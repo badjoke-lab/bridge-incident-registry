@@ -1,0 +1,43 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Bridge Incident Registry",
+  description = "A historical registry of cross-chain bridge incidents and their aftermath."
+} = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="nav-wrap">
+        <a class="brand" href="/">Bridge Incident Registry</a>
+        <nav class="nav-links" aria-label="Primary navigation">
+          <a href="/bridges/">Bridges</a>
+          <a href="/incidents/">Incidents</a>
+          <a href="/methodology/">Methodology</a>
+          <a href="/about/">About</a>
+        </nav>
+      </div>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="footer-wrap">
+        BIR is an informational historical registry. It does not rank bridge safety or recommend using any bridge.
+      </div>
+    </footer>
+  </body>
+</html>

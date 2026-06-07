@@ -1,0 +1,55 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout
+  title="Bridge Incident Registry"
+  description="A historical registry of cross-chain bridge incidents, pauses, recoveries, reimbursements, and migrations."
+>
+  <section class="hero">
+    <div class="kicker">Quiet incident registry</div>
+    <h1>The registry for what happened after cross-chain bridge incidents.</h1>
+    <p class="lede">
+      Most hack databases stop at the exploit. Bridge Incident Registry tracks what happened after:
+      pauses, recoveries, reimbursements, reopenings, migrations, and shutdowns.
+    </p>
+  </section>
+
+  <section class="summary-strip" aria-label="Project status summary">
+    <div class="stat">
+      <div class="stat-value">0</div>
+      <div class="stat-label">Bridge records</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">0</div>
+      <div class="stat-label">Incident cases</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">0</div>
+      <div class="stat-label">Evidence records</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">v0</div>
+      <div class="stat-label">Static foundation</div>
+    </div>
+  </section>
+
+  <section class="panel-grid" aria-label="Registry focus">
+    <article class="panel">
+      <h2>Incident aftermath</h2>
+      <p>Track pause, recovery, reimbursement, reopening, migration, and shutdown outcomes.</p>
+    </article>
+    <article class="panel">
+      <h2>Evidence-first records</h2>
+      <p>Every major claim should point back to official, archival, analytical, or journalistic evidence.</p>
+    </article>
+    <article class="panel">
+      <h2>Not a safety ranking</h2>
+      <p>BIR records historical incidents and outcomes. It does not recommend bridges or rank safety.</p>
+    </article>
+  </section>
+
+  <p class="notice">
+    This static foundation contains no canonical bridge or incident records yet. Data files, validation,
+    and registry pages will be added in later pull requests.
+  </p>
+</BaseLayout>

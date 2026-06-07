@@ -2,29 +2,34 @@
 
 ## Project state
 
-Bridge Incident Registry is in the pre-implementation documentation phase.
+Bridge Incident Registry is in the static application foundation phase.
 
 ## Current milestone
 
-PR-001: project foundation documents.
+PR-002: Astro static site foundation.
 
 ## Completed
 
 - Repository initialized.
+- PR-001 merged: project foundation documents.
 - Project purpose fixed.
-- v0.3 pre-implementation specification drafted.
-- Visual direction drafted.
-- Licensing and attribution position drafted.
+- v0.3 pre-implementation specification added.
+- Visual direction added.
+- Licensing and attribution note added.
 - Changelog started.
+- Astro project configuration added.
+- Base layout and global CSS foundation added.
+- Placeholder routes added for home, bridges, incidents, methodology, and about.
 
 ## Not started
 
-- Astro application setup
 - Canonical JSON data files
+- Reference dictionaries
 - Validation script
-- Registry pages
+- Data loader
+- Real registry tables
 - Detail pages
-- Methodology page implementation
+- Methodology page full implementation
 - Seed records
 - Cloudflare Pages deployment
 
@@ -57,15 +62,13 @@ paid APIs
 
 ## Next planned PR
 
-PR-002: set up Astro static site foundation.
+PR-003: shared layout and base UI components.
 
 Expected scope:
 
-- Astro project files
-- TypeScript configuration
-- static build setup
-- base page
-- global CSS foundation
+- reusable header / footer refinement if needed
+- route-level placeholder polish
+- base chips and utility components
 - no canonical data implementation yet
 
 ## Reporting rule
