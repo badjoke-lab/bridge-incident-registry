@@ -1,0 +1,25 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+<BaseLayout title="About - Bridge Incident Registry" description="About placeholder for BIR.">
+  <section class="hero">
+    <div class="kicker">About</div>
+    <h1>A registry for bridge incident aftermath.</h1>
+    <p class="lede">Bridge Incident Registry records historical incident outcomes with evidence, uncertainty, and source attribution.</p>
+  </section>
+
+  <section class="panel-grid" aria-label="About BIR">
+    <article class="panel">
+      <h2>Evidence-based</h2>
+      <p>Records are intended to point back to source material rather than unsupported summaries.</p>
+    </article>
+    <article class="panel">
+      <h2>Static-first</h2>
+      <p>The first public version is designed to run as a static site without a database or server API.</p>
+    </article>
+    <article class="panel">
+      <h2>Safety-aware</h2>
+      <p>BIR does not publish exploit reproduction steps or operational attack instructions.</p>
+    </article>
+  </section>
+</BaseLayout>
