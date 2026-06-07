@@ -6,13 +6,14 @@ Bridge Incident Registry is in the static application foundation and visual foun
 
 ## Current milestone
 
-PR-003: Deep Navy Archive palette and base style direction.
+PR-004: notice palette fix.
 
 ## Completed
 
 - Repository initialized.
 - PR-001 merged: project foundation documents.
 - PR-002 merged: Astro static site foundation.
+- PR-003 merged: Deep Navy Archive palette.
 - Project purpose fixed.
 - v0.3 pre-implementation specification added.
 - Visual direction added.
@@ -23,6 +24,7 @@ PR-003: Deep Navy Archive palette and base style direction.
 - Placeholder routes added for home, bridges, incidents, methodology, and about.
 - Cloudflare Pages URL is live.
 - Deep Navy Archive palette added to global styles and design docs.
+- Notice blocks aligned with the navy palette instead of warning/accent styling.
 
 ## Not started
 
@@ -73,11 +75,12 @@ Archival blue links
 Subdued status colors
 No pure-black default identity
 No neon crypto styling
+Notice blocks use navy/info styling, not warning styling
 ```
 
 ## Next planned PR
 
-PR-004: shared layout and base UI components.
+PR-005: shared layout and base UI components.
 
 Expected scope:
 
