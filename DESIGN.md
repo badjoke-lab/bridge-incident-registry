@@ -12,6 +12,10 @@ BIR should feel like a quiet incident registry: structured, archival, evidence-b
 
 **Quiet incident registry**
 
+### Palette phrase
+
+**Deep Navy Archive**
+
 ### Desired mood
 
 - archival
@@ -20,9 +24,11 @@ BIR should feel like a quiet incident registry: structured, archival, evidence-b
 - evidence-based
 - technical but readable
 - dense without becoming a trading terminal
+- closer to a research archive than a crypto dashboard
 
 ### Avoid
 
+- pure black background as the default identity
 - crypto neon
 - cyberpunk styling
 - sensational exploit imagery
@@ -95,18 +101,55 @@ Incident detail structure:
 
 ## Color roles
 
-Use a restrained archival palette.
+Use a restrained archival palette based on deep navy, muted brass, and subdued evidence blue.
 
-- base: near-black / deep charcoal or soft off-white
-- primary accent: muted bronze or aged gold
-- archive link: subdued archival blue
-- active: subdued green
-- paused / limited: dusty amber
-- inactive: blue-gray
-- deprecated / dead: muted red-brown
-- migrated: muted violet-gray
-- unknown: neutral gray
-- unsafe: strong warning red
+### Core palette
+
+```css
+--bg: #07111f;
+--bg-soft: #0b1728;
+--surface: #101d2f;
+--surface-soft: #16263b;
+--surface-raised: #1b2d45;
+--border: #2b3d55;
+--border-strong: #3b526f;
+--text: #e8eef6;
+--muted: #a8b5c6;
+--faint: #748499;
+--accent: #c7a15a;
+--link: #8fb7d8;
+```
+
+### Interpretation
+
+- base: deep navy, not pure black
+- primary accent: muted brass / archival gold
+- evidence link: subdued archival blue
+- amount: muted gold
+- unknown: neutral gray-blue
+- unsafe: muted red, not alarm neon
+
+### Status colors
+
+```css
+--status-active: #7fb28a;
+--status-limited: #d0a85f;
+--status-paused: #c98d5a;
+--status-inactive: #7f93aa;
+--status-deprecated: #a979c9;
+--status-migrated: #8aa4d6;
+--status-dead: #c46f6f;
+--status-unknown: #8a94a3;
+```
+
+### Risk / impact colors
+
+```css
+--risk-critical: #d36b6b;
+--risk-high: #d28a5c;
+--risk-medium: #d0a85f;
+--risk-low: #7fb28a;
+```
 
 Accent colors must be sparse and stable across pages.
 

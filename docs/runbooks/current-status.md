@@ -2,16 +2,17 @@
 
 ## Project state
 
-Bridge Incident Registry is in the static application foundation phase.
+Bridge Incident Registry is in the static application foundation and visual foundation phase.
 
 ## Current milestone
 
-PR-002: Astro static site foundation.
+PR-003: Deep Navy Archive palette and base style direction.
 
 ## Completed
 
 - Repository initialized.
 - PR-001 merged: project foundation documents.
+- PR-002 merged: Astro static site foundation.
 - Project purpose fixed.
 - v0.3 pre-implementation specification added.
 - Visual direction added.
@@ -20,6 +21,8 @@ PR-002: Astro static site foundation.
 - Astro project configuration added.
 - Base layout and global CSS foundation added.
 - Placeholder routes added for home, bridges, incidents, methodology, and about.
+- Cloudflare Pages URL is live.
+- Deep Navy Archive palette added to global styles and design docs.
 
 ## Not started
 
@@ -31,7 +34,6 @@ PR-002: Astro static site foundation.
 - Detail pages
 - Methodology page full implementation
 - Seed records
-- Cloudflare Pages deployment
 
 ## Current architecture decision
 
@@ -60,15 +62,28 @@ on-chain parser
 paid APIs
 ```
 
+## Current visual decision
+
+The site uses a Deep Navy Archive palette:
+
+```text
+Deep navy background
+Muted brass accent
+Archival blue links
+Subdued status colors
+No pure-black default identity
+No neon crypto styling
+```
+
 ## Next planned PR
 
-PR-003: shared layout and base UI components.
+PR-004: shared layout and base UI components.
 
 Expected scope:
 
-- reusable header / footer refinement if needed
-- route-level placeholder polish
-- base chips and utility components
+- reusable UI components
+- status / maturity / update status chip components
+- base utility components for future registry pages
 - no canonical data implementation yet
 
 ## Reporting rule
