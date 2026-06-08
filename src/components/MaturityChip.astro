@@ -1,0 +1,11 @@
+---
+type Maturity = "stub" | "reviewed" | "full";
+
+interface Props {
+  maturity: Maturity;
+  label?: string;
+}
+
+const { maturity, label = maturity.replaceAll("_", " ") } = Astro.props;
+---
+<span class={`chip chip-${maturity}`}>{label}</span>

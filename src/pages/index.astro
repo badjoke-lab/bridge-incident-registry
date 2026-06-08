@@ -1,5 +1,10 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import Callout from "../components/Callout.astro";
+import MaturityChip from "../components/MaturityChip.astro";
+import SectionHeader from "../components/SectionHeader.astro";
+import StatusChip from "../components/StatusChip.astro";
+import UpdateStatusChip from "../components/UpdateStatusChip.astro";
 ---
 <BaseLayout
   title="Bridge Incident Registry"
@@ -33,6 +38,20 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </div>
   </section>
 
+  <SectionHeader
+    kicker="Foundation"
+    title="Registry primitives before registry data"
+    description="The first UI components establish status, maturity, freshness, callout, and empty-state patterns before canonical JSON records are added."
+  />
+
+  <div class="chip-row" aria-label="Sample registry chips">
+    <StatusChip status="active" />
+    <StatusChip status="paused" />
+    <StatusChip status="migrated" />
+    <MaturityChip maturity="reviewed" />
+    <UpdateStatusChip status="current" />
+  </div>
+
   <section class="panel-grid" aria-label="Registry focus">
     <article class="panel">
       <h2>Incident aftermath</h2>
@@ -48,8 +67,8 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     </article>
   </section>
 
-  <p class="notice">
+  <Callout title="Static foundation only">
     This static foundation contains no canonical bridge or incident records yet. Data files, validation,
     and registry pages will be added in later pull requests.
-  </p>
+  </Callout>
 </BaseLayout>

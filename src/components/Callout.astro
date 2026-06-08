@@ -1,0 +1,15 @@
+---
+type Tone = "info" | "warning" | "danger";
+
+interface Props {
+  title?: string;
+  tone?: Tone;
+}
+
+const { title, tone = "info" } = Astro.props;
+const toneClass = tone === "info" ? "" : ` callout-${tone}`;
+---
+<div class={`callout${toneClass}`}>
+  {title && <p class="callout-title">{title}</p>}
+  <slot />
+</div>

@@ -1,0 +1,12 @@
+---
+type UpdateStatus = "current" | "stale" | "needs_review" | "under_revision";
+
+interface Props {
+  status: UpdateStatus;
+  label?: string;
+}
+
+const { status, label = status.replaceAll("_", " ") } = Astro.props;
+const className = status.replaceAll("_", "-");
+---
+<span class={`chip chip-${className}`}>{label}</span>
