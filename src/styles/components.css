@@ -1,0 +1,171 @@
+.section-header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 18px;
+  margin: 34px 0 14px;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+  letter-spacing: -0.035em;
+}
+
+.section-header p {
+  max-width: 680px;
+  margin: 6px 0 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.section-kicker {
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 760;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.empty-state {
+  border: 1px dashed var(--border-strong);
+  background: rgba(16, 29, 47, 0.58);
+  border-radius: 14px;
+  padding: 22px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.empty-state strong {
+  color: var(--text);
+}
+
+.chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  width: fit-content;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(22, 38, 59, 0.78);
+  color: var(--muted);
+  padding: 5px 9px;
+  font-size: 0.76rem;
+  font-weight: 720;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.chip::before {
+  content: "";
+  width: 0.52em;
+  height: 0.52em;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.9;
+}
+
+.chip-active { color: var(--status-active); border-color: rgba(127, 178, 138, 0.34); }
+.chip-limited { color: var(--status-limited); border-color: rgba(208, 168, 95, 0.34); }
+.chip-paused { color: var(--status-paused); border-color: rgba(201, 141, 90, 0.34); }
+.chip-inactive { color: var(--status-inactive); border-color: rgba(127, 147, 170, 0.34); }
+.chip-deprecated { color: var(--status-deprecated); border-color: rgba(169, 121, 201, 0.34); }
+.chip-migrated { color: var(--status-migrated); border-color: rgba(138, 164, 214, 0.34); }
+.chip-dead { color: var(--status-dead); border-color: rgba(196, 111, 111, 0.34); }
+.chip-unknown { color: var(--status-unknown); border-color: rgba(138, 148, 163, 0.34); }
+
+.chip-stub { color: var(--status-paused); border-color: rgba(201, 141, 90, 0.34); }
+.chip-reviewed { color: var(--status-migrated); border-color: rgba(138, 164, 214, 0.34); }
+.chip-full { color: var(--status-active); border-color: rgba(127, 178, 138, 0.34); }
+
+.chip-current { color: var(--status-active); border-color: rgba(127, 178, 138, 0.34); }
+.chip-stale { color: var(--status-limited); border-color: rgba(208, 168, 95, 0.34); }
+.chip-needs-review { color: var(--status-paused); border-color: rgba(201, 141, 90, 0.34); }
+.chip-under-revision { color: var(--status-migrated); border-color: rgba(138, 164, 214, 0.34); }
+
+.callout {
+  border: 1px solid var(--notice-border);
+  background:
+    linear-gradient(180deg, rgba(143, 183, 216, 0.045), transparent),
+    var(--notice-bg);
+  color: var(--muted);
+  border-radius: 14px;
+  padding: 16px 18px;
+  line-height: 1.6;
+}
+
+.callout-warning {
+  border-color: rgba(208, 168, 95, 0.36);
+  background: var(--warning-bg);
+}
+
+.callout-danger {
+  border-color: rgba(196, 111, 111, 0.42);
+  background: var(--danger-bg);
+}
+
+.callout-title {
+  margin: 0 0 6px;
+  color: var(--text);
+  font-weight: 760;
+}
+
+.key-value-list {
+  display: grid;
+  grid-template-columns: minmax(130px, 0.32fr) 1fr;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.key-value-list dt,
+.key-value-list dd {
+  margin: 0;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.key-value-list dt {
+  color: var(--faint);
+  background: rgba(11, 23, 40, 0.62);
+  font-size: 0.78rem;
+  font-weight: 720;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.key-value-list dd {
+  color: var(--text);
+  background: rgba(16, 29, 47, 0.42);
+}
+
+.key-value-list dt:last-of-type,
+.key-value-list dd:last-of-type {
+  border-bottom: 0;
+}
+
+@media (max-width: 760px) {
+  .section-header {
+    display: block;
+  }
+
+  .key-value-list {
+    grid-template-columns: 1fr;
+  }
+
+  .key-value-list dt {
+    border-bottom: 0;
+    padding-bottom: 4px;
+  }
+
+  .key-value-list dd {
+    padding-top: 4px;
+  }
+}
