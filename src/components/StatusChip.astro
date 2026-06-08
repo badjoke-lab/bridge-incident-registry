@@ -1,0 +1,11 @@
+---
+type Status = "active" | "limited" | "paused" | "inactive" | "deprecated" | "migrated" | "dead" | "unknown";
+
+interface Props {
+  status: Status;
+  label?: string;
+}
+
+const { status, label = status.replaceAll("_", " ") } = Astro.props;
+---
+<span class={`chip chip-${status}`}>{label}</span>
