@@ -1,0 +1,50 @@
+{
+  "eth": {
+    "display_name": "ETH",
+    "aliases": ["Ether"]
+  },
+  "weth": {
+    "display_name": "WETH",
+    "aliases": ["Wrapped Ether", "Wrapped ETH"]
+  },
+  "usdc": {
+    "display_name": "USDC",
+    "aliases": ["USD Coin"]
+  },
+  "usdt": {
+    "display_name": "USDT",
+    "aliases": ["Tether", "Tether USD"]
+  },
+  "btc": {
+    "display_name": "BTC",
+    "aliases": ["Bitcoin"]
+  },
+  "wbtc": {
+    "display_name": "WBTC",
+    "aliases": ["Wrapped Bitcoin"]
+  },
+  "bnb": {
+    "display_name": "BNB",
+    "aliases": ["Binance Coin"]
+  },
+  "matic": {
+    "display_name": "MATIC",
+    "aliases": ["Polygon token"]
+  },
+  "avax": {
+    "display_name": "AVAX",
+    "aliases": []
+  },
+  "one": {
+    "display_name": "ONE",
+    "aliases": ["Harmony ONE"]
+  },
+  "sol": {
+    "display_name": "SOL",
+    "aliases": []
+  },
+  "unknown": {
+    "display_name": "Unknown",
+    "aliases": []
+  }
+}
