@@ -5,6 +5,10 @@ import MaturityChip from "../components/MaturityChip.astro";
 import SectionHeader from "../components/SectionHeader.astro";
 import StatusChip from "../components/StatusChip.astro";
 import UpdateStatusChip from "../components/UpdateStatusChip.astro";
+import { getRegistryCounts } from "../lib/data";
+
+const counts = getRegistryCounts();
+const hasRegistryData = counts.bridges > 0 || counts.incidents > 0 || counts.events > 0 || counts.evidence > 0;
 ---
 <BaseLayout
   title="Bridge Incident Registry"
@@ -19,22 +23,22 @@ import UpdateStatusChip from "../components/UpdateStatusChip.astro";
     </p>
   </section>
 
-  <section class="summary-strip" aria-label="Project status summary">
+  <section class="summary-strip" aria-label="Registry record summary">
     <div class="stat">
-      <div class="stat-value">0</div>
+      <div class="stat-value">{counts.bridges}</div>
       <div class="stat-label">Bridge records</div>
     </div>
     <div class="stat">
-      <div class="stat-value">0</div>
+      <div class="stat-value">{counts.incidents}</div>
       <div class="stat-label">Incident cases</div>
     </div>
     <div class="stat">
-      <div class="stat-value">0</div>
-      <div class="stat-label">Evidence records</div>
+      <div class="stat-value">{counts.events}</div>
+      <div class="stat-label">Timeline events</div>
     </div>
     <div class="stat">
-      <div class="stat-value">v0</div>
-      <div class="stat-label">Static foundation</div>
+      <div class="stat-value">{counts.evidence}</div>
+      <div class="stat-label">Evidence records</div>
     </div>
   </section>
 
@@ -67,8 +71,9 @@ import UpdateStatusChip from "../components/UpdateStatusChip.astro";
     </article>
   </section>
 
-  <Callout title="Static foundation only">
-    This static foundation contains no canonical bridge or incident records yet. Data files, validation,
-    and registry pages will be added in later pull requests.
-  </Callout>
+  {!hasRegistryData && (
+    <Callout title="Static foundation only">
+      The canonical registry is currently empty. Bridge, incident, event, and evidence records will appear here automatically after reviewed JSON records are merged.
+    </Callout>
+  )}
 </BaseLayout>
