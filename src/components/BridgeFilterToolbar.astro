@@ -1,0 +1,50 @@
+---
+import { bridgeStatuses, bridgeTypes, recordMaturities, updateStatuses } from "../lib/enums";
+import { formatLabel } from "../lib/format";
+
+interface Props {
+  disabled?: boolean;
+}
+
+const { disabled = false } = Astro.props;
+---
+<form class="registry-toolbar" id="bridge-filters" aria-label="Bridge registry filters">
+  <div class="registry-field registry-search-field">
+    <label for="bridge-search">Search</label>
+    <input id="bridge-search" name="search" type="search" placeholder="Name, alias, chain, operator, or ecosystem" autocomplete="off" disabled={disabled} />
+  </div>
+
+  <div class="registry-field">
+    <label for="bridge-type">Type</label>
+    <select id="bridge-type" name="type" disabled={disabled}>
+      <option value="">All types</option>
+      {bridgeTypes.map((type) => <option value={type}>{formatLabel(type)}</option>)}
+    </select>
+  </div>
+
+  <div class="registry-field">
+    <label for="bridge-status">Status</label>
+    <select id="bridge-status" name="status" disabled={disabled}>
+      <option value="">All statuses</option>
+      {bridgeStatuses.map((status) => <option value={status}>{formatLabel(status)}</option>)}
+    </select>
+  </div>
+
+  <div class="registry-field">
+    <label for="bridge-maturity">Maturity</label>
+    <select id="bridge-maturity" name="maturity" disabled={disabled}>
+      <option value="">All maturity</option>
+      {recordMaturities.map((maturity) => <option value={maturity}>{formatLabel(maturity)}</option>)}
+    </select>
+  </div>
+
+  <div class="registry-field">
+    <label for="bridge-update-status">Freshness</label>
+    <select id="bridge-update-status" name="update_status" disabled={disabled}>
+      <option value="">All freshness</option>
+      {updateStatuses.map((status) => <option value={status}>{formatLabel(status)}</option>)}
+    </select>
+  </div>
+
+  <button class="registry-reset" id="bridge-reset" type="reset" disabled={disabled}>Reset</button>
+</form>
