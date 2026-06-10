@@ -1,16 +1,42 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import BridgeFilterToolbar from "../../components/BridgeFilterToolbar.astro";
+import BridgeRegistryTable from "../../components/BridgeRegistryTable.astro";
 import EmptyState from "../../components/EmptyState.astro";
+import { registryData } from "../../lib/data";
+import "../../styles/registry.css";
+
+const bridges = [...registryData.bridges].sort((a, b) => {
+  const incidentDelta = (b.major_incident_count ?? 0) - (a.major_incident_count ?? 0);
+  return incidentDelta !== 0 ? incidentDelta : a.canonical_name.localeCompare(b.canonical_name);
+});
+const hasBridges = bridges.length > 0;
 ---
-<BaseLayout title="Bridges - Bridge Incident Registry" description="Bridge entity registry placeholder for BIR.">
+<BaseLayout title="Bridges - Bridge Incident Registry" description="Browse cross-chain bridge entities, incident history, status, chains, and evidence coverage.">
   <section class="hero">
     <div class="kicker">Registry</div>
     <h1>Bridges</h1>
-    <p class="lede">Bridge entity records will be listed here after canonical JSON data is added.</p>
+    <p class="lede">Browse bridge and interoperability infrastructure records with incident history, lifecycle status, evidence coverage, and current outcome context.</p>
   </section>
 
-  <EmptyState
-    title="No bridge records yet."
-    message="This page reserves the bridge registry route before canonical JSON data and registry tables are added."
-  />
+  <BridgeFilterToolbar disabled={!hasBridges} />
+
+  <div class="registry-meta" aria-live="polite">
+    <span id="bridge-result-count">{bridges.length} bridge records</span>
+    <span>Default sort: major incidents, then name</span>
+  </div>
+
+  {hasBridges ? <BridgeRegistryTable bridges={bridges} /> : (
+    <div class="registry-zero-state">
+      <EmptyState title="No bridge records yet." message="The registry structure, search controls, and filters are ready. Reviewed bridge records will appear here after canonical JSON data is merged." />
+    </div>
+  )}
+
+  {hasBridges && (
+    <div class="registry-zero-state" id="bridge-no-results" hidden>
+      <EmptyState title="No matching bridge records." message="Clear or change the current search and filter settings." />
+    </div>
+  )}
+
+  {hasBridges && <script src="/scripts/bridge-filters.js"></script>}
 </BaseLayout>

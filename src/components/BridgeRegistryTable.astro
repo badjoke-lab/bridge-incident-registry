@@ -1,0 +1,60 @@
+---
+import MaturityChip from "./MaturityChip.astro";
+import StatusChip from "./StatusChip.astro";
+import UpdateStatusChip from "./UpdateStatusChip.astro";
+import { getEvidenceForBridge, getIncidentsForBridge } from "../lib/data";
+import { formatLabel, formatUsd, joinLabels } from "../lib/format";
+import { getChainLabels } from "../lib/reference";
+import type { BridgeEntity } from "../lib/types";
+
+interface Props {
+  bridges: BridgeEntity[];
+}
+
+const { bridges } = Astro.props;
+---
+<div class="registry-table-wrap">
+  <table class="registry-table">
+    <thead>
+      <tr>
+        <th scope="col">Bridge</th>
+        <th scope="col">Type</th>
+        <th scope="col">Status</th>
+        <th scope="col">Maturity</th>
+        <th scope="col">Incidents</th>
+        <th scope="col">Reported loss</th>
+        <th scope="col">Chains</th>
+        <th scope="col">Evidence</th>
+        <th scope="col">Freshness</th>
+      </tr>
+    </thead>
+    <tbody id="bridge-table-body">
+      {bridges.map((bridge) => {
+        const incidents = getIncidentsForBridge(bridge.id);
+        const evidence = getEvidenceForBridge(bridge.id);
+        const totalReportedLoss = incidents.reduce((sum, incident) => sum + (incident.reported_loss_usd ?? 0), 0);
+        const chains = getChainLabels(bridge.primary_chains);
+        const searchText = [bridge.canonical_name, ...(bridge.aliases ?? []), ...chains, bridge.operator_name ?? "", bridge.ecosystem_name ?? "", ...(bridge.related_protocols ?? [])].join(" ").toLowerCase();
+
+        return (
+          <tr class="registry-row" data-search={searchText} data-type={bridge.type} data-status={bridge.status} data-maturity={bridge.record_maturity} data-update-status={bridge.update_status}>
+            <td data-label="Bridge">
+              <div class="registry-name">
+                <a href={`/bridge/${bridge.slug}/`}>{bridge.canonical_name}</a>
+                <span class="registry-summary">{bridge.summary}</span>
+              </div>
+            </td>
+            <td data-label="Type"><span class="registry-small">{formatLabel(bridge.type)}</span></td>
+            <td data-label="Status"><StatusChip status={bridge.status} /></td>
+            <td data-label="Maturity"><MaturityChip maturity={bridge.record_maturity} /></td>
+            <td data-label="Incidents"><div class="registry-stack"><strong>{incidents.length}</strong><span class="registry-small">{bridge.major_incident_count ?? 0} major</span></div></td>
+            <td data-label="Reported loss"><span class="registry-small">{totalReportedLoss > 0 ? formatUsd(totalReportedLoss) : "Unknown"}</span></td>
+            <td data-label="Chains"><span class="registry-small">{joinLabels(chains)}</span></td>
+            <td data-label="Evidence"><span class="registry-small">{evidence.length}</span></td>
+            <td data-label="Freshness"><UpdateStatusChip status={bridge.update_status} /></td>
+          </tr>
+        );
+      })}
+    </tbody>
+  </table>
+</div>
