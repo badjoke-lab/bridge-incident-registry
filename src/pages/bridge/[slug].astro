@@ -1,0 +1,117 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import Callout from "../../components/Callout.astro";
+import EmptyState from "../../components/EmptyState.astro";
+import KeyValueList from "../../components/KeyValueList.astro";
+import MaturityChip from "../../components/MaturityChip.astro";
+import StatusChip from "../../components/StatusChip.astro";
+import UpdateStatusChip from "../../components/UpdateStatusChip.astro";
+import { getEvidenceForBridge, getIncidentsForBridge, registryData } from "../../lib/data";
+import { formatDateWithPrecision, formatLabel, joinLabels } from "../../lib/format";
+import { getAssetLabels, getChainLabels } from "../../lib/reference";
+import "../../styles/detail.css";
+
+export function getStaticPaths() {
+  return registryData.bridges.map((bridge) => ({
+    params: { slug: bridge.slug },
+    props: { bridge }
+  }));
+}
+
+const { bridge } = Astro.props;
+const incidents = getIncidentsForBridge(bridge.id).sort((a, b) => b.incident_date.localeCompare(a.incident_date));
+const evidence = getEvidenceForBridge(bridge.id);
+const chains = getChainLabels(bridge.primary_chains);
+const assets = getAssetLabels(bridge.primary_assets);
+const pageTitle = `${bridge.canonical_name} - Bridge Incident Registry`;
+const totalReportedLoss = incidents.reduce((sum, incident) => sum + (incident.reported_loss_usd ?? 0), 0);
+
+const facts = [
+  { label: "Canonical name", value: bridge.canonical_name },
+  { label: "Type", value: formatLabel(bridge.type) },
+  { label: "Status", value: formatLabel(bridge.status) },
+  { label: "Confidence", value: formatLabel(bridge.confidence) },
+  { label: "Primary chains", value: joinLabels(chains) },
+  { label: "Primary assets", value: joinLabels(assets) },
+  { label: "Operator", value: bridge.operator_name ?? "Unknown" },
+  { label: "Ecosystem", value: bridge.ecosystem_name ?? "Unknown" },
+  { label: "Launch date", value: formatDateWithPrecision(bridge.launch_date, bridge.launch_date_precision) },
+  { label: "End date", value: formatDateWithPrecision(bridge.end_date, bridge.end_date_precision) },
+  { label: "Terminal reason", value: bridge.terminal_reason ?? "Not applicable / unknown" },
+  { label: "Last reviewed", value: bridge.last_reviewed_at },
+  { label: "Last verified", value: bridge.last_verified_at }
+];
+---
+<BaseLayout title={pageTitle} description={bridge.summary}>
+  <section class="hero detail-hero">
+    <div class="kicker">Bridge entity</div>
+    <div class="detail-title-row">
+      <div>
+        <h1>{bridge.canonical_name}</h1>
+        <p class="lede">{bridge.summary}</p>
+      </div>
+      <div class="detail-chip-row" aria-label="Bridge status chips">
+        <StatusChip status={bridge.status} />
+        <MaturityChip maturity={bridge.record_maturity} />
+        <UpdateStatusChip status={bridge.update_status} />
+      </div>
+    </div>
+  </section>
+
+  <div class="detail-grid">
+    <main class="detail-panel">
+      <h2>Bridge facts</h2>
+      <KeyValueList items={facts} />
+    </main>
+
+    <aside class="detail-panel">
+      <h2>Registry summary</h2>
+      <KeyValueList items={[
+        { label: "Incident cases", value: String(incidents.length) },
+        { label: "Major incidents", value: String(bridge.major_incident_count ?? 0) },
+        { label: "Evidence records", value: String(evidence.length) },
+        { label: "Reported loss total", value: totalReportedLoss > 0 ? `$${totalReportedLoss.toLocaleString("en-US")}` : "Unknown" },
+        { label: "Unresolved incident", value: bridge.has_unresolved_incident ? "Yes" : "No / unknown" },
+        { label: "Reimbursement history", value: bridge.has_reimbursement_history ? "Yes" : "No / unknown" }
+      ]} />
+    </aside>
+  </div>
+
+  <section class="detail-two-column" aria-label="Bridge related records">
+    <div class="detail-panel">
+      <h2>Incident cases</h2>
+      {incidents.length > 0 ? (
+        <ul class="detail-list">
+          {incidents.map((incident) => (
+            <li class="detail-card">
+              <p class="detail-card-title"><a href={`/incident/${incident.slug}/`}>{incident.title}</a><span>{formatDateWithPrecision(incident.incident_date, incident.incident_date_precision)}</span></p>
+              <p class="detail-muted">{incident.summary}</p>
+              <div class="detail-meta-line"><span>{formatLabel(incident.incident_type)}</span><span>{incident.reported_loss_usd_display ?? incident.reported_loss_text ?? "Unknown loss"}</span><span>{incident.is_unresolved ? "Unresolved" : "Final outcome known"}</span></div>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <EmptyState title="No linked incident cases." message="Incident records will appear here after canonical JSON data is merged." />
+      )}
+    </div>
+
+    <div class="detail-panel">
+      <h2>Evidence records</h2>
+      {evidence.length > 0 ? (
+        <ul class="detail-link-list">
+          {evidence.map((source) => (
+            <li><a href={source.url}>{source.title}</a><div class="detail-muted">{source.publisher} · {formatLabel(source.source_tier)} · {formatDateWithPrecision(source.published_at, source.published_at_precision)}</div></li>
+          ))}
+        </ul>
+      ) : (
+        <EmptyState title="No linked evidence records." message="Evidence links will appear here after source records are added." />
+      )}
+    </div>
+  </section>
+
+  {bridge.official_url && (
+    <Callout title="Official URL status">
+      Official URL recorded as {bridge.official_url_status ?? "unknown"}: <a href={bridge.official_url}>{bridge.official_url}</a>
+    </Callout>
+  )}
+</BaseLayout>
