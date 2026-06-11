@@ -1,1 +1,60 @@
-[]
+[
+  {
+    "id": "bir_inc_000001",
+    "bridge_id": "bir_bridge_000001",
+    "slug": "ronin-bridge-2022-validator-key-compromise",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "title": "Ronin Bridge validator-key compromise",
+    "incident_date": "2022-03-29",
+    "incident_date_precision": "day",
+    "incident_type": "exploit",
+    "summary": "In March 2022, Ronin Bridge was exploited after validator keys were compromised, leading to one of the largest reported bridge losses in crypto history. The incident later became a reference case for bridge validator and cross-chain security risk.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "source_count": 4,
+    "last_reviewed_at": "2026-06-11",
+    "last_verified_at": "2026-06-11",
+    "is_major_incident": true,
+    "reported_loss_usd_display": "$620 million",
+    "reported_loss_usd": 620000000,
+    "reported_loss_usd_min": null,
+    "reported_loss_usd_max": null,
+    "reported_loss_text": "Reported as roughly $620 million in public coverage.",
+    "reported_loss_assets": ["eth", "usdc"],
+    "usd_valuation_date": "2022-03-29",
+    "loss_amount_basis": "public reports and secondary summaries",
+    "amount_confidence": "medium",
+    "amount_note": "Public reports commonly cite approximately $620 million; exact valuation depends on asset prices and source timing.",
+    "amount_claims": [
+      {
+        "amount_text": "173,600 ETH and 25.5 million USDC",
+        "amount_usd_text": "about $620 million",
+        "source_id": "bir_src_000001",
+        "basis": "media report",
+        "usd_valuation_date": "2022-03-29",
+        "notes": "Used as the display loss amount in this seed record."
+      }
+    ],
+    "recovery_status": "partial_recovery",
+    "reimbursement_status": "completed",
+    "restart_status": "reopened",
+    "current_outcome": "active_after_incident",
+    "is_unresolved": false,
+    "unresolved_reason": [],
+    "affected_chains": ["ronin", "ethereum"],
+    "affected_assets": ["eth", "usdc"],
+    "attack_vector_category": "validator_key_compromise",
+    "postmortem_available": "unknown",
+    "known_unknowns": [
+      "Exact loss valuation varies by source and valuation date.",
+      "This seed record does not yet include a full reimbursement timeline."
+    ],
+    "conflicting_claims": [],
+    "duplicate_of": null,
+    "merged_into": null,
+    "split_from": null,
+    "split_reason": null
+  }
+]
