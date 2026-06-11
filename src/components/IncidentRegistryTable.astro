@@ -1,0 +1,64 @@
+---
+import MaturityChip from "./MaturityChip.astro";
+import UpdateStatusChip from "./UpdateStatusChip.astro";
+import { registryData } from "../lib/data";
+import { formatDateWithPrecision, formatLabel } from "../lib/format";
+import { getAssetLabels, getChainLabels } from "../lib/reference";
+import type { IncidentCase } from "../lib/types";
+
+interface Props {
+  incidents: IncidentCase[];
+}
+
+const { incidents } = Astro.props;
+const bridgeNames = new Map(registryData.bridges.map((bridge) => [bridge.id, bridge.canonical_name]));
+---
+<div class="registry-table-wrap">
+  <table class="registry-table">
+    <thead>
+      <tr>
+        <th scope="col">Incident</th>
+        <th scope="col">Date</th>
+        <th scope="col">Bridge</th>
+        <th scope="col">Type</th>
+        <th scope="col">Reported loss</th>
+        <th scope="col">Recovery</th>
+        <th scope="col">Reimbursement</th>
+        <th scope="col">Outcome</th>
+        <th scope="col">Resolution</th>
+        <th scope="col">Maturity</th>
+        <th scope="col">Freshness</th>
+      </tr>
+    </thead>
+    <tbody id="incident-table-body">
+      {incidents.map((incident) => {
+        const bridgeName = bridgeNames.get(incident.bridge_id) ?? incident.bridge_id;
+        const chains = getChainLabels(incident.affected_chains);
+        const assets = getAssetLabels(incident.affected_assets);
+        const searchText = [incident.title, bridgeName, ...chains, ...assets, incident.attack_vector_category ?? "", incident.incident_type].join(" ").toLowerCase();
+        const unresolvedValue = String(Boolean(incident.is_unresolved));
+
+        return (
+          <tr class="registry-row" data-search={searchText} data-type={incident.incident_type} data-recovery={incident.recovery_status ?? "unknown"} data-reimbursement={incident.reimbursement_status ?? "unknown"} data-outcome={incident.current_outcome ?? "unknown"} data-unresolved={unresolvedValue}>
+            <td data-label="Incident">
+              <div class="registry-name">
+                <a href={`/incident/${incident.slug}/`}>{incident.title}</a>
+                <span class="registry-summary">{incident.summary}</span>
+              </div>
+            </td>
+            <td data-label="Date"><span class="registry-small">{formatDateWithPrecision(incident.incident_date, incident.incident_date_precision)}</span></td>
+            <td data-label="Bridge"><span class="registry-small">{bridgeName}</span></td>
+            <td data-label="Type"><span class="registry-small">{formatLabel(incident.incident_type)}</span></td>
+            <td data-label="Reported loss"><span class="registry-small">{incident.reported_loss_usd_display ?? incident.reported_loss_text ?? "Unknown"}</span></td>
+            <td data-label="Recovery"><span class="registry-small">{formatLabel(incident.recovery_status ?? "unknown")}</span></td>
+            <td data-label="Reimbursement"><span class="registry-small">{formatLabel(incident.reimbursement_status ?? "unknown")}</span></td>
+            <td data-label="Outcome"><span class="registry-small">{formatLabel(incident.current_outcome ?? "unknown")}</span></td>
+            <td data-label="Resolution"><span class={`registry-resolution ${incident.is_unresolved ? "is-unresolved" : "is-resolved"}`}>{incident.is_unresolved ? "Unresolved" : "Final outcome known"}</span></td>
+            <td data-label="Maturity"><MaturityChip maturity={incident.record_maturity} /></td>
+            <td data-label="Freshness"><UpdateStatusChip status={incident.update_status} /></td>
+          </tr>
+        );
+      })}
+    </tbody>
+  </table>
+</div>

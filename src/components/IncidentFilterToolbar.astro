@@ -1,0 +1,59 @@
+---
+import { currentOutcomes, incidentTypes, recoveryStatuses, reimbursementStatuses } from "../lib/enums";
+import { formatLabel } from "../lib/format";
+
+interface Props {
+  disabled?: boolean;
+}
+
+const { disabled = false } = Astro.props;
+---
+<form class="registry-toolbar" id="incident-filters" aria-label="Incident registry filters">
+  <div class="registry-field registry-search-field">
+    <label for="incident-search">Search</label>
+    <input id="incident-search" name="search" type="search" placeholder="Incident, bridge, chain, asset, or attack category" autocomplete="off" disabled={disabled} />
+  </div>
+
+  <div class="registry-field">
+    <label for="incident-type">Type</label>
+    <select id="incident-type" name="type" disabled={disabled}>
+      <option value="">All types</option>
+      {incidentTypes.map((type) => <option value={type}>{formatLabel(type)}</option>)}
+    </select>
+  </div>
+
+  <div class="registry-field">
+    <label for="incident-recovery">Recovery</label>
+    <select id="incident-recovery" name="recovery" disabled={disabled}>
+      <option value="">All recovery states</option>
+      {recoveryStatuses.map((status) => <option value={status}>{formatLabel(status)}</option>)}
+    </select>
+  </div>
+
+  <div class="registry-field">
+    <label for="incident-reimbursement">Reimbursement</label>
+    <select id="incident-reimbursement" name="reimbursement" disabled={disabled}>
+      <option value="">All reimbursement states</option>
+      {reimbursementStatuses.map((status) => <option value={status}>{formatLabel(status)}</option>)}
+    </select>
+  </div>
+
+  <div class="registry-field">
+    <label for="incident-outcome">Outcome</label>
+    <select id="incident-outcome" name="outcome" disabled={disabled}>
+      <option value="">All outcomes</option>
+      {currentOutcomes.map((outcome) => <option value={outcome}>{formatLabel(outcome)}</option>)}
+    </select>
+  </div>
+
+  <div class="registry-field">
+    <label for="incident-unresolved">Resolution</label>
+    <select id="incident-unresolved" name="unresolved" disabled={disabled}>
+      <option value="">All</option>
+      <option value="true">Unresolved</option>
+      <option value="false">Resolved / final outcome known</option>
+    </select>
+  </div>
+
+  <button class="registry-reset" type="reset" disabled={disabled}>Reset</button>
+</form>

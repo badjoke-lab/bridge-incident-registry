@@ -1,16 +1,45 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import EmptyState from "../../components/EmptyState.astro";
+import IncidentFilterToolbar from "../../components/IncidentFilterToolbar.astro";
+import IncidentRegistryTable from "../../components/IncidentRegistryTable.astro";
+import { registryData } from "../../lib/data";
+import "../../styles/registry.css";
+import "../../styles/incident-registry.css";
+
+const incidents = [...registryData.incidents].sort((a, b) => {
+  const dateDelta = b.incident_date.localeCompare(a.incident_date);
+  if (dateDelta !== 0) return dateDelta;
+  if (a.is_major_incident !== b.is_major_incident) return a.is_major_incident ? -1 : 1;
+  return a.title.localeCompare(b.title);
+});
+const hasIncidents = incidents.length > 0;
 ---
-<BaseLayout title="Incidents - Bridge Incident Registry" description="Incident case registry placeholder for BIR.">
+<BaseLayout title="Incidents - Bridge Incident Registry" description="Browse cross-chain bridge incident cases, reported loss, recovery, reimbursement, and final outcomes.">
   <section class="hero">
     <div class="kicker">Registry</div>
     <h1>Incidents</h1>
-    <p class="lede">Incident case records will be listed here after canonical JSON data is added.</p>
+    <p class="lede">Browse exploit, pause, recovery, reimbursement, migration, and shutdown cases with evidence-backed outcome tracking.</p>
   </section>
 
-  <EmptyState
-    title="No incident records yet."
-    message="This page reserves the incident registry route before canonical JSON data and registry tables are added."
-  />
+  <IncidentFilterToolbar disabled={!hasIncidents} />
+
+  <div class="registry-meta" aria-live="polite">
+    <span id="incident-result-count">{incidents.length} incident cases</span>
+    <span>Default sort: newest incident date</span>
+  </div>
+
+  {hasIncidents ? <IncidentRegistryTable incidents={incidents} /> : (
+    <div class="registry-zero-state">
+      <EmptyState title="No incident records yet." message="The incident registry structure, search controls, and filters are ready. Reviewed incident cases will appear here after canonical JSON data is merged." />
+    </div>
+  )}
+
+  {hasIncidents && (
+    <div class="registry-zero-state" id="incident-no-results" hidden>
+      <EmptyState title="No matching incident cases." message="Clear or change the current search and filter settings." />
+    </div>
+  )}
+
+  {hasIncidents && <script src="/scripts/incident-filters.js"></script>}
 </BaseLayout>
