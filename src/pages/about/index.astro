@@ -1,25 +1,49 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Callout from "../../components/Callout.astro";
+import KeyValueList from "../../components/KeyValueList.astro";
+import SectionHeader from "../../components/SectionHeader.astro";
 ---
-<BaseLayout title="About - Bridge Incident Registry" description="About placeholder for BIR.">
+<BaseLayout title="About - Bridge Incident Registry" description="About Bridge Incident Registry, its purpose, limits, and correction flow.">
   <section class="hero">
     <div class="kicker">About</div>
     <h1>A registry for bridge incident aftermath.</h1>
-    <p class="lede">Bridge Incident Registry records historical incident outcomes with evidence, uncertainty, and source attribution.</p>
+    <p class="lede">Bridge Incident Registry records historical bridge incidents, source-backed outcomes, unresolved questions, and lifecycle changes after incidents.</p>
   </section>
 
-  <section class="panel-grid" aria-label="About BIR">
-    <article class="panel">
-      <h2>Evidence-based</h2>
-      <p>Records are intended to point back to source material rather than unsupported summaries.</p>
-    </article>
-    <article class="panel">
-      <h2>Static-first</h2>
-      <p>The first public version is designed to run as a static site without a database or server API.</p>
-    </article>
-    <article class="panel">
-      <h2>Safety-aware</h2>
-      <p>BIR does not publish exploit reproduction steps or operational attack instructions.</p>
-    </article>
+  <Callout title="Not a safety ranking">
+    BIR does not recommend bridges, rank bridge safety, or provide investment advice. It records historical claims and outcomes with source attribution.
+  </Callout>
+
+  <SectionHeader kicker="Purpose" title="Why this registry exists" description="Most incident lists focus on the exploit. BIR focuses on what happened after." />
+
+  <section class="panel-grid" aria-label="Purpose">
+    <article class="panel"><h2>Aftermath tracking</h2><p>Pause, recovery, reimbursement, reopening, migration, shutdown, and final outcome are tracked as first-class records.</p></article>
+    <article class="panel"><h2>Evidence-first</h2><p>Major claims should point to source material, with uncertainty and conflicts preserved when sources disagree.</p></article>
+    <article class="panel"><h2>Static public archive</h2><p>The first version is a static site backed by reviewed JSON files, not a live monitoring dashboard.</p></article>
+  </section>
+
+  <SectionHeader kicker="Limits" title="What BIR does not do" description="Clear limits keep the project useful and safer to publish." />
+
+  <KeyValueList items={[
+    { label: "No rankings", value: "BIR does not score or rank bridge safety." },
+    { label: "No recommendations", value: "BIR does not advise users to use or avoid a bridge." },
+    { label: "No exploit reproduction", value: "BIR does not publish operational attack steps or reproduction instructions." },
+    { label: "No private data", value: "Reports should not include private keys, seed phrases, passwords, or personal financial information." },
+    { label: "No unsupported allegations", value: "Claims require source material or must be marked as unresolved/unknown." }
+  ]} />
+
+  <SectionHeader kicker="Corrections" title="Correction and report flow" description="BIR should become more accurate over time without accepting unverifiable claims." />
+
+  <KeyValueList items={[
+    { label: "What to report", value: "Wrong status, missing evidence, broken source URL, duplicate record, better archive link, or outdated recovery/reimbursement outcome." },
+    { label: "What to include", value: "Record name, exact claim to change, source URL, archive URL if available, and a short explanation." },
+    { label: "What not to include", value: "Private keys, seed phrases, passwords, personal account data, or non-public allegations." },
+    { label: "Review result", value: "Accepted changes should update the relevant JSON record and appear through a reviewed pull request." }
+  ]} />
+
+  <section class="detail-panel">
+    <h2>Contact</h2>
+    <p class="detail-muted">For now, corrections should be filed through the project repository or the public contact/report form when available. Every accepted correction should leave a visible source-backed trail in the registry data.</p>
   </section>
 </BaseLayout>
