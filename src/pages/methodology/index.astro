@@ -1,14 +1,60 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import Callout from "../../components/Callout.astro";
+import KeyValueList from "../../components/KeyValueList.astro";
+import SectionHeader from "../../components/SectionHeader.astro";
 ---
-<BaseLayout title="Methodology - Bridge Incident Registry" description="Methodology placeholder for BIR.">
+<BaseLayout title="Methodology - Bridge Incident Registry" description="How Bridge Incident Registry defines scope, evidence quality, incident aftermath, and uncertainty.">
   <section class="hero">
     <div class="kicker">Methodology</div>
     <h1>Definitions before rankings.</h1>
-    <p class="lede">BIR will document scope, evidence rules, URL safety, amount handling, and incident aftermath classifications here.</p>
+    <p class="lede">BIR is a historical registry for cross-chain bridge incidents and their aftermath. It is not a live safety ranking and not a recommendation engine.</p>
   </section>
 
-  <div class="notice">
-    Methodology copy will be expanded after the data model and validation layer are added.
-  </div>
+  <Callout title="Scope boundary">
+    BIR records what happened, what changed, and what remains uncertain after bridge incidents. It does not publish exploit reproduction steps, attack instructions, or bridge safety rankings.
+  </Callout>
+
+  <SectionHeader kicker="Scope" title="What BIR records" description="A record may describe a bridge entity, an incident case, an aftermath event, or a source used as evidence." />
+
+  <section class="panel-grid" aria-label="Record scope">
+    <article class="panel"><h2>Bridge entity</h2><p>A bridge, router, messaging protocol, or interoperability system that may have one or more incident records.</p></article>
+    <article class="panel"><h2>Incident case</h2><p>An exploit, pause, migration, shutdown, recovery, reimbursement, or other historically significant bridge incident.</p></article>
+    <article class="panel"><h2>Evidence</h2><p>Official statements, postmortems, analytics reports, security writeups, media coverage, or archived pages used to support claims.</p></article>
+  </section>
+
+  <SectionHeader kicker="Maturity" title="Record maturity and freshness" description="BIR separates how complete a record is from how recently it was reviewed." />
+
+  <KeyValueList items={[
+    { label: "stub", value: "Minimal placeholder with limited verified facts." },
+    { label: "reviewed", value: "Core facts checked against source material." },
+    { label: "full", value: "Expanded record with timeline, evidence, and known uncertainty." },
+    { label: "current", value: "Reviewed recently enough for the record scope." },
+    { label: "stale", value: "May still be useful, but needs a later review." },
+    { label: "needs_review", value: "Known issue, missing source, or uncertain claim requires review." },
+    { label: "under_revision", value: "Record is being actively corrected or expanded." }
+  ]} />
+
+  <SectionHeader kicker="Evidence" title="Source handling" description="BIR prefers primary and well-attributed sources. Lower-tier sources can provide context, but should not alone establish major claims." />
+
+  <KeyValueList items={[
+    { label: "Tier 1", value: "Official postmortem, project statement, court/regulatory source, or analytical report with clear methodology." },
+    { label: "Tier 2", value: "Security firm writeup, blockchain analytics article, major crypto media report, or archived official material." },
+    { label: "Tier 3", value: "Community post, social thread, database entry, or secondary summary." },
+    { label: "Conflicts", value: "Conflicting claims should be kept visible with source links and resolution notes." },
+    { label: "Quotes", value: "Use short excerpts only. Prefer paraphrase, attribution, and source URLs." }
+  ]} />
+
+  <SectionHeader kicker="Amounts" title="Reported loss and recovery amounts" description="Amounts are treated as claims, not automatic facts." />
+
+  <p class="lede">Reported loss values may differ across official posts, analytics reports, security writeups, and media coverage. BIR stores the selected display value together with confidence, source links, and conflicting claims where needed.</p>
+
+  <SectionHeader kicker="Uncertainty" title="Known unknowns" description="Unknown values are part of the record, not a failure of the record." />
+
+  <KeyValueList items={[
+    { label: "null", value: "Information is missing or not yet entered." },
+    { label: "unknown", value: "The question was considered, but no reliable answer is currently known." },
+    { label: "not_applicable", value: "The field does not apply to this record." },
+    { label: "is_unresolved", value: "The final recovery, reimbursement, restart, or outcome is not yet sufficiently verified." }
+  ]} />
 </BaseLayout>
