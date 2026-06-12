@@ -56,5 +56,63 @@
     "merged_into": null,
     "split_from": null,
     "split_reason": null
+  },
+  {
+    "id": "bir_inc_000002",
+    "bridge_id": "bir_bridge_000002",
+    "slug": "wormhole-2022-weth-mint-exploit",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "title": "Wormhole 2022 wrapped ETH mint exploit",
+    "incident_date": "2022-02-02",
+    "incident_date_precision": "day",
+    "incident_type": "exploit",
+    "summary": "In February 2022, Wormhole was exploited through a vulnerability that allowed unauthorized wrapped ETH minting on Solana. Public reporting described a loss of roughly $320 million, and the bridge deficit was later backfilled.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "source_count": 4,
+    "last_reviewed_at": "2026-06-11",
+    "last_verified_at": "2026-06-11",
+    "is_major_incident": true,
+    "reported_loss_usd_display": "$320 million",
+    "reported_loss_usd": 320000000,
+    "reported_loss_usd_min": null,
+    "reported_loss_usd_max": null,
+    "reported_loss_text": "Reported as roughly $320 million in public coverage.",
+    "reported_loss_assets": ["weth"],
+    "usd_valuation_date": "2022-02-02",
+    "loss_amount_basis": "public reports and secondary summaries",
+    "amount_confidence": "medium",
+    "amount_note": "Public reports commonly cite approximately $320 million; exact valuation depends on ETH price and source timing.",
+    "amount_claims": [
+      {
+        "amount_text": "120,000 ETH",
+        "amount_usd_text": "about $320 million",
+        "source_id": "bir_src_000005",
+        "basis": "media report",
+        "usd_valuation_date": "2022-02-02",
+        "notes": "Used as the display loss amount in this seed record."
+      }
+    ],
+    "recovery_status": "not_applicable",
+    "reimbursement_status": "completed",
+    "restart_status": "reopened",
+    "current_outcome": "active_after_incident",
+    "is_unresolved": false,
+    "unresolved_reason": [],
+    "affected_chains": ["solana", "ethereum"],
+    "affected_assets": ["weth"],
+    "attack_vector_category": "message_verification_failure",
+    "postmortem_available": "unknown",
+    "known_unknowns": [
+      "This seed record does not yet include a full technical root-cause timeline.",
+      "Exact loss valuation varies by source and valuation date."
+    ],
+    "conflicting_claims": [],
+    "duplicate_of": null,
+    "merged_into": null,
+    "split_from": null,
+    "split_reason": null
   }
 ]
