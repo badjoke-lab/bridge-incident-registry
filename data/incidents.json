@@ -114,5 +114,66 @@
     "merged_into": null,
     "split_from": null,
     "split_reason": null
+  },
+  {
+    "id": "bir_inc_000003",
+    "bridge_id": "bir_bridge_000003",
+    "slug": "nomad-bridge-2022-message-verification-exploit",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "title": "Nomad Bridge 2022 message verification exploit",
+    "incident_date": "2022-08-01",
+    "incident_date_precision": "day",
+    "incident_type": "exploit",
+    "summary": "In August 2022, Nomad Bridge was exploited after a message verification flaw made fraudulent withdrawals copyable by many participants. Public reporting commonly describes the loss as roughly $190 million, with partial recovery and unresolved recovery/reimbursement questions.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "source_count": 4,
+    "last_reviewed_at": "2026-06-12",
+    "last_verified_at": "2026-06-12",
+    "is_major_incident": true,
+    "reported_loss_usd_display": "$190 million",
+    "reported_loss_usd": 190000000,
+    "reported_loss_usd_min": null,
+    "reported_loss_usd_max": null,
+    "reported_loss_text": "Reported as roughly $190 million in public coverage.",
+    "reported_loss_assets": ["eth", "usdc", "usdt", "wbtc"],
+    "usd_valuation_date": "2022-08-01",
+    "loss_amount_basis": "public reports and secondary summaries",
+    "amount_confidence": "medium",
+    "amount_note": "Public reports commonly cite approximately $190 million; exact recovered and outstanding amounts require later source-specific expansion.",
+    "amount_claims": [
+      {
+        "amount_text": "about $190 million",
+        "amount_usd_text": "about $190 million",
+        "source_id": "bir_src_000009",
+        "basis": "media report",
+        "usd_valuation_date": "2022-08-01",
+        "notes": "Used as the display loss amount in this seed record."
+      }
+    ],
+    "recovery_status": "partial_recovery",
+    "reimbursement_status": "unknown",
+    "restart_status": "not_reopened",
+    "current_outcome": "dead_after_incident",
+    "is_unresolved": true,
+    "unresolved_reason": [
+      "Full recovery status is not established in this seed record.",
+      "Reimbursement outcome requires later source-specific review."
+    ],
+    "affected_chains": ["ethereum", "avalanche", "unknown"],
+    "affected_assets": ["eth", "usdc", "usdt", "wbtc"],
+    "attack_vector_category": "message_verification_failure",
+    "postmortem_available": "unknown",
+    "known_unknowns": [
+      "Exact recovered amount and final reimbursement outcome require further review.",
+      "This seed does not yet include a full technical timeline."
+    ],
+    "conflicting_claims": [],
+    "duplicate_of": null,
+    "merged_into": null,
+    "split_from": null,
+    "split_reason": null
   }
 ]
