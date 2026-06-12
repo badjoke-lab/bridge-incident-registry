@@ -175,5 +175,66 @@
     "merged_into": null,
     "split_from": null,
     "split_reason": null
+  },
+  {
+    "id": "bir_inc_000004",
+    "bridge_id": "bir_bridge_000004",
+    "slug": "harmony-horizon-bridge-2022-exploit",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "title": "Harmony Horizon Bridge 2022 exploit",
+    "incident_date": "2022-06-24",
+    "incident_date_precision": "day",
+    "incident_type": "exploit",
+    "summary": "In June 2022, Harmony's Horizon Bridge was exploited for roughly $100 million. Later public statements and FBI material linked the theft to Lazarus Group actors, while recovery and reimbursement details remain incomplete in this seed record.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "source_count": 4,
+    "last_reviewed_at": "2026-06-12",
+    "last_verified_at": "2026-06-12",
+    "is_major_incident": true,
+    "reported_loss_usd_display": "$100 million",
+    "reported_loss_usd": 100000000,
+    "reported_loss_usd_min": null,
+    "reported_loss_usd_max": null,
+    "reported_loss_text": "Reported as roughly $100 million in public coverage.",
+    "reported_loss_assets": ["eth", "usdc", "usdt", "wbtc", "bnb", "one"],
+    "usd_valuation_date": "2022-06-24",
+    "loss_amount_basis": "public reports and official/security summaries",
+    "amount_confidence": "medium",
+    "amount_note": "Public reports commonly cite approximately $100 million; exact asset-level composition requires later source-specific expansion.",
+    "amount_claims": [
+      {
+        "amount_text": "about $100 million",
+        "amount_usd_text": "about $100 million",
+        "source_id": "bir_src_000013",
+        "basis": "media report",
+        "usd_valuation_date": "2022-06-24",
+        "notes": "Used as the display loss amount in this seed record."
+      }
+    ],
+    "recovery_status": "partial_recovery",
+    "reimbursement_status": "unknown",
+    "restart_status": "not_reopened",
+    "current_outcome": "dead_after_incident",
+    "is_unresolved": true,
+    "unresolved_reason": [
+      "Full recovery status is not established in this seed record.",
+      "Reimbursement outcome requires later source-specific review."
+    ],
+    "affected_chains": ["harmony", "ethereum", "bnb-chain"],
+    "affected_assets": ["eth", "usdc", "usdt", "wbtc", "bnb", "one"],
+    "attack_vector_category": "validator_key_compromise",
+    "postmortem_available": "unknown",
+    "known_unknowns": [
+      "Exact recovered amount and final reimbursement outcome require further review.",
+      "This seed does not yet include a full technical postmortem timeline."
+    ],
+    "conflicting_claims": [],
+    "duplicate_of": null,
+    "merged_into": null,
+    "split_from": null,
+    "split_reason": null
   }
 ]
