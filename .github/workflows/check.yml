@@ -22,7 +22,19 @@ jobs:
         run: npm install
 
       - name: Type and Astro check
-        run: npm run check
+        run: |
+          set +e
+          npm run check > check-output.txt 2>&1
+          status=$?
+          cat check-output.txt
+          exit $status
+
+      - name: Upload Astro check output
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: astro-check-output
+          path: check-output.txt
 
       - name: Validate canonical data
         run: npm run validate:data
