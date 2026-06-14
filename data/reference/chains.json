@@ -5,7 +5,11 @@
   },
   "bnb-chain": {
     "display_name": "BNB Chain",
-    "aliases": ["BSC", "Binance Smart Chain"]
+    "aliases": ["BSC", "Binance Smart Chain", "BNB Smart Chain"]
+  },
+  "bnb-beacon-chain": {
+    "display_name": "BNB Beacon Chain",
+    "aliases": ["Beacon Chain", "BNB Chain Beacon Chain", "BEP2 Chain"]
   },
   "ronin": {
     "display_name": "Ronin",
