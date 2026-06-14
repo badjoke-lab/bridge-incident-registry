@@ -1,23 +1,16 @@
-name: Apply Phase 2 Batch 1
+name: Generate Phase 2 Batch 1
 
 on:
-  push:
+  pull_request:
     branches:
-      - phase2-meter-allbridge-lifi
-
-permissions:
-  contents: write
+      - main
 
 jobs:
-  apply:
-    if: github.event.head_commit.message != 'data: apply phase 2 batch 1 records'
+  generate:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout branch
+      - name: Checkout pull request
         uses: actions/checkout@v4
-        with:
-          ref: phase2-meter-allbridge-lifi
-          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -27,11 +20,26 @@ jobs:
       - name: Generate canonical records
         run: node scripts/apply-phase2-batch-01.mjs
 
-      - name: Validate generated data
-        run: npm install && npm run validate:data && npm run check && npm run build
+      - name: Install dependencies
+        run: npm install
 
-      - name: Commit generated records
-        uses: stefanzweifel/git-auto-commit-action@v5
+      - name: Validate generated data
+        run: npm run validate:data
+
+      - name: Type and Astro check
+        run: npm run check
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Upload validated generated data
+        uses: actions/upload-artifact@v4
         with:
-          commit_message: data: apply phase 2 batch 1 records
-          file_pattern: data/*.json
+          name: phase2-batch-01-generated-data
+          path: |
+            data/bridges.json
+            data/incidents.json
+            data/events.json
+            data/evidence.json
+          if-no-files-found: error
+          retention-days: 3
