@@ -27,5 +27,8 @@ jobs:
       - name: Validate canonical data
         run: npm run validate:data
 
+      - name: Audit first ten seeds
+        run: npm run audit:first-ten
+
       - name: Build static site
         run: npm run build
