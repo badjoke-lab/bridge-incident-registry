@@ -10,7 +10,10 @@ const incidents = readJson("data/incidents.json");
 const events = readJson("data/events.json");
 const evidence = readJson("data/evidence.json");
 
-const targetBridgeIds = Array.from({ length: 10 }, (_, index) => `bir_bridge_${String(index + 1).padStart(6, "0")}`);
+const targetBridgeIds = Array.from(
+  { length: 10 },
+  (_, index) => `bir_bridge_${String(index + 1).padStart(6, "0")}`
+);
 const targetBridgeIdSet = new Set(targetBridgeIds);
 const targetBridges = bridges.filter((bridge) => targetBridgeIdSet.has(bridge.id));
 const targetIncidents = incidents.filter((incident) => targetBridgeIdSet.has(incident.bridge_id));
@@ -24,14 +27,8 @@ const evidenceById = new Map(evidence.map((source) => [source.id, source]));
 
 const errors = [];
 const warnings = [];
-
-function error(message) {
-  errors.push(message);
-}
-
-function warn(message) {
-  warnings.push(message);
-}
+const error = (message) => errors.push(message);
+const warn = (message) => warnings.push(message);
 
 function incidentEvidence(incidentId) {
   return targetEvidence.filter((source) => source.incident_id === incidentId);
@@ -44,7 +41,7 @@ function supportingEvidenceForEvent(event) {
   });
 }
 
-function isReimbursementHistory(status) {
+function hasConfirmedReimbursement(status) {
   return ["announced", "in_progress", "completed", "partial"].includes(status);
 }
 
@@ -53,20 +50,21 @@ if (targetBridges.length !== 10) {
 }
 
 for (const expectedId of targetBridgeIds) {
-  if (!bridgeById.has(expectedId)) {
-    error(`Missing target bridge ${expectedId}.`);
-  }
+  if (!bridgeById.has(expectedId)) error(`Missing target bridge ${expectedId}.`);
 }
 
 for (const bridge of targetBridges) {
   const bridgeIncidents = targetIncidents.filter((incident) => incident.bridge_id === bridge.id);
   const majorIncidents = bridgeIncidents.filter((incident) => incident.is_major_incident === true);
   const unresolvedIncidents = bridgeIncidents.filter((incident) => incident.is_unresolved === true);
-  const reimbursementHistory = bridgeIncidents.some((incident) => isReimbursementHistory(incident.reimbursement_status));
+  const confirmedReimbursement = bridgeIncidents.some((incident) =>
+    hasConfirmedReimbursement(incident.reimbursement_status)
+  );
+  const reimbursementUnknown = bridgeIncidents.some(
+    (incident) => incident.reimbursement_status === "unknown"
+  );
 
-  if (bridgeIncidents.length === 0) {
-    error(`${bridge.id}: no incident records.`);
-  }
+  if (bridgeIncidents.length === 0) error(`${bridge.id}: no incident records.`);
 
   if (bridge.major_incident_count !== majorIncidents.length) {
     error(`${bridge.id}: major_incident_count=${bridge.major_incident_count}, actual=${majorIncidents.length}.`);
@@ -76,8 +74,16 @@ for (const bridge of targetBridges) {
     error(`${bridge.id}: has_unresolved_incident does not match incident records.`);
   }
 
-  if (bridge.has_reimbursement_history !== reimbursementHistory) {
-    error(`${bridge.id}: has_reimbursement_history does not match incident records.`);
+  if (confirmedReimbursement && bridge.has_reimbursement_history !== true) {
+    error(`${bridge.id}: confirmed reimbursement history exists but bridge flag is false.`);
+  }
+
+  if (!confirmedReimbursement && bridge.has_reimbursement_history === true) {
+    if (reimbursementUnknown) {
+      warn(`${bridge.id}: reimbursement-history flag is true while incident outcome remains unknown; retain for manual review.`);
+    } else {
+      error(`${bridge.id}: reimbursement-history flag is true without supporting incident status.`);
+    }
   }
 
   if (["dead", "deprecated", "migrated"].includes(bridge.status)) {
@@ -85,7 +91,9 @@ for (const bridge of targetBridges) {
     if (!bridge.terminal_reason) error(`${bridge.id}: terminal/semi-terminal bridge has no terminal_reason.`);
   }
 
-  const latestIncident = [...bridgeIncidents].sort((a, b) => b.incident_date.localeCompare(a.incident_date))[0];
+  const latestIncident = [...bridgeIncidents].sort((a, b) =>
+    b.incident_date.localeCompare(a.incident_date)
+  )[0];
   if (!latestIncident) continue;
 
   if (bridge.status === "paused") {
@@ -116,21 +124,20 @@ for (const bridge of targetBridges) {
 
 for (const incident of targetIncidents) {
   const sources = incidentEvidence(incident.id);
-  const highQualitySources = sources.filter((source) => source.source_tier === "tier_1" || source.is_primary === true);
+  const highQualitySources = sources.filter(
+    (source) => source.source_tier === "tier_1" || source.is_primary === true
+  );
 
   if (incident.source_count !== sources.length) {
     error(`${incident.id}: source_count=${incident.source_count}, actual incident evidence=${sources.length}.`);
   }
+  if (sources.length < 2) error(`${incident.id}: fewer than two evidence records.`);
+  if (highQualitySources.length === 0) warn(`${incident.id}: no tier_1 or primary evidence source.`);
 
-  if (sources.length < 2) {
-    error(`${incident.id}: fewer than two evidence records.`);
-  }
-
-  if (highQualitySources.length === 0) {
-    warn(`${incident.id}: no tier_1 or primary evidence source.`);
-  }
-
-  if (incident.is_unresolved && (!Array.isArray(incident.unresolved_reason) || incident.unresolved_reason.length === 0)) {
+  if (
+    incident.is_unresolved &&
+    (!Array.isArray(incident.unresolved_reason) || incident.unresolved_reason.length === 0)
+  ) {
     error(`${incident.id}: unresolved incident has no unresolved_reason.`);
   }
 
@@ -164,8 +171,7 @@ for (const incident of targetIncidents) {
 }
 
 for (const event of targetEvents) {
-  const bridge = bridgeById.get(event.bridge_id);
-  if (!bridge) error(`${event.id}: missing bridge ${event.bridge_id}.`);
+  if (!bridgeById.has(event.bridge_id)) error(`${event.id}: missing bridge ${event.bridge_id}.`);
 
   if (event.incident_id) {
     const incident = incidentById.get(event.incident_id);
@@ -183,9 +189,7 @@ for (const event of targetEvents) {
 }
 
 for (const source of targetEvidence) {
-  if (!bridgeById.has(source.bridge_id)) {
-    error(`${source.id}: missing bridge ${source.bridge_id}.`);
-  }
+  if (!bridgeById.has(source.bridge_id)) error(`${source.id}: missing bridge ${source.bridge_id}.`);
 
   if (source.incident_id) {
     const incident = incidentById.get(source.incident_id);
@@ -201,7 +205,9 @@ for (const source of targetEvidence) {
     if (!event) {
       error(`${source.id}: missing event ${source.event_id}.`);
     } else {
-      if (event.bridge_id !== source.bridge_id) error(`${source.id}: evidence and event belong to different bridges.`);
+      if (event.bridge_id !== source.bridge_id) {
+        error(`${source.id}: evidence and event belong to different bridges.`);
+      }
       if (source.incident_id && event.incident_id && source.incident_id !== event.incident_id) {
         error(`${source.id}: evidence incident_id and event incident_id disagree.`);
       }
