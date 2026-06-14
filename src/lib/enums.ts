@@ -83,6 +83,8 @@ export const attackVectorCategories = [
   "validator_key_compromise",
   "message_verification_failure",
   "smart_contract_bug",
+  // Exploitation of a cross-chain contract or privileged call path spanning bridge components.
+  "cross_chain_contract_exploit",
   "relayer_or_oracle_issue",
   "configuration_error",
   "frontend_or_dns_compromise",

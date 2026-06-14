@@ -4,7 +4,7 @@ import EmptyState from "../../components/EmptyState.astro";
 import KeyValueList from "../../components/KeyValueList.astro";
 import MaturityChip from "../../components/MaturityChip.astro";
 import UpdateStatusChip from "../../components/UpdateStatusChip.astro";
-import { getBridgeBySlug, getEventsForIncident, getEvidenceForIncident, registryData } from "../../lib/data";
+import { getEventsForIncident, getEvidenceForIncident, registryData } from "../../lib/data";
 import { formatDateWithPrecision, formatLabel, joinLabels } from "../../lib/format";
 import { getAssetLabels, getChainLabels } from "../../lib/reference";
 import "../../styles/detail.css";
@@ -20,6 +20,7 @@ const { incident } = Astro.props;
 const bridge = registryData.bridges.find((item) => item.id === incident.bridge_id);
 const events = getEventsForIncident(incident.id).sort((a, b) => a.event_date.localeCompare(b.event_date));
 const evidence = getEvidenceForIncident(incident.id);
+const knownUnknowns = incident.known_unknowns ?? [];
 const chains = getChainLabels(incident.affected_chains);
 const assets = getAssetLabels(incident.affected_assets);
 const pageTitle = `${incident.title} - Bridge Incident Registry`;
@@ -108,11 +109,11 @@ const facts = [
     </div>
   </section>
 
-  {incident.known_unknowns?.length > 0 && (
+  {knownUnknowns.length > 0 && (
     <section class="detail-panel">
       <h2>Known unknowns</h2>
       <ul class="detail-list">
-        {incident.known_unknowns.map((item) => <li class="detail-muted">{item}</li>)}
+        {knownUnknowns.map((item) => <li class="detail-muted">{item}</li>)}
       </ul>
     </section>
   )}

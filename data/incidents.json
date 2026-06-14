@@ -236,5 +236,63 @@
     "merged_into": null,
     "split_from": null,
     "split_reason": null
+  },
+  {
+    "id": "bir_inc_000005",
+    "bridge_id": "bir_bridge_000005",
+    "slug": "poly-network-2021-cross-chain-exploit",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "title": "Poly Network 2021 cross-chain exploit",
+    "incident_date": "2021-08-10",
+    "incident_date_precision": "day",
+    "incident_type": "exploit",
+    "summary": "In August 2021, Poly Network was exploited for more than $600 million across multiple chains. The case became a major reference point because the attacker later returned most or all of the funds, making it a recovery-centered bridge incident rather than a permanent-loss case.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "source_count": 4,
+    "last_reviewed_at": "2026-06-12",
+    "last_verified_at": "2026-06-12",
+    "is_major_incident": true,
+    "reported_loss_usd_display": "$610 million",
+    "reported_loss_usd": 610000000,
+    "reported_loss_usd_min": null,
+    "reported_loss_usd_max": null,
+    "reported_loss_text": "Reported as more than $600 million, commonly around $610 million, in public coverage.",
+    "reported_loss_assets": ["eth", "usdc", "usdt", "wbtc", "bnb", "matic"],
+    "usd_valuation_date": "2021-08-10",
+    "loss_amount_basis": "public reports and secondary summaries",
+    "amount_confidence": "medium",
+    "amount_note": "Public reports commonly cite more than $600 million; exact valuation depends on source timing and asset prices.",
+    "amount_claims": [
+      {
+        "amount_text": "more than $600 million",
+        "amount_usd_text": "about $610 million",
+        "source_id": "bir_src_000017",
+        "basis": "media report",
+        "usd_valuation_date": "2021-08-10",
+        "notes": "Used as the display loss amount in this seed record."
+      }
+    ],
+    "recovery_status": "full_recovery",
+    "reimbursement_status": "not_applicable",
+    "restart_status": "reopened",
+    "current_outcome": "active_after_incident",
+    "is_unresolved": false,
+    "unresolved_reason": [],
+    "affected_chains": ["ethereum", "bnb-chain", "polygon"],
+    "affected_assets": ["eth", "usdc", "usdt", "wbtc", "bnb", "matic"],
+    "attack_vector_category": "cross_chain_contract_exploit",
+    "postmortem_available": "unknown",
+    "known_unknowns": [
+      "Exact asset-level composition and final operational timeline require later source-specific expansion.",
+      "This seed does not yet include a full technical postmortem timeline."
+    ],
+    "conflicting_claims": [],
+    "duplicate_of": null,
+    "merged_into": null,
+    "split_from": null,
+    "split_reason": null
   }
 ]
