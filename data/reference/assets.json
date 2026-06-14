@@ -15,6 +15,10 @@
     "display_name": "USDT",
     "aliases": ["Tether", "Tether USD"]
   },
+  "dai": {
+    "display_name": "DAI",
+    "aliases": ["Dai Stablecoin"]
+  },
   "btc": {
     "display_name": "BTC",
     "aliases": ["Bitcoin"]
