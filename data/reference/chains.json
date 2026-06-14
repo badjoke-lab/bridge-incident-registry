@@ -43,6 +43,10 @@
     "display_name": "Solana",
     "aliases": []
   },
+  "orbit-chain": {
+    "display_name": "Orbit Chain",
+    "aliases": ["OrbitChain"]
+  },
   "bitcoin": {
     "display_name": "Bitcoin",
     "aliases": ["BTC"]
