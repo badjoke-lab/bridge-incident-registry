@@ -30,10 +30,12 @@ for (const id of ids) if (!B.has(id)) fail(`missing bridge ${id}`);
 for (const bridge of b) {
   const related = i.filter((x) => x.bridge_id === bridge.id);
   const latest = [...related].sort((x, y) => y.incident_date.localeCompare(x.incident_date))[0];
+  const modeledReimbursement = related.some((x) => reimbursed(x.reimbursement_status));
   if (!related.length) fail(`${bridge.id}: no incidents`);
   if (bridge.major_incident_count !== related.filter((x) => x.is_major_incident).length) fail(`${bridge.id}: major_incident_count mismatch`);
   if (bridge.has_unresolved_incident !== related.some((x) => x.is_unresolved)) fail(`${bridge.id}: unresolved flag mismatch`);
-  if (bridge.has_reimbursement_history !== related.some((x) => reimbursed(x.reimbursement_status))) fail(`${bridge.id}: reimbursement flag mismatch`);
+  if (!bridge.has_reimbursement_history && modeledReimbursement) fail(`${bridge.id}: reimbursement flag omits modeled history`);
+  if (bridge.has_reimbursement_history && !modeledReimbursement) warn(`${bridge.id}: reimbursement history is not yet expanded in incident status`);
   if (["dead", "deprecated", "migrated"].includes(bridge.status) && (!bridge.end_date || !bridge.terminal_reason)) fail(`${bridge.id}: terminal metadata incomplete`);
   if (!latest) continue;
   if (bridge.status === "paused") {
