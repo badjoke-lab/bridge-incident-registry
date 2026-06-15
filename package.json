@@ -7,11 +7,12 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "node scripts/apply-phase2-batch2.mjs && astro check",
+    "check": "GITHUB_HEAD_REF= node scripts/apply-phase2-batch2.mjs && node scripts/upload-phase2-batch2-artifact.mjs && astro check",
     "validate:data": "node scripts/validate-data.mjs",
     "audit:first-ten": "node scripts/audit-first-ten-seeds.mjs"
   },
   "dependencies": {
+    "@actions/artifact": "^2.2.2",
     "@astrojs/check": "^0.9.4",
     "astro": "^5.9.3",
     "typescript": "^5.8.3"
