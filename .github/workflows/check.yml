@@ -21,20 +21,6 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Generate Phase 2 Batch 2 canonical files
-        run: GITHUB_HEAD_REF= node scripts/apply-phase2-batch2.mjs
-
-      - name: Upload generated canonical files
-        uses: actions/upload-artifact@v4
-        with:
-          name: phase2-batch2-generated
-          path: |
-            data/bridges.json
-            data/incidents.json
-            data/events.json
-            data/evidence.json
-          retention-days: 1
-
       - name: Type and Astro check
         run: npm run check
 
