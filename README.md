@@ -31,18 +31,18 @@ BIR is not:
 
 The static registry application, canonical data model, validation pipeline, list/detail pages, methodology pages, and initial seed dataset are implemented.
 
-Phase 2 record expansion is in progress. A first-ten quality-hardening pass has also been completed before the next record batch.
+Phase 2 record expansion is in progress.
 
 Current canonical counts:
 
 ```text
 Bridges     13
 Incidents   16
-Events      51
-Evidence    70
+Events      47
+Evidence    62
 ```
 
-The first Phase 2 batch added Meter Passport, Allbridge Core, and LI.FI. The quality-hardening pass added official aftermath evidence for Wormhole, Nomad, and Harmony and corrected Nomad to limited recovery-oriented operation.
+The first Phase 2 batch added Meter Passport, Allbridge Core, and LI.FI.
 
 See:
 
