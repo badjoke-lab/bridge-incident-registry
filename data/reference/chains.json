@@ -1,18 +1,66 @@
 {
-  "ethereum": {"display_name":"Ethereum","aliases":["ETH mainnet","Ethereum mainnet"]},
-  "bnb-chain": {"display_name":"BNB Chain","aliases":["BSC","Binance Smart Chain","BNB Smart Chain"]},
-  "bnb-beacon-chain": {"display_name":"BNB Beacon Chain","aliases":["Beacon Chain","BNB Chain Beacon Chain","BEP2 Chain"]},
-  "ronin": {"display_name":"Ronin","aliases":["Ronin Network"]},
-  "polygon": {"display_name":"Polygon","aliases":["Polygon PoS","Matic"]},
-  "avalanche": {"display_name":"Avalanche","aliases":["Avalanche C-Chain","Avalanche C Chain"]},
-  "arbitrum": {"display_name":"Arbitrum","aliases":["Arbitrum One"]},
-  "optimism": {"display_name":"Optimism","aliases":["OP Mainnet"]},
-  "fantom": {"display_name":"Fantom","aliases":["Fantom Opera"]},
-  "harmony": {"display_name":"Harmony","aliases":["Harmony One","Harmony ONE"]},
-  "solana": {"display_name":"Solana","aliases":[]},
-  "meter": {"display_name":"Meter","aliases":["Meter Network"]},
-  "orbit-chain": {"display_name":"Orbit Chain","aliases":["OrbitChain"]},
-  "bitcoin": {"display_name":"Bitcoin","aliases":["BTC"]},
-  "thorchain": {"display_name":"THORChain","aliases":[]},
-  "unknown": {"display_name":"Unknown","aliases":[]}
+  "ethereum": {
+    "display_name": "Ethereum",
+    "aliases": ["ETH mainnet", "Ethereum mainnet"]
+  },
+  "bnb-chain": {
+    "display_name": "BNB Chain",
+    "aliases": ["BSC", "Binance Smart Chain", "BNB Smart Chain"]
+  },
+  "bnb-beacon-chain": {
+    "display_name": "BNB Beacon Chain",
+    "aliases": ["Beacon Chain", "BNB Chain Beacon Chain", "BEP2 Chain"]
+  },
+  "ronin": {
+    "display_name": "Ronin",
+    "aliases": ["Ronin Network"]
+  },
+  "polygon": {
+    "display_name": "Polygon",
+    "aliases": ["Polygon PoS", "Matic"]
+  },
+  "avalanche": {
+    "display_name": "Avalanche",
+    "aliases": ["Avalanche C-Chain", "Avalanche C Chain"]
+  },
+  "arbitrum": {
+    "display_name": "Arbitrum",
+    "aliases": ["Arbitrum One"]
+  },
+  "optimism": {
+    "display_name": "Optimism",
+    "aliases": ["OP Mainnet"]
+  },
+  "fantom": {
+    "display_name": "Fantom",
+    "aliases": ["Fantom Opera"]
+  },
+  "harmony": {
+    "display_name": "Harmony",
+    "aliases": ["Harmony One", "Harmony ONE"]
+  },
+  "solana": {
+    "display_name": "Solana",
+    "aliases": []
+  },
+  "meter": {
+    "display_name": "Meter",
+    "aliases": ["Meter Network"]
+  },
+  "orbit-chain": {
+    "display_name": "Orbit Chain",
+    "aliases": ["OrbitChain"]
+  },
+  "bitcoin": {
+    "display_name": "Bitcoin",
+    "aliases": ["BTC"]
+  },
+  "thorchain": {
+    "display_name": "THORChain",
+    "aliases": []
+  },
+  "unknown": {
+    "display_name": "Unknown",
+    "aliases": []
+  }
 }
