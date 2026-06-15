@@ -10,7 +10,7 @@ This batch resolves the four non-blocking warnings remaining from the first-ten 
 - add Harmony official incident and continuing recovery evidence
 - change Harmony reimbursement status from `unknown` to `in_progress`
 
-## Expected result
+## Result
 
 ```text
 First-ten audit warnings  4 -> 0
