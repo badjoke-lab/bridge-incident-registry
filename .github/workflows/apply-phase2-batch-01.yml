@@ -5,25 +5,41 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout pull request
+      - name: Checkout head branch
         uses: actions/checkout@v4
+        with:
+          ref: phase2-meter-allbridge-lifi
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
+      - name: Detect generated records
+        id: generated
+        run: |
+          if jq -e '.[] | select(.id == "bir_bridge_000011")' data/bridges.json >/dev/null; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Generate canonical records
+        if: steps.generated.outputs.exists == 'false'
         run: node scripts/apply-phase2-batch-01.mjs
 
       - name: Install dependencies
         run: npm install
 
-      - name: Validate generated data
+      - name: Validate canonical data
         run: npm run validate:data
 
       - name: Type and Astro check
@@ -32,14 +48,11 @@ jobs:
       - name: Build static site
         run: npm run build
 
-      - name: Upload validated generated data
-        uses: actions/upload-artifact@v4
-        with:
-          name: phase2-batch-01-generated-data
-          path: |
-            data/bridges.json
-            data/incidents.json
-            data/events.json
-            data/evidence.json
-          if-no-files-found: error
-          retention-days: 3
+      - name: Commit generated records
+        if: steps.generated.outputs.exists == 'false'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/bridges.json data/incidents.json data/events.json data/evidence.json
+          git commit -m "data: add phase 2 batch 1 bridge records"
+          git push origin HEAD:phase2-meter-allbridge-lifi
