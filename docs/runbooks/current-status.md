@@ -6,26 +6,26 @@ Bridge Incident Registry is in Phase 2 record expansion.
 
 The static application foundation, canonical data model, validation pipeline, registry UI, methodology pages, and initial seed dataset are implemented.
 
-A first-ten quality-hardening pass was completed before Phase 2 Batch 2 to resolve the remaining audit warnings and correct aftermath states.
+Two reviewed record-expansion batches and an early first-ten quality-hardening pass are complete.
 
 ## Current milestone
 
-Phase 2 Batch 1 and the first-ten aftermath/source enrichment are complete.
+Phase 2 Batch 2 completed and merged through PR #40.
 
-Latest merge:
+Latest data merge:
 
 ```text
-PR #36
-a0266abab5c57edd7109d1b65302c024a0b1e3ea
+PR #40
+c361d88a356bd924f9eb4433de010d4143bbf45a
 ```
 
 ## Current canonical counts
 
 ```text
-Bridges     13
-Incidents   16
-Events      51
-Evidence    70
+Bridges     16
+Incidents   20
+Events      65
+Evidence    84
 ```
 
 ## Completed
@@ -63,7 +63,7 @@ The initial reviewed dataset includes major bridge and interoperability cases su
 - Nomad Bridge
 - Harmony Horizon Bridge
 - Poly Network
-- BNB Bridge
+- BSC Token Hub
 - Multichain
 - Orbit Bridge
 - QBridge
@@ -91,8 +91,6 @@ Reference additions:
 - BUSD
 - Meter Network
 
-The temporary deterministic batch generator and temporary workflow modifications were removed after the validated canonical files were committed.
-
 ### First-ten quality hardening
 
 The four remaining non-blocking audit warnings were resolved.
@@ -105,7 +103,40 @@ The four remaining non-blocking audit warnings were resolved.
 - increased events from 47 to 51
 - increased evidence from 62 to 70
 
-This was an early Phase 3-quality task brought forward before Phase 2 Batch 2. It does not replace the ongoing Phase 2 record-expansion track.
+This was an early Phase 3-quality task brought forward during Phase 2.
+
+### Phase 2 Batch 2
+
+Merged records:
+
+- ChainSwap
+- Celer cBridge
+- SOCKET Protocol / Bungee
+
+Added:
+
+```text
+Bridges     +3
+Incidents   +4
+Events      +14
+Evidence    +14
+```
+
+Incident patterns added:
+
+- repeated bridge-contract exploitation
+- DNS/frontend hijacking
+- approval exploit with partial fund recovery
+
+Key modeling decisions:
+
+- ChainSwap's two July 2021 incidents remain separate.
+- Celer's incident is classified as a frontend/DNS compromise rather than an underlying bridge-contract compromise.
+- Bungee remains product and alias context under the SOCKET canonical entity.
+- SOCKET's reported loss and recovered 1,032 ETH are stored separately.
+- unresolved compensation and distribution claims remain explicitly unresolved.
+
+All temporary generation tooling was removed before merge. The final canonical branch passed data validation, the first-ten audit, Astro/type checks, and the static build.
 
 ## Current architecture decision
 
@@ -155,7 +186,8 @@ Phase 0  Specification and foundation              complete
 Phase 1  Canonical model, UI, validation, seeds    complete
 Phase 2  Record expansion                          in progress
          Batch 1                                   complete
-         Batch 2                                   next
+         Batch 2                                   complete
+         Batch 3                                   next
 Phase 3  Coverage and quality strengthening        first slice complete early
 Phase 4  Machine-readable public layer             not started
 Phase 5  Monitoring and candidate collection       not started
@@ -163,14 +195,14 @@ Phase 5  Monitoring and candidate collection       not started
 
 ## Next planned work
 
-Phase 2 Batch 2:
+Phase 2 Batch 3:
 
 1. select a balanced candidate batch
-2. verify scope and duplicates against canonical data
+2. verify entity boundaries and duplicates
 3. collect primary and strong secondary evidence
 4. model bridge, incident, event, and evidence records
-5. open a draft PR
-6. validate, review, and merge
+5. validate through the standard CI path
+6. review and merge
 
 ## Reporting rule
 

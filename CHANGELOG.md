@@ -19,6 +19,8 @@ All notable project changes should be recorded here after merge.
 - Official Wormhole incident and restoration evidence
 - Nomad root-cause, recovery, and restricted-relaunch evidence
 - Harmony official incident and continuing-recovery evidence
+- Phase 2 Batch 2 records for ChainSwap, Celer cBridge, and SOCKET Protocol / Bungee
+- Four Batch 2 incident records covering repeated exploits, DNS/frontend hijacking, and approval-related exploitation
 
 ### Changed
 
@@ -27,12 +29,15 @@ All notable project changes should be recorded here after merge.
 - Nomad Bridge reclassified from `dead` to `limited` recovery-oriented operation
 - Harmony reimbursement status changed from `unknown` to `in_progress`
 - First-ten canonical audit warnings reduced from four to zero
+- Celer cBridge's 2022 incident classified as a frontend/DNS compromise rather than a bridge-contract compromise
+- Bungee modeled as product and alias context under the SOCKET canonical entity
+- Reported loss and recovered-fund amounts kept separate for SOCKET
 
 ### Data counts
 
 ```text
-Bridges     13
-Incidents   16
-Events      51
-Evidence    70
+Bridges     16
+Incidents   20
+Events      65
+Evidence    84
 ```

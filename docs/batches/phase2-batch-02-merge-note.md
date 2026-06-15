@@ -8,3 +8,5 @@ Incidents   20
 Events      65
 Evidence    84
 ```
+
+Public project documentation was synchronized in PR #41.
