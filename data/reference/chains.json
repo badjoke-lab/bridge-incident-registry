@@ -1,43 +1,71 @@
 {
   "ethereum": {
     "display_name": "Ethereum",
-    "aliases": ["ETH mainnet", "Ethereum mainnet"]
+    "aliases": [
+      "ETH mainnet",
+      "Ethereum mainnet"
+    ]
   },
   "bnb-chain": {
     "display_name": "BNB Chain",
-    "aliases": ["BSC", "Binance Smart Chain", "BNB Smart Chain"]
+    "aliases": [
+      "BSC",
+      "Binance Smart Chain",
+      "BNB Smart Chain"
+    ]
   },
   "bnb-beacon-chain": {
     "display_name": "BNB Beacon Chain",
-    "aliases": ["Beacon Chain", "BNB Chain Beacon Chain", "BEP2 Chain"]
+    "aliases": [
+      "Beacon Chain",
+      "BNB Chain Beacon Chain",
+      "BEP2 Chain"
+    ]
   },
   "ronin": {
     "display_name": "Ronin",
-    "aliases": ["Ronin Network"]
+    "aliases": [
+      "Ronin Network"
+    ]
   },
   "polygon": {
     "display_name": "Polygon",
-    "aliases": ["Polygon PoS", "Matic"]
+    "aliases": [
+      "Polygon PoS",
+      "Matic"
+    ]
   },
   "avalanche": {
     "display_name": "Avalanche",
-    "aliases": ["Avalanche C-Chain", "Avalanche C Chain"]
+    "aliases": [
+      "Avalanche C-Chain",
+      "Avalanche C Chain"
+    ]
   },
   "arbitrum": {
     "display_name": "Arbitrum",
-    "aliases": ["Arbitrum One"]
+    "aliases": [
+      "Arbitrum One"
+    ]
   },
   "optimism": {
     "display_name": "Optimism",
-    "aliases": ["OP Mainnet"]
+    "aliases": [
+      "OP Mainnet"
+    ]
   },
   "fantom": {
     "display_name": "Fantom",
-    "aliases": ["Fantom Opera"]
+    "aliases": [
+      "Fantom Opera"
+    ]
   },
   "harmony": {
     "display_name": "Harmony",
-    "aliases": ["Harmony One", "Harmony ONE"]
+    "aliases": [
+      "Harmony One",
+      "Harmony ONE"
+    ]
   },
   "solana": {
     "display_name": "Solana",
@@ -45,15 +73,21 @@
   },
   "meter": {
     "display_name": "Meter",
-    "aliases": ["Meter Network"]
+    "aliases": [
+      "Meter Network"
+    ]
   },
   "orbit-chain": {
     "display_name": "Orbit Chain",
-    "aliases": ["OrbitChain"]
+    "aliases": [
+      "OrbitChain"
+    ]
   },
   "bitcoin": {
     "display_name": "Bitcoin",
-    "aliases": ["BTC"]
+    "aliases": [
+      "BTC"
+    ]
   },
   "thorchain": {
     "display_name": "THORChain",
@@ -62,5 +96,17 @@
   "unknown": {
     "display_name": "Unknown",
     "aliases": []
+  },
+  "near": {
+    "display_name": "NEAR",
+    "aliases": [
+      "NEAR Protocol"
+    ]
+  },
+  "aurora": {
+    "display_name": "Aurora",
+    "aliases": [
+      "Aurora Network"
+    ]
   }
 }

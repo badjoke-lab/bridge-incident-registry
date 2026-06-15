@@ -6,26 +6,19 @@ Bridge Incident Registry is in Phase 2 record expansion.
 
 The static application foundation, canonical data model, validation pipeline, registry UI, methodology pages, and initial seed dataset are implemented.
 
-Two reviewed record-expansion batches and an early first-ten quality-hardening pass are complete.
+Three reviewed record-expansion batches and an early first-ten quality-hardening pass are complete.
 
 ## Current milestone
 
-Phase 2 Batch 2 completed and merged through PR #40.
-
-Latest data merge:
-
-```text
-PR #40
-c361d88a356bd924f9eb4433de010d4143bbf45a
-```
+Phase 2 Batch 3 is complete in PR #43.
 
 ## Current canonical counts
 
 ```text
-Bridges     16
-Incidents   20
-Events      65
-Evidence    84
+Bridges     19
+Incidents   25
+Events      86
+Evidence    107
 ```
 
 ## Completed
@@ -134,9 +127,51 @@ Key modeling decisions:
 - Celer's incident is classified as a frontend/DNS compromise rather than an underlying bridge-contract compromise.
 - Bungee remains product and alias context under the SOCKET canonical entity.
 - SOCKET's reported loss and recovered 1,032 ETH are stored separately.
-- unresolved compensation and distribution claims remain explicitly unresolved.
 
-All temporary generation tooling was removed before merge. The final canonical branch passed data validation, the first-ten audit, Astro/type checks, and the static build.
+### Phase 2 Batch 3
+
+Added records:
+
+- pNetwork / pTokens
+- Rainbow Bridge
+- Synapse Protocol
+
+Added:
+
+```text
+Bridges     +3
+Incidents   +5
+Events      +21
+Evidence    +23
+```
+
+Reference additions:
+
+- NEAR
+- Aurora
+- GALA
+- nUSD
+
+Incident patterns added:
+
+- wrapped-asset bridge collateral exploit
+- bridge token-contract ownership misconfiguration
+- fabricated light-client block attack attempts
+- metapool price-manipulation exploit with malicious transfer prevention
+
+Key modeling decisions:
+
+- pNetwork is the canonical entity and `pTokens` is retained as alias/product context.
+- pNetwork v2 is classified as `deprecated` because its official application states that it has reached end of life.
+- the 277 BTC pBTC-on-BSC loss remains denominated in BTC rather than converted using a later fiat price.
+- the pGALA incident records no bridge-collateral loss; the 12,977 BNB whitehat recovery remains separate from exploit loss.
+- Rainbow Bridge's May and August 2022 attempts remain separate incidents.
+- Rainbow attacker bond losses are not user or bridge losses.
+- privately reported Rainbow vulnerabilities are modeled as security events, not exploited incidents.
+- Synapse's approximately $8.2 million nUSD amount is protected exposure rather than realized loss.
+- Synapse and the separately operated Nerve Bridge remain distinct entity boundaries.
+
+All temporary generation tooling was removed before final review. The canonical branch passed data validation, the first-ten audit, Astro/type checks, and the static build.
 
 ## Current architecture decision
 
@@ -165,20 +200,6 @@ on-chain parser
 paid APIs
 ```
 
-## Current visual decision
-
-The site uses a Deep Navy Archive palette:
-
-```text
-Deep navy background
-Muted brass accent
-Archival blue links
-Subdued status colors
-No pure-black default identity
-No neon crypto styling
-Notice blocks use navy/info styling, not warning styling
-```
-
 ## Current phase
 
 ```text
@@ -187,17 +208,22 @@ Phase 1  Canonical model, UI, validation, seeds    complete
 Phase 2  Record expansion                          in progress
          Batch 1                                   complete
          Batch 2                                   complete
-         Batch 3                                   next
+         Batch 3                                   complete
+         Batch 4                                   next
+         Batch 5                                   planned
+         Batch 6                                   planned
+         Batch 7                                   planned
 Phase 3  Coverage and quality strengthening        first slice complete early
 Phase 4  Machine-readable public layer             not started
 Phase 5  Monitoring and candidate collection       not started
+Release  v1 hardening                              not started
 ```
 
 ## Next planned work
 
-Phase 2 Batch 3:
+Phase 2 Batch 4:
 
-1. select a balanced candidate batch
+1. select a cross-chain messaging / interoperability-focused batch
 2. verify entity boundaries and duplicates
 3. collect primary and strong secondary evidence
 4. model bridge, incident, event, and evidence records

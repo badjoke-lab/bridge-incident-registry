@@ -21,6 +21,9 @@ All notable project changes should be recorded here after merge.
 - Harmony official incident and continuing-recovery evidence
 - Phase 2 Batch 2 records for ChainSwap, Celer cBridge, and SOCKET Protocol / Bungee
 - Four Batch 2 incident records covering repeated exploits, DNS/frontend hijacking, and approval-related exploitation
+- Phase 2 Batch 3 records for pNetwork, Rainbow Bridge, and Synapse Protocol
+- Five Batch 3 incident records covering wrapped-asset collateral theft, contract-control misconfiguration, fabricated light-client blocks, and metapool manipulation
+- NEAR, Aurora, GALA, and nUSD reference definitions
 
 ### Changed
 
@@ -32,12 +35,16 @@ All notable project changes should be recorded here after merge.
 - Celer cBridge's 2022 incident classified as a frontend/DNS compromise rather than a bridge-contract compromise
 - Bungee modeled as product and alias context under the SOCKET canonical entity
 - Reported loss and recovered-fund amounts kept separate for SOCKET
+- pNetwork v2 classified as `deprecated` from its official end-of-life notice
+- pGALA whitehat-recovered BNB separated from bridge collateral loss
+- Rainbow Bridge attacker bond losses separated from bridge and user losses
+- Synapse's approximately $8.2 million nUSD protected exposure separated from realized loss
 
 ### Data counts
 
 ```text
-Bridges     16
-Incidents   20
-Events      65
-Evidence    84
+Bridges     19
+Incidents   25
+Events      86
+Evidence    107
 ```

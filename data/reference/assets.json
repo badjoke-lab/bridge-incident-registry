@@ -1,43 +1,65 @@
 {
   "eth": {
     "display_name": "ETH",
-    "aliases": ["Ether"]
+    "aliases": [
+      "Ether"
+    ]
   },
   "weth": {
     "display_name": "WETH",
-    "aliases": ["Wrapped Ether", "Wrapped ETH"]
+    "aliases": [
+      "Wrapped Ether",
+      "Wrapped ETH"
+    ]
   },
   "usdc": {
     "display_name": "USDC",
-    "aliases": ["USD Coin"]
+    "aliases": [
+      "USD Coin"
+    ]
   },
   "usdt": {
     "display_name": "USDT",
-    "aliases": ["Tether", "Tether USD"]
+    "aliases": [
+      "Tether",
+      "Tether USD"
+    ]
   },
   "busd": {
     "display_name": "BUSD",
-    "aliases": ["Binance USD"]
+    "aliases": [
+      "Binance USD"
+    ]
   },
   "dai": {
     "display_name": "DAI",
-    "aliases": ["Dai Stablecoin"]
+    "aliases": [
+      "Dai Stablecoin"
+    ]
   },
   "btc": {
     "display_name": "BTC",
-    "aliases": ["Bitcoin"]
+    "aliases": [
+      "Bitcoin"
+    ]
   },
   "wbtc": {
     "display_name": "WBTC",
-    "aliases": ["Wrapped Bitcoin"]
+    "aliases": [
+      "Wrapped Bitcoin"
+    ]
   },
   "bnb": {
     "display_name": "BNB",
-    "aliases": ["Binance Coin"]
+    "aliases": [
+      "Binance Coin"
+    ]
   },
   "matic": {
     "display_name": "MATIC",
-    "aliases": ["Polygon token"]
+    "aliases": [
+      "Polygon token"
+    ]
   },
   "avax": {
     "display_name": "AVAX",
@@ -45,7 +67,9 @@
   },
   "one": {
     "display_name": "ONE",
-    "aliases": ["Harmony ONE"]
+    "aliases": [
+      "Harmony ONE"
+    ]
   },
   "sol": {
     "display_name": "SOL",
@@ -54,5 +78,17 @@
   "unknown": {
     "display_name": "Unknown",
     "aliases": []
+  },
+  "gala": {
+    "display_name": "GALA",
+    "aliases": [
+      "Gala"
+    ]
+  },
+  "nusd": {
+    "display_name": "nUSD",
+    "aliases": [
+      "Synapse nUSD"
+    ]
   }
 }
