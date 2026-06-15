@@ -15,11 +15,22 @@ This batch adds three active bridge/interoperability entities and four historica
 - LI.FI — March 2022 approval-drain exploit
 - LI.FI — July 2024 facet/approval exploit
 
+## Added records
+
+```text
+Bridges     +3
+Incidents   +4
+Events      +13
+Evidence    +15
+```
+
 ## Target counts after merge
 
 ```text
-Bridges    13
-Incidents  16
+Bridges     13
+Incidents   16
+Events      47
+Evidence    62
 ```
 
 ## Modeling rules
