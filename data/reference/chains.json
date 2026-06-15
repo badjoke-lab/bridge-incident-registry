@@ -43,6 +43,10 @@
     "display_name": "Solana",
     "aliases": []
   },
+  "meter": {
+    "display_name": "Meter",
+    "aliases": ["Meter Network"]
+  },
   "orbit-chain": {
     "display_name": "Orbit Chain",
     "aliases": ["OrbitChain"]
