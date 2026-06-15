@@ -6,14 +6,17 @@ Bridge Incident Registry is in Phase 2 record expansion.
 
 The static application foundation, canonical data model, validation pipeline, registry UI, methodology pages, and initial seed dataset are implemented.
 
+A first-ten quality-hardening pass was completed before Phase 2 Batch 2 to resolve the remaining audit warnings and correct aftermath states.
+
 ## Current milestone
 
-Phase 2 Batch 1 completed and merged through PR #34.
+Phase 2 Batch 1 and the first-ten aftermath/source enrichment are complete.
 
-Merge commit:
+Latest merge:
 
 ```text
-fa92fa3b0bbb8885a95e8c29f69c07e339baae53
+PR #36
+a0266abab5c57edd7109d1b65302c024a0b1e3ea
 ```
 
 ## Current canonical counts
@@ -21,8 +24,8 @@ fa92fa3b0bbb8885a95e8c29f69c07e339baae53
 ```text
 Bridges     13
 Incidents   16
-Events      47
-Evidence    62
+Events      51
+Evidence    70
 ```
 
 ## Completed
@@ -90,6 +93,20 @@ Reference additions:
 
 The temporary deterministic batch generator and temporary workflow modifications were removed after the validated canonical files were committed.
 
+### First-ten quality hardening
+
+The four remaining non-blocking audit warnings were resolved.
+
+- added official Wormhole incident and restoration evidence
+- added Nomad root-cause, recovery, and restricted-relaunch evidence
+- corrected Nomad from `dead` to `limited`
+- added Harmony official incident and continuing-recovery evidence
+- changed Harmony reimbursement status from `unknown` to `in_progress`
+- increased events from 47 to 51
+- increased evidence from 62 to 70
+
+This was an early Phase 3-quality task brought forward before Phase 2 Batch 2. It does not replace the ongoing Phase 2 record-expansion track.
+
 ## Current architecture decision
 
 BIR remains static-first:
@@ -139,7 +156,7 @@ Phase 1  Canonical model, UI, validation, seeds    complete
 Phase 2  Record expansion                          in progress
          Batch 1                                   complete
          Batch 2                                   next
-Phase 3  Coverage and quality strengthening        not started
+Phase 3  Coverage and quality strengthening        first slice complete early
 Phase 4  Machine-readable public layer             not started
 Phase 5  Monitoring and candidate collection       not started
 ```
