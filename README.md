@@ -29,16 +29,30 @@ BIR is not:
 
 ## Current status
 
-The project is in the pre-implementation documentation phase.
+The static registry application, canonical data model, validation pipeline, list/detail pages, methodology pages, and initial seed dataset are implemented.
+
+Phase 2 record expansion is in progress.
+
+Current canonical counts:
+
+```text
+Bridges     13
+Incidents   16
+Events      47
+Evidence    62
+```
+
+The first Phase 2 batch added Meter Passport, Allbridge Core, and LI.FI.
 
 See:
 
 - `SPEC.md` for the v0.3 project specification
 - `DESIGN.md` for the visual and UI direction
-- `LICENSE-NOTE.md` for the current licensing and attribution position
+- `LICENSE-NOTE.md` for the licensing and attribution position
 - `docs/runbooks/current-status.md` for the current project state
+- `docs/batches/` for reviewed batch scopes
 
-## Initial architecture target
+## Architecture
 
 ```text
 Astro
@@ -49,4 +63,4 @@ GitHub pull-request workflow
 client-side search and filters
 ```
 
-No database, authentication, wallet connection, paid API, or server runtime is required for v0.
+The canonical data files are validated in CI before merge. No database, authentication, wallet connection, paid API, or server runtime is required for the current version.
