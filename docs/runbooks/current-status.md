@@ -6,19 +6,19 @@ Bridge Incident Registry is in Phase 2 record expansion.
 
 The static application foundation, canonical data model, validation pipeline, registry UI, methodology pages, and initial seed dataset are implemented.
 
-Three reviewed record-expansion batches and an early first-ten quality-hardening pass are complete.
+Four reviewed record-expansion batches and an early first-ten quality-hardening pass are complete.
 
 ## Current milestone
 
-Phase 2 Batch 3 is complete in PR #43.
+Phase 2 Batch 4 is complete in PR #45.
 
 ## Current canonical counts
 
 ```text
-Bridges     19
-Incidents   25
-Events      86
-Evidence    107
+Bridges     22
+Incidents   27
+Events      103
+Evidence    125
 ```
 
 ## Completed
@@ -115,12 +115,6 @@ Events      +14
 Evidence    +14
 ```
 
-Incident patterns added:
-
-- repeated bridge-contract exploitation
-- DNS/frontend hijacking
-- approval exploit with partial fund recovery
-
 Key modeling decisions:
 
 - ChainSwap's two July 2021 incidents remain separate.
@@ -130,7 +124,7 @@ Key modeling decisions:
 
 ### Phase 2 Batch 3
 
-Added records:
+Merged records:
 
 - pNetwork / pTokens
 - Rainbow Bridge
@@ -152,26 +146,69 @@ Reference additions:
 - GALA
 - nUSD
 
-Incident patterns added:
+Key modeling decisions:
 
-- wrapped-asset bridge collateral exploit
-- bridge token-contract ownership misconfiguration
-- fabricated light-client block attack attempts
-- metapool price-manipulation exploit with malicious transfer prevention
+- pNetwork is canonical and `pTokens` remains alias/product context.
+- pNetwork v2 is `deprecated` based on its official end-of-life notice.
+- the 277 BTC pBTC-on-BSC loss remains asset-denominated.
+- pGALA bridge collateral loss remains separate from the 12,977 BNB whitehat recovery.
+- Rainbow Bridge's May and August 2022 attempts remain separate incidents.
+- Rainbow attacker bond losses are not user or bridge losses.
+- privately reported Rainbow vulnerabilities are security events rather than exploited incidents.
+- Synapse's approximately $8.2 million nUSD amount is protected exposure rather than realized loss.
+- Synapse and the separately operated NerveNetwork entity remain distinct.
+
+### Phase 2 Batch 4
+
+Merged records:
+
+- NerveNetwork / Nerve Bridge
+- historical Holograph Protocol
+- Inter-Blockchain Communication Protocol / ibc-go
+
+Added:
+
+```text
+Bridges     +3
+Incidents   +2
+Events      +17
+Evidence    +18
+```
+
+Reference additions:
+
+- NerveNetwork
+- Mantle
+- Cosmos interchain
+- fUSDT
+- UST
+- HLG
+
+Incident and response patterns added:
+
+- successful metapool liquidity extraction
+- unauthorized omnichain token minting
+- protocol lock and account-freeze response
+- staged token-burn recovery plan
+- ecosystem-wide critical vulnerability disclosure
+- confidential validator and chain-team patch coordination
+- multi-release-line security remediation
 
 Key modeling decisions:
 
-- pNetwork is the canonical entity and `pTokens` is retained as alias/product context.
-- pNetwork v2 is classified as `deprecated` because its official application states that it has reached end of life.
-- the 277 BTC pBTC-on-BSC loss remains denominated in BTC rather than converted using a later fiat price.
-- the pGALA incident records no bridge-collateral loss; the 12,977 BNB whitehat recovery remains separate from exploit loss.
-- Rainbow Bridge's May and August 2022 attempts remain separate incidents.
-- Rainbow attacker bond losses are not user or bridge losses.
-- privately reported Rainbow vulnerabilities are modeled as security events, not exploited incidents.
-- Synapse's approximately $8.2 million nUSD amount is protected exposure rather than realized loss.
-- Synapse and the separately operated Nerve Bridge remain distinct entity boundaries.
+- `NerveNetwork` is canonical; `Nerve Bridge` remains application and alias context.
+- NerveNetwork remains distinct from Synapse Protocol despite related metapool code lineage and historical naming overlap.
+- the Nerve attacker amount remains approximately 900 BNB rather than an imposed fiat conversion.
+- no stable official Nerve postmortem or reimbursement statement was located, so the incident remains medium confidence and unresolved.
+- historical Holograph Protocol remains within scope because the compromised Operator contract was part of its omnichain token infrastructure.
+- Holograph is classified as `inactive`; the current same-domain creator-coin trading terminal is not asserted as a canonical successor.
+- one billion unauthorized HLG minted is not treated automatically as one billion HLG of realized loss.
+- minted, sold, frozen, recovered, and burned HLG quantities remain separate.
+- IBC is canonical; ibc-go remains implementation context under the protocol entity.
+- Dragonberry and Huckleberry are security-response events, not exploited-fund incident records.
+- official IBC sources report no known user-fund loss from those vulnerabilities.
 
-All temporary generation tooling was removed before final review. The canonical branch passed data validation, the first-ten audit, Astro/type checks, and the static build.
+All temporary generation and diagnostic tooling was removed before final review. The canonical branch passed data validation, the first-ten audit, Astro/type checks, and the static build.
 
 ## Current architecture decision
 
@@ -209,8 +246,8 @@ Phase 2  Record expansion                          in progress
          Batch 1                                   complete
          Batch 2                                   complete
          Batch 3                                   complete
-         Batch 4                                   next
-         Batch 5                                   planned
+         Batch 4                                   complete
+         Batch 5                                   next
          Batch 6                                   planned
          Batch 7                                   planned
 Phase 3  Coverage and quality strengthening        first slice complete early
@@ -221,10 +258,10 @@ Release  v1 hardening                              not started
 
 ## Next planned work
 
-Phase 2 Batch 4:
+Phase 2 Batch 5:
 
-1. select a cross-chain messaging / interoperability-focused batch
-2. verify entity boundaries and duplicates
+1. select dead, deprecated, migrated, or functionally replaced bridge infrastructure
+2. verify terminal-state and successor boundaries
 3. collect primary and strong secondary evidence
 4. model bridge, incident, event, and evidence records
 5. validate through the standard CI path

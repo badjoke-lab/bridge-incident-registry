@@ -108,5 +108,25 @@
     "aliases": [
       "Aurora Network"
     ]
+  },
+  "nerve-network": {
+    "display_name": "NerveNetwork",
+    "aliases": [
+      "Nerve",
+      "NERVE"
+    ]
+  },
+  "mantle": {
+    "display_name": "Mantle",
+    "aliases": [
+      "Mantle Network"
+    ]
+  },
+  "cosmos-interchain": {
+    "display_name": "Cosmos interchain",
+    "aliases": [
+      "IBC-connected Cosmos chains",
+      "Interchain"
+    ]
   }
 }
