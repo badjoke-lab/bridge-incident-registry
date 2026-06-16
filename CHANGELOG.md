@@ -24,6 +24,10 @@ All notable project changes should be recorded here after merge.
 - Phase 2 Batch 3 records for pNetwork, Rainbow Bridge, and Synapse Protocol
 - Five Batch 3 incident records covering wrapped-asset collateral theft, contract-control misconfiguration, fabricated light-client blocks, and metapool manipulation
 - NEAR, Aurora, GALA, and nUSD reference definitions
+- Phase 2 Batch 4 records for NerveNetwork, historical Holograph Protocol, and the Inter-Blockchain Communication Protocol
+- Two Batch 4 incident records covering metapool liquidity extraction and unauthorized omnichain token minting
+- IBC Dragonberry and Huckleberry security-response timelines as non-exploited event records
+- NerveNetwork, Mantle, Cosmos interchain, fUSDT, UST, and HLG reference definitions
 
 ### Changed
 
@@ -39,12 +43,17 @@ All notable project changes should be recorded here after merge.
 - pGALA whitehat-recovered BNB separated from bridge collateral loss
 - Rainbow Bridge attacker bond losses separated from bridge and user losses
 - Synapse's approximately $8.2 million nUSD protected exposure separated from realized loss
+- NerveNetwork made canonical with Nerve Bridge retained as application and alias context
+- Historical Holograph Protocol classified as `inactive` after its same-domain documentation changed to an unrelated product direction
+- Holograph unauthorized minted supply, sold supply, frozen supply, and burned supply kept as separate quantities
+- IBC made canonical with ibc-go retained as implementation context
+- Dragonberry and Huckleberry modeled as security-response events rather than exploited-fund incidents
 
 ### Data counts
 
 ```text
-Bridges     19
-Incidents   25
-Events      86
-Evidence    107
+Bridges     22
+Incidents   27
+Events      103
+Evidence    125
 ```
