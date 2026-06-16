@@ -90,5 +90,24 @@
     "aliases": [
       "Synapse nUSD"
     ]
+  },
+  "fusdt": {
+    "display_name": "fUSDT",
+    "aliases": [
+      "Nerve fUSDT"
+    ]
+  },
+  "ust": {
+    "display_name": "UST",
+    "aliases": [
+      "TerraUSD",
+      "USTC"
+    ]
+  },
+  "hlg": {
+    "display_name": "HLG",
+    "aliases": [
+      "Holograph Token"
+    ]
   }
 }
