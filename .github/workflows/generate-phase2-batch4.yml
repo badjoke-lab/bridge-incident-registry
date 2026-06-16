@@ -1,0 +1,54 @@
+name: Generate Phase 2 Batch 4
+
+on:
+  push:
+    branches:
+      - phase2-batch4-records
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: phase2-batch4-records
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Generate canonical records
+        run: node scripts/apply-phase2-batch4.mjs
+
+      - name: Validate canonical data
+        run: npm run validate:data
+
+      - name: Audit first ten seeds
+        run: npm run audit:first-ten
+
+      - name: Type and Astro check
+        run: npm run check
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Commit generated canonical files
+        run: |
+          if git diff --quiet -- data/bridges.json data/incidents.json data/events.json data/evidence.json data/reference/chains.json data/reference/assets.json; then
+            echo "No generated changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/bridges.json data/incidents.json data/events.json data/evidence.json data/reference/chains.json data/reference/assets.json
+          git commit -m "data: add Phase 2 Batch 4 interoperability incidents"
+          git push origin HEAD:phase2-batch4-records
