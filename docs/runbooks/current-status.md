@@ -1,17 +1,15 @@
 # Current Status — Bridge Incident Registry
 
 Status: active  
-Last reset: 2026-06-19
+Updated: 2026-06-19
 
 ## Project state
 
-Bridge Incident Registry is in Phase 2 record expansion, but canonical record growth is temporarily paused for a public-consistency remediation workstream.
+Bridge Incident Registry remains in Phase 2 record expansion, but canonical record growth is paused for the emergency public-consistency remediation.
 
-The static application foundation, canonical data model, validation pipeline, registry UI, methodology pages, and five reviewed expansion batches are complete.
+Five reviewed expansion batches and the Batch 6 scope are complete.
 
 ## Canonical source of truth
-
-Only the reviewed canonical datasets define the current public registry state:
 
 ```text
 data/bridges.json
@@ -22,7 +20,7 @@ data/reference/chains.json
 data/reference/assets.json
 ```
 
-HTML, public JSON, metadata, sitemap output, and documentation counts must derive from these files rather than being maintained independently.
+All human and machine-readable public output must derive from these files.
 
 ## Current canonical counts
 
@@ -33,20 +31,16 @@ Events      123
 Evidence    148
 ```
 
-These counts reflect the completion of Phase 2 Batch 5.
-
 ## Last completed record work
 
-### Phase 2 Batch 5
-
-Merged canonical records:
+Phase 2 Batch 5 added:
 
 - Ren Protocol / RenVM / RenBridge
 - Avalanche-Ethereum Bridge / AEB
 - Avalanche Bridge
 - ShuttleFlow
 
-Added:
+Batch 5 delta:
 
 ```text
 Bridges     +4
@@ -55,20 +49,9 @@ Events      +20
 Evidence    +23
 ```
 
-Key decisions:
-
-- Ren Protocol is canonical; RenVM and RenBridge remain context.
-- Ren 2.0 is not treated as a launched successor without public-mainnet evidence.
-- AEB and Avalanche Bridge are separate predecessor and successor entities.
-- Legacy AEB token upgrades do not make AEB active.
-- ShuttleFlow bridge operation ended before its residual claim interface closed.
-- Zero Gravity remains successor context without a canonical relationship ID.
-
 ## Last completed scope work
 
-### Phase 2 Batch 6 scope
-
-The reviewed candidates are:
+Phase 2 Batch 6 scope is complete for:
 
 ```text
 Transit Swap
@@ -77,79 +60,89 @@ Unizen
 Magpie Protocol
 ```
 
-The scope distinguishes routing-layer failures, approval exposure, operator-key compromise, frontend or DNS compromise, and underlying bridge failures.
+Canonical implementation remains paused.
 
-The scope is complete. Canonical implementation is paused.
-
-## Current workstream
+## Current remediation progress
 
 ```text
-Emergency public-consistency remediation
+PR 1  Current-state reset and plan freeze     complete — PR #50
+PR 2  Canonical-derived public output         complete when this file reaches main
+PR 3  Machine-readable public layer           next
+PR 4  Canonical metadata and discovery        blocked by PR 3
+PR 5  Legacy redirects                        blocked by PR 4
+PR 6  Post-build consistency CI               blocked by PR 5
+PR 7  Production verification                 blocked by PR 6
 ```
 
-The remediation is defined in:
+Detailed plan:
 
 ```text
 docs/runbooks/public-consistency-remediation.md
 ```
 
-Execution order:
+## PR 2 implementation
+
+PR 2 adds a canonical-derived internal generation layer.
+
+Configuration:
 
 ```text
-PR 1  Current-state reset and plan freeze
-PR 2  Canonical-derived public output pipeline
-PR 3  Machine-readable public layer
-PR 4  Canonical metadata and discovery
-PR 5  Legacy redirects
-PR 6  Post-build consistency CI
-PR 7  Production verification and audit closure
+config/public-data.json
 ```
 
-This file is part of PR 1. Once it is present on `main`, PR 1 is complete and PR 2 is next.
+Generator:
 
-## Why record growth is paused
+```text
+scripts/build-public-data.mjs
+scripts/lib/canonical-data.mjs
+scripts/lib/public-records.mjs
+```
 
-The audit found that the main HTML record counts already derive from canonical JSON, but the project did not yet provide a complete and enforced public contract for AI systems, search engines, and external tools.
+Staging output:
 
-Missing or incomplete controls included:
+```text
+.generated/public-data/
+```
 
-- machine-readable version and manifest endpoints
-- canonical public record JSON
-- `llms.txt` and `ai.txt`
-- canonical URL metadata
-- alternate discovery links
-- sitemap and robots policy
+The staging directory is ignored by Git and is not deployed from `public/`.
+
+The generator derives:
+
+- record counts
+- latest verification date
+- generated time
+- schema version
+- canonical origin
+- `canonical_only`
+- human-page links for generated records
+
+`npm run build` now invokes the generator through the npm `prebuild` hook.
+
+PR 3 will publish reviewed generated output as formal endpoints.
+
+## Remaining remediation work
+
+Still not public at this stage:
+
+- `/version.json`
+- `/data/manifest.json`
+- bridge, incident, event, and evidence JSON endpoints
+- `llms.txt`
+- `ai.txt`
+- canonical and alternate links
 - JSON-LD and Open Graph metadata
+- sitemap and robots policy
 - generated legacy redirects
-- post-build count and ID consistency checks
-- public-safety checks excluding internal or unverified data
-
-The audit also found stale current-state documentation. An older roadmap checkpoint still presented the pre-Batch-5 counts of 22 bridges, 27 incidents, 103 events, and 125 evidence records as current.
+- post-build consistency CI
+- production verification report
 
 ## Parked branch rule
-
-The existing branch:
 
 ```text
 phase2-batch6-records
 ```
 
-is parked. Do not add canonical records to it during remediation.
-
-After production verification completes, compare it with the latest main and either fast-forward it or replace it with a clean branch from latest main.
-
-## Current architecture
-
-```text
-Astro
-TypeScript
-static JSON
-Cloudflare Pages
-GitHub pull-request workflow
-client-side search and filters
-```
-
-The current version does not require a database, authentication, wallet connection, paid API, or server runtime.
+is parked. Do not add canonical records to it until PR 7 closes production verification.
 
 ## Current phase map
 
@@ -166,36 +159,25 @@ Phase 2  Record expansion                          paused for remediation
          Batch 6 scope                             complete
          Batch 6 canonical implementation          paused
          Batch 7                                   planned
-Emergency public consistency                       in progress
+Emergency public consistency                       in progress — PR 2 of 7
 Phase 3  Full-corpus quality strengthening         planned
 Phase 4  Machine-readable public layer             being completed early
 Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
 ```
 
-## Resume conditions for Batch 6
+## Batch 6 resume gate
 
-Batch 6 canonical implementation may resume only after:
+Batch 6 may resume only after:
 
-1. public version and manifest metadata are generated from canonical data
-2. public bridge, incident, event, and evidence JSON is generated from canonical data
-3. canonical URL, sitemap, robots, structured data, and discovery links are complete
-4. previous slugs and redirects are enforced
-5. CI compares canonical JSON, public JSON, HTML, metadata, and built output
-6. internal and unverified records are blocked from public output
-7. Cloudflare production HTML and JSON are directly verified
-8. the production audit report is merged
+1. machine-readable endpoints derive from canonical data
+2. canonical metadata, sitemap, robots, and discovery are complete
+3. legacy routes redirect correctly
+4. CI compares canonical JSON, public JSON, HTML, metadata, and `dist`
+5. non-canonical material is blocked from public output
+6. Cloudflare production HTML and JSON are directly verified
+7. the production audit report is merged
 
 ## Reporting rule
 
-After every merge, report:
-
-1. overall schedule
-2. current project position
-3. what changed
-4. canonical count changes, if any
-5. changed files
-6. PR number and merge commit
-7. CI result
-8. production verification result when applicable
-9. next PR
+After every merge, report the PR, merge commit, changed files, canonical count delta, CI result, production result when applicable, current roadmap position, and next PR.
