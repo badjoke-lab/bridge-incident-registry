@@ -23,13 +23,9 @@ jobs:
         with:
           node-version: 22
 
-      - name: Apply Batch 5 canonical data
+      - name: Generate Batch 5 records
         if: github.head_ref == 'phase2-batch5-records'
         run: python scripts/batch5_apply_data.py
-
-      - name: Apply Batch 5 documentation
-        if: github.head_ref == 'phase2-batch5-records'
-        run: python scripts/batch5_apply_docs.py
 
       - name: Install dependencies
         run: npm install
@@ -46,14 +42,14 @@ jobs:
       - name: Build static site
         run: npm run build
 
-      - name: Commit Batch 5 records
+      - name: Commit generated records
         if: github.head_ref == 'phase2-batch5-records' && github.actor != 'github-actions[bot]'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add README.md CHANGELOG.md data docs
+          git add data
           if git diff --cached --quiet; then
-            echo "No Batch 5 changes"
+            echo "No generated changes"
             exit 0
           fi
           git commit -m "data: add Phase 2 Batch 5 migration records"
