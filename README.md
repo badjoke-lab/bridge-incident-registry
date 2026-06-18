@@ -31,18 +31,18 @@ BIR is not:
 
 The static registry application, canonical data model, validation pipeline, list/detail pages, methodology pages, and initial seed dataset are implemented.
 
-Phase 2 record expansion is in progress. Four reviewed expansion batches and a first-ten quality-hardening pass are complete.
+Phase 2 record expansion is in progress. Five reviewed expansion batches and a first-ten quality-hardening pass are complete.
 
 Current canonical counts:
 
 ```text
-Bridges     22
+Bridges     26
 Incidents   27
-Events      103
-Evidence    125
+Events      123
+Evidence    148
 ```
 
-Phase 2 Batch 1 added Meter Passport, Allbridge Core, and LI.FI. Batch 2 added ChainSwap, Celer cBridge, and SOCKET Protocol / Bungee. Batch 3 added pNetwork, Rainbow Bridge, and Synapse Protocol. Batch 4 added NerveNetwork, historical Holograph Protocol, and the Inter-Blockchain Communication Protocol. The quality-hardening pass added official aftermath evidence for Wormhole, Nomad, and Harmony.
+Phase 2 Batch 1 added Meter Passport, Allbridge Core, and LI.FI. Batch 2 added ChainSwap, Celer cBridge, and SOCKET Protocol / Bungee. Batch 3 added pNetwork, Rainbow Bridge, and Synapse Protocol. Batch 4 added NerveNetwork, historical Holograph Protocol, and the Inter-Blockchain Communication Protocol. Batch 5 added Ren Protocol, Avalanche-Ethereum Bridge, Avalanche Bridge, and ShuttleFlow. The quality-hardening pass added official aftermath evidence for Wormhole, Nomad, and Harmony.
 
 See:
 
