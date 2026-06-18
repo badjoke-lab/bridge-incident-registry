@@ -1,15 +1,24 @@
 ---
+import SiteMeta from "../components/SiteMeta.astro";
 import "../styles/global.css";
 import "../styles/components.css";
 
 interface Props {
   title?: string;
   description?: string;
+  alternateDataPath?: string;
+  pageType?: "WebPage" | "CollectionPage" | "AboutPage";
+  dateModified?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
 const {
   title = "Bridge Incident Registry",
-  description = "A historical registry of cross-chain bridge incidents and their aftermath."
+  description = "A historical registry of cross-chain bridge incidents and their aftermath.",
+  alternateDataPath,
+  pageType,
+  dateModified,
+  jsonLd
 } = Astro.props;
 ---
 <!doctype html>
@@ -17,7 +26,14 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
+    <SiteMeta
+      title={title}
+      description={description}
+      alternateDataPath={alternateDataPath}
+      pageType={pageType}
+      dateModified={dateModified}
+      jsonLd={jsonLd}
+    />
     <title>{title}</title>
   </head>
   <body>
@@ -32,12 +48,19 @@ const {
         </nav>
       </div>
     </header>
-    <main>
-      <slot />
-    </main>
+    <main><slot /></main>
     <footer class="site-footer">
       <div class="footer-wrap">
-        BIR is an informational historical registry. It does not rank bridge safety or recommend using any bridge.
+        <p>BIR is an informational historical registry. It does not rank bridge safety or recommend using any bridge.</p>
+        <nav aria-label="Data discovery">
+          <a href="/version.json">Version</a>
+          <span aria-hidden="true"> · </span>
+          <a href="/data/manifest.json">Data manifest</a>
+          <span aria-hidden="true"> · </span>
+          <a href="/llms.txt">LLM guide</a>
+          <span aria-hidden="true"> · </span>
+          <a href="/ai.txt">AI guide</a>
+        </nav>
       </div>
     </footer>
   </body>
