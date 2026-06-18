@@ -20,47 +20,25 @@ Canonical JSON remains the only record source. Generated public files are build 
 PR 1  Current-state reset                    complete — PR #50
 PR 2  Canonical-derived public output        complete — PR #51
 PR 3  Machine-readable public layer          complete — PR #52
-PR 4  Canonical metadata and discovery       complete when merged
-PR 5  Legacy redirects                       next
-PR 6  Post-build consistency CI              blocked by PR 5
+PR 4  Canonical metadata and discovery       complete — PR #53
+PR 5  Legacy redirects                       complete when merged
+PR 6  Post-build consistency CI              next
 PR 7  Production verification                blocked by PR 6
 ```
 
-## Completed foundation
+## PR 5 result
 
-PRs 1–3 reset stale status documents, declared canonical inputs, added canonical-derived staging, and published version, manifest, bridge, incident, event, evidence, reference, and guidance endpoints.
+The build generates `public/_redirects` from canonical `previous_slugs` and `redirect_from` fields.
 
-## PR 4 result
+Trailing and non-trailing legacy routes redirect permanently to current canonical pages.
 
-Every HTML page gains production canonical metadata, machine-readable alternate links, Open Graph metadata, Twitter summary metadata, JSON-LD, and preview noindex policy.
+Generation and checking reject invalid slugs, canonical-route collisions, conflicting destinations, self-redirects, missing targets, loops, output drift, and legacy sitemap entries.
 
-The homepage and bridge/incident detail pages expose dataset JSON-LD derived from canonical records.
+## PR 6 — next
 
-The build generates and checks:
+Compare canonical JSON, public JSON, version, manifest, built HTML, JSON-LD, sitemap, robots, redirects, documentation counts, and `dist` output.
 
-```text
-/sitemap.xml
-/robots.txt
-/_headers
-```
-
-The sitemap includes every canonical bridge and incident page and excludes legacy slugs. Preview builds receive both HTML and response-header noindex directives.
-
-## PR 5 — next
-
-Generate Cloudflare redirects from `previous_slugs` and `redirect_from`.
-
-Completion gates:
-
-- one canonical target per source
-- no duplicate source
-- no loop
-- every target exists
-- no legacy URL in canonical discovery
-
-## PR 6
-
-Compare canonical JSON, public JSON, version, manifest, built HTML, JSON-LD, sitemap, robots, redirects, and `dist`. Intentional mismatches must fail.
+Add controlled failure fixtures for count, ID, metadata, route, sitemap, and publication-boundary mismatches.
 
 ## PR 7
 
