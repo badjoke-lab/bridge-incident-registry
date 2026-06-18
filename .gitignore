@@ -4,7 +4,7 @@ dist/
 .generated/
 public/data/
 public/version.json
-public/llms.txt
+public/*.txt
 .env
 .env.*
 .DS_Store
