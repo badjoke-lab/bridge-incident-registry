@@ -6,19 +6,19 @@ Bridge Incident Registry is in Phase 2 record expansion.
 
 The static application foundation, canonical data model, validation pipeline, registry UI, methodology pages, and initial seed dataset are implemented.
 
-Four reviewed record-expansion batches and an early first-ten quality-hardening pass are complete.
+Five reviewed record-expansion batches and an early first-ten quality-hardening pass are complete.
 
 ## Current milestone
 
-Phase 2 Batch 4 is complete in PR #45.
+Phase 2 Batch 5 canonical implementation is complete on the current branch.
 
 ## Current canonical counts
 
 ```text
-Bridges     22
+Bridges     26
 Incidents   27
-Events      103
-Evidence    125
+Events      123
+Evidence    148
 ```
 
 ## Completed
@@ -210,6 +210,41 @@ Key modeling decisions:
 
 All temporary generation and diagnostic tooling was removed before final review. The canonical branch passed data validation, the first-ten audit, Astro/type checks, and the static build.
 
+### Phase 2 Batch 5
+
+Added records:
+
+- Ren Protocol / RenVM / RenBridge
+- Avalanche-Ethereum Bridge / AEB
+- Avalanche Bridge
+- ShuttleFlow
+
+Added:
+
+```text
+Bridges     +4
+Incidents   +0
+Events      +20
+Evidence    +23
+```
+
+Reference additions:
+
+- Conflux Core Space
+- Conflux eSpace
+- renBTC
+- CFX
+
+Key decisions:
+
+- Ren Protocol is canonical; RenVM and RenBridge remain context.
+- Ren 2.0 is not treated as a launched successor without public mainnet evidence.
+- Ren 1.0 ending is an event-only timeline.
+- AEB and Avalanche Bridge are separate predecessor and successor entities.
+- legacy AEB token upgrades do not make AEB active.
+- ShuttleFlow bridge operations ended before its residual claim interface closed.
+- Zero Gravity remains successor context without a canonical relationship ID.
+
 ## Current architecture decision
 
 BIR remains static-first:
@@ -247,8 +282,8 @@ Phase 2  Record expansion                          in progress
          Batch 2                                   complete
          Batch 3                                   complete
          Batch 4                                   complete
-         Batch 5                                   next
-         Batch 6                                   planned
+         Batch 5                                   complete
+         Batch 6                                   next
          Batch 7                                   planned
 Phase 3  Coverage and quality strengthening        first slice complete early
 Phase 4  Machine-readable public layer             not started
@@ -258,14 +293,12 @@ Release  v1 hardening                              not started
 
 ## Next planned work
 
-Phase 2 Batch 5:
+Phase 2 Batch 6 scope:
 
-1. select dead, deprecated, migrated, or functionally replaced bridge infrastructure
-2. verify terminal-state and successor boundaries
-3. collect primary and strong secondary evidence
-4. model bridge, incident, event, and evidence records
-5. validate through the standard CI path
-6. review and merge
+1. select interface, router, approval, and aggregator candidates
+2. distinguish underlying bridge events from interface-path events
+3. fix entity and incident boundaries in a docs-only scope pull request
+4. define evidence and completion gates before canonical implementation
 
 ## Reporting rule
 
