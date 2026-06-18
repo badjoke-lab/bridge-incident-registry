@@ -3,7 +3,7 @@
 Status: active  
 Updated: 2026-06-19
 
-This file is the short restart point. GitHub state and canonical JSON remain authoritative. Embedded commit SHAs are historical checkpoints, not live branch pointers.
+GitHub state and canonical JSON are authoritative. Embedded commit SHAs below are completed merge checkpoints, not live branch pointers.
 
 ## Canonical counts
 
@@ -14,48 +14,47 @@ Events      123
 Evidence    148
 ```
 
-## Current workstream
+## Remediation progress
 
 ```text
-Emergency public-consistency remediation
+PR 1  Current-state reset                    complete — PR #50
+PR 2  Canonical-derived public output        complete — PR #51
+PR 3  Machine-readable public layer          complete when this file reaches main
+PR 4  Canonical metadata and discovery       next
+PR 5  Legacy redirects                       blocked by PR 4
+PR 6  Post-build consistency CI              blocked by PR 5
+PR 7  Production verification                blocked by PR 6
 ```
 
-Detailed plan:
+Completed merge checkpoints:
 
 ```text
-docs/runbooks/public-consistency-remediation.md
+PR #50  ed7d4871c82dcd6b089bb3ac6da5df538a83116c
+PR #51  f7e0ff462c07fc02f6fe620d7a125546a27a45e3
 ```
 
-## Progress
+## PR 3 result
+
+Each build generates and validates:
 
 ```text
-PR 1  Current-state reset and plan freeze     complete — PR #50
-PR 2  Canonical-derived public output         complete when this file reaches main
-PR 3  Machine-readable public layer           next
-PR 4  Canonical metadata and discovery        blocked by PR 3
-PR 5  Legacy redirects                        blocked by PR 4
-PR 6  Post-build consistency CI               blocked by PR 5
-PR 7  Production verification                 blocked by PR 6
+/version.json
+/data/manifest.json
+/data/bridges.json
+/data/incidents.json
+/data/events.json
+/data/evidence.json
+/data/reference/chains.json
+/data/reference/assets.json
+/llms.txt
+/ai.txt
 ```
 
-PR 1 merge checkpoint:
+Generated public files are derived from canonical JSON and are not committed as source data.
 
-```text
-PR:           #50
-Merge commit: ed7d4871c82dcd6b089bb3ac6da5df538a83116c
-```
+PR 4 remains responsible for HTML canonical links, alternate discovery, Open Graph metadata, JSON-LD, sitemap, robots, and preview indexing policy.
 
-## PR 2 output contract
-
-PR 2 establishes an internal generated layer at:
-
-```text
-.generated/public-data/
-```
-
-It derives counts, verification metadata, canonical origin, schema version, and page links from canonical JSON. The directory is ignored by Git and is not publicly deployed. PR 3 connects reviewed generated output to public endpoints.
-
-## Record-expansion state
+## Record expansion
 
 ```text
 Phase 2 Batch 5                 complete
@@ -64,27 +63,11 @@ Phase 2 Batch 6 implementation  paused
 Phase 2 Batch 7                 planned
 ```
 
-The branch `phase2-batch6-records` is parked. Do not add canonical data to it during remediation.
+`phase2-batch6-records` remains parked.
 
 ## Resume sequence
 
-1. read the live main head and open PRs from GitHub
-2. read this file
-3. read `development-roadmap.md`
-4. read `public-consistency-remediation.md`
-5. determine the first remediation PR not yet merged
-6. continue through a fresh branch and PR
-7. keep Batch 6 paused until production verification closes PR 7
-
-## Source-of-truth rule
-
-Current public state must derive from:
-
-```text
-data/bridges.json
-data/incidents.json
-data/events.json
-data/evidence.json
-```
-
-Do not infer the current state from an old commit SHA, an archived checkpoint, a preview deployment, or manually copied counts.
+1. read live main and open PRs from GitHub
+2. read this file and the remediation plan
+3. continue with the first incomplete remediation PR
+4. keep Batch 6 paused through PR 7
