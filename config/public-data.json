@@ -1,0 +1,17 @@
+{
+  "project_id": "bridge-incident-registry",
+  "site_name": "Bridge Incident Registry",
+  "registry_type": "bridge_incident_registry",
+  "schema_version": "1.0.0-draft",
+  "canonical_origin": "https://bridge-incident-registry.pages.dev",
+  "generated_output_dir": ".generated/public-data",
+  "canonical_only": true,
+  "source_files": {
+    "bridges": "data/bridges.json",
+    "incidents": "data/incidents.json",
+    "events": "data/events.json",
+    "evidence": "data/evidence.json",
+    "chains": "data/reference/chains.json",
+    "assets": "data/reference/assets.json"
+  }
+}
