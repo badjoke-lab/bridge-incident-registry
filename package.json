@@ -5,11 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "npm run public:build",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
     "validate:data": "node scripts/validate-data.mjs",
-    "audit:first-ten": "node scripts/audit-first-ten-seeds.mjs"
+    "audit:first-ten": "node scripts/audit-first-ten-seeds.mjs",
+    "public:build": "node scripts/build-public-data.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
