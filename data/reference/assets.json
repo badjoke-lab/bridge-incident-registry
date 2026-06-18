@@ -109,5 +109,17 @@
     "aliases": [
       "Holograph Token"
     ]
+  },
+  "renbtc": {
+    "display_name": "renBTC",
+    "aliases": [
+      "Ren Bitcoin"
+    ]
+  },
+  "cfx": {
+    "display_name": "CFX",
+    "aliases": [
+      "Conflux"
+    ]
   }
 }

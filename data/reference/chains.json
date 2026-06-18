@@ -128,5 +128,18 @@
       "IBC-connected Cosmos chains",
       "Interchain"
     ]
+  },
+  "conflux-core-space": {
+    "display_name": "Conflux Core Space",
+    "aliases": [
+      "Conflux Core",
+      "Conflux Network"
+    ]
+  },
+  "conflux-espace": {
+    "display_name": "Conflux eSpace",
+    "aliases": [
+      "Conflux eSpace EVM"
+    ]
   }
 }
