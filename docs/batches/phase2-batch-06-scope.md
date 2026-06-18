@@ -170,16 +170,227 @@ Review gates:
 
 ## Unizen
 
-Detailed entity and incident boundaries remain to be fixed in this scope document.
+Canonical name candidate:
+
+```text
+Unizen
+```
+
+Product and protocol context:
+
+```text
+Unizen Trade
+Unizen Trade Aggregator
+Unizen Interoperability Protocol
+UIP
+```
+
+Proposed classification:
+
+```text
+interoperability_protocol
+```
+
+Alternative classification subject to schema review:
+
+```text
+bridge_aggregator
+```
+
+The reviewed case is the March 2024 trade-aggregation incident involving approved user assets, followed by reimbursement announcements and additional security review.
+
+Boundary rules:
+
+- do not mark every liquidity source or interoperability provider as affected
+- distinguish the trade-aggregation contract from later UIP architecture
+- distinguish reimbursement announcement, payment start, and completion
+- do not treat all Unizen user balances as affected
+
+Required timeline:
+
+```text
+launch or Trade launch
+cross-chain aggregation development
+March 2024 incident
+approval warning
+reimbursement process
+post-incident audits
+UIP or current architecture verification
+current-state verification
+```
+
+Initial sources:
+
+- current Unizen website and product documentation
+- Unizen liquidity-distribution documentation
+- Unizen Interoperability Protocol documentation
+- Unizen security-audit index
+- June 2024 Beosin audit
+- Halborn incident analysis
+
+Review gates:
+
+- locate and archive original incident and reimbursement statements
+- determine canonical type
+- identify the affected contract version
+- verify reimbursement completion
+- determine whether UIP existed during the incident or is later architecture
 
 ## Magpie Protocol
 
-Detailed entity and incident boundaries remain to be fixed in this scope document.
+Canonical name candidate:
 
-## Core boundary rule
+```text
+Magpie Protocol
+```
 
-Each record must distinguish the affected project layer from integrated bridges, DEXs, wallets, and messaging systems. Integrated providers are not marked affected without direct evidence.
+Later brand context:
 
-## Completion gate
+```text
+fly
+Fly Trade
+```
 
-Canonical implementation begins only after entity names, incident counts, source requirements, current status, and recovery or reimbursement claims have been reviewed.
+Proposed classification:
+
+```text
+bridge_aggregator
+```
+
+Proposed current status:
+
+```text
+active or rebranded
+```
+
+The reviewed case is the April 23, 2024 MagpieRouterV2 incident, followed by a pause, remediation, full user reimbursement, review, and later operation.
+
+Boundary rules:
+
+- record the case under Magpie routing infrastructure
+- retain Wormhole and liquidity systems as dependencies
+- do not classify the event as a Wormhole or reserve compromise
+- separate stolen amount, attacker return, and protocol-funded reimbursement
+- do not set a rebrand or successor relationship until the `fly` boundary is verified
+
+Required timeline:
+
+```text
+public beta or launch
+cross-chain routing operation
+April 2024 incident
+pause and remediation
+full reimbursement
+review before reactivation
+current status or rebrand verification
+```
+
+Initial sources:
+
+- official Magpie Protocol postmortem dated April 26, 2024
+- official Magpie follow-up on remediation and reimbursement
+- Magpie protocol documentation
+- Magpie cross-chain architecture documentation
+
+Review gates:
+
+- determine canonical current name and status
+- verify launch and public-beta dates
+- verify when operation resumed
+- distinguish reimbursement from attacker recovery
+- archive the primary postmortem and current-state pages
+
+## Cross-batch comparison rules
+
+Existing BIR records provide comparison cases but are not new Batch 6 entities:
+
+```text
+Celer cBridge
+  frontend and DNS compromise
+
+SOCKET Protocol / Bungee
+  approval-related gateway incident
+
+LI.FI
+  router and approval-related incidents
+
+Multichain
+  router and cross-chain infrastructure context
+```
+
+An aggregator incident does not automatically create incidents for every integrated DEX, bridge, messaging layer, or wallet.
+
+## Candidates reviewed but not selected
+
+### Rango Exchange
+
+Rango is in scope as a bridge and DEX aggregator, but its current public site describes a zero-exploit history. It remains a future active-baseline candidate.
+
+### ParaSwap / Velora
+
+The Augustus V6 case is a strong comparison for router exposure, white-hat rescue, and reimbursement, but the reviewed event is primarily a multi-chain DEX-aggregation case rather than a clearly cross-chain bridge-routing case. It remains a methodology comparator.
+
+### XY Finance
+
+XY Finance is a bridge aggregator with its own bridge, but no public-quality incident matching Batch 6 was established during scope review.
+
+### Chainge Finance
+
+Chainge is a cross-chain liquidity aggregator and bridge-infrastructure provider, but no reviewed incident matching Batch 6 was established.
+
+## Duplicate and scope check
+
+Repository search found no existing canonical entity or reviewed batch record for:
+
+```text
+Transit Swap
+Transit Finance
+Rubic
+Unizen
+Magpie Protocol
+Fly Trade
+```
+
+Before implementation, direct canonical checks must cover:
+
+- names and aliases
+- historical and current domains
+- operator and product boundaries
+- token bridge and aggregator boundaries
+- later rebrands or successors
+- integrated protocols already represented in BIR
+
+## Reference additions
+
+Likely existing references include Ethereum, BNB Chain, Polygon, Avalanche, Arbitrum, Optimism, Fantom, USDC, USDT, ETH, BNB, and DAI.
+
+Project-token references should be added only when necessary to explain an incident amount or bridge lineage.
+
+## Quality rules
+
+- prefer official or archived incident notices
+- technical analysis may support root cause but not reimbursement completion
+- reported loss, realized loss, returned amount, recovered amount, rescued amount, and reimbursed amount remain separate
+- approved-fund exposure is not automatically realized loss
+- integrated providers are not marked affected without evidence
+- a protocol pause is not a shutdown
+- a relaunch announcement is not proof of current operation
+- current status must be verified independently
+- no exploit-reproduction instructions are included
+
+## Completion conditions
+
+Batch 6 implementation is complete only when:
+
+1. all four entity boundaries are resolved
+2. Rubic's two incident classes remain separate
+3. Transit Swap loss and recovery claims are reconciled
+4. Unizen reimbursement status is supported beyond announcement-level reporting
+5. Magpie reimbursement and current status are verified
+6. all incidents distinguish router, approval, key, frontend, and bridge layers
+7. direct canonical duplicate checks pass
+8. canonical validation passes
+9. first-ten audit remains clean
+10. Astro and TypeScript checks pass
+11. the static site builds successfully
+12. temporary generation or write-enabled workflow files are removed before merge
