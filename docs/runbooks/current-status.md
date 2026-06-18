@@ -20,61 +20,44 @@ Canonical record expansion is paused during public-consistency remediation.
 PR 1  Current-state reset                    complete — PR #50
 PR 2  Canonical-derived public output        complete — PR #51
 PR 3  Machine-readable public layer          complete — PR #52
-PR 4  Canonical metadata and discovery       complete when merged
-PR 5  Legacy redirects                       next
-PR 6  Post-build consistency CI              blocked by PR 5
+PR 4  Canonical metadata and discovery       complete — PR #53
+PR 5  Legacy redirects                       complete when merged
+PR 6  Post-build consistency CI              next
 PR 7  Production verification                blocked by PR 6
 ```
 
-## Public data
+## Public representations now covered
 
-The build publishes and validates:
+The build derives and validates:
 
-```text
-/version.json
-/data/manifest.json
-/data/bridges.json
-/data/incidents.json
-/data/events.json
-/data/evidence.json
-/data/reference/chains.json
-/data/reference/assets.json
-/llms.txt
-/ai.txt
-```
+- human-facing HTML
+- version and manifest metadata
+- bridge, incident, event, evidence, chain, and asset JSON
+- `llms.txt` and `ai.txt`
+- canonical and alternate metadata
+- Open Graph, Twitter, and JSON-LD metadata
+- sitemap and robots policy
+- Cloudflare response headers
+- legacy route redirects
 
-Generated files derive from canonical JSON and are not independently maintained source data.
+## Legacy redirects
 
-## Canonical metadata and discovery
+`public/_redirects` is generated from canonical `previous_slugs` and `redirect_from` arrays.
 
-PR 4 adds the following to every HTML page:
-
-- production canonical URL
-- meta description
-- index or preview noindex policy
-- manifest, version, and guidance alternate links
-- optional page-specific JSON alternate link
-- Open Graph metadata
-- Twitter summary metadata
-- JSON-LD page metadata
-
-The homepage and bridge/incident detail pages also include dataset-oriented JSON-LD derived from canonical records.
-
-Build output now generates:
+For each accepted legacy slug, both forms redirect permanently:
 
 ```text
-/sitemap.xml
-/robots.txt
-/_headers
+/bridge/old-slug
+/bridge/old-slug/
 ```
 
-The sitemap includes static pages and every canonical bridge and incident page. Record `last_verified_at` values supply detail-page `lastmod` values. Legacy slugs are excluded.
+The same applies to incident routes.
 
-Preview builds receive both HTML `noindex, nofollow` metadata and a Cloudflare `X-Robots-Tag` response header.
+The generator and checker reject invalid slugs, canonical-route collisions, conflicting destinations, self-redirects, missing canonical targets, loops, output drift, and legacy sitemap entries.
 
 ## Next
 
-PR 5 generates actual redirects from canonical `previous_slugs` and `redirect_from` fields, rejects loops and collisions, and verifies every target.
+PR 6 adds post-build checks that inspect actual `dist` HTML and generated output, compare all counts and IDs, parse JSON-LD, verify documentation count blocks, and run intentional failure fixtures.
 
 ## Record-expansion hold
 
