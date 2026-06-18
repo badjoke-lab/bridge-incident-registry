@@ -31,6 +31,7 @@ All notable project changes should be recorded here after merge.
 - Phase 2 Batch 5 records for Ren Protocol, Avalanche-Ethereum Bridge, Avalanche Bridge, and ShuttleFlow
 - Twenty Batch 5 lifecycle and migration events
 - Conflux Core Space, Conflux eSpace, renBTC, and CFX reference definitions
+- Public-consistency remediation runbook covering canonical-derived output, machine-readable endpoints, metadata, redirects, CI, and production verification
 
 ### Changed
 
@@ -51,6 +52,9 @@ All notable project changes should be recorded here after merge.
 - Holograph unauthorized minted supply, sold supply, frozen supply, and burned supply kept as separate quantities
 - IBC made canonical with ibc-go retained as implementation context
 - Dragonberry and Huckleberry modeled as security-response events rather than exploited-fund incidents
+- Phase 2 Batch 6 canonical implementation paused until public HTML, machine-readable data, metadata, redirects, and CI share one canonical source
+- Project status and recovery documents reset so older 22 / 27 / 103 / 125 counts are no longer presented as current
+- Embedded commit SHAs reclassified as historical checkpoints rather than live branch pointers
 
 ### Data counts
 
