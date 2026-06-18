@@ -10,10 +10,7 @@ import { getAssetLabels, getChainLabels } from "../../lib/reference";
 import "../../styles/detail.css";
 
 export function getStaticPaths() {
-  return registryData.incidents.map((incident) => ({
-    params: { slug: incident.slug },
-    props: { incident }
-  }));
+  return registryData.incidents.map((incident) => ({ params: { slug: incident.slug }, props: { incident } }));
 }
 
 const { incident } = Astro.props;
@@ -24,6 +21,21 @@ const knownUnknowns = incident.known_unknowns ?? [];
 const chains = getChainLabels(incident.affected_chains);
 const assets = getAssetLabels(incident.affected_assets);
 const pageTitle = `${incident.title} - Bridge Incident Registry`;
+const site = Astro.site ?? new URL("https://bridge-incident-registry.pages.dev");
+const incidentJsonLd = {
+  "@type": "Dataset",
+  name: incident.title,
+  description: incident.summary,
+  identifier: incident.id,
+  url: new URL(`/incident/${incident.slug}/`, site).toString(),
+  dateModified: incident.last_verified_at,
+  about: bridge ? { "@type": "Thing", name: bridge.canonical_name, url: new URL(`/bridge/${bridge.slug}/`, site).toString() } : undefined,
+  distribution: {
+    "@type": "DataDownload",
+    encodingFormat: "application/json",
+    contentUrl: new URL("/data/incidents.json", site).toString()
+  }
+};
 
 const facts = [
   { label: "Incident title", value: incident.title },
@@ -44,27 +56,17 @@ const facts = [
   { label: "Last verified", value: incident.last_verified_at }
 ];
 ---
-<BaseLayout title={pageTitle} description={incident.summary}>
+<BaseLayout title={pageTitle} description={incident.summary} alternateDataPath="/data/incidents.json" dateModified={incident.last_verified_at} jsonLd={incidentJsonLd}>
   <section class="hero detail-hero">
     <div class="kicker">Incident case</div>
     <div class="detail-title-row">
-      <div>
-        <h1>{incident.title}</h1>
-        <p class="lede">{incident.summary}</p>
-      </div>
-      <div class="detail-chip-row" aria-label="Incident status chips">
-        <MaturityChip maturity={incident.record_maturity} />
-        <UpdateStatusChip status={incident.update_status} />
-      </div>
+      <div><h1>{incident.title}</h1><p class="lede">{incident.summary}</p></div>
+      <div class="detail-chip-row" aria-label="Incident status chips"><MaturityChip maturity={incident.record_maturity} /><UpdateStatusChip status={incident.update_status} /></div>
     </div>
   </section>
 
   <div class="detail-grid">
-    <main class="detail-panel">
-      <h2>Incident facts</h2>
-      <KeyValueList items={facts} />
-    </main>
-
+    <main class="detail-panel"><h2>Incident facts</h2><KeyValueList items={facts} /></main>
     <aside class="detail-panel">
       <h2>Linked records</h2>
       <KeyValueList items={[
@@ -80,41 +82,13 @@ const facts = [
   <section class="detail-two-column" aria-label="Incident timeline and evidence">
     <div class="detail-panel">
       <h2>Timeline events</h2>
-      {events.length > 0 ? (
-        <ul class="detail-list">
-          {events.map((event) => (
-            <li class="detail-card">
-              <p class="detail-card-title"><span>{event.title}</span><span>{formatDateWithPrecision(event.event_date, event.event_date_precision)}</span></p>
-              <p class="detail-muted">{event.description}</p>
-              <div class="detail-meta-line"><span>{formatLabel(event.event_type)}</span><span>{formatLabel(event.confidence)}</span></div>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <EmptyState title="No linked timeline events." message="Timeline events will appear here after event records are added." />
-      )}
+      {events.length > 0 ? <ul class="detail-list">{events.map((event) => <li class="detail-card"><p class="detail-card-title"><span>{event.title}</span><span>{formatDateWithPrecision(event.event_date, event.event_date_precision)}</span></p><p class="detail-muted">{event.description}</p><div class="detail-meta-line"><span>{formatLabel(event.event_type)}</span><span>{formatLabel(event.confidence)}</span></div></li>)}</ul> : <EmptyState title="No linked timeline events." message="Timeline events will appear here after event records are added." />}
     </div>
-
     <div class="detail-panel">
       <h2>Evidence records</h2>
-      {evidence.length > 0 ? (
-        <ul class="detail-link-list">
-          {evidence.map((source) => (
-            <li><a href={source.url}>{source.title}</a><div class="detail-muted">{source.publisher} · {formatLabel(source.source_tier)} · {formatDateWithPrecision(source.published_at, source.published_at_precision)}</div></li>
-          ))}
-        </ul>
-      ) : (
-        <EmptyState title="No linked evidence records." message="Evidence links will appear here after source records are added." />
-      )}
+      {evidence.length > 0 ? <ul class="detail-link-list">{evidence.map((source) => <li><a href={source.url}>{source.title}</a><div class="detail-muted">{source.publisher} · {formatLabel(source.source_tier)} · {formatDateWithPrecision(source.published_at, source.published_at_precision)}</div></li>)}</ul> : <EmptyState title="No linked evidence records." message="Evidence links will appear here after source records are added." />}
     </div>
   </section>
 
-  {knownUnknowns.length > 0 && (
-    <section class="detail-panel">
-      <h2>Known unknowns</h2>
-      <ul class="detail-list">
-        {knownUnknowns.map((item) => <li class="detail-muted">{item}</li>)}
-      </ul>
-    </section>
-  )}
+  {knownUnknowns.length > 0 && <section class="detail-panel"><h2>Known unknowns</h2><ul class="detail-list">{knownUnknowns.map((item) => <li class="detail-muted">{item}</li>)}</ul></section>}
 </BaseLayout>

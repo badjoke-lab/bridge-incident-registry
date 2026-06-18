@@ -5,6 +5,8 @@ dist/
 public/data/
 public/version.json
 public/*.txt
+public/sitemap.xml
+public/_headers
 .env
 .env.*
 .DS_Store

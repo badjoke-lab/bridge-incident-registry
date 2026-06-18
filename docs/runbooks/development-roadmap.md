@@ -29,133 +29,86 @@ Phase 2  Record expansion                          paused for remediation
          Batch 6 scope                             complete
          Batch 6 implementation                    paused
          Batch 7                                   planned
-Emergency public consistency                       in progress — PR 3 of 7
+Emergency public consistency                       in progress — PR 4 of 7
 Phase 3  Full-corpus quality strengthening         planned
 Phase 4  Public contract stabilization             being completed early
 Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
 ```
 
-## Emergency public-consistency sequence
-
-### PR 1 — Current-state reset
-
-Complete:
+## Emergency sequence
 
 ```text
-PR #50
-ed7d4871c82dcd6b089bb3ac6da5df538a83116c
+PR 1  Current-state reset                    complete — PR #50
+PR 2  Canonical-derived public output        complete — PR #51
+PR 3  Machine-readable public layer          complete — PR #52
+PR 4  Canonical metadata and discovery       complete when merged
+PR 5  Legacy redirects                       next
+PR 6  Post-build consistency CI              blocked by PR 5
+PR 7  Production verification                blocked by PR 6
 ```
 
-### PR 2 — Canonical-derived public output
-
-Complete:
+Completed merge checkpoints:
 
 ```text
-PR #51
-f7e0ff462c07fc02f6fe620d7a125546a27a45e3
+PR #50  ed7d4871c82dcd6b089bb3ac6da5df538a83116c
+PR #51  f7e0ff462c07fc02f6fe620d7a125546a27a45e3
+PR #52  6f3b8aad06edc7027fb362120aabe19fa46d52ee
 ```
 
-Result:
+## PR 4 result
 
-- one declared canonical input set
-- generated metadata and page URLs
-- isolated `.generated/public-data/` staging
-- prebuild integration
+- all HTML pages declare production canonical URLs
+- manifest, version, guidance, and page-specific JSON alternates are exposed
+- Open Graph and Twitter summary metadata are present
+- base page JSON-LD is present
+- homepage and bridge/incident detail pages expose dataset JSON-LD
+- sitemap, robots, and Cloudflare headers are generated from canonical data and build environment
+- preview builds receive HTML and response-header noindex directives
+- legacy slugs are excluded from the sitemap
 
-### PR 3 — Machine-readable public layer
+## PR 5 — next
 
-Complete when this roadmap version reaches main.
+Generate actual redirects from canonical slug-history fields.
 
-Result:
+Completion gates:
 
-```text
-/version.json
-/data/manifest.json
-/data/bridges.json
-/data/incidents.json
-/data/events.json
-/data/evidence.json
-/data/reference/chains.json
-/data/reference/assets.json
-/llms.txt
-/ai.txt
-```
+- every accepted legacy source maps to one canonical target
+- no duplicate redirect source
+- no loop
+- every target exists
+- legacy URLs remain absent from sitemap and canonical metadata
 
-The build checks public IDs, counts, origin, schema, verification marker, reference dictionaries, and canonical-only flags.
+## PR 6
 
-### PR 4 — Canonical metadata and discovery
+Add full post-build consistency checks across canonical JSON, public JSON, version, manifest, HTML, JSON-LD, sitemap, robots, redirects, and `dist`.
 
-Next.
+## PR 7
 
-Scope:
-
-- HTML canonical links
-- alternate JSON links
-- Open Graph and social metadata
-- conservative JSON-LD
-- sitemap
-- robots policy
-- preview noindex behavior
-- human-visible links to version, manifest, and public datasets
-
-### PR 5 — Legacy redirects
-
-Blocked by PR 4.
-
-Scope:
-
-- generate redirects from `previous_slugs` and `redirect_from`
-- reject duplicate sources, loops, and missing targets
-- exclude old routes from canonical discovery
-
-### PR 6 — Post-build consistency CI
-
-Blocked by PR 5.
-
-Scope:
-
-- compare canonical JSON, public JSON, manifest, version, HTML, sitemap, pages, and redirects
-- inspect `dist` for stale or non-canonical output
-- add intentional mismatch tests
-
-### PR 7 — Production verification
-
-Blocked by PR 6.
-
-Scope:
-
-- verify all production HTML and machine-readable endpoints
-- verify all bridge and incident pages
-- verify redirects and indexing files
-- compare normal and cache-bypassed responses
-- publish the final audit report
+Verify production HTML, JSON, metadata, routes, cache behavior, and redirects; then publish the final audit report.
 
 ## Phase 2 resume
 
 After PR 7:
 
-1. verify latest main and open PRs
-2. compare the parked Batch 6 branch with main
-3. recreate or fast-forward the branch
-4. re-read Batch 6 scope
-5. derive IDs and counts from canonical JSON
-6. implement Transit Swap, Rubic, Unizen, and Magpie Protocol
-7. run canonical and public-consistency checks
-8. verify production output after merge
+1. verify live main and open PRs
+2. compare or recreate the parked Batch 6 branch
+3. re-read Batch 6 scope
+4. derive IDs and counts from canonical JSON
+5. implement Transit Swap, Rubic, Unizen, and Magpie Protocol
+6. run canonical and public checks
+7. verify production after merge
 
 ## Remaining roadmap
 
-After Batch 6:
-
-1. define and implement Batch 7
+1. Phase 2 Batch 7
 2. full-corpus audit
 3. primary-source strengthening
-4. aftermath terminology normalization
+4. aftermath normalization
 5. URL and archive hardening
 6. validator strengthening
 7. public-contract compatibility review
-8. monitoring and candidate collection with no automatic publication
+8. monitoring with no automatic publication
 9. v1 documentation, accessibility, performance, and release checks
 
 ## Permanent rules
