@@ -31,7 +31,7 @@ BIR is not:
 
 The static registry application, canonical data model, validation pipeline, list/detail pages, methodology pages, and five reviewed expansion batches are implemented.
 
-Phase 2 Batch 6 scope is complete, but canonical record expansion is temporarily paused while the project completes an emergency public-consistency remediation.
+Phase 2 Batch 6 scope is complete, but canonical record expansion is paused while the project completes the public-consistency remediation.
 
 Current canonical counts:
 
@@ -51,18 +51,40 @@ data/events.json
 data/evidence.json
 ```
 
-The remediation will ensure that human-facing HTML, AI and search discovery, public JSON, metadata, sitemap output, redirects, and CI all derive from the same canonical input.
+## Machine-readable public layer
 
-See:
+Each build now generates:
 
-- `SPEC.md` for the v0.3 project specification
-- `DESIGN.md` for the visual and UI direction
-- `LICENSE-NOTE.md` for the licensing and attribution position
-- `docs/runbooks/current-status.md` for the current project state
-- `docs/runbooks/recovery-checkpoint.md` for the short restart point
-- `docs/runbooks/development-roadmap.md` for the roadmap to v1
-- `docs/runbooks/public-consistency-remediation.md` for the blocking seven-PR consistency plan
-- `docs/batches/` for reviewed batch scopes
+```text
+/version.json
+/data/manifest.json
+/data/bridges.json
+/data/incidents.json
+/data/events.json
+/data/evidence.json
+/data/reference/chains.json
+/data/reference/assets.json
+/llms.txt
+/ai.txt
+```
+
+The generated files derive from canonical JSON, include current record counts and generation metadata, and are checked before the Astro build completes.
+
+They are build products rather than independently maintained source files.
+
+See `docs/machine-readable-public-layer.md` for the current contract and limits.
+
+## Project documentation
+
+- `SPEC.md` — project specification
+- `DESIGN.md` — visual and UI direction
+- `LICENSE-NOTE.md` — licensing and attribution position
+- `docs/machine-readable-public-layer.md` — public data contract
+- `docs/runbooks/current-status.md` — current project state
+- `docs/runbooks/recovery-checkpoint.md` — short restart point
+- `docs/runbooks/development-roadmap.md` — roadmap to v1
+- `docs/runbooks/public-consistency-remediation.md` — blocking remediation plan
+- `docs/batches/` — reviewed batch scopes
 
 ## Architecture
 
@@ -75,7 +97,7 @@ GitHub pull-request workflow
 client-side search and filters
 ```
 
-Canonical data is validated in CI before merge. The current version requires no database, authentication, wallet connection, paid API, or server runtime.
+Canonical data and generated machine-readable output are validated during the build. The current version requires no database, authentication, wallet connection, paid API, or server runtime.
 
 ## Development hold
 
