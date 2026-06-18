@@ -50,6 +50,7 @@ See:
 - `DESIGN.md` for the visual and UI direction
 - `LICENSE-NOTE.md` for the licensing and attribution position
 - `docs/runbooks/current-status.md` for the current project state
+- `docs/runbooks/development-roadmap.md` for the verified recovery checkpoint and PR-by-PR roadmap to v1
 - `docs/batches/` for reviewed batch scopes
 
 ## Architecture
