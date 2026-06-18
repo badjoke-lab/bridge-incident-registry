@@ -23,11 +23,13 @@ jobs:
         with:
           node-version: 22
 
-      - name: Apply Batch 5 staged records
+      - name: Apply Batch 5 canonical data
         if: github.head_ref == 'phase2-batch5-records'
-        run: |
-          python scripts/batch5_apply_data.py
-          python scripts/batch5_apply_docs.py
+        run: python scripts/batch5_apply_data.py
+
+      - name: Apply Batch 5 documentation
+        if: github.head_ref == 'phase2-batch5-records'
+        run: python scripts/batch5_apply_docs.py
 
       - name: Install dependencies
         run: npm install
