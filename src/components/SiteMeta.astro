@@ -1,0 +1,64 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  alternateDataPath?: string;
+  pageType?: "WebPage" | "CollectionPage" | "AboutPage";
+  dateModified?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title,
+  description,
+  alternateDataPath,
+  pageType = "WebPage",
+  dateModified,
+  jsonLd
+} = Astro.props;
+
+const site = Astro.site ?? new URL("https://bridge-incident-registry.pages.dev");
+const canonicalUrl = new URL(Astro.url.pathname, site);
+const productionBranch = process.env.CF_PAGES_PRODUCTION_BRANCH ?? "main";
+const previewBuild = process.env.PUBLIC_NO_INDEX === "true" || Boolean(
+  process.env.CF_PAGES_BRANCH && process.env.CF_PAGES_BRANCH !== productionBranch
+);
+
+const baseJsonLd: Record<string, unknown> = {
+  "@context": "https://schema.org",
+  "@type": pageType,
+  name: title,
+  description,
+  url: canonicalUrl.toString(),
+  isPartOf: {
+    "@type": "WebSite",
+    name: "Bridge Incident Registry",
+    url: site.toString()
+  }
+};
+if (dateModified) baseJsonLd.dateModified = dateModified;
+
+const extras = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+const structuredData = [baseJsonLd, ...extras.map((entry) => ({ "@context": "https://schema.org", ...entry }))];
+const alternateDataUrl = alternateDataPath ? new URL(alternateDataPath, site) : null;
+---
+<meta name="description" content={description} />
+<meta name="robots" content={previewBuild ? "noindex, nofollow" : "index, follow"} />
+<meta name="googlebot" content={previewBuild ? "noindex, nofollow" : "index, follow"} />
+<link rel="canonical" href={canonicalUrl} />
+<link rel="alternate" type="application/json" href={new URL("/data/manifest.json", site)} title="Data manifest" />
+<link rel="alternate" type="application/json" href={new URL("/version.json", site)} title="Version metadata" />
+{alternateDataUrl && <link rel="alternate" type="application/json" href={alternateDataUrl} title="Canonical page dataset" />}
+<link rel="alternate" type="text/plain" href={new URL("/llms.txt", site)} title="Language model guidance" />
+<link rel="alternate" type="text/plain" href={new URL("/ai.txt", site)} title="AI data guide" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Bridge Incident Registry" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:locale" content="en_US" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+{dateModified && <meta property="article:modified_time" content={dateModified} />}
+{structuredData.map((entry) => <script type="application/ld+json" set:html={JSON.stringify(entry)} />)}
