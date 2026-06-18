@@ -3,13 +3,7 @@
 Status: active  
 Updated: 2026-06-19
 
-## Project state
-
-Canonical record expansion is paused while the public-consistency remediation is in progress.
-
-Five reviewed expansion batches and the Phase 2 Batch 6 scope are complete.
-
-## Canonical source and counts
+## Canonical state
 
 ```text
 data/bridges.json       26
@@ -18,25 +12,23 @@ data/events.json        123
 data/evidence.json      148
 ```
 
-These reviewed files remain the only source of public record content and counts.
+Canonical record expansion is paused during public-consistency remediation.
 
 ## Remediation progress
 
 ```text
 PR 1  Current-state reset                    complete — PR #50
 PR 2  Canonical-derived public output        complete — PR #51
-PR 3  Machine-readable public layer          complete when merged
-PR 4  Canonical metadata and discovery       next
-PR 5  Legacy redirects                       blocked by PR 4
+PR 3  Machine-readable public layer          complete — PR #52
+PR 4  Canonical metadata and discovery       complete when merged
+PR 5  Legacy redirects                       next
 PR 6  Post-build consistency CI              blocked by PR 5
 PR 7  Production verification                blocked by PR 6
 ```
 
-## Machine-readable public layer
+## Public data
 
-The build now stages canonical-derived records, publishes them under `public/`, checks counts and IDs, and then runs the Astro build.
-
-Published paths:
+The build publishes and validates:
 
 ```text
 /version.json
@@ -51,49 +43,39 @@ Published paths:
 /ai.txt
 ```
 
-The version and manifest include:
+Generated files derive from canonical JSON and are not independently maintained source data.
 
-- project and registry identifiers
-- schema version
-- generated time
-- latest verified date
-- canonical origin
-- verification marker
-- canonical-only marker
-- record counts
+## Canonical metadata and discovery
 
-The manifest also declares endpoint URLs, record types, human-page patterns, and the canonical-only safety boundary.
+PR 4 adds the following to every HTML page:
 
-Public bridge and incident records link to their human pages. Event and evidence records link to bridge and incident pages where applicable.
+- production canonical URL
+- meta description
+- index or preview noindex policy
+- manifest, version, and guidance alternate links
+- optional page-specific JSON alternate link
+- Open Graph metadata
+- Twitter summary metadata
+- JSON-LD page metadata
 
-Generated files are ignored by Git and recreated during each build.
+The homepage and bridge/incident detail pages also include dataset-oriented JSON-LD derived from canonical records.
 
-## Checks added in PR 3
+Build output now generates:
 
-`npm run public:check` verifies:
+```text
+/sitemap.xml
+/robots.txt
+/_headers
+```
 
-- version and manifest counts
-- schema, origin, verification marker, and canonical-only flags
-- public record ID order against canonical data
-- public bridge and incident page URLs
-- reference dictionaries
-- machine guidance files
+The sitemap includes static pages and every canonical bridge and incident page. Record `last_verified_at` values supply detail-page `lastmod` values. Legacy slugs are excluded.
 
-Full HTML, sitemap, redirect, and `dist` cross-checking remains PR 6 work.
+Preview builds receive both HTML `noindex, nofollow` metadata and a Cloudflare `X-Robots-Tag` response header.
 
 ## Next
 
-PR 4 adds:
-
-- canonical HTML links
-- alternate JSON discovery
-- Open Graph metadata
-- JSON-LD
-- sitemap
-- robots policy
-- preview noindex behavior
-- human-visible machine-data discovery
+PR 5 generates actual redirects from canonical `previous_slugs` and `redirect_from` fields, rejects loops and collisions, and verifies every target.
 
 ## Record-expansion hold
 
-`phase2-batch6-records` remains parked. Batch 6 implementation may resume only after PR 7 verifies production HTML and machine-readable output.
+Phase 2 Batch 6 implementation remains paused. The parked branch must not receive canonical writes until PR 7 completes production verification.
