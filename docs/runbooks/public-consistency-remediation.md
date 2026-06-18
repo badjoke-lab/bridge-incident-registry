@@ -1,14 +1,16 @@
 # Bridge Incident Registry — Public Consistency Remediation
 
 Status: active  
-Started: 2026-06-19  
-Priority: blocks further canonical record expansion
+Updated: 2026-06-19  
+Priority: blocks canonical record expansion
+
+Live progress is maintained in `recovery-checkpoint.md`. This document defines scope, dependencies, and completion gates.
 
 ## Purpose
 
-This workstream prevents Bridge Incident Registry from presenting different current states to human readers, AI systems, search engines, and external tools.
+Ensure that human-facing HTML, AI and search discovery, public JSON, metadata, routes, and external-tool output all resolve to the same reviewed canonical state.
 
-The canonical datasets remain the only source of truth:
+## Canonical source
 
 ```text
 data/bridges.json
@@ -19,7 +21,7 @@ data/reference/chains.json
 data/reference/assets.json
 ```
 
-At the start of this workstream, the canonical counts are:
+Remediation baseline:
 
 ```text
 Bridges     26
@@ -28,93 +30,73 @@ Events      123
 Evidence    148
 ```
 
-Phase 2 Batch 6 canonical implementation is paused until all remediation pull requests below are complete and production verification succeeds.
+## Rules
 
-## Why this work was inserted
-
-The human-facing HTML already derives its main counts and records from canonical JSON. However, the repository did not yet provide a complete machine-readable public layer, canonical URL metadata, sitemap, robots policy, legacy redirects, or post-build consistency checks.
-
-The audit also found stale project-state documents that could be mistaken for the current state. In particular, an older roadmap checkpoint still presented 22 bridges, 27 incidents, 103 events, and 125 evidence records as current.
-
-This remediation makes one build derive all public representations from the same canonical input and adds CI checks that reject stale or divergent output.
-
-## Non-negotiable rules
-
-1. Canonical JSON is the only source of truth for public record content and counts.
-2. HTML, public JSON, version metadata, manifest metadata, sitemap, structured data, and machine-readable guidance must derive from the same build.
-3. Record counts must not be manually maintained in multiple current-state documents.
-4. Public machine-readable files must contain reviewed canonical records only.
-5. Monitoring candidates, internal staging, private notes, temporary captures, and unverified drafts must never enter public JSON.
-6. Every public entity or incident record must link to its human-facing canonical page.
-7. Preview deployments must not compete with the production origin in search indexing.
-8. Old slugs must redirect to a current canonical page or be explicitly retired.
-9. No record-expansion PR may merge while this remediation workstream is incomplete.
+1. Canonical JSON is the only source of record content and counts.
+2. HTML, public JSON, manifest, version, sitemap, and metadata derive from one build.
+3. Current counts are not manually maintained in multiple places.
+4. Public data contains reviewed canonical records only.
+5. Working candidates and monitoring output remain separate.
+6. Public entity and incident records link to human canonical pages.
+7. Preview deployments do not compete with the production origin.
+8. Old slugs redirect or are explicitly retired.
+9. Batch 6 remains paused through production verification.
 
 ## Execution order
 
 ```text
-PR 1  Reset current-state documents and fix the remediation plan
-PR 2  Add canonical-derived public output pipeline
-PR 3  Add machine-readable public endpoints
-PR 4  Add canonical metadata, structured data, sitemap, robots, and discovery
-PR 5  Generate and validate legacy redirects
-PR 6  Enforce post-build public consistency in CI
-PR 7  Verify production deployment and close the audit
+PR 1  Current-state reset                         complete — PR #50
+PR 2  Canonical-derived public output pipeline    complete when merged
+PR 3  Machine-readable public layer               next
+PR 4  Canonical metadata and discovery            blocked by PR 3
+PR 5  Legacy redirects                            blocked by PR 4
+PR 6  Post-build consistency CI                   blocked by PR 5
+PR 7  Production verification                     blocked by PR 6
 ```
 
-The pull requests are sequential. Do not implement them in parallel because later stages depend on the generation contract established earlier.
+The PRs are sequential.
 
 ---
 
-# PR 1 — Current-state reset and plan freeze
+## PR 1 — Current-state reset
 
-Status: complete when this document is present on `main`
+Result:
 
-## Purpose
+- stale current-state claims removed
+- 26 / 27 / 123 / 148 recorded as baseline
+- Batch 6 implementation paused
+- roadmap and recovery documents reset
+- remediation sequence stored in the repository
 
-Remove stale current-state claims, pause Batch 6 implementation, and store the seven-PR remediation sequence in the repository.
-
-## Files
-
-```text
-README.md
-CHANGELOG.md
-docs/runbooks/current-status.md
-docs/runbooks/development-roadmap.md
-docs/runbooks/recovery-checkpoint.md
-docs/runbooks/public-consistency-remediation.md
-```
-
-## Completion gates
-
-- canonical counts are recorded as 26 / 27 / 123 / 148
-- the older 22 / 27 / 103 / 125 checkpoint is labeled historical or removed as a current claim
-- Batch 6 canonical work is explicitly paused
-- the parked `phase2-batch6-records` branch is not used for new writes
-- canonical data remains unchanged
-- standard CI passes
+Canonical data changes: none.
 
 ---
 
-# PR 2 — Canonical-derived public output pipeline
+## PR 2 — Canonical-derived public output pipeline
 
-Status: next after PR 1
+Purpose:
 
-## Purpose
+Create one internal transformation path from canonical JSON to generated output.
 
-Create one reusable data-loading and generation path for all public output.
-
-## Planned changes
+Files:
 
 ```text
+config/public-data.json
 scripts/build-public-data.mjs
 scripts/lib/canonical-data.mjs
 scripts/lib/public-records.mjs
-config/public-data.json
+docs/runbooks/canonical-public-output-pipeline.md
 package.json
+.gitignore
 ```
 
-## Required generated metadata
+Internal output:
+
+```text
+.generated/public-data/
+```
+
+Required metadata:
 
 ```text
 record_counts
@@ -125,26 +107,22 @@ canonical_origin
 canonical_only
 ```
 
-## Completion gates
+Completion gates:
 
-- all counts are calculated from canonical JSON
-- build timestamps follow a documented reproducible precedence
-- internal staging paths are excluded by construction
-- existing HTML remains derived from canonical data
-- 26 / 27 / 123 / 148 is calculated without hand-entered counts
-- canonical validation, Astro checks, and build pass
+- only declared canonical paths are read
+- counts are calculated from canonical arrays
+- transformed IDs and count remain unchanged
+- source canonical JSON is not modified
+- generated timestamps follow documented precedence
+- staging output is ignored by Git and not publicly deployed
+- `npm run build` invokes generation before Astro
+- canonical validation and static build pass
 
 ---
 
-# PR 3 — Machine-readable public layer
+## PR 3 — Machine-readable public layer
 
-Status: blocked by PR 2
-
-## Purpose
-
-Give AI systems, search engines, and external tools a declared canonical data entry point.
-
-## Planned endpoints
+Planned endpoints:
 
 ```text
 /version.json
@@ -159,7 +137,7 @@ Give AI systems, search engines, and external tools a declared canonical data en
 /ai.txt
 ```
 
-## Required properties
+Required properties:
 
 ```text
 generated_at
@@ -171,125 +149,81 @@ data_safety
 human_page_patterns
 ```
 
-Public records will receive build-derived page links such as `canonical_page_url`, without duplicating those URLs in the source canonical JSON.
+Completion gates:
 
-## Completion gates
-
-- public and canonical ID sets match
-- public and canonical counts match
-- all JSON parses successfully
-- each bridge and incident reaches a human canonical page
-- monitoring and staging data is absent
+- canonical and public ID sets match
+- canonical and public counts match
+- public JSON parses successfully
+- bridge and incident records link to human pages
+- working material is absent
 - `canonical_only` is true
 
 ---
 
-# PR 4 — Canonical metadata and discovery
+## PR 4 — Canonical metadata and discovery
 
-Status: blocked by PR 3
+Scope:
 
-## Purpose
-
-Declare which origin and pages are canonical and expose machine-readable discovery links.
-
-## Planned changes
-
-- canonical links on all HTML pages
-- alternate JSON discovery links
-- Open Graph and social metadata
-- conservative JSON-LD for the site, datasets, bridge pages, and incident pages
+- canonical links on HTML pages
+- alternate JSON discovery
+- Open Graph metadata
+- conservative JSON-LD
 - sitemap generation
 - robots policy
 - production-origin configuration
-- preview `noindex` behavior
-- footer or page discovery links for version, manifest, AI guidance, and public data
+- preview noindex behavior
+- data-discovery links
 
-## Completion gates
+Completion gates:
 
-- every canonical HTML page has a canonical URL
+- all canonical pages declare the production origin
 - preview output points to production canonical URLs
-- preview deployments are noindex
-- all bridge and incident pages are in the sitemap
-- legacy URLs are not in the canonical sitemap
+- all canonical bridge and incident pages are in the sitemap
+- old slugs are excluded from the sitemap
 - robots points to the sitemap
-- structured data derives dates and identifiers from canonical data
 
 ---
 
-# PR 5 — Legacy redirects
+## PR 5 — Legacy redirects
 
-Status: blocked by PR 4
+Purpose:
 
-## Purpose
+Generate real Cloudflare redirects from `previous_slugs` and `redirect_from`.
 
-Turn `previous_slugs` and `redirect_from` fields into real Cloudflare Pages redirects.
-
-## Planned output
+Output:
 
 ```text
 public/_redirects
 ```
 
-The file must be generated, not manually maintained.
+Completion gates:
 
-## Completion gates
-
-- every valid previous slug and redirect source is reviewed
 - redirect sources are unique
-- redirect loops are impossible
-- every redirect target exists
-- old URLs are excluded from the sitemap and public canonical URLs
-- retired endpoints are redirected, deleted, or explicitly documented as gone
+- loops are rejected
+- targets exist
+- old URLs are absent from canonical metadata and sitemap
+- obsolete endpoints are redirected, removed, or documented as gone
 
 ---
 
-# PR 6 — Post-build consistency CI
+## PR 6 — Post-build consistency CI
 
-Status: blocked by PR 5
-
-## Purpose
-
-Reject future changes that make HTML, JSON, metadata, documentation, or generated output disagree.
-
-## Planned checks
-
-```text
-scripts/check-public-consistency.mjs
-scripts/check-built-site.mjs
-scripts/check-stale-counts.mjs
-scripts/check-public-safety.mjs
-```
-
-## Required comparisons
+Required comparisons:
 
 - canonical counts versus public JSON
 - canonical counts versus version and manifest
-- canonical counts versus top-page and list-page HTML
+- canonical counts versus HTML
 - canonical IDs versus public IDs
-- canonical slugs versus generated detail pages
+- canonical slugs versus generated pages
 - canonical slugs versus sitemap URLs
-- required canonical and alternate links
+- canonical and alternate links
 - JSON-LD parseability
 - robots and sitemap linkage
 - redirect targets and loops
-- absence of internal, private, candidate, draft, and staging outputs
-- absence of stale generated files in `dist`
+- absence of non-canonical generated output
+- absence of stale files in `dist`
 
-## Failure tests
-
-CI must fail when a test branch intentionally:
-
-- changes a manifest count
-- removes one public record
-- hardcodes an old HTML count
-- removes a canonical link
-- publishes an internal candidate
-- removes a canonical detail page from the sitemap
-- creates a redirect loop
-
-## Completion gates
-
-The clean branch passes the complete standard path:
+The clean build must pass:
 
 ```text
 npm run check
@@ -301,17 +235,13 @@ npm run public:check
 npm run dist:check
 ```
 
+Intentional mismatch tests must fail.
+
 ---
 
-# PR 7 — Production verification and audit closure
+## PR 7 — Production verification
 
-Status: blocked by PR 6
-
-## Purpose
-
-Confirm that the Cloudflare production deployment, not only the repository build, exposes one consistent current state.
-
-## Required live checks
+Required live checks:
 
 ```text
 /
@@ -319,8 +249,8 @@ Confirm that the Cloudflare production deployment, not only the repository build
 /incidents/
 /methodology/
 /about/
-representative and complete bridge detail URLs
-representative and complete incident detail URLs
+all bridge detail pages
+all incident detail pages
 /version.json
 /data/manifest.json
 /data/bridges.json
@@ -331,60 +261,37 @@ representative and complete incident detail URLs
 /ai.txt
 /sitemap.xml
 /robots.txt
-legacy redirect URLs
-unknown URLs
+legacy redirects
+unknown routes
 ```
 
-## Audit report
-
-Create:
+Required report:
 
 ```text
 docs/audits/public-consistency-verification-2026-06.md
 ```
 
-The report must contain:
+The report records checked URLs, data sources, counts, stale-information sources, canonical source, machine-readable changes, CI checks, redirects, changed files, PRs, commits, CI results, production HTML results, production JSON results, and remaining limitations.
 
-- all checked URLs
-- the data source for each output class
-- before and after counts
-- stale-information sources found
-- canonical source of truth
-- machine-readable changes
-- CI additions
-- removed or redirected routes
-- changed files
-- PR numbers and merge commits
-- CI results
-- production HTML results
-- production JSON and manifest results
-- remaining limitations
+Completion gates:
 
-## Completion gates
-
-- production HTML and JSON report the same canonical counts
-- cache-bypassed and normal responses agree
-- production deploy references the expected main commit
-- all canonical pages return success
-- expected redirects return 301
+- production HTML and JSON agree
+- normal and cache-bypassed responses agree
+- canonical pages return success
+- redirects return the expected status
 - public JSON contains canonical records only
-- the recovery checkpoint advances to Batch 6 implementation
+- recovery checkpoint advances to Batch 6
 
 ---
 
-# Resume rule for record expansion
+## Record-expansion resume rule
 
-Phase 2 Batch 6 canonical implementation may resume only after PR 7 is merged and production verification is successful.
+After PR 7:
 
-At that point:
+1. compare `phase2-batch6-records` with latest main
+2. replace or fast-forward the parked branch
+3. re-read the Batch 6 scope
+4. derive IDs and counts from canonical JSON
+5. resume canonical implementation through a clean PR
 
-1. compare the parked `phase2-batch6-records` branch with the latest main
-2. discard or fast-forward the empty parked branch as appropriate
-3. create a clean implementation branch from latest main if necessary
-4. re-read the Batch 6 scope
-5. derive IDs and counts from canonical JSON
-6. continue through the normal data PR process
-
-## Post-remediation roadmap effect
-
-This work completes most of the previously planned Phase 4 machine-readable public layer early. The later Phase 4 stage becomes a contract-stability and cross-site alignment review rather than a second implementation of the same layer.
+This work completes most of the previously planned machine-readable Phase 4 early. The later Phase 4 becomes a contract-stability and cross-site alignment review.
