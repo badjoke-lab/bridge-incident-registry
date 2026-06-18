@@ -1,16 +1,28 @@
 # Current Status — Bridge Incident Registry
 
+Status: active  
+Last reset: 2026-06-19
+
 ## Project state
 
-Bridge Incident Registry is in Phase 2 record expansion.
+Bridge Incident Registry is in Phase 2 record expansion, but canonical record growth is temporarily paused for a public-consistency remediation workstream.
 
-The static application foundation, canonical data model, validation pipeline, registry UI, methodology pages, and initial seed dataset are implemented.
+The static application foundation, canonical data model, validation pipeline, registry UI, methodology pages, and five reviewed expansion batches are complete.
 
-Five reviewed record-expansion batches and an early first-ten quality-hardening pass are complete.
+## Canonical source of truth
 
-## Current milestone
+Only the reviewed canonical datasets define the current public registry state:
 
-Phase 2 Batch 5 canonical implementation is complete on the current branch.
+```text
+data/bridges.json
+data/incidents.json
+data/events.json
+data/evidence.json
+data/reference/chains.json
+data/reference/assets.json
+```
+
+HTML, public JSON, metadata, sitemap output, and documentation counts must derive from these files rather than being maintained independently.
 
 ## Current canonical counts
 
@@ -21,198 +33,13 @@ Events      123
 Evidence    148
 ```
 
-## Completed
+These counts reflect the completion of Phase 2 Batch 5.
 
-### Foundation and design
-
-- Repository initialized.
-- Project purpose fixed.
-- v0.3 specification added.
-- Deep Navy Archive visual direction implemented.
-- Licensing and attribution position documented.
-- Astro static site foundation implemented.
-- Shared layout and reusable UI components implemented.
-- Cloudflare Pages deployment configured.
-
-### Canonical registry implementation
-
-- Canonical bridge, incident, event, and evidence JSON files implemented.
-- Chain and asset reference dictionaries implemented.
-- TypeScript data loader implemented.
-- Canonical validation script implemented.
-- Duplicate and reference-integrity checks implemented.
-- Astro/type checks and static build integrated into CI.
-- Bridge and incident list pages implemented.
-- Bridge and incident detail pages implemented.
-- Methodology and About pages implemented.
-- Search and filtering foundation implemented.
-
-### Initial records and Phase 1 seed coverage
-
-The initial reviewed dataset includes major bridge and interoperability cases such as:
-
-- Ronin Bridge
-- Wormhole
-- Nomad Bridge
-- Harmony Horizon Bridge
-- Poly Network
-- BSC Token Hub
-- Multichain
-- Orbit Bridge
-- QBridge
-- THORChain
-
-### Phase 2 Batch 1
-
-Merged records:
-
-- Meter Passport
-- Allbridge Core
-- LI.FI
-
-Added:
-
-```text
-Bridges     +3
-Incidents   +4
-Events      +13
-Evidence    +15
-```
-
-Reference additions:
-
-- BUSD
-- Meter Network
-
-### First-ten quality hardening
-
-The four remaining non-blocking audit warnings were resolved.
-
-- added official Wormhole incident and restoration evidence
-- added Nomad root-cause, recovery, and restricted-relaunch evidence
-- corrected Nomad from `dead` to `limited`
-- added Harmony official incident and continuing-recovery evidence
-- changed Harmony reimbursement status from `unknown` to `in_progress`
-- increased events from 47 to 51
-- increased evidence from 62 to 70
-
-This was an early Phase 3-quality task brought forward during Phase 2.
-
-### Phase 2 Batch 2
-
-Merged records:
-
-- ChainSwap
-- Celer cBridge
-- SOCKET Protocol / Bungee
-
-Added:
-
-```text
-Bridges     +3
-Incidents   +4
-Events      +14
-Evidence    +14
-```
-
-Key modeling decisions:
-
-- ChainSwap's two July 2021 incidents remain separate.
-- Celer's incident is classified as a frontend/DNS compromise rather than an underlying bridge-contract compromise.
-- Bungee remains product and alias context under the SOCKET canonical entity.
-- SOCKET's reported loss and recovered 1,032 ETH are stored separately.
-
-### Phase 2 Batch 3
-
-Merged records:
-
-- pNetwork / pTokens
-- Rainbow Bridge
-- Synapse Protocol
-
-Added:
-
-```text
-Bridges     +3
-Incidents   +5
-Events      +21
-Evidence    +23
-```
-
-Reference additions:
-
-- NEAR
-- Aurora
-- GALA
-- nUSD
-
-Key modeling decisions:
-
-- pNetwork is canonical and `pTokens` remains alias/product context.
-- pNetwork v2 is `deprecated` based on its official end-of-life notice.
-- the 277 BTC pBTC-on-BSC loss remains asset-denominated.
-- pGALA bridge collateral loss remains separate from the 12,977 BNB whitehat recovery.
-- Rainbow Bridge's May and August 2022 attempts remain separate incidents.
-- Rainbow attacker bond losses are not user or bridge losses.
-- privately reported Rainbow vulnerabilities are security events rather than exploited incidents.
-- Synapse's approximately $8.2 million nUSD amount is protected exposure rather than realized loss.
-- Synapse and the separately operated NerveNetwork entity remain distinct.
-
-### Phase 2 Batch 4
-
-Merged records:
-
-- NerveNetwork / Nerve Bridge
-- historical Holograph Protocol
-- Inter-Blockchain Communication Protocol / ibc-go
-
-Added:
-
-```text
-Bridges     +3
-Incidents   +2
-Events      +17
-Evidence    +18
-```
-
-Reference additions:
-
-- NerveNetwork
-- Mantle
-- Cosmos interchain
-- fUSDT
-- UST
-- HLG
-
-Incident and response patterns added:
-
-- successful metapool liquidity extraction
-- unauthorized omnichain token minting
-- protocol lock and account-freeze response
-- staged token-burn recovery plan
-- ecosystem-wide critical vulnerability disclosure
-- confidential validator and chain-team patch coordination
-- multi-release-line security remediation
-
-Key modeling decisions:
-
-- `NerveNetwork` is canonical; `Nerve Bridge` remains application and alias context.
-- NerveNetwork remains distinct from Synapse Protocol despite related metapool code lineage and historical naming overlap.
-- the Nerve attacker amount remains approximately 900 BNB rather than an imposed fiat conversion.
-- no stable official Nerve postmortem or reimbursement statement was located, so the incident remains medium confidence and unresolved.
-- historical Holograph Protocol remains within scope because the compromised Operator contract was part of its omnichain token infrastructure.
-- Holograph is classified as `inactive`; the current same-domain creator-coin trading terminal is not asserted as a canonical successor.
-- one billion unauthorized HLG minted is not treated automatically as one billion HLG of realized loss.
-- minted, sold, frozen, recovered, and burned HLG quantities remain separate.
-- IBC is canonical; ibc-go remains implementation context under the protocol entity.
-- Dragonberry and Huckleberry are security-response events, not exploited-fund incident records.
-- official IBC sources report no known user-fund loss from those vulnerabilities.
-
-All temporary generation and diagnostic tooling was removed before final review. The canonical branch passed data validation, the first-ten audit, Astro/type checks, and the static build.
+## Last completed record work
 
 ### Phase 2 Batch 5
 
-Added records:
+Merged canonical records:
 
 - Ren Protocol / RenVM / RenBridge
 - Avalanche-Ethereum Bridge / AEB
@@ -228,26 +55,90 @@ Events      +20
 Evidence    +23
 ```
 
-Reference additions:
-
-- Conflux Core Space
-- Conflux eSpace
-- renBTC
-- CFX
-
 Key decisions:
 
 - Ren Protocol is canonical; RenVM and RenBridge remain context.
-- Ren 2.0 is not treated as a launched successor without public mainnet evidence.
-- Ren 1.0 ending is an event-only timeline.
+- Ren 2.0 is not treated as a launched successor without public-mainnet evidence.
 - AEB and Avalanche Bridge are separate predecessor and successor entities.
-- legacy AEB token upgrades do not make AEB active.
-- ShuttleFlow bridge operations ended before its residual claim interface closed.
+- Legacy AEB token upgrades do not make AEB active.
+- ShuttleFlow bridge operation ended before its residual claim interface closed.
 - Zero Gravity remains successor context without a canonical relationship ID.
 
-## Current architecture decision
+## Last completed scope work
 
-BIR remains static-first:
+### Phase 2 Batch 6 scope
+
+The reviewed candidates are:
+
+```text
+Transit Swap
+Rubic
+Unizen
+Magpie Protocol
+```
+
+The scope distinguishes routing-layer failures, approval exposure, operator-key compromise, frontend or DNS compromise, and underlying bridge failures.
+
+The scope is complete. Canonical implementation is paused.
+
+## Current workstream
+
+```text
+Emergency public-consistency remediation
+```
+
+The remediation is defined in:
+
+```text
+docs/runbooks/public-consistency-remediation.md
+```
+
+Execution order:
+
+```text
+PR 1  Current-state reset and plan freeze
+PR 2  Canonical-derived public output pipeline
+PR 3  Machine-readable public layer
+PR 4  Canonical metadata and discovery
+PR 5  Legacy redirects
+PR 6  Post-build consistency CI
+PR 7  Production verification and audit closure
+```
+
+This file is part of PR 1. Once it is present on `main`, PR 1 is complete and PR 2 is next.
+
+## Why record growth is paused
+
+The audit found that the main HTML record counts already derive from canonical JSON, but the project did not yet provide a complete and enforced public contract for AI systems, search engines, and external tools.
+
+Missing or incomplete controls included:
+
+- machine-readable version and manifest endpoints
+- canonical public record JSON
+- `llms.txt` and `ai.txt`
+- canonical URL metadata
+- alternate discovery links
+- sitemap and robots policy
+- JSON-LD and Open Graph metadata
+- generated legacy redirects
+- post-build count and ID consistency checks
+- public-safety checks excluding internal or unverified data
+
+The audit also found stale current-state documentation. An older roadmap checkpoint still presented the pre-Batch-5 counts of 22 bridges, 27 incidents, 103 events, and 125 evidence records as current.
+
+## Parked branch rule
+
+The existing branch:
+
+```text
+phase2-batch6-records
+```
+
+is parked. Do not add canonical records to it during remediation.
+
+After production verification completes, compare it with the latest main and either fast-forward it or replace it with a clean branch from latest main.
+
+## Current architecture
 
 ```text
 Astro
@@ -258,47 +149,42 @@ GitHub pull-request workflow
 client-side search and filters
 ```
 
-The current version does not require:
+The current version does not require a database, authentication, wallet connection, paid API, or server runtime.
 
-```text
-D1
-KV
-R2
-Pages Functions
-Workers API
-authentication
-wallet connection
-on-chain parser
-paid APIs
-```
-
-## Current phase
+## Current phase map
 
 ```text
 Phase 0  Specification and foundation              complete
 Phase 1  Canonical model, UI, validation, seeds    complete
-Phase 2  Record expansion                          in progress
+Phase 2  Record expansion                          paused for remediation
          Batch 1                                   complete
+         First-ten quality hardening               complete
          Batch 2                                   complete
          Batch 3                                   complete
          Batch 4                                   complete
          Batch 5                                   complete
-         Batch 6                                   next
+         Batch 6 scope                             complete
+         Batch 6 canonical implementation          paused
          Batch 7                                   planned
-Phase 3  Coverage and quality strengthening        first slice complete early
-Phase 4  Machine-readable public layer             not started
-Phase 5  Monitoring and candidate collection       not started
-Release  v1 hardening                              not started
+Emergency public consistency                       in progress
+Phase 3  Full-corpus quality strengthening         planned
+Phase 4  Machine-readable public layer             being completed early
+Phase 5  Monitoring and candidate collection       planned
+Release  v1 hardening                              planned
 ```
 
-## Next planned work
+## Resume conditions for Batch 6
 
-Phase 2 Batch 6 scope:
+Batch 6 canonical implementation may resume only after:
 
-1. select interface, router, approval, and aggregator candidates
-2. distinguish underlying bridge events from interface-path events
-3. fix entity and incident boundaries in a docs-only scope pull request
-4. define evidence and completion gates before canonical implementation
+1. public version and manifest metadata are generated from canonical data
+2. public bridge, incident, event, and evidence JSON is generated from canonical data
+3. canonical URL, sitemap, robots, structured data, and discovery links are complete
+4. previous slugs and redirects are enforced
+5. CI compares canonical JSON, public JSON, HTML, metadata, and built output
+6. internal and unverified records are blocked from public output
+7. Cloudflare production HTML and JSON are directly verified
+8. the production audit report is merged
 
 ## Reporting rule
 
@@ -306,5 +192,10 @@ After every merge, report:
 
 1. overall schedule
 2. current project position
-3. what changed in the merge
-4. what is next
+3. what changed
+4. canonical count changes, if any
+5. changed files
+6. PR number and merge commit
+7. CI result
+8. production verification result when applicable
+9. next PR

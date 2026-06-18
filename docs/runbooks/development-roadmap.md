@@ -1,384 +1,121 @@
 # Bridge Incident Registry — Development Roadmap to v1
 
 Status: active roadmap  
-Last verified: 2026-06-18  
+Last reset: 2026-06-19  
 Repository: `badjoke-lab/bridge-incident-registry`
 
 ## Purpose
 
-This document is the recovery point and execution order for continuing Bridge Incident Registry development.
+This document defines the execution order from the current project state to v1.
 
-It records:
+GitHub state and canonical JSON remain the final source of truth. Embedded commit SHAs are historical checkpoints only and must never be treated as a live branch pointer without re-verification.
 
-- the verified repository state
-- the current canonical counts
-- the next work item
-- the remaining phases to v1
-- the intended pull-request boundaries
-- the completion gates for each stage
-- the procedure for resuming after an interruption
+## Current recovery checkpoint
 
-GitHub state and canonical JSON remain the final source of truth. If this document conflicts with the repository, verify the repository first and update this document in a docs-only pull request.
-
-## Verified recovery checkpoint
-
-Verified on 2026-06-18:
+Historical baseline immediately before the public-consistency remediation:
 
 ```text
 Default branch:              main
-main head:                   ecca05c596f7b4ec90390fc146828a93a4f3d579
-Last merged canonical PR:    #45 — Phase 2 Batch 4
-Last merged scope PR:        #46 — Phase 2 Batch 5 scope
-Open pull requests:          0
-Prepared work branch:        phase2-batch5-records
-Prepared branch difference:  identical to main
-Next canonical work:         Phase 2 Batch 5 implementation
+Baseline commit:             001da4b36570ac861d5c2d1c821b3cc27d2c521f
+Last merged canonical PR:    #48 — Phase 2 Batch 5
+Last merged scope PR:        #49 — Phase 2 Batch 6 scope
+Open PRs at baseline:        0
+Parked record branch:        phase2-batch6-records
+Next record task:            Phase 2 Batch 6 canonical implementation
 ```
 
-Current canonical counts:
+The baseline commit is intentionally labeled historical. The live main head must be read from GitHub whenever work resumes.
+
+Current canonical counts at the start of remediation:
 
 ```text
-Bridges     22
+Bridges     26
 Incidents   27
-Events      103
-Evidence    125
+Events      123
+Evidence    148
 ```
-
-The `phase2-batch5-records` branch exists but contains no Batch 5 canonical changes. It was created from the PR #46 merge commit and is currently identical to `main`.
 
 ## Current position
 
 ```text
 Phase 0  Specification and foundation              complete
 Phase 1  Canonical model, UI, validation, seeds    complete
-Phase 2  Record expansion                          in progress
+Phase 2  Record expansion                          paused for remediation
          Batch 1                                   complete
          First-ten quality hardening               complete
          Batch 2                                   complete
          Batch 3                                   complete
          Batch 4                                   complete
-         Batch 5 scope                             complete
-         Batch 5 canonical implementation          next
-         Batch 6                                   planned
+         Batch 5                                   complete
+         Batch 6 scope                             complete
+         Batch 6 canonical implementation          paused
          Batch 7                                   planned
-Phase 3  Full-corpus quality strengthening         not started
-Phase 4  Machine-readable public layer             not started
-Phase 5  Monitoring and candidate collection       not started
-Release  v1 hardening                              not started
+Emergency public consistency                       in progress
+Phase 3  Full-corpus quality strengthening         planned
+Phase 4  Machine-readable public layer             being completed early
+Phase 5  Monitoring and candidate collection       planned
+Release  v1 hardening                              planned
 ```
 
-The immediate next task is Phase 2 Batch 5 canonical implementation.
+The immediate next task is public-consistency remediation PR 2 after the documentation reset reaches main.
 
 ---
 
-# Phase 2 — Record expansion
+# Emergency workstream — Public consistency remediation
 
-## Roadmap PR 1 — Implement Phase 2 Batch 5
-
-Theme:
+The authoritative detailed plan is:
 
 ```text
-dead
-deprecated
-migrated
-functionally replaced
+docs/runbooks/public-consistency-remediation.md
 ```
 
-Canonical entities:
+No canonical record-expansion PR may merge before this workstream completes.
 
-1. Ren Protocol
-2. Avalanche-Ethereum Bridge
-3. Avalanche Bridge
-4. ShuttleFlow
+## Remediation PR 1 — Current-state reset and plan freeze
 
-Provisional result:
-
-```text
-Bridges     +4   -> 26
-Incidents   +0   -> 27
-Events      about +20 -> about 123
-Evidence    about +23 -> about 148
-```
-
-Exact event and evidence counts may change during implementation.
-
-Required boundary decisions:
-
-- `Ren Protocol` is canonical; RenVM and RenBridge remain network, implementation, product, and alias context.
-- Ren 2.0 must not be treated as a launched successor without operational evidence.
-- Ren 1.0 shutdown is a terminal-state timeline, not an exploit incident.
-- `Avalanche-Ethereum Bridge` and `Avalanche Bridge` are separate canonical entities.
-- AEB residual token-upgrade support must not be treated as active AEB operation.
-- AEB and Avalanche Bridge must use explicit predecessor/successor relations.
-- ShuttleFlow closure must be supported by a stable official or archived source.
-- A technology handoff alone is insufficient to set Zero Gravity as a canonical successor.
-- No Batch 5 incident record should be created merely because an architecture was replaced or a service shut down.
-
-Implementation order:
-
-1. Reconfirm GitHub state and branch equality.
-2. Read canonical JSON and validators directly.
-3. Determine the next unused IDs from the files.
-4. Recheck primary and archived sources.
-5. Add `docs/batches/phase2-batch-05-boundary-note.md`.
-6. Add required chain and asset references without duplicates.
-7. Add the four bridge entities.
-8. Add terminal-state and migration events.
-9. Add evidence and recalculate `source_count`.
-10. Add predecessor/successor relationships.
-11. Synchronize README, changelog, current status, and Batch 5 notes.
-12. Run all standard checks.
-13. Open the implementation pull request.
-14. Squash merge only after the final branch and CI are clean.
-
-Required checks:
-
-```text
-npm run check
-npm run validate:data
-npm run audit:first-ten
-npm run build
-```
-
-Completion gate:
-
-- four entity boundaries are resolved
-- direct duplicate checks pass
-- all relationship IDs resolve
-- no orphan event or evidence exists
-- status and date precision are supported by evidence
-- standard CI passes
-- no temporary generator, workflow, diagnostic, or marker file remains
-- canonical counts and status documentation match
-
-## Roadmap PR 2 — Define Phase 2 Batch 6 scope
-
-Theme:
-
-```text
-aggregator
-frontend compromise
-approval or permit abuse
-router infrastructure
-multi-bridge interface failure
-```
+Status: complete when this roadmap version is on `main`
 
 Purpose:
 
-- select three to five candidates
-- distinguish an underlying bridge compromise from a frontend, router, DNS, approval, or permit compromise
-- define entity and incident boundaries before canonical data is written
-- fix source requirements and completion gates
+- remove stale current-state claims
+- record the correct 26 / 27 / 123 / 148 counts
+- pause Batch 6 canonical implementation
+- store the seven-PR remediation plan in the repository
 
-This is a docs-only scope pull request.
+Canonical data changes: none.
 
-## Roadmap PR 3 — Implement Phase 2 Batch 6
+## Remediation PR 2 — Canonical-derived public output pipeline
 
-Provisional shape:
+Status: next
+
+Purpose:
+
+- establish one reusable canonical data-loading path
+- derive counts, verification dates, schema version, canonical origin, and generated time
+- remove the possibility of separately maintained public counts
+
+Expected files:
 
 ```text
-Bridges     +3 to +5
-Incidents   +3 to +6
-Events      +15 to +25
-Evidence    +20 to +35
+scripts/build-public-data.mjs
+scripts/lib/canonical-data.mjs
+scripts/lib/public-records.mjs
+config/public-data.json
+package.json
 ```
 
-Target cumulative range:
+Completion gates:
 
-```text
-Bridges     29 to 31
-Incidents   30 to 33
-Events      140 to 150
-Evidence    170 to 185
-```
-
-Completion gate:
-
-- bridge, interface, router, and approval-compromise boundaries are explicit
-- loss, exposure, recovery, reimbursement, and protected amounts remain separate
+- all public counts derive from canonical arrays
+- build metadata follows a documented reproducible rule
+- internal staging is excluded by construction
 - standard validation and build pass
 
-## Roadmap PR 4 — Define Phase 2 Batch 7 scope
+## Remediation PR 3 — Machine-readable public layer
 
-Theme:
+Status: blocked by PR 2
 
-```text
-non-EVM
-multi-chain
-complex recovery
-validator or relayer compromise
-chain-level bridge failure
-```
-
-Candidate domains may include:
-
-```text
-Solana
-Cosmos
-NEAR
-TON
-TRON
-Bitcoin federations
-custom validator bridges
-```
-
-Purpose:
-
-- avoid forcing EVM assumptions onto non-EVM systems
-- define chain, validator, relayer, asset, and recovery boundaries
-- select three to five candidates with public-quality evidence
-
-This is a docs-only scope pull request.
-
-## Roadmap PR 5 — Implement Phase 2 Batch 7
-
-Provisional shape:
-
-```text
-Bridges     +3 to +5
-Incidents   +4 to +8
-Events      +18 to +30
-Evidence    +25 to +40
-```
-
-Phase 2 exit target:
-
-```text
-Bridges     about 30 to 32
-Incidents   about 38 to 48
-Events      at least 125 to 155
-Evidence    at least 165 to 210
-```
-
-The target is a quality checkpoint, not a quota. Entity boundaries and evidence quality take priority over counts.
-
-Phase 2 completion gate:
-
-- Batch 5, 6, and 7 are merged
-- about thirty bridge entities are represented
-- major bridge, interoperability, router, terminal-state, and non-EVM patterns are covered
-- all standard checks pass
-- current status and canonical counts match
-
----
-
-# Phase 3 — Full-corpus quality strengthening
-
-## Roadmap PR 6 — Run an all-corpus audit
-
-Audit:
-
-```text
-all bridges
-all incidents
-all events
-all evidence
-all chain references
-all asset references
-```
-
-Detect:
-
-- duplicate IDs and slugs
-- alias and domain collisions
-- broken relationships
-- orphan events and evidence
-- `source_count` mismatches
-- date-precision inconsistencies
-- status and end-date contradictions
-- incident-outcome contradictions
-
-Outputs:
-
-```text
-audit report
-fix manifest
-quality baseline
-```
-
-This pull request defines the full repair queue rather than mixing unrelated fixes without a recorded baseline.
-
-## Roadmap PR 7 — Strengthen primary-source coverage
-
-Prioritize:
-
-- low- and medium-confidence records
-- records with fewer than two evidence items
-- dead-side records without archive evidence
-- records without an official source
-- unresolved recovery and reimbursement claims
-
-Preferred evidence:
-
-```text
-official postmortem
-official incident notice
-governance proposal
-recovery announcement
-reimbursement notice
-regulatory filing
-repository security advisory
-official archive
-```
-
-## Roadmap PR 8 — Normalize aftermath and amount semantics
-
-Normalize event language for:
-
-```text
-paused
-reopened
-reimbursement started
-reimbursement completed
-partial recovery
-funds frozen
-funds returned
-migrated
-deprecated
-shutdown
-```
-
-Keep these quantities separate:
-
-```text
-reported loss
-realized loss
-protected exposure
-recovered amount
-reimbursed amount
-frozen amount
-returned amount
-minted amount
-burned amount
-```
-
-## Roadmap PR 9 — Strengthen URL, archive, and validation rules
-
-Add or improve:
-
-- broken evidence URL detection
-- archive fallback handling
-- redirect detection
-- repurposed and dead-domain handling
-- duplicate-source detection
-- source-date validation
-- relationship and reference validation
-
-Phase 3 completion gate:
-
-- zero critical validation errors
-- zero orphan canonical records
-- major incidents have multiple evidence items
-- status and timeline contradictions are resolved
-- archive gaps are measured and documented
-
----
-
-# Phase 4 — Machine-readable public layer
-
-## Roadmap PR 10 — Define the public data contract
-
-Public outputs:
+Endpoints:
 
 ```text
 /version.json
@@ -387,330 +124,398 @@ Public outputs:
 /data/incidents.json
 /data/events.json
 /data/evidence.json
+/data/reference/chains.json
+/data/reference/assets.json
 /llms.txt
 /ai.txt
 ```
 
-Safety rules:
+Completion gates:
+
+- canonical and public ID sets match
+- canonical and public counts match
+- `canonical_only` is true
+- public records link to human canonical pages
+- unverified or internal records are absent
+
+## Remediation PR 4 — Canonical metadata and discovery
+
+Status: blocked by PR 3
+
+Scope:
+
+- canonical links
+- alternate JSON discovery
+- Open Graph metadata
+- conservative JSON-LD
+- sitemap
+- robots policy
+- production-origin configuration
+- preview noindex behavior
+- human-visible data-discovery links
+
+Completion gates:
+
+- all canonical HTML pages declare production canonical URLs
+- preview pages do not compete in indexing
+- all canonical bridge and incident pages appear in the sitemap
+- sitemap excludes old slugs
+
+## Remediation PR 5 — Legacy redirects
+
+Status: blocked by PR 4
+
+Scope:
+
+- generate Cloudflare redirects from `previous_slugs` and `redirect_from`
+- reject loops, duplicate sources, and missing targets
+- retire obsolete routes explicitly
+
+Completion gates:
+
+- every accepted legacy route returns 301 to a live canonical page
+- no legacy URL appears as canonical or in the sitemap
+
+## Remediation PR 6 — Post-build consistency CI
+
+Status: blocked by PR 5
+
+Scope:
+
+- compare canonical JSON, public JSON, manifest, version, HTML, sitemap, and generated detail pages
+- inspect `dist` for stale or unsafe output
+- reject internal, private, draft, monitoring, candidate, and staging data
+- validate canonical links, discovery links, structured data, robots, sitemap, and redirects
+
+Completion gates:
+
+- intentional mismatch tests fail
+- clean build passes all canonical and post-build checks
+
+## Remediation PR 7 — Production verification and audit closure
+
+Status: blocked by PR 6
+
+Scope:
+
+- verify Cloudflare production HTML and JSON directly
+- verify all canonical detail pages and redirects
+- compare normal and cache-bypassed responses
+- record all checked URLs, sources, counts, PRs, commits, CI, and remaining limitations
+
+Required report:
 
 ```text
-canonical_only = true
-no unverified candidates
-no internal watchlists
-no private notes
+docs/audits/public-consistency-verification-2026-06.md
 ```
 
-## Roadmap PR 11 — Add schemas and stable endpoint checks
+Completion gate:
 
-Add:
+- production presents one consistent canonical state to humans, AI systems, search engines, and external tools
 
-- JSON Schema definitions
-- manifest validation
-- versioning rules
-- stable endpoint tests
-- canonical and public record-count consistency checks
+---
 
-## Roadmap PR 12 — Add discovery metadata
+# Phase 2 — Record expansion resume
 
-Add or confirm:
+Phase 2 resumes only after remediation PR 7.
+
+## Resume gate
+
+Before any new record work:
+
+1. verify live main head and open PRs
+2. verify production audit completion
+3. compare `phase2-batch6-records` with latest main
+4. replace or fast-forward the parked branch as necessary
+5. read canonical JSON directly
+6. derive the next IDs and counts
+7. re-read the Batch 6 scope and boundary decisions
+
+## Roadmap PR — Implement Phase 2 Batch 6
+
+Theme:
 
 ```text
-llms.txt
-ai.txt
-robots.txt
-sitemap
-JSON-LD
-alternate links
-canonical links
+cross-chain aggregation and routing incidents
 ```
 
-These files improve discovery and interpretation but do not guarantee search or AI ingestion.
+Selected candidates:
 
-## Roadmap PR 13 — Integrate contract tests and public documentation
+```text
+Transit Swap
+Rubic
+Unizen
+Magpie Protocol
+```
 
-Add:
+Provisional shape:
 
-- machine-readable build checks
-- CI integration
-- public usage documentation
-- data limitations
-- compatibility and version policy
+```text
+Bridges     +4
+Incidents   +5 to +6
+Events      +20 to +28
+Evidence    +28 to +38
+```
 
-Phase 4 completion gate:
+Required decisions:
 
-- UI and public JSON are generated from the same canonical source
-- public and canonical counts match
-- no internal data is exposed
-- stable endpoints and schemas pass CI
+- routing-layer versus underlying bridge failure
+- approval exposure versus realized loss
+- operator-wallet versus contract incident
+- integrated dependency versus directly affected system
+- reimbursement announcement versus payment start versus completion
+- Magpie Protocol versus later `fly` identity
+- Unizen Trade versus later UIP architecture
+
+Completion gates:
+
+- all four entity boundaries resolved
+- Rubic incidents remain separate
+- Transit Swap amounts reconciled
+- Unizen reimbursement status supported beyond announcement level
+- Magpie reimbursement and current status verified
+- canonical validation passes
+- post-build public consistency checks pass
+- production output remains aligned after merge
+
+## Roadmap PR — Define Phase 2 Batch 7 scope
+
+Purpose:
+
+Select the next bounded group after reviewing corpus gaps created by Batches 1–6.
+
+Candidate selection rules:
+
+- prefer meaningful bridge or interoperability lifecycle coverage
+- preserve entity and incident boundaries
+- avoid adding weakly sourced records only to increase counts
+- include terminal, migration, replacement, and recovery cases where evidence is strong
+
+Deliverable:
+
+```text
+docs/batches/phase2-batch-07-scope.md
+```
+
+## Roadmap PR — Implement Phase 2 Batch 7
+
+Requirements:
+
+- direct canonical duplicate checks
+- primary-source review
+- entity, incident, event, and evidence implementation
+- reference dictionary updates only when necessary
+- full canonical and public consistency checks
+- production verification after merge
+
+---
+
+# Phase 3 — Full-corpus quality strengthening
+
+## Roadmap PR — Corpus audit inventory
+
+Create a machine-readable and human-readable inventory of:
+
+- source-tier gaps
+- missing or weak official evidence
+- stale verification dates
+- unresolved amount conflicts
+- unclear recovery or reimbursement states
+- current-status uncertainty
+- missing archive URLs
+- missing redirect mappings
+
+The audit must not modify canonical claims in the same PR.
+
+## Roadmap PR — Primary-source strengthening
+
+Improve records with weak or secondary-only support.
+
+Priorities:
+
+1. incident existence and root cause
+2. loss amount basis
+3. recovery and returned funds
+4. reimbursement status
+5. restart, migration, deprecation, or shutdown
+6. current operating state
+
+## Roadmap PR — Aftermath normalization
+
+Normalize distinctions across the corpus:
+
+```text
+reported loss
+realized loss
+protected exposure
+returned funds
+recovered funds
+rescued funds
+frozen funds
+burned supply
+reimbursement announced
+reimbursement started
+reimbursement completed
+restart announced
+restart completed
+```
+
+## Roadmap PR — URL and archive hardening
+
+Tasks:
+
+- verify official URLs
+- add archived URLs where appropriate
+- distinguish live, redirected, archived, dead, and unknown source states
+- verify canonical page URLs and legacy redirects
+- ensure public JSON and HTML remain aligned
+
+## Roadmap PR — Validator strengthening
+
+Add or tighten checks for:
+
+- relationship targets
+- redirect collisions
+- source-count consistency
+- amount-claim evidence references
+- terminal-state requirements
+- verification-date shape and freshness policy
+- public output safety
+- schema and endpoint contracts
+
+---
+
+# Phase 4 — Public contract stabilization
+
+Most implementation work is completed early by the emergency remediation.
+
+The later Phase 4 review focuses on:
+
+- schema-version policy
+- backward-compatibility expectations
+- endpoint stability
+- cross-site ledger-series alignment
+- public change documentation
+- deprecation policy for machine-readable fields and routes
+
+Deliverables may include:
+
+```text
+docs/machine-readable-contract.md
+docs/public-data-change-policy.md
+```
 
 ---
 
 # Phase 5 — Monitoring and candidate collection
 
-## Roadmap PR 14 — Add the monitoring skeleton
+Monitoring may begin only after the public canonical boundary is enforced.
 
-Add:
+## Rules
 
-```text
-scripts/monitoring/
-data-staging/monitoring/
-data-staging/watchlists/
-scheduled workflow
-canonical guard
-```
+- monitoring output is private or internal by default
+- monitoring never modifies canonical JSON directly
+- candidates require manual source review
+- candidate drafts are not public machine-readable records
+- automated publication remains prohibited
 
-Start without external network collection. First prove safe report generation and canonical immutability.
+## Planned work
 
-## Roadmap PR 15 — Add candidate discovery
+1. define monitoring sources and frequency
+2. collect candidate changes
+3. deduplicate against canonical records
+4. produce internal review packets
+5. generate draft PR material without opening or merging canonical PRs automatically
+6. alert only on meaningful changes or failures
 
-Detect:
+## Safety gate
 
-- unlisted bridges
-- historical bridges
-- dead or deprecated bridges
-- new interoperability protocols
-- multi-chain routers
-
-Implement:
-
-```text
-name normalization
-alias matching
-domain matching
-duplicate detection
-A / B / C candidate classification
-```
-
-## Roadmap PR 16 — Add evidence and URL health monitoring
-
-Monitor:
-
-```text
-evidence 404
-redirects
-dead domains
-repurposed domains
-archive availability
-thin evidence
-stale verification
-```
-
-## Roadmap PR 17 — Add incident, news, and regulatory monitoring
-
-Monitor candidate signals for:
-
-```text
-exploit
-pause
-bridge suspension
-recovery
-reimbursement
-migration
-shutdown
-regulatory action
-governance emergency
-```
-
-Monitoring may create findings and review candidates but must not change canonical data.
-
-## Roadmap PR 18 — Add scheduled monitoring pull requests
-
-Final flow:
-
-```text
-scheduled monitoring
--> JSON and Markdown report
--> branch only when findings exist
--> monitoring pull request
--> human or AI review
--> separate canonical pull request when approved
-```
-
-Non-negotiable rule:
-
-```text
-Monitoring workflows never modify canonical JSON directly.
-```
-
-Phase 5 completion gate:
-
-- no-change runs create no pull request
-- findings create report-only pull requests
-- canonical guard rejects canonical modifications
-- candidate findings remain separate from public data
+CI must prove that monitoring directories and candidate fields cannot enter public output.
 
 ---
 
 # Release — v1 hardening
 
-## Roadmap PR 19 — UI, mobile, and accessibility hardening
+## Roadmap PR — Documentation and methodology review
 
 Review:
 
-```text
-registry list
-bridge detail
-incident detail
-timeline
-evidence links
-filters
-search
-mobile layout
-keyboard navigation
-focus states
-contrast
-empty states
-```
+- project purpose
+- inclusion and exclusion rules
+- uncertainty language
+- source tiers
+- amount handling
+- recovery and reimbursement definitions
+- public-data guidance
+- limitations
 
-This stage hardens existing functionality rather than expanding scope.
+## Roadmap PR — Accessibility and UI review
 
-## Roadmap PR 20 — SEO, redirects, and performance
+Review:
 
-Review and improve:
+- keyboard navigation
+- focus states
+- contrast
+- table behavior
+- mobile behavior
+- filter usability
+- detail-page readability
+- machine-readable discovery usability
 
-```text
-metadata
-Open Graph
-sitemap
-canonical URLs
-redirects
-404 handling
-legacy paths
-bundle size
-static generation
-Cloudflare Pages compatibility
-```
+## Roadmap PR — Performance and deployment review
 
-## Roadmap PR 21 — v1 checkpoint and release
+Review:
 
-Finalize:
+- static build size
+- page generation time
+- asset caching
+- JSON caching
+- Cloudflare production configuration
+- redirect behavior
+- sitemap and robots responses
+- preview isolation
 
-```text
-methodology
-about
-current status
-changelog
-canonical counts
-release notes
-version marker
-v1.0.0 tag
-```
+## Roadmap PR — v1 release checkpoint
 
-v1 completion gate:
+Release only when:
 
-- Phases 2 through 5 are complete
-- all standard CI passes
-- the public site is healthy
-- the machine-readable layer is healthy
-- monitoring cannot write canonical data
-- current-status documentation matches canonical counts
-
----
-
-# Resume procedure after interruption
-
-Before changing files, always perform this recovery sequence.
-
-## 1. Verify repository state
-
-```text
-repository identity
-default branch
-main head SHA
-open pull requests
-relevant merged pull requests
-prepared work branches
-branch-to-main differences
-workflow and check state
-```
-
-## 2. Read the recovery documents
-
-```text
-docs/runbooks/development-roadmap.md
-docs/runbooks/current-status.md
-relevant docs/batches scope and boundary notes
-README.md
-CHANGELOG.md
-```
-
-## 3. Read canonical files directly
-
-```text
-data/bridges.json
-data/incidents.json
-data/events.json
-data/evidence.json
-data/reference/chains.json
-data/reference/assets.json
-scripts/validate-data.mjs
-src/lib/data.ts
-```
-
-Never infer the next ID or canonical count from an earlier chat, issue, or roadmap entry.
-
-## 4. Re-establish the exact next step
-
-Record:
-
-```text
-current phase
-current batch or hardening task
-latest unused IDs
-expected files to change
-required evidence still missing
-completion gate
-```
-
-## 5. Work through a branch and pull request
-
-```text
-no direct main writes
-one coherent purpose per pull request
-standard validation before review
-squash merge after final head verification
-```
-
-## 6. Update the recovery point after merge
-
-Every merged roadmap item must update, as applicable:
-
-```text
-docs/runbooks/development-roadmap.md
-docs/runbooks/current-status.md
-README.md
-CHANGELOG.md
-batch implementation or merge note
-canonical counts
-next planned work
-```
+- canonical data validates
+- public output matches canonical data
+- production verification passes
+- no critical corpus-audit issues remain undocumented
+- monitoring cannot publish automatically
+- recovery documentation is current
+- all v1 limitations are documented
 
 ---
 
 # Permanent operating rules
 
-```text
-Do not write directly to main.
-Use a branch and pull request.
-Read canonical JSON before assigning IDs.
-Do not treat an empty search result as a complete duplicate check.
-Check names, slugs, aliases, domains, and relationships.
-Do not classify a bridge as dead without sufficient evidence.
-Do not assert a successor without evidence of operational continuity.
-Do not mix loss, exposure, recovery, reimbursement, frozen, returned, minted, or burned amounts.
-Do not model vulnerability disclosure as an exploit incident without exploitation evidence.
-Do not merge temporary generators, write-enabled temporary workflows, diagnostics, or marker files.
-Do not allow monitoring to modify canonical data.
-```
+1. Never write canonical changes directly to main.
+2. Use one branch and one bounded PR per task.
+3. Read canonical JSON before assigning IDs or counts.
+4. Treat GitHub and canonical JSON as the current source of truth.
+5. Label historical checkpoints explicitly; never present an embedded old SHA as the live main head.
+6. Keep canonical, candidate, monitoring, internal, and private data separate.
+7. Do not merge temporary generators, diagnostics, write-enabled workflows, or source captures.
+8. Keep reported, returned, recovered, reimbursed, frozen, minted, and burned amounts distinct.
+9. A vulnerability disclosure is not automatically an exploit incident.
+10. A relaunch announcement is not proof of resumed operation.
+11. Every PR must pass canonical and public-consistency checks appropriate to its phase.
+12. After every merge, update the recovery checkpoint without hardcoding a live SHA that will immediately become stale.
 
 # Standard merge report
 
-After each merge, report:
+After each merge, record:
 
-1. overall roadmap position
-2. current phase and next item
-3. what changed in the merge
-4. canonical count changes
-5. important boundary decisions
-6. validation and CI result
-7. the next pull request
+```text
+PR number and title
+merge commit
+changed files
+canonical count delta
+CI result
+Cloudflare preview result
+production verification result, when applicable
+current roadmap position
+next PR
+```

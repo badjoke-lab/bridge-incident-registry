@@ -1,23 +1,22 @@
 # BIR Live Recovery Checkpoint
 
 Status: active  
-Verified: 2026-06-18
+Reset: 2026-06-19
 
-This short file is the live restart point for ongoing development. The full execution order remains in `development-roadmap.md`; GitHub and canonical JSON remain the final source of truth.
+This file is the short restart point. GitHub state and canonical JSON remain authoritative. Any embedded commit SHA is a historical baseline, not a live pointer.
 
-## Repository state
+## Historical baseline before remediation
 
 ```text
 Repository:                   badjoke-lab/bridge-incident-registry
 Default branch:               main
-Verified main head:           ac363697a55d7ece4e55d1a4b19258a4f805c05d
+Baseline commit:              001da4b36570ac861d5c2d1c821b3cc27d2c521f
 Last merged canonical PR:     #48 — Phase 2 Batch 5
-Current working branch:       phase2-batch6-scope
-Current task:                 Phase 2 Batch 6 scope
-Next task after merge:        Phase 2 Batch 6 canonical implementation
+Last merged scope PR:         #49 — Phase 2 Batch 6 scope
+Open PRs at baseline:         0
 ```
 
-## Canonical counts
+## Canonical counts at remediation start
 
 ```text
 Bridges     26
@@ -26,38 +25,60 @@ Events      123
 Evidence    148
 ```
 
-## Current phase
+## Current workstream
 
 ```text
-Phase 2 record expansion
-Batch 5 complete
-Batch 6 scope in progress
-Batch 7 planned
+Emergency public-consistency remediation
 ```
 
-## Batch 6 selected candidates
+Detailed plan:
 
 ```text
-Transit Swap
-Rubic
-Unizen
-Magpie Protocol
+docs/runbooks/public-consistency-remediation.md
 ```
 
-Provisional implementation shape:
+Current sequence:
 
 ```text
-Bridges     +4
-Incidents   +5 to +6
-Events      +20 to +28
-Evidence    +28 to +38
+PR 1  Current-state reset and plan freeze     complete when this file reaches main
+PR 2  Canonical-derived public output         next
+PR 3  Machine-readable public layer           blocked by PR 2
+PR 4  Canonical metadata and discovery        blocked by PR 3
+PR 5  Legacy redirects                        blocked by PR 4
+PR 6  Post-build consistency CI               blocked by PR 5
+PR 7  Production verification                 blocked by PR 6
 ```
+
+## Record-expansion state
+
+```text
+Phase 2 Batch 5                 complete
+Phase 2 Batch 6 scope           complete
+Phase 2 Batch 6 implementation  paused
+Phase 2 Batch 7                 planned
+```
+
+The branch `phase2-batch6-records` is parked. Do not add canonical data to it during remediation.
 
 ## Resume sequence
 
-1. verify `main` head and open pull requests
-2. read this file and `development-roadmap.md`
-3. read `docs/batches/phase2-batch-06-scope.md`
-4. read canonical JSON directly before assigning IDs
-5. continue through a branch and pull request
-6. update this checkpoint after merge
+1. read the live main head and open PRs from GitHub
+2. read this file
+3. read `development-roadmap.md`
+4. read `public-consistency-remediation.md`
+5. determine the first remediation PR not yet merged
+6. continue through a fresh branch and PR
+7. keep Batch 6 paused until production verification closes PR 7
+
+## Source-of-truth rule
+
+Current public state must always derive from:
+
+```text
+data/bridges.json
+data/incidents.json
+data/events.json
+data/evidence.json
+```
+
+Do not infer the current state from an old commit SHA, an archived roadmap checkpoint, a preview deployment, or manually copied counts.
