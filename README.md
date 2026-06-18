@@ -29,9 +29,9 @@ BIR is not:
 
 ## Current status
 
-The static registry application, canonical data model, validation pipeline, list/detail pages, methodology pages, and initial seed dataset are implemented.
+The static registry application, canonical data model, validation pipeline, list/detail pages, methodology pages, and five reviewed expansion batches are implemented.
 
-Phase 2 record expansion is in progress. Five reviewed expansion batches and a first-ten quality-hardening pass are complete.
+Phase 2 Batch 6 scope is complete, but canonical record expansion is temporarily paused while the project completes an emergency public-consistency remediation.
 
 Current canonical counts:
 
@@ -42,7 +42,16 @@ Events      123
 Evidence    148
 ```
 
-Phase 2 Batch 1 added Meter Passport, Allbridge Core, and LI.FI. Batch 2 added ChainSwap, Celer cBridge, and SOCKET Protocol / Bungee. Batch 3 added pNetwork, Rainbow Bridge, and Synapse Protocol. Batch 4 added NerveNetwork, historical Holograph Protocol, and the Inter-Blockchain Communication Protocol. Batch 5 added Ren Protocol, Avalanche-Ethereum Bridge, Avalanche Bridge, and ShuttleFlow. The quality-hardening pass added official aftermath evidence for Wormhole, Nomad, and Harmony.
+The canonical datasets are the only source of truth:
+
+```text
+data/bridges.json
+data/incidents.json
+data/events.json
+data/evidence.json
+```
+
+The remediation will ensure that human-facing HTML, AI and search discovery, public JSON, metadata, sitemap output, redirects, and CI all derive from the same canonical input.
 
 See:
 
@@ -50,7 +59,9 @@ See:
 - `DESIGN.md` for the visual and UI direction
 - `LICENSE-NOTE.md` for the licensing and attribution position
 - `docs/runbooks/current-status.md` for the current project state
-- `docs/runbooks/development-roadmap.md` for the verified recovery checkpoint and PR-by-PR roadmap to v1
+- `docs/runbooks/recovery-checkpoint.md` for the short restart point
+- `docs/runbooks/development-roadmap.md` for the roadmap to v1
+- `docs/runbooks/public-consistency-remediation.md` for the blocking seven-PR consistency plan
 - `docs/batches/` for reviewed batch scopes
 
 ## Architecture
@@ -64,4 +75,10 @@ GitHub pull-request workflow
 client-side search and filters
 ```
 
-The canonical data files are validated in CI before merge. No database, authentication, wallet connection, paid API, or server runtime is required for the current version.
+Canonical data is validated in CI before merge. The current version requires no database, authentication, wallet connection, paid API, or server runtime.
+
+## Development hold
+
+Do not merge new canonical record batches until the public-consistency remediation and production verification are complete.
+
+The parked `phase2-batch6-records` branch must not receive new canonical writes during this hold.
