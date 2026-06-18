@@ -2,6 +2,9 @@ node_modules/
 dist/
 .astro/
 .generated/
+public/data/
+public/version.json
+public/llms.txt
 .env
 .env.*
 .DS_Store
