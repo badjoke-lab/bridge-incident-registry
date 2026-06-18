@@ -14,32 +14,20 @@ const incidents = [...registryData.incidents].sort((a, b) => {
   return a.title.localeCompare(b.title);
 });
 const hasIncidents = incidents.length > 0;
+const latestVerifiedAt = incidents.map((record) => record.last_verified_at).filter(Boolean).sort().at(-1);
 ---
-<BaseLayout title="Incidents - Bridge Incident Registry" description="Browse cross-chain bridge incident cases, reported loss, recovery, reimbursement, and final outcomes.">
+<BaseLayout title="Incidents - Bridge Incident Registry" description="Browse cross-chain bridge incident cases, reported loss, recovery, reimbursement, and final outcomes." alternateDataPath="/data/incidents.json" pageType="CollectionPage" dateModified={latestVerifiedAt}>
   <section class="hero">
     <div class="kicker">Registry</div>
     <h1>Incidents</h1>
-    <p class="lede">Browse exploit, pause, recovery, reimbursement, migration, and shutdown cases with evidence-backed outcome tracking.</p>
+    <p class="lede">Browse bridge incident cases with evidence-backed outcome tracking.</p>
   </section>
-
   <IncidentFilterToolbar disabled={!hasIncidents} />
-
   <div class="registry-meta" aria-live="polite">
     <span id="incident-result-count">{incidents.length} incident cases</span>
     <span>Default sort: newest incident date</span>
   </div>
-
-  {hasIncidents ? <IncidentRegistryTable incidents={incidents} /> : (
-    <div class="registry-zero-state">
-      <EmptyState title="No incident records yet." message="The incident registry structure, search controls, and filters are ready. Reviewed incident cases will appear here after canonical JSON data is merged." />
-    </div>
-  )}
-
-  {hasIncidents && (
-    <div class="registry-zero-state" id="incident-no-results" hidden>
-      <EmptyState title="No matching incident cases." message="Clear or change the current search and filter settings." />
-    </div>
-  )}
-
+  {hasIncidents ? <IncidentRegistryTable incidents={incidents} /> : <div class="registry-zero-state"><EmptyState title="No incident records yet." message="Reviewed incident cases will appear here after canonical JSON data is merged." /></div>}
+  {hasIncidents && <div class="registry-zero-state" id="incident-no-results" hidden><EmptyState title="No matching incident cases." message="Clear or change the current search and filter settings." /></div>}
   {hasIncidents && <script is:inline src="/scripts/incident-filters.js"></script>}
 </BaseLayout>
