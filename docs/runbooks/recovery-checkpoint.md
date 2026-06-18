@@ -20,9 +20,9 @@ Evidence    148
 PR 1  Current-state reset                    complete — PR #50
 PR 2  Canonical-derived public output        complete — PR #51
 PR 3  Machine-readable public layer          complete — PR #52
-PR 4  Canonical metadata and discovery       complete when this file reaches main
-PR 5  Legacy redirects                       next
-PR 6  Post-build consistency CI              blocked by PR 5
+PR 4  Canonical metadata and discovery       complete — PR #53
+PR 5  Legacy redirects                       complete when this file reaches main
+PR 6  Post-build consistency CI              next
 PR 7  Production verification                blocked by PR 6
 ```
 
@@ -32,31 +32,20 @@ Completed merge checkpoints:
 PR #50  ed7d4871c82dcd6b089bb3ac6da5df538a83116c
 PR #51  f7e0ff462c07fc02f6fe620d7a125546a27a45e3
 PR #52  6f3b8aad06edc7027fb362120aabe19fa46d52ee
+PR #53  5558a50e0a0f34ceca7c4b34816db29b0e7ae17b
 ```
 
-## PR 4 result
+## PR 5 result
 
-HTML output now declares:
+The build generates `public/_redirects` from canonical `previous_slugs` and `redirect_from` fields.
 
-- production canonical URLs
-- machine-readable alternate links
-- Open Graph and social metadata
-- page-level JSON-LD
-- preview noindex policy
+Both trailing-slash and non-trailing-slash legacy routes permanently redirect to current canonical bridge or incident pages.
 
-Build output also generates and validates:
-
-```text
-/sitemap.xml
-/robots.txt
-/_headers
-```
-
-The sitemap derives canonical bridge and incident URLs from canonical JSON. Legacy slugs are excluded.
+Generation and checks reject invalid slugs, canonical-route collisions, conflicting sources, self-redirects, missing targets, loops, output drift, and legacy sitemap entries.
 
 ## Next
 
-PR 5 generates Cloudflare redirects from `previous_slugs` and `redirect_from`, then validates uniqueness, targets, and loops.
+PR 6 adds full post-build consistency checks across canonical JSON, public JSON, version, manifest, built HTML, JSON-LD, sitemap, robots, redirects, documentation counts, and the `dist` tree.
 
 ## Record expansion
 
