@@ -11,8 +11,15 @@ const bridges = [...registryData.bridges].sort((a, b) => {
   return incidentDelta !== 0 ? incidentDelta : a.canonical_name.localeCompare(b.canonical_name);
 });
 const hasBridges = bridges.length > 0;
+const latestVerifiedAt = bridges.map((record) => record.last_verified_at).filter(Boolean).sort().at(-1);
 ---
-<BaseLayout title="Bridges - Bridge Incident Registry" description="Browse cross-chain bridge entities, incident history, status, chains, and evidence coverage.">
+<BaseLayout
+  title="Bridges - Bridge Incident Registry"
+  description="Browse cross-chain bridge entities, incident history, status, chains, and evidence coverage."
+  alternateDataPath="/data/bridges.json"
+  pageType="CollectionPage"
+  dateModified={latestVerifiedAt}
+>
   <section class="hero">
     <div class="kicker">Registry</div>
     <h1>Bridges</h1>
