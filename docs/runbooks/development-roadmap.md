@@ -29,7 +29,7 @@ Phase 2  Record expansion                          paused for remediation
          Batch 6 scope                             complete
          Batch 6 implementation                    paused
          Batch 7                                   planned
-Emergency public consistency                       in progress — PR 4 of 7
+Emergency public consistency                       in progress — PR 5 of 7
 Phase 3  Full-corpus quality strengthening         planned
 Phase 4  Public contract stabilization             being completed early
 Phase 5  Monitoring and candidate collection       planned
@@ -42,9 +42,9 @@ Release  v1 hardening                              planned
 PR 1  Current-state reset                    complete — PR #50
 PR 2  Canonical-derived public output        complete — PR #51
 PR 3  Machine-readable public layer          complete — PR #52
-PR 4  Canonical metadata and discovery       complete when merged
-PR 5  Legacy redirects                       next
-PR 6  Post-build consistency CI              blocked by PR 5
+PR 4  Canonical metadata and discovery       complete — PR #53
+PR 5  Legacy redirects                       complete when merged
+PR 6  Post-build consistency CI              next
 PR 7  Production verification                blocked by PR 6
 ```
 
@@ -54,34 +54,33 @@ Completed merge checkpoints:
 PR #50  ed7d4871c82dcd6b089bb3ac6da5df538a83116c
 PR #51  f7e0ff462c07fc02f6fe620d7a125546a27a45e3
 PR #52  6f3b8aad06edc7027fb362120aabe19fa46d52ee
+PR #53  5558a50e0a0f34ceca7c4b34816db29b0e7ae17b
 ```
 
-## PR 4 result
+## PR 5 result
 
-- all HTML pages declare production canonical URLs
-- manifest, version, guidance, and page-specific JSON alternates are exposed
-- Open Graph and Twitter summary metadata are present
-- base page JSON-LD is present
-- homepage and bridge/incident detail pages expose dataset JSON-LD
-- sitemap, robots, and Cloudflare headers are generated from canonical data and build environment
-- preview builds receive HTML and response-header noindex directives
-- legacy slugs are excluded from the sitemap
+- canonical `previous_slugs` and `redirect_from` fields generate Cloudflare redirects
+- trailing and non-trailing legacy routes redirect to the current trailing-slash canonical route
+- invalid slugs, route collisions, conflicts, self-redirects, missing targets, loops, and output drift fail the build
+- legacy routes remain excluded from the sitemap
 
-## PR 5 — next
+## PR 6 — next
 
-Generate actual redirects from canonical slug-history fields.
+Add full post-build consistency checks across:
 
-Completion gates:
+- canonical JSON
+- public JSON
+- version and manifest
+- built HTML counts and detail pages
+- canonical and alternate metadata
+- JSON-LD
+- sitemap and robots
+- redirects
+- documentation count blocks
+- complete `dist` contents
+- non-canonical working-output exclusions
 
-- every accepted legacy source maps to one canonical target
-- no duplicate redirect source
-- no loop
-- every target exists
-- legacy URLs remain absent from sitemap and canonical metadata
-
-## PR 6
-
-Add full post-build consistency checks across canonical JSON, public JSON, version, manifest, HTML, JSON-LD, sitemap, robots, redirects, and `dist`.
+The PR must also include controlled failure fixtures proving that count, ID, metadata, route, sitemap, and public-safety mismatches are rejected.
 
 ## PR 7
 
