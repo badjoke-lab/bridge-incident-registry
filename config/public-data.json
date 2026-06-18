@@ -5,7 +5,9 @@
   "schema_version": "1.0.0-draft",
   "canonical_origin": "https://bridge-incident-registry.pages.dev",
   "generated_output_dir": ".generated/public-data",
+  "public_output_dir": "public",
   "canonical_only": true,
+  "verification_marker": "canonical-reviewed-records-only",
   "source_files": {
     "bridges": "data/bridges.json",
     "incidents": "data/incidents.json",
