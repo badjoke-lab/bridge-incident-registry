@@ -5,14 +5,35 @@ import MaturityChip from "../components/MaturityChip.astro";
 import SectionHeader from "../components/SectionHeader.astro";
 import StatusChip from "../components/StatusChip.astro";
 import UpdateStatusChip from "../components/UpdateStatusChip.astro";
-import { getRegistryCounts } from "../lib/data";
+import { getRegistryCounts, registryData } from "../lib/data";
 
 const counts = getRegistryCounts();
-const hasRegistryData = counts.bridges > 0 || counts.incidents > 0 || counts.events > 0 || counts.evidence > 0;
+const hasRegistryData = Object.values(counts).some((count) => count > 0);
+const latestVerifiedAt = [
+  ...registryData.bridges.map((record) => record.last_verified_at),
+  ...registryData.incidents.map((record) => record.last_verified_at)
+].filter(Boolean).sort().at(-1);
+const site = Astro.site ?? new URL("https://bridge-incident-registry.pages.dev");
+const datasetJsonLd = {
+  "@type": "Dataset",
+  name: "Bridge Incident Registry canonical datasets",
+  description: "Canonical bridge, incident, event, and evidence records for historical cross-chain incident research.",
+  url: new URL("/", site).toString(),
+  dateModified: latestVerifiedAt,
+  distribution: [
+    { "@type": "DataDownload", encodingFormat: "application/json", contentUrl: new URL("/data/bridges.json", site).toString() },
+    { "@type": "DataDownload", encodingFormat: "application/json", contentUrl: new URL("/data/incidents.json", site).toString() },
+    { "@type": "DataDownload", encodingFormat: "application/json", contentUrl: new URL("/data/events.json", site).toString() },
+    { "@type": "DataDownload", encodingFormat: "application/json", contentUrl: new URL("/data/evidence.json", site).toString() }
+  ]
+};
 ---
 <BaseLayout
   title="Bridge Incident Registry"
   description="A historical registry of cross-chain bridge incidents, pauses, recoveries, reimbursements, and migrations."
+  alternateDataPath="/data/manifest.json"
+  dateModified={latestVerifiedAt}
+  jsonLd={datasetJsonLd}
 >
   <section class="hero">
     <div class="kicker">Quiet incident registry</div>
@@ -24,22 +45,10 @@ const hasRegistryData = counts.bridges > 0 || counts.incidents > 0 || counts.eve
   </section>
 
   <section class="summary-strip" aria-label="Registry record summary">
-    <div class="stat">
-      <div class="stat-value">{counts.bridges}</div>
-      <div class="stat-label">Bridge records</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value">{counts.incidents}</div>
-      <div class="stat-label">Incident cases</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value">{counts.events}</div>
-      <div class="stat-label">Timeline events</div>
-    </div>
-    <div class="stat">
-      <div class="stat-value">{counts.evidence}</div>
-      <div class="stat-label">Evidence records</div>
-    </div>
+    <div class="stat"><div class="stat-value">{counts.bridges}</div><div class="stat-label">Bridge records</div></div>
+    <div class="stat"><div class="stat-value">{counts.incidents}</div><div class="stat-label">Incident cases</div></div>
+    <div class="stat"><div class="stat-value">{counts.events}</div><div class="stat-label">Timeline events</div></div>
+    <div class="stat"><div class="stat-value">{counts.evidence}</div><div class="stat-label">Evidence records</div></div>
   </section>
 
   <SectionHeader
@@ -57,18 +66,9 @@ const hasRegistryData = counts.bridges > 0 || counts.incidents > 0 || counts.eve
   </div>
 
   <section class="panel-grid" aria-label="Registry focus">
-    <article class="panel">
-      <h2>Incident aftermath</h2>
-      <p>Track pause, recovery, reimbursement, reopening, migration, and shutdown outcomes.</p>
-    </article>
-    <article class="panel">
-      <h2>Evidence-first records</h2>
-      <p>Every major claim should point back to official, archival, analytical, or journalistic evidence.</p>
-    </article>
-    <article class="panel">
-      <h2>Not a safety ranking</h2>
-      <p>BIR records historical incidents and outcomes. It does not recommend bridges or rank safety.</p>
-    </article>
+    <article class="panel"><h2>Incident aftermath</h2><p>Track pause, recovery, reimbursement, reopening, migration, and shutdown outcomes.</p></article>
+    <article class="panel"><h2>Evidence-first records</h2><p>Every major claim should point back to official, archival, analytical, or journalistic evidence.</p></article>
+    <article class="panel"><h2>Not a safety ranking</h2><p>BIR records historical incidents and outcomes. It does not recommend bridges or rank safety.</p></article>
   </section>
 
   {!hasRegistryData && (
