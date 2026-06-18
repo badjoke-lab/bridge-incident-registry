@@ -28,6 +28,9 @@ All notable project changes should be recorded here after merge.
 - Two Batch 4 incident records covering metapool liquidity extraction and unauthorized omnichain token minting
 - IBC Dragonberry and Huckleberry security-response timelines as non-exploited event records
 - NerveNetwork, Mantle, Cosmos interchain, fUSDT, UST, and HLG reference definitions
+- Phase 2 Batch 5 records for Ren Protocol, Avalanche-Ethereum Bridge, Avalanche Bridge, and ShuttleFlow
+- Twenty Batch 5 lifecycle and migration events
+- Conflux Core Space, Conflux eSpace, renBTC, and CFX reference definitions
 
 ### Changed
 
@@ -52,8 +55,8 @@ All notable project changes should be recorded here after merge.
 ### Data counts
 
 ```text
-Bridges     22
+Bridges     26
 Incidents   27
-Events      103
-Evidence    125
+Events      123
+Evidence    148
 ```
