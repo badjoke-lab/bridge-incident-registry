@@ -1,22 +1,11 @@
 # BIR Live Recovery Checkpoint
 
 Status: active  
-Reset: 2026-06-19
+Updated: 2026-06-19
 
-This file is the short restart point. GitHub state and canonical JSON remain authoritative. Any embedded commit SHA is a historical baseline, not a live pointer.
+This file is the short restart point. GitHub state and canonical JSON remain authoritative. Embedded commit SHAs are historical checkpoints, not live branch pointers.
 
-## Historical baseline before remediation
-
-```text
-Repository:                   badjoke-lab/bridge-incident-registry
-Default branch:               main
-Baseline commit:              001da4b36570ac861d5c2d1c821b3cc27d2c521f
-Last merged canonical PR:     #48 — Phase 2 Batch 5
-Last merged scope PR:         #49 — Phase 2 Batch 6 scope
-Open PRs at baseline:         0
-```
-
-## Canonical counts at remediation start
+## Canonical counts
 
 ```text
 Bridges     26
@@ -37,17 +26,34 @@ Detailed plan:
 docs/runbooks/public-consistency-remediation.md
 ```
 
-Current sequence:
+## Progress
 
 ```text
-PR 1  Current-state reset and plan freeze     complete when this file reaches main
-PR 2  Canonical-derived public output         next
-PR 3  Machine-readable public layer           blocked by PR 2
+PR 1  Current-state reset and plan freeze     complete — PR #50
+PR 2  Canonical-derived public output         complete when this file reaches main
+PR 3  Machine-readable public layer           next
 PR 4  Canonical metadata and discovery        blocked by PR 3
 PR 5  Legacy redirects                        blocked by PR 4
 PR 6  Post-build consistency CI               blocked by PR 5
 PR 7  Production verification                 blocked by PR 6
 ```
+
+PR 1 merge checkpoint:
+
+```text
+PR:           #50
+Merge commit: ed7d4871c82dcd6b089bb3ac6da5df538a83116c
+```
+
+## PR 2 output contract
+
+PR 2 establishes an internal generated layer at:
+
+```text
+.generated/public-data/
+```
+
+It derives counts, verification metadata, canonical origin, schema version, and page links from canonical JSON. The directory is ignored by Git and is not publicly deployed. PR 3 connects reviewed generated output to public endpoints.
 
 ## Record-expansion state
 
@@ -72,7 +78,7 @@ The branch `phase2-batch6-records` is parked. Do not add canonical data to it du
 
 ## Source-of-truth rule
 
-Current public state must always derive from:
+Current public state must derive from:
 
 ```text
 data/bridges.json
@@ -81,4 +87,4 @@ data/events.json
 data/evidence.json
 ```
 
-Do not infer the current state from an old commit SHA, an archived roadmap checkpoint, a preview deployment, or manually copied counts.
+Do not infer the current state from an old commit SHA, an archived checkpoint, a preview deployment, or manually copied counts.
