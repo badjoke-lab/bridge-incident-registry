@@ -5,8 +5,10 @@ const steps = [
   "scripts/build-public-data.mjs",
   "scripts/publish-machine-data.mjs",
   "scripts/publish-discovery.mjs",
+  "scripts/publish-redirects.mjs",
   "scripts/check-machine-data.mjs",
-  "scripts/check-discovery.mjs"
+  "scripts/check-discovery.mjs",
+  "scripts/check-redirects.mjs"
 ];
 
 for (const step of steps) {
