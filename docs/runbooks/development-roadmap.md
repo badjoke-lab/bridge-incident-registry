@@ -1,11 +1,11 @@
 # Bridge Incident Registry — Development Roadmap to v1
 
-Status: active roadmap  
+Status: active  
 Updated: 2026-06-19
 
-GitHub state and canonical JSON are authoritative. Embedded commit SHAs are historical checkpoints only.
+GitHub state and canonical JSON are authoritative.
 
-## Canonical counts
+## Canonical baseline
 
 ```text
 Bridges     26
@@ -27,79 +27,47 @@ Phase 2  Record expansion                          paused for remediation
          Batch 4                                   complete
          Batch 5                                   complete
          Batch 6 scope                             complete
-         Batch 6 canonical implementation          paused
+         Batch 6 implementation                    paused
          Batch 7                                   planned
-Emergency public consistency                       in progress — PR 2 of 7
+Emergency public consistency                       in progress — PR 3 of 7
 Phase 3  Full-corpus quality strengthening         planned
-Phase 4  Machine-readable public layer             being completed early
+Phase 4  Public contract stabilization             being completed early
 Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
 ```
 
-## Emergency public-consistency workstream
+## Emergency public-consistency sequence
 
-Detailed plan:
+### PR 1 — Current-state reset
+
+Complete:
 
 ```text
-docs/runbooks/public-consistency-remediation.md
+PR #50
+ed7d4871c82dcd6b089bb3ac6da5df538a83116c
 ```
 
-No canonical record-expansion PR may merge until PR 7 completes production verification.
+### PR 2 — Canonical-derived public output
 
-### PR 1 — Current-state reset and plan freeze
-
-Status: complete
+Complete:
 
 ```text
-PR:           #50
-Merge commit: ed7d4871c82dcd6b089bb3ac6da5df538a83116c
+PR #51
+f7e0ff462c07fc02f6fe620d7a125546a27a45e3
 ```
 
 Result:
 
-- stale current-state claims were removed
-- 26 / 27 / 123 / 148 was fixed as the remediation baseline
-- Batch 6 implementation was paused
-- the seven-PR sequence was stored in the repository
-
-### PR 2 — Canonical-derived public output pipeline
-
-Status: complete when this roadmap version reaches main
-
-Purpose:
-
-- load canonical JSON through one Node-side generation path
-- calculate counts and verification metadata from canonical records
-- derive page URLs without modifying source canonical JSON
-- create isolated staging output under `.generated/public-data/`
-- run the generator automatically before Astro builds
-
-Files:
-
-```text
-config/public-data.json
-scripts/build-public-data.mjs
-scripts/lib/canonical-data.mjs
-scripts/lib/public-records.mjs
-docs/runbooks/canonical-public-output-pipeline.md
-package.json
-.gitignore
-```
-
-Completion gates:
-
-- generator reads only declared canonical paths
-- `canonical_only` must be true
-- record IDs and counts remain unchanged during transformation
-- generated timestamps follow documented precedence
-- `.generated/` is not committed or publicly deployed
-- standard validation and build pass
+- one declared canonical input set
+- generated metadata and page URLs
+- isolated `.generated/public-data/` staging
+- prebuild integration
 
 ### PR 3 — Machine-readable public layer
 
-Status: next
+Complete when this roadmap version reaches main.
 
-Planned endpoints:
+Result:
 
 ```text
 /version.json
@@ -114,171 +82,91 @@ Planned endpoints:
 /ai.txt
 ```
 
-Completion gates:
-
-- public and canonical IDs match
-- public and canonical counts match
-- `canonical_only` is true
-- each bridge and incident links to a human canonical page
-- non-canonical working material is absent
+The build checks public IDs, counts, origin, schema, verification marker, reference dictionaries, and canonical-only flags.
 
 ### PR 4 — Canonical metadata and discovery
 
-Status: blocked by PR 3
+Next.
 
 Scope:
 
-- canonical links
-- alternate JSON discovery
-- Open Graph metadata
+- HTML canonical links
+- alternate JSON links
+- Open Graph and social metadata
 - conservative JSON-LD
 - sitemap
 - robots policy
 - preview noindex behavior
-- production-origin configuration
-- human-visible data-discovery links
+- human-visible links to version, manifest, and public datasets
 
 ### PR 5 — Legacy redirects
 
-Status: blocked by PR 4
+Blocked by PR 4.
 
 Scope:
 
-- generate Cloudflare redirects from `previous_slugs` and `redirect_from`
+- generate redirects from `previous_slugs` and `redirect_from`
 - reject duplicate sources, loops, and missing targets
-- exclude old URLs from canonical metadata and sitemap output
+- exclude old routes from canonical discovery
 
 ### PR 6 — Post-build consistency CI
 
-Status: blocked by PR 5
+Blocked by PR 5.
 
 Scope:
 
-- compare canonical JSON, public JSON, manifest, version, HTML, sitemap, detail pages, and redirects
+- compare canonical JSON, public JSON, manifest, version, HTML, sitemap, pages, and redirects
 - inspect `dist` for stale or non-canonical output
-- reject count, ID, page, metadata, and route mismatches
+- add intentional mismatch tests
 
-### PR 7 — Production verification and audit closure
+### PR 7 — Production verification
 
-Status: blocked by PR 6
+Blocked by PR 6.
 
 Scope:
 
-- verify Cloudflare production HTML and JSON directly
-- check every canonical bridge and incident page
-- verify redirects, sitemap, robots, metadata, and cache behavior
-- record all URLs, sources, counts, PRs, commits, and CI results
-
-Required report:
-
-```text
-docs/audits/public-consistency-verification-2026-06.md
-```
+- verify all production HTML and machine-readable endpoints
+- verify all bridge and incident pages
+- verify redirects and indexing files
+- compare normal and cache-bypassed responses
+- publish the final audit report
 
 ## Phase 2 resume
 
 After PR 7:
 
 1. verify latest main and open PRs
-2. compare the parked `phase2-batch6-records` branch with main
-3. replace or fast-forward it as necessary
-4. re-read the Batch 6 scope
+2. compare the parked Batch 6 branch with main
+3. recreate or fast-forward the branch
+4. re-read Batch 6 scope
 5. derive IDs and counts from canonical JSON
 6. implement Transit Swap, Rubic, Unizen, and Magpie Protocol
 7. run canonical and public-consistency checks
 8. verify production output after merge
 
-## Phase 2 Batch 7
+## Remaining roadmap
 
 After Batch 6:
 
-1. define a bounded evidence-backed scope
-2. review duplicates and entity boundaries
-3. implement canonical records and references
-4. run the full public-consistency path
+1. define and implement Batch 7
+2. full-corpus audit
+3. primary-source strengthening
+4. aftermath terminology normalization
+5. URL and archive hardening
+6. validator strengthening
+7. public-contract compatibility review
+8. monitoring and candidate collection with no automatic publication
+9. v1 documentation, accessibility, performance, and release checks
 
-## Phase 3 — Full-corpus quality strengthening
-
-Planned PR groups:
-
-1. corpus audit inventory
-2. primary-source strengthening
-3. aftermath terminology normalization
-4. URL and archive hardening
-5. validator strengthening
-
-The corpus audit must separately track:
-
-- weak source tiers
-- stale verification dates
-- amount conflicts
-- unresolved recovery and reimbursement states
-- missing archives
-- uncertain current status
-- missing redirects
-
-## Phase 4 — Public contract stabilization
-
-The emergency workstream completes most implementation early. Later Phase 4 work focuses on:
-
-- schema-version policy
-- backward compatibility
-- endpoint stability
-- cross-site ledger-series alignment
-- public change documentation
-- deprecation policy
-
-## Phase 5 — Monitoring and candidate collection
-
-Rules:
-
-- monitoring output is separate from canonical data
-- monitoring never writes canonical JSON directly
-- candidates require review
-- candidate drafts are not public records
-- automatic publication is prohibited
-
-## v1 hardening
-
-Final groups:
-
-1. methodology and documentation review
-2. accessibility and UI review
-3. performance and deployment review
-4. v1 release checkpoint
-
-Release requires:
-
-- canonical data validation
-- public output consistency
-- production verification
-- documented corpus limitations
-- no automatic candidate publication
-- current recovery documentation
-
-## Permanent operating rules
+## Permanent rules
 
 1. Never write canonical changes directly to main.
-2. Use one branch and one bounded PR per task.
+2. Use one branch and bounded PR per task.
 3. Read canonical JSON before assigning IDs or counts.
-4. Keep canonical, candidate, monitoring, and temporary data separate.
-5. Do not merge temporary diagnostics or write-enabled workflows.
-6. Keep reported, returned, recovered, reimbursed, frozen, minted, and burned amounts distinct.
-7. A disclosure is not automatically an exploit incident.
+4. Keep canonical and working data separate.
+5. Do not merge temporary diagnostics.
+6. Preserve distinctions among loss, return, recovery, reimbursement, freezing, minting, and burning.
+7. A disclosure is not automatically an exploit.
 8. A relaunch announcement is not proof of operation.
-9. Every PR must pass the checks appropriate to its phase.
-10. Historical SHAs must never be presented as a live branch pointer.
-
-## Standard merge report
-
-```text
-PR number and title
-merge commit
-changed files
-canonical count delta
-CI result
-Cloudflare preview result
-production result when applicable
-current roadmap position
-next PR
-```
+9. Historical SHAs are not live branch pointers.
+10. Every PR must pass checks appropriate to its stage.
