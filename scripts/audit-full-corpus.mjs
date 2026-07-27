@@ -69,21 +69,21 @@ for (const bridge of bridges) {
   const reimbursed = linkedIncidents.some(reimbursementHistory);
 
   if (bridge.major_incident_count !== majorCount) {
-    warn("bridge_major_incident_count", `${bridge.id}: stored ${bridge.major_incident_count}, derived ${majorCount}`);
+    errors.push(`${bridge.id}: major_incident_count ${bridge.major_incident_count} does not match linked incidents ${majorCount}`);
   }
   if (bridge.has_unresolved_incident !== unresolved) {
-    warn("bridge_unresolved_flag", `${bridge.id}: stored ${bridge.has_unresolved_incident}, derived ${unresolved}`);
+    errors.push(`${bridge.id}: has_unresolved_incident ${bridge.has_unresolved_incident} does not match linked incidents ${unresolved}`);
   }
   if (bridge.has_reimbursement_history !== reimbursed) {
-    warn("bridge_reimbursement_flag", `${bridge.id}: stored ${bridge.has_reimbursement_history}, derived ${reimbursed}`);
+    errors.push(`${bridge.id}: has_reimbursement_history ${bridge.has_reimbursement_history} does not match linked incidents ${reimbursed}`);
   }
   if (linkedEvidence.length === 0) errors.push(`${bridge.id}: bridge has no evidence records`);
   if (linkedIncidents.length > 0 && linkedEvents.length === 0) errors.push(`${bridge.id}: bridge has incidents but no timeline events`);
   if (isTerminalStatus(bridge.status) && !bridge.end_date && !bridge.terminal_reason) {
-    warn("terminal_entity_metadata", `${bridge.id}: ${bridge.status} without end_date or terminal_reason`);
+    errors.push(`${bridge.id}: ${bridge.status} entity requires end_date or terminal_reason`);
   }
   if (bridge.status === "active" && bridge.end_date) {
-    warn("active_entity_end_date", `${bridge.id}: active entity has end_date ${bridge.end_date}`);
+    errors.push(`${bridge.id}: active entity must not have end_date ${bridge.end_date}`);
   }
 }
 
@@ -128,10 +128,10 @@ for (const incident of incidents) {
   }
   if (incident.recovery_status === "full_recovery"
       && !linkedEvents.some((event) => ["funds_recovered", "funds_returned"].includes(event.event_type))) {
-    warn("full_recovery_event", `${incident.id}: full_recovery without funds_recovered or funds_returned event`);
+    errors.push(`${incident.id}: full_recovery requires funds_recovered or funds_returned event`);
   }
   if (incident.is_unresolved === false && Array.isArray(incident.unresolved_reason) && incident.unresolved_reason.length > 0) {
-    warn("resolved_with_unresolved_reason", `${incident.id}: resolved incident retains unresolved_reason entries`);
+    errors.push(`${incident.id}: resolved incident must not retain unresolved_reason entries`);
   }
   if (incident.is_unresolved === true && (!Array.isArray(incident.unresolved_reason) || incident.unresolved_reason.length === 0)) {
     errors.push(`${incident.id}: unresolved incident has no unresolved_reason`);
@@ -145,24 +145,24 @@ for (const event of events) {
   }
   const incident = event.incident_id ? incidentsById.get(event.incident_id) : null;
   if (event.event_type === "reimbursement_completed" && incident?.reimbursement_status !== "completed") {
-    warn("event_incident_reimbursement", `${event.id}: reimbursement_completed but incident is ${incident?.reimbursement_status ?? "missing"}`);
+    errors.push(`${event.id}: reimbursement_completed requires incident reimbursement_status completed`);
   }
   if (event.event_type === "bridge_reopened" && incident
       && !["reopened", "partially_reopened", "replaced"].includes(incident.restart_status)) {
-    warn("event_incident_restart", `${event.id}: bridge_reopened but incident restart is ${incident.restart_status}`);
+    errors.push(`${event.id}: bridge_reopened conflicts with incident restart_status ${incident.restart_status}`);
   }
   if (["funds_recovered", "funds_returned"].includes(event.event_type) && incident
       && !["partial_recovery", "full_recovery", "unknown"].includes(incident.recovery_status)) {
-    warn("event_incident_recovery", `${event.id}: ${event.event_type} but incident recovery is ${incident.recovery_status}`);
+    errors.push(`${event.id}: ${event.event_type} conflicts with incident recovery_status ${incident.recovery_status}`);
   }
 }
 
 for (const source of evidence) {
   if (source.is_primary === true && source.source_tier !== "tier_1") {
-    warn("primary_source_tier", `${source.id}: primary source classified ${source.source_tier}`);
+    errors.push(`${source.id}: primary source must use tier_1, received ${source.source_tier}`);
   }
   if (["dead", "archived"].includes(source.url_status) && !source.archived_url) {
-    warn("archive_coverage", `${source.id}: ${source.url_status} without archived_url`);
+    errors.push(`${source.id}: ${source.url_status} source requires archived_url`);
   }
   if (source.event_id) {
     const event = eventsById.get(source.event_id);
@@ -170,9 +170,8 @@ for (const source of evidence) {
       const expectedIncidentId = event.incident_id ?? null;
       const actualIncidentId = source.incident_id ?? null;
       if (expectedIncidentId !== actualIncidentId) {
-        warn(
-          "event_evidence_incident_mismatch",
-          `${source.id}: event ${source.event_id} expects incident ${expectedIncidentId ?? "null"}, evidence has ${actualIncidentId ?? "null"}`
+        errors.push(
+          `${source.id}: event evidence incident mismatch; event ${source.event_id} expects ${expectedIncidentId ?? "null"}, evidence has ${actualIncidentId ?? "null"}`
         );
       }
     }
