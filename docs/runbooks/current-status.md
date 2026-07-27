@@ -3,7 +3,7 @@
 Status: active  
 Updated: 2026-07-28
 
-## Canonical state on Batch 7 review branch
+## Canonical state
 
 ```text
 Bridges     33
@@ -21,8 +21,6 @@ data/events.json        173
 data/evidence.json      199
 ```
 
-`main` remains at 30 / 32 / 150 / 181 until the Batch 7 data PR merges.
-
 ## Phase 2 record expansion
 
 ```text
@@ -33,39 +31,34 @@ Batch 4    complete
 Batch 5    complete
 Batch 6A   merged and production-verified
 Batch 6B   merged and production-verified
-Batch 7    canonical implementation complete on review branch
+Batch 7    merged and production-verified
 ```
 
-Batch 7 review-branch additions:
+## Batch 7 checkpoint
 
 ```text
-Bridge entities    3
-Incident cases     2
-Timeline events    23
-Evidence records   18
-Asset references   3
-Chain references   3
+Canonical data PR      #69
+Merge commit           eb6bc7366ea25be4441c72cdfa50b753477eef34
+Production verify      30309573252
+Verified state         33 / 34 / 173 / 199
+Verified HTML routes   72
 ```
 
-Added candidates:
+Batch 7 added:
 
-- Taiko Bridge
-- Everclear / Connext
-- Commons Bridge
+- Taiko Bridge entity and June 2026 incident
+- Everclear / Connext lifecycle entity
+- Commons Bridge entity and April 2026 incident
+- 23 timeline events
+- 18 evidence records
+- SYND, CLEAR, and NEXT asset references
+- Taiko, Base, and Commons Chain references
 
-Implementation record: `docs/batches/phase2-batch-07-implementation.md`.
+Records:
 
-## Previous publication checkpoint
-
-```text
-Batch 6B PR           #66
-Merge commit          1d2ccf24edab7b764160da130fc2e36146e6f1b1
-Production verify     30307942555
-Verified state        30 / 32 / 150 / 181
-Verified HTML routes  67
-```
-
-Audit: `docs/audits/production-verification-batch6b-2026-07-28.md`.
+- `docs/batches/phase2-batch-07-scope-2026-07-28.md`
+- `docs/batches/phase2-batch-07-implementation.md`
+- `docs/audits/production-verification-batch7-2026-07-28.md`
 
 ## Production verifier
 
@@ -77,15 +70,29 @@ The verifier:
 - fails if publication does not converge within five minutes
 - retains all count, ID, route, reference, metadata, sitemap, robots, redirect, content-type, and cache assertions
 
+## Public representations covered
+
+The repository and production checks cover:
+
+- human-facing HTML
+- version and manifest metadata
+- bridge, incident, event, evidence, chain, and asset JSON
+- `llms.txt` and `ai.txt`
+- canonical and alternate metadata
+- Open Graph, Twitter, and JSON-LD metadata
+- sitemap and robots policy
+- Cloudflare response headers and observable cache metadata
+- legacy route redirects
+- canonical/public counts, IDs, routes, and publication boundaries
+
 ## Next
 
-1. run normal PR CI against the cleaned Batch 7 branch
-2. review the Taiko, Everclear, and Commons canonical diff
-3. merge only after every required check passes
-4. run explicit production verification against 33 / 34 / 173 / 199
-5. verify all 72 canonical HTML routes
-6. begin full-corpus quality work only after publication is confirmed
+1. verify latest `main` and open PRs after the Batch 7 audit merges
+2. start Phase 3 full-corpus quality strengthening
+3. audit every bridge, incident, event, and evidence record for schema drift and aftermath consistency
+4. separate mechanical normalization from claim-changing data review
+5. require repository and production verification for every canonical change
 
 ## Record expansion
 
-Batch 7 data is not part of `main` until PR #69 merges. No temporary generator, diagnostic output, or write-enabled workflow remains in the cleaned review diff.
+Phase 2 Batches 1–7 are complete. Phase 3 full-corpus quality strengthening is the next bounded workstream.
