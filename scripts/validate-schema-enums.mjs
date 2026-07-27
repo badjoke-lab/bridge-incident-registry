@@ -218,7 +218,7 @@ for (const source of evidence) {
 for (const bridge of bridges) {
   const context = `bridge ${bridge.id ?? "<missing id>"}`;
   checkMigrationValue(bridge, "official_url_status", targetEnums.official_url_status, context, { snakeCase: true });
-  checkMigrationValue(bridge, "operator_type", targetEnums.operator_type, context, { snakeCase: true });
+  checkMigrationValue(bridge, "operator_type", targetEnums.operator_type, context);
 }
 
 if (legacyValues.size > 0) {
