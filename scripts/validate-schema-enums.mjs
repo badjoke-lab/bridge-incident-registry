@@ -11,6 +11,10 @@ const events = read("data/events.json");
 const evidence = read("data/evidence.json");
 
 const strictEnums = {
+  amount_confidence: new Set(["high", "medium", "low", "disputed", "unknown", "not_applicable"])
+};
+
+const targetEnums = {
   incident_type: new Set([
     "exploit",
     "hack",
@@ -55,10 +59,6 @@ const strictEnums = {
     "unknown",
     "not_applicable"
   ]),
-  amount_confidence: new Set(["high", "medium", "low", "disputed", "unknown", "not_applicable"])
-};
-
-const targetEnums = {
   attack_vector_category: new Set([
     "validator_key_compromise",
     "message_verification_failure",
@@ -165,19 +165,12 @@ function requireEnum(record, field, allowed, context) {
   if (!allowed.has(value)) errors.push(`${context}: invalid ${field}: ${value}`);
 }
 
-function checkOptionalEnum(record, field, allowed, context) {
-  const value = record[field];
-  if (value === undefined || value === null) return;
-  if (typeof value !== "string" || value.length === 0) {
-    errors.push(`${context}: ${field} must be a non-empty string when present`);
-    return;
-  }
-  if (!allowed.has(value)) errors.push(`${context}: invalid ${field}: ${value}`);
-}
-
 function checkMigrationValue(record, field, allowed, context, options = {}) {
   const value = record[field];
-  if (value === undefined || value === null) return;
+  if (value === undefined || value === null) {
+    if (options.required) errors.push(`${context}: missing ${field}`);
+    return;
+  }
   if (typeof value !== "string" || value.length === 0) {
     errors.push(`${context}: ${field} must be a non-empty string when present`);
     return;
@@ -194,11 +187,11 @@ function checkMigrationValue(record, field, allowed, context, options = {}) {
 
 for (const incident of incidents) {
   const context = `incident ${incident.id ?? "<missing id>"}`;
-  requireEnum(incident, "incident_type", strictEnums.incident_type, context);
-  requireEnum(incident, "recovery_status", strictEnums.recovery_status, context);
-  requireEnum(incident, "reimbursement_status", strictEnums.reimbursement_status, context);
-  requireEnum(incident, "restart_status", strictEnums.restart_status, context);
-  requireEnum(incident, "current_outcome", strictEnums.current_outcome, context);
+  checkMigrationValue(incident, "incident_type", targetEnums.incident_type, context, { required: true, snakeCase: true });
+  checkMigrationValue(incident, "recovery_status", targetEnums.recovery_status, context, { required: true, snakeCase: true });
+  checkMigrationValue(incident, "reimbursement_status", targetEnums.reimbursement_status, context, { required: true, snakeCase: true });
+  checkMigrationValue(incident, "restart_status", targetEnums.restart_status, context, { required: true, snakeCase: true });
+  checkMigrationValue(incident, "current_outcome", targetEnums.current_outcome, context, { required: true, snakeCase: true });
   requireEnum(incident, "amount_confidence", strictEnums.amount_confidence, context);
   checkMigrationValue(incident, "attack_vector_category", targetEnums.attack_vector_category, context, { snakeCase: true });
   checkMigrationValue(incident, "postmortem_available", targetEnums.postmortem_available, context, { snakeCase: true });
@@ -207,18 +200,18 @@ for (const incident of incidents) {
 
 for (const event of events) {
   const context = `event ${event.id ?? "<missing id>"}`;
-  checkMigrationValue(event, "event_type", targetEnums.event_type, context, { snakeCase: true });
+  checkMigrationValue(event, "event_type", targetEnums.event_type, context, { required: true, snakeCase: true });
   checkMigrationValue(event, "impact_level", targetEnums.impact_level, context, { snakeCase: true });
   if (typeof event.status_effect !== "string" || event.status_effect.trim().length === 0) {
     errors.push(`${context}: status_effect must be a non-empty descriptive string`);
   }
-  checkOptionalEnum(event, "reimbursement_status", strictEnums.reimbursement_status, context);
-  checkOptionalEnum(event, "restart_status", strictEnums.restart_status, context);
+  checkMigrationValue(event, "reimbursement_status", targetEnums.reimbursement_status, context, { snakeCase: true });
+  checkMigrationValue(event, "restart_status", targetEnums.restart_status, context, { snakeCase: true });
 }
 
 for (const source of evidence) {
   const context = `evidence ${source.id ?? "<missing id>"}`;
-  checkMigrationValue(source, "source_type", targetEnums.source_type, context, { snakeCase: true });
+  checkMigrationValue(source, "source_type", targetEnums.source_type, context, { required: true, snakeCase: true });
   checkMigrationValue(source, "claim_scope", targetEnums.claim_scope, context, { snakeCase: true });
 }
 
@@ -242,5 +235,5 @@ if (errors.length > 0) {
 }
 
 console.log("Schema enum validation passed.");
-console.log(`Strict incident enum checks: ${incidents.length}`);
-console.log(`Migration-shape checks: ${bridges.length} bridges, ${events.length} events, ${evidence.length} evidence records.`);
+console.log(`Strict amount-confidence checks: ${incidents.length}`);
+console.log(`Target-vocabulary migration checks: ${bridges.length} bridges, ${incidents.length} incidents, ${events.length} events, ${evidence.length} evidence records.`);
