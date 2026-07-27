@@ -28,7 +28,7 @@ Phase 2  Record expansion                          active
          Batch 5                                   complete
          Batch 6 scope                             complete
          Batch 6 source resolution                 complete
-         Batch 6A Transit + Magpie                  implemented on review branch
+         Batch 6A Transit + Magpie                  complete and production-verified
          Batch 6B Rubic + Unizen                    source-gated
          Batch 7                                   planned
 Emergency public consistency                       complete — PR #59
@@ -50,16 +50,16 @@ PR 6  Post-build consistency CI              complete — PR #58
 PR 7  Production verification                complete — PR #59
 ```
 
-Production verification passed on GitHub Actions run `30290442852`. See `docs/audits/production-verification-2026-07-28.md`.
+The original production verification passed on GitHub Actions run `30290442852`. See `docs/audits/production-verification-2026-07-28.md`.
 
-## Phase 2 Batch 6A
+## Completed Phase 2 Batch 6A
 
-Implemented records:
+Canonical records:
 
 - Transit Swap
 - Magpie Protocol / Fly
 
-Implemented additions:
+Additions:
 
 ```text
 Bridge entities   2
@@ -68,15 +68,21 @@ Timeline events   11
 Evidence records  12
 ```
 
-Required completion steps:
+Completion checkpoints:
 
-1. open the cleaned canonical-data PR
-2. run canonical validation, enum migration checks, first-ten audit, build, post-build consistency, and controlled-failure tests
-3. review all amount, return, reimbursement, dependency, and brand-history boundaries
-4. merge after required checks pass
-5. verify production HTML, JSON, routes, sitemap, metadata, and redirects against the new canonical totals
+```text
+Canonical data PR        #63
+Merge commit             c074d411b9c1d99b0f5cd56c5ade3125952de13c
+Production verify run    30306150605
+Verified HTML routes     62
+```
 
-Implementation record: `docs/batches/phase2-batch-06a-implementation.md`.
+The production run checked all static pages, 28 bridge detail pages, 29 incident detail pages, public JSON counts and ordered IDs, metadata, sitemap, robots, redirects, content types, and observable cache headers.
+
+Records:
+
+- `docs/batches/phase2-batch-06a-implementation.md`
+- `docs/audits/production-verification-batch6a-2026-07-28.md`
 
 ## Phase 2 Batch 6B
 
@@ -91,7 +97,8 @@ Before canonical promotion:
 2. reconcile Rubic operator-wallet, user-loss, recovery, and reimbursement scopes
 3. obtain stronger first-party Unizen incident and reimbursement records
 4. keep Unizen's trade aggregator incident distinct from UIP providers
-5. prepare a dedicated reviewed data PR rather than extending Batch 6A
+5. derive IDs only from the current 28 / 29 / 134 / 160 canonical baseline
+6. prepare a dedicated reviewed data PR rather than extending Batch 6A
 
 Source-resolution record: `docs/batches/phase2-batch-06-source-resolution-2026-07-28.md`.
 
