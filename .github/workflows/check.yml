@@ -27,6 +27,9 @@ jobs:
       - name: Validate canonical data
         run: npm run validate:data
 
+      - name: Validate schema enums
+        run: npm run validate:enums
+
       - name: Audit first ten seeds
         run: npm run audit:first-ten
 
