@@ -1,10 +1,11 @@
 # BIR Batch 6B production verification — 2026-07-28
 
-Status: retrying after initial publication check  
+Status: passed  
 Production origin: `https://bridge-incident-registry.pages.dev`  
-Canonical merge: `1d2ccf24edab7b764160da130fc2e36146e6f1b1`
+Canonical merge: `1d2ccf24edab7b764160da130fc2e36146e6f1b1`  
+Successful verification run: `30307748017`
 
-## Expected canonical state
+## Verified canonical state
 
 ```text
 Bridges     30
@@ -18,6 +19,8 @@ The HTML route total consists of five static pages, 30 bridge detail pages, and 
 
 ## Batch 6B routes
 
+The following new routes were included in the full successful verification:
+
 ```text
 /bridge/rubic/
 /bridge/unizen/
@@ -28,22 +31,47 @@ The HTML route total consists of five static pages, 30 bridge detail pages, and 
 
 ## Verification scope
 
+The successful production run checked:
+
 - production home and collection counts
-- all static pages
-- all bridge detail routes
-- all incident detail routes
+- all five static pages
+- all 30 bridge detail routes
+- all 32 incident detail routes
 - canonical links and JSON-LD identifiers
-- version and manifest counts
-- ordered canonical public JSON IDs
+- version and manifest counts and canonical-only markers
+- ordered bridge, incident, event, and evidence public JSON IDs
 - RBC and BRBC public reference output
 - sitemap URL set
 - robots policy
-- legacy redirects and destinations
+- generated legacy redirects and destinations
 - content types
 - observable cache headers
 
-## Runs
+## Publication convergence
 
-Initial Production Verification run `30307468595` started immediately after PR #67 opened and did not match the expected newly published state.
+Initial runs `30307468595` and `30307568938` observed the previous 28 / 29 / 134 / 160 production state. Diagnostic run `30307610257` confirmed:
 
-A fresh full verification run is triggered by this commit. The audit remains incomplete until the 30 / 32 / 150 / 181 state and all 67 routes pass without reduced assertions.
+- old record counts in `version.json` and `data/manifest.json`
+- no RBC or BRBC reference output
+- 62 sitemap URLs
+- Batch 6B paths falling through to the home page canonical URL
+
+The repository state was correct; Cloudflare Pages publication had not yet converged to the Batch 6B merge.
+
+The production verifier now performs a bounded publication-convergence wait against canonical `version.json` counts before beginning route checks. Defaults:
+
+```text
+Attempts       20
+Delay          15 seconds
+Maximum wait   5 minutes
+```
+
+The wait does not weaken any verification assertion. If expected counts do not appear within the bounded window, the workflow fails before route checks and records the latest observed counts and generation timestamp.
+
+Full verification run `30307748017` detected the expected canonical state and then passed all content, route, metadata, ID, reference, redirect, and cache checks.
+
+## Result
+
+Phase 2 Batch 6B publication is complete and verified against the reviewed canonical repository state.
+
+The temporary diagnostic workflow was removed before this audit PR was merged.
