@@ -1,6 +1,6 @@
 # BIR Batch 7 production verification — 2026-07-28
 
-Status: running  
+Status: retrying after publication convergence timeout  
 Production origin: `https://bridge-incident-registry.pages.dev`  
 Canonical merge: `eb6bc7366ea25be4441c72cdfa50b753477eef34`
 
@@ -43,6 +43,8 @@ The HTML route total consists of five static pages, 33 bridge detail pages, and 
 - content types
 - observable cache headers
 
-## Result
+## Runs
 
-Pending the dedicated `Production Verification` workflow run triggered by this audit PR.
+Initial Production Verification run `30309142124` did not observe the 33 / 34 / 173 / 199 state within the bounded five-minute publication window and failed before route checks.
+
+A fresh full verification run is triggered by this commit. The same hard convergence gate and all 72-route assertions remain in effect.
