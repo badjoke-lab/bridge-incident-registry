@@ -5,7 +5,7 @@ Updated: 2026-07-28
 
 GitHub state and canonical JSON are authoritative. Commit SHAs below are completed merge checkpoints, not live branch pointers.
 
-## Canonical counts on Batch 7 review branch
+## Canonical counts
 
 ```text
 Bridges     33
@@ -14,72 +14,79 @@ Events      173
 Evidence    199
 ```
 
-`main` remains at 30 / 32 / 150 / 181 until PR #69 merges.
-
-## Completed merge checkpoints
+## Latest completed merge checkpoints
 
 ```text
-PR #50  ed7d4871c82dcd6b089bb3ac6da5df538a83116c
-PR #51  f7e0ff462c07fc02f6fe620d7a125546a27a45e3
-PR #52  6f3b8aad06edc7027fb362120aabe19fa46d52ee
-PR #53  5558a50e0a0f34ceca7c4b34816db29b0e7ae17b
-PR #54  40632e3e5cf600490097d58a15210dabce704ede
-PR #58  57e4fc948fc9a26f20833b657c8d31822c72f56a
-PR #59  e511911d97216366386ff808d9dfb80bdfd19334
-PR #61  bcf59e4c811f2d68a3cfeb89cceaa76c24fba9f0
-PR #62  90304ecbb9dfef4670d91093873a05aa87e770d2
-PR #63  c074d411b9c1d99b0f5cd56c5ade3125952de13c
-PR #64  8d5bb2b994cfd501e49827a2896291507a499620
-PR #65  d634db5436bc0590b35e19e88435eb4b9214e7b0
-PR #66  1d2ccf24edab7b764160da130fc2e36146e6f1b1
-PR #67  75ceaee267b537d4e8dadb21f64179d72f637c02
-PR #68  a74fadd47878015f940831a1339880ae81d937ca
+PR #63  c074d411b9c1d99b0f5cd56c5ade3125952de13c  Batch 6A data
+PR #64  8d5bb2b994cfd501e49827a2896291507a499620  Batch 6A audit
+PR #66  1d2ccf24edab7b764160da130fc2e36146e6f1b1  Batch 6B data
+PR #67  75ceaee267b537d4e8dadb21f64179d72f637c02  Batch 6B audit
+PR #68  a74fadd47878015f940831a1339880ae81d937ca  Batch 7 scope
+PR #69  eb6bc7366ea25be4441c72cdfa50b753477eef34  Batch 7 data
 ```
 
-## Last completed publication checkpoint
+## Phase 2 completion
 
-Batch 6B production verification passed:
+### Batch 6A
 
 ```text
-Run          30307942555
-State        30 / 32 / 150 / 181
-HTML routes  67
+Entities             Transit Swap, Magpie Protocol / Fly
+Production verify    30306303489
+Verified state       28 / 29 / 134 / 160
+HTML routes          62
 ```
 
-Audit: `docs/audits/production-verification-batch6b-2026-07-28.md`.
-
-## Batch 7 review state
-
-Branch:
+### Batch 6B
 
 ```text
-agent/phase2-batch7-records
+Entities             Rubic, Unizen
+Production verify    30307942555
+Verified state       30 / 32 / 150 / 181
+HTML routes          67
 ```
 
-Pull request:
+### Batch 7
 
 ```text
-#69  data: add Phase 2 Batch 7 records
+Entities             Taiko Bridge, Everclear / Connext, Commons Bridge
+Production verify    30309573252
+Verified state       33 / 34 / 173 / 199
+HTML routes          72
 ```
 
-Implemented:
+Batch 7 verified surfaces:
 
-- Taiko Bridge entity and June 2026 incident
-- Everclear / Connext lifecycle entity
-- Commons Bridge entity and April 2026 incident
-- 23 timeline events
-- 18 evidence records
-- SYND, CLEAR, and NEXT asset references
-- Taiko, Base, and Commons Chain references
+- all five static registry pages
+- all 33 bridge detail routes
+- all 34 incident detail routes
+- canonical JSON endpoints and ordered IDs
+- SYND, CLEAR, and NEXT public asset references
+- Taiko, Base, and Commons Chain public references
+- canonical metadata and JSON-LD identifiers
+- robots and 72-route sitemap
+- generated legacy redirects
+- content types and observable cache headers
 
-The bounded generator passed all repository checks before committing canonical data. Temporary generators, diagnostic output, and the write-enabled workflow were removed.
+Audit: `docs/audits/production-verification-batch7-2026-07-28.md`.
+
+## Production verifier behavior
+
+The verifier uses browser-compatible request headers and waits for `version.json` counts to match repository canonical counts before route checks.
+
+```text
+Attempts       20
+Delay          15 seconds
+Maximum wait   5 minutes
+```
+
+If production does not converge within the bounded window, verification fails before route checks. All route and content assertions remain mandatory after convergence.
 
 ## Next
 
-1. require the final normal Check workflow on the cleaned PR
-2. review the complete canonical diff
-3. merge PR #69 only after every required check passes
-4. run production verification against 33 / 34 / 173 / 199
-5. verify all 72 canonical HTML routes
-6. publish a Batch 7 production audit
-7. begin full-corpus quality work only after publication is confirmed
+1. merge the Batch 7 production-audit PR after final CI and production verification pass
+2. verify latest `main` and open PRs
+3. create a fresh Phase 3 full-corpus audit branch
+4. inventory schema and descriptive-value drift across all 33 / 34 / 173 / 199 records
+5. audit amount, recovery, reimbursement, restart, and outcome consistency
+6. separate mechanical normalization from claim-changing review
+7. strengthen validators with controlled failure fixtures before canonical migrations
