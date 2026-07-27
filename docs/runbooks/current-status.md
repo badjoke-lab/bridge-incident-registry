@@ -3,7 +3,7 @@
 Status: active  
 Updated: 2026-07-28
 
-## Canonical state on Batch 6B review branch
+## Canonical state
 
 ```text
 Bridges     30
@@ -20,8 +20,6 @@ data/incidents.json     32
 data/events.json        150
 data/evidence.json      181
 ```
-
-`main` remains at the prior 28 / 29 / 134 / 160 state until the Batch 6B data PR merges.
 
 ## Public-consistency remediation
 
@@ -44,51 +42,80 @@ Batch 3    complete
 Batch 4    complete
 Batch 5    complete
 Batch 6A   merged and production-verified
-Batch 6B   canonical implementation complete on review branch
-Batch 7    planned
+Batch 6B   merged and production-verified
+Batch 7    next
 ```
 
-Batch 6B review-branch additions:
+## Batch 6A checkpoint
 
 ```text
-Bridge entities   2
-Incident cases    3
-Timeline events   16
-Evidence records  21
-Asset references  2
-```
-
-Added candidates:
-
-- Rubic
-- Unizen
-
-Implementation record: `docs/batches/phase2-batch-06b-implementation.md`.
-
-## Batch 6A publication checkpoint
-
-```text
-PR #63                 c074d411b9c1d99b0f5cd56c5ade3125952de13c
+Canonical data PR      #63
+Merge commit           c074d411b9c1d99b0f5cd56c5ade3125952de13c
 Production verify      30306303489
 Verified state         28 / 29 / 134 / 160
 Verified HTML routes   62
 ```
 
-Audit: `docs/audits/production-verification-batch6a-2026-07-28.md`.
+## Batch 6B checkpoint
+
+```text
+Canonical data PR      #66
+Merge commit           1d2ccf24edab7b764160da130fc2e36146e6f1b1
+Production verify      30307748017
+Verified state         30 / 32 / 150 / 181
+Verified HTML routes   67
+```
+
+Batch 6B added:
+
+- Rubic entity
+- Rubic RBC/BRBC bridge wallet incident
+- Rubic RubicProxy approval incident
+- Unizen entity
+- Unizen March 2024 approval incident
+- 16 timeline events
+- 21 evidence records
+- RBC and BRBC asset references
+
+Records:
+
+- `docs/batches/phase2-batch-06b-source-resolution-2026-07-28.md`
+- `docs/batches/phase2-batch-06b-implementation.md`
+- `docs/audits/production-verification-batch6b-2026-07-28.md`
 
 ## Production verifier
 
-The verifier uses browser-compatible request headers because Cloudflare returned Error 1010 to the previous custom automation User-Agent. Verification assertions remain unchanged.
+The verifier:
+
+- uses browser-compatible request headers because Cloudflare rejected the previous custom automation User-Agent
+- waits for canonical `version.json` counts to converge before route checks
+- uses a bounded default window of 20 attempts at 15-second intervals
+- fails if publication does not converge within five minutes
+- retains all count, ID, route, reference, metadata, sitemap, robots, redirect, content-type, and cache assertions
+
+## Public representations covered
+
+The repository and production checks cover:
+
+- human-facing HTML
+- version and manifest metadata
+- bridge, incident, event, evidence, chain, and asset JSON
+- `llms.txt` and `ai.txt`
+- canonical and alternate metadata
+- Open Graph, Twitter, and JSON-LD metadata
+- sitemap and robots policy
+- Cloudflare response headers and observable cache metadata
+- legacy route redirects
+- canonical/public counts, IDs, routes, and publication boundaries
 
 ## Next
 
-1. run normal PR CI against the cleaned Batch 6B branch
-2. review the Rubic and Unizen canonical diff
-3. merge only after every required check passes
-4. run explicit production verification against the 30 / 32 / 150 / 181 state
-5. verify all 67 canonical HTML routes
-6. begin Batch 7 after publication is confirmed
+1. verify latest `main` and open PRs after the Batch 6B audit merges
+2. define the reviewed Phase 2 Batch 7 candidate scope
+3. derive IDs only from the 30 / 32 / 150 / 181 baseline
+4. preserve candidate research as non-canonical until a dedicated data PR
+5. require repository and production verification for every canonical merge
 
 ## Record expansion
 
-Batch 6B data is not part of `main` until PR #66 merges. No temporary generator or write-enabled workflow remains in the cleaned review diff.
+Phase 2 Batch 6 is complete. Batch 7 is the next bounded record-expansion workstream.

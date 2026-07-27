@@ -5,7 +5,7 @@ Updated: 2026-07-28
 
 GitHub state and canonical JSON are authoritative. Commit SHAs below are completed merge checkpoints, not live branch pointers.
 
-## Canonical counts on Batch 6B review branch
+## Canonical counts
 
 ```text
 Bridges     30
@@ -14,21 +14,7 @@ Events      150
 Evidence    181
 ```
 
-`main` remains at 28 / 29 / 134 / 160 until PR #66 merges.
-
-## Public-consistency remediation
-
-```text
-PR 1  Current-state reset                    complete — PR #50
-PR 2  Canonical-derived public output        complete — PR #51
-PR 3  Machine-readable public layer          complete — PR #52
-PR 4  Canonical metadata and discovery       complete — PR #53
-PR 5  Legacy redirects                       complete — PR #54
-PR 6  Post-build consistency CI              complete — PR #58
-PR 7  Production verification                complete — PR #59
-```
-
-Completed merge checkpoints:
+## Completed merge checkpoints
 
 ```text
 PR #50  ed7d4871c82dcd6b089bb3ac6da5df538a83116c
@@ -43,57 +29,65 @@ PR #62  90304ecbb9dfef4670d91093873a05aa87e770d2
 PR #63  c074d411b9c1d99b0f5cd56c5ade3125952de13c
 PR #64  8d5bb2b994cfd501e49827a2896291507a499620
 PR #65  d634db5436bc0590b35e19e88435eb4b9214e7b0
+PR #66  1d2ccf24edab7b764160da130fc2e36146e6f1b1
 ```
 
-## Last completed publication checkpoint
+## Phase 2 Batch 6 completion
 
-Batch 6A Production Verification run `30306303489` passed against `https://bridge-incident-registry.pages.dev`.
-
-Verified state:
+### Batch 6A
 
 ```text
-Bridges     28
-Incidents   29
-Events      134
-Evidence    160
-HTML routes 62
+Entities             Transit Swap, Magpie Protocol / Fly
+Production verify    30306303489
+Verified state       28 / 29 / 134 / 160
+HTML routes          62
 ```
 
-Audit: `docs/audits/production-verification-batch6a-2026-07-28.md`.
-
-## Batch 6B review state
-
-Branch:
+### Batch 6B
 
 ```text
-agent/phase2-batch6b-records
+Entities             Rubic, Unizen
+Incidents            3
+Timeline events      16
+Evidence records     21
+Asset references     RBC, BRBC
+Production verify    30307748017
+Verified state       30 / 32 / 150 / 181
+HTML routes          67
 ```
 
-Pull request:
+Batch 6B verified surfaces:
+
+- all five static registry pages
+- all 30 bridge detail routes
+- all 32 incident detail routes
+- canonical JSON endpoints and ordered IDs
+- RBC and BRBC public reference output
+- canonical metadata and JSON-LD identifiers
+- robots and 67-route sitemap
+- generated legacy redirects
+- content types and observable cache headers
+
+Audit: `docs/audits/production-verification-batch6b-2026-07-28.md`.
+
+## Production verifier behavior
+
+The verifier uses browser-compatible request headers and waits for `version.json` counts to match the repository's canonical counts before route checks.
 
 ```text
-#66  data: add Phase 2 Batch 6B records
+Attempts       20
+Delay          15 seconds
+Maximum wait   5 minutes
 ```
 
-Implemented:
-
-- Rubic entity
-- Rubic RBC/BRBC bridge wallet incident
-- Rubic RubicProxy approval incident
-- Unizen entity
-- Unizen March 2024 approval incident
-- 16 timeline events
-- 21 evidence records
-- RBC and BRBC reference definitions
-
-The bounded generator passed all repository checks before committing canonical data. The temporary generator, write-enabled workflow, and trigger file have been removed.
+If production does not converge within the bounded window, verification fails before route checks and reports the last observed counts and generation timestamp. All existing route and content assertions remain mandatory after convergence.
 
 ## Next
 
-1. require the final normal Check workflow on the cleaned PR
-2. review the complete canonical diff
-3. merge PR #66 only after every required check passes
-4. run production verification against 30 / 32 / 150 / 181
-5. verify all 67 canonical HTML routes
-6. publish a Batch 6B production audit
-7. begin Batch 7 only after publication is confirmed
+1. merge the Batch 6B production-audit PR after final CI and production verification pass
+2. verify latest `main` and open PRs
+3. create a fresh Phase 2 Batch 7 scope branch
+4. review Taiko, Everclear / Connext, Syndicate Commons Bridge, and other candidates
+5. define candidate boundaries before assigning IDs
+6. derive IDs only from the 30 / 32 / 150 / 181 baseline
+7. use separate reviewed scope and canonical-data PRs

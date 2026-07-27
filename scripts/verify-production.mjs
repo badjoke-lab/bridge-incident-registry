@@ -5,6 +5,8 @@ import { buildLegacyRedirects } from "./lib/legacy-redirects.mjs";
 const canonical = loadCanonicalData(process.cwd(), process.env);
 const origin = (process.env.PUBLIC_SITE_ORIGIN ?? canonical.config.canonical_origin).replace(/\/$/, "");
 const timeoutMs = Number(process.env.BIR_PRODUCTION_TIMEOUT_MS ?? 20000);
+const publicationAttempts = Number(process.env.BIR_PUBLICATION_ATTEMPTS ?? 20);
+const publicationDelayMs = Number(process.env.BIR_PUBLICATION_DELAY_MS ?? 15000);
 const userAgent = process.env.BIR_PRODUCTION_USER_AGENT
   ?? "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36";
 const errors = [];
@@ -12,6 +14,10 @@ const observations = [];
 
 function absolute(route) {
   return new URL(route.replace(/^\//, ""), `${origin}/`).toString();
+}
+
+function sleep(milliseconds) {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
 }
 
 function record(route, response, extra = {}) {
@@ -28,7 +34,7 @@ function record(route, response, extra = {}) {
 }
 
 async function request(route, options = {}) {
-  const response = await fetch(absolute(route), {
+  return fetch(absolute(route), {
     redirect: options.redirect ?? "follow",
     headers: {
       "user-agent": userAgent,
@@ -38,7 +44,63 @@ async function request(route, options = {}) {
     },
     signal: AbortSignal.timeout(timeoutMs)
   });
-  return response;
+}
+
+function countsMatch(actual) {
+  return JSON.stringify(actual) === JSON.stringify(canonical.recordCounts);
+}
+
+async function waitForCanonicalPublication() {
+  let latestCounts = null;
+  let latestGeneratedAt = null;
+  let latestStatus = null;
+  let latestError = null;
+
+  for (let attempt = 1; attempt <= publicationAttempts; attempt += 1) {
+    try {
+      const response = await request("/version.json", { accept: "application/json" });
+      latestStatus = response.status;
+      const text = await response.text();
+      let version = null;
+      try {
+        version = JSON.parse(text);
+      } catch (error) {
+        latestError = `invalid version JSON: ${error.message}`;
+      }
+      latestCounts = version?.record_counts ?? null;
+      latestGeneratedAt = version?.generated_at ?? null;
+      record("/version.json", response, {
+        phase: "publication_wait",
+        attempt,
+        generated_at: latestGeneratedAt,
+        observed_counts: latestCounts
+      });
+      if (response.status === 200 && version?.canonical_only === true && countsMatch(latestCounts)) {
+        console.log(`Canonical production state available on attempt ${attempt}.`);
+        return true;
+      }
+      latestError = `expected ${JSON.stringify(canonical.recordCounts)}, observed ${JSON.stringify(latestCounts)}`;
+    } catch (error) {
+      latestError = error.message;
+      observations.push({
+        route: "/version.json",
+        phase: "publication_wait",
+        attempt,
+        request_error: error.message
+      });
+    }
+
+    if (attempt < publicationAttempts) {
+      console.log(`Production has not converged on attempt ${attempt}/${publicationAttempts}; retrying in ${publicationDelayMs}ms.`);
+      await sleep(publicationDelayMs);
+    }
+  }
+
+  errors.push(
+    `production did not converge after ${publicationAttempts} attempts: status ${latestStatus ?? "unknown"}; `
+    + `generated_at ${latestGeneratedAt ?? "unknown"}; ${latestError ?? "unknown mismatch"}`
+  );
+  return false;
 }
 
 async function fetchText(route, options = {}) {
@@ -123,6 +185,14 @@ function compareIds(label, actual, expected) {
   if (JSON.stringify(actualIds) !== JSON.stringify(expectedIds)) errors.push(`${label}: ID set/order mismatch`);
 }
 
+const publicationReady = await waitForCanonicalPublication();
+if (!publicationReady) {
+  console.error("Production verification failed before route checks:");
+  for (const error of errors) console.error(`- ${error}`);
+  console.error(JSON.stringify({ origin, record_counts: canonical.recordCounts, observations }, null, 2));
+  process.exit(1);
+}
+
 const staticRoutes = ["/", "/bridges/", "/incidents/", "/methodology/", "/about/"];
 for (const route of staticRoutes) await verifyHtml(route);
 for (const bridge of canonical.data.bridges) await verifyHtml(`/bridge/${bridge.slug}/`, bridge.id);
@@ -136,16 +206,21 @@ for (const key of ["bridges", "incidents", "events", "evidence"]) {
 }
 
 if (version) {
-  if (JSON.stringify(version.record_counts) !== JSON.stringify(canonical.recordCounts)) errors.push("version.json: record_counts mismatch");
+  if (!countsMatch(version.record_counts)) errors.push("version.json: record_counts mismatch");
   if (version.canonical_only !== true) errors.push("version.json: canonical_only must be true");
   if (version.canonical_origin !== origin) errors.push("version.json: canonical_origin mismatch");
 }
 if (manifest) {
-  if (JSON.stringify(manifest.record_counts) !== JSON.stringify(canonical.recordCounts)) errors.push("manifest: record_counts mismatch");
+  if (!countsMatch(manifest.record_counts)) errors.push("manifest: record_counts mismatch");
   if (manifest.canonical_only !== true || manifest.data_safety?.canonical_only !== true) errors.push("manifest: canonical-only markers missing");
 }
 for (const key of ["bridges", "incidents", "events", "evidence"]) {
   compareIds(`/data/${key}.json`, publicData[key], canonical.data[key]);
+}
+
+const publicAssets = await fetchJson("/data/reference/assets.json");
+if (publicAssets) {
+  if (JSON.stringify(publicAssets) !== JSON.stringify(canonical.data.assets)) errors.push("/data/reference/assets.json: reference data mismatch");
 }
 
 const sitemapResult = await fetchText("/sitemap.xml", { accept: "application/xml,text/xml" });
