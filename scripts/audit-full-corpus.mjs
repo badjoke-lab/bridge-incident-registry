@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
 
-const root = process.cwd();
+const root = path.resolve(process.env.BIR_AUDIT_ROOT ?? process.cwd());
 const read = (relativePath) => JSON.parse(fs.readFileSync(path.join(root, relativePath), "utf8"));
 
 const bridges = read("data/bridges.json");
@@ -30,6 +30,8 @@ function reimbursementHistory(incident) {
   return ![undefined, null, "not_announced", "not_applicable", "denied", "unknown"].includes(incident.reimbursement_status);
 }
 
+const incidentsById = new Map(incidents.map((incident) => [incident.id, incident]));
+const eventsById = new Map(events.map((event) => [event.id, event]));
 const incidentsByBridge = new Map();
 const eventsByBridge = new Map();
 const eventsByIncident = new Map();
@@ -141,7 +143,7 @@ for (const event of events) {
   if (event.source_count !== undefined && event.source_count !== null && event.source_count !== linkedEvidence.length) {
     warn("event_source_count", `${event.id}: stored ${event.source_count}, directly linked ${linkedEvidence.length}`);
   }
-  const incident = event.incident_id ? incidents.find((item) => item.id === event.incident_id) : null;
+  const incident = event.incident_id ? incidentsById.get(event.incident_id) : null;
   if (event.event_type === "reimbursement_completed" && incident?.reimbursement_status !== "completed") {
     warn("event_incident_reimbursement", `${event.id}: reimbursement_completed but incident is ${incident?.reimbursement_status ?? "missing"}`);
   }
@@ -162,8 +164,18 @@ for (const source of evidence) {
   if (["dead", "archived"].includes(source.url_status) && !source.archived_url) {
     warn("archive_coverage", `${source.id}: ${source.url_status} without archived_url`);
   }
-  if (source.event_id && !source.incident_id) {
-    warn("event_evidence_without_incident", `${source.id}: event-linked evidence has no incident_id`);
+  if (source.event_id) {
+    const event = eventsById.get(source.event_id);
+    if (event) {
+      const expectedIncidentId = event.incident_id ?? null;
+      const actualIncidentId = source.incident_id ?? null;
+      if (expectedIncidentId !== actualIncidentId) {
+        warn(
+          "event_evidence_incident_mismatch",
+          `${source.id}: event ${source.event_id} expects incident ${expectedIncidentId ?? "null"}, evidence has ${actualIncidentId ?? "null"}`
+        );
+      }
+    }
   }
 }
 
