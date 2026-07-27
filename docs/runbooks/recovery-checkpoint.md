@@ -5,14 +5,16 @@ Updated: 2026-07-28
 
 GitHub state and canonical JSON are authoritative. Commit SHAs below are completed merge checkpoints, not live branch pointers.
 
-## Canonical counts
+## Canonical counts on Batch 6A review branch
 
 ```text
-Bridges     26
-Incidents   27
-Events      123
-Evidence    148
+Bridges     28
+Incidents   29
+Events      134
+Evidence    160
 ```
+
+`main` remains at its prior canonical totals until the Batch 6A data PR merges.
 
 ## Public-consistency remediation
 
@@ -36,13 +38,15 @@ PR #53  5558a50e0a0f34ceca7c4b34816db29b0e7ae17b
 PR #54  40632e3e5cf600490097d58a15210dabce704ede
 PR #58  57e4fc948fc9a26f20833b657c8d31822c72f56a
 PR #59  e511911d97216366386ff808d9dfb80bdfd19334
+PR #61  bcf59e4c811f2d68a3cfeb89cceaa76c24fba9f0
+PR #62  90304ecbb9dfef4670d91093873a05aa87e770d2
 ```
 
-## Production verification result
+## Last completed production verification
 
-GitHub Actions production-verification run `30290442852` passed against `https://bridge-incident-registry.pages.dev`.
+GitHub Actions production-verification run `30290442852` passed against `https://bridge-incident-registry.pages.dev` before Batch 6A.
 
-Verified surfaces include:
+Verified surfaces included:
 
 - all static registry pages
 - all 26 bridge detail routes
@@ -55,6 +59,29 @@ Verified surfaces include:
 
 Full audit: `docs/audits/production-verification-2026-07-28.md`.
 
+## Batch 6A review state
+
+Branch:
+
+```text
+agent/phase2-batch6a-records
+```
+
+Implemented:
+
+- Transit Swap entity and October 2022 incident
+- Magpie Protocol / Fly entity and April 2024 incident
+- 11 timeline events
+- 12 evidence records
+- current count synchronization
+
+The bounded generator passed all repository checks before committing canonical data. The temporary generator, write-enabled workflow, and trigger file have been removed.
+
 ## Next
 
-The documented parked `phase2-batch6-records` branch is not present in the current GitHub branch search. Create a fresh bounded Batch 6 branch from latest `main`, re-read the scope, derive IDs from canonical JSON, and resume record expansion.
+1. open the cleaned Batch 6A canonical-data PR
+2. verify the final PR diff contains no temporary workflow or generator
+3. require the normal Check workflow to pass
+4. merge after review
+5. run production verification against 28 bridge and 29 incident detail routes
+6. continue source-gated Batch 6B work for Rubic and Unizen

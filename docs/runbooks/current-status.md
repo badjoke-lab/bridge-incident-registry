@@ -6,19 +6,19 @@ Updated: 2026-07-28
 ## Canonical state
 
 ```text
-Bridges     26
-Incidents   27
-Events      123
-Evidence    148
+Bridges     28
+Incidents   29
+Events      134
+Evidence    160
 ```
 
 Canonical source files:
 
 ```text
-data/bridges.json       26
-data/incidents.json     27
-data/events.json        123
-data/evidence.json      148
+data/bridges.json       28
+data/incidents.json     29
+data/events.json        134
+data/evidence.json      160
 ```
 
 ## Public-consistency remediation
@@ -34,6 +34,30 @@ PR 7  Production verification                complete — PR #59
 ```
 
 Production verification passed on GitHub Actions run `30290442852`. The audit is recorded in `docs/audits/production-verification-2026-07-28.md`.
+
+## Phase 2 record expansion
+
+```text
+Batch 1    complete
+Batch 2    complete
+Batch 3    complete
+Batch 4    complete
+Batch 5    complete
+Batch 6A   canonical implementation complete on review branch
+Batch 6B   source-gated
+Batch 7    planned
+```
+
+Batch 6A adds Transit Swap and Magpie Protocol / Fly:
+
+```text
+Bridge entities   2
+Incident cases    2
+Timeline events   11
+Evidence records  12
+```
+
+Implementation record: `docs/batches/phase2-batch-06a-implementation.md`.
 
 ## Public representations covered
 
@@ -52,12 +76,11 @@ The repository and production checks cover:
 
 ## Next
 
-1. verify latest `main` and open PRs
-2. recreate the missing `phase2-batch6-records` branch from current `main`
-3. re-read the Batch 6 scope
-4. derive all IDs and counts from current canonical JSON
-5. resume reviewed canonical record expansion
+1. run the normal pull-request CI against the cleaned Batch 6A branch
+2. review the canonical diff and merge only after all checks pass
+3. run explicit production verification for the 28 bridge and 29 incident routes
+4. resume Batch 6B source work for Rubic and Unizen
 
 ## Record expansion
 
-Canonical record expansion is unblocked. Candidate research remains non-canonical until a dedicated reviewed data PR is merged.
+Canonical Batch 6A is implemented but is not part of `main` until its reviewed data PR merges. Batch 6B candidates remain non-canonical.
