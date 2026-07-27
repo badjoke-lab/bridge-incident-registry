@@ -27,7 +27,9 @@ Phase 2  Record expansion                          active
          Batch 4                                   complete
          Batch 5                                   complete
          Batch 6 scope                             complete
-         Batch 6 implementation                    next
+         Batch 6 source resolution                 complete
+         Batch 6A Transit + Magpie                  implemented on review branch
+         Batch 6B Rubic + Unizen                    source-gated
          Batch 7                                   planned
 Emergency public consistency                       complete — PR #59
 Phase 3  Full-corpus quality strengthening         planned
@@ -50,15 +52,48 @@ PR 7  Production verification                complete — PR #59
 
 Production verification passed on GitHub Actions run `30290442852`. See `docs/audits/production-verification-2026-07-28.md`.
 
-## Phase 2 Batch 6 — next
+## Phase 2 Batch 6A
 
-1. create a fresh bounded branch from latest `main`; the previously documented parked branch is not present in the current GitHub branch search
-2. re-read `docs/batches/phase-2-batch-6-scope.md`
-3. inspect canonical files before assigning IDs or counts
-4. implement the bounded Batch 6 scope for Transit Swap, Rubic, Unizen, and Magpie Protocol
-5. keep routing and aggregation incidents distinct from underlying bridge-reserve incidents
-6. run canonical validation, first-ten audit, build, post-build consistency, and controlled failure checks
-7. verify production after merge because public records and routes will change
+Implemented records:
+
+- Transit Swap
+- Magpie Protocol / Fly
+
+Implemented additions:
+
+```text
+Bridge entities   2
+Incident cases    2
+Timeline events   11
+Evidence records  12
+```
+
+Required completion steps:
+
+1. open the cleaned canonical-data PR
+2. run canonical validation, enum migration checks, first-ten audit, build, post-build consistency, and controlled-failure tests
+3. review all amount, return, reimbursement, dependency, and brand-history boundaries
+4. merge after required checks pass
+5. verify production HTML, JSON, routes, sitemap, metadata, and redirects against the new canonical totals
+
+Implementation record: `docs/batches/phase2-batch-06a-implementation.md`.
+
+## Phase 2 Batch 6B
+
+Remaining candidates:
+
+- Rubic
+- Unizen
+
+Before canonical promotion:
+
+1. obtain stable primary or archived Rubic incident notices for both distinct cases
+2. reconcile Rubic operator-wallet, user-loss, recovery, and reimbursement scopes
+3. obtain stronger first-party Unizen incident and reimbursement records
+4. keep Unizen's trade aggregator incident distinct from UIP providers
+5. prepare a dedicated reviewed data PR rather than extending Batch 6A
+
+Source-resolution record: `docs/batches/phase2-batch-06-source-resolution-2026-07-28.md`.
 
 ## Candidate queue after Batch 6
 
@@ -72,15 +107,16 @@ These candidates require dedicated scope review and current-source verification 
 
 ## Remaining roadmap
 
-1. Phase 2 Batch 7
-2. full-corpus audit
-3. primary-source strengthening
-4. aftermath normalization
-5. URL and archive hardening
-6. validator strengthening
-7. public-contract compatibility review
-8. monitoring with no automatic publication
-9. v1 documentation, accessibility, performance, and release checks
+1. Phase 2 Batch 6B
+2. Phase 2 Batch 7
+3. full-corpus audit
+4. primary-source strengthening
+5. aftermath normalization
+6. URL and archive hardening
+7. validator strengthening
+8. public-contract compatibility review
+9. monitoring with no automatic publication
+10. v1 documentation, accessibility, performance, and release checks
 
 ## Permanent rules
 
@@ -88,9 +124,9 @@ These candidates require dedicated scope review and current-source verification 
 2. Use one branch and bounded PR per task.
 3. Read canonical JSON before assigning IDs or counts.
 4. Keep canonical and working data separate.
-5. Do not merge temporary diagnostics.
+5. Do not merge temporary diagnostics or write-enabled workflows.
 6. Preserve distinctions among loss, return, recovery, reimbursement, freezing, minting, and burning.
 7. A disclosure is not automatically an exploit.
-8. A relaunch announcement is not proof of operation.
+8. A relaunch announcement is not proof of reimbursement completion.
 9. Historical SHAs are not live branch pointers.
 10. Every PR must pass checks appropriate to its stage.
