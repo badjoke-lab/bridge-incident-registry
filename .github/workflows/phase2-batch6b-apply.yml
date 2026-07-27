@@ -1,0 +1,52 @@
+name: Apply Phase 2 Batch 6B
+
+on:
+  push:
+    branches:
+      - agent/phase2-batch6b-records
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: ${{ !contains(github.event.head_commit.message, '[batch6b-applied]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/phase2-batch6b-records
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Apply canonical records
+        run: node scripts/apply-phase2-batch6b.mjs
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Validate generated canonical state
+        run: |
+          npm run validate:data
+          npm run validate:enums
+          npm run audit:first-ten
+          npm run build
+          npm run dist:check
+          npm run dist:test
+
+      - name: Commit canonical changes
+        run: |
+          if git diff --quiet; then
+            echo "No canonical changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data README.md CHANGELOG.md docs/runbooks
+          git commit -m "data: add Phase 2 Batch 6B records [batch6b-applied]"
+          git push origin HEAD:agent/phase2-batch6b-records
