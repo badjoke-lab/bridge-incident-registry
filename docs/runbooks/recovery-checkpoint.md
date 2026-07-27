@@ -5,14 +5,16 @@ Updated: 2026-07-28
 
 GitHub state and canonical JSON are authoritative. Commit SHAs below are completed merge checkpoints, not live branch pointers.
 
-## Canonical counts
+## Canonical counts on Batch 7 review branch
 
 ```text
-Bridges     30
-Incidents   32
-Events      150
-Evidence    181
+Bridges     33
+Incidents   34
+Events      173
+Evidence    199
 ```
+
+`main` remains at 30 / 32 / 150 / 181 until PR #69 merges.
 
 ## Completed merge checkpoints
 
@@ -30,64 +32,54 @@ PR #63  c074d411b9c1d99b0f5cd56c5ade3125952de13c
 PR #64  8d5bb2b994cfd501e49827a2896291507a499620
 PR #65  d634db5436bc0590b35e19e88435eb4b9214e7b0
 PR #66  1d2ccf24edab7b764160da130fc2e36146e6f1b1
+PR #67  75ceaee267b537d4e8dadb21f64179d72f637c02
+PR #68  a74fadd47878015f940831a1339880ae81d937ca
 ```
 
-## Phase 2 Batch 6 completion
+## Last completed publication checkpoint
 
-### Batch 6A
+Batch 6B production verification passed:
 
 ```text
-Entities             Transit Swap, Magpie Protocol / Fly
-Production verify    30306303489
-Verified state       28 / 29 / 134 / 160
-HTML routes          62
+Run          30307942555
+State        30 / 32 / 150 / 181
+HTML routes  67
 ```
-
-### Batch 6B
-
-```text
-Entities             Rubic, Unizen
-Incidents            3
-Timeline events      16
-Evidence records     21
-Asset references     RBC, BRBC
-Production verify    30307748017
-Verified state       30 / 32 / 150 / 181
-HTML routes          67
-```
-
-Batch 6B verified surfaces:
-
-- all five static registry pages
-- all 30 bridge detail routes
-- all 32 incident detail routes
-- canonical JSON endpoints and ordered IDs
-- RBC and BRBC public reference output
-- canonical metadata and JSON-LD identifiers
-- robots and 67-route sitemap
-- generated legacy redirects
-- content types and observable cache headers
 
 Audit: `docs/audits/production-verification-batch6b-2026-07-28.md`.
 
-## Production verifier behavior
+## Batch 7 review state
 
-The verifier uses browser-compatible request headers and waits for `version.json` counts to match the repository's canonical counts before route checks.
+Branch:
 
 ```text
-Attempts       20
-Delay          15 seconds
-Maximum wait   5 minutes
+agent/phase2-batch7-records
 ```
 
-If production does not converge within the bounded window, verification fails before route checks and reports the last observed counts and generation timestamp. All existing route and content assertions remain mandatory after convergence.
+Pull request:
+
+```text
+#69  data: add Phase 2 Batch 7 records
+```
+
+Implemented:
+
+- Taiko Bridge entity and June 2026 incident
+- Everclear / Connext lifecycle entity
+- Commons Bridge entity and April 2026 incident
+- 23 timeline events
+- 18 evidence records
+- SYND, CLEAR, and NEXT asset references
+- Taiko, Base, and Commons Chain references
+
+The bounded generator passed all repository checks before committing canonical data. Temporary generators, diagnostic output, and the write-enabled workflow were removed.
 
 ## Next
 
-1. merge the Batch 6B production-audit PR after final CI and production verification pass
-2. verify latest `main` and open PRs
-3. create a fresh Phase 2 Batch 7 scope branch
-4. review Taiko, Everclear / Connext, Syndicate Commons Bridge, and other candidates
-5. define candidate boundaries before assigning IDs
-6. derive IDs only from the 30 / 32 / 150 / 181 baseline
-7. use separate reviewed scope and canonical-data PRs
+1. require the final normal Check workflow on the cleaned PR
+2. review the complete canonical diff
+3. merge PR #69 only after every required check passes
+4. run production verification against 33 / 34 / 173 / 199
+5. verify all 72 canonical HTML routes
+6. publish a Batch 7 production audit
+7. begin full-corpus quality work only after publication is confirmed

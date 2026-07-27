@@ -135,5 +135,23 @@
       "Wrapped RBC",
       "BNB Chain Rubic token"
     ]
+  },
+  "synd": {
+    "display_name": "SYND",
+    "aliases": [
+      "Syndicate token"
+    ]
+  },
+  "clear": {
+    "display_name": "CLEAR",
+    "aliases": [
+      "Everclear token"
+    ]
+  },
+  "next": {
+    "display_name": "NEXT",
+    "aliases": [
+      "Connext token"
+    ]
   }
 }
