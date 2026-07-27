@@ -5,7 +5,7 @@ Updated: 2026-07-28
 
 GitHub state and canonical JSON are authoritative.
 
-## Canonical baseline
+## Canonical baseline on Batch 7 review branch
 
 ```text
 Bridges     33
@@ -13,6 +13,8 @@ Incidents   34
 Events      173
 Evidence    199
 ```
+
+`main` remains at 30 / 32 / 150 / 181 until the Batch 7 data PR merges.
 
 ## Current position
 
@@ -26,78 +28,73 @@ Phase 2  Record expansion                          active
          Batch 3                                   complete
          Batch 4                                   complete
          Batch 5                                   complete
-         Batch 6 scope                             complete
-         Batch 6 source resolution                 complete
          Batch 6A Transit + Magpie                  complete and production-verified
          Batch 6B Rubic + Unizen                    complete and production-verified
-         Batch 7                                   next
-Emergency public consistency                       complete — PR #59
-Phase 3  Full-corpus quality strengthening         planned
+         Batch 7 Taiko + Everclear + Commons        implemented on review branch
+Phase 3  Full-corpus quality strengthening         next after Batch 7 publication
 Phase 4  Public contract stabilization             complete
 Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
 ```
 
-## Completed Phase 2 Batch 6A
-
-```text
-Canonical data PR        #63
-Merge commit             c074d411b9c1d99b0f5cd56c5ade3125952de13c
-Production verify run    30306303489
-Verified state           28 / 29 / 134 / 160
-Verified HTML routes     62
-```
-
-Records:
-
-- `docs/batches/phase2-batch-06a-implementation.md`
-- `docs/audits/production-verification-batch6a-2026-07-28.md`
-
-## Completed Phase 2 Batch 6B
+## Completed Batch 6 publication checkpoint
 
 ```text
 Canonical data PR        #66
 Merge commit             1d2ccf24edab7b764160da130fc2e36146e6f1b1
-Production verify run    30307748017
+Production verify run    30307942555
 Verified state           30 / 32 / 150 / 181
 Verified HTML routes     67
 ```
 
-Canonical records:
+## Phase 2 Batch 7 implementation
 
-- Rubic
-- Unizen
+Canonical candidates:
 
-Additions:
+- Taiko Bridge
+- Everclear / Connext
+- Commons Bridge
+
+Review-branch additions:
 
 ```text
-Bridge entities   2
-Incident cases    3
-Timeline events   16
-Evidence records  21
-Asset references  2
+Bridge entities    3
+Incident cases     2
+Timeline events    23
+Evidence records   18
+Asset references   3
+Chain references   3
 ```
 
 Modeling results:
 
-- Rubic's RBC/BRBC bridge-wallet compromise remains separate from its RubicProxy approval exploit
-- the former native bridge component is deprecated/replaced while the Rubic aggregator remains active
-- RBC/BRBC token quantity, attacker proceeds, collateral effects, USD loss, and market effects remain separate
-- Unizen reimbursement remains `in_progress`, not completed
-- partial recovery does not imply complete user restitution
-- Unizen's trade-aggregation contract incident does not propagate to UIP providers
+- Taiko recollateralization remains separate from attacker-fund recovery
+- Taiko reimbursement is completed and the bridge is active after reopening
+- Everclear and Connext remain one rebranded lifecycle entity without a fabricated incident
+- Everclear documentation availability is not active-operation proof after shutdown
+- Commons Bridge is separated from the broader Syndicate Bridge family
+- Commons reimbursement is completed and the route is dead / not reopened
+- Commons token quantity, attacker proceeds, user loss, price effects, and treasury reimbursement remain separate
+- Syndicate Labs wind-down is not asserted as the incident cause
+
+Required completion steps:
+
+1. run normal PR CI against the cleaned branch
+2. review all canonical additions and source links
+3. merge only after every required check passes
+4. verify production at 33 / 34 / 173 / 199
+5. verify all 72 canonical HTML routes
+6. record the production audit
+7. start Phase 3 full-corpus quality work only after publication is confirmed
 
 Records:
 
-- `docs/batches/phase2-batch-06b-source-resolution-2026-07-28.md`
-- `docs/batches/phase2-batch-06b-implementation.md`
-- `docs/audits/production-verification-batch6b-2026-07-28.md`
+- `docs/batches/phase2-batch-07-scope-2026-07-28.md`
+- `docs/batches/phase2-batch-07-implementation.md`
 
 ## Production publication gate
 
-The production verifier now waits for canonical `version.json` counts to converge before starting route checks.
-
-Default bounded wait:
+The verifier waits for canonical `version.json` counts to converge before route checks.
 
 ```text
 Attempts       20
@@ -105,40 +102,18 @@ Delay          15 seconds
 Maximum wait   5 minutes
 ```
 
-After convergence, every existing count, ID, route, reference, metadata, sitemap, robots, redirect, content-type, and cache assertion still runs. Failure to converge within the bounded window remains a hard failure.
+After convergence, every count, ID, route, reference, metadata, sitemap, robots, redirect, content-type, and cache assertion remains mandatory.
 
-## Phase 2 Batch 7
+## Work after Batch 7
 
-Next actions:
-
-1. verify latest `main` and open PRs after the Batch 6B audit merges
-2. define a reviewed candidate scope before assigning IDs
-3. prioritize candidates with meaningful incident, recovery, migration, or shutdown history
-4. derive all IDs from the 30 / 32 / 150 / 181 baseline
-5. use a separate scope PR and canonical-data PR
-6. run repository and production verification after merge
-
-## Candidate queue available for review
-
-Non-canonical research currently includes:
-
-- Taiko bridge exploit and recovery
-- Everclear / Connext lifecycle and shutdown
-- Syndicate Commons Bridge exploit, reimbursement, and operator-lifecycle context
-
-These candidates require a dedicated Batch 7 boundary decision. Candidate documents are not canonical records.
-
-## Remaining roadmap
-
-1. Phase 2 Batch 7
-2. full-corpus audit
-3. primary-source strengthening
-4. aftermath normalization
-5. URL and archive hardening
-6. validator strengthening
-7. public-contract compatibility review
-8. monitoring with no automatic publication
-9. v1 documentation, accessibility, performance, and release checks
+1. full-corpus audit
+2. primary-source strengthening
+3. aftermath normalization
+4. URL and archive hardening
+5. validator strengthening
+6. public-contract compatibility review
+7. monitoring with no automatic publication
+8. v1 documentation, accessibility, performance, and release checks
 
 ## Permanent rules
 
