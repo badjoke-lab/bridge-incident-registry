@@ -8,7 +8,7 @@ This audit records the enforcement boundary between the documented BIR v0.3 sche
 
 ## Result
 
-The validator now treats normalized identity, lifecycle, incident outcome, evidence, and reference fields as closed vocabularies. Fields that still contain legacy descriptive values remain structurally validated and produce migration warnings rather than blocking canonical builds.
+The combined validators now treat normalized identity, lifecycle, incident outcome, reference, source-tier, and URL-state fields as closed vocabularies. Fields that still contain legacy descriptive values remain structurally validated and produce migration warnings rather than blocking canonical builds.
 
 ## Strictly enforced vocabularies
 
@@ -24,21 +24,23 @@ The validator now treats normalized identity, lifecycle, incident outcome, evide
 - restart status
 - current outcome
 - amount confidence
-- evidence source type
 - source tier
 - evidence URL status
-- evidence claim scope
 
 ## Migration fields
 
 The following fields are not yet safe to convert to closed enums without a dedicated canonical-data migration:
 
+- `bridge.official_url_status`
+- `bridge.operator_type`
 - `incident.attack_vector_category`
 - `incident.postmortem_available`
 - `incident.loss_amount_basis`
 - `event.event_type`
 - `event.impact_level`
 - `event.status_effect`
+- `evidence.source_type`
+- `evidence.claim_scope`
 
 Current records include descriptive or earlier-generation values that predate the final v0.3 vocabulary. The validator requires these values to be non-empty snake-case tokens where applicable and reports values outside the target vocabulary as warnings.
 
