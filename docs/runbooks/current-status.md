@@ -33,7 +33,7 @@ PR 6  Post-build consistency CI              complete — PR #58
 PR 7  Production verification                complete — PR #59
 ```
 
-Production verification passed on GitHub Actions run `30290442852`. The audit is recorded in `docs/audits/production-verification-2026-07-28.md`.
+The original public-consistency audit passed on GitHub Actions run `30290442852` and is recorded in `docs/audits/production-verification-2026-07-28.md`.
 
 ## Phase 2 record expansion
 
@@ -43,12 +43,12 @@ Batch 2    complete
 Batch 3    complete
 Batch 4    complete
 Batch 5    complete
-Batch 6A   canonical implementation complete on review branch
+Batch 6A   merged and production-verified
 Batch 6B   source-gated
 Batch 7    planned
 ```
 
-Batch 6A adds Transit Swap and Magpie Protocol / Fly:
+Batch 6A added Transit Swap and Magpie Protocol / Fly:
 
 ```text
 Bridge entities   2
@@ -57,7 +57,22 @@ Timeline events   11
 Evidence records  12
 ```
 
-Implementation record: `docs/batches/phase2-batch-06a-implementation.md`.
+Canonical merge:
+
+```text
+PR #63  c074d411b9c1d99b0f5cd56c5ade3125952de13c
+```
+
+Production verification run `30306150605` passed against all 62 canonical HTML routes and the 28 / 29 / 134 / 160 public-data state.
+
+Records:
+
+- `docs/batches/phase2-batch-06a-implementation.md`
+- `docs/audits/production-verification-batch6a-2026-07-28.md`
+
+## Production verifier
+
+The verifier now uses browser-compatible request headers. Cloudflare had returned Error 1010 to the previous custom automation User-Agent even though production content was healthy. Verification assertions were not reduced.
 
 ## Public representations covered
 
@@ -76,11 +91,11 @@ The repository and production checks cover:
 
 ## Next
 
-1. run the normal pull-request CI against the cleaned Batch 6A branch
-2. review the canonical diff and merge only after all checks pass
-3. run explicit production verification for the 28 bridge and 29 incident routes
-4. resume Batch 6B source work for Rubic and Unizen
+1. continue Batch 6B source resolution for Rubic and Unizen
+2. promote only records whose primary/archive and reimbursement gates are satisfied
+3. prepare a separate reviewed Batch 6B canonical-data PR
+4. run repository and production verification after any merge
 
 ## Record expansion
 
-Canonical Batch 6A is implemented but is not part of `main` until its reviewed data PR merges. Batch 6B candidates remain non-canonical.
+Batch 6A is public and verified. Rubic and Unizen remain non-canonical until their dedicated source and data review is complete.
