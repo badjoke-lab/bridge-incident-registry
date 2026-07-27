@@ -1,6 +1,6 @@
 # BIR Batch 6A production verification — 2026-07-28
 
-Status: running  
+Status: retrying after publication lag  
 Production origin: `https://bridge-incident-registry.pages.dev`
 
 ## Expected canonical state
@@ -30,6 +30,12 @@ Expected HTML routes consist of five static pages, 28 bridge detail pages, and 2
 - content types
 - observable cache headers
 
-## Result
+## Runs
 
-Pending the dedicated `Production Verification` workflow run triggered by this audit PR.
+### Initial run
+
+Production Verification run `30305681928` started immediately after the Batch 6A merge and failed while publication was still converging to the new canonical state.
+
+### Retry
+
+A fresh run is triggered by this commit after allowing the production publication path to advance. The audit remains incomplete until the dedicated workflow passes against the expected 28 / 29 / 134 / 160 state.
