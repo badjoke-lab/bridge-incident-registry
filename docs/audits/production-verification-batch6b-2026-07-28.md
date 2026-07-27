@@ -1,6 +1,6 @@
 # BIR Batch 6B production verification — 2026-07-28
 
-Status: running  
+Status: retrying after initial publication check  
 Production origin: `https://bridge-incident-registry.pages.dev`  
 Canonical merge: `1d2ccf24edab7b764160da130fc2e36146e6f1b1`
 
@@ -42,6 +42,8 @@ The HTML route total consists of five static pages, 30 bridge detail pages, and 
 - content types
 - observable cache headers
 
-## Result
+## Runs
 
-Pending the dedicated `Production Verification` workflow run triggered by this audit PR.
+Initial Production Verification run `30307468595` started immediately after PR #67 opened and did not match the expected newly published state.
+
+A fresh full verification run is triggered by this commit. The audit remains incomplete until the 30 / 32 / 150 / 181 state and all 67 routes pass without reduced assertions.
