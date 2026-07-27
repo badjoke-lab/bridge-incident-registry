@@ -29,9 +29,9 @@ BIR is not:
 
 ## Current status
 
-The static registry application, canonical data model, validation pipeline, list/detail pages, methodology pages, and five reviewed expansion batches are implemented.
+The static registry application, four-record canonical model, validation pipeline, list/detail pages, methodology pages, five reviewed expansion batches, canonical public-data layer, metadata, redirects, post-build consistency CI, and production-verification gate are implemented.
 
-Phase 2 Batch 6 scope is complete, but canonical record expansion is paused while the project completes the public-consistency remediation.
+The seven-step public-consistency remediation is complete when PR #59 merges. Phase 2 Batch 6 record expansion is the next bounded workstream.
 
 Current canonical counts:
 
@@ -53,7 +53,7 @@ data/evidence.json
 
 ## Machine-readable public layer
 
-Each build now generates:
+Each build generates:
 
 ```text
 /version.json
@@ -68,7 +68,7 @@ Each build now generates:
 /ai.txt
 ```
 
-The generated files derive from canonical JSON, include current record counts and generation metadata, and are checked before the Astro build completes.
+The generated files derive from canonical JSON, include current record counts and generation metadata, and are checked before the Astro build completes and again in the final `dist` tree.
 
 They are build products rather than independently maintained source files.
 
@@ -83,7 +83,8 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/runbooks/current-status.md` — current project state
 - `docs/runbooks/recovery-checkpoint.md` — short restart point
 - `docs/runbooks/development-roadmap.md` — roadmap to v1
-- `docs/runbooks/public-consistency-remediation.md` — blocking remediation plan
+- `docs/runbooks/public-consistency-remediation.md` — completed remediation sequence
+- `docs/audits/production-verification-2026-07-28.md` — production verification result
 - `docs/batches/` — reviewed batch scopes
 
 ## Architecture
@@ -97,10 +98,10 @@ GitHub pull-request workflow
 client-side search and filters
 ```
 
-Canonical data and generated machine-readable output are validated during the build. The current version requires no database, authentication, wallet connection, paid API, or server runtime.
+Canonical data and generated machine-readable output are validated during the build. Production verification checks live HTML, JSON, metadata, sitemap, robots, redirects, content types, and observable cache behavior. The current version requires no database, authentication, wallet connection, paid API, or server runtime.
 
-## Development hold
+## Development rule
 
-Do not merge new canonical record batches until the public-consistency remediation and production verification are complete.
+Never write canonical data directly to `main`. Candidate research, monitoring output, private notes, and temporary files must remain separate from reviewed canonical records.
 
-The parked `phase2-batch6-records` branch must not receive new canonical writes during this hold.
+After PR #59 merges, compare or recreate the parked `phase2-batch6-records` branch from latest `main` before resuming canonical writes.

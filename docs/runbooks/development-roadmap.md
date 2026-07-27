@@ -19,7 +19,7 @@ Evidence    148
 ```text
 Phase 0  Specification and foundation              complete
 Phase 1  Canonical model, UI, validation, seeds    complete
-Phase 2  Record expansion                          paused for remediation
+Phase 2  Record expansion                          ready to resume after PR #59
          Batch 1                                   complete
          First-ten quality hardening               complete
          Batch 2                                   complete
@@ -27,16 +27,16 @@ Phase 2  Record expansion                          paused for remediation
          Batch 4                                   complete
          Batch 5                                   complete
          Batch 6 scope                             complete
-         Batch 6 implementation                    paused
+         Batch 6 implementation                    next
          Batch 7                                   planned
-Emergency public consistency                       in progress — PR 6 of 7
+Emergency public consistency                       complete when PR #59 merges
 Phase 3  Full-corpus quality strengthening         planned
-Phase 4  Public contract stabilization             being completed early
+Phase 4  Public contract stabilization             complete when PR #59 merges
 Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
 ```
 
-## Emergency sequence
+## Completed emergency sequence
 
 ```text
 PR 1  Current-state reset                    complete — PR #50
@@ -44,48 +44,34 @@ PR 2  Canonical-derived public output        complete — PR #51
 PR 3  Machine-readable public layer          complete — PR #52
 PR 4  Canonical metadata and discovery       complete — PR #53
 PR 5  Legacy redirects                       complete — PR #54
-PR 6  Post-build consistency CI              complete when merged
-PR 7  Production verification                next
+PR 6  Post-build consistency CI              complete — PR #58
+PR 7  Production verification                complete when PR #59 merges
 ```
 
-Completed merge checkpoints:
+Production verification passed on GitHub Actions run `30290442852`. See `docs/audits/production-verification-2026-07-28.md`.
 
-```text
-PR #50  ed7d4871c82dcd6b089bb3ac6da5df538a83116c
-PR #51  f7e0ff462c07fc02f6fe620d7a125546a27a45e3
-PR #52  6f3b8aad06edc7027fb362120aabe19fa46d52ee
-PR #53  5558a50e0a0f34ceca7c4b34816db29b0e7ae17b
-PR #54  40632e3e5cf600490097d58a15210dabce704ede
-```
+## Phase 2 resume — next
 
-## PR 6 result
+After PR #59 merges:
 
-- canonical JSON is compared with copied public JSON after Astro completes
-- all required static, bridge-detail, and incident-detail HTML files must exist
-- detail route directory sets must equal canonical slugs exactly
-- canonical links, production robots metadata, data-discovery links, and JSON-LD identifiers are checked
-- home and collection-page record counts must match canonical counts
-- sitemap URLs, robots, headers, and redirects are checked in the final `dist` tree
-- repository documentation count blocks must match canonical counts
-- staging, research, candidate, watchlist, private, Markdown, JSONL, CSV, SQLite, and unexpected JSON output cannot cross the publication boundary
-- controlled failure fixtures cover count, ID, metadata, route, sitemap, and publication-boundary corruption
+1. verify latest `main` and open PRs
+2. compare the parked `phase2-batch6-records` branch with current `main`; recreate it if its history is stale or unclear
+3. re-read `docs/batches/phase-2-batch-6-scope.md`
+4. inspect canonical files before assigning IDs or counts
+5. implement the bounded Batch 6 scope for Transit Swap, Rubic, Unizen, and Magpie Protocol
+6. keep routing/aggregation incidents distinct from underlying bridge-reserve incidents
+7. run canonical validation, first-ten audit, build, post-build consistency, and controlled failure checks
+8. verify production after merge when public records or routes change
 
-## PR 7 — next
+## Candidate queue after Batch 6
 
-Verify production HTML, JSON, metadata, routes, response headers, redirects, and cache behavior; then publish the final audit report and close the emergency remediation.
+Non-canonical candidate research currently includes:
 
-## Phase 2 resume
+- Taiko bridge exploit and recovery
+- Everclear / Connext lifecycle and shutdown
+- Syndicate Commons Bridge exploit, reimbursement, and operator-lifecycle context
 
-After PR 7:
-
-1. verify live main and open PRs
-2. compare or recreate the parked Batch 6 branch
-3. re-read Batch 6 scope
-4. re-evaluate the Taiko, Everclear, and Syndicate research queue against current canonical data
-5. derive IDs and counts from canonical JSON
-6. implement Transit Swap, Rubic, Unizen, and Magpie Protocol as the bounded Batch 6 scope
-7. run canonical, public, and post-build checks
-8. verify production after merge
+These candidates require dedicated scope review and current-source verification before canonical promotion.
 
 ## Remaining roadmap
 

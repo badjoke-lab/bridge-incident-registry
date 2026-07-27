@@ -21,9 +21,7 @@ data/events.json        123
 data/evidence.json      148
 ```
 
-Canonical record expansion is paused during public-consistency remediation.
-
-## Remediation progress
+## Public-consistency remediation
 
 ```text
 PR 1  Current-state reset                    complete — PR #50
@@ -31,13 +29,15 @@ PR 2  Canonical-derived public output        complete — PR #51
 PR 3  Machine-readable public layer          complete — PR #52
 PR 4  Canonical metadata and discovery       complete — PR #53
 PR 5  Legacy redirects                       complete — PR #54
-PR 6  Post-build consistency CI              complete when this file reaches main
-PR 7  Production verification                next
+PR 6  Post-build consistency CI              complete — PR #58
+PR 7  Production verification                complete when PR #59 merges
 ```
 
-## Public representations now covered
+Production verification passed on GitHub Actions run `30290442852`. The audit is recorded in `docs/audits/production-verification-2026-07-28.md`.
 
-The build derives and validates:
+## Public representations covered
+
+The repository and production checks cover:
 
 - human-facing HTML
 - version and manifest metadata
@@ -46,29 +46,20 @@ The build derives and validates:
 - canonical and alternate metadata
 - Open Graph, Twitter, and JSON-LD metadata
 - sitemap and robots policy
-- Cloudflare response headers
+- Cloudflare response headers and observable cache metadata
 - legacy route redirects
-
-## Post-build consistency
-
-The built `dist` tree is checked against canonical JSON after Astro completes.
-
-The checker verifies:
-
-- canonical record counts and ordered IDs in published JSON
-- required static, bridge-detail, and incident-detail HTML routes
-- canonical links, production robots metadata, discovery links, and JSON-LD identifiers
-- home and registry-page count displays
-- sitemap URL equality, robots policy, response headers, and generated redirects
-- repository documentation count blocks
-- exclusion of staging, research, candidate, watchlist, private, and unexpected JSON output
-
-Controlled fixtures prove that count, ID, metadata, route, sitemap, and publication-boundary mismatches fail CI.
+- canonical/public counts, IDs, routes, and publication boundaries
 
 ## Next
 
-PR 7 verifies production HTML, JSON, metadata, routes, redirects, cache behavior, and publication headers, then records the final remediation audit.
+After PR #59 merges:
 
-## Record-expansion hold
+1. verify latest `main` and open PRs
+2. compare or recreate the parked `phase2-batch6-records` branch
+3. re-read the Batch 6 scope
+4. derive all IDs and counts from current canonical JSON
+5. resume reviewed canonical record expansion
 
-Phase 2 Batch 6 implementation remains paused. The parked branch must not receive canonical writes until PR 7 completes production verification.
+## Record expansion
+
+Canonical writes remain paused only until PR #59 merges. Candidate research may continue in non-canonical documentation.
