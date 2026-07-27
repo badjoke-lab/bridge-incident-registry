@@ -35,12 +35,36 @@ jobs:
 
       - name: Validate generated canonical state
         run: |
-          npm run validate:data
-          npm run validate:enums
-          npm run audit:first-ten
-          npm run build
-          npm run dist:check
-          npm run dist:test
+          set +e
+          LOG="docs/batches/.phase2-batch7-validation.log"
+          : > "$LOG"
+          status=0
+          for command in \
+            "npm run validate:data" \
+            "npm run validate:enums" \
+            "npm run audit:first-ten" \
+            "npm run build" \
+            "npm run dist:check" \
+            "npm run dist:test"
+          do
+            echo "" | tee -a "$LOG"
+            echo ">>> $command" | tee -a "$LOG"
+            bash -lc "$command" 2>&1 | tee -a "$LOG"
+            current=${PIPESTATUS[0]}
+            if [ "$current" -ne 0 ]; then
+              status="$current"
+              break
+            fi
+          done
+          if [ "$status" -ne 0 ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add "$LOG"
+            git commit -m "build: record Batch 7 validation failure [batch7-diagnostic]"
+            git push origin HEAD:agent/phase2-batch7-records
+            exit "$status"
+          fi
+          rm -f "$LOG"
 
       - name: Commit canonical changes
         run: |
