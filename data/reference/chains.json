@@ -141,5 +141,25 @@
     "aliases": [
       "Conflux eSpace EVM"
     ]
+  },
+  "taiko": {
+    "display_name": "Taiko",
+    "aliases": [
+      "Taiko Alethia",
+      "Taiko Network"
+    ]
+  },
+  "base": {
+    "display_name": "Base",
+    "aliases": [
+      "Base Mainnet"
+    ]
+  },
+  "commons-chain": {
+    "display_name": "Commons Chain",
+    "aliases": [
+      "Commons",
+      "Syndicate Commons"
+    ]
   }
 }

@@ -6,10 +6,10 @@ Updated: 2026-07-28
 ## Canonical baseline
 
 ```text
-Bridges     30
-Incidents   32
-Events      150
-Evidence    181
+Bridges     33
+Incidents   34
+Events      173
+Evidence    199
 ```
 
 Canonical JSON remains the only record source. Generated public files are build products.

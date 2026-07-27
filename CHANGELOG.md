@@ -6,6 +6,10 @@ All notable project changes should be recorded here after merge.
 
 ### Added
 
+- Phase 2 Batch 7 records for Taiko Bridge, Everclear / Connext, and Commons Bridge
+- Two incident cases covering message-proof exploitation and a route-specific bridge proxy compromise
+- SYND, CLEAR, and NEXT asset reference definitions
+
 - Phase 2 Batch 6B records for Rubic and Unizen
 - Three incident cases covering a deprecated native-bridge wallet compromise and two aggregator approval exploits
 - RBC and BRBC asset reference definitions
@@ -75,8 +79,8 @@ All notable project changes should be recorded here after merge.
 ### Data counts
 
 ```text
-Bridges     30
-Incidents   32
-Events      150
-Evidence    181
+Bridges     33
+Incidents   34
+Events      173
+Evidence    199
 ```

@@ -36,10 +36,10 @@ The seven-step public-consistency remediation is complete. Phase 2 Batch 6 recor
 Current canonical counts:
 
 ```text
-Bridges     30
-Incidents   32
-Events      150
-Evidence    181
+Bridges     33
+Incidents   34
+Events      173
+Evidence    199
 ```
 
 The canonical datasets are the only source of truth:
