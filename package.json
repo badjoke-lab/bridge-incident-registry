@@ -12,6 +12,7 @@
     "validate:data": "node scripts/validate-data.mjs",
     "validate:enums": "node scripts/validate-schema-enums.mjs",
     "audit:first-ten": "node scripts/audit-first-ten-seeds.mjs",
+    "audit:full-corpus": "node scripts/audit-full-corpus.mjs",
     "public:stage": "node scripts/build-public-data.mjs",
     "public:publish": "node scripts/publish-machine-data.mjs",
     "public:check": "node scripts/check-machine-data.mjs",
