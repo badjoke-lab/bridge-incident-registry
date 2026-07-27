@@ -10,6 +10,7 @@
     "preview": "astro preview",
     "check": "astro check",
     "validate:data": "node scripts/validate-data.mjs",
+    "validate:enums": "node scripts/validate-schema-enums.mjs",
     "audit:first-ten": "node scripts/audit-first-ten-seeds.mjs",
     "public:stage": "node scripts/build-public-data.mjs",
     "public:publish": "node scripts/publish-machine-data.mjs",
