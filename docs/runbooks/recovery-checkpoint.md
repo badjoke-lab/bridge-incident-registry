@@ -14,7 +14,7 @@ Events      123
 Evidence    148
 ```
 
-## Remediation progress
+## Public-consistency remediation
 
 ```text
 PR 1  Current-state reset                    complete — PR #50
@@ -22,8 +22,8 @@ PR 2  Canonical-derived public output        complete — PR #51
 PR 3  Machine-readable public layer          complete — PR #52
 PR 4  Canonical metadata and discovery       complete — PR #53
 PR 5  Legacy redirects                       complete — PR #54
-PR 6  Post-build consistency CI              complete when this file reaches main
-PR 7  Production verification                next
+PR 6  Post-build consistency CI              complete — PR #58
+PR 7  Production verification                complete when PR #59 merges
 ```
 
 Completed merge checkpoints:
@@ -34,18 +34,26 @@ PR #51  f7e0ff462c07fc02f6fe620d7a125546a27a45e3
 PR #52  6f3b8aad06edc7027fb362120aabe19fa46d52ee
 PR #53  5558a50e0a0f34ceca7c4b34816db29b0e7ae17b
 PR #54  40632e3e5cf600490097d58a15210dabce704ede
+PR #58  57e4fc948fc9a26f20833b657c8d31822c72f56a
 ```
 
-## PR 6 result
+## Production verification result
 
-The build is followed by a `dist` consistency gate that compares canonical JSON with published JSON, required HTML routes, canonical metadata, JSON-LD, sitemap, robots, headers, redirects, documentation counts, and publication boundaries.
+GitHub Actions production-verification run `30290442852` passed against `https://bridge-incident-registry.pages.dev`.
 
-Controlled failure fixtures prove that count, ID, metadata, route, sitemap, and non-canonical publication mismatches are rejected.
+Verified surfaces include:
+
+- all static registry pages
+- all 26 bridge detail routes
+- all 27 incident detail routes
+- canonical JSON endpoints and ordered IDs
+- canonical metadata and JSON-LD
+- robots and sitemap
+- generated legacy redirects
+- content types and observable cache headers
+
+Full audit: `docs/audits/production-verification-2026-07-28.md`.
 
 ## Next
 
-PR 7 performs production verification for HTML, machine-readable endpoints, metadata, routes, redirects, headers, and cache behavior, then records the final audit.
-
-## Record expansion
-
-Phase 2 Batch 6 implementation remains paused. `phase2-batch6-records` remains parked through PR 7.
+After PR #59 merges, compare or recreate `phase2-batch6-records` from latest `main`, re-read the Batch 6 scope, derive IDs from canonical JSON, and resume record expansion.
