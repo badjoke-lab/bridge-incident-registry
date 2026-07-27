@@ -38,11 +38,13 @@ All notable project changes should be recorded here after merge.
 - Production canonical links, alternate discovery links, Open Graph metadata, JSON-LD, sitemap, robots policy, and preview noindex controls
 - Canonical-derived Cloudflare redirects for legacy bridge and incident slugs
 - Redirect checks for collisions, conflicts, missing targets, loops, output drift, and sitemap exclusion
+- Post-build `dist` consistency checks across canonical and public JSON, HTML routes, metadata, JSON-LD, sitemap, robots, redirects, documentation counts, and publication boundaries
+- Controlled failure fixtures for count, ID, metadata, route, sitemap, and non-canonical publication mismatches
 
 ### Changed
 
 - Project status advanced from pre-implementation to Phase 2 record expansion
-- CI now validates canonical data, runs Astro/type checks, audits the first ten seeds, and builds the static site
+- CI now validates canonical data, runs Astro/type checks, audits the first ten seeds, builds the static site, and checks the final `dist` output
 - Nomad Bridge reclassified from `dead` to `limited` recovery-oriented operation
 - Harmony reimbursement status changed from `unknown` to `in_progress`
 - First-ten canonical audit warnings reduced from four to zero
