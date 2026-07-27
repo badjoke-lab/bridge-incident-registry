@@ -5,7 +5,7 @@ Updated: 2026-07-28
 
 GitHub state and canonical JSON are authoritative.
 
-## Canonical baseline on Batch 7 review branch
+## Canonical baseline
 
 ```text
 Bridges     33
@@ -14,14 +14,12 @@ Events      173
 Evidence    199
 ```
 
-`main` remains at 30 / 32 / 150 / 181 until the Batch 7 data PR merges.
-
 ## Current position
 
 ```text
 Phase 0  Specification and foundation              complete
 Phase 1  Canonical model, UI, validation, seeds    complete
-Phase 2  Record expansion                          active
+Phase 2  Record expansion                          complete through Batch 7
          Batch 1                                   complete
          First-ten quality hardening               complete
          Batch 2                                   complete
@@ -30,32 +28,24 @@ Phase 2  Record expansion                          active
          Batch 5                                   complete
          Batch 6A Transit + Magpie                  complete and production-verified
          Batch 6B Rubic + Unizen                    complete and production-verified
-         Batch 7 Taiko + Everclear + Commons        implemented on review branch
-Phase 3  Full-corpus quality strengthening         next after Batch 7 publication
+         Batch 7 Taiko + Everclear + Commons        complete and production-verified
+Phase 3  Full-corpus quality strengthening         next
 Phase 4  Public contract stabilization             complete
 Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
 ```
 
-## Completed Batch 6 publication checkpoint
+## Completed Phase 2 Batch 7
 
 ```text
-Canonical data PR        #66
-Merge commit             1d2ccf24edab7b764160da130fc2e36146e6f1b1
-Production verify run    30307942555
-Verified state           30 / 32 / 150 / 181
-Verified HTML routes     67
+Canonical data PR        #69
+Merge commit             eb6bc7366ea25be4441c72cdfa50b753477eef34
+Production verify run    30309573252
+Verified state           33 / 34 / 173 / 199
+Verified HTML routes     72
 ```
 
-## Phase 2 Batch 7 implementation
-
-Canonical candidates:
-
-- Taiko Bridge
-- Everclear / Connext
-- Commons Bridge
-
-Review-branch additions:
+Canonical additions:
 
 ```text
 Bridge entities    3
@@ -77,20 +67,11 @@ Modeling results:
 - Commons token quantity, attacker proceeds, user loss, price effects, and treasury reimbursement remain separate
 - Syndicate Labs wind-down is not asserted as the incident cause
 
-Required completion steps:
-
-1. run normal PR CI against the cleaned branch
-2. review all canonical additions and source links
-3. merge only after every required check passes
-4. verify production at 33 / 34 / 173 / 199
-5. verify all 72 canonical HTML routes
-6. record the production audit
-7. start Phase 3 full-corpus quality work only after publication is confirmed
-
 Records:
 
 - `docs/batches/phase2-batch-07-scope-2026-07-28.md`
 - `docs/batches/phase2-batch-07-implementation.md`
+- `docs/audits/production-verification-batch7-2026-07-28.md`
 
 ## Production publication gate
 
@@ -104,9 +85,22 @@ Maximum wait   5 minutes
 
 After convergence, every count, ID, route, reference, metadata, sitemap, robots, redirect, content-type, and cache assertion remains mandatory.
 
-## Work after Batch 7
+## Phase 3 — full-corpus quality strengthening
 
-1. full-corpus audit
+Next sequence:
+
+1. inventory all current enum and descriptive-value drift
+2. audit amount claims, recovery, reimbursement, restart, and current-outcome consistency across all incidents
+3. audit entity status against linked incident and lifecycle events
+4. audit evidence source tiers, URL states, archive coverage, and source counts
+5. separate mechanical normalization from changes that alter historical claims
+6. add controlled failure fixtures for any strengthened validator rule
+7. apply reviewed canonical migrations through bounded data PRs
+8. verify production after every public-data change
+
+## Remaining roadmap
+
+1. Phase 3 full-corpus audit and normalization
 2. primary-source strengthening
 3. aftermath normalization
 4. URL and archive hardening
