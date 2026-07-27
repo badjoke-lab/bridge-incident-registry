@@ -1,0 +1,32 @@
+name: Production Verification
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/production-verification.yml"
+      - "scripts/verify-production.mjs"
+      - "scripts/lib/**"
+      - "config/public-data.json"
+      - "data/**"
+      - "package.json"
+      - "docs/audits/production-verification-*.md"
+  workflow_dispatch:
+
+jobs:
+  verify-production:
+    if: github.event_name == 'workflow_dispatch' || github.head_ref == 'agent/production-verification'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Verify production registry
+        env:
+          PUBLIC_SITE_ORIGIN: https://bridge-incident-registry.pages.dev
+          BIR_PRODUCTION_TIMEOUT_MS: "30000"
+        run: npm run production:verify
