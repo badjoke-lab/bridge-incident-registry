@@ -1,7 +1,7 @@
 # BIR Live Recovery Checkpoint
 
 Status: active  
-Updated: 2026-06-19
+Updated: 2026-07-28
 
 GitHub state and canonical JSON are authoritative. Commit SHAs below are completed merge checkpoints, not live branch pointers.
 
@@ -21,9 +21,9 @@ PR 1  Current-state reset                    complete — PR #50
 PR 2  Canonical-derived public output        complete — PR #51
 PR 3  Machine-readable public layer          complete — PR #52
 PR 4  Canonical metadata and discovery       complete — PR #53
-PR 5  Legacy redirects                       complete when this file reaches main
-PR 6  Post-build consistency CI              next
-PR 7  Production verification                blocked by PR 6
+PR 5  Legacy redirects                       complete — PR #54
+PR 6  Post-build consistency CI              complete when this file reaches main
+PR 7  Production verification                next
 ```
 
 Completed merge checkpoints:
@@ -33,19 +33,18 @@ PR #50  ed7d4871c82dcd6b089bb3ac6da5df538a83116c
 PR #51  f7e0ff462c07fc02f6fe620d7a125546a27a45e3
 PR #52  6f3b8aad06edc7027fb362120aabe19fa46d52ee
 PR #53  5558a50e0a0f34ceca7c4b34816db29b0e7ae17b
+PR #54  40632e3e5cf600490097d58a15210dabce704ede
 ```
 
-## PR 5 result
+## PR 6 result
 
-The build generates `public/_redirects` from canonical `previous_slugs` and `redirect_from` fields.
+The build is followed by a `dist` consistency gate that compares canonical JSON with published JSON, required HTML routes, canonical metadata, JSON-LD, sitemap, robots, headers, redirects, documentation counts, and publication boundaries.
 
-Both trailing-slash and non-trailing-slash legacy routes permanently redirect to current canonical bridge or incident pages.
-
-Generation and checks reject invalid slugs, canonical-route collisions, conflicting sources, self-redirects, missing targets, loops, output drift, and legacy sitemap entries.
+Controlled failure fixtures prove that count, ID, metadata, route, sitemap, and non-canonical publication mismatches are rejected.
 
 ## Next
 
-PR 6 adds full post-build consistency checks across canonical JSON, public JSON, version, manifest, built HTML, JSON-LD, sitemap, robots, redirects, documentation counts, and the `dist` tree.
+PR 7 performs production verification for HTML, machine-readable endpoints, metadata, routes, redirects, headers, and cache behavior, then records the final audit.
 
 ## Record expansion
 

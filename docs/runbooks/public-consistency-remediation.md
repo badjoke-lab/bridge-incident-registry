@@ -1,7 +1,7 @@
 # Bridge Incident Registry — Public Consistency Remediation
 
 Status: active  
-Updated: 2026-06-19
+Updated: 2026-07-28
 
 ## Canonical baseline
 
@@ -21,28 +21,34 @@ PR 1  Current-state reset                    complete — PR #50
 PR 2  Canonical-derived public output        complete — PR #51
 PR 3  Machine-readable public layer          complete — PR #52
 PR 4  Canonical metadata and discovery       complete — PR #53
-PR 5  Legacy redirects                       complete when merged
-PR 6  Post-build consistency CI              next
-PR 7  Production verification                blocked by PR 6
+PR 5  Legacy redirects                       complete — PR #54
+PR 6  Post-build consistency CI              complete when merged
+PR 7  Production verification                next
 ```
 
-## PR 5 result
+## PR 6 result
 
-The build generates `public/_redirects` from canonical `previous_slugs` and `redirect_from` fields.
+The final `dist` tree is checked against canonical data after the Astro build.
 
-Trailing and non-trailing legacy routes redirect permanently to current canonical pages.
+The gate compares:
 
-Generation and checking reject invalid slugs, canonical-route collisions, conflicting destinations, self-redirects, missing targets, loops, output drift, and legacy sitemap entries.
+- canonical and published record counts
+- canonical and published ordered IDs
+- version and manifest canonical-only metadata
+- bridge, incident, event, evidence, chain, and asset JSON
+- required static and record-detail HTML routes
+- exact bridge and incident slug route sets
+- canonical links, production robots metadata, alternate discovery links, and JSON-LD identifiers
+- displayed counts on home and collection pages
+- sitemap URLs, robots policy, response headers, and generated redirects
+- documentation count blocks
+- the publication boundary for staging, research, candidates, watchlists, private files, and unexpected data formats
 
-## PR 6 — next
+Controlled fixtures intentionally corrupt count, ID, metadata, route, sitemap, and publication-boundary output and require every corruption to fail.
 
-Compare canonical JSON, public JSON, version, manifest, built HTML, JSON-LD, sitemap, robots, redirects, documentation counts, and `dist` output.
+## PR 7 — next
 
-Add controlled failure fixtures for count, ID, metadata, route, sitemap, and publication-boundary mismatches.
-
-## PR 7
-
-Verify production HTML, JSON, metadata, routes, redirects, cache behavior, and publish the final audit report.
+Verify production HTML, JSON, metadata, routes, redirects, response headers, and cache behavior, then publish the final audit report.
 
 ## Resume rule
 

@@ -1,9 +1,18 @@
 # Current Status — Bridge Incident Registry
 
 Status: active  
-Updated: 2026-06-19
+Updated: 2026-07-28
 
 ## Canonical state
+
+```text
+Bridges     26
+Incidents   27
+Events      123
+Evidence    148
+```
+
+Canonical source files:
 
 ```text
 data/bridges.json       26
@@ -21,9 +30,9 @@ PR 1  Current-state reset                    complete — PR #50
 PR 2  Canonical-derived public output        complete — PR #51
 PR 3  Machine-readable public layer          complete — PR #52
 PR 4  Canonical metadata and discovery       complete — PR #53
-PR 5  Legacy redirects                       complete when merged
-PR 6  Post-build consistency CI              next
-PR 7  Production verification                blocked by PR 6
+PR 5  Legacy redirects                       complete — PR #54
+PR 6  Post-build consistency CI              complete when this file reaches main
+PR 7  Production verification                next
 ```
 
 ## Public representations now covered
@@ -40,24 +49,25 @@ The build derives and validates:
 - Cloudflare response headers
 - legacy route redirects
 
-## Legacy redirects
+## Post-build consistency
 
-`public/_redirects` is generated from canonical `previous_slugs` and `redirect_from` arrays.
+The built `dist` tree is checked against canonical JSON after Astro completes.
 
-For each accepted legacy slug, both forms redirect permanently:
+The checker verifies:
 
-```text
-/bridge/old-slug
-/bridge/old-slug/
-```
+- canonical record counts and ordered IDs in published JSON
+- required static, bridge-detail, and incident-detail HTML routes
+- canonical links, production robots metadata, discovery links, and JSON-LD identifiers
+- home and registry-page count displays
+- sitemap URL equality, robots policy, response headers, and generated redirects
+- repository documentation count blocks
+- exclusion of staging, research, candidate, watchlist, private, and unexpected JSON output
 
-The same applies to incident routes.
-
-The generator and checker reject invalid slugs, canonical-route collisions, conflicting destinations, self-redirects, missing canonical targets, loops, output drift, and legacy sitemap entries.
+Controlled fixtures prove that count, ID, metadata, route, sitemap, and publication-boundary mismatches fail CI.
 
 ## Next
 
-PR 6 adds post-build checks that inspect actual `dist` HTML and generated output, compare all counts and IDs, parse JSON-LD, verify documentation count blocks, and run intentional failure fixtures.
+PR 7 verifies production HTML, JSON, metadata, routes, redirects, cache behavior, and publication headers, then records the final remediation audit.
 
 ## Record-expansion hold
 
