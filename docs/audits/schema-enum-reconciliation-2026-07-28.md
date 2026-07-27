@@ -8,7 +8,9 @@ This audit records the enforcement boundary between the documented BIR v0.3 sche
 
 ## Result
 
-The combined validators now treat normalized identity, lifecycle, incident outcome, reference, source-tier, and URL-state fields as closed vocabularies. Fields that still contain legacy descriptive values remain structurally validated and produce migration warnings rather than blocking canonical builds.
+The combined validators continue to enforce already-normalized bridge, metadata, reference, source-tier, URL-state, and amount-confidence vocabularies. A new migration gate now inventories fields whose current canonical values predate or extend the final v0.3 target vocabulary.
+
+The migration gate rejects missing, empty, or malformed tokens, but it does not silently rewrite historically reviewed classifications.
 
 ## Strictly enforced vocabularies
 
@@ -18,35 +20,39 @@ The combined validators now treat normalized identity, lifecycle, incident outco
 - update status
 - confidence
 - date precision
-- incident type
-- recovery status
-- reimbursement status
-- restart status
-- current outcome
 - amount confidence
 - source tier
 - evidence URL status
 
-## Migration fields
+## Target-vocabulary migration fields
 
 The following fields are not yet safe to convert to closed enums without a dedicated canonical-data migration:
 
 - `bridge.official_url_status`
 - `bridge.operator_type`
+- `incident.incident_type`
+- `incident.recovery_status`
+- `incident.reimbursement_status`
+- `incident.restart_status`
+- `incident.current_outcome`
 - `incident.attack_vector_category`
 - `incident.postmortem_available`
 - `incident.loss_amount_basis`
 - `event.event_type`
 - `event.impact_level`
 - `event.status_effect`
+- `event.reimbursement_status`
+- `event.restart_status`
 - `evidence.source_type`
 - `evidence.claim_scope`
 
-Current records include descriptive or earlier-generation values that predate the final v0.3 vocabulary. The validator requires these values to be non-empty snake-case tokens where applicable and reports values outside the target vocabulary as warnings.
+Current records include descriptive or earlier-generation values that predate the final v0.3 vocabulary. The validator requires these values to be non-empty snake-case tokens where applicable and reports values outside the target vocabulary as migration warnings.
+
+Examples confirmed during this audit include `frontend_compromise`, `attempted_exploit`, `none_confirmed`, `partial_reopen`, `attack_thwarted`, and `whitehat_recovery`.
 
 ## Safety boundary
 
-This PR does not rewrite canonical incident history or silently map descriptive claims to stronger classifications. Batch 6 must use the documented target vocabulary wherever the underlying evidence supports it.
+This PR does not rewrite canonical incident history or silently map descriptive legacy classifications to stronger technical claims. Batch 6 must use the documented target vocabulary wherever the underlying evidence supports it.
 
 ## Follow-up
 
