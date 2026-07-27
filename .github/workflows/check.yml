@@ -32,3 +32,9 @@ jobs:
 
       - name: Build static site
         run: npm run build
+
+      - name: Check built output consistency
+        run: npm run dist:check
+
+      - name: Test controlled consistency failures
+        run: npm run dist:test
