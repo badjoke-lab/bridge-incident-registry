@@ -23,7 +23,7 @@ PR 3  Machine-readable public layer          complete — PR #52
 PR 4  Canonical metadata and discovery       complete — PR #53
 PR 5  Legacy redirects                       complete — PR #54
 PR 6  Post-build consistency CI              complete — PR #58
-PR 7  Production verification                complete when PR #59 merges
+PR 7  Production verification                complete — PR #59
 ```
 
 Completed merge checkpoints:
@@ -35,6 +35,7 @@ PR #52  6f3b8aad06edc7027fb362120aabe19fa46d52ee
 PR #53  5558a50e0a0f34ceca7c4b34816db29b0e7ae17b
 PR #54  40632e3e5cf600490097d58a15210dabce704ede
 PR #58  57e4fc948fc9a26f20833b657c8d31822c72f56a
+PR #59  e511911d97216366386ff808d9dfb80bdfd19334
 ```
 
 ## Production verification result
@@ -56,4 +57,4 @@ Full audit: `docs/audits/production-verification-2026-07-28.md`.
 
 ## Next
 
-After PR #59 merges, compare or recreate `phase2-batch6-records` from latest `main`, re-read the Batch 6 scope, derive IDs from canonical JSON, and resume record expansion.
+The documented parked `phase2-batch6-records` branch is not present in the current GitHub branch search. Create a fresh bounded Batch 6 branch from latest `main`, re-read the scope, derive IDs from canonical JSON, and resume record expansion.
