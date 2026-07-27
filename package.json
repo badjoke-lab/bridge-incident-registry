@@ -16,7 +16,8 @@
     "public:check": "node scripts/check-machine-data.mjs",
     "public:build": "node scripts/build-public-site.mjs",
     "dist:check": "node scripts/check-dist-consistency.mjs",
-    "dist:test": "node scripts/test-dist-consistency.mjs"
+    "dist:test": "node scripts/test-dist-consistency.mjs",
+    "production:verify": "node scripts/verify-production.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
