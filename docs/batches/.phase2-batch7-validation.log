@@ -1,0 +1,37 @@
+
+>>> npm run validate:data
+
+> bridge-incident-registry@0.0.0 validate:data
+> node scripts/validate-data.mjs
+
+Data validation failed:
+- bridge bir_bridge_000031: unknown primary_chains reference key: taiko
+- bridge bir_bridge_000033: unknown primary_chains reference key: base
+- bridge bir_bridge_000033: unknown primary_chains reference key: commons-chain
+- incident bir_inc_000033: unknown affected_chains reference key: taiko
+- incident bir_inc_000034: unknown affected_chains reference key: base
+- incident bir_inc_000034: unknown affected_chains reference key: commons-chain
+- event bir_ev_000151: unknown affected_chains reference key: taiko
+- event bir_ev_000152: unknown affected_chains reference key: taiko
+- event bir_ev_000153: unknown affected_chains reference key: taiko
+- event bir_ev_000154: unknown affected_chains reference key: taiko
+- event bir_ev_000155: unknown affected_chains reference key: taiko
+- event bir_ev_000156: unknown affected_chains reference key: taiko
+- event bir_ev_000157: unknown affected_chains reference key: taiko
+- event bir_ev_000158: unknown affected_chains reference key: taiko
+- event bir_ev_000166: unknown affected_chains reference key: base
+- event bir_ev_000166: unknown affected_chains reference key: commons-chain
+- event bir_ev_000167: unknown affected_chains reference key: base
+- event bir_ev_000167: unknown affected_chains reference key: commons-chain
+- event bir_ev_000168: unknown affected_chains reference key: base
+- event bir_ev_000168: unknown affected_chains reference key: commons-chain
+- event bir_ev_000169: unknown affected_chains reference key: base
+- event bir_ev_000169: unknown affected_chains reference key: commons-chain
+- event bir_ev_000170: unknown affected_chains reference key: base
+- event bir_ev_000170: unknown affected_chains reference key: commons-chain
+- event bir_ev_000171: unknown affected_chains reference key: base
+- event bir_ev_000171: unknown affected_chains reference key: commons-chain
+- event bir_ev_000172: unknown affected_chains reference key: base
+- event bir_ev_000172: unknown affected_chains reference key: commons-chain
+- event bir_ev_000173: unknown affected_chains reference key: base
+- event bir_ev_000173: unknown affected_chains reference key: commons-chain
