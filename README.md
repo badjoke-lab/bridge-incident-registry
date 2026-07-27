@@ -31,7 +31,7 @@ BIR is not:
 
 The static registry application, four-record canonical model, validation pipeline, list/detail pages, methodology pages, five reviewed expansion batches, canonical public-data layer, metadata, redirects, post-build consistency CI, and production-verification gate are implemented.
 
-The seven-step public-consistency remediation is complete when PR #59 merges. Phase 2 Batch 6 record expansion is the next bounded workstream.
+The seven-step public-consistency remediation is complete. Phase 2 Batch 6 record expansion is the next bounded workstream.
 
 Current canonical counts:
 
@@ -104,4 +104,4 @@ Canonical data and generated machine-readable output are validated during the bu
 
 Never write canonical data directly to `main`. Candidate research, monitoring output, private notes, and temporary files must remain separate from reviewed canonical records.
 
-After PR #59 merges, compare or recreate the parked `phase2-batch6-records` branch from latest `main` before resuming canonical writes.
+The documented parked `phase2-batch6-records` branch is not present in the current GitHub branch search, so Batch 6 must start from a new branch based on latest `main`.

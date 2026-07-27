@@ -19,7 +19,7 @@ Evidence    148
 ```text
 Phase 0  Specification and foundation              complete
 Phase 1  Canonical model, UI, validation, seeds    complete
-Phase 2  Record expansion                          ready to resume after PR #59
+Phase 2  Record expansion                          active
          Batch 1                                   complete
          First-ten quality hardening               complete
          Batch 2                                   complete
@@ -29,9 +29,9 @@ Phase 2  Record expansion                          ready to resume after PR #59
          Batch 6 scope                             complete
          Batch 6 implementation                    next
          Batch 7                                   planned
-Emergency public consistency                       complete when PR #59 merges
+Emergency public consistency                       complete — PR #59
 Phase 3  Full-corpus quality strengthening         planned
-Phase 4  Public contract stabilization             complete when PR #59 merges
+Phase 4  Public contract stabilization             complete
 Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
 ```
@@ -45,23 +45,20 @@ PR 3  Machine-readable public layer          complete — PR #52
 PR 4  Canonical metadata and discovery       complete — PR #53
 PR 5  Legacy redirects                       complete — PR #54
 PR 6  Post-build consistency CI              complete — PR #58
-PR 7  Production verification                complete when PR #59 merges
+PR 7  Production verification                complete — PR #59
 ```
 
 Production verification passed on GitHub Actions run `30290442852`. See `docs/audits/production-verification-2026-07-28.md`.
 
-## Phase 2 resume — next
+## Phase 2 Batch 6 — next
 
-After PR #59 merges:
-
-1. verify latest `main` and open PRs
-2. compare the parked `phase2-batch6-records` branch with current `main`; recreate it if its history is stale or unclear
-3. re-read `docs/batches/phase-2-batch-6-scope.md`
-4. inspect canonical files before assigning IDs or counts
-5. implement the bounded Batch 6 scope for Transit Swap, Rubic, Unizen, and Magpie Protocol
-6. keep routing/aggregation incidents distinct from underlying bridge-reserve incidents
-7. run canonical validation, first-ten audit, build, post-build consistency, and controlled failure checks
-8. verify production after merge when public records or routes change
+1. create a fresh bounded branch from latest `main`; the previously documented parked branch is not present in the current GitHub branch search
+2. re-read `docs/batches/phase-2-batch-6-scope.md`
+3. inspect canonical files before assigning IDs or counts
+4. implement the bounded Batch 6 scope for Transit Swap, Rubic, Unizen, and Magpie Protocol
+5. keep routing and aggregation incidents distinct from underlying bridge-reserve incidents
+6. run canonical validation, first-ten audit, build, post-build consistency, and controlled failure checks
+7. verify production after merge because public records and routes will change
 
 ## Candidate queue after Batch 6
 
