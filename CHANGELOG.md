@@ -6,6 +6,10 @@ All notable project changes should be recorded here after merge.
 
 ### Added
 
+- Phase 2 Batch 6B records for Rubic and Unizen
+- Three incident cases covering a deprecated native-bridge wallet compromise and two aggregator approval exploits
+- RBC and BRBC asset reference definitions
+
 - Phase 2 Batch 6A records for Transit Swap and Magpie Protocol / Fly
 - Two aggregator routing and approval incident cases with attacker-return, reimbursement, pause, relaunch, and current-state evidence
 
@@ -71,8 +75,8 @@ All notable project changes should be recorded here after merge.
 ### Data counts
 
 ```text
-Bridges     28
-Incidents   29
-Events      134
-Evidence    160
+Bridges     30
+Incidents   32
+Events      150
+Evidence    181
 ```

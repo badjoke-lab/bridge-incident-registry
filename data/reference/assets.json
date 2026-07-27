@@ -121,5 +121,19 @@
     "aliases": [
       "Conflux"
     ]
+  },
+  "rbc": {
+    "display_name": "RBC",
+    "aliases": [
+      "Rubic token",
+      "Rubic Classic"
+    ]
+  },
+  "brbc": {
+    "display_name": "BRBC",
+    "aliases": [
+      "Wrapped RBC",
+      "BNB Chain Rubic token"
+    ]
   }
 }

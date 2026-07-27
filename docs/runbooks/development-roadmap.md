@@ -5,14 +5,16 @@ Updated: 2026-07-28
 
 GitHub state and canonical JSON are authoritative.
 
-## Canonical baseline
+## Canonical baseline on Batch 6B review branch
 
 ```text
-Bridges     28
-Incidents   29
-Events      134
-Evidence    160
+Bridges     30
+Incidents   32
+Events      150
+Evidence    181
 ```
+
+`main` remains at 28 / 29 / 134 / 160 until the Batch 6B data PR merges.
 
 ## Current position
 
@@ -29,7 +31,7 @@ Phase 2  Record expansion                          active
          Batch 6 scope                             complete
          Batch 6 source resolution                 complete
          Batch 6A Transit + Magpie                  complete and production-verified
-         Batch 6B Rubic + Unizen                    source-gated
+         Batch 6B Rubic + Unizen                    implemented on review branch
          Batch 7                                   planned
 Emergency public consistency                       complete — PR #59
 Phase 3  Full-corpus quality strengthening         planned
@@ -50,57 +52,59 @@ PR 6  Post-build consistency CI              complete — PR #58
 PR 7  Production verification                complete — PR #59
 ```
 
-The original production verification passed on GitHub Actions run `30290442852`. See `docs/audits/production-verification-2026-07-28.md`.
-
 ## Completed Phase 2 Batch 6A
-
-Canonical records:
-
-- Transit Swap
-- Magpie Protocol / Fly
-
-Additions:
-
-```text
-Bridge entities   2
-Incident cases    2
-Timeline events   11
-Evidence records  12
-```
-
-Completion checkpoints:
 
 ```text
 Canonical data PR        #63
 Merge commit             c074d411b9c1d99b0f5cd56c5ade3125952de13c
-Production verify run    30306150605
+Production verify run    30306303489
+Verified state           28 / 29 / 134 / 160
 Verified HTML routes     62
 ```
-
-The production run checked all static pages, 28 bridge detail pages, 29 incident detail pages, public JSON counts and ordered IDs, metadata, sitemap, robots, redirects, content types, and observable cache headers.
 
 Records:
 
 - `docs/batches/phase2-batch-06a-implementation.md`
 - `docs/audits/production-verification-batch6a-2026-07-28.md`
 
-## Phase 2 Batch 6B
+## Phase 2 Batch 6B implementation
 
-Remaining candidates:
+Canonical candidates:
 
 - Rubic
 - Unizen
 
-Before canonical promotion:
+Review-branch additions:
 
-1. obtain stable primary or archived Rubic incident notices for both distinct cases
-2. reconcile Rubic operator-wallet, user-loss, recovery, and reimbursement scopes
-3. obtain stronger first-party Unizen incident and reimbursement records
-4. keep Unizen's trade aggregator incident distinct from UIP providers
-5. derive IDs only from the current 28 / 29 / 134 / 160 canonical baseline
-6. prepare a dedicated reviewed data PR rather than extending Batch 6A
+```text
+Bridge entities   2
+Incident cases    3
+Timeline events   16
+Evidence records  21
+Asset references  2
+```
 
-Source-resolution record: `docs/batches/phase2-batch-06-source-resolution-2026-07-28.md`.
+Modeling results:
+
+- Rubic's historical RBC/BRBC bridge wallet compromise remains separate from the later RubicProxy approval exploit
+- the former native bridge component is deprecated/replaced while the Rubic aggregator remains active
+- Unizen reimbursement is `in_progress`, not completed
+- Unizen's trade-aggregation contract incident does not propagate to UIP providers
+- RBC/BRBC token quantity, attacker proceeds, collateral effects, and USD loss remain distinct
+
+Required completion steps:
+
+1. run normal PR CI against the cleaned branch
+2. review all canonical additions and source links
+3. merge only after every required check passes
+4. verify production at 30 / 32 / 150 / 181
+5. verify all 67 canonical HTML routes
+6. record the production audit before starting Batch 7
+
+Records:
+
+- `docs/batches/phase2-batch-06b-source-resolution-2026-07-28.md`
+- `docs/batches/phase2-batch-06b-implementation.md`
 
 ## Candidate queue after Batch 6
 
@@ -114,7 +118,7 @@ These candidates require dedicated scope review and current-source verification 
 
 ## Remaining roadmap
 
-1. Phase 2 Batch 6B
+1. complete Batch 6B PR and production verification
 2. Phase 2 Batch 7
 3. full-corpus audit
 4. primary-source strengthening

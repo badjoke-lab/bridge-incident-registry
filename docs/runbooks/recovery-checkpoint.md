@@ -5,14 +5,16 @@ Updated: 2026-07-28
 
 GitHub state and canonical JSON are authoritative. Commit SHAs below are completed merge checkpoints, not live branch pointers.
 
-## Canonical counts
+## Canonical counts on Batch 6B review branch
 
 ```text
-Bridges     28
-Incidents   29
-Events      134
-Evidence    160
+Bridges     30
+Incidents   32
+Events      150
+Evidence    181
 ```
+
+`main` remains at 28 / 29 / 134 / 160 until PR #66 merges.
 
 ## Public-consistency remediation
 
@@ -39,43 +41,59 @@ PR #59  e511911d97216366386ff808d9dfb80bdfd19334
 PR #61  bcf59e4c811f2d68a3cfeb89cceaa76c24fba9f0
 PR #62  90304ecbb9dfef4670d91093873a05aa87e770d2
 PR #63  c074d411b9c1d99b0f5cd56c5ade3125952de13c
+PR #64  8d5bb2b994cfd501e49827a2896291507a499620
+PR #65  d634db5436bc0590b35e19e88435eb4b9214e7b0
 ```
 
-## Batch 6A completion
+## Last completed publication checkpoint
 
-Published canonical records:
+Batch 6A Production Verification run `30306303489` passed against `https://bridge-incident-registry.pages.dev`.
 
-- Transit Swap entity and October 2022 incident
-- Magpie Protocol / Fly entity and April 2024 incident
-- 11 timeline events
-- 12 evidence records
+Verified state:
 
-Production Verification run `30306150605` passed against `https://bridge-incident-registry.pages.dev`.
-
-Verified surfaces:
-
-- all five static registry pages
-- all 28 bridge detail routes
-- all 29 incident detail routes
-- canonical JSON endpoints and ordered IDs
-- 28 / 29 / 134 / 160 version and manifest counts
-- canonical metadata and JSON-LD identifiers
-- robots and 62-route sitemap
-- generated legacy redirects
-- content types and observable cache headers
+```text
+Bridges     28
+Incidents   29
+Events      134
+Evidence    160
+HTML routes 62
+```
 
 Audit: `docs/audits/production-verification-batch6a-2026-07-28.md`.
 
-## Production verifier correction
+## Batch 6B review state
 
-Cloudflare Error 1010 blocked the verifier's previous custom automation User-Agent. The verifier now sends browser-compatible request headers while retaining every content, route, metadata, count, ID, redirect, and cache assertion.
+Branch:
+
+```text
+agent/phase2-batch6b-records
+```
+
+Pull request:
+
+```text
+#66  data: add Phase 2 Batch 6B records
+```
+
+Implemented:
+
+- Rubic entity
+- Rubic RBC/BRBC bridge wallet incident
+- Rubic RubicProxy approval incident
+- Unizen entity
+- Unizen March 2024 approval incident
+- 16 timeline events
+- 21 evidence records
+- RBC and BRBC reference definitions
+
+The bounded generator passed all repository checks before committing canonical data. The temporary generator, write-enabled workflow, and trigger file have been removed.
 
 ## Next
 
-1. verify latest `main` and open PRs
-2. create a fresh bounded Batch 6B research branch
-3. re-read `docs/batches/phase2-batch-06-source-resolution-2026-07-28.md`
-4. resolve Rubic's two incident source and outcome gates
-5. resolve Unizen's first-party incident and reimbursement gates
-6. assign IDs only after both candidates pass review
-7. promote through a separate canonical-data PR and production verification
+1. require the final normal Check workflow on the cleaned PR
+2. review the complete canonical diff
+3. merge PR #66 only after every required check passes
+4. run production verification against 30 / 32 / 150 / 181
+5. verify all 67 canonical HTML routes
+6. publish a Batch 6B production audit
+7. begin Batch 7 only after publication is confirmed
