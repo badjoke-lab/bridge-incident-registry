@@ -1,6 +1,6 @@
 # Bridge Incident Registry — Public Consistency Remediation
 
-Status: complete when PR #59 merges  
+Status: complete  
 Updated: 2026-07-28
 
 ## Canonical baseline
@@ -23,7 +23,7 @@ PR 3  Machine-readable public layer          complete — PR #52
 PR 4  Canonical metadata and discovery       complete — PR #53
 PR 5  Legacy redirects                       complete — PR #54
 PR 6  Post-build consistency CI              complete — PR #58
-PR 7  Production verification                complete when PR #59 merges
+PR 7  Production verification                complete — PR #59
 ```
 
 ## Final production verification
@@ -48,13 +48,13 @@ Final audit: `docs/audits/production-verification-2026-07-28.md`.
 
 ## Closure
 
-When PR #59 merges, the emergency public-consistency remediation is closed.
+The emergency public-consistency remediation is closed.
 
-Canonical record expansion may then resume from latest `main`, subject to the standard branch, review, validation, and production-verification rules.
+Canonical record expansion may resume from latest `main`, subject to the standard branch, review, validation, and production-verification rules.
 
 ## Batch 6 resume rule
 
-1. compare or recreate the parked `phase2-batch6-records` branch
+1. create a fresh Batch 6 branch from latest `main`
 2. re-read the approved Batch 6 scope
 3. derive IDs and counts from current canonical JSON
 4. keep canonical records separate from candidate and research material
