@@ -1,0 +1,317 @@
+Full-corpus audit warnings:
+- completed_reimbursement_event: 5
+  - bir_inc_000001: completed without reimbursement_completed event
+  - bir_inc_000002: completed without reimbursement_completed event
+  - bir_inc_000010: completed without reimbursement_completed event
+  - bir_inc_000011: completed without reimbursement_completed event
+  - bir_inc_000014: completed without reimbursement_completed event
+- event_evidence_without_incident: 56
+  - bir_src_000062: event-linked evidence has no incident_id
+  - bir_src_000075: event-linked evidence has no incident_id
+  - bir_src_000078: event-linked evidence has no incident_id
+  - bir_src_000084: event-linked evidence has no incident_id
+  - bir_src_000085: event-linked evidence has no incident_id
+  - bir_src_000092: event-linked evidence has no incident_id
+  - bir_src_000093: event-linked evidence has no incident_id
+  - bir_src_000094: event-linked evidence has no incident_id
+  - bir_src_000097: event-linked evidence has no incident_id
+  - bir_src_000100: event-linked evidence has no incident_id
+  - bir_src_000101: event-linked evidence has no incident_id
+  - bir_src_000102: event-linked evidence has no incident_id
+  - bir_src_000103: event-linked evidence has no incident_id
+  - bir_src_000106: event-linked evidence has no incident_id
+  - bir_src_000107: event-linked evidence has no incident_id
+  - bir_src_000110: event-linked evidence has no incident_id
+  - bir_src_000111: event-linked evidence has no incident_id
+  - bir_src_000116: event-linked evidence has no incident_id
+  - bir_src_000117: event-linked evidence has no incident_id
+  - bir_src_000118: event-linked evidence has no incident_id
+  - bir_src_000119: event-linked evidence has no incident_id
+  - bir_src_000120: event-linked evidence has no incident_id
+  - bir_src_000121: event-linked evidence has no incident_id
+  - bir_src_000122: event-linked evidence has no incident_id
+  - bir_src_000123: event-linked evidence has no incident_id
+  - bir_src_000124: event-linked evidence has no incident_id
+  - bir_src_000125: event-linked evidence has no incident_id
+  - bir_src_000126: event-linked evidence has no incident_id
+  - bir_src_000127: event-linked evidence has no incident_id
+  - bir_src_000128: event-linked evidence has no incident_id
+  - bir_src_000129: event-linked evidence has no incident_id
+  - bir_src_000130: event-linked evidence has no incident_id
+  - bir_src_000131: event-linked evidence has no incident_id
+  - bir_src_000132: event-linked evidence has no incident_id
+  - bir_src_000133: event-linked evidence has no incident_id
+  - bir_src_000134: event-linked evidence has no incident_id
+  - bir_src_000135: event-linked evidence has no incident_id
+  - bir_src_000136: event-linked evidence has no incident_id
+  - bir_src_000137: event-linked evidence has no incident_id
+  - bir_src_000138: event-linked evidence has no incident_id
+  - bir_src_000139: event-linked evidence has no incident_id
+  - bir_src_000140: event-linked evidence has no incident_id
+  - bir_src_000141: event-linked evidence has no incident_id
+  - bir_src_000142: event-linked evidence has no incident_id
+  - bir_src_000143: event-linked evidence has no incident_id
+  - bir_src_000144: event-linked evidence has no incident_id
+  - bir_src_000145: event-linked evidence has no incident_id
+  - bir_src_000146: event-linked evidence has no incident_id
+  - bir_src_000147: event-linked evidence has no incident_id
+  - bir_src_000148: event-linked evidence has no incident_id
+  - bir_src_000187: event-linked evidence has no incident_id
+  - bir_src_000188: event-linked evidence has no incident_id
+  - bir_src_000189: event-linked evidence has no incident_id
+  - bir_src_000190: event-linked evidence has no incident_id
+  - bir_src_000191: event-linked evidence has no incident_id
+  - bir_src_000192: event-linked evidence has no incident_id
+- event_source_count: 54
+  - bir_ev_000003: stored 1, directly linked 0
+  - bir_ev_000010: stored 2, directly linked 3
+  - bir_ev_000013: stored 2, directly linked 1
+  - bir_ev_000014: stored 2, directly linked 1
+  - bir_ev_000015: stored 1, directly linked 2
+  - bir_ev_000016: stored 3, directly linked 2
+  - bir_ev_000017: stored 2, directly linked 1
+  - bir_ev_000021: stored 2, directly linked 1
+  - bir_ev_000030: stored 1, directly linked 0
+  - bir_ev_000032: stored 1, directly linked 0
+  - bir_ev_000034: stored 1, directly linked 0
+  - bir_ev_000035: stored 2, directly linked 1
+  - bir_ev_000037: stored 2, directly linked 1
+  - bir_ev_000039: stored 2, directly linked 0
+  - bir_ev_000040: stored 2, directly linked 1
+  - bir_ev_000043: stored 3, directly linked 2
+  - bir_ev_000044: stored 3, directly linked 1
+  - bir_ev_000045: stored 2, directly linked 1
+  - bir_ev_000053: stored 1, directly linked 0
+  - bir_ev_000054: stored 2, directly linked 1
+  - bir_ev_000059: stored 1, directly linked 0
+  - bir_ev_000067: stored 1, directly linked 2
+  - bir_ev_000068: stored 1, directly linked 0
+  - bir_ev_000069: stored 1, directly linked 0
+  - bir_ev_000070: stored 2, directly linked 3
+  - bir_ev_000071: stored 2, directly linked 1
+  - bir_ev_000072: stored 1, directly linked 0
+  - bir_ev_000073: stored 1, directly linked 0
+  - bir_ev_000079: stored 2, directly linked 0
+  - bir_ev_000085: stored 1, directly linked 0
+  - bir_ev_000087: stored 2, directly linked 1
+  - bir_ev_000088: stored 2, directly linked 1
+  - bir_ev_000091: stored 2, directly linked 0
+  - bir_ev_000095: stored 2, directly linked 1
+  - bir_ev_000096: stored 2, directly linked 1
+  - bir_ev_000097: stored 2, directly linked 1
+  - bir_ev_000098: stored 2, directly linked 0
+  - bir_ev_000099: stored 3, directly linked 1
+  - bir_ev_000102: stored 2, directly linked 1
+  - bir_ev_000125: stored 2, directly linked 0
+  - bir_ev_000126: stored 2, directly linked 1
+  - bir_ev_000130: stored 1, directly linked 0
+  - bir_ev_000131: stored 2, directly linked 0
+  - bir_ev_000132: stored 2, directly linked 0
+  - bir_ev_000139: stored 1, directly linked 3
+  - bir_ev_000153: stored 1, directly linked 0
+  - bir_ev_000154: stored 1, directly linked 0
+  - bir_ev_000155: stored 1, directly linked 0
+  - bir_ev_000158: stored 1, directly linked 0
+  - bir_ev_000159: stored 1, directly linked 0
+  - bir_ev_000168: stored 1, directly linked 0
+  - bir_ev_000170: stored 1, directly linked 0
+  - bir_ev_000171: stored 1, directly linked 0
+  - bir_ev_000172: stored 1, directly linked 2
+- incident_source_count: 7
+  - bir_inc_000019: stored 4, directly linked 3
+  - bir_inc_000020: stored 5, directly linked 4
+  - bir_inc_000027: stored 5, directly linked 4
+  - bir_inc_000031: stored 7, directly linked 6
+  - bir_inc_000032: stored 10, directly linked 8
+  - bir_inc_000033: stored 5, directly linked 4
+  - bir_inc_000034: stored 5, directly linked 6
+- reopened_event: 15
+  - bir_inc_000001: reopened without bridge_reopened event
+  - bir_inc_000002: reopened without bridge_reopened event
+  - bir_inc_000005: reopened without bridge_reopened event
+  - bir_inc_000006: reopened without bridge_reopened event
+  - bir_inc_000010: reopened without bridge_reopened event
+  - bir_inc_000011: reopened without bridge_reopened event
+  - bir_inc_000013: reopened without bridge_reopened event
+  - bir_inc_000014: reopened without bridge_reopened event
+  - bir_inc_000015: reopened without bridge_reopened event
+  - bir_inc_000016: reopened without bridge_reopened event
+  - bir_inc_000017: reopened without bridge_reopened event
+  - bir_inc_000018: reopened without bridge_reopened event
+  - bir_inc_000019: reopened without bridge_reopened event
+  - bir_inc_000020: reopened without bridge_reopened event
+  - bir_inc_000025: reopened without bridge_reopened event
+Full-corpus audit passed blocking checks.
+{
+  "record_counts": {
+    "bridges": 33,
+    "incidents": 34,
+    "events": 173,
+    "evidence": 199
+  },
+  "blocking_errors": 0,
+  "warning_categories": {
+    "completed_reimbursement_event": {
+      "count": 5,
+      "records": [
+        "bir_inc_000001: completed without reimbursement_completed event",
+        "bir_inc_000002: completed without reimbursement_completed event",
+        "bir_inc_000010: completed without reimbursement_completed event",
+        "bir_inc_000011: completed without reimbursement_completed event",
+        "bir_inc_000014: completed without reimbursement_completed event"
+      ]
+    },
+    "event_evidence_without_incident": {
+      "count": 56,
+      "records": [
+        "bir_src_000062: event-linked evidence has no incident_id",
+        "bir_src_000075: event-linked evidence has no incident_id",
+        "bir_src_000078: event-linked evidence has no incident_id",
+        "bir_src_000084: event-linked evidence has no incident_id",
+        "bir_src_000085: event-linked evidence has no incident_id",
+        "bir_src_000092: event-linked evidence has no incident_id",
+        "bir_src_000093: event-linked evidence has no incident_id",
+        "bir_src_000094: event-linked evidence has no incident_id",
+        "bir_src_000097: event-linked evidence has no incident_id",
+        "bir_src_000100: event-linked evidence has no incident_id",
+        "bir_src_000101: event-linked evidence has no incident_id",
+        "bir_src_000102: event-linked evidence has no incident_id",
+        "bir_src_000103: event-linked evidence has no incident_id",
+        "bir_src_000106: event-linked evidence has no incident_id",
+        "bir_src_000107: event-linked evidence has no incident_id",
+        "bir_src_000110: event-linked evidence has no incident_id",
+        "bir_src_000111: event-linked evidence has no incident_id",
+        "bir_src_000116: event-linked evidence has no incident_id",
+        "bir_src_000117: event-linked evidence has no incident_id",
+        "bir_src_000118: event-linked evidence has no incident_id",
+        "bir_src_000119: event-linked evidence has no incident_id",
+        "bir_src_000120: event-linked evidence has no incident_id",
+        "bir_src_000121: event-linked evidence has no incident_id",
+        "bir_src_000122: event-linked evidence has no incident_id",
+        "bir_src_000123: event-linked evidence has no incident_id",
+        "bir_src_000124: event-linked evidence has no incident_id",
+        "bir_src_000125: event-linked evidence has no incident_id",
+        "bir_src_000126: event-linked evidence has no incident_id",
+        "bir_src_000127: event-linked evidence has no incident_id",
+        "bir_src_000128: event-linked evidence has no incident_id",
+        "bir_src_000129: event-linked evidence has no incident_id",
+        "bir_src_000130: event-linked evidence has no incident_id",
+        "bir_src_000131: event-linked evidence has no incident_id",
+        "bir_src_000132: event-linked evidence has no incident_id",
+        "bir_src_000133: event-linked evidence has no incident_id",
+        "bir_src_000134: event-linked evidence has no incident_id",
+        "bir_src_000135: event-linked evidence has no incident_id",
+        "bir_src_000136: event-linked evidence has no incident_id",
+        "bir_src_000137: event-linked evidence has no incident_id",
+        "bir_src_000138: event-linked evidence has no incident_id",
+        "bir_src_000139: event-linked evidence has no incident_id",
+        "bir_src_000140: event-linked evidence has no incident_id",
+        "bir_src_000141: event-linked evidence has no incident_id",
+        "bir_src_000142: event-linked evidence has no incident_id",
+        "bir_src_000143: event-linked evidence has no incident_id",
+        "bir_src_000144: event-linked evidence has no incident_id",
+        "bir_src_000145: event-linked evidence has no incident_id",
+        "bir_src_000146: event-linked evidence has no incident_id",
+        "bir_src_000147: event-linked evidence has no incident_id",
+        "bir_src_000148: event-linked evidence has no incident_id",
+        "bir_src_000187: event-linked evidence has no incident_id",
+        "bir_src_000188: event-linked evidence has no incident_id",
+        "bir_src_000189: event-linked evidence has no incident_id",
+        "bir_src_000190: event-linked evidence has no incident_id",
+        "bir_src_000191: event-linked evidence has no incident_id",
+        "bir_src_000192: event-linked evidence has no incident_id"
+      ]
+    },
+    "event_source_count": {
+      "count": 54,
+      "records": [
+        "bir_ev_000003: stored 1, directly linked 0",
+        "bir_ev_000010: stored 2, directly linked 3",
+        "bir_ev_000013: stored 2, directly linked 1",
+        "bir_ev_000014: stored 2, directly linked 1",
+        "bir_ev_000015: stored 1, directly linked 2",
+        "bir_ev_000016: stored 3, directly linked 2",
+        "bir_ev_000017: stored 2, directly linked 1",
+        "bir_ev_000021: stored 2, directly linked 1",
+        "bir_ev_000030: stored 1, directly linked 0",
+        "bir_ev_000032: stored 1, directly linked 0",
+        "bir_ev_000034: stored 1, directly linked 0",
+        "bir_ev_000035: stored 2, directly linked 1",
+        "bir_ev_000037: stored 2, directly linked 1",
+        "bir_ev_000039: stored 2, directly linked 0",
+        "bir_ev_000040: stored 2, directly linked 1",
+        "bir_ev_000043: stored 3, directly linked 2",
+        "bir_ev_000044: stored 3, directly linked 1",
+        "bir_ev_000045: stored 2, directly linked 1",
+        "bir_ev_000053: stored 1, directly linked 0",
+        "bir_ev_000054: stored 2, directly linked 1",
+        "bir_ev_000059: stored 1, directly linked 0",
+        "bir_ev_000067: stored 1, directly linked 2",
+        "bir_ev_000068: stored 1, directly linked 0",
+        "bir_ev_000069: stored 1, directly linked 0",
+        "bir_ev_000070: stored 2, directly linked 3",
+        "bir_ev_000071: stored 2, directly linked 1",
+        "bir_ev_000072: stored 1, directly linked 0",
+        "bir_ev_000073: stored 1, directly linked 0",
+        "bir_ev_000079: stored 2, directly linked 0",
+        "bir_ev_000085: stored 1, directly linked 0",
+        "bir_ev_000087: stored 2, directly linked 1",
+        "bir_ev_000088: stored 2, directly linked 1",
+        "bir_ev_000091: stored 2, directly linked 0",
+        "bir_ev_000095: stored 2, directly linked 1",
+        "bir_ev_000096: stored 2, directly linked 1",
+        "bir_ev_000097: stored 2, directly linked 1",
+        "bir_ev_000098: stored 2, directly linked 0",
+        "bir_ev_000099: stored 3, directly linked 1",
+        "bir_ev_000102: stored 2, directly linked 1",
+        "bir_ev_000125: stored 2, directly linked 0",
+        "bir_ev_000126: stored 2, directly linked 1",
+        "bir_ev_000130: stored 1, directly linked 0",
+        "bir_ev_000131: stored 2, directly linked 0",
+        "bir_ev_000132: stored 2, directly linked 0",
+        "bir_ev_000139: stored 1, directly linked 3",
+        "bir_ev_000153: stored 1, directly linked 0",
+        "bir_ev_000154: stored 1, directly linked 0",
+        "bir_ev_000155: stored 1, directly linked 0",
+        "bir_ev_000158: stored 1, directly linked 0",
+        "bir_ev_000159: stored 1, directly linked 0",
+        "bir_ev_000168: stored 1, directly linked 0",
+        "bir_ev_000170: stored 1, directly linked 0",
+        "bir_ev_000171: stored 1, directly linked 0",
+        "bir_ev_000172: stored 1, directly linked 2"
+      ]
+    },
+    "incident_source_count": {
+      "count": 7,
+      "records": [
+        "bir_inc_000019: stored 4, directly linked 3",
+        "bir_inc_000020: stored 5, directly linked 4",
+        "bir_inc_000027: stored 5, directly linked 4",
+        "bir_inc_000031: stored 7, directly linked 6",
+        "bir_inc_000032: stored 10, directly linked 8",
+        "bir_inc_000033: stored 5, directly linked 4",
+        "bir_inc_000034: stored 5, directly linked 6"
+      ]
+    },
+    "reopened_event": {
+      "count": 15,
+      "records": [
+        "bir_inc_000001: reopened without bridge_reopened event",
+        "bir_inc_000002: reopened without bridge_reopened event",
+        "bir_inc_000005: reopened without bridge_reopened event",
+        "bir_inc_000006: reopened without bridge_reopened event",
+        "bir_inc_000010: reopened without bridge_reopened event",
+        "bir_inc_000011: reopened without bridge_reopened event",
+        "bir_inc_000013: reopened without bridge_reopened event",
+        "bir_inc_000014: reopened without bridge_reopened event",
+        "bir_inc_000015: reopened without bridge_reopened event",
+        "bir_inc_000016: reopened without bridge_reopened event",
+        "bir_inc_000017: reopened without bridge_reopened event",
+        "bir_inc_000018: reopened without bridge_reopened event",
+        "bir_inc_000019: reopened without bridge_reopened event",
+        "bir_inc_000020: reopened without bridge_reopened event",
+        "bir_inc_000025: reopened without bridge_reopened event"
+      ]
+    }
+  }
+}
