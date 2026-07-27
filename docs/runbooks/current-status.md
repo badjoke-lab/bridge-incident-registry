@@ -6,19 +6,19 @@ Updated: 2026-07-28
 ## Canonical state
 
 ```text
-Bridges     26
-Incidents   27
-Events      123
-Evidence    148
+Bridges     28
+Incidents   29
+Events      134
+Evidence    160
 ```
 
 Canonical source files:
 
 ```text
-data/bridges.json       26
-data/incidents.json     27
-data/events.json        123
-data/evidence.json      148
+data/bridges.json       28
+data/incidents.json     29
+data/events.json        134
+data/evidence.json      160
 ```
 
 ## Public-consistency remediation

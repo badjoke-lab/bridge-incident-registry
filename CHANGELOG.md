@@ -6,6 +6,9 @@ All notable project changes should be recorded here after merge.
 
 ### Added
 
+- Phase 2 Batch 6A records for Transit Swap and Magpie Protocol / Fly
+- Two aggregator routing and approval incident cases with attacker-return, reimbursement, pause, relaunch, and current-state evidence
+
 - Astro static registry application foundation
 - Deep Navy Archive visual system
 - Canonical bridge, incident, event, and evidence JSON datasets
@@ -68,8 +71,8 @@ All notable project changes should be recorded here after merge.
 ### Data counts
 
 ```text
-Bridges     26
-Incidents   27
-Events      123
-Evidence    148
+Bridges     28
+Incidents   29
+Events      134
+Evidence    160
 ```

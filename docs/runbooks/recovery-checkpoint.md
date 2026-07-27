@@ -8,10 +8,10 @@ GitHub state and canonical JSON are authoritative. Commit SHAs below are complet
 ## Canonical counts
 
 ```text
-Bridges     26
-Incidents   27
-Events      123
-Evidence    148
+Bridges     28
+Incidents   29
+Events      134
+Evidence    160
 ```
 
 ## Public-consistency remediation
