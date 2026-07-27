@@ -6,6 +6,15 @@ Updated: 2026-07-28
 ## Canonical state
 
 ```text
+Bridges     26
+Incidents   27
+Events      123
+Evidence    148
+```
+
+Canonical source files:
+
+```text
 data/bridges.json       26
 data/incidents.json     27
 data/events.json        123
