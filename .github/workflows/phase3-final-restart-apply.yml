@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - agent/phase3-final-restart-canonical
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: write
