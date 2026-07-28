@@ -3,13 +3,13 @@
 Status: complete  
 Updated: 2026-07-28
 
-## Current canonical baseline
+## Canonical baseline on final restart review branch
 
 ```text
 Bridges     33
 Incidents   34
-Events      182
-Evidence    210
+Events      183
+Evidence    211
 ```
 
 Canonical JSON remains the only record source. Generated public files are build products.
@@ -26,7 +26,7 @@ PR 6  Post-build consistency CI              complete — PR #58
 PR 7  Production verification                complete — PR #59
 ```
 
-## Latest contract verification
+## Latest completed contract verification
 
 Phase 3 aftermath production verification run `30358827192` passed against `https://bridge-incident-registry.pages.dev` at:
 
@@ -38,21 +38,32 @@ Phase 3 aftermath production verification run `30358827192` passed against `http
 72 canonical HTML routes
 ```
 
-The verification covered:
+The ordinary repository workflow run `30358827222` also passed type checking, canonical validation, enum validation, first-ten audit, full-corpus audit, controlled audit failures, build, final-`dist` consistency, and controlled public-output failures.
 
-- all static HTML routes
-- all canonical bridge and incident detail routes
+Latest completed audit: `docs/audits/production-verification-phase3-aftermath-2026-07-28.md`.
+
+## Pending publication gate
+
+The final restart review branch must publish and verify:
+
+```text
+33 bridges
+34 incidents
+183 events
+211 evidence records
+72 canonical HTML routes
+```
+
+The same checks remain mandatory:
+
+- all static and detail routes
 - production canonical links and robots metadata
 - JSON-LD URLs and record identifiers
 - version and manifest counts and canonical-only markers
 - bridge, incident, event, and evidence ordered IDs
-- robots and exact sitemap route equality
+- exact sitemap route equality
 - every generated legacy redirect
 - content types and observable cache-related headers
-
-The ordinary repository workflow run `30358827222` also passed type checking, canonical validation, enum validation, first-ten audit, full-corpus audit, controlled audit failures, build, final-`dist` consistency, and controlled public-output failures.
-
-Latest audit: `docs/audits/production-verification-phase3-aftermath-2026-07-28.md`.
 
 ## Closure
 
