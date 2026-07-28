@@ -370,6 +370,12 @@ unknown
 not_applicable
 ```
 
+### reimbursement semantics
+
+`reimbursement_status` records whether affected user claims or bridge liabilities were made whole. Completion may occur through direct claim payments, treasury or sponsor funding, investor funding, or a full deficit backfill. The event description must identify the mechanism and scope.
+
+Reimbursement does not imply attacker-fund recovery. Qualified completion claims, such as payments to all users who submitted a claim form, must remain qualified in canonical text.
+
 ### restart_status
 
 ```text

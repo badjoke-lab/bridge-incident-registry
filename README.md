@@ -29,17 +29,17 @@ BIR is not:
 
 ## Current status
 
-The static registry application, four-record canonical model, validation pipeline, list/detail pages, methodology pages, five reviewed expansion batches, canonical public-data layer, metadata, redirects, post-build consistency CI, and production-verification gate are implemented.
+The static registry application, four-record canonical model, validation pipeline, list/detail pages, methodology pages, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
 
-The seven-step public-consistency remediation is complete. Phase 2 Batch 6 record expansion is the next bounded workstream.
+Phase 2 record expansion is complete through Batch 7. Phase 3 aftermath normalization is active.
 
-Current canonical counts:
+Current canonical review-branch counts:
 
 ```text
 Bridges     33
 Incidents   34
-Events      173
-Evidence    199
+Events      182
+Evidence    210
 ```
 
 The canonical datasets are the only source of truth:
@@ -85,6 +85,8 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/runbooks/development-roadmap.md` — roadmap to v1
 - `docs/runbooks/public-consistency-remediation.md` — completed remediation sequence
 - `docs/audits/production-verification-2026-07-28.md` — production verification result
+- `docs/audits/full-corpus-quality-baseline-2026-07-28.md` — Phase 3 audit baseline
+- `docs/audits/phase3-aftermath-source-resolution-2026-07-28.md` — reviewed aftermath boundary
 - `docs/batches/` — reviewed batch scopes
 
 ## Architecture
@@ -103,5 +105,3 @@ Canonical data and generated machine-readable output are validated during the bu
 ## Development rule
 
 Never write canonical data directly to `main`. Candidate research, monitoring output, private notes, and temporary files must remain separate from reviewed canonical records.
-
-The documented parked `phase2-batch6-records` branch is not present in the current GitHub branch search, so Batch 6 must start from a new branch based on latest `main`.

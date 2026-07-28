@@ -3,13 +3,13 @@
 Status: complete  
 Updated: 2026-07-28
 
-## Canonical baseline
+## Canonical baseline on Phase 3 review branch
 
 ```text
 Bridges     33
 Incidents   34
-Events      173
-Evidence    199
+Events      182
+Evidence    210
 ```
 
 Canonical JSON remains the only record source. Generated public files are build products.
@@ -26,7 +26,7 @@ PR 6  Post-build consistency CI              complete — PR #58
 PR 7  Production verification                complete — PR #59
 ```
 
-## Final production verification
+## Final remediation verification
 
 GitHub Actions run `30290442852` passed against `https://bridge-incident-registry.pages.dev`.
 
@@ -50,12 +50,12 @@ Final audit: `docs/audits/production-verification-2026-07-28.md`.
 
 The emergency public-consistency remediation is closed.
 
-Canonical record expansion may resume from latest `main`, subject to the standard branch, review, validation, and production-verification rules.
+Later canonical changes, including the Phase 3 review-branch state above, must continue to satisfy the same generated-output and production-verification contract.
 
-## Batch 6 resume rule
+## Resume rule
 
-1. create a fresh Batch 6 branch from latest `main`
-2. re-read the approved Batch 6 scope
-3. derive IDs and counts from current canonical JSON
-4. keep canonical records separate from candidate and research material
-5. run all repository checks before merge
+1. create a fresh branch from latest `main`
+2. derive IDs and counts from canonical JSON
+3. keep canonical records separate from candidate and research material
+4. run all repository checks before merge
+5. run explicit production verification after public-data changes

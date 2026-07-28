@@ -3,13 +3,13 @@
 Status: active  
 Updated: 2026-07-28
 
-## Canonical state
+## Canonical state on Phase 3 review branch
 
 ```text
 Bridges     33
 Incidents   34
-Events      173
-Evidence    199
+Events      182
+Evidence    210
 ```
 
 Canonical source files:
@@ -17,9 +17,11 @@ Canonical source files:
 ```text
 data/bridges.json       33
 data/incidents.json     34
-data/events.json        173
-data/evidence.json      199
+data/events.json        182
+data/evidence.json      210
 ```
+
+`main` remains at 33 / 34 / 173 / 199 until the Phase 3 aftermath canonical PR merges.
 
 ## Phase 2 record expansion
 
@@ -34,7 +36,34 @@ Batch 6B   merged and production-verified
 Batch 7    merged and production-verified
 ```
 
-## Batch 7 checkpoint
+## Phase 3 quality strengthening
+
+```text
+Full-corpus audit             merged — PR #71
+Aftermath source resolution   merged — PR #72
+Aftermath canonical migration implemented on review branch
+```
+
+Phase 3 aftermath changes:
+
+- seven legacy descriptive reopening event types normalized to `bridge_reopened`
+- Ronin generic aftermath event converted to sourced reimbursement completion
+- Wormhole deficit backfill normalized to reimbursement completion
+- nine new timeline events
+- eleven new evidence records
+- public reimbursement semantics added to SPEC and methodology
+- reimbursement-completion warnings reduced from five to zero
+- reopening warnings reduced from fifteen to three
+
+The remaining restart reviews are:
+
+```text
+bir_inc_000015  LI.FI 2022
+bir_inc_000016  LI.FI 2024
+bir_inc_000017  ChainSwap July 2, 2021
+```
+
+## Last completed production checkpoint
 
 ```text
 Canonical data PR      #69
@@ -44,21 +73,10 @@ Verified state         33 / 34 / 173 / 199
 Verified HTML routes   72
 ```
 
-Batch 7 added:
-
-- Taiko Bridge entity and June 2026 incident
-- Everclear / Connext lifecycle entity
-- Commons Bridge entity and April 2026 incident
-- 23 timeline events
-- 18 evidence records
-- SYND, CLEAR, and NEXT asset references
-- Taiko, Base, and Commons Chain references
-
 Records:
 
-- `docs/batches/phase2-batch-07-scope-2026-07-28.md`
-- `docs/batches/phase2-batch-07-implementation.md`
-- `docs/audits/production-verification-batch7-2026-07-28.md`
+- `docs/audits/full-corpus-quality-baseline-2026-07-28.md`
+- `docs/audits/phase3-aftermath-source-resolution-2026-07-28.md`
 
 ## Production verifier
 
@@ -70,29 +88,10 @@ The verifier:
 - fails if publication does not converge within five minutes
 - retains all count, ID, route, reference, metadata, sitemap, robots, redirect, content-type, and cache assertions
 
-## Public representations covered
-
-The repository and production checks cover:
-
-- human-facing HTML
-- version and manifest metadata
-- bridge, incident, event, evidence, chain, and asset JSON
-- `llms.txt` and `ai.txt`
-- canonical and alternate metadata
-- Open Graph, Twitter, and JSON-LD metadata
-- sitemap and robots policy
-- Cloudflare response headers and observable cache metadata
-- legacy route redirects
-- canonical/public counts, IDs, routes, and publication boundaries
-
 ## Next
 
-1. verify latest `main` and open PRs after the Batch 7 audit merges
-2. start Phase 3 full-corpus quality strengthening
-3. audit every bridge, incident, event, and evidence record for schema drift and aftermath consistency
-4. separate mechanical normalization from claim-changing data review
-5. require repository and production verification for every canonical change
-
-## Record expansion
-
-Phase 2 Batches 1–7 are complete. Phase 3 full-corpus quality strengthening is the next bounded workstream.
+1. pass the complete repository suite on the cleaned Phase 3 aftermath PR
+2. merge only after normal CI succeeds
+3. run explicit production verification at 33 / 34 / 182 / 210
+4. resolve the three remaining restart warnings through source review or status correction
+5. define the `source_count` field contract before mechanical normalization
