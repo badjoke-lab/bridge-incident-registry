@@ -5,13 +5,13 @@ Updated: 2026-07-28
 
 GitHub state and canonical JSON are authoritative.
 
-## Canonical baseline
+## Canonical baseline on Batch 2 review branch
 
 ```text
 Bridges     33
 Incidents   34
 Events      183
-Evidence    221
+Evidence    231
 ```
 
 ## Current position
@@ -26,12 +26,14 @@ Phase 3  Full-corpus quality strengthening         active
          Source-count contract                     complete — PR #78
          Safe source-count normalization           complete — PRs #79–#80
          Source-count remediation Batch 1          complete — PRs #81–#83
+         Source-count review Batch 2               complete — PR #84
+         Batch 2 canonical migration               implemented on review branch
 Phase 4  Public contract stabilization             complete
 Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
 ```
 
-## Latest publication checkpoint
+## Latest completed publication checkpoint
 
 ```text
 Canonical data PR        #82
@@ -48,26 +50,26 @@ Verified HTML routes     72
 Initial total mismatches   60
 After safe normalization   47
 After Batch 1              37
+After Batch 2              27 expected
 Incident mismatches         0
 ```
 
-## Completed Batch 1 migration
+## Batch 2 canonical migration
 
 ```text
 New event-scoped evidence records   10
-Incident source_count updates        7
-Event source_count changes           0
-Resulting evidence                  221
-Remaining event mismatches           37
+Incident source_count updates        6
+Event source_count reductions        2
+Resulting evidence                  231
+Expected remaining mismatches        27
 ```
 
-The reused URLs are not counted as new independent publications. Each canonical evidence record represents a distinct event and claim-scope linkage. Preserved incident links required seven incident derived-count synchronizations.
+The two count reductions remove unsupported historical source totals rather than fabricating duplicate evidence. Preserved incident linkage requires six incident derived-count synchronizations.
 
 Records:
 
-- `docs/audits/phase3-source-count-review-batch1-2026-07-28.md`
-- `docs/audits/phase3-source-count-batch1-canonical-2026-07-28.md`
-- `docs/audits/production-verification-phase3-source-count-batch1-2026-07-28.md`
+- `docs/audits/phase3-source-count-review-batch2-2026-07-28.md`
+- `docs/audits/phase3-source-count-batch2-canonical-2026-07-28.md`
 
 ## Production publication gate
 
@@ -77,18 +79,19 @@ Delay          15 seconds
 Maximum wait   5 minutes
 ```
 
-The initial Batch 1 production attempt exhausted the unchanged convergence window. A retry passed after Cloudflare publication converged; no verification condition was relaxed.
+After convergence, every count, ID, route, reference, metadata, sitemap, robots, redirect, content-type, and cache assertion remains mandatory.
 
 ## Remaining roadmap
 
-1. review and migrate the remaining 37 event evidence-link mismatches in bounded batches;
-2. promote exact source-count equality to a hard CI gate;
-3. strengthen primary-source and archive coverage;
-4. harden URLs and archives;
-5. strengthen remaining validators;
-6. complete public-contract compatibility review;
-7. add monitoring with no automatic publication;
-8. complete v1 documentation, accessibility, performance, and release checks.
+1. merge and production-verify Batch 2 at 33 / 34 / 183 / 231;
+2. review and migrate the remaining 27 event evidence-link mismatches in bounded batches;
+3. promote exact source-count equality to a hard CI gate;
+4. strengthen primary-source and archive coverage;
+5. harden URLs and archives;
+6. strengthen remaining validators;
+7. complete public-contract compatibility review;
+8. add monitoring with no automatic publication;
+9. complete v1 documentation, accessibility, performance, and release checks.
 
 ## Permanent rules
 
