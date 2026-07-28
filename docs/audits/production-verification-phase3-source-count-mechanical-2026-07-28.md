@@ -1,10 +1,10 @@
 # BIR Phase 3 source-count production verification — 2026-07-28
 
-Status: running  
+Status: passed  
 Production origin: `https://bridge-incident-registry.pages.dev`  
 Canonical merge: `3c4bae8905ff052e987f84bc798545b467de807d`
 
-## Expected canonical state
+## Verified canonical state
 
 ```text
 Bridges     33
@@ -14,9 +14,16 @@ Evidence    211
 HTML routes 72
 ```
 
-## Verification focus
+## Successful runs
 
-The dedicated production verifier must confirm:
+```text
+Production Verification   30367770935
+Normal repository CI      30367770892
+```
+
+## Verified surfaces
+
+The production verifier confirmed:
 
 - all five static routes;
 - all 33 bridge detail routes;
@@ -29,7 +36,7 @@ The dedicated production verifier must confirm:
 - exact 72-route sitemap equality;
 - robots, metadata, redirects, content types, and observable cache headers.
 
-## Expected audit state
+## Verified audit state
 
 ```text
 Total source-count mismatches   47
@@ -41,7 +48,7 @@ The remaining event mismatches are reviewed evidence-link remediation work and a
 
 ## Publication convergence
 
-The verifier retains the bounded convergence gate:
+The verifier retained the bounded convergence gate:
 
 ```text
 Attempts       20
@@ -49,8 +56,12 @@ Delay          15 seconds
 Maximum wait   5 minutes
 ```
 
-Failure to reach the expected public-data state remains a hard failure before route assertions.
+Production converged within the bounded window and all route and public-data assertions passed.
 
 ## Result
 
-Pending the dedicated `Production Verification` workflow run triggered by this audit PR.
+The 13-record safe source-count normalization is merged, published, and production-verified. Record totals and route totals remain unchanged.
+
+## Next
+
+Review the remaining 47 event evidence-link mismatches in bounded source-resolution batches. Exact source-count equality must not become a hard CI failure until those migrations are complete.
