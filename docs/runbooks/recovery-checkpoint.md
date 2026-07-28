@@ -25,35 +25,31 @@ PR #75  e5e29dc17dd46d81ca8b0a328db66754c74bd2ad  Final restart source resolutio
 PR #76  5cc54661b3a3f349ba5aa898930e35279f70df3b  Final restart canonical migration
 PR #77  e322223a7423d1e18cd2343017c26eb2699d2b51  Final restart production audit
 PR #78  fa05b271a980fad3509e527cecbf298d43557783  Source-count contract
+PR #79  3c4bae8905ff052e987f84bc798545b467de807d  Safe source-count normalization
 ```
 
 ## Latest production checkpoint
 
 ```text
-Production verify    30361214486
-Normal CI            30361214318
+Production verify    30367770935
+Normal CI            30367770892
 Verified state       33 / 34 / 183 / 211
 HTML routes          72
 ```
 
-Audit: `docs/audits/production-verification-phase3-final-restart-2026-07-28.md`.
+Audit: `docs/audits/production-verification-phase3-source-count-mechanical-2026-07-28.md`.
 
-## Active branch
-
-```text
-agent/phase3-source-count-mechanical
-```
-
-Implemented on the branch:
+## Completed source-count normalization
 
 - seven incident `source_count` values synchronized to direct evidence-record counts;
 - six event `source_count` values increased to match already linked evidence;
 - incident mismatches reduced from seven to zero;
 - total source-count mismatches reduced from sixty to forty-seven;
 - no evidence links, historical claims, dates, statuses, or record totals changed;
-- temporary generator and write-enabled workflow removed.
+- temporary generator and write-enabled workflow removed;
+- public JSON and all 72 canonical HTML routes verified.
 
-Expected cleaned audit state:
+Current audit state:
 
 ```text
 Blocking errors                  0
@@ -77,8 +73,8 @@ If production does not converge within the bounded window, verification fails be
 
 ## Next
 
-1. require clean normal CI on `agent/phase3-source-count-mechanical`;
-2. merge the 13-record derived-count migration;
-3. production-verify all public data and 72 HTML routes;
-4. split the remaining 47 event evidence-link mismatches into bounded review batches;
-5. enable hard source-count equality only after all mismatches are resolved.
+1. split the remaining 47 event evidence-link mismatches into bounded review batches;
+2. add or relink event-scoped evidence where supported;
+3. reduce stale counts only after source review;
+4. enable hard source-count equality only after all mismatches are resolved;
+5. continue primary-source and archive strengthening.
