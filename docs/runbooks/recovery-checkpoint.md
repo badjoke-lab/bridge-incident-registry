@@ -5,7 +5,7 @@ Updated: 2026-07-28
 
 GitHub state and canonical JSON are authoritative. Completed merge SHAs are checkpoints, not live branch pointers.
 
-## Canonical counts on Batch 2 review branch
+## Canonical counts
 
 ```text
 Bridges     33
@@ -24,34 +24,35 @@ PR #81  2881f6fec0aa6e504701636e4977c85353808196  Source-count review Batch 1
 PR #82  626ac6b91c5ce9165938034055ccb7edc14071a7  Source-count Batch 1 canonical migration
 PR #83  4789b6cdf604d200748e5ae25a27cf98d2e34b32  Source-count Batch 1 production audit
 PR #84  e73f7d8ac1ec316e1c25151b01c92a4098ed1bd1  Source-count review Batch 2
+PR #85  70bd5de1526cca5ce3122a7bdc23ea80d50179e0  Source-count Batch 2 canonical migration
+PR #87  99941592b9e526661ad004e6504c26588737d7fc  Batch 2 deployment retrigger
 ```
 
-## Latest completed production checkpoint
+## Latest production checkpoint
 
 ```text
-Production verify    30370374622
-Normal CI            30370374443
-Verified state       33 / 34 / 183 / 221
+Production verify    30374628843
+Normal CI            30374629112
+Verified state       33 / 34 / 183 / 231
 HTML routes          72
 ```
 
-## Active branch
+Audit: `docs/audits/production-verification-phase3-source-count-batch2-2026-07-28.md`.
 
-```text
-agent/phase3-source-count-batch2-canonical
-```
-
-Implemented scope:
+## Completed Batch 2
 
 - ten reviewed event-scoped evidence additions;
 - six affected incident derived-count synchronizations;
-- two stale event count corrections;
+- `bir_ev_000044.source_count` corrected from 3 to 2;
+- `bir_ev_000054.source_count` corrected from 2 to 1;
 - no event text, date, status, or historical claim changes;
 - evidence total 221 -> 231;
-- source-count mismatches 37 -> 27 expected;
-- incident mismatches remain zero.
+- source-count mismatches 37 -> 27;
+- incident mismatches remain zero;
+- temporary implementation and diagnostic files removed;
+- public JSON and all 72 canonical HTML routes verified.
 
-Expected audit state:
+Current audit state:
 
 ```text
 Blocking errors                  0
@@ -61,11 +62,12 @@ Incident source-count warnings   0
 Event source-count warnings     27
 ```
 
+Two initial verification attempts correctly failed because production had not deployed Batch 2. A diagnostic confirmed the stale live state. A docs-only main push retriggered Cloudflare Pages, and the unchanged verifier then passed.
+
 ## Next
 
-1. run the bounded Batch 2 generator;
-2. pass the complete repository suite;
-3. remove temporary implementation files;
-4. merge the cleaned canonical PR;
-5. production-verify 33 / 34 / 183 / 231 and all 72 routes;
-6. begin source-count review Batch 3.
+1. review source-count Batch 3;
+2. implement only reviewed event evidence links or supported count corrections;
+3. continue until all 27 event mismatches are resolved;
+4. enable hard source-count equality only at zero mismatches;
+5. continue primary-source and archive strengthening.

@@ -3,7 +3,7 @@
 Status: active  
 Updated: 2026-07-28
 
-## Canonical state on Batch 2 review branch
+## Canonical state
 
 ```text
 Bridges     33
@@ -40,11 +40,11 @@ Batch 7    merged and production-verified
 Full-corpus audit                    merged — PR #71
 Aftermath and restart normalization  merged — PRs #72–#77
 Source-count contract                merged — PR #78
-Safe source-count normalization      merged — PR #79
-Production publication               merged — PR #80
+Safe source-count normalization      merged — PRs #79–#80
 Source-count remediation Batch 1     complete — PRs #81–#83
-Source-count review Batch 2          merged — PR #84
-Batch 2 canonical migration          implemented on review branch
+Source-count remediation Batch 2     merged — PRs #84–#85
+Batch 2 deployment retrigger         merged — PR #87
+Batch 2 production publication       verified — run 30374628843
 ```
 
 ## Source-count state
@@ -53,7 +53,7 @@ Batch 2 canonical migration          implemented on review branch
 Initial total mismatches          60
 After safe normalization          47
 After Batch 1                     37
-After Batch 2                     27 expected
+After Batch 2                     27
 Incident mismatches                0
 ```
 
@@ -69,22 +69,27 @@ Records:
 
 - `docs/audits/phase3-source-count-review-batch2-2026-07-28.md`
 - `docs/audits/phase3-source-count-batch2-canonical-2026-07-28.md`
+- `docs/audits/production-deployment-retrigger-batch2-2026-07-28.md`
+- `docs/audits/production-verification-phase3-source-count-batch2-2026-07-28.md`
 
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR      #82
-Merge commit           626ac6b91c5ce9165938034055ccb7edc14071a7
-Production verify      30370374622
-Normal CI              30370374443
-Verified state         33 / 34 / 183 / 221
+Canonical data PR      #85
+Canonical merge        70bd5de1526cca5ce3122a7bdc23ea80d50179e0
+Deployment retrigger   99941592b9e526661ad004e6504c26588737d7fc
+Production verify      30374628843
+Normal CI              30374629112
+Verified state         33 / 34 / 183 / 231
 Verified HTML routes   72
 ```
 
+Two earlier production-verification attempts failed correctly because production remained at the Batch 1 state. A diagnostic confirmed that no Batch 2 deployment had occurred. The docs-only main retrigger caused the existing Cloudflare Pages Git integration to publish, after which the unchanged verifier passed.
+
 ## Next
 
-1. run the bounded Batch 2 generator and full repository suite;
-2. remove temporary implementation files;
-3. merge the cleaned 33 / 34 / 183 / 231 canonical PR;
-4. production-verify all public data and 72 HTML routes;
-5. continue with source-count review Batch 3.
+1. review source-count Batch 3;
+2. migrate only source-backed event evidence links or correct unsupported stale counts;
+3. continue bounded batches until all 27 event mismatches are resolved;
+4. promote exact source-count equality to a hard CI gate only at zero mismatches;
+5. strengthen primary-source and archive coverage.
