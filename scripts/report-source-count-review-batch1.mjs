@@ -1,3 +1,4 @@
+// Temporary inventory generator for the bounded Batch 1 source review.
 import fs from "node:fs";
 import path from "node:path";
 
