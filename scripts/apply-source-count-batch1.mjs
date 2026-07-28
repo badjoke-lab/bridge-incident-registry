@@ -47,15 +47,14 @@ for (const addition of additions) {
   const event = eventById.get(addition.event);
   if (!event) throw new Error(`Missing target event ${addition.event}`);
   if (source.incident_id !== event.incident_id) throw new Error(`${addition.id}: source and target incident differ`);
-  const cloned = {
+  evidence.push({
     ...source,
     id: addition.id,
     event_id: addition.event,
     claim_scope: addition.claim_scope,
     accessed_at: "2026-07-28",
     notes: addition.notes
-  };
-  evidence.push(cloned);
+  });
 }
 
 if (evidence.length !== 221) throw new Error(`Expected evidence=221, received ${evidence.length}`);
@@ -71,6 +70,19 @@ for (const source of evidence) {
   }
 }
 
+const affectedIncidentIds = new Set(additions.map((addition) => eventById.get(addition.event).incident_id));
+const incidentChanges = [];
+for (const incident of incidents) {
+  const direct = directIncidentCounts.get(incident.id);
+  if (incident.source_count === direct) continue;
+  if (!affectedIncidentIds.has(incident.id)) {
+    throw new Error(`${incident.id}: unexpected incident source_count mismatch ${incident.source_count} -> ${direct}`);
+  }
+  incidentChanges.push({ id: incident.id, from: incident.source_count, to: direct });
+  incident.source_count = direct;
+}
+if (incidentChanges.length !== 7) throw new Error(`Expected 7 incident source_count changes, received ${incidentChanges.length}`);
+
 const incidentMismatches = incidents.filter((item) => item.source_count !== directIncidentCounts.get(item.id));
 const eventMismatches = events.filter((item) => item.source_count !== directEventCounts.get(item.id));
 if (incidentMismatches.length !== 0) throw new Error(`Expected zero incident mismatches, received ${incidentMismatches.length}`);
@@ -79,10 +91,9 @@ if (eventMismatches.length !== 37) throw new Error(`Expected 37 event mismatches
 for (const addition of additions) {
   const event = eventById.get(addition.event);
   const direct = directEventCounts.get(addition.event);
-  if (event.source_count !== direct) {
-    throw new Error(`${addition.event}: stored=${event.source_count}, direct=${direct}`);
-  }
+  if (event.source_count !== direct) throw new Error(`${addition.event}: stored=${event.source_count}, direct=${direct}`);
 }
 
+writeArray("data/incidents.json", incidents);
 writeArray("data/evidence.json", evidence);
-console.log(JSON.stringify({ additions: additions.map(({ id, source, event, claim_scope }) => ({ id, source, event, claim_scope })), evidence: evidence.length, incident_mismatches: 0, event_mismatches: 37 }, null, 2));
+console.log(JSON.stringify({ additions: additions.map(({ id, source, event, claim_scope }) => ({ id, source, event, claim_scope })), incident_changes: incidentChanges, evidence: evidence.length, incident_mismatches: 0, event_mismatches: 37 }, null, 2));
