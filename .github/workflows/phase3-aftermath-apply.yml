@@ -47,12 +47,27 @@ jobs:
 
       - name: Commit canonical changes
         run: |
-          if git diff --quiet; then
-            echo "No canonical changes to commit."
-            exit 0
-          fi
+          set -euo pipefail
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data SPEC.md src/pages/methodology/index.astro
+
+          git add \
+            data/incidents.json \
+            data/events.json \
+            data/evidence.json \
+            SPEC.md \
+            src/pages/methodology/index.astro
+
+          echo "Staged canonical migration:"
+          git diff --cached --stat
+
+          if git diff --cached --quiet; then
+            echo "Expected canonical migration produced no staged changes."
+            exit 1
+          fi
+
           git commit -m "data: normalize Phase 3 aftermath records [aftermath-applied]"
-          git push origin HEAD:agent/phase3-aftermath-canonical
+
+          git fetch origin agent/phase3-aftermath-canonical
+          git rebase origin/agent/phase3-aftermath-canonical
+          git push --force-with-lease origin HEAD:agent/phase3-aftermath-canonical
