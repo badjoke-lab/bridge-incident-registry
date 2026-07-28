@@ -4,13 +4,16 @@ on:
   push:
     branches:
       - agent/phase3-source-count-batch1-canonical
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: write
 
 jobs:
   apply:
-    if: ${{ github.actor != 'github-actions[bot]' }}
+    if: ${{ github.actor != 'github-actions[bot]' && github.head_ref == 'agent/phase3-source-count-batch1-canonical' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout branch
