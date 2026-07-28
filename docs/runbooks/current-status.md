@@ -40,7 +40,8 @@ Batch 7    merged and production-verified
 Full-corpus audit                    merged — PR #71
 Aftermath and restart normalization  merged — PRs #72–#77
 Source-count contract                merged — PR #78
-Source-count mechanical migration    implemented on review branch
+Source-count mechanical migration    merged — PR #79
+Production publication               verified — run 30367770935
 ```
 
 Completed aftermath work:
@@ -69,7 +70,7 @@ incident.source_count = directly linked canonical evidence records
 event.source_count    = directly linked canonical evidence records
 ```
 
-The review branch has normalized the 13 safe derived values without changing evidence linkage or historical claims.
+The 13 safe derived values are merged and production-verified without changing evidence linkage or historical claims.
 
 ```text
 Total mismatches   60 -> 47
@@ -83,14 +84,15 @@ Records:
 
 - `docs/audits/phase3-source-count-contract-2026-07-28.md`
 - `docs/audits/phase3-source-count-mechanical-2026-07-28.md`
+- `docs/audits/production-verification-phase3-source-count-mechanical-2026-07-28.md`
 
 ## Latest production checkpoint
 
 ```text
-Canonical data PR      #76
-Merge commit           5cc54661b3a3f349ba5aa898930e35279f70df3b
-Production verify      30361214486
-Normal CI              30361214318
+Canonical data PR      #79
+Merge commit           3c4bae8905ff052e987f84bc798545b467de807d
+Production verify      30367770935
+Normal CI              30367770892
 Verified state         33 / 34 / 183 / 211
 Verified HTML routes   72
 ```
@@ -107,8 +109,7 @@ The verifier:
 
 ## Next
 
-1. pass normal CI on the cleaned source-count mechanical branch;
-2. merge the 13-record derived-count migration;
-3. production-verify 33 / 34 / 183 / 211 and all 72 canonical HTML routes;
-4. remediate the remaining 47 event evidence-link mismatches in bounded batches;
-5. promote exact source-count equality to a hard CI gate only after mismatch count reaches zero.
+1. split the remaining 47 event evidence-link mismatches into bounded source-review batches;
+2. add, relink, or remove event-scoped evidence only after source review;
+3. promote exact source-count equality to a hard CI gate only after mismatch count reaches zero;
+4. strengthen primary-source and archive coverage.

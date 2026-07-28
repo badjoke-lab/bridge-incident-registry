@@ -24,7 +24,8 @@ Phase 3  Full-corpus quality strengthening         active
          Full-corpus audit                         complete — PR #71
          Reimbursement/restart normalization       complete — PRs #72–#77
          Source-count contract                     complete — PR #78
-         Safe source-count normalization           implemented on review branch
+         Safe source-count normalization           complete — PR #79
+         Source-count production verification      complete — run 30367770935
 Phase 4  Public contract stabilization             complete
 Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
@@ -33,10 +34,10 @@ Release  v1 hardening                              planned
 ## Latest publication checkpoint
 
 ```text
-Canonical data PR        #76
-Merge commit             5cc54661b3a3f349ba5aa898930e35279f70df3b
-Production verify run    30361214486
-Normal CI run            30361214318
+Canonical data PR        #79
+Merge commit             3c4bae8905ff052e987f84bc798545b467de807d
+Production verify run    30367770935
+Normal CI run            30367770892
 Verified state           33 / 34 / 183 / 211
 Verified HTML routes     72
 ```
@@ -60,7 +61,7 @@ reopened_event                   0
 blocking errors                  0
 ```
 
-Source-count contract inventory:
+Source-count contract inventory before normalization:
 
 ```text
 Total mismatches   60
@@ -68,7 +69,7 @@ Incident mismatch   7
 Event mismatch     53
 ```
 
-After the safe mechanical migration on the review branch:
+Current production-verified source-count state:
 
 ```text
 Total mismatches   47
@@ -80,7 +81,7 @@ Event mismatch     47
 
 `source_count` is the number of canonical evidence records directly linked to the incident or event. It is not a unique-URL count, inherited evidence union, prose citation count, or quality score.
 
-The safe migration changes only stale derived values:
+The completed safe migration changed only stale derived values:
 
 ```text
 Incident count updates   7
@@ -94,6 +95,7 @@ Records:
 
 - `docs/audits/phase3-source-count-contract-2026-07-28.md`
 - `docs/audits/phase3-source-count-mechanical-2026-07-28.md`
+- `docs/audits/production-verification-phase3-source-count-mechanical-2026-07-28.md`
 
 ## Production publication gate
 
@@ -109,15 +111,14 @@ After convergence, every count, ID, route, reference, metadata, sitemap, robots,
 
 ## Remaining roadmap
 
-1. merge and production-verify the 13-record safe source-count normalization;
-2. remediate the remaining 47 event evidence-link mismatches in bounded batches;
-3. promote exact source-count equality to a hard CI gate;
-4. strengthen primary-source and archive coverage;
-5. harden URLs and archives;
-6. strengthen remaining validators;
-7. complete public-contract compatibility review;
-8. add monitoring with no automatic publication;
-9. complete v1 documentation, accessibility, performance, and release checks.
+1. remediate the remaining 47 event evidence-link mismatches in bounded batches;
+2. promote exact source-count equality to a hard CI gate;
+3. strengthen primary-source and archive coverage;
+4. harden URLs and archives;
+5. strengthen remaining validators;
+6. complete public-contract compatibility review;
+7. add monitoring with no automatic publication;
+8. complete v1 documentation, accessibility, performance, and release checks.
 
 ## Permanent rules
 
