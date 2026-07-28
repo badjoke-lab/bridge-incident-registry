@@ -5,14 +5,16 @@ Updated: 2026-07-28
 
 GitHub state and canonical JSON are authoritative.
 
-## Canonical baseline
+## Canonical baseline on final restart review branch
 
 ```text
 Bridges     33
 Incidents   34
-Events      182
-Evidence    210
+Events      183
+Evidence    211
 ```
+
+`main` remains at 33 / 34 / 182 / 210 until the final restart canonical PR merges.
 
 ## Current position
 
@@ -22,15 +24,15 @@ Phase 1  Canonical model, UI, validation, seeds    complete
 Phase 2  Record expansion                          complete through Batch 7
 Phase 3  Full-corpus quality strengthening         active
          Full-corpus audit                         complete — PR #71
-         Aftermath source resolution               complete — PR #72
-         Aftermath canonical migration             complete — PR #73
-         Aftermath production verification         complete — run 30358827192
+         First aftermath migration                 complete and production-verified
+         Final restart source resolution           complete — PR #75
+         Final restart canonical migration         implemented on review branch
 Phase 4  Public contract stabilization             complete
 Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
 ```
 
-## Latest publication checkpoint
+## Latest completed publication checkpoint
 
 ```text
 Canonical data PR        #73
@@ -41,11 +43,9 @@ Verified state           33 / 34 / 182 / 210
 Verified HTML routes     72
 ```
 
-## Phase 3 audit baseline
+## Phase 3 audit trajectory
 
-The full-corpus audit runs permanently in normal CI and reports zero blocking errors.
-
-Baseline review categories before the first aftermath migration:
+Initial audit baseline:
 
 ```text
 completed_reimbursement_event   5 incidents
@@ -54,41 +54,41 @@ incident_source_count            7 incidents
 event_source_count              54 events
 ```
 
-## Completed aftermath migration
-
-Canonical changes:
-
-```text
-Existing event normalizations    9
-New timeline events              9
-New evidence records            11
-Resulting events               182
-Resulting evidence             210
-```
-
-Modeling results:
-
-- reimbursement completion can include a fully funded deficit backfill, but is not attacker-fund recovery
-- qualified reimbursement scopes remain qualified
-- chain resumption alone does not prove bridge reopening
-- staged Poly Network restoration is represented separately from full roadmap completion
-- THORChain's combined reimbursement amount is not fabricated into incident-specific allocations
-- seven descriptive legacy reopening event types were normalized without duplicating historical events
-
-Current warning state:
+After the first aftermath migration:
 
 ```text
 completed_reimbursement_event   0
 reopened_event                   3
-incident_source_count            7
-existing event_source_count drift remains separate
 ```
 
-Remaining restart review:
+Final restart review-branch result:
 
-1. LI.FI 2022
-2. LI.FI 2024
-3. ChainSwap July 2, 2021
+```text
+completed_reimbursement_event   0
+reopened_event                   0
+blocking errors                  0
+```
+
+## Final restart migration
+
+Canonical changes:
+
+```text
+Existing event normalization   1
+Incident status correction     1
+Existing event status fix      1
+New timeline event             1
+New evidence record            1
+Resulting events             183
+Resulting evidence           211
+```
+
+Modeling results:
+
+- LI.FI 2022 uses its existing patch/redeployment event rather than a duplicate event
+- LI.FI 2024 historical restart timing is changed to `unknown` because containment reporting does not prove service restoration
+- current operation remains separate from exact historical restart timing
+- ChainSwap's August 20 relaunch is linked to the first July incident without claiming a durable reopening before the second exploit
 
 Records:
 
@@ -96,6 +96,7 @@ Records:
 - `docs/audits/phase3-aftermath-source-resolution-2026-07-28.md`
 - `docs/audits/phase3-aftermath-canonical-2026-07-28.md`
 - `docs/audits/production-verification-phase3-aftermath-2026-07-28.md`
+- `docs/audits/phase3-final-restart-source-resolution-2026-07-28.md`
 
 ## Production publication gate
 
@@ -111,7 +112,7 @@ After convergence, every count, ID, route, reference, metadata, sitemap, robots,
 
 ## Remaining roadmap
 
-1. resolve the three remaining restart warnings
+1. merge and production-verify the final restart migration
 2. define and normalize the `source_count` contract
 3. primary-source strengthening
 4. URL and archive hardening

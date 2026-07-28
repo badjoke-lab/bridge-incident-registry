@@ -5,14 +5,16 @@ Updated: 2026-07-28
 
 GitHub state and canonical JSON are authoritative. Completed merge SHAs are checkpoints, not live branch pointers.
 
-## Canonical counts
+## Canonical counts on final restart review branch
 
 ```text
 Bridges     33
 Incidents   34
-Events      182
-Evidence    210
+Events      183
+Evidence    211
 ```
+
+`main` remains at 33 / 34 / 182 / 210 until the final restart canonical PR merges.
 
 ## Latest completed merge checkpoints
 
@@ -22,9 +24,11 @@ PR #70  08cfd2014661f8b9a795ead8e045329364b7943f  Batch 7 audit
 PR #71  0d3d61ecce6ce9434505e04588d1bd220b85fc5d  Full-corpus audit
 PR #72  2c9bd1faccef0515df8ce3fa9fb251382071ab33  Aftermath source resolution
 PR #73  a6794d5460eb263045c23ee1a850674b1a7beb98  Aftermath canonical migration
+PR #74  5fad899e6bb119297c2b865ac1de76b58e4565b5  Aftermath production audit
+PR #75  e5e29dc17dd46d81ca8b0a328db66754c74bd2ad  Final restart source resolution
 ```
 
-## Latest production checkpoint
+## Latest completed production checkpoint
 
 ```text
 Production verify    30358827192
@@ -35,32 +39,20 @@ HTML routes          72
 
 Audit: `docs/audits/production-verification-phase3-aftermath-2026-07-28.md`.
 
-## Completed Phase 3 aftermath pass
+## Final restart review-branch changes
 
-- seven legacy reopening values normalized to `bridge_reopened`
-- Ronin reimbursement completion and reopening
-- Wormhole deficit-backfill reimbursement and reopening
-- Poly Network staged and completed reopening
-- BSC Token Hub bridge-specific reopening
-- THORChain first-incident reopening and both incident reimbursement completions
-- Allbridge qualified reimbursement completion
-- eleven new primary evidence records
-- reimbursement semantics in SPEC and public methodology
+- LI.FI 2022 existing event normalized to `bridge_reopened`
+- LI.FI 2024 exact restart timing corrected to `unknown`
+- ChainSwap July 2 incident linked to the August 20 official relaunch
+- one new timeline event
+- one new primary evidence record
 
-Current audit state:
+Expected audit state:
 
 ```text
 Blocking errors                  0
 Reimbursement warnings           0
-Reopening warnings               3
-```
-
-Remaining restart review:
-
-```text
-bir_inc_000015  LI.FI 2022
-bir_inc_000016  LI.FI 2024
-bir_inc_000017  ChainSwap July 2, 2021
+Reopening warnings               0
 ```
 
 ## Production verifier behavior
@@ -77,8 +69,8 @@ If production does not converge within the bounded window, verification fails be
 
 ## Next
 
-1. resolve the three remaining restart warnings through direct source review or status correction
-2. define the meaning of incident and event `source_count`
-3. normalize source counts only after the contract is fixed
-4. continue primary-source and archive strengthening
-5. use bounded PRs with full repository and production verification
+1. generate and validate the 33 / 34 / 183 / 211 canonical state
+2. remove temporary generator and write-enabled workflow
+3. require clean normal CI
+4. merge and production-verify all 72 HTML routes
+5. define and normalize the `source_count` contract

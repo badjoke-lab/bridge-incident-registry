@@ -3,13 +3,13 @@
 Status: active  
 Updated: 2026-07-28
 
-## Canonical state
+## Canonical state on final restart review branch
 
 ```text
 Bridges     33
 Incidents   34
-Events      182
-Evidence    210
+Events      183
+Evidence    211
 ```
 
 Canonical source files:
@@ -17,9 +17,11 @@ Canonical source files:
 ```text
 data/bridges.json       33
 data/incidents.json     34
-data/events.json        182
-data/evidence.json      210
+data/events.json        183
+data/evidence.json      211
 ```
+
+`main` remains at 33 / 34 / 182 / 210 until the final restart canonical PR merges.
 
 ## Phase 2 record expansion
 
@@ -37,32 +39,32 @@ Batch 7    merged and production-verified
 ## Phase 3 quality strengthening
 
 ```text
-Full-corpus audit             merged — PR #71
-Aftermath source resolution   merged — PR #72
-Aftermath canonical migration merged — PR #73
-Production publication        verified — run 30358827192
+Full-corpus audit                 merged — PR #71
+Aftermath source resolution       merged — PR #72
+Aftermath canonical migration     merged — PR #73
+Aftermath production publication  merged — PR #74
+Final restart source resolution   merged — PR #75
+Final restart canonical migration implemented on review branch
 ```
 
-Phase 3 aftermath changes:
+Final restart migration:
 
-- seven legacy descriptive reopening event types normalized to `bridge_reopened`
-- Ronin generic aftermath event converted to sourced reimbursement completion
-- Wormhole deficit backfill normalized to reimbursement completion
-- nine new timeline events
-- eleven new evidence records
-- public reimbursement semantics added to SPEC and methodology
-- reimbursement-completion warnings reduced from five to zero
-- reopening warnings reduced from fifteen to three
+- LI.FI 2022 existing patch/redeployment event normalized to `bridge_reopened`
+- LI.FI 2024 restart status corrected from `reopened` to `unknown`
+- ChainSwap July 2 incident linked to the official August 20 bridge relaunch
+- one new timeline event
+- one new primary evidence record
+- reopening warnings reduced from three to zero
 
-The remaining restart reviews are:
+Expected full-corpus state:
 
 ```text
-bir_inc_000015  LI.FI 2022
-bir_inc_000016  LI.FI 2024
-bir_inc_000017  ChainSwap July 2, 2021
+Blocking errors                  0
+Reimbursement warnings           0
+Reopening warnings               0
 ```
 
-## Latest production checkpoint
+## Last completed production checkpoint
 
 ```text
 Canonical data PR      #73
@@ -79,6 +81,7 @@ Records:
 - `docs/audits/phase3-aftermath-source-resolution-2026-07-28.md`
 - `docs/audits/phase3-aftermath-canonical-2026-07-28.md`
 - `docs/audits/production-verification-phase3-aftermath-2026-07-28.md`
+- `docs/audits/phase3-final-restart-source-resolution-2026-07-28.md`
 
 ## Production verifier
 
@@ -92,7 +95,7 @@ The verifier:
 
 ## Next
 
-1. resolve the three remaining restart warnings through source review or status correction
-2. define the `source_count` field contract before mechanical normalization
-3. strengthen primary-source and archive coverage
-4. continue bounded Phase 3 migrations with normal CI and production verification
+1. pass the complete repository suite on the cleaned final restart PR
+2. merge and production-verify 33 / 34 / 183 / 211
+3. define the `source_count` field contract before mechanical normalization
+4. strengthen primary-source and archive coverage
