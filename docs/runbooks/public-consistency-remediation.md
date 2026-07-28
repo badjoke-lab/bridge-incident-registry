@@ -3,7 +3,7 @@
 Status: complete  
 Updated: 2026-07-28
 
-## Canonical baseline on Phase 3 review branch
+## Current canonical baseline
 
 ```text
 Bridges     33
@@ -14,7 +14,7 @@ Evidence    210
 
 Canonical JSON remains the only record source. Generated public files are build products.
 
-## Completed sequence
+## Completed remediation sequence
 
 ```text
 PR 1  Current-state reset                    complete — PR #50
@@ -26,9 +26,17 @@ PR 6  Post-build consistency CI              complete — PR #58
 PR 7  Production verification                complete — PR #59
 ```
 
-## Final remediation verification
+## Latest contract verification
 
-GitHub Actions run `30290442852` passed against `https://bridge-incident-registry.pages.dev`.
+Phase 3 aftermath production verification run `30358827192` passed against `https://bridge-incident-registry.pages.dev` at:
+
+```text
+33 bridges
+34 incidents
+182 events
+210 evidence records
+72 canonical HTML routes
+```
 
 The verification covered:
 
@@ -42,15 +50,13 @@ The verification covered:
 - every generated legacy redirect
 - content types and observable cache-related headers
 
-The ordinary repository workflow run `30290443807` also passed the type, canonical-data, seed-audit, build, final-`dist`, and controlled-failure gates.
+The ordinary repository workflow run `30358827222` also passed type checking, canonical validation, enum validation, first-ten audit, full-corpus audit, controlled audit failures, build, final-`dist` consistency, and controlled public-output failures.
 
-Final audit: `docs/audits/production-verification-2026-07-28.md`.
+Latest audit: `docs/audits/production-verification-phase3-aftermath-2026-07-28.md`.
 
 ## Closure
 
-The emergency public-consistency remediation is closed.
-
-Later canonical changes, including the Phase 3 review-branch state above, must continue to satisfy the same generated-output and production-verification contract.
+The emergency public-consistency remediation remains closed. The same canonical-derived publication contract continues to guard every later canonical migration.
 
 ## Resume rule
 

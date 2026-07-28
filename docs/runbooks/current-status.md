@@ -3,7 +3,7 @@
 Status: active  
 Updated: 2026-07-28
 
-## Canonical state on Phase 3 review branch
+## Canonical state
 
 ```text
 Bridges     33
@@ -20,8 +20,6 @@ data/incidents.json     34
 data/events.json        182
 data/evidence.json      210
 ```
-
-`main` remains at 33 / 34 / 173 / 199 until the Phase 3 aftermath canonical PR merges.
 
 ## Phase 2 record expansion
 
@@ -41,7 +39,8 @@ Batch 7    merged and production-verified
 ```text
 Full-corpus audit             merged — PR #71
 Aftermath source resolution   merged — PR #72
-Aftermath canonical migration implemented on review branch
+Aftermath canonical migration merged — PR #73
+Production publication        verified — run 30358827192
 ```
 
 Phase 3 aftermath changes:
@@ -63,13 +62,14 @@ bir_inc_000016  LI.FI 2024
 bir_inc_000017  ChainSwap July 2, 2021
 ```
 
-## Last completed production checkpoint
+## Latest production checkpoint
 
 ```text
-Canonical data PR      #69
-Merge commit           eb6bc7366ea25be4441c72cdfa50b753477eef34
-Production verify      30309573252
-Verified state         33 / 34 / 173 / 199
+Canonical data PR      #73
+Merge commit           a6794d5460eb263045c23ee1a850674b1a7beb98
+Production verify      30358827192
+Normal CI              30358827222
+Verified state         33 / 34 / 182 / 210
 Verified HTML routes   72
 ```
 
@@ -77,6 +77,8 @@ Records:
 
 - `docs/audits/full-corpus-quality-baseline-2026-07-28.md`
 - `docs/audits/phase3-aftermath-source-resolution-2026-07-28.md`
+- `docs/audits/phase3-aftermath-canonical-2026-07-28.md`
+- `docs/audits/production-verification-phase3-aftermath-2026-07-28.md`
 
 ## Production verifier
 
@@ -90,8 +92,7 @@ The verifier:
 
 ## Next
 
-1. pass the complete repository suite on the cleaned Phase 3 aftermath PR
-2. merge only after normal CI succeeds
-3. run explicit production verification at 33 / 34 / 182 / 210
-4. resolve the three remaining restart warnings through source review or status correction
-5. define the `source_count` field contract before mechanical normalization
+1. resolve the three remaining restart warnings through source review or status correction
+2. define the `source_count` field contract before mechanical normalization
+3. strengthen primary-source and archive coverage
+4. continue bounded Phase 3 migrations with normal CI and production verification
