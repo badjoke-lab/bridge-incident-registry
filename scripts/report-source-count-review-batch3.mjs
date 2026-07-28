@@ -21,18 +21,24 @@ const flags = (source) => [source.supports_amount && "amount", source.supports_r
 const lines = ["# Source-count review Batch 3 inventory", "", "Status: temporary generated inventory", "", `Remaining mismatch baseline: ${mismatches.length}`, "", "## Targets", "", "```text", ...targets.map((event) => event.id), "```", ""];
 for (const event of targets) {
   const direct = evidence.filter((source) => source.event_id === event.id);
-  const sameIncident = evidence.filter((source) => source.incident_id === event.incident_id && source.event_id !== event.id);
-  lines.push(`## ${event.id} — ${event.title}`, "", `- Incident: \`${event.incident_id}\` — ${incidentById.get(event.incident_id)?.title ?? "unknown"}`, `- Event type: \`${event.event_type}\``, `- Date: ${event.event_date} (${event.event_date_precision})`, `- Stored source_count: ${event.source_count}`, `- Direct evidence: ${direct.length}`, `- Same-incident alternatives: ${sameIncident.length}`, `- Description: ${event.description}`, "", "### Direct evidence", "");
+  const scopeLabel = event.incident_id ? "Same-incident" : "Same-bridge";
+  const alternatives = evidence.filter((source) => {
+    if (source.event_id === event.id) return false;
+    return event.incident_id
+      ? source.incident_id === event.incident_id
+      : source.bridge_id === event.bridge_id;
+  });
+  lines.push(`## ${event.id} — ${event.title}`, "", `- Bridge: \`${event.bridge_id}\``, `- Incident: \`${event.incident_id}\` — ${incidentById.get(event.incident_id)?.title ?? "not applicable"}`, `- Event type: \`${event.event_type}\``, `- Date: ${event.event_date} (${event.event_date_precision})`, `- Stored source_count: ${event.source_count}`, `- Direct evidence: ${direct.length}`, `- ${scopeLabel} alternatives: ${alternatives.length}`, `- Description: ${event.description}`, "", "### Direct evidence", "");
   if (!direct.length) lines.push("None.");
   else {
     lines.push("| ID | Scope | Supports | Title | URL |", "|---|---|---|---|---|");
     for (const source of direct) lines.push(`| ${escape(source.id)} | ${escape(source.claim_scope)} | ${escape(flags(source))} | ${escape(source.title)} | ${escape(source.url)} |`);
   }
-  lines.push("", "### Same-incident evidence linked elsewhere", "");
-  if (!sameIncident.length) lines.push("None.");
+  lines.push("", `### ${scopeLabel} evidence linked elsewhere`, "");
+  if (!alternatives.length) lines.push("None.");
   else {
-    lines.push("| ID | Current event | Scope | Supports | Title | URL |", "|---|---|---|---|---|---|");
-    for (const source of sameIncident) lines.push(`| ${escape(source.id)} | ${escape(source.event_id)} | ${escape(source.claim_scope)} | ${escape(flags(source))} | ${escape(source.title)} | ${escape(source.url)} |`);
+    lines.push("| ID | Current event | Incident | Scope | Supports | Title | URL |", "|---|---|---|---|---|---|---|");
+    for (const source of alternatives) lines.push(`| ${escape(source.id)} | ${escape(source.event_id)} | ${escape(source.incident_id)} | ${escape(source.claim_scope)} | ${escape(flags(source))} | ${escape(source.title)} | ${escape(source.url)} |`);
   }
   lines.push("");
 }
