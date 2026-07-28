@@ -31,15 +31,15 @@ BIR is not:
 
 The static registry application, four-record canonical model, validation pipeline, list/detail pages, methodology pages, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
 
-Phase 2 record expansion is complete through Batch 7. The first Phase 3 aftermath normalization pass is merged and production-verified.
+Phase 2 record expansion is complete through Batch 7. The final Phase 3 restart-warning migration is implemented on a review branch.
 
-Current canonical counts:
+Current canonical review-branch counts:
 
 ```text
 Bridges     33
 Incidents   34
-Events      182
-Evidence    210
+Events      183
+Evidence    211
 ```
 
 The canonical datasets are the only source of truth:
@@ -86,9 +86,10 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/runbooks/public-consistency-remediation.md` — completed remediation sequence
 - `docs/audits/production-verification-2026-07-28.md` — initial production verification result
 - `docs/audits/full-corpus-quality-baseline-2026-07-28.md` — Phase 3 audit baseline
-- `docs/audits/phase3-aftermath-source-resolution-2026-07-28.md` — reviewed aftermath boundary
-- `docs/audits/phase3-aftermath-canonical-2026-07-28.md` — canonical migration record
-- `docs/audits/production-verification-phase3-aftermath-2026-07-28.md` — Phase 3 aftermath production audit
+- `docs/audits/phase3-aftermath-source-resolution-2026-07-28.md` — first aftermath boundary
+- `docs/audits/phase3-aftermath-canonical-2026-07-28.md` — first canonical migration record
+- `docs/audits/production-verification-phase3-aftermath-2026-07-28.md` — first aftermath production audit
+- `docs/audits/phase3-final-restart-source-resolution-2026-07-28.md` — final restart-warning boundary
 - `docs/batches/` — reviewed batch scopes
 
 ## Architecture
