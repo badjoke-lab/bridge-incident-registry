@@ -49,6 +49,15 @@ import SectionHeader from "../../components/SectionHeader.astro";
 
   <p class="lede">Reported loss values may differ across official posts, analytics reports, security writeups, and media coverage. BIR stores the selected display value together with confidence, source links, and conflicting claims where needed.</p>
 
+  <SectionHeader kicker="Aftermath" title="Recovery, reimbursement, and restart" description="BIR keeps different aftermath mechanisms separate." />
+
+  <KeyValueList items={[
+    { label: "Recovery", value: "Attacker-controlled or otherwise lost assets were returned, frozen, seized, or recovered." },
+    { label: "Reimbursement", value: "Affected user claims or bridge liabilities were made whole through claim payments, treasury or sponsor funding, investor funding, or a full deficit backfill." },
+    { label: "Restart", value: "The affected bridge, frontend, or transfer path resumed. Chain resumption alone does not prove bridge reopening." },
+    { label: "Qualified scope", value: "A statement covering submitted claims or a defined user group is not broadened to every possible affected address." }
+  ]} />
+
   <SectionHeader kicker="Uncertainty" title="Known unknowns" description="Unknown values are part of the record, not a failure of the record." />
 
   <KeyValueList items={[
