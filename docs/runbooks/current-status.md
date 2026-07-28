@@ -3,7 +3,7 @@
 Status: active  
 Updated: 2026-07-28
 
-## Canonical state on Batch 1 review branch
+## Canonical state
 
 ```text
 Bridges     33
@@ -43,35 +43,20 @@ Source-count contract                merged — PR #78
 Safe source-count normalization      merged — PR #79
 Production publication               merged — PR #80
 Source-count review Batch 1          merged — PR #81
-Batch 1 canonical migration          implemented on review branch
+Batch 1 canonical migration          merged — PR #82
+Batch 1 production publication       verified — run 30370374622
 ```
 
 ## Source-count state
 
-The contract is:
-
 ```text
-incident.source_count = directly linked canonical evidence records
-event.source_count    = directly linked canonical evidence records
+Initial total mismatches          60
+After safe normalization          47
+After Batch 1                     37
+Incident mismatches                0
 ```
 
-Production-verified state before Batch 1:
-
-```text
-Total mismatches   47
-Incident mismatch   0
-Event mismatch     47
-```
-
-Batch 1 adds ten event-scoped evidence records derived from reviewed same-incident sources. No event text, date, status, or stored count changes.
-
-Expected review-branch state:
-
-```text
-Total mismatches   37
-Incident mismatch   0
-Event mismatch     37
-```
+Batch 1 added ten reviewed event-scoped evidence records and synchronized seven affected incident derived counts. No event text, dates, statuses, or stored event source counts changed.
 
 Records:
 
@@ -80,22 +65,25 @@ Records:
 - `docs/audits/production-verification-phase3-source-count-mechanical-2026-07-28.md`
 - `docs/audits/phase3-source-count-review-batch1-2026-07-28.md`
 - `docs/audits/phase3-source-count-batch1-canonical-2026-07-28.md`
+- `docs/audits/production-verification-phase3-source-count-batch1-2026-07-28.md`
 
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR      #79
-Merge commit           3c4bae8905ff052e987f84bc798545b467de807d
-Production verify      30367770935
-Normal CI              30367770892
-Verified state         33 / 34 / 183 / 211
+Canonical data PR      #82
+Merge commit           626ac6b91c5ce9165938034055ccb7edc14071a7
+Production verify      30370374622
+Normal CI              30370374443
+Verified state         33 / 34 / 183 / 221
 Verified HTML routes   72
 ```
 
+The first production attempt exhausted the unchanged five-minute convergence window. The retry passed after Cloudflare publication converged; no verification condition was relaxed.
+
 ## Next
 
-1. run the bounded Batch 1 generator and full repository suite;
-2. remove temporary implementation files;
-3. merge the cleaned 33 / 34 / 183 / 221 canonical PR;
-4. production-verify all public data and 72 HTML routes;
-5. continue with source-count review Batch 2.
+1. review source-count Batch 2;
+2. migrate only source-backed event evidence links;
+3. continue bounded batches until all 37 event mismatches are resolved;
+4. promote exact source-count equality to a hard CI gate only at zero mismatches;
+5. strengthen primary-source and archive coverage.
