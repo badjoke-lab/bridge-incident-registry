@@ -5,7 +5,7 @@ Updated: 2026-07-28
 
 GitHub state and canonical JSON are authoritative.
 
-## Canonical baseline on final restart review branch
+## Canonical baseline
 
 ```text
 Bridges     33
@@ -13,8 +13,6 @@ Incidents   34
 Events      183
 Evidence    211
 ```
-
-`main` remains at 33 / 34 / 182 / 210 until the final restart canonical PR merges.
 
 ## Current position
 
@@ -24,22 +22,22 @@ Phase 1  Canonical model, UI, validation, seeds    complete
 Phase 2  Record expansion                          complete through Batch 7
 Phase 3  Full-corpus quality strengthening         active
          Full-corpus audit                         complete — PR #71
-         First aftermath migration                 complete and production-verified
-         Final restart source resolution           complete — PR #75
-         Final restart canonical migration         implemented on review branch
+         Reimbursement/restart normalization       complete — PRs #72–#76
+         Production verification                   complete — run 30361214486
+         Source-count contract                     next
 Phase 4  Public contract stabilization             complete
 Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
 ```
 
-## Latest completed publication checkpoint
+## Latest publication checkpoint
 
 ```text
-Canonical data PR        #73
-Merge commit             a6794d5460eb263045c23ee1a850674b1a7beb98
-Production verify run    30358827192
-Normal CI run            30358827222
-Verified state           33 / 34 / 182 / 210
+Canonical data PR        #76
+Merge commit             5cc54661b3a3f349ba5aa898930e35279f70df3b
+Production verify run    30361214486
+Normal CI run            30361214318
+Verified state           33 / 34 / 183 / 211
 Verified HTML routes     72
 ```
 
@@ -54,14 +52,7 @@ incident_source_count            7 incidents
 event_source_count              54 events
 ```
 
-After the first aftermath migration:
-
-```text
-completed_reimbursement_event   0
-reopened_event                   3
-```
-
-Final restart review-branch result:
+Current state:
 
 ```text
 completed_reimbursement_event   0
@@ -69,26 +60,15 @@ reopened_event                   0
 blocking errors                  0
 ```
 
-## Final restart migration
+## Completed aftermath normalization
 
-Canonical changes:
+The completed migrations:
 
-```text
-Existing event normalization   1
-Incident status correction     1
-Existing event status fix      1
-New timeline event             1
-New evidence record            1
-Resulting events             183
-Resulting evidence           211
-```
-
-Modeling results:
-
-- LI.FI 2022 uses its existing patch/redeployment event rather than a duplicate event
-- LI.FI 2024 historical restart timing is changed to `unknown` because containment reporting does not prove service restoration
-- current operation remains separate from exact historical restart timing
-- ChainSwap's August 20 relaunch is linked to the first July incident without claiming a durable reopening before the second exploit
+- normalized descriptive legacy restart events without duplicating history;
+- added source-backed Ronin, Wormhole, Poly Network, BSC Token Hub, THORChain, Allbridge, and ChainSwap aftermath records;
+- distinguished reimbursement, deficit backfill, attacker-fund recovery, chain resumption, and bridge reopening;
+- retained qualified reimbursement scopes;
+- corrected LI.FI 2024 exact restart timing to `unknown` instead of inferring it from containment or later current operation.
 
 Records:
 
@@ -97,6 +77,8 @@ Records:
 - `docs/audits/phase3-aftermath-canonical-2026-07-28.md`
 - `docs/audits/production-verification-phase3-aftermath-2026-07-28.md`
 - `docs/audits/phase3-final-restart-source-resolution-2026-07-28.md`
+- `docs/audits/phase3-final-restart-canonical-2026-07-28.md`
+- `docs/audits/production-verification-phase3-final-restart-2026-07-28.md`
 
 ## Production publication gate
 
@@ -112,14 +94,13 @@ After convergence, every count, ID, route, reference, metadata, sitemap, robots,
 
 ## Remaining roadmap
 
-1. merge and production-verify the final restart migration
-2. define and normalize the `source_count` contract
-3. primary-source strengthening
-4. URL and archive hardening
-5. validator strengthening
-6. public-contract compatibility review
-7. monitoring with no automatic publication
-8. v1 documentation, accessibility, performance, and release checks
+1. define and normalize the `source_count` contract
+2. primary-source strengthening
+3. URL and archive hardening
+4. validator strengthening
+5. public-contract compatibility review
+6. monitoring with no automatic publication
+7. v1 documentation, accessibility, performance, and release checks
 
 ## Permanent rules
 
