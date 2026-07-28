@@ -1,12 +1,7 @@
 name: Apply Phase 3 Aftermath Canonical Migration
 
 on:
-  push:
-    branches:
-      - agent/phase3-aftermath-canonical
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:
 
 permissions:
   contents: write
