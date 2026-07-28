@@ -3,7 +3,7 @@
 Status: complete  
 Updated: 2026-07-28
 
-## Current canonical baseline on Batch 2 review branch
+## Current canonical baseline
 
 ```text
 Bridges     33
@@ -26,23 +26,9 @@ PR 6  Post-build consistency CI              complete — PR #58
 PR 7  Production verification                complete — PR #59
 ```
 
-## Latest completed contract verification
+## Latest contract verification
 
-Source-count Batch 1 production verification run `30370374622` passed against `https://bridge-incident-registry.pages.dev` at:
-
-```text
-33 bridges
-34 incidents
-183 events
-221 evidence records
-72 canonical HTML routes
-```
-
-The ordinary repository workflow run `30370374443` passed the complete repository suite.
-
-## Pending Batch 2 publication gate
-
-The Batch 2 review branch must publish and verify:
+Source-count Batch 2 production verification run `30374628843` passed against `https://bridge-incident-registry.pages.dev` at:
 
 ```text
 33 bridges
@@ -52,16 +38,25 @@ The Batch 2 review branch must publish and verify:
 72 canonical HTML routes
 ```
 
-The same checks remain mandatory:
+The ordinary repository workflow run `30374629112` passed type checking, canonical validation, enum validation, first-ten audit, full-corpus audit, controlled audit failures, build, final-`dist` consistency, and controlled public-output failures.
+
+The production verification covered:
 
 - all static and detail routes;
 - production canonical links and robots metadata;
 - JSON-LD URLs and record identifiers;
 - version and manifest counts and canonical-only markers;
-- bridge, incident, event, and evidence ordered IDs;
+- bridge, incident, event, and evidence ordered IDs through `bir_src_000231`;
+- the ten Batch 2 event-scoped evidence records;
+- the six synchronized incident source counts;
+- corrected public event counts for `bir_ev_000044` and `bir_ev_000054`;
 - exact sitemap route equality;
 - every generated legacy redirect;
 - content types and observable cache-related headers.
+
+Two initial attempts correctly failed because production remained at the Batch 1 state. A diagnostic confirmed that Batch 2 had not deployed. A docs-only main push retriggered the existing Cloudflare Pages Git integration; no verifier condition was changed.
+
+Latest audit: `docs/audits/production-verification-phase3-source-count-batch2-2026-07-28.md`.
 
 ## Closure
 
