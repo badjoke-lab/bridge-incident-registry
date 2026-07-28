@@ -31,9 +31,9 @@ BIR is not:
 
 The static registry application, four-record canonical model, validation pipeline, list/detail pages, methodology pages, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
 
-Phase 2 record expansion is complete through Batch 7. Phase 3 reimbursement and restart normalization is production-verified with zero reimbursement or reopening warnings. The `source_count` contract and safe mechanical normalization are complete. Source-count remediation Batch 1 is implemented on a review branch, adding ten event-scoped evidence records and reducing unresolved event mismatches from 47 to 37.
+Phase 2 record expansion is complete through Batch 7. Phase 3 reimbursement and restart normalization is production-verified with zero reimbursement or reopening warnings. The `source_count` contract and safe mechanical normalization are complete. Source-count remediation Batch 1 is merged and production-verified, adding ten event-scoped evidence records and reducing unresolved event mismatches from 47 to 37.
 
-Current canonical review-branch counts:
+Current canonical counts:
 
 ```text
 Bridges     33
@@ -97,6 +97,7 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/audits/production-verification-phase3-source-count-mechanical-2026-07-28.md` — source-count production audit
 - `docs/audits/phase3-source-count-review-batch1-2026-07-28.md` — Batch 1 source-resolution boundary
 - `docs/audits/phase3-source-count-batch1-canonical-2026-07-28.md` — Batch 1 canonical migration record
+- `docs/audits/production-verification-phase3-source-count-batch1-2026-07-28.md` — Batch 1 production audit
 - `docs/batches/` — reviewed batch scopes
 
 ## Architecture
