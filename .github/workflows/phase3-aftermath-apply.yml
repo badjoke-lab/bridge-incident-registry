@@ -1,7 +1,12 @@
 name: Apply Phase 3 Aftermath Canonical Migration
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - agent/phase3-aftermath-canonical
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: write
@@ -30,39 +35,15 @@ jobs:
 
       - name: Validate generated canonical state
         run: |
-          set +e
-          LOG="docs/audits/.phase3-aftermath-validation.log"
-          : > "$LOG"
-          STATUS=0
-          for COMMAND in \
-            "npm run check" \
-            "npm run validate:data" \
-            "npm run validate:enums" \
-            "npm run audit:first-ten" \
-            "npm run audit:full-corpus" \
-            "npm run audit:full-corpus:test" \
-            "npm run build" \
-            "npm run dist:check" \
-            "npm run dist:test"
-          do
-            echo "" | tee -a "$LOG"
-            echo ">>> $COMMAND" | tee -a "$LOG"
-            bash -lc "$COMMAND" 2>&1 | tee -a "$LOG"
-            CODE=${PIPESTATUS[0]}
-            if [ "$CODE" -ne 0 ]; then
-              STATUS="$CODE"
-              break
-            fi
-          done
-          if [ "$STATUS" -ne 0 ]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add "$LOG"
-            git commit -m "docs: capture Phase 3 aftermath validation failure [diagnostic]"
-            git push origin HEAD:agent/phase3-aftermath-canonical
-            exit "$STATUS"
-          fi
-          rm -f "$LOG"
+          npm run check
+          npm run validate:data
+          npm run validate:enums
+          npm run audit:first-ten
+          npm run audit:full-corpus
+          npm run audit:full-corpus:test
+          npm run build
+          npm run dist:check
+          npm run dist:test
 
       - name: Commit canonical changes
         run: |
