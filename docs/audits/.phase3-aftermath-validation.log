@@ -4,10 +4,10 @@
 > bridge-incident-registry@0.0.0 check
 > astro check
 
-[2m12:06:27[22m [34m[content][39m Syncing content
-[2m12:06:27[22m [34m[content][39m Synced content
-[2m12:06:27[22m [34m[types][39m Generated [2m152ms[22m
-[2m12:06:27[22m [34m[check][39m Getting diagnostics for Astro files in /home/runner/work/bridge-incident-registry/bridge-incident-registry...
+[2m12:07:28[22m [34m[content][39m Syncing content
+[2m12:07:28[22m [34m[content][39m Synced content
+[2m12:07:28[22m [34m[types][39m Generated [2m124ms[22m
+[2m12:07:28[22m [34m[check][39m Getting diagnostics for Astro files in /home/runner/work/bridge-incident-registry/bridge-incident-registry...
 [96msrc/components/SiteMeta.astro[0m:[93m67[0m:[93m40[0m - [93mwarning[0m[90m astro(4000): [0mThis script will be treated as if it has the `is:inline` directive because it contains an attribute. Therefore, features that require processing (e.g. using TypeScript or npm packages in the script) are unavailable.
 
 See docs for more details: https://docs.astro.build/en/guides/client-side-scripts/#script-processing.
@@ -252,7 +252,7 @@ Full-corpus audit controlled failure tests passed (8 fixtures).
 Generated canonical-derived public staging data in .generated/public-data.
 Records: 33 bridges, 34 incidents, 182 events, 210 evidence sources.
 Canonical only: true
-Generated at: 2026-07-28T12:06:33.979Z
+Generated at: 2026-07-28T12:07:34.285Z
 Published machine-readable files under public.
 Counts: 33 bridges, 34 incidents, 182 events, 210 evidence sources.
 Published discovery files for 72 canonical HTML URLs.
@@ -266,102 +266,102 @@ Legacy redirect check passed for 74 routes.
 > bridge-incident-registry@0.0.0 build
 > astro build
 
-[2m12:06:35[22m [34m[content][39m Syncing content
-[2m12:06:35[22m [34m[content][39m Synced content
-[2m12:06:35[22m [34m[types][39m Generated [2m41ms[22m
-[2m12:06:35[22m [34m[build][39m output: [34m"static"[39m
-[2m12:06:35[22m [34m[build][39m mode: [34m"static"[39m
-[2m12:06:35[22m [34m[build][39m directory: [34m/home/runner/work/bridge-incident-registry/bridge-incident-registry/dist/[39m
-[2m12:06:35[22m [34m[build][39m Collecting build info...
-[2m12:06:35[22m [34m[build][39m [32m✓ Completed in 57ms.[39m
-[2m12:06:35[22m [34m[build][39m Building static entrypoints...
-[2m12:06:36[22m [34m[vite][39m [32m✓ built in 974ms[39m
-[2m12:06:36[22m [34m[build][39m [32m✓ Completed in 1.01s.[39m
+[2m12:07:35[22m [34m[content][39m Syncing content
+[2m12:07:35[22m [34m[content][39m Synced content
+[2m12:07:35[22m [34m[types][39m Generated [2m41ms[22m
+[2m12:07:35[22m [34m[build][39m output: [34m"static"[39m
+[2m12:07:35[22m [34m[build][39m mode: [34m"static"[39m
+[2m12:07:35[22m [34m[build][39m directory: [34m/home/runner/work/bridge-incident-registry/bridge-incident-registry/dist/[39m
+[2m12:07:35[22m [34m[build][39m Collecting build info...
+[2m12:07:35[22m [34m[build][39m [32m✓ Completed in 59ms.[39m
+[2m12:07:35[22m [34m[build][39m Building static entrypoints...
+[2m12:07:36[22m [34m[vite][39m [32m✓ built in 1.00s[39m
+[2m12:07:36[22m [34m[build][39m [32m✓ Completed in 1.04s.[39m
 
 [42m[30m generating static routes [39m[49m
-[2m12:06:36[22m [32m▶[39m src/pages/about/index.astro
-[2m12:06:36[22m   [34m└─[39m [2m/about/index.html[22m [2m(+9ms)[22m 
-[2m12:06:36[22m [32m▶[39m src/pages/bridge/[slug].astro
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/ronin-bridge/index.html[22m [2m(+4ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/wormhole/index.html[22m [2m(+2ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/nomad-bridge/index.html[22m [2m(+2ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/harmony-horizon-bridge/index.html[22m [2m(+2ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/poly-network/index.html[22m [2m(+2ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/bsc-token-hub/index.html[22m [2m(+2ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/multichain/index.html[22m [2m(+2ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/orbit-bridge/index.html[22m [2m(+3ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/qubit-qbridge/index.html[22m [2m(+2ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/thorchain/index.html[22m [2m(+4ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/meter-passport/index.html[22m [2m(+2ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/allbridge-core/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/li-fi/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/chainswap/index.html[22m [2m(+2ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/celer-cbridge/index.html[22m [2m(+2ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/socket-protocol/index.html[22m [2m(+2ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/pnetwork/index.html[22m [2m(+2ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/rainbow-bridge/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/synapse-protocol/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/nerve-network/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/holograph-protocol/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/ibc-protocol/index.html[22m [2m(+2ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/ren-protocol/index.html[22m [2m(+2ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/avalanche-ethereum-bridge/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/avalanche-bridge/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/shuttleflow/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/transit-swap/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/magpie-protocol/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/rubic/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/unizen/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/taiko-bridge/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/bridge/everclear/index.html[22m [2m(+2ms)[22m 
-[2m12:06:36[22m   [34m└─[39m [2m/bridge/commons-bridge/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m [32m▶[39m src/pages/bridges/index.astro
-[2m12:06:36[22m   [34m└─[39m [2m/bridges/index.html[22m [2m(+5ms)[22m 
-[2m12:06:36[22m [32m▶[39m src/pages/incident/[slug].astro
-[2m12:06:36[22m   [34m├─[39m [2m/incident/ronin-bridge-2022-validator-key-compromise/index.html[22m [2m(+2ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/wormhole-2022-weth-mint-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/nomad-bridge-2022-message-verification-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/harmony-horizon-bridge-2022-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/poly-network-2021-cross-chain-exploit/index.html[22m [2m(+3ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/bsc-token-hub-2022-forged-proof-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/multichain-2023-abnormal-mpc-outflows/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/orbit-bridge-2024-ethereum-vault-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/qubit-qbridge-2022-zero-value-deposit-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/thorchain-2021-eth-router-exploit-1/index.html[22m [2m(+4ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/thorchain-2021-eth-router-exploit-2/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/thorchain-2026-gg20-tss-vault-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/meter-passport-2022-false-deposit-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/allbridge-core-2023-bnb-pool-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/li-fi-2022-approval-drain-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/li-fi-2024-facet-approval-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/chainswap-2021-july-2-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/chainswap-2021-july-10-quota-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/celer-cbridge-2022-dns-hijacking/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/socket-2024-gateway-approval-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/pnetwork-2021-pbtc-bsc-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/pnetwork-2022-pgala-misconfiguration/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/rainbow-bridge-2022-may-attack-attempt/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/rainbow-bridge-2022-august-attack-attempt/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/synapse-2021-nusd-metapool-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/nerve-bridge-2021-metapool-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/holograph-2024-unauthorized-hlg-mint/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/transit-swap-2022-routing-approval-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/magpie-protocol-2024-router-v2-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/rubic-2022-rbc-brbc-bridge-wallet-compromise/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/rubic-2022-rubicproxy-approval-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/unizen-2024-external-call-approval-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m├─[39m [2m/incident/taiko-bridge-2026-message-proof-exploit/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m   [34m└─[39m [2m/incident/commons-bridge-2026-proxy-compromise/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m [32m▶[39m src/pages/incidents/index.astro
-[2m12:06:36[22m   [34m└─[39m [2m/incidents/index.html[22m [2m(+3ms)[22m 
-[2m12:06:36[22m [32m▶[39m src/pages/index.astro
-[2m12:06:36[22m   [34m└─[39m [2m/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m [32m▶[39m src/pages/methodology/index.astro
-[2m12:06:36[22m   [34m└─[39m [2m/methodology/index.html[22m [2m(+1ms)[22m 
-[2m12:06:36[22m [32m✓ Completed in 147ms.
+[2m12:07:36[22m [32m▶[39m src/pages/about/index.astro
+[2m12:07:36[22m   [34m└─[39m [2m/about/index.html[22m [2m(+10ms)[22m 
+[2m12:07:36[22m [32m▶[39m src/pages/bridge/[slug].astro
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/ronin-bridge/index.html[22m [2m(+4ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/wormhole/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/nomad-bridge/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/harmony-horizon-bridge/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/poly-network/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/bsc-token-hub/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/multichain/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/orbit-bridge/index.html[22m [2m(+3ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/qubit-qbridge/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/thorchain/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/meter-passport/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/allbridge-core/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/li-fi/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/chainswap/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/celer-cbridge/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/socket-protocol/index.html[22m [2m(+3ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/pnetwork/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/rainbow-bridge/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/synapse-protocol/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/nerve-network/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/holograph-protocol/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/ibc-protocol/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/ren-protocol/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/avalanche-ethereum-bridge/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/avalanche-bridge/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/shuttleflow/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/transit-swap/index.html[22m [2m(+4ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/magpie-protocol/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/rubic/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/unizen/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/taiko-bridge/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/bridge/everclear/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m└─[39m [2m/bridge/commons-bridge/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m [32m▶[39m src/pages/bridges/index.astro
+[2m12:07:36[22m   [34m└─[39m [2m/bridges/index.html[22m [2m(+6ms)[22m 
+[2m12:07:36[22m [32m▶[39m src/pages/incident/[slug].astro
+[2m12:07:36[22m   [34m├─[39m [2m/incident/ronin-bridge-2022-validator-key-compromise/index.html[22m [2m(+3ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/wormhole-2022-weth-mint-exploit/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/nomad-bridge-2022-message-verification-exploit/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/harmony-horizon-bridge-2022-exploit/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/poly-network-2021-cross-chain-exploit/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/bsc-token-hub-2022-forged-proof-exploit/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/multichain-2023-abnormal-mpc-outflows/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/orbit-bridge-2024-ethereum-vault-exploit/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/qubit-qbridge-2022-zero-value-deposit-exploit/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/thorchain-2021-eth-router-exploit-1/index.html[22m [2m(+4ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/thorchain-2021-eth-router-exploit-2/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/thorchain-2026-gg20-tss-vault-exploit/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/meter-passport-2022-false-deposit-exploit/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/allbridge-core-2023-bnb-pool-exploit/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/li-fi-2022-approval-drain-exploit/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/li-fi-2024-facet-approval-exploit/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/chainswap-2021-july-2-exploit/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/chainswap-2021-july-10-quota-exploit/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/celer-cbridge-2022-dns-hijacking/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/socket-2024-gateway-approval-exploit/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/pnetwork-2021-pbtc-bsc-exploit/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/pnetwork-2022-pgala-misconfiguration/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/rainbow-bridge-2022-may-attack-attempt/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/rainbow-bridge-2022-august-attack-attempt/index.html[22m [2m(+2ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/synapse-2021-nusd-metapool-exploit/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/nerve-bridge-2021-metapool-exploit/index.html[22m [2m(+3ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/holograph-2024-unauthorized-hlg-mint/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/transit-swap-2022-routing-approval-exploit/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/magpie-protocol-2024-router-v2-exploit/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/rubic-2022-rbc-brbc-bridge-wallet-compromise/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/rubic-2022-rubicproxy-approval-exploit/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/unizen-2024-external-call-approval-exploit/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m├─[39m [2m/incident/taiko-bridge-2026-message-proof-exploit/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m   [34m└─[39m [2m/incident/commons-bridge-2026-proxy-compromise/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m [32m▶[39m src/pages/incidents/index.astro
+[2m12:07:36[22m   [34m└─[39m [2m/incidents/index.html[22m [2m(+4ms)[22m 
+[2m12:07:36[22m [32m▶[39m src/pages/index.astro
+[2m12:07:36[22m   [34m└─[39m [2m/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m [32m▶[39m src/pages/methodology/index.astro
+[2m12:07:36[22m   [34m└─[39m [2m/methodology/index.html[22m [2m(+1ms)[22m 
+[2m12:07:36[22m [32m✓ Completed in 158ms.
 [39m
-[2m12:06:36[22m [34m[build][39m 72 page(s) built in [1m1.23s[22m
-[2m12:06:36[22m [34m[build][39m [1mComplete![22m
+[2m12:07:36[22m [34m[build][39m 72 page(s) built in [1m1.27s[22m
+[2m12:07:36[22m [34m[build][39m [1mComplete![22m
 
 >>> npm run dist:check
 
