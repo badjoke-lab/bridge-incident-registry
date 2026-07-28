@@ -3,13 +3,13 @@
 Status: complete  
 Updated: 2026-07-28
 
-## Current canonical baseline
+## Current canonical baseline on Batch 2 review branch
 
 ```text
 Bridges     33
 Incidents   34
 Events      183
-Evidence    221
+Evidence    231
 ```
 
 Canonical JSON remains the only record source. Generated public files are build products.
@@ -26,7 +26,7 @@ PR 6  Post-build consistency CI              complete — PR #58
 PR 7  Production verification                complete — PR #59
 ```
 
-## Latest contract verification
+## Latest completed contract verification
 
 Source-count Batch 1 production verification run `30370374622` passed against `https://bridge-incident-registry.pages.dev` at:
 
@@ -38,22 +38,30 @@ Source-count Batch 1 production verification run `30370374622` passed against `h
 72 canonical HTML routes
 ```
 
-The ordinary repository workflow run `30370374443` passed type checking, canonical validation, enum validation, first-ten audit, full-corpus audit, controlled audit failures, build, final-`dist` consistency, and controlled public-output failures.
+The ordinary repository workflow run `30370374443` passed the complete repository suite.
 
-The production verification covered:
+## Pending Batch 2 publication gate
+
+The Batch 2 review branch must publish and verify:
+
+```text
+33 bridges
+34 incidents
+183 events
+231 evidence records
+72 canonical HTML routes
+```
+
+The same checks remain mandatory:
 
 - all static and detail routes;
 - production canonical links and robots metadata;
 - JSON-LD URLs and record identifiers;
 - version and manifest counts and canonical-only markers;
-- bridge, incident, event, and evidence ordered IDs through `bir_src_000221`;
-- the ten Batch 1 event-scoped evidence records;
-- the seven synchronized incident source counts;
+- bridge, incident, event, and evidence ordered IDs;
 - exact sitemap route equality;
 - every generated legacy redirect;
 - content types and observable cache-related headers.
-
-Latest audit: `docs/audits/production-verification-phase3-source-count-batch1-2026-07-28.md`.
 
 ## Closure
 
