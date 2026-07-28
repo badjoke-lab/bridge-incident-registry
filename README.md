@@ -31,9 +31,9 @@ BIR is not:
 
 The static registry application, four-record canonical model, validation pipeline, list/detail pages, methodology pages, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
 
-Phase 2 record expansion is complete through Batch 7. Phase 3 reimbursement and restart normalization is production-verified with zero reimbursement or reopening warnings. The `source_count` contract and safe mechanical normalization are complete. Source-count remediation Batch 1 is production-verified. Batch 2 is implemented on a review branch with ten additional event-scoped evidence records, six incident derived-count synchronizations, two event count corrections, and an expected reduction from 37 to 27 remaining event mismatches.
+Phase 2 record expansion is complete through Batch 7. Phase 3 reimbursement and restart normalization is production-verified with zero reimbursement or reopening warnings. The `source_count` contract and safe mechanical normalization are complete. Source-count remediation Batches 1 and 2 are merged and production-verified. Batch 2 added ten event-scoped evidence records, synchronized six incident derived counts, corrected two stale event counts, and reduced unresolved event mismatches from 37 to 27.
 
-Current canonical review-branch counts:
+Current canonical counts:
 
 ```text
 Bridges     33
@@ -100,6 +100,8 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/audits/production-verification-phase3-source-count-batch1-2026-07-28.md` — Batch 1 production audit
 - `docs/audits/phase3-source-count-review-batch2-2026-07-28.md` — Batch 2 source-resolution boundary
 - `docs/audits/phase3-source-count-batch2-canonical-2026-07-28.md` — Batch 2 canonical migration record
+- `docs/audits/production-verification-phase3-source-count-batch2-2026-07-28.md` — Batch 2 production audit
+- `docs/audits/production-deployment-retrigger-batch2-2026-07-28.md` — Batch 2 deployment retrigger record
 - `docs/batches/` — reviewed batch scopes
 
 ## Architecture
