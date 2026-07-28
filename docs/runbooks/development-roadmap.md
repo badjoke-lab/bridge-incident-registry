@@ -5,14 +5,16 @@ Updated: 2026-07-28
 
 GitHub state and canonical JSON are authoritative.
 
-## Canonical baseline
+## Canonical baseline on Phase 3 review branch
 
 ```text
 Bridges     33
 Incidents   34
-Events      173
-Evidence    199
+Events      182
+Evidence    210
 ```
+
+`main` remains at 33 / 34 / 173 / 199 until the aftermath canonical PR merges.
 
 ## Current position
 
@@ -20,22 +22,16 @@ Evidence    199
 Phase 0  Specification and foundation              complete
 Phase 1  Canonical model, UI, validation, seeds    complete
 Phase 2  Record expansion                          complete through Batch 7
-         Batch 1                                   complete
-         First-ten quality hardening               complete
-         Batch 2                                   complete
-         Batch 3                                   complete
-         Batch 4                                   complete
-         Batch 5                                   complete
-         Batch 6A Transit + Magpie                  complete and production-verified
-         Batch 6B Rubic + Unizen                    complete and production-verified
-         Batch 7 Taiko + Everclear + Commons        complete and production-verified
-Phase 3  Full-corpus quality strengthening         next
+Phase 3  Full-corpus quality strengthening         active
+         Full-corpus audit                         complete — PR #71
+         Aftermath source resolution               complete — PR #72
+         Aftermath canonical migration             implemented on review branch
 Phase 4  Public contract stabilization             complete
 Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
 ```
 
-## Completed Phase 2 Batch 7
+## Completed Phase 2 publication checkpoint
 
 ```text
 Canonical data PR        #69
@@ -45,33 +41,59 @@ Verified state           33 / 34 / 173 / 199
 Verified HTML routes     72
 ```
 
-Canonical additions:
+## Phase 3 audit baseline
+
+The full-corpus audit runs permanently in normal CI and currently reports zero blocking errors.
+
+Baseline review categories before aftermath migration:
 
 ```text
-Bridge entities    3
-Incident cases     2
-Timeline events    23
-Evidence records   18
-Asset references   3
-Chain references   3
+completed_reimbursement_event   5 incidents
+reopened_event                  15 incidents
+incident_source_count            7 incidents
+event_source_count              54 events
+```
+
+## Phase 3 aftermath canonical migration
+
+Review-branch changes:
+
+```text
+Existing event normalizations   9
+New timeline events             9
+New evidence records           11
+Resulting events              182
+Resulting evidence            210
 ```
 
 Modeling results:
 
-- Taiko recollateralization remains separate from attacker-fund recovery
-- Taiko reimbursement is completed and the bridge is active after reopening
-- Everclear and Connext remain one rebranded lifecycle entity without a fabricated incident
-- Everclear documentation availability is not active-operation proof after shutdown
-- Commons Bridge is separated from the broader Syndicate Bridge family
-- Commons reimbursement is completed and the route is dead / not reopened
-- Commons token quantity, attacker proceeds, user loss, price effects, and treasury reimbursement remain separate
-- Syndicate Labs wind-down is not asserted as the incident cause
+- reimbursement completion can include a fully funded deficit backfill, but is not attacker-fund recovery
+- qualified reimbursement scopes remain qualified
+- chain resumption alone does not prove bridge reopening
+- staged Poly Network restoration is represented separately from full roadmap completion
+- THORChain's combined reimbursement amount is not fabricated into incident-specific allocations
+- seven descriptive legacy reopening event types are normalized without duplicating historical events
+
+Expected warning state after migration:
+
+```text
+completed_reimbursement_event   0
+reopened_event                   3
+incident_source_count            7
+existing event_source_count drift remains separate
+```
+
+Remaining restart review:
+
+1. LI.FI 2022
+2. LI.FI 2024
+3. ChainSwap July 2, 2021
 
 Records:
 
-- `docs/batches/phase2-batch-07-scope-2026-07-28.md`
-- `docs/batches/phase2-batch-07-implementation.md`
-- `docs/audits/production-verification-batch7-2026-07-28.md`
+- `docs/audits/full-corpus-quality-baseline-2026-07-28.md`
+- `docs/audits/phase3-aftermath-source-resolution-2026-07-28.md`
 
 ## Production publication gate
 
@@ -85,29 +107,17 @@ Maximum wait   5 minutes
 
 After convergence, every count, ID, route, reference, metadata, sitemap, robots, redirect, content-type, and cache assertion remains mandatory.
 
-## Phase 3 — full-corpus quality strengthening
-
-Next sequence:
-
-1. inventory all current enum and descriptive-value drift
-2. audit amount claims, recovery, reimbursement, restart, and current-outcome consistency across all incidents
-3. audit entity status against linked incident and lifecycle events
-4. audit evidence source tiers, URL states, archive coverage, and source counts
-5. separate mechanical normalization from changes that alter historical claims
-6. add controlled failure fixtures for any strengthened validator rule
-7. apply reviewed canonical migrations through bounded data PRs
-8. verify production after every public-data change
-
 ## Remaining roadmap
 
-1. Phase 3 full-corpus audit and normalization
-2. primary-source strengthening
-3. aftermath normalization
-4. URL and archive hardening
-5. validator strengthening
-6. public-contract compatibility review
-7. monitoring with no automatic publication
-8. v1 documentation, accessibility, performance, and release checks
+1. merge and production-verify the Phase 3 aftermath canonical migration
+2. resolve the three remaining restart warnings
+3. define and normalize the `source_count` contract
+4. primary-source strengthening
+5. URL and archive hardening
+6. validator strengthening
+7. public-contract compatibility review
+8. monitoring with no automatic publication
+9. v1 documentation, accessibility, performance, and release checks
 
 ## Permanent rules
 
