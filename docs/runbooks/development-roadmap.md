@@ -22,9 +22,9 @@ Phase 1  Canonical model, UI, validation, seeds    complete
 Phase 2  Record expansion                          complete through Batch 7
 Phase 3  Full-corpus quality strengthening         active
          Full-corpus audit                         complete — PR #71
-         Reimbursement/restart normalization       complete — PRs #72–#76
-         Production verification                   complete — run 30361214486
-         Source-count contract                     next
+         Reimbursement/restart normalization       complete — PRs #72–#77
+         Source-count contract                     complete — PR #78
+         Safe source-count normalization           implemented on review branch
 Phase 4  Public contract stabilization             complete
 Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
@@ -49,10 +49,10 @@ Initial audit baseline:
 completed_reimbursement_event   5 incidents
 reopened_event                  15 incidents
 incident_source_count            7 incidents
-event_source_count              54 events
+event_source_count              53 events
 ```
 
-Current state:
+Current aftermath state:
 
 ```text
 completed_reimbursement_event   0
@@ -60,25 +60,40 @@ reopened_event                   0
 blocking errors                  0
 ```
 
-## Completed aftermath normalization
+Source-count contract inventory:
 
-The completed migrations:
+```text
+Total mismatches   60
+Incident mismatch   7
+Event mismatch     53
+```
 
-- normalized descriptive legacy restart events without duplicating history;
-- added source-backed Ronin, Wormhole, Poly Network, BSC Token Hub, THORChain, Allbridge, and ChainSwap aftermath records;
-- distinguished reimbursement, deficit backfill, attacker-fund recovery, chain resumption, and bridge reopening;
-- retained qualified reimbursement scopes;
-- corrected LI.FI 2024 exact restart timing to `unknown` instead of inferring it from containment or later current operation.
+After the safe mechanical migration on the review branch:
+
+```text
+Total mismatches   47
+Incident mismatch   0
+Event mismatch     47
+```
+
+## Source-count contract
+
+`source_count` is the number of canonical evidence records directly linked to the incident or event. It is not a unique-URL count, inherited evidence union, prose citation count, or quality score.
+
+The safe migration changes only stale derived values:
+
+```text
+Incident count updates   7
+Event count increases    6
+Total changes            13
+```
+
+The remaining 47 events have stored counts above their direct evidence-link counts. Each requires source review to decide whether to add or relink event-scoped evidence, reduce the count, or revise the event.
 
 Records:
 
-- `docs/audits/full-corpus-quality-baseline-2026-07-28.md`
-- `docs/audits/phase3-aftermath-source-resolution-2026-07-28.md`
-- `docs/audits/phase3-aftermath-canonical-2026-07-28.md`
-- `docs/audits/production-verification-phase3-aftermath-2026-07-28.md`
-- `docs/audits/phase3-final-restart-source-resolution-2026-07-28.md`
-- `docs/audits/phase3-final-restart-canonical-2026-07-28.md`
-- `docs/audits/production-verification-phase3-final-restart-2026-07-28.md`
+- `docs/audits/phase3-source-count-contract-2026-07-28.md`
+- `docs/audits/phase3-source-count-mechanical-2026-07-28.md`
 
 ## Production publication gate
 
@@ -94,13 +109,15 @@ After convergence, every count, ID, route, reference, metadata, sitemap, robots,
 
 ## Remaining roadmap
 
-1. define and normalize the `source_count` contract
-2. primary-source strengthening
-3. URL and archive hardening
-4. validator strengthening
-5. public-contract compatibility review
-6. monitoring with no automatic publication
-7. v1 documentation, accessibility, performance, and release checks
+1. merge and production-verify the 13-record safe source-count normalization;
+2. remediate the remaining 47 event evidence-link mismatches in bounded batches;
+3. promote exact source-count equality to a hard CI gate;
+4. strengthen primary-source and archive coverage;
+5. harden URLs and archives;
+6. strengthen remaining validators;
+7. complete public-contract compatibility review;
+8. add monitoring with no automatic publication;
+9. complete v1 documentation, accessibility, performance, and release checks.
 
 ## Permanent rules
 
