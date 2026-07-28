@@ -3,7 +3,7 @@
 Status: active  
 Updated: 2026-07-28
 
-## Canonical state on final restart review branch
+## Canonical state
 
 ```text
 Bridges     33
@@ -20,8 +20,6 @@ data/incidents.json     34
 data/events.json        183
 data/evidence.json      211
 ```
-
-`main` remains at 33 / 34 / 182 / 210 until the final restart canonical PR merges.
 
 ## Phase 2 record expansion
 
@@ -44,19 +42,20 @@ Aftermath source resolution       merged — PR #72
 Aftermath canonical migration     merged — PR #73
 Aftermath production publication  merged — PR #74
 Final restart source resolution   merged — PR #75
-Final restart canonical migration implemented on review branch
+Final restart canonical migration merged — PR #76
+Production publication            verified — run 30361214486
 ```
 
-Final restart migration:
+Completed Phase 3 aftermath work:
 
-- LI.FI 2022 existing patch/redeployment event normalized to `bridge_reopened`
-- LI.FI 2024 restart status corrected from `reopened` to `unknown`
-- ChainSwap July 2 incident linked to the official August 20 bridge relaunch
-- one new timeline event
-- one new primary evidence record
-- reopening warnings reduced from three to zero
+- reimbursement-completion warnings reduced from five to zero
+- reopening warnings reduced from fifteen to zero
+- legacy descriptive restart event types normalized without duplicate history
+- recovery, reimbursement, deficit backfill, chain resumption, and bridge reopening kept separate
+- LI.FI 2024 exact restart timing corrected to `unknown`
+- ChainSwap July 2 incident linked to the official August 20 relaunch
 
-Expected full-corpus state:
+Full-corpus state:
 
 ```text
 Blocking errors                  0
@@ -64,14 +63,14 @@ Reimbursement warnings           0
 Reopening warnings               0
 ```
 
-## Last completed production checkpoint
+## Latest production checkpoint
 
 ```text
-Canonical data PR      #73
-Merge commit           a6794d5460eb263045c23ee1a850674b1a7beb98
-Production verify      30358827192
-Normal CI              30358827222
-Verified state         33 / 34 / 182 / 210
+Canonical data PR      #76
+Merge commit           5cc54661b3a3f349ba5aa898930e35279f70df3b
+Production verify      30361214486
+Normal CI              30361214318
+Verified state         33 / 34 / 183 / 211
 Verified HTML routes   72
 ```
 
@@ -82,6 +81,8 @@ Records:
 - `docs/audits/phase3-aftermath-canonical-2026-07-28.md`
 - `docs/audits/production-verification-phase3-aftermath-2026-07-28.md`
 - `docs/audits/phase3-final-restart-source-resolution-2026-07-28.md`
+- `docs/audits/phase3-final-restart-canonical-2026-07-28.md`
+- `docs/audits/production-verification-phase3-final-restart-2026-07-28.md`
 
 ## Production verifier
 
@@ -95,7 +96,7 @@ The verifier:
 
 ## Next
 
-1. pass the complete repository suite on the cleaned final restart PR
-2. merge and production-verify 33 / 34 / 183 / 211
-3. define the `source_count` field contract before mechanical normalization
-4. strengthen primary-source and archive coverage
+1. define the `source_count` field contract
+2. normalize source counts only after the contract is fixed
+3. strengthen primary-source and archive coverage
+4. continue bounded Phase 3 migrations with normal CI and production verification
