@@ -3,13 +3,13 @@
 Status: complete  
 Updated: 2026-07-28
 
-## Current canonical baseline
+## Current canonical baseline on Batch 1 review branch
 
 ```text
 Bridges     33
 Incidents   34
 Events      183
-Evidence    211
+Evidence    221
 ```
 
 Canonical JSON remains the only record source. Generated public files are build products.
@@ -26,9 +26,9 @@ PR 6  Post-build consistency CI              complete — PR #58
 PR 7  Production verification                complete — PR #59
 ```
 
-## Latest contract verification
+## Latest completed contract verification
 
-Final Phase 3 restart production verification run `30361214486` passed against `https://bridge-incident-registry.pages.dev` at:
+Source-count production verification run `30367770935` passed against `https://bridge-incident-registry.pages.dev` at:
 
 ```text
 33 bridges
@@ -38,21 +38,32 @@ Final Phase 3 restart production verification run `30361214486` passed against `
 72 canonical HTML routes
 ```
 
-The verification covered:
+The ordinary repository workflow run `30367770892` also passed type checking, canonical validation, enum validation, first-ten audit, full-corpus audit, controlled audit failures, build, final-`dist` consistency, and controlled public-output failures.
 
-- all static HTML routes
-- all canonical bridge and incident detail routes
-- production canonical links and robots metadata
-- JSON-LD URLs and record identifiers
-- version and manifest counts and canonical-only markers
-- bridge, incident, event, and evidence ordered IDs
-- exact sitemap route equality
-- every generated legacy redirect
-- content types and observable cache-related headers
+Latest completed audit: `docs/audits/production-verification-phase3-source-count-mechanical-2026-07-28.md`.
 
-The ordinary repository workflow run `30361214318` also passed type checking, canonical validation, enum validation, first-ten audit, full-corpus audit, controlled audit failures, build, final-`dist` consistency, and controlled public-output failures.
+## Pending Batch 1 publication gate
 
-Latest audit: `docs/audits/production-verification-phase3-final-restart-2026-07-28.md`.
+The Batch 1 review branch must publish and verify:
+
+```text
+33 bridges
+34 incidents
+183 events
+221 evidence records
+72 canonical HTML routes
+```
+
+The same checks remain mandatory:
+
+- all static and detail routes;
+- production canonical links and robots metadata;
+- JSON-LD URLs and record identifiers;
+- version and manifest counts and canonical-only markers;
+- bridge, incident, event, and evidence ordered IDs;
+- exact sitemap route equality;
+- every generated legacy redirect;
+- content types and observable cache-related headers.
 
 ## Closure
 
@@ -60,8 +71,8 @@ The emergency public-consistency remediation remains closed. The same canonical-
 
 ## Resume rule
 
-1. create a fresh branch from latest `main`
-2. derive IDs and counts from canonical JSON
-3. keep canonical records separate from candidate and research material
-4. run all repository checks before merge
-5. run explicit production verification after public-data changes
+1. create a fresh branch from latest `main`;
+2. derive IDs and counts from canonical JSON;
+3. keep canonical records separate from candidate and research material;
+4. run all repository checks before merge;
+5. run explicit production verification after public-data changes.
