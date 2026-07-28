@@ -31,9 +31,9 @@ BIR is not:
 
 The static registry application, four-record canonical model, validation pipeline, list/detail pages, methodology pages, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
 
-Phase 2 record expansion is complete through Batch 7. The final Phase 3 restart-warning migration is implemented on a review branch.
+Phase 2 record expansion is complete through Batch 7. Phase 3 reimbursement and restart normalization is merged and production-verified with zero reimbursement or reopening warnings.
 
-Current canonical review-branch counts:
+Current canonical counts:
 
 ```text
 Bridges     33
@@ -90,6 +90,8 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/audits/phase3-aftermath-canonical-2026-07-28.md` — first canonical migration record
 - `docs/audits/production-verification-phase3-aftermath-2026-07-28.md` — first aftermath production audit
 - `docs/audits/phase3-final-restart-source-resolution-2026-07-28.md` — final restart-warning boundary
+- `docs/audits/phase3-final-restart-canonical-2026-07-28.md` — final restart canonical record
+- `docs/audits/production-verification-phase3-final-restart-2026-07-28.md` — final restart production audit
 - `docs/batches/` — reviewed batch scopes
 
 ## Architecture

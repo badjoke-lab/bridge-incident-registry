@@ -3,7 +3,7 @@
 Status: complete  
 Updated: 2026-07-28
 
-## Canonical baseline on final restart review branch
+## Current canonical baseline
 
 ```text
 Bridges     33
@@ -26,25 +26,9 @@ PR 6  Post-build consistency CI              complete — PR #58
 PR 7  Production verification                complete — PR #59
 ```
 
-## Latest completed contract verification
+## Latest contract verification
 
-Phase 3 aftermath production verification run `30358827192` passed against `https://bridge-incident-registry.pages.dev` at:
-
-```text
-33 bridges
-34 incidents
-182 events
-210 evidence records
-72 canonical HTML routes
-```
-
-The ordinary repository workflow run `30358827222` also passed type checking, canonical validation, enum validation, first-ten audit, full-corpus audit, controlled audit failures, build, final-`dist` consistency, and controlled public-output failures.
-
-Latest completed audit: `docs/audits/production-verification-phase3-aftermath-2026-07-28.md`.
-
-## Pending publication gate
-
-The final restart review branch must publish and verify:
+Final Phase 3 restart production verification run `30361214486` passed against `https://bridge-incident-registry.pages.dev` at:
 
 ```text
 33 bridges
@@ -54,9 +38,10 @@ The final restart review branch must publish and verify:
 72 canonical HTML routes
 ```
 
-The same checks remain mandatory:
+The verification covered:
 
-- all static and detail routes
+- all static HTML routes
+- all canonical bridge and incident detail routes
 - production canonical links and robots metadata
 - JSON-LD URLs and record identifiers
 - version and manifest counts and canonical-only markers
@@ -64,6 +49,10 @@ The same checks remain mandatory:
 - exact sitemap route equality
 - every generated legacy redirect
 - content types and observable cache-related headers
+
+The ordinary repository workflow run `30361214318` also passed type checking, canonical validation, enum validation, first-ten audit, full-corpus audit, controlled audit failures, build, final-`dist` consistency, and controlled public-output failures.
+
+Latest audit: `docs/audits/production-verification-phase3-final-restart-2026-07-28.md`.
 
 ## Closure
 
