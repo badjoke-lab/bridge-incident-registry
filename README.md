@@ -31,7 +31,7 @@ BIR is not:
 
 The static registry application, four-record canonical model, validation pipeline, list/detail pages, methodology pages, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
 
-Phase 2 record expansion is complete through Batch 7. Phase 3 reimbursement and restart normalization is merged and production-verified with zero reimbursement or reopening warnings.
+Phase 2 record expansion is complete through Batch 7. Phase 3 reimbursement and restart normalization is production-verified with zero reimbursement or reopening warnings. The `source_count` contract is fixed, and the 13 safe derived-count corrections are merged and production-verified. Forty-seven event evidence-link mismatches remain for bounded source review.
 
 Current canonical counts:
 
@@ -92,6 +92,9 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/audits/phase3-final-restart-source-resolution-2026-07-28.md` — final restart-warning boundary
 - `docs/audits/phase3-final-restart-canonical-2026-07-28.md` — final restart canonical record
 - `docs/audits/production-verification-phase3-final-restart-2026-07-28.md` — final restart production audit
+- `docs/audits/phase3-source-count-contract-2026-07-28.md` — source-count field contract
+- `docs/audits/phase3-source-count-mechanical-2026-07-28.md` — safe count migration record
+- `docs/audits/production-verification-phase3-source-count-mechanical-2026-07-28.md` — source-count production audit
 - `docs/batches/` — reviewed batch scopes
 
 ## Architecture
