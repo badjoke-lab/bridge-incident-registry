@@ -23,6 +23,8 @@ PR #73  a6794d5460eb263045c23ee1a850674b1a7beb98  Aftermath canonical migration
 PR #74  5fad899e6bb119297c2b865ac1de76b58e4565b5  Aftermath production audit
 PR #75  e5e29dc17dd46d81ca8b0a328db66754c74bd2ad  Final restart source resolution
 PR #76  5cc54661b3a3f349ba5aa898930e35279f70df3b  Final restart canonical migration
+PR #77  e322223a7423d1e18cd2343017c26eb2699d2b51  Final restart production audit
+PR #78  fa05b271a980fad3509e527cecbf298d43557783  Source-count contract
 ```
 
 ## Latest production checkpoint
@@ -36,22 +38,30 @@ HTML routes          72
 
 Audit: `docs/audits/production-verification-phase3-final-restart-2026-07-28.md`.
 
-## Completed Phase 3 aftermath work
+## Active branch
+
+```text
+agent/phase3-source-count-mechanical
+```
+
+Implemented on the branch:
+
+- seven incident `source_count` values synchronized to direct evidence-record counts;
+- six event `source_count` values increased to match already linked evidence;
+- incident mismatches reduced from seven to zero;
+- total source-count mismatches reduced from sixty to forty-seven;
+- no evidence links, historical claims, dates, statuses, or record totals changed;
+- temporary generator and write-enabled workflow removed.
+
+Expected cleaned audit state:
 
 ```text
 Blocking errors                  0
 Reimbursement warnings           0
 Reopening warnings               0
+Incident source-count warnings   0
+Event source-count warnings     47
 ```
-
-The canonical timelines now preserve the distinctions among:
-
-- attacker-fund recovery;
-- operator or sponsor deficit backfill;
-- user or liquidity-provider reimbursement;
-- chain resumption;
-- bridge or transfer-path reopening;
-- current operation versus exact historical restart timing.
 
 ## Production verifier behavior
 
@@ -67,7 +77,8 @@ If production does not converge within the bounded window, verification fails be
 
 ## Next
 
-1. define the incident and event `source_count` contract
-2. normalize source counts only after the contract is fixed
-3. continue primary-source and archive strengthening
-4. use bounded PRs with full repository and production verification
+1. require clean normal CI on `agent/phase3-source-count-mechanical`;
+2. merge the 13-record derived-count migration;
+3. production-verify all public data and 72 HTML routes;
+4. split the remaining 47 event evidence-link mismatches into bounded review batches;
+5. enable hard source-count equality only after all mismatches are resolved.
