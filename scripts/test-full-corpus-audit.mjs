@@ -93,4 +93,54 @@ withFixture(
   "bridge has no evidence records"
 );
 
-console.log("Full-corpus audit controlled failure tests passed.");
+withFixture(
+  "bridge-aggregate-drift",
+  (fixtureRoot) => {
+    const bridges = readJson(fixtureRoot, "data/bridges.json");
+    bridges[0].major_incident_count += 1;
+    writeJson(fixtureRoot, "data/bridges.json", bridges);
+  },
+  "major_incident_count"
+);
+
+withFixture(
+  "active-bridge-end-date",
+  (fixtureRoot) => {
+    const bridges = readJson(fixtureRoot, "data/bridges.json");
+    const bridge = bridges.find((item) => item.status === "active");
+    if (!bridge) throw new Error("fixture requires an active bridge");
+    bridge.end_date = "2026-07-28";
+    writeJson(fixtureRoot, "data/bridges.json", bridges);
+  },
+  "active entity must not have end_date"
+);
+
+withFixture(
+  "primary-source-tier",
+  (fixtureRoot) => {
+    const evidence = readJson(fixtureRoot, "data/evidence.json");
+    const source = evidence.find((item) => item.is_primary === true);
+    if (!source) throw new Error("fixture requires a primary source");
+    source.source_tier = "tier_2";
+    writeJson(fixtureRoot, "data/evidence.json", evidence);
+  },
+  "primary source must use tier_1"
+);
+
+withFixture(
+  "event-evidence-incident-mismatch",
+  (fixtureRoot) => {
+    const incidents = readJson(fixtureRoot, "data/incidents.json");
+    const events = readJson(fixtureRoot, "data/events.json");
+    const evidence = readJson(fixtureRoot, "data/evidence.json");
+    const source = evidence.find((item) => item.event_id);
+    if (!source) throw new Error("fixture requires event-linked evidence");
+    const event = events.find((item) => item.id === source.event_id);
+    if (!event) throw new Error("fixture requires a valid linked event");
+    source.incident_id = event.incident_id ? null : incidents[0].id;
+    writeJson(fixtureRoot, "data/evidence.json", evidence);
+  },
+  "event evidence incident mismatch"
+);
+
+console.log("Full-corpus audit controlled failure tests passed (8 fixtures).");
