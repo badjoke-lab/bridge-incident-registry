@@ -33,6 +33,12 @@ jobs:
       - name: Audit first ten seeds
         run: npm run audit:first-ten
 
+      - name: Audit full canonical corpus
+        run: npm run audit:full-corpus
+
+      - name: Test full-corpus audit failures
+        run: npm run audit:full-corpus:test
+
       - name: Build static site
         run: npm run build
 
