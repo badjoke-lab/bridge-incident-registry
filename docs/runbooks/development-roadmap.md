@@ -5,7 +5,7 @@ Updated: 2026-07-28
 
 GitHub state and canonical JSON are authoritative.
 
-## Canonical baseline on Batch 2 review branch
+## Canonical baseline
 
 ```text
 Bridges     33
@@ -26,21 +26,21 @@ Phase 3  Full-corpus quality strengthening         active
          Source-count contract                     complete — PR #78
          Safe source-count normalization           complete — PRs #79–#80
          Source-count remediation Batch 1          complete — PRs #81–#83
-         Source-count review Batch 2               complete — PR #84
-         Batch 2 canonical migration               implemented on review branch
+         Source-count remediation Batch 2          complete — PRs #84–#88
 Phase 4  Public contract stabilization             complete
 Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
 ```
 
-## Latest completed publication checkpoint
+## Latest publication checkpoint
 
 ```text
-Canonical data PR        #82
-Merge commit             626ac6b91c5ce9165938034055ccb7edc14071a7
-Production verify run    30370374622
-Normal CI run            30370374443
-Verified state           33 / 34 / 183 / 221
+Canonical data PR        #85
+Canonical merge          70bd5de1526cca5ce3122a7bdc23ea80d50179e0
+Deployment retrigger     99941592b9e526661ad004e6504c26588737d7fc
+Production verify run    30374628843
+Normal CI run            30374629112
+Verified state           33 / 34 / 183 / 231
 Verified HTML routes     72
 ```
 
@@ -50,26 +50,30 @@ Verified HTML routes     72
 Initial total mismatches   60
 After safe normalization   47
 After Batch 1              37
-After Batch 2              27 expected
+After Batch 2              27
 Incident mismatches         0
 ```
 
-## Batch 2 canonical migration
+## Completed Batch 2 migration
 
 ```text
 New event-scoped evidence records   10
 Incident source_count updates        6
 Event source_count reductions        2
 Resulting evidence                  231
-Expected remaining mismatches        27
+Remaining event mismatches           27
 ```
 
-The two count reductions remove unsupported historical source totals rather than fabricating duplicate evidence. Preserved incident linkage requires six incident derived-count synchronizations.
+The two count reductions removed unsupported historical source totals rather than fabricating duplicate evidence. Preserved incident linkage required six incident derived-count synchronizations.
+
+Two initial production checks failed because Cloudflare remained at the Batch 1 deployment. A diagnostic confirmed the stale live state. A docs-only main push retriggered the existing Git integration, and the unchanged verifier then passed.
 
 Records:
 
 - `docs/audits/phase3-source-count-review-batch2-2026-07-28.md`
 - `docs/audits/phase3-source-count-batch2-canonical-2026-07-28.md`
+- `docs/audits/production-deployment-retrigger-batch2-2026-07-28.md`
+- `docs/audits/production-verification-phase3-source-count-batch2-2026-07-28.md`
 
 ## Production publication gate
 
@@ -83,15 +87,14 @@ After convergence, every count, ID, route, reference, metadata, sitemap, robots,
 
 ## Remaining roadmap
 
-1. merge and production-verify Batch 2 at 33 / 34 / 183 / 231;
-2. review and migrate the remaining 27 event evidence-link mismatches in bounded batches;
-3. promote exact source-count equality to a hard CI gate;
-4. strengthen primary-source and archive coverage;
-5. harden URLs and archives;
-6. strengthen remaining validators;
-7. complete public-contract compatibility review;
-8. add monitoring with no automatic publication;
-9. complete v1 documentation, accessibility, performance, and release checks.
+1. review and migrate the remaining 27 event evidence-link mismatches in bounded batches;
+2. promote exact source-count equality to a hard CI gate;
+3. strengthen primary-source and archive coverage;
+4. harden URLs and archives;
+5. strengthen remaining validators;
+6. complete public-contract compatibility review;
+7. add monitoring with no automatic publication;
+8. complete v1 documentation, accessibility, performance, and release checks.
 
 ## Permanent rules
 
