@@ -3,13 +3,13 @@
 Status: active  
 Updated: 2026-07-28
 
-## Canonical state
+## Canonical state on Batch 2 review branch
 
 ```text
 Bridges     33
 Incidents   34
 Events      183
-Evidence    221
+Evidence    231
 ```
 
 Canonical source files:
@@ -18,7 +18,7 @@ Canonical source files:
 data/bridges.json       33
 data/incidents.json     34
 data/events.json        183
-data/evidence.json      221
+data/evidence.json      231
 ```
 
 ## Phase 2 record expansion
@@ -42,9 +42,9 @@ Aftermath and restart normalization  merged — PRs #72–#77
 Source-count contract                merged — PR #78
 Safe source-count normalization      merged — PR #79
 Production publication               merged — PR #80
-Source-count review Batch 1          merged — PR #81
-Batch 1 canonical migration          merged — PR #82
-Batch 1 production publication       verified — run 30370374622
+Source-count remediation Batch 1     complete — PRs #81–#83
+Source-count review Batch 2          merged — PR #84
+Batch 2 canonical migration          implemented on review branch
 ```
 
 ## Source-count state
@@ -53,19 +53,22 @@ Batch 1 production publication       verified — run 30370374622
 Initial total mismatches          60
 After safe normalization          47
 After Batch 1                     37
+After Batch 2                     27 expected
 Incident mismatches                0
 ```
 
-Batch 1 added ten reviewed event-scoped evidence records and synchronized seven affected incident derived counts. No event text, dates, statuses, or stored event source counts changed.
+Batch 2 changes:
+
+- ten reviewed event-scoped evidence additions;
+- six affected incident derived-count synchronizations;
+- `bir_ev_000044.source_count` corrected from 3 to 2;
+- `bir_ev_000054.source_count` corrected from 2 to 1;
+- no event text, dates, statuses, or historical claims changed.
 
 Records:
 
-- `docs/audits/phase3-source-count-contract-2026-07-28.md`
-- `docs/audits/phase3-source-count-mechanical-2026-07-28.md`
-- `docs/audits/production-verification-phase3-source-count-mechanical-2026-07-28.md`
-- `docs/audits/phase3-source-count-review-batch1-2026-07-28.md`
-- `docs/audits/phase3-source-count-batch1-canonical-2026-07-28.md`
-- `docs/audits/production-verification-phase3-source-count-batch1-2026-07-28.md`
+- `docs/audits/phase3-source-count-review-batch2-2026-07-28.md`
+- `docs/audits/phase3-source-count-batch2-canonical-2026-07-28.md`
 
 ## Latest completed production checkpoint
 
@@ -78,12 +81,10 @@ Verified state         33 / 34 / 183 / 221
 Verified HTML routes   72
 ```
 
-The first production attempt exhausted the unchanged five-minute convergence window. The retry passed after Cloudflare publication converged; no verification condition was relaxed.
-
 ## Next
 
-1. review source-count Batch 2;
-2. migrate only source-backed event evidence links;
-3. continue bounded batches until all 37 event mismatches are resolved;
-4. promote exact source-count equality to a hard CI gate only at zero mismatches;
-5. strengthen primary-source and archive coverage.
+1. run the bounded Batch 2 generator and full repository suite;
+2. remove temporary implementation files;
+3. merge the cleaned 33 / 34 / 183 / 231 canonical PR;
+4. production-verify all public data and 72 HTML routes;
+5. continue with source-count review Batch 3.
