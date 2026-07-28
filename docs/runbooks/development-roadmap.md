@@ -5,13 +5,13 @@ Updated: 2026-07-28
 
 GitHub state and canonical JSON are authoritative.
 
-## Canonical baseline
+## Canonical baseline on Batch 1 review branch
 
 ```text
 Bridges     33
 Incidents   34
 Events      183
-Evidence    211
+Evidence    221
 ```
 
 ## Current position
@@ -24,14 +24,15 @@ Phase 3  Full-corpus quality strengthening         active
          Full-corpus audit                         complete — PR #71
          Reimbursement/restart normalization       complete — PRs #72–#77
          Source-count contract                     complete — PR #78
-         Safe source-count normalization           complete — PR #79
-         Source-count production verification      complete — run 30367770935
+         Safe source-count normalization           complete — PRs #79–#80
+         Source-count review Batch 1               complete — PR #81
+         Batch 1 canonical migration               implemented on review branch
 Phase 4  Public contract stabilization             complete
 Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
 ```
 
-## Latest publication checkpoint
+## Latest completed publication checkpoint
 
 ```text
 Canonical data PR        #79
@@ -42,60 +43,33 @@ Verified state           33 / 34 / 183 / 211
 Verified HTML routes     72
 ```
 
-## Phase 3 audit trajectory
-
-Initial audit baseline:
+## Source-count trajectory
 
 ```text
-completed_reimbursement_event   5 incidents
-reopened_event                  15 incidents
-incident_source_count            7 incidents
-event_source_count              53 events
+Initial total mismatches          60
+After safe normalization          47
+After Batch 1 review migration    37 expected
+Incident mismatches                0
 ```
 
-Current aftermath state:
+## Batch 1 canonical migration
+
+Ten event-scoped evidence records are added for reviewed same-incident sources.
 
 ```text
-completed_reimbursement_event   0
-reopened_event                   0
-blocking errors                  0
+New evidence records             10
+Resulting evidence              221
+Event text changes                0
+Event source_count changes        0
+Expected remaining mismatches    37
 ```
 
-Source-count contract inventory before normalization:
-
-```text
-Total mismatches   60
-Incident mismatch   7
-Event mismatch     53
-```
-
-Current production-verified source-count state:
-
-```text
-Total mismatches   47
-Incident mismatch   0
-Event mismatch     47
-```
-
-## Source-count contract
-
-`source_count` is the number of canonical evidence records directly linked to the incident or event. It is not a unique-URL count, inherited evidence union, prose citation count, or quality score.
-
-The completed safe migration changed only stale derived values:
-
-```text
-Incident count updates   7
-Event count increases    6
-Total changes            13
-```
-
-The remaining 47 events have stored counts above their direct evidence-link counts. Each requires source review to decide whether to add or relink event-scoped evidence, reduce the count, or revise the event.
+The reused URLs are not counted as new independent publications. Each canonical evidence record represents a distinct event or claim-scope linkage.
 
 Records:
 
-- `docs/audits/phase3-source-count-contract-2026-07-28.md`
-- `docs/audits/phase3-source-count-mechanical-2026-07-28.md`
-- `docs/audits/production-verification-phase3-source-count-mechanical-2026-07-28.md`
+- `docs/audits/phase3-source-count-review-batch1-2026-07-28.md`
+- `docs/audits/phase3-source-count-batch1-canonical-2026-07-28.md`
 
 ## Production publication gate
 
@@ -111,14 +85,15 @@ After convergence, every count, ID, route, reference, metadata, sitemap, robots,
 
 ## Remaining roadmap
 
-1. remediate the remaining 47 event evidence-link mismatches in bounded batches;
-2. promote exact source-count equality to a hard CI gate;
-3. strengthen primary-source and archive coverage;
-4. harden URLs and archives;
-5. strengthen remaining validators;
-6. complete public-contract compatibility review;
-7. add monitoring with no automatic publication;
-8. complete v1 documentation, accessibility, performance, and release checks.
+1. merge and production-verify Batch 1 at 33 / 34 / 183 / 221;
+2. review and migrate the remaining 37 event evidence-link mismatches in bounded batches;
+3. promote exact source-count equality to a hard CI gate;
+4. strengthen primary-source and archive coverage;
+5. harden URLs and archives;
+6. strengthen remaining validators;
+7. complete public-contract compatibility review;
+8. add monitoring with no automatic publication;
+9. complete v1 documentation, accessibility, performance, and release checks.
 
 ## Permanent rules
 
