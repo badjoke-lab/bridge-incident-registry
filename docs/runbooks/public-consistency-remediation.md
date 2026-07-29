@@ -9,7 +9,7 @@ Updated: 2026-07-29
 Bridges     33
 Incidents   34
 Events      183
-Evidence    263
+Evidence    265
 ```
 
 Canonical JSON remains the only record source. Generated public files are build products.
@@ -26,7 +26,7 @@ PR 6  Post-build consistency CI              complete — PR #58
 PR 7  Production verification                complete — PR #59
 ```
 
-## Latest production contract verification
+## Latest completed production contract verification
 
 Final source-count production verification run `30427603790` passed against `https://bridge-incident-registry.pages.dev` at:
 
@@ -41,28 +41,42 @@ Final source-count production verification run `30427603790` passed against `htt
 0 event source-count mismatches
 ```
 
-The canonical migration workflow run `30427464812` passed type checking, canonical validation, enum validation, first-ten audit, full-corpus audit, exact source-count equality, controlled source-count drift failures, build, final-`dist` consistency, and controlled public-output failures.
+The current canonical branch advances Evidence to 265 through source-quality remediation Batch 1. It adds LI.FI's first-party 2022 postmortem as two event-scoped evidence records and corrects the incident to completed operator-funded reimbursement. Production remains at the verified 263-evidence checkpoint until PR #101 is merged and the unchanged production verifier passes.
 
-The production verification covered:
+## Current canonical validation scope
+
+Normal CI requires:
+
+- type and Astro checks;
+- canonical and enum validation;
+- first-ten and full-corpus audits;
+- exact incident and event source-count equality;
+- source-quality no-regression limits;
+- controlled full-corpus, source-count, and source-quality failure fixtures;
+- static build;
+- final-`dist` canonical data and documentation consistency;
+- controlled public-output failure fixtures.
+
+## Production verification scope
+
+After merge, explicit production verification must cover:
 
 - all static and detail routes;
 - production canonical links and robots metadata;
 - JSON-LD URLs and record identifiers;
 - version and manifest counts and canonical-only markers;
-- bridge, incident, event, and evidence ordered IDs through `bir_src_000263`;
-- the final seven event-scoped evidence records;
-- both synchronized incident source counts;
+- bridge, incident, event, and evidence ordered IDs through `bir_src_000265`;
 - exact sitemap route equality;
 - every generated legacy redirect;
 - content types and observable cache-related headers.
 
-The first final verification attempt exhausted all 20 publication attempts because production remained at the 256-evidence state. A docs-only main push retriggered the existing Cloudflare Pages Git integration; no verifier or equality condition changed. The unchanged rerun detected the 263-evidence state on attempt 1 and passed.
+Latest completed production audit: `docs/audits/production-verification-phase3-source-count-final-2026-07-29.md`.
 
-Latest production audit: `docs/audits/production-verification-phase3-source-count-final-2026-07-29.md`.
+Current migration audit: `docs/audits/phase3-source-quality-remediation-batch1-2026-07-29.md`.
 
 ## Closure
 
-The emergency public-consistency remediation remains closed. Canonical-derived publication, final-`dist` checking, production verification, and the exact source-count gate now protect every later canonical migration.
+The emergency public-consistency remediation remains closed. Canonical-derived publication, final-`dist` checking, production verification, exact source-count equality, and source-quality no-regression gates protect later canonical migrations.
 
 ## Resume rule
 
