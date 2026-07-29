@@ -3,13 +3,15 @@
 Status: complete  
 Updated: 2026-07-29
 
-## Current canonical baseline
+## Current canonical and production baseline
 
 ```text
 Bridges     33
 Incidents   34
 Events      183
 Evidence    265
+HTML routes 72
+Redirects   74
 ```
 
 Canonical JSON remains the only record source. Generated public files are build products.
@@ -26,24 +28,32 @@ PR 6  Post-build consistency CI              complete — PR #58
 PR 7  Production verification                complete — PR #59
 ```
 
-## Latest completed production contract verification
+## Latest production contract verification
 
-Final source-count production verification run `30427603790` passed against `https://bridge-incident-registry.pages.dev` at:
+Source-quality Batch 1 production verification run `30454087470` passed against `https://bridge-incident-registry.pages.dev` at:
 
 ```text
 33 bridges
 34 incidents
 183 events
-263 evidence records
+265 evidence records
 72 canonical HTML routes
 74 legacy redirects
 0 incident source-count mismatches
 0 event source-count mismatches
 ```
 
-The current canonical branch advances Evidence to 265 through source-quality remediation Batch 1. It adds LI.FI's first-party 2022 postmortem as two event-scoped evidence records and corrects the incident to completed operator-funded reimbursement. Production remains at the verified 263-evidence checkpoint until PR #101 is merged and the unchanged production verifier passes.
+The verification confirmed ordered evidence IDs through `bir_src_000265`, LI.FI's two first-party event links, completed reimbursement and resolved incident state, all canonical routes, exact sitemap equality, metadata, redirects, content types, and observable cache headers.
 
-## Current canonical validation scope
+The first attempt exhausted all 20 publication checks at the previous 263-evidence state. PR #105 created a docs-only main push without changing canonical data or verifier conditions. The unchanged rerun detected the 265-evidence state on attempt 1 and passed.
+
+```text
+Canonical merge      cbff8411ee7f0bde4d4cd13624166502bded7fdc
+Deployment retrigger 8ed1cd13292eefe524609c5f2db8578d58a07bee
+Generated at         2026-07-29T13:06:10.965Z
+```
+
+## Current validation scope
 
 Normal CI requires:
 
@@ -57,22 +67,18 @@ Normal CI requires:
 - final-`dist` canonical data and documentation consistency;
 - controlled public-output failure fixtures.
 
-## Production verification scope
-
-After merge, explicit production verification must cover:
+Production verification requires:
 
 - all static and detail routes;
 - production canonical links and robots metadata;
 - JSON-LD URLs and record identifiers;
 - version and manifest counts and canonical-only markers;
-- bridge, incident, event, and evidence ordered IDs through `bir_src_000265`;
+- ordered canonical IDs;
 - exact sitemap route equality;
 - every generated legacy redirect;
 - content types and observable cache-related headers.
 
-Latest completed production audit: `docs/audits/production-verification-phase3-source-count-final-2026-07-29.md`.
-
-Current migration audit: `docs/audits/phase3-source-quality-remediation-batch1-2026-07-29.md`.
+Latest production audit: `docs/audits/production-verification-phase3-source-quality-batch1-2026-07-29.md`.
 
 ## Closure
 
