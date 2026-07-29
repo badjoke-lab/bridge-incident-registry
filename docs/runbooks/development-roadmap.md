@@ -23,17 +23,12 @@ Phase 2  Record expansion                          complete through Batch 7
 Phase 3  Full-corpus quality strengthening         active
          Full-corpus audit                         complete — PR #71
          Reimbursement/restart normalization       complete — PRs #72–#77
-         Source-count contract                     complete — PR #78
-         Safe source-count normalization           complete — PRs #79–#80
-         Source-count remediation Batch 1          complete — PRs #81–#83
-         Source-count remediation Batch 2          complete — PRs #84–#88
-         Source-count remediation Batch 3          complete — PRs #89–#92
-         Source-count remediation Batch 4          complete — PRs #93–#95
-         Final source-count migration              complete — PRs #96–#99
+         Source-count remediation                  complete — PRs #78–#99
          Hard source-count equality gate           active
          Source-quality baseline                   complete — PR #100
          Source-quality no-regression gate         active
-         Source-quality remediation Batch 1        canonical complete — PR #101
+         Source-quality remediation Batch 1        complete — PRs #103–#105
+         Batch 1 production publication            verified — run 30454087470
 Phase 4  Public contract stabilization             complete
 Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
@@ -42,17 +37,16 @@ Release  v1 hardening                              planned
 ## Latest production checkpoint
 
 ```text
-Canonical data PR        #97
-Canonical merge          e03386ab6d1242e2918700839b8449faff5c40c6
-Deployment retrigger     be5c6242647feb36c14d35f65e945f4e437ada70
-Production verify run    30427603790
-Canonical normal CI run  30427464812
-Verified state           33 / 34 / 183 / 263
+Canonical data PR        #103
+Canonical merge          cbff8411ee7f0bde4d4cd13624166502bded7fdc
+Deployment retrigger     8ed1cd13292eefe524609c5f2db8578d58a07bee
+Production verify run    30454087470
+Canonical normal CI run  30453868882
+Verified state           33 / 34 / 183 / 265
 Verified HTML routes     72
 Verified redirects       74
+Generated at             2026-07-29T13:06:10.965Z
 ```
-
-Production remains at 263 evidence until PR #101 is merged and explicitly verified. The canonical branch state is 265 evidence.
 
 ## Source-count state
 
@@ -79,20 +73,22 @@ Risky-host evidence without archive    90          90
 Unknown URL status                      2           2
 ```
 
-Batch 1 uses LI.FI's first-party March 2022 postmortem to correct the incident from partial reimbursement and unresolved status to completed operator-funded reimbursement and resolved status. Attacker-fund recovery remains `none`.
+Batch 1 uses LI.FI's first-party March 2022 postmortem to correct the incident from partial reimbursement and unresolved status to completed operator-funded reimbursement and resolved status. Attacker-fund recovery remains `none`. The improved primary-source ceilings are enforced in normal CI.
 
 Records:
 
 - `docs/audits/phase3-source-quality-baseline-2026-07-29.md`
 - `docs/audits/phase3-source-quality-remediation-batch1-2026-07-29.md`
+- `docs/audits/production-deployment-retrigger-source-quality-batch1-2026-07-29.md`
+- `docs/audits/production-verification-phase3-source-quality-batch1-2026-07-29.md`
 
 ## Immediate source-quality targets
 
-1. `bir_inc_000026` — Nerve Bridge 2021 metapool exploit: continue searching for stable first-party incident evidence; do not misclassify a security-firm report as Tier 1 merely to close the metric;
-2. the 25 events without Tier 1 evidence;
-3. the 34 events without primary evidence;
-4. the 132-item archive-priority queue, starting with terminal bridges and X/Twitter sources;
-5. the two evidence records with unknown URL status.
+1. resolve the two evidence records with unknown URL status and tighten the ceiling from 2;
+2. `bir_inc_000026` — Nerve Bridge 2021 metapool exploit: continue searching for stable first-party incident evidence; do not misclassify a security-firm report as Tier 1 merely to close the metric;
+3. reduce the 25 events without Tier 1 evidence;
+4. reduce the 34 events without primary evidence;
+5. begin the 132-item archive-priority queue with terminal bridges and X/Twitter sources.
 
 ## Production publication gate
 
@@ -106,15 +102,14 @@ After convergence, every count, ID, route, reference, metadata, sitemap, robots,
 
 ## Remaining roadmap
 
-1. merge and production-verify source-quality remediation Batch 1;
+1. resolve unknown URL states and harden domain-state handling;
 2. close or document the remaining incident-level primary and Tier 1 gap;
 3. reduce event-level Tier 1 and primary gaps in bounded batches;
 4. add archive captures for terminal and risky-host evidence and tighten archive-risk ceilings;
-5. resolve unknown URL states and harden domain-state handling;
-6. strengthen remaining validators;
-7. complete public-contract compatibility review;
-8. add monitoring with no automatic publication;
-9. complete v1 documentation, accessibility, performance, and release checks.
+5. strengthen remaining validators;
+6. complete public-contract compatibility review;
+7. add monitoring with no automatic publication;
+8. complete v1 documentation, accessibility, performance, and release checks.
 
 ## Permanent rules
 

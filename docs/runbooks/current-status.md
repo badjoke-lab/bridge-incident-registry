@@ -45,14 +45,12 @@ Source-count remediation Batch 1     complete — PRs #81–#83
 Source-count remediation Batch 2     complete — PRs #84–#88
 Source-count remediation Batch 3     complete — PRs #89–#92
 Source-count remediation Batch 4     complete — PRs #93–#95
-Final source-count review            complete — PR #96
-Final source-count migration         complete — PR #97
-Final deployment retrigger           complete — PR #99
-Final production publication         verified — run 30427603790
+Final source-count migration         complete — PRs #96–#99
 Hard source-count equality gate      active
 Source-quality baseline              complete — PR #100
 Source-quality no-regression gate    active
-Source-quality remediation Batch 1   canonical complete — PR #101
+Source-quality remediation Batch 1   complete — PRs #103–#105
+Batch 1 production publication       verified — run 30454087470
 ```
 
 ## Exact source-count state
@@ -81,7 +79,7 @@ X/Twitter evidence without archive       29
 Unknown URL status                        2
 ```
 
-Batch 1 resolved the LI.FI 2022 incident primary-source gap with LI.FI's first-party postmortem. The incident now records completed operator-funded reimbursement of all 29 affected wallets, while attacker-fund recovery remains `none`.
+Batch 1 resolved the LI.FI 2022 incident primary-source gap with LI.FI's first-party postmortem. The incident records completed operator-funded reimbursement of all 29 affected wallets, while attacker-fund recovery remains `none`.
 
 Remaining incident-level gap:
 
@@ -91,28 +89,30 @@ Records:
 
 - `docs/audits/phase3-source-quality-baseline-2026-07-29.md`
 - `docs/audits/phase3-source-quality-remediation-batch1-2026-07-29.md`
+- `docs/audits/production-deployment-retrigger-source-quality-batch1-2026-07-29.md`
+- `docs/audits/production-verification-phase3-source-quality-batch1-2026-07-29.md`
 
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR      #97
-Canonical merge        e03386ab6d1242e2918700839b8449faff5c40c6
-Deployment retrigger   be5c6242647feb36c14d35f65e945f4e437ada70
-Production verify      30427603790
-Canonical normal CI    30427464812
-Verified state         33 / 34 / 183 / 263
+Canonical data PR      #103
+Canonical merge        cbff8411ee7f0bde4d4cd13624166502bded7fdc
+Deployment retrigger   8ed1cd13292eefe524609c5f2db8578d58a07bee
+Production verify      30454087470
+Canonical normal CI    30453868882
+Verified state         33 / 34 / 183 / 265
 Verified HTML routes   72
 Verified redirects     74
-Generated at           2026-07-29T06:23:49.183Z
+Generated at           2026-07-29T13:06:10.965Z
+Publication attempt    1
 ```
 
-The live production checkpoint remains the previously verified 263-evidence state until PR #101 is merged and explicit production verification completes.
+The first production-verification attempt correctly failed at the previous 263-evidence deployment. A docs-only main push retriggered Cloudflare Pages, and the unchanged verifier passed on attempt 1.
 
 ## Next
 
-1. merge and production-verify source-quality remediation Batch 1;
-2. continue the search for a stable Nerve Bridge first-party incident source without downgrading source hierarchy rules;
-3. remediate the 25 event tier-1 gaps in bounded batches;
+1. identify and resolve the two evidence records with unknown URL status;
+2. continue Nerve Bridge primary/Tier 1 research without weakening source hierarchy;
+3. remediate the 25 event Tier 1 gaps in bounded batches;
 4. archive terminal and risky-host evidence, beginning with the 132-item priority queue;
-5. resolve the two unknown URL-status records;
-6. strengthen remaining validators and proceed to monitoring, candidate collection, and v1 hardening.
+5. strengthen remaining validators and proceed to monitoring, candidate collection, and v1 hardening.
