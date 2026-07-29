@@ -11,7 +11,7 @@ GitHub state and canonical JSON are authoritative.
 Bridges     33
 Incidents   34
 Events      183
-Evidence    256
+Evidence    263
 ```
 
 ## Current position
@@ -28,7 +28,9 @@ Phase 3  Full-corpus quality strengthening         active
          Source-count remediation Batch 1          complete — PRs #81–#83
          Source-count remediation Batch 2          complete — PRs #84–#88
          Source-count remediation Batch 3          complete — PRs #89–#92
-         Source-count remediation Batch 4          implemented — PRs #93–#94
+         Source-count remediation Batch 4          complete — PRs #93–#95
+         Final source-count migration              implemented — PRs #96–#97
+         Hard source-count equality gate           implemented — PR #97
 Phase 4  Public contract stabilization             complete
 Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
@@ -37,17 +39,17 @@ Release  v1 hardening                              planned
 ## Latest production checkpoint
 
 ```text
-Canonical data PR        #90
-Canonical merge          83d61fc1b4778a7a255db2de152c7b8d168a170f
-Deployment retrigger     5d23d7da414e65226f37caafbfce3884fd1aeb8c
-Production verify run    30424531817
-Canonical normal CI run  30424388432
-Verified state           33 / 34 / 183 / 241
+Canonical data PR        #94
+Canonical merge          fd210052b40ff038156b22d116848751990b5633
+Publication trigger      44e785c0e286ff16a5bcd1fddc1e9ce2b9fbc37c
+Production verify run    30426111329
+Canonical normal CI run  30425990662
+Verified state           33 / 34 / 183 / 256
 Verified HTML routes     72
 Verified redirects       74
 ```
 
-Batch 3 remains the production baseline until the Batch 4 canonical migration is merged and explicitly verified live.
+Batch 4 remains the production baseline until the final canonical migration is merged and explicitly verified live.
 
 ## Source-count trajectory
 
@@ -58,25 +60,27 @@ After Batch 1              37
 After Batch 2              27
 After Batch 3              17
 After Batch 4               7
+After final migration       0
 Incident mismatches         0
+Event mismatches            0
 ```
 
-## Implemented Batch 4 migration
+## Implemented final migration
 
 ```text
-New event-scoped evidence records   15
-Affected incident updates             3 incidents / +9 records
+New event-scoped evidence records    7
+Affected incident updates             2 incidents / +6 records
 Event source_count reductions          0
-Resulting evidence                    256
-Remaining event mismatches              7
+Resulting evidence                    263
+Remaining source-count mismatches       0
 ```
 
-The reviewed source links satisfy all ten Batch 4 event counts without reducing any event `source_count`. Preserved incident linkage requires exact synchronization of the three affected incident derived counts.
+The reviewed links satisfy all remaining event counts. Exact equality is now enforced by a permanent checker and two controlled drift fixtures in normal CI.
 
 Records:
 
-- `docs/audits/phase3-source-count-review-batch4-2026-07-29.md`
-- `docs/audits/phase3-source-count-batch4-canonical-2026-07-29.md`
+- `docs/audits/phase3-source-count-review-final-2026-07-29.md`
+- `docs/audits/phase3-source-count-final-canonical-2026-07-29.md`
 
 ## Production publication gate
 
@@ -90,15 +94,13 @@ After convergence, every count, ID, route, reference, metadata, sitemap, robots,
 
 ## Remaining roadmap
 
-1. merge and production-verify Batch 4;
-2. review and migrate the final 7 event evidence-link mismatches;
-3. promote exact source-count equality to a hard CI gate;
-4. strengthen primary-source and archive coverage;
-5. harden URLs and archives;
-6. strengthen remaining validators;
-7. complete public-contract compatibility review;
-8. add monitoring with no automatic publication;
-9. complete v1 documentation, accessibility, performance, and release checks.
+1. merge and production-verify the final source-count migration;
+2. strengthen primary-source and archive coverage;
+3. harden URLs and archives;
+4. strengthen remaining validators;
+5. complete public-contract compatibility review;
+6. add monitoring with no automatic publication;
+7. complete v1 documentation, accessibility, performance, and release checks.
 
 ## Permanent rules
 
