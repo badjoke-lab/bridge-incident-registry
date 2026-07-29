@@ -3,7 +3,7 @@
 Status: active  
 Updated: 2026-07-29
 
-## Canonical review-branch state
+## Canonical state
 
 ```text
 Bridges     33
@@ -43,8 +43,8 @@ Source-count contract                merged — PR #78
 Safe source-count normalization      merged — PRs #79–#80
 Source-count remediation Batch 1     complete — PRs #81–#83
 Source-count remediation Batch 2     complete — PRs #84–#88
-Source-count review Batch 3          merged — PR #89
-Source-count migration Batch 3       implemented — PR #90
+Source-count remediation Batch 3     complete — PRs #89–#92
+Batch 3 production publication       verified — run 30424531817
 ```
 
 ## Source-count state
@@ -70,26 +70,28 @@ Records:
 
 - `docs/audits/phase3-source-count-review-batch3-2026-07-29.md`
 - `docs/audits/phase3-source-count-batch3-canonical-2026-07-29.md`
+- `docs/audits/production-deployment-retrigger-batch3-2026-07-29.md`
+- `docs/audits/production-verification-phase3-source-count-batch3-2026-07-29.md`
 
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR      #85
-Canonical merge        70bd5de1526cca5ce3122a7bdc23ea80d50179e0
-Deployment retrigger   99941592b9e526661ad004e6504c26588737d7fc
-Production verify      30374628843
-Normal CI              30374629112
-Verified state         33 / 34 / 183 / 231
+Canonical data PR      #90
+Canonical merge        83d61fc1b4778a7a255db2de152c7b8d168a170f
+Deployment retrigger   5d23d7da414e65226f37caafbfce3884fd1aeb8c
+Production verify      30424531817
+Canonical normal CI    30424388432
+Verified state         33 / 34 / 183 / 241
 Verified HTML routes   72
+Verified redirects     74
 ```
 
-Batch 2 remains the latest production-verified checkpoint until PR #90 merges and the live publication verifier passes. The Batch 3 review branch has removed all temporary generator, package-hook, and workflow-permission changes.
+The first Batch 3 production-verification attempt failed correctly because production remained at the Batch 2 state. A docs-only main push retriggered Cloudflare Pages. The unchanged verifier then detected the canonical production state on attempt 1 and passed every public-contract assertion.
 
 ## Next
 
-1. complete normal CI for PR #90;
-2. merge the Batch 3 canonical migration;
-3. verify production at 33 / 34 / 183 / 241 with all 72 canonical HTML routes;
-4. continue bounded source-count remediation with the remaining 17 event mismatches;
-5. promote exact source-count equality to a hard CI gate only at zero mismatches;
-6. strengthen primary-source and archive coverage.
+1. review source-count Batch 4 against the remaining 17 event mismatches;
+2. migrate only source-backed event evidence links or correct unsupported stale counts;
+3. continue bounded batches until exact equality is reached;
+4. promote exact source-count equality to a hard CI gate only at zero mismatches;
+5. strengthen primary-source and archive coverage.
