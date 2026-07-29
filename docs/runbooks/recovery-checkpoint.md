@@ -17,12 +17,11 @@ Evidence    265
 ## Latest completed checkpoints
 
 ```text
-PR #97       Final source-count canonical migration
-PR #99       Final source-count deployment retrigger
 PR #100      Source-quality baseline and no-regression gate
 PR #103      LI.FI source-quality canonical remediation
 PR #105      LI.FI production deployment retrigger
 PR #104      LI.FI production verification
+PR #106      Holograph URL-status remediation in progress
 ```
 
 ## Latest production checkpoint
@@ -38,8 +37,6 @@ Redirects            74
 Generated at         2026-07-29T13:06:10.965Z
 Publication attempt  1
 ```
-
-The first verification attempt observed the previous 263-evidence deployment for all 20 checks. The docs-only retrigger caused Cloudflare Pages to publish the 265-evidence state, and the unchanged verifier passed on attempt 1.
 
 ## Permanent guards
 
@@ -58,31 +55,27 @@ Incidents without primary        1
 Incidents without Tier 1         1
 Events without primary          34
 Events without Tier 1           25
-Unknown URL status               2
+Unknown URL status               0
 ```
 
-## Source-quality Batch 1
+## URL-status Batch 1
 
 ```text
-Incident corrected       bir_inc_000015
-Events corrected         bir_ev_000043, bir_ev_000044
-Evidence added           bir_src_000264, bir_src_000265
-Reimbursement            completed
-Unresolved               false
-Primary incident gaps    2 -> 1
-Primary event gaps       36 -> 34
+Evidence changed     bir_src_000112, bir_src_000239
+Legacy host          twitter.com
+Canonical host       x.com
+URL status           unknown -> live
+Evidence total       265
+Source-count drift   0
 ```
 
-The first-party LI.FI postmortem reports all 29 affected wallets reimbursed for USD 570,000 total. Attacker-fund recovery remains `none` and is not conflated with reimbursement.
+Both records point to Holograph's official June 2024 incident statement. No evidence link, source tier, reliability, claim, or historical outcome changed. The permanent no-regression ceiling now requires zero unknown URL statuses.
 
-Audits:
-
-- `docs/audits/phase3-source-quality-remediation-batch1-2026-07-29.md`
-- `docs/audits/production-verification-phase3-source-quality-batch1-2026-07-29.md`
+Audit: `docs/audits/phase3-url-status-remediation-batch1-2026-07-29.md`.
 
 ## Next
 
-1. resolve the two unknown URL-status records;
+1. complete normal CI, merge, and production-verify PR #106;
 2. continue Nerve Bridge primary/Tier 1 research without weakening source hierarchy;
 3. reduce event-level source gaps;
 4. begin archive-risk remediation;

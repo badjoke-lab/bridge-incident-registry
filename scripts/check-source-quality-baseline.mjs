@@ -41,7 +41,7 @@ const limits = {
   events_without_tier_1: 25,
   terminal_unarchived: 76,
   risky_host_unarchived: 90,
-  unknown_url_status: 2
+  unknown_url_status: 0
 };
 
 function hostOf(url) {
