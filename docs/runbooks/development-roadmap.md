@@ -5,7 +5,7 @@ Updated: 2026-07-29
 
 GitHub state and canonical JSON are authoritative.
 
-## Canonical review-branch baseline
+## Canonical baseline
 
 ```text
 Bridges     33
@@ -27,25 +27,24 @@ Phase 3  Full-corpus quality strengthening         active
          Safe source-count normalization           complete — PRs #79–#80
          Source-count remediation Batch 1          complete — PRs #81–#83
          Source-count remediation Batch 2          complete — PRs #84–#88
-         Source-count remediation Batch 3          implemented — PRs #89–#90
+         Source-count remediation Batch 3          complete — PRs #89–#92
 Phase 4  Public contract stabilization             complete
 Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
 ```
 
-## Latest production checkpoint
+## Latest publication checkpoint
 
 ```text
-Canonical data PR        #85
-Canonical merge          70bd5de1526cca5ce3122a7bdc23ea80d50179e0
-Deployment retrigger     99941592b9e526661ad004e6504c26588737d7fc
-Production verify run    30374628843
-Normal CI run            30374629112
-Verified state           33 / 34 / 183 / 231
+Canonical data PR        #90
+Canonical merge          83d61fc1b4778a7a255db2de152c7b8d168a170f
+Deployment retrigger     5d23d7da414e65226f37caafbfce3884fd1aeb8c
+Production verify run    30424531817
+Canonical normal CI run  30424388432
+Verified state           33 / 34 / 183 / 241
 Verified HTML routes     72
+Verified redirects       74
 ```
-
-Batch 2 remains the production baseline until the Batch 3 canonical migration is merged and explicitly verified live.
 
 ## Source-count trajectory
 
@@ -58,7 +57,7 @@ After Batch 3              17
 Incident mismatches         0
 ```
 
-## Implemented Batch 3 migration
+## Completed Batch 3 migration
 
 ```text
 New event-scoped evidence records   10
@@ -68,12 +67,16 @@ Resulting evidence                    241
 Remaining event mismatches             17
 ```
 
-The two count reductions remove unsupported historical totals rather than fabricating duplicate evidence. Preserved incident linkage requires exact synchronization of the four affected incident derived counts.
+The two count reductions removed unsupported historical totals rather than fabricating duplicate evidence. Preserved incident linkage required exact synchronization of the four affected incident derived counts.
+
+The first production-verification attempt exhausted the publication gate while Cloudflare remained at the Batch 2 state. A docs-only main push retriggered the existing Git integration. The unchanged rerun detected Batch 3 on attempt 1 and passed all 72 routes, 74 redirects, public JSON, metadata, sitemap, robots, content-type, and cache assertions.
 
 Records:
 
 - `docs/audits/phase3-source-count-review-batch3-2026-07-29.md`
 - `docs/audits/phase3-source-count-batch3-canonical-2026-07-29.md`
+- `docs/audits/production-deployment-retrigger-batch3-2026-07-29.md`
+- `docs/audits/production-verification-phase3-source-count-batch3-2026-07-29.md`
 
 ## Production publication gate
 
@@ -87,15 +90,14 @@ After convergence, every count, ID, route, reference, metadata, sitemap, robots,
 
 ## Remaining roadmap
 
-1. merge and production-verify Batch 3;
-2. review and migrate the remaining 17 event evidence-link mismatches in bounded batches;
-3. promote exact source-count equality to a hard CI gate;
-4. strengthen primary-source and archive coverage;
-5. harden URLs and archives;
-6. strengthen remaining validators;
-7. complete public-contract compatibility review;
-8. add monitoring with no automatic publication;
-9. complete v1 documentation, accessibility, performance, and release checks.
+1. review and migrate the remaining 17 event evidence-link mismatches in bounded batches;
+2. promote exact source-count equality to a hard CI gate;
+3. strengthen primary-source and archive coverage;
+4. harden URLs and archives;
+5. strengthen remaining validators;
+6. complete public-contract compatibility review;
+7. add monitoring with no automatic publication;
+8. complete v1 documentation, accessibility, performance, and release checks.
 
 ## Permanent rules
 
