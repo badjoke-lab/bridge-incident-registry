@@ -1,15 +1,15 @@
 # Bridge Incident Registry — Public Consistency Remediation
 
 Status: complete  
-Updated: 2026-07-28
+Updated: 2026-07-29
 
-## Current canonical baseline
+## Current canonical review-branch baseline
 
 ```text
 Bridges     33
 Incidents   34
 Events      183
-Evidence    231
+Evidence    241
 ```
 
 Canonical JSON remains the only record source. Generated public files are build products.
@@ -26,7 +26,7 @@ PR 6  Post-build consistency CI              complete — PR #58
 PR 7  Production verification                complete — PR #59
 ```
 
-## Latest contract verification
+## Latest production contract verification
 
 Source-count Batch 2 production verification run `30374628843` passed against `https://bridge-incident-registry.pages.dev` at:
 
@@ -56,7 +56,22 @@ The production verification covered:
 
 Two initial attempts correctly failed because production remained at the Batch 1 state. A diagnostic confirmed that Batch 2 had not deployed. A docs-only main push retriggered the existing Cloudflare Pages Git integration; no verifier condition was changed.
 
-Latest audit: `docs/audits/production-verification-phase3-source-count-batch2-2026-07-28.md`.
+Latest production audit: `docs/audits/production-verification-phase3-source-count-batch2-2026-07-28.md`.
+
+## Pending Batch 3 publication
+
+PR #90 carries the reviewed Batch 3 canonical state:
+
+```text
+33 bridges
+34 incidents
+183 events
+241 evidence records
+17 remaining event source-count mismatches
+0 incident source-count mismatches
+```
+
+The live production contract remains at the Batch 2 checkpoint until PR #90 merges, Cloudflare publishes the new canonical build, and the unchanged production verifier passes at the Batch 3 counts.
 
 ## Closure
 
