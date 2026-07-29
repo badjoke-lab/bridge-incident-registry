@@ -31,9 +31,9 @@ BIR is not:
 
 The static registry application, four-record canonical model, validation pipeline, list/detail pages, methodology pages, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
 
-Phase 2 record expansion is complete through Batch 7. Phase 3 reimbursement and restart normalization is production-verified with zero reimbursement or reopening warnings. Source-count remediation Batches 1 through 4 are production-verified. The final canonical migration is implemented on PR #97 with seven additional event-scoped evidence records, exact incident and event source-count equality, and a permanent hard CI gate with controlled drift fixtures.
+Phase 2 record expansion is complete through Batch 7. Phase 3 reimbursement and restart normalization is production-verified with zero reimbursement or reopening warnings. Source-count remediation is complete and production-verified. Canonical data, generated public JSON, normal CI, and the live site now agree exactly, and permanent CI rejects any future incident or event source-count drift.
 
-Current canonical review-branch counts:
+Current canonical counts:
 
 ```text
 Bridges     33
@@ -84,33 +84,23 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/runbooks/recovery-checkpoint.md` — short restart point
 - `docs/runbooks/development-roadmap.md` — roadmap to v1
 - `docs/runbooks/public-consistency-remediation.md` — completed remediation sequence
-- `docs/audits/production-verification-2026-07-28.md` — initial production verification result
 - `docs/audits/full-corpus-quality-baseline-2026-07-28.md` — Phase 3 audit baseline
-- `docs/audits/phase3-aftermath-source-resolution-2026-07-28.md` — first aftermath boundary
-- `docs/audits/phase3-aftermath-canonical-2026-07-28.md` — first canonical migration record
-- `docs/audits/production-verification-phase3-aftermath-2026-07-28.md` — first aftermath production audit
-- `docs/audits/phase3-final-restart-source-resolution-2026-07-28.md` — final restart-warning boundary
-- `docs/audits/phase3-final-restart-canonical-2026-07-28.md` — final restart canonical record
-- `docs/audits/production-verification-phase3-final-restart-2026-07-28.md` — final restart production audit
-- `docs/audits/phase3-source-count-contract-2026-07-28.md` — source-count field contract
-- `docs/audits/phase3-source-count-mechanical-2026-07-28.md` — safe count migration record
-- `docs/audits/production-verification-phase3-source-count-mechanical-2026-07-28.md` — source-count production audit
-- `docs/audits/phase3-source-count-review-batch1-2026-07-28.md` — Batch 1 source-resolution boundary
-- `docs/audits/phase3-source-count-batch1-canonical-2026-07-28.md` — Batch 1 canonical migration record
+- `docs/audits/phase3-source-count-review-batch1-2026-07-28.md` — Batch 1 review boundary
+- `docs/audits/phase3-source-count-batch1-canonical-2026-07-28.md` — Batch 1 canonical migration
 - `docs/audits/production-verification-phase3-source-count-batch1-2026-07-28.md` — Batch 1 production audit
-- `docs/audits/phase3-source-count-review-batch2-2026-07-28.md` — Batch 2 source-resolution boundary
-- `docs/audits/phase3-source-count-batch2-canonical-2026-07-28.md` — Batch 2 canonical migration record
+- `docs/audits/phase3-source-count-review-batch2-2026-07-28.md` — Batch 2 review boundary
+- `docs/audits/phase3-source-count-batch2-canonical-2026-07-28.md` — Batch 2 canonical migration
 - `docs/audits/production-verification-phase3-source-count-batch2-2026-07-28.md` — Batch 2 production audit
-- `docs/audits/production-deployment-retrigger-batch2-2026-07-28.md` — Batch 2 deployment retrigger record
-- `docs/audits/phase3-source-count-review-batch3-2026-07-29.md` — Batch 3 source-resolution boundary
-- `docs/audits/phase3-source-count-batch3-canonical-2026-07-29.md` — Batch 3 canonical migration record
-- `docs/audits/production-deployment-retrigger-batch3-2026-07-29.md` — Batch 3 deployment retrigger record
+- `docs/audits/phase3-source-count-review-batch3-2026-07-29.md` — Batch 3 review boundary
+- `docs/audits/phase3-source-count-batch3-canonical-2026-07-29.md` — Batch 3 canonical migration
 - `docs/audits/production-verification-phase3-source-count-batch3-2026-07-29.md` — Batch 3 production audit
-- `docs/audits/phase3-source-count-review-batch4-2026-07-29.md` — Batch 4 source-resolution boundary
-- `docs/audits/phase3-source-count-batch4-canonical-2026-07-29.md` — Batch 4 canonical migration record
+- `docs/audits/phase3-source-count-review-batch4-2026-07-29.md` — Batch 4 review boundary
+- `docs/audits/phase3-source-count-batch4-canonical-2026-07-29.md` — Batch 4 canonical migration
 - `docs/audits/production-verification-phase3-source-count-batch4-2026-07-29.md` — Batch 4 production audit
-- `docs/audits/phase3-source-count-review-final-2026-07-29.md` — final source-resolution boundary
-- `docs/audits/phase3-source-count-final-canonical-2026-07-29.md` — final canonical migration record
+- `docs/audits/phase3-source-count-review-final-2026-07-29.md` — final review boundary
+- `docs/audits/phase3-source-count-final-canonical-2026-07-29.md` — final canonical migration
+- `docs/audits/production-deployment-retrigger-final-source-count-2026-07-29.md` — final deployment retrigger
+- `docs/audits/production-verification-phase3-source-count-final-2026-07-29.md` — final production audit
 - `docs/batches/` — reviewed batch scopes
 
 ## Architecture
