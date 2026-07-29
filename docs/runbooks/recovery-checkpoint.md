@@ -5,7 +5,7 @@ Updated: 2026-07-29
 
 GitHub state and canonical JSON are authoritative. Completed merge SHAs are checkpoints, not live branch pointers.
 
-## Canonical review-branch counts
+## Canonical counts
 
 ```text
 Bridges     33
@@ -27,22 +27,24 @@ PR #84  e73f7d8ac1ec316e1c25151b01c92a4098ed1bd1  Source-count review Batch 2
 PR #85  70bd5de1526cca5ce3122a7bdc23ea80d50179e0  Source-count Batch 2 canonical migration
 PR #87  99941592b9e526661ad004e6504c26588737d7fc  Batch 2 deployment retrigger
 PR #89  ac6de510a4906821ea82aa2ec05460329db2483a  Source-count review Batch 3
+PR #90  83d61fc1b4778a7a255db2de152c7b8d168a170f  Source-count Batch 3 canonical migration
+PR #92  5d23d7da414e65226f37caafbfce3884fd1aeb8c  Batch 3 deployment retrigger
 ```
-
-PR #90 is the active Batch 3 canonical migration branch and is not yet a completed merge checkpoint.
 
 ## Latest production checkpoint
 
 ```text
-Production verify    30374628843
-Normal CI            30374629112
-Verified state       33 / 34 / 183 / 231
+Production verify    30424531817
+Canonical normal CI  30424388432
+Verified state       33 / 34 / 183 / 241
 HTML routes          72
+Redirects            74
+Generated at         2026-07-29T05:19:45.302Z
 ```
 
-Audit: `docs/audits/production-verification-phase3-source-count-batch2-2026-07-28.md`.
+Audit: `docs/audits/production-verification-phase3-source-count-batch3-2026-07-29.md`.
 
-## Implemented Batch 3 review branch
+## Completed Batch 3
 
 - ten reviewed event-scoped evidence additions;
 - four affected incident derived-count synchronizations totaling eight added links;
@@ -52,9 +54,10 @@ Audit: `docs/audits/production-verification-phase3-source-count-batch2-2026-07-2
 - evidence total 231 -> 241;
 - source-count mismatches 27 -> 17;
 - incident mismatches remain zero;
-- temporary generator, package hook, and workflow-permission changes removed.
+- temporary generator, package hook, and workflow-permission changes removed;
+- public JSON and all 72 canonical HTML routes verified.
 
-Current review-branch audit target:
+Current audit state:
 
 ```text
 Blocking errors                  0
@@ -64,16 +67,12 @@ Incident source-count warnings   0
 Event source-count warnings     17
 ```
 
-Records:
-
-- `docs/audits/phase3-source-count-review-batch3-2026-07-29.md`
-- `docs/audits/phase3-source-count-batch3-canonical-2026-07-29.md`
+The first verification attempt correctly failed because production had not deployed Batch 3. A docs-only main push retriggered Cloudflare Pages, and the unchanged verifier then passed on convergence attempt 1.
 
 ## Next
 
-1. complete normal CI for PR #90;
-2. merge the Batch 3 canonical migration;
-3. run explicit production verification at 33 / 34 / 183 / 241;
-4. continue until all 17 remaining event mismatches are resolved;
-5. enable hard source-count equality only at zero mismatches;
-6. continue primary-source and archive strengthening.
+1. review source-count Batch 4;
+2. implement only reviewed event evidence links or supported count corrections;
+3. continue until all 17 remaining event mismatches are resolved;
+4. enable hard source-count equality only at zero mismatches;
+5. continue primary-source and archive strengthening.
