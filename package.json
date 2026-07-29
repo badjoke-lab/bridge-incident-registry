@@ -8,7 +8,6 @@
     "prebuild": "npm run public:build",
     "build": "astro build",
     "preview": "astro preview",
-    "precheck": "node scripts/apply-source-count-batch4.mjs",
     "check": "astro check",
     "validate:data": "node scripts/validate-data.mjs",
     "validate:enums": "node scripts/validate-schema-enums.mjs",
