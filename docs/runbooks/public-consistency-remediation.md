@@ -19,18 +19,19 @@ Canonical JSON remains the only record source. Generated public files are build 
 ## Completed remediation sequence
 
 ```text
-PR 1  Current-state reset                    complete — PR #50
-PR 2  Canonical-derived public output        complete — PR #51
-PR 3  Machine-readable public layer          complete — PR #52
-PR 4  Canonical metadata and discovery       complete — PR #53
-PR 5  Legacy redirects                       complete — PR #54
-PR 6  Post-build consistency CI              complete — PR #58
-PR 7  Production verification                complete — PR #59
+PR #50  Current-state reset
+PR #51  Canonical-derived public output
+PR #52  Machine-readable public layer
+PR #53  Canonical metadata and discovery
+PR #54  Legacy redirects
+PR #58  Post-build consistency CI
+PR #59  Production verification
+PR #107 Full generated-content production equality
 ```
 
 ## Latest production contract verification
 
-Source-quality Batch 1 production verification run `30454087470` passed against `https://bridge-incident-registry.pages.dev` at:
+URL-status Batch 1 production verification run `30457429225` passed against `https://bridge-incident-registry.pages.dev` at:
 
 ```text
 33 bridges
@@ -39,19 +40,37 @@ Source-quality Batch 1 production verification run `30454087470` passed against 
 265 evidence records
 72 canonical HTML routes
 74 legacy redirects
-0 incident source-count mismatches
-0 event source-count mismatches
+0 unknown URL statuses
+complete public-content equality
 ```
 
-The verification confirmed ordered evidence IDs through `bir_src_000265`, LI.FI's two first-party event links, completed reimbursement and resolved incident state, all canonical routes, exact sitemap equality, metadata, redirects, content types, and observable cache headers.
-
-The first attempt exhausted all 20 publication checks at the previous 263-evidence state. PR #105 created a docs-only main push without changing canonical data or verifier conditions. The unchanged rerun detected the 265-evidence state on attempt 1 and passed.
+The verifier confirmed `bir_src_000112` and `bir_src_000239` publish the canonical Holograph `x.com` URL, `url_status: live`, and the reviewed access date.
 
 ```text
-Canonical merge      cbff8411ee7f0bde4d4cd13624166502bded7fdc
-Deployment retrigger 8ed1cd13292eefe524609c5f2db8578d58a07bee
-Generated at         2026-07-29T13:06:10.965Z
+Canonical merge   d0e9674745996fc1d85a32710890fa880d8946ad
+Production run    30457429225
+Normal CI         30457429426
+Generated at      2026-07-29T13:30:13.794Z
+Attempt           1
 ```
+
+## Full-content publication gate
+
+A same-count canonical change exposed that counts and ordered IDs could remain unchanged while field values in production were stale. The production verifier now:
+
+- builds the expected public records with the canonical publication transformation;
+- compares every field in all bridge, incident, event, and evidence records;
+- ignores object key ordering only;
+- preserves array and record order;
+- reports the first differing record;
+- refuses publication convergence when any field differs.
+
+Normal CI includes controlled tests for:
+
+- same-count and same-ID field drift;
+- record-order drift;
+- dataset-length drift;
+- object key-order normalization.
 
 ## Current validation scope
 
@@ -62,27 +81,27 @@ Normal CI requires:
 - first-ten and full-corpus audits;
 - exact incident and event source-count equality;
 - source-quality no-regression limits;
-- controlled full-corpus, source-count, and source-quality failure fixtures;
+- controlled full-corpus, source-count, source-quality, and production-content fixtures;
 - static build;
 - final-`dist` canonical data and documentation consistency;
 - controlled public-output failure fixtures.
 
 Production verification requires:
 
+- matching counts and canonical-only markers;
+- complete generated public JSON equality;
 - all static and detail routes;
 - production canonical links and robots metadata;
 - JSON-LD URLs and record identifiers;
-- version and manifest counts and canonical-only markers;
-- ordered canonical IDs;
 - exact sitemap route equality;
 - every generated legacy redirect;
 - content types and observable cache-related headers.
 
-Latest production audit: `docs/audits/production-verification-phase3-source-quality-batch1-2026-07-29.md`.
+Latest production audit: `docs/audits/production-verification-phase3-url-status-batch1-2026-07-29.md`.
 
 ## Closure
 
-The emergency public-consistency remediation remains closed. Canonical-derived publication, final-`dist` checking, production verification, exact source-count equality, and source-quality no-regression gates protect later canonical migrations.
+The emergency public-consistency remediation remains closed. Canonical-derived publication, final-`dist` checking, full-content production verification, exact source-count equality, zero unknown URL status, and source-quality no-regression gates protect later canonical migrations.
 
 ## Resume rule
 
@@ -90,4 +109,4 @@ The emergency public-consistency remediation remains closed. Canonical-derived p
 2. derive IDs and counts from canonical JSON;
 3. keep canonical records separate from candidate and research material;
 4. run all repository checks before merge;
-5. run explicit production verification after public-data changes.
+5. run explicit full-content production verification after public-data changes.
