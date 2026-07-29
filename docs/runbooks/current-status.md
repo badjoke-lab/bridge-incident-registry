@@ -3,7 +3,7 @@
 Status: active  
 Updated: 2026-07-29
 
-## Canonical review-branch state
+## Canonical state
 
 ```text
 Bridges     33
@@ -45,9 +45,11 @@ Source-count remediation Batch 1     complete — PRs #81–#83
 Source-count remediation Batch 2     complete — PRs #84–#88
 Source-count remediation Batch 3     complete — PRs #89–#92
 Source-count remediation Batch 4     complete — PRs #93–#95
-Final source-count review            merged — PR #96
-Final source-count migration         implemented — PR #97
-Hard source-count equality gate      implemented — PR #97
+Final source-count review            complete — PR #96
+Final source-count migration         complete — PR #97
+Final deployment retrigger           complete — PR #99
+Final production publication         verified — run 30427603790
+Hard source-count equality gate      active
 ```
 
 ## Source-count state
@@ -77,27 +79,30 @@ Records:
 
 - `docs/audits/phase3-source-count-review-final-2026-07-29.md`
 - `docs/audits/phase3-source-count-final-canonical-2026-07-29.md`
+- `docs/audits/production-deployment-retrigger-final-source-count-2026-07-29.md`
+- `docs/audits/production-verification-phase3-source-count-final-2026-07-29.md`
 
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR      #94
-Canonical merge        fd210052b40ff038156b22d116848751990b5633
-Publication trigger    44e785c0e286ff16a5bcd1fddc1e9ce2b9fbc37c
-Production verify      30426111329
-Canonical normal CI    30425990662
-Verified state         33 / 34 / 183 / 256
+Canonical data PR      #97
+Canonical merge        e03386ab6d1242e2918700839b8449faff5c40c6
+Deployment retrigger   be5c6242647feb36c14d35f65e945f4e437ada70
+Production verify      30427603790
+Canonical normal CI    30427464812
+Verified state         33 / 34 / 183 / 263
 Verified HTML routes   72
 Verified redirects     74
+Generated at           2026-07-29T06:23:49.183Z
 ```
 
-Batch 4 is the latest production-verified checkpoint. PR #97 carries the exact-equality canonical state and must pass normal CI, merge, publish, and production verification before becoming the live checkpoint.
+The first final production-verification attempt correctly failed because production remained at the 256-evidence state. The docs-only retrigger caused Cloudflare Pages to publish, after which the unchanged verifier passed on attempt 1.
 
 ## Next
 
-1. complete normal CI for PR #97;
-2. merge the final source-count canonical migration;
-3. verify production at 33 / 34 / 183 / 263 with all 72 canonical HTML routes;
-4. confirm exact equality in public JSON and permanent CI;
-5. continue primary-source, archive, URL, and validator strengthening;
-6. proceed to monitoring and v1 hardening.
+1. strengthen primary-source coverage;
+2. strengthen archive coverage;
+3. harden URLs and domain-state handling;
+4. strengthen remaining validators;
+5. proceed to monitoring and candidate collection;
+6. complete v1 documentation, accessibility, performance, and release checks.
