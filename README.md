@@ -31,9 +31,9 @@ BIR is not:
 
 The static registry application, four-record canonical model, validation pipeline, list/detail pages, methodology pages, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
 
-Phase 2 record expansion is complete through Batch 7. Phase 3 reimbursement and restart normalization is production-verified. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active, and remediation Batch 1 adds LI.FI's first-party 2022 postmortem while correcting the incident to completed operator-funded reimbursement.
+Phase 2 record expansion is complete through Batch 7. Phase 3 reimbursement and restart normalization is production-verified. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Source-quality remediation Batch 1 is production-verified and adds LI.FI's first-party 2022 postmortem while correcting the incident to completed operator-funded reimbursement.
 
-Current canonical counts:
+Current canonical and production counts:
 
 ```text
 Bridges     33
@@ -87,6 +87,8 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/audits/full-corpus-quality-baseline-2026-07-28.md` — Phase 3 audit baseline
 - `docs/audits/phase3-source-quality-baseline-2026-07-29.md` — source-quality baseline and no-regression ceilings
 - `docs/audits/phase3-source-quality-remediation-batch1-2026-07-29.md` — LI.FI first-party source and outcome correction
+- `docs/audits/production-deployment-retrigger-source-quality-batch1-2026-07-29.md` — LI.FI deployment retrigger record
+- `docs/audits/production-verification-phase3-source-quality-batch1-2026-07-29.md` — LI.FI production audit
 - `docs/audits/phase3-source-count-review-batch1-2026-07-28.md` — Batch 1 review boundary
 - `docs/audits/phase3-source-count-batch1-canonical-2026-07-28.md` — Batch 1 canonical migration
 - `docs/audits/production-verification-phase3-source-count-batch1-2026-07-28.md` — Batch 1 production audit
@@ -102,7 +104,7 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/audits/phase3-source-count-review-final-2026-07-29.md` — final review boundary
 - `docs/audits/phase3-source-count-final-canonical-2026-07-29.md` — final canonical migration
 - `docs/audits/production-deployment-retrigger-final-source-count-2026-07-29.md` — final deployment retrigger
-- `docs/audits/production-verification-phase3-source-count-final-2026-07-29.md` — final production audit
+- `docs/audits/production-verification-phase3-source-count-final-2026-07-29.md` — final source-count production audit
 - `docs/batches/` — reviewed batch scopes
 
 ## Architecture
