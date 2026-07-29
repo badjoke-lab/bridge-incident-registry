@@ -31,16 +31,17 @@ Hard source-count equality gate      active
 Source-quality baseline              complete — PR #100
 Source-quality no-regression gate    active
 Source-quality remediation Batch 1   complete — PRs #103–#105
-Batch 1 production publication       verified — run 30454087470
-URL-status remediation Batch 1       canonical complete — PR #106
+URL-status remediation Batch 1       complete — PRs #106–#107
 Unknown URL-status hard ceiling      active at 0
+Full production-content equality     active
 ```
 
-## Exact source-count state
+## Exact source-count and URL state
 
 ```text
 Incident mismatches  0
 Event mismatches     0
+Unknown URL status   0
 ```
 
 ## Source-quality state
@@ -59,10 +60,11 @@ Events without tier 1 evidence           25 / 183
 Terminal evidence without archive        76
 Risky-host evidence without archive      90
 X/Twitter evidence without archive       29
-Unknown URL status                        0
 ```
 
-URL-status Batch 1 normalized the Holograph official incident post from the legacy `twitter.com` route to the canonical `x.com` route for `bir_src_000112` and `bir_src_000239`. Both records remain Tier 1 primary evidence and are now marked `live`. No claims or linkages changed.
+URL-status Batch 1 normalized the Holograph official incident post from the legacy `twitter.com` route to the canonical `x.com` route for `bir_src_000112` and `bir_src_000239`. Both records remain Tier 1 primary evidence and are published as `live`.
+
+The production verifier now compares every transformed field in all four public datasets with the generated public contract. Same-count and same-ID field drift is a blocking failure.
 
 Remaining incident-level gap:
 
@@ -74,28 +76,27 @@ Records:
 - `docs/audits/phase3-source-quality-remediation-batch1-2026-07-29.md`
 - `docs/audits/production-verification-phase3-source-quality-batch1-2026-07-29.md`
 - `docs/audits/phase3-url-status-remediation-batch1-2026-07-29.md`
+- `docs/audits/production-verification-phase3-url-status-batch1-2026-07-29.md`
 
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR      #103
-Canonical merge        cbff8411ee7f0bde4d4cd13624166502bded7fdc
-Deployment retrigger   8ed1cd13292eefe524609c5f2db8578d58a07bee
-Production verify      30454087470
-Canonical normal CI    30453868882
-Verified state         33 / 34 / 183 / 265
-Verified HTML routes   72
-Verified redirects     74
-Generated at           2026-07-29T13:06:10.965Z
-Publication attempt    1
+Canonical data PR       #106
+Canonical merge         d0e9674745996fc1d85a32710890fa880d8946ad
+Production audit PR     #107
+Production verify       30457429225
+Normal CI               30457429426
+Verified state          33 / 34 / 183 / 265
+Canonical content match true
+Verified HTML routes    72
+Verified redirects      74
+Generated at            2026-07-29T13:30:13.794Z
+Publication attempt     1
 ```
-
-URL-status Batch 1 changes no counts and requires normal CI plus explicit production verification before its status is final.
 
 ## Next
 
-1. complete and production-verify URL-status remediation Batch 1;
+1. inventory and remediate the 25 event Tier 1 gaps in bounded batches;
 2. continue Nerve Bridge primary/Tier 1 research without weakening source hierarchy;
-3. remediate the 25 event Tier 1 gaps in bounded batches;
-4. archive terminal and risky-host evidence, beginning with the 132-item priority queue;
-5. strengthen remaining validators and proceed to monitoring, candidate collection, and v1 hardening.
+3. begin archive coverage for terminal and risky-host evidence;
+4. strengthen remaining validators and proceed to monitoring, candidate collection, and v1 hardening.
