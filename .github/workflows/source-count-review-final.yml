@@ -1,0 +1,34 @@
+name: Final Source Count Review
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  inventory:
+    if: ${{ github.actor != 'github-actions[bot]' && github.head_ref == 'agent/phase3-source-count-review-final' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/phase3-source-count-review-final
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Generate final review inventory
+        run: node scripts/report-source-count-review-final.mjs
+      - name: Commit inventory
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/audits/.source-count-review-final.md
+          git commit -m "docs: capture final source-count inventory [inventory]"
+          git push origin HEAD:agent/phase3-source-count-review-final
