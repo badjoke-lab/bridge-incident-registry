@@ -14,6 +14,8 @@
     "audit:first-ten": "node scripts/audit-first-ten-seeds.mjs",
     "audit:full-corpus": "node scripts/audit-full-corpus.mjs",
     "audit:full-corpus:test": "node scripts/test-full-corpus-audit.mjs",
+    "audit:source-count": "node scripts/check-source-count-equality.mjs",
+    "audit:source-count:test": "node scripts/test-source-count-equality.mjs",
     "public:stage": "node scripts/build-public-data.mjs",
     "public:publish": "node scripts/publish-machine-data.mjs",
     "public:check": "node scripts/check-machine-data.mjs",

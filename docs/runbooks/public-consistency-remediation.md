@@ -9,7 +9,7 @@ Updated: 2026-07-29
 Bridges     33
 Incidents   34
 Events      183
-Evidence    256
+Evidence    263
 ```
 
 Canonical JSON remains the only record source. Generated public files are build products.
@@ -28,18 +28,18 @@ PR 7  Production verification                complete — PR #59
 
 ## Latest production contract verification
 
-Source-count Batch 3 production verification run `30424531817` passed against `https://bridge-incident-registry.pages.dev` at:
+Source-count Batch 4 production verification run `30426111329` passed against `https://bridge-incident-registry.pages.dev` at:
 
 ```text
 33 bridges
 34 incidents
 183 events
-241 evidence records
+256 evidence records
 72 canonical HTML routes
 74 legacy redirects
 ```
 
-The canonical migration workflow run `30424388432` passed type checking, canonical validation, enum validation, first-ten audit, full-corpus audit, controlled audit failures, build, final-`dist` consistency, and controlled public-output failures.
+The canonical migration workflow run `30425990662` passed type checking, canonical validation, enum validation, first-ten audit, full-corpus audit, controlled audit failures, build, final-`dist` consistency, and controlled public-output failures.
 
 The production verification covered:
 
@@ -47,34 +47,33 @@ The production verification covered:
 - production canonical links and robots metadata;
 - JSON-LD URLs and record identifiers;
 - version and manifest counts and canonical-only markers;
-- bridge, incident, event, and evidence ordered IDs through `bir_src_000241`;
-- the ten Batch 3 event-scoped evidence records;
-- the four synchronized incident source counts;
-- corrected public event counts for `bir_ev_000079` and `bir_ev_000096`;
+- bridge, incident, event, and evidence ordered IDs through `bir_src_000256`;
+- the fifteen Batch 4 event-scoped evidence records;
+- the three synchronized incident source counts;
 - exact sitemap route equality;
 - every generated legacy redirect;
 - content types and observable cache-related headers.
 
-Latest production audit: `docs/audits/production-verification-phase3-source-count-batch3-2026-07-29.md`.
+Latest production audit: `docs/audits/production-verification-phase3-source-count-batch4-2026-07-29.md`.
 
-## Pending Batch 4 publication
+## Pending final publication
 
-PR #94 carries the reviewed Batch 4 canonical state:
+PR #97 carries the exact-equality canonical state:
 
 ```text
 33 bridges
 34 incidents
 183 events
-256 evidence records
-7 remaining event source-count mismatches
+263 evidence records
+0 event source-count mismatches
 0 incident source-count mismatches
 ```
 
-The live production contract remains at the Batch 3 checkpoint until PR #94 merges, Cloudflare publishes the new canonical build, and the unchanged production verifier passes at the Batch 4 counts.
+Normal CI now includes an explicit exact source-count check and controlled incident/event drift fixtures. The live production contract remains at the Batch 4 checkpoint until PR #97 merges, Cloudflare publishes the new canonical build, and the unchanged production verifier passes at the final counts.
 
 ## Closure
 
-The emergency public-consistency remediation remains closed. The same canonical-derived publication contract continues to guard every later canonical migration.
+The emergency public-consistency remediation remains closed. The same canonical-derived publication contract and the new source-count equality gate continue to guard later canonical migrations.
 
 ## Resume rule
 

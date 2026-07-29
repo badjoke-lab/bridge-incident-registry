@@ -9,7 +9,7 @@ Updated: 2026-07-29
 Bridges     33
 Incidents   34
 Events      183
-Evidence    256
+Evidence    263
 ```
 
 Canonical source files:
@@ -18,7 +18,7 @@ Canonical source files:
 data/bridges.json       33
 data/incidents.json     34
 data/events.json        183
-data/evidence.json      256
+data/evidence.json      263
 ```
 
 ## Phase 2 record expansion
@@ -44,8 +44,10 @@ Safe source-count normalization      merged — PRs #79–#80
 Source-count remediation Batch 1     complete — PRs #81–#83
 Source-count remediation Batch 2     complete — PRs #84–#88
 Source-count remediation Batch 3     complete — PRs #89–#92
-Source-count review Batch 4          merged — PR #93
-Source-count migration Batch 4       implemented — PR #94
+Source-count remediation Batch 4     complete — PRs #93–#95
+Final source-count review            merged — PR #96
+Final source-count migration         implemented — PR #97
+Hard source-count equality gate      implemented — PR #97
 ```
 
 ## Source-count state
@@ -57,41 +59,45 @@ After Batch 1                     37
 After Batch 2                     27
 After Batch 3                     17
 After Batch 4                      7
+After final migration              0
 Incident mismatches                0
+Event mismatches                   0
 ```
 
-Batch 4 changes:
+Final migration changes:
 
-- fifteen reviewed event-scoped evidence additions;
-- three affected incident derived-count synchronizations totaling nine added links;
+- seven reviewed event-scoped evidence additions;
+- two affected incident derived-count synchronizations totaling six added links;
 - no event `source_count` corrections;
+- permanent exact-equality checker added;
+- controlled incident and event drift fixtures added;
 - no event text, dates, statuses, amounts, or historical claims changed.
 
 Records:
 
-- `docs/audits/phase3-source-count-review-batch4-2026-07-29.md`
-- `docs/audits/phase3-source-count-batch4-canonical-2026-07-29.md`
+- `docs/audits/phase3-source-count-review-final-2026-07-29.md`
+- `docs/audits/phase3-source-count-final-canonical-2026-07-29.md`
 
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR      #90
-Canonical merge        83d61fc1b4778a7a255db2de152c7b8d168a170f
-Deployment retrigger   5d23d7da414e65226f37caafbfce3884fd1aeb8c
-Production verify      30424531817
-Canonical normal CI    30424388432
-Verified state         33 / 34 / 183 / 241
+Canonical data PR      #94
+Canonical merge        fd210052b40ff038156b22d116848751990b5633
+Publication trigger    44e785c0e286ff16a5bcd1fddc1e9ce2b9fbc37c
+Production verify      30426111329
+Canonical normal CI    30425990662
+Verified state         33 / 34 / 183 / 256
 Verified HTML routes   72
 Verified redirects     74
 ```
 
-Batch 3 remains the latest production-verified checkpoint until PR #94 merges and the live publication verifier passes. The Batch 4 review branch has removed all temporary generator, package-hook, and workflow-permission changes.
+Batch 4 is the latest production-verified checkpoint. PR #97 carries the exact-equality canonical state and must pass normal CI, merge, publish, and production verification before becoming the live checkpoint.
 
 ## Next
 
-1. complete normal CI for PR #94;
-2. merge the Batch 4 canonical migration;
-3. verify production at 33 / 34 / 183 / 256 with all 72 canonical HTML routes;
-4. complete the final source-count batch against the remaining 7 event mismatches;
-5. promote exact source-count equality to a hard CI gate at zero mismatches;
-6. strengthen primary-source and archive coverage.
+1. complete normal CI for PR #97;
+2. merge the final source-count canonical migration;
+3. verify production at 33 / 34 / 183 / 263 with all 72 canonical HTML routes;
+4. confirm exact equality in public JSON and permanent CI;
+5. continue primary-source, archive, URL, and validator strengthening;
+6. proceed to monitoring and v1 hardening.
