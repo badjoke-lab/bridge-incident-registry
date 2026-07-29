@@ -35,9 +35,9 @@ const riskyHosts = new Set([
 const limits = {
   bridges_without_primary: 0,
   bridges_without_tier_1: 0,
-  incidents_without_primary: 2,
+  incidents_without_primary: 1,
   incidents_without_tier_1: 1,
-  events_without_primary: 36,
+  events_without_primary: 34,
   events_without_tier_1: 25,
   terminal_unarchived: 76,
   risky_host_unarchived: 90,
