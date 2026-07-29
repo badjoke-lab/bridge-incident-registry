@@ -1,5 +1,6 @@
 import process from "node:process";
 import { loadCanonicalData } from "./lib/canonical-data.mjs";
+import { canonicalJsonEqual, firstRecordMismatch } from "./lib/canonical-equality.mjs";
 import { buildLegacyRedirects } from "./lib/legacy-redirects.mjs";
 
 const canonical = loadCanonicalData(process.cwd(), process.env);
@@ -11,6 +12,7 @@ const userAgent = process.env.BIR_PRODUCTION_USER_AGENT
   ?? "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36";
 const errors = [];
 const observations = [];
+const canonicalKeys = ["bridges", "incidents", "events", "evidence"];
 
 function absolute(route) {
   return new URL(route.replace(/^\//, ""), `${origin}/`).toString();
@@ -47,7 +49,51 @@ async function request(route, options = {}) {
 }
 
 function countsMatch(actual) {
-  return JSON.stringify(actual) === JSON.stringify(canonical.recordCounts);
+  return canonicalJsonEqual(actual, canonical.recordCounts);
+}
+
+async function publicationContentState(attempt) {
+  const mismatches = [];
+  const statuses = {};
+
+  for (const key of canonicalKeys) {
+    const route = `/data/${key}.json`;
+    try {
+      const response = await request(route, { accept: "application/json" });
+      statuses[key] = response.status;
+      const text = await response.text();
+      if (response.status !== 200) {
+        mismatches.push(`${key}: HTTP ${response.status}`);
+        continue;
+      }
+      let actual = null;
+      try {
+        actual = JSON.parse(text);
+      } catch (error) {
+        mismatches.push(`${key}: invalid JSON: ${error.message}`);
+        continue;
+      }
+      if (!canonicalJsonEqual(actual, canonical.data[key])) {
+        const mismatch = firstRecordMismatch(actual, canonical.data[key]);
+        const location = mismatch?.id ?? (mismatch?.index === null ? "dataset" : `index ${mismatch?.index}`);
+        mismatches.push(`${key}: canonical content mismatch at ${location}; ${mismatch?.reason ?? "unknown difference"}`);
+      }
+    } catch (error) {
+      statuses[key] = null;
+      mismatches.push(`${key}: request failed: ${error.message}`);
+    }
+  }
+
+  observations.push({
+    route: "/data/{bridges,incidents,events,evidence}.json",
+    phase: "publication_content_wait",
+    attempt,
+    content_match: mismatches.length === 0,
+    dataset_statuses: statuses,
+    content_mismatches: mismatches
+  });
+
+  return { matches: mismatches.length === 0, mismatches };
 }
 
 async function waitForCanonicalPublication() {
@@ -75,11 +121,17 @@ async function waitForCanonicalPublication() {
         generated_at: latestGeneratedAt,
         observed_counts: latestCounts
       });
+
       if (response.status === 200 && version?.canonical_only === true && countsMatch(latestCounts)) {
-        console.log(`Canonical production state available on attempt ${attempt}.`);
-        return true;
+        const contentState = await publicationContentState(attempt);
+        if (contentState.matches) {
+          console.log(`Canonical production content available on attempt ${attempt}.`);
+          return true;
+        }
+        latestError = contentState.mismatches.join("; ");
+      } else {
+        latestError = `expected ${JSON.stringify(canonical.recordCounts)}, observed ${JSON.stringify(latestCounts)}`;
       }
-      latestError = `expected ${JSON.stringify(canonical.recordCounts)}, observed ${JSON.stringify(latestCounts)}`;
     } catch (error) {
       latestError = error.message;
       observations.push({
@@ -175,14 +227,16 @@ async function verifyHtml(route, identifier = null) {
   if (!hasCacheSignal) errors.push(`${route}: no cache observation header present`);
 }
 
-function compareIds(label, actual, expected) {
+function compareCanonicalRecords(label, actual, expected) {
   if (!Array.isArray(actual)) {
     errors.push(`${label}: expected an array`);
     return;
   }
-  const actualIds = actual.map((record) => record?.id);
-  const expectedIds = expected.map((record) => record.id);
-  if (JSON.stringify(actualIds) !== JSON.stringify(expectedIds)) errors.push(`${label}: ID set/order mismatch`);
+  if (!canonicalJsonEqual(actual, expected)) {
+    const mismatch = firstRecordMismatch(actual, expected);
+    const location = mismatch?.id ?? (mismatch?.index === null ? "dataset" : `index ${mismatch?.index}`);
+    errors.push(`${label}: canonical content mismatch at ${location}; ${mismatch?.reason ?? "unknown difference"}`);
+  }
 }
 
 const publicationReady = await waitForCanonicalPublication();
@@ -201,7 +255,7 @@ for (const incident of canonical.data.incidents) await verifyHtml(`/incident/${i
 const version = await fetchJson("/version.json");
 const manifest = await fetchJson("/data/manifest.json");
 const publicData = {};
-for (const key of ["bridges", "incidents", "events", "evidence"]) {
+for (const key of canonicalKeys) {
   publicData[key] = await fetchJson(`/data/${key}.json`);
 }
 
@@ -214,13 +268,13 @@ if (manifest) {
   if (!countsMatch(manifest.record_counts)) errors.push("manifest: record_counts mismatch");
   if (manifest.canonical_only !== true || manifest.data_safety?.canonical_only !== true) errors.push("manifest: canonical-only markers missing");
 }
-for (const key of ["bridges", "incidents", "events", "evidence"]) {
-  compareIds(`/data/${key}.json`, publicData[key], canonical.data[key]);
+for (const key of canonicalKeys) {
+  compareCanonicalRecords(`/data/${key}.json`, publicData[key], canonical.data[key]);
 }
 
 const publicAssets = await fetchJson("/data/reference/assets.json");
-if (publicAssets) {
-  if (JSON.stringify(publicAssets) !== JSON.stringify(canonical.data.assets)) errors.push("/data/reference/assets.json: reference data mismatch");
+if (publicAssets && !canonicalJsonEqual(publicAssets, canonical.data.assets)) {
+  errors.push("/data/reference/assets.json: reference data mismatch");
 }
 
 const sitemapResult = await fetchText("/sitemap.xml", { accept: "application/xml,text/xml" });
@@ -233,7 +287,7 @@ if (sitemapResult) {
   ];
   const expectedUrls = expectedRoutes.map(absolute).sort();
   const actualUrls = [...sitemapResult.text.matchAll(/<loc>([^<]+)<\/loc>/g)].map((match) => match[1]).sort();
-  if (JSON.stringify(actualUrls) !== JSON.stringify(expectedUrls)) errors.push(`/sitemap.xml: URL set mismatch; expected ${expectedUrls.length}, received ${actualUrls.length}`);
+  if (!canonicalJsonEqual(actualUrls, expectedUrls)) errors.push(`/sitemap.xml: URL set mismatch; expected ${expectedUrls.length}, received ${actualUrls.length}`);
 }
 
 const robotsResult = await fetchText("/robots.txt", { accept: "text/plain" });
@@ -270,6 +324,7 @@ console.log("Production verification passed.");
 console.log(JSON.stringify({
   origin,
   record_counts: canonical.recordCounts,
+  canonical_content_match: true,
   html_routes: staticRoutes.length + canonical.data.bridges.length + canonical.data.incidents.length,
   redirects: buildLegacyRedirects(canonical.data).length,
   observations
