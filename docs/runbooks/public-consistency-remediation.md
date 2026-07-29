@@ -3,13 +3,13 @@
 Status: complete  
 Updated: 2026-07-29
 
-## Current canonical baseline
+## Current canonical review-branch baseline
 
 ```text
 Bridges     33
 Incidents   34
 Events      183
-Evidence    241
+Evidence    256
 ```
 
 Canonical JSON remains the only record source. Generated public files are build products.
@@ -55,9 +55,22 @@ The production verification covered:
 - every generated legacy redirect;
 - content types and observable cache-related headers.
 
-The first verification attempt exhausted all 20 publication attempts because production remained at the Batch 2 state. A docs-only main push retriggered the existing Cloudflare Pages Git integration; no verifier condition was changed. The unchanged rerun detected the Batch 3 state on attempt 1 and passed.
-
 Latest production audit: `docs/audits/production-verification-phase3-source-count-batch3-2026-07-29.md`.
+
+## Pending Batch 4 publication
+
+PR #94 carries the reviewed Batch 4 canonical state:
+
+```text
+33 bridges
+34 incidents
+183 events
+256 evidence records
+7 remaining event source-count mismatches
+0 incident source-count mismatches
+```
+
+The live production contract remains at the Batch 3 checkpoint until PR #94 merges, Cloudflare publishes the new canonical build, and the unchanged production verifier passes at the Batch 4 counts.
 
 ## Closure
 
