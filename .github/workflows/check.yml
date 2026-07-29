@@ -39,11 +39,17 @@ jobs:
       - name: Audit exact source counts
         run: npm run audit:source-count
 
+      - name: Audit source quality baseline
+        run: npm run audit:source-quality
+
       - name: Test full-corpus audit failures
         run: npm run audit:full-corpus:test
 
       - name: Test source-count equality failures
         run: npm run audit:source-count:test
+
+      - name: Test source quality regressions
+        run: npm run audit:source-quality:test
 
       - name: Build static site
         run: npm run build

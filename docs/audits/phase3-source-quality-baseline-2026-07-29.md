@@ -1,0 +1,501 @@
+# Phase 3 source-quality baseline — 2026-07-29
+
+Status: complete
+
+## Corpus totals
+
+```text
+Bridges                 33
+Incidents               34
+Events                 183
+Evidence               263
+Primary evidence        181
+Tier 1 evidence         199
+Official-domain evidence 121
+Evidence with archive   0
+```
+
+## No-regression contract
+
+The baseline is enforced in normal CI. Future changes must not increase any of these gap or archive-risk counts:
+
+```text
+Bridges without primary evidence      0
+Bridges without tier 1 evidence       0
+Incidents without primary evidence    2
+Incidents without tier 1 evidence     1
+Events without primary evidence      36
+Events without tier 1 evidence       25
+Terminal evidence without archive    76
+Risky-host evidence without archive  90
+Unknown URL status                    2
+```
+
+The gate also rejects invalid source URLs and invalid archive URLs. These values are ceilings, not targets. Remediation PRs must reduce them and tighten the corresponding limits.
+
+## Evidence distributions
+
+```json
+{
+  "source_tier": {
+    "tier_1": 199,
+    "tier_2": 59,
+    "tier_3": 5
+  },
+  "reliability": {
+    "high": 240,
+    "medium": 23
+  },
+  "url_status": {
+    "live": 261,
+    "unknown": 2
+  },
+  "source_type": {
+    "archive_capture": 1,
+    "audit_report": 1,
+    "blockchain_analytics_report": 6,
+    "community_reference": 1,
+    "database_reference": 5,
+    "news_article": 38,
+    "official_blog": 69,
+    "official_documentation": 3,
+    "official_press_release": 1,
+    "official_release": 2,
+    "official_repository": 2,
+    "official_social": 28,
+    "official_statement": 28,
+    "official_support": 2,
+    "official_website": 10,
+    "other": 6,
+    "postmortem": 25,
+    "regulatory_notice": 2,
+    "security_advisory": 5,
+    "security_analysis": 8,
+    "security_firm_report": 16,
+    "security_retrospective": 4
+  }
+}
+```
+
+## Coverage gaps
+
+```text
+Bridges without primary evidence    0
+Bridges without tier 1 evidence     0
+Bridges without official evidence   3
+Incidents without primary evidence  2
+Incidents without tier 1 evidence   1
+Incidents without official evidence 15
+Events without primary evidence     36
+Events without tier 1 evidence      25
+Events without official evidence    91
+```
+
+## Archive-risk summary
+
+```text
+Terminal-bridge evidence without archive 76
+Risky-host evidence without archive      90
+X/Twitter evidence without archive       29
+Non-live evidence without archive        2
+Unique archive-priority evidence         132
+```
+
+## Incidents without primary evidence
+
+| ID | Title | Sources | Primary | Tier 1 | Official | Archived |
+|---|---|---:|---:|---:|---:|---:|
+| `bir_inc_000015` | LI.FI 2022 approval-drain exploit | 5 | 0 | 3 | 0 | 0 |
+| `bir_inc_000026` | Nerve Bridge 2021 metapool exploit | 4 | 0 | 0 | 0 | 0 |
+
+## Events without tier 1 evidence
+
+| ID | Title | Sources | Primary | Tier 1 | Official | Archived |
+|---|---|---:|---:|---:|---:|---:|
+| `bir_ev_000001` | Ronin Bridge exploit disclosed | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000006` | Wormhole included in bridge-hack research context | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000007` | Nomad exploit disclosed | 2 | 0 | 0 | 0 | 0 |
+| `bir_ev_000009` | Nomad included in bridge-hack research context | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000012` | Harmony Horizon included in bridge-hack research context | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000015` | Recovery treated as substantially complete | 2 | 0 | 0 | 0 | 0 |
+| `bir_ev_000051` | Additional Harmony recovery partner proposed | 1 | 0 | 0 | 1 | 0 |
+| `bir_ev_000059` | Celer committed to compensate affected users | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000060` | cBridge frontend restored with additional monitoring | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000064` | SOCKET reported recovery of 1,032 ETH | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000084` | Approximately $8.2 million nUSD transfer left unprocessed | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000087` | Nerve Bridge metapools exploited | 2 | 0 | 0 | 0 | 0 |
+| `bir_ev_000088` | BlockSec published Nerve Bridge root-cause analysis | 2 | 0 | 0 | 0 | 0 |
+| `bir_ev_000093` | Investigation attributed incident to former contractor | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000126` | Main attacker returned approximately 70 percent | 2 | 0 | 0 | 0 | 0 |
+| `bir_ev_000127` | Additional BNB returns reported | 2 | 0 | 0 | 0 | 0 |
+| `bir_ev_000136` | RBC/BRBC bridge wallet compromise occurred | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000139` | RubicProxy approval exploit occurred | 3 | 0 | 0 | 0 | 0 |
+| `bir_ev_000146` | Unizen announced immediate reimbursement plan | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000150` | Remaining stolen funds moved through Tornado Cash | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000151` | Forged Taiko bridge messages accepted on Ethereum | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000156` | Taiko Bridge reopened | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000164` | Everclear protocol, UI, and chain sunset | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000166` | Commons Bridge proxy compromised | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000169` | Syndicate began tracing and security investigation | 1 | 0 | 0 | 0 | 0 |
+
+## Events without primary evidence
+
+| ID | Title | Sources | Primary | Tier 1 | Official | Archived |
+|---|---|---:|---:|---:|---:|---:|
+| `bir_ev_000001` | Ronin Bridge exploit disclosed | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000006` | Wormhole included in bridge-hack research context | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000007` | Nomad exploit disclosed | 2 | 0 | 0 | 0 | 0 |
+| `bir_ev_000009` | Nomad included in bridge-hack research context | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000012` | Harmony Horizon included in bridge-hack research context | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000015` | Recovery treated as substantially complete | 2 | 0 | 0 | 0 | 0 |
+| `bir_ev_000051` | Additional Harmony recovery partner proposed | 1 | 0 | 0 | 1 | 0 |
+| `bir_ev_000059` | Celer committed to compensate affected users | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000060` | cBridge frontend restored with additional monitoring | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000064` | SOCKET reported recovery of 1,032 ETH | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000084` | Approximately $8.2 million nUSD transfer left unprocessed | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000087` | Nerve Bridge metapools exploited | 2 | 0 | 0 | 0 | 0 |
+| `bir_ev_000088` | BlockSec published Nerve Bridge root-cause analysis | 2 | 0 | 0 | 0 | 0 |
+| `bir_ev_000093` | Investigation attributed incident to former contractor | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000126` | Main attacker returned approximately 70 percent | 2 | 0 | 0 | 0 | 0 |
+| `bir_ev_000127` | Additional BNB returns reported | 2 | 0 | 0 | 0 | 0 |
+| `bir_ev_000136` | RBC/BRBC bridge wallet compromise occurred | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000139` | RubicProxy approval exploit occurred | 3 | 0 | 0 | 0 | 0 |
+| `bir_ev_000146` | Unizen announced immediate reimbursement plan | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000150` | Remaining stolen funds moved through Tornado Cash | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000151` | Forged Taiko bridge messages accepted on Ethereum | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000156` | Taiko Bridge reopened | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000164` | Everclear protocol, UI, and chain sunset | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000166` | Commons Bridge proxy compromised | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000169` | Syndicate began tracing and security investigation | 1 | 0 | 0 | 0 | 0 |
+| `bir_ev_000002` | Attribution to Lazarus-linked activity reported | 2 | 0 | 1 | 1 | 0 |
+| `bir_ev_000011` | FBI attribution to Lazarus Group reported | 1 | 0 | 1 | 1 | 0 |
+| `bir_ev_000013` | Poly Network exploit disclosed | 2 | 0 | 1 | 0 | 0 |
+| `bir_ev_000014` | Stolen funds returned in stages | 2 | 0 | 1 | 0 | 0 |
+| `bir_ev_000043` | LI.FI approval-drain exploit occurred | 3 | 0 | 2 | 0 | 0 |
+| `bir_ev_000044` | Vulnerability patched and smaller wallets reimbursed | 2 | 0 | 1 | 0 | 0 |
+| `bir_ev_000124` | Transit Swap routing exploit occurred | 2 | 0 | 1 | 0 | 0 |
+| `bir_ev_000125` | Transit Swap incident disclosed and traced | 2 | 0 | 1 | 0 | 0 |
+| `bir_ev_000143` | Unizen external-call approval exploit occurred | 1 | 0 | 1 | 0 | 0 |
+| `bir_ev_000144` | Unizen incident and approval risk disclosed | 1 | 0 | 1 | 0 | 0 |
+| `bir_ev_000148` | Unizen reported partial recovery from four hackers | 1 | 0 | 1 | 0 | 0 |
+
+## Archive-priority evidence
+
+| ID | Bridge | Status | Host | Source type | Event | Incident | URL |
+|---|---|---|---|---|---|---|---|
+| `bir_src_000013` | bir_bridge_000004 | dead | cnbc.com | news_article | bir_ev_000010 | bir_inc_000004 | https://www.cnbc.com/2022/06/24/hackers-steal-100-million-in-crypto-from-harmonys-horizon-bridge.html |
+| `bir_src_000014` | bir_bridge_000004 | dead | fbi.gov | regulatory_notice | bir_ev_000011 | bir_inc_000004 | https://www.fbi.gov/news/press-releases/fbi-confirms-lazarus-group-cyber-actors-responsible-for-harmonys-horizon-bridge-currency-theft |
+| `bir_src_000015` | bir_bridge_000004 | dead | reuters.com | news_article | bir_ev_000010 | bir_inc_000004 | https://www.reuters.com/technology/us-fbi-says-north-korean-hackers-stole-100-mln-harmony-bridge-2023-01-24/ |
+| `bir_src_000016` | bir_bridge_000004 | dead | arxiv.org | other | bir_ev_000012 | bir_inc_000004 | https://arxiv.org/abs/2501.03423 |
+| `bir_src_000021` | bir_bridge_000006 | deprecated | bnbchain.org | official_statement | bir_ev_000016 | bir_inc_000006 | https://www.bnbchain.org/en/blog/bnb-chain-ecosystem-update |
+| `bir_src_000022` | bir_bridge_000006 | deprecated | bnbchain.org | official_blog | bir_ev_000017 | bir_inc_000006 | https://www.bnbchain.org/en/blog/bnb-chain-a-decentralized-response |
+| `bir_src_000023` | bir_bridge_000006 | deprecated | elliptic.co | blockchain_analytics_report | bir_ev_000016 | bir_inc_000006 | https://www.elliptic.co/blog/analysis/attack-mints-569-million-worth-of-bnb-tokens-in-bsc-bridge-exploit |
+| `bir_src_000024` | bir_bridge_000006 | deprecated | bnbchain.org | official_blog | bir_ev_000018 | bir_inc_000006 | https://www.bnbchain.org/en/bnb-chain-fusion |
+| `bir_src_000025` | bir_bridge_000007 | dead | twitter.com | official_social | bir_ev_000019 | bir_inc_000007 | https://twitter.com/MultichainOrg/status/1677096839731097600 |
+| `bir_src_000026` | bir_bridge_000007 | dead | chainalysis.com | blockchain_analytics_report | bir_ev_000019 | bir_inc_000007 | https://www.chainalysis.com/blog/multichain-exploit-july-2023/ |
+| `bir_src_000027` | bir_bridge_000007 | dead | coindesk.com | news_article | bir_ev_000019 | bir_inc_000007 | https://www.coindesk.com/business/2023/07/06/multichain-bridges-experience-unannounced-outflows-of-over-130m-in-crypto |
+| `bir_src_000028` | bir_bridge_000007 | dead | twitter.com | official_social | bir_ev_000020 | bir_inc_000007 | https://twitter.com/MultichainOrg/status/1677180114227056641 |
+| `bir_src_000029` | bir_bridge_000007 | dead | twitter.com | official_social | bir_ev_000021 | bir_inc_000007 | https://twitter.com/MultichainOrg/status/1679768407628185600 |
+| `bir_src_000035` | bir_bridge_000009 | dead | medium.com | official_statement | bir_ev_000025 | bir_inc_000009 | https://medium.com/@QubitFin/protocol-exploit-report-305c34540fa3 |
+| `bir_src_000036` | bir_bridge_000009 | dead | certik.medium.com | other | bir_ev_000025 | bir_inc_000009 | https://certik.medium.com/qubit-bridge-collapse-exploited-to-the-tune-of-80-million-a7ab9068e1a0 |
+| `bir_src_000037` | bir_bridge_000009 | dead | medium.com | official_blog | bir_ev_000026 | bir_inc_000009 | https://medium.com/@QubitFin/our-compensation-plan-1-63e7c64738ed |
+| `bir_src_000038` | bir_bridge_000009 | dead | pancakebunny.medium.com | official_blog | bir_ev_000027 | bir_inc_000009 | https://pancakebunny.medium.com/the-next-chapter-dao-9630b2c087b |
+| `bir_src_000039` | bir_bridge_000009 | dead | medium.com | official_blog | bir_ev_000028 | bir_inc_000009 | https://medium.com/@QubitFin/qubit-markets-reopening-d1d25f4fbfc4 |
+| `bir_src_000068` | bir_bridge_000004 | dead | talk.harmony.one | official_statement | bir_ev_000010 | bir_inc_000004 | https://talk.harmony.one/t/summary-of-the-horizon-bridge-incident/20990 |
+| `bir_src_000069` | bir_bridge_000004 | dead | blog.harmony.one | official_blog | bir_ev_000050 | bir_inc_000004 | https://blog.harmony.one/p/state-of-harmony-q1-2023 |
+| `bir_src_000070` | bir_bridge_000004 | dead | talk.harmony.one | community_reference | bir_ev_000051 | bir_inc_000004 | https://talk.harmony.one/t/proposal-utilitydao-recovery-partner-for-harmony-protocol/26467 |
+| `bir_src_000085` | bir_bridge_000017 | deprecated | medium.com | official_blog | bir_ev_000066 | — | https://medium.com/pnetwork/introducing-pnetwork-v2-bfa7fcdcedb8 |
+| `bir_src_000086` | bir_bridge_000017 | deprecated | medium.com | postmortem | bir_ev_000067 | bir_inc_000021 | https://medium.com/pnetwork/pnetwork-post-mortem-pbtc-on-bsc-exploit-170890c58d5f |
+| `bir_src_000087` | bir_bridge_000017 | deprecated | rekt.news | security_analysis | bir_ev_000067 | bir_inc_000021 | https://rekt.news/pnetwork-rekt/ |
+| `bir_src_000088` | bir_bridge_000017 | deprecated | medium.com | postmortem | bir_ev_000070 | bir_inc_000022 | https://medium.com/pnetwork/pgala-post-mortem-measures-taken-to-safeguard-the-ecosystem-from-malicious-actors-and-recovery-6407048f4497 |
+| `bir_src_000089` | bir_bridge_000017 | deprecated | medium.com | official_blog | bir_ev_000070 | bir_inc_000022 | https://medium.com/pnetwork/lessons-learnt-from-the-pgala-exploit-50e686730b98 |
+| `bir_src_000090` | bir_bridge_000017 | deprecated | gogalagames.medium.com | official_blog | bir_ev_000071 | bir_inc_000022 | https://gogalagames.medium.com/pgala-what-happened-and-the-dangers-of-decentralization-62d64e1ea569 |
+| `bir_src_000091` | bir_bridge_000017 | deprecated | slowmist.medium.com | security_analysis | bir_ev_000070 | bir_inc_000022 | https://slowmist.medium.com/slowmist-the-root-cause-of-the-pgala-event-is-that-the-plaintext-of-the-private-key-was-leaked-on-6e117ccf5473 |
+| `bir_src_000092` | bir_bridge_000017 | deprecated | dapp.p.network | official_website | bir_ev_000074 | — | https://dapp.p.network/ |
+| `bir_src_000126` | bir_bridge_000023 | deprecated | medium.com | official_blog | bir_ev_000104 | — | https://medium.com/renprotocol/renvm-mainnet-release-98cac4c6fa8e |
+| `bir_src_000127` | bir_bridge_000023 | deprecated | medium.com | official_blog | bir_ev_000105 | — | https://medium.com/renprotocol/introducing-renbridge-3-0-2b5f49aaf722 |
+| `bir_src_000128` | bir_bridge_000023 | deprecated | medium.com | official_blog | bir_ev_000106 | — | https://medium.com/renprotocol/introducing-ren-2-0-43025b3d5d6 |
+| `bir_src_000129` | bir_bridge_000023 | deprecated | medium.com | official_blog | bir_ev_000107 | — | https://medium.com/renprotocol/moving-on-from-alameda-da62a823ce93 |
+| `bir_src_000130` | bir_bridge_000023 | deprecated | medium.com | official_blog | bir_ev_000108 | — | https://medium.com/renprotocol/moving-on-from-alameda-da62a823ce93 |
+| `bir_src_000131` | bir_bridge_000023 | deprecated | renprotocol.org | official_website | bir_ev_000109 | — | https://renprotocol.org/ |
+| `bir_src_000132` | bir_bridge_000023 | deprecated | github.com | official_repository | bir_ev_000109 | — | https://github.com/renproject |
+| `bir_src_000133` | bir_bridge_000024 | migrated | medium.com | official_blog | bir_ev_000110 | — | https://medium.com/avalancheavax/introducing-the-avalanche-ethereum-light-bridge-aelb-through-the-cyberfi-asset-management-b280e830702f |
+| `bir_src_000134` | bir_bridge_000024 | migrated | medium.com | official_blog | bir_ev_000111 | — | https://medium.com/avalancheavax/preparing-for-the-next-generation-avalanche-bridge-ab-26f7521485e7 |
+| `bir_src_000135` | bir_bridge_000024 | migrated | medium.com | official_blog | bir_ev_000112 | — | https://medium.com/avalancheavax/new-avalanche-bridge-builds-on-intel-sgx-technology-in-breakthrough-for-cross-chain-8f854e0e72e0 |
+| `bir_src_000136` | bir_bridge_000024 | migrated | medium.com | official_blog | bir_ev_000113 | — | https://medium.com/avalancheavax/avalanche-bridge-secure-cross-chain-asset-transfers-using-intel-sgx-b04f5a4c7ad1 |
+| `bir_src_000137` | bir_bridge_000024 | migrated | support.avax.network | official_support | bir_ev_000114 | — | https://support.avax.network/en/articles/6752048-how-do-i-upgrade-old-avalanche-bridge-aeb-assets |
+| `bir_src_000141` | bir_bridge_000026 | migrated | medium.com | official_blog | bir_ev_000118 | — | https://medium.com/conflux-network/shuttleflow-protocol-passes-peckshield-security-audit-fe0aa0f20d27 |
+| `bir_src_000142` | bir_bridge_000026 | migrated | medium.com | official_blog | bir_ev_000119 | — | https://medium.com/conflux-network/shuttleflow-enabling-the-future-of-defi-through-true-multi-chain-connection-e60c2bada7d4 |
+| `bir_src_000143` | bir_bridge_000026 | migrated | medium.com | official_blog | bir_ev_000120 | — | https://medium.com/conflux-network/shuttleflow-v1-3-0-front-end-upgrade-released-301b2ab59437 |
+| `bir_src_000144` | bir_bridge_000026 | migrated | forum.conflux.fun | official_statement | bir_ev_000121 | — | https://forum.conflux.fun/t/announcement-shuttleflow-is-closing-its-services-on-2023-11-08-asset-bridging-operations-will-migrate-to-zero-gravity/19507 |
+| `bir_src_000145` | bir_bridge_000026 | migrated | forum.conflux.fun | official_statement | bir_ev_000121 | — | https://forum.conflux.fun/t/announcement-shuttleflow-is-closing-its-services-on-2023-11-08-asset-bridging-operations-will-migrate-to-zero-gravity/19507 |
+| `bir_src_000146` | bir_bridge_000026 | migrated | forum.conflux.fun | official_statement | bir_ev_000122 | — | https://forum.conflux.fun/t/announcement-shuttleflow-is-closing-its-services-on-2023-11-08-asset-bridging-operations-will-migrate-to-zero-gravity/19507 |
+| `bir_src_000147` | bir_bridge_000026 | migrated | forum.conflux.fun | official_statement | bir_ev_000123 | — | https://forum.conflux.fun/t/announcement-shuttleflow-is-closing-its-services-on-2023-11-08-asset-bridging-operations-will-migrate-to-zero-gravity/19507 |
+| `bir_src_000148` | bir_bridge_000026 | migrated | forum.conflux.fun | official_statement | bir_ev_000123 | — | https://forum.conflux.fun/t/kinetflow-is-now-live/23143 |
+| `bir_src_000187` | bir_bridge_000032 | dead | twitter.com | official_social | bir_ev_000165 | — | https://twitter.com/EverclearOrg/status/2057488000003477886 |
+| `bir_src_000188` | bir_bridge_000032 | dead | docs.everclear.org | official_statement | bir_ev_000161 | — | https://docs.everclear.org/developers/getting-started |
+| `bir_src_000189` | bir_bridge_000032 | dead | everclear.org | official_statement | bir_ev_000163 | — | https://www.everclear.org/blog |
+| `bir_src_000190` | bir_bridge_000032 | dead | medium.com | official_blog | bir_ev_000160 | — | https://medium.com/connext/xpollinate-is-now-connext-bridge-d294baea94c2 |
+| `bir_src_000191` | bir_bridge_000032 | dead | everclear.org | official_blog | bir_ev_000162 | — | https://www.everclear.org/blog/q3-recap |
+| `bir_src_000192` | bir_bridge_000032 | dead | theblock.co | news_article | bir_ev_000164 | — | https://www.theblock.co/post/402252/clear-token-tanks-48-everclear-winds-down-protocol-foundation-labs-unit |
+| `bir_src_000193` | bir_bridge_000033 | dead | twitter.com | official_social | bir_ev_000167 | bir_inc_000034 | https://twitter.com/syndicateio/status/2049352309784904187 |
+| `bir_src_000194` | bir_bridge_000033 | dead | x.com | official_social | bir_ev_000172 | bir_inc_000034 | https://x.com/syndicateio/status/2057291537860706672 |
+| `bir_src_000195` | bir_bridge_000033 | dead | commons.syndicate.io | official_statement | bir_ev_000173 | bir_inc_000034 | https://commons.syndicate.io/ |
+| `bir_src_000196` | bir_bridge_000033 | dead | docs.syndicate.io | official_statement | — | — | https://docs.syndicate.io/en/docs/synd/bridging |
+| `bir_src_000197` | bir_bridge_000033 | dead | theblock.co | news_article | bir_ev_000166 | bir_inc_000034 | https://www.theblock.co/post/399318/syndicate-exploit |
+| `bir_src_000198` | bir_bridge_000033 | dead | darknavy.org | security_firm_report | bir_ev_000169 | bir_inc_000034 | https://www.darknavy.org/web3/exploits/syndicate-commons-bridge-upgrade-compromise/ |
+| `bir_src_000199` | bir_bridge_000033 | dead | theblock.co | news_article | bir_ev_000172 | bir_inc_000034 | https://www.theblock.co/post/402130/syndicate-labs-wind-down |
+| `bir_src_000205` | bir_bridge_000006 | deprecated | bnbchain.org | official_blog | bir_ev_000178 | bir_inc_000006 | https://www.bnbchain.org/en/blog/bnb-chain-a-decentralized-response |
+| `bir_src_000206` | bir_bridge_000006 | deprecated | bnbchain.org | official_blog | bir_ev_000178 | bir_inc_000006 | https://www.bnbchain.org/en/blog/technology-update-of-bnb-chain-in-october-2022 |
+| `bir_src_000214` | bir_bridge_000006 | deprecated | bnbchain.org | official_blog | bir_ev_000016 | bir_inc_000006 | https://www.bnbchain.org/en/blog/bnb-chain-a-decentralized-response |
+| `bir_src_000215` | bir_bridge_000006 | deprecated | bnbchain.org | official_statement | bir_ev_000017 | bir_inc_000006 | https://www.bnbchain.org/en/blog/bnb-chain-ecosystem-update |
+| `bir_src_000216` | bir_bridge_000007 | dead | twitter.com | official_social | bir_ev_000021 | bir_inc_000007 | https://twitter.com/MultichainOrg/status/1677180114227056641 |
+| `bir_src_000230` | bir_bridge_000017 | deprecated | medium.com | postmortem | bir_ev_000068 | bir_inc_000021 | https://medium.com/pnetwork/pnetwork-post-mortem-pbtc-on-bsc-exploit-170890c58d5f |
+| `bir_src_000231` | bir_bridge_000017 | deprecated | medium.com | postmortem | bir_ev_000069 | bir_inc_000021 | https://medium.com/pnetwork/pnetwork-post-mortem-pbtc-on-bsc-exploit-170890c58d5f |
+| `bir_src_000232` | bir_bridge_000017 | deprecated | medium.com | postmortem | bir_ev_000071 | bir_inc_000022 | https://medium.com/pnetwork/pgala-post-mortem-measures-taken-to-safeguard-the-ecosystem-from-malicious-actors-and-recovery-6407048f4497 |
+| `bir_src_000233` | bir_bridge_000017 | deprecated | medium.com | postmortem | bir_ev_000072 | bir_inc_000022 | https://medium.com/pnetwork/pgala-post-mortem-measures-taken-to-safeguard-the-ecosystem-from-malicious-actors-and-recovery-6407048f4497 |
+| `bir_src_000234` | bir_bridge_000017 | deprecated | medium.com | postmortem | bir_ev_000073 | bir_inc_000022 | https://medium.com/pnetwork/pgala-post-mortem-measures-taken-to-safeguard-the-ecosystem-from-malicious-actors-and-recovery-6407048f4497 |
+| `bir_src_000260` | bir_bridge_000032 | dead | everclear.org | official_statement | bir_ev_000159 | — | https://www.everclear.org/blog |
+| `bir_src_000261` | bir_bridge_000033 | dead | twitter.com | official_social | bir_ev_000168 | bir_inc_000034 | https://twitter.com/syndicateio/status/2049352309784904187 |
+| `bir_src_000262` | bir_bridge_000033 | dead | twitter.com | official_social | bir_ev_000170 | bir_inc_000034 | https://twitter.com/syndicateio/status/2049352309784904187 |
+| `bir_src_000263` | bir_bridge_000033 | dead | commons.syndicate.io | official_statement | bir_ev_000171 | bir_inc_000034 | https://commons.syndicate.io/ |
+| `bir_src_000030` | bir_bridge_000008 | limited | medium.com | official_statement | bir_ev_000022 | bir_inc_000008 | https://medium.com/orbit-chain/official-statement-regarding-orbit-bridge-exploit-551928f3dc52 |
+| `bir_src_000031` | bir_bridge_000008 | limited | medium.com | official_blog | bir_ev_000023 | bir_inc_000008 | https://medium.com/orbit-chain/orbit-bridge-exploit-asset-recovery-and-ecosystem-normalization-plan-draft-3aa7ac2a6e4a |
+| `bir_src_000032` | bir_bridge_000008 | limited | medium.com | official_blog | bir_ev_000023 | bir_inc_000008 | https://medium.com/orbit-chain/orbit-bridge-strategies-for-service-resumption-draft-250c1acb3ecc |
+| `bir_src_000033` | bir_bridge_000008 | limited | medium.com | official_blog | bir_ev_000024 | bir_inc_000008 | https://medium.com/orbit-chain/orbit-bridge-follow-up-plan-e65d8cbabbb5 |
+| `bir_src_000040` | bir_bridge_000010 | paused | medium.com | official_blog | bir_ev_000029 | bir_inc_000010 | https://medium.com/thorchain/post-mortem-eth-router-exploits-1-2-and-premature-return-to-trading-incident-2908928c5fb |
+| `bir_src_000042` | bir_bridge_000010 | paused | medium.com | official_blog | bir_ev_000031 | bir_inc_000011 | https://medium.com/thorchain/post-mortem-eth-router-exploits-1-2-and-premature-return-to-trading-incident-2908928c5fb |
+| `bir_src_000048` | bir_bridge_000011 | active | medium.com | postmortem | bir_ev_000036 | bir_inc_000013 | https://medium.com/meter-io/post-mortem-report-meter-passport-12af6b50393d |
+| `bir_src_000049` | bir_bridge_000011 | active | medium.com | official_blog | bir_ev_000037 | bir_inc_000013 | https://medium.com/meter-io/the-meter-monthly-february-2022-7172b75f40a5 |
+| `bir_src_000051` | bir_bridge_000011 | active | medium.com | official_blog | bir_ev_000038 | bir_inc_000013 | https://medium.com/meter-io/meter-passport-v1-5-completes-a-rigorous-audit-by-haechi-760cbda5959 |
+| `bir_src_000057` | bir_bridge_000013 | active | medium.com | security_firm_report | bir_ev_000043 | bir_inc_000015 | https://medium.com/@Knownsec_Blockchain_Lab/knownsec-blockchain-lab-li-finance-attack-incident-6304c6c728c9 |
+| `bir_src_000063` | bir_bridge_000002 | active | x.com | official_social | bir_ev_000004 | bir_inc_000002 | https://x.com/wormhole/status/1489001949881978883 |
+| `bir_src_000064` | bir_bridge_000002 | active | x.com | official_social | bir_ev_000005 | bir_inc_000002 | https://x.com/wormhole/status/1489232008521859079 |
+| `bir_src_000065` | bir_bridge_000003 | limited | medium.com | postmortem | bir_ev_000048 | bir_inc_000003 | https://medium.com/nomad-xyz-blog/nomad-bridge-hack-root-cause-analysis-875ad2e5aacd |
+| `bir_src_000066` | bir_bridge_000003 | limited | medium.com | official_blog | bir_ev_000008 | bir_inc_000003 | https://medium.com/nomad-xyz-blog/the-road-to-recovery-6abe5eec8ff1 |
+| `bir_src_000067` | bir_bridge_000003 | limited | medium.com | official_blog | bir_ev_000049 | bir_inc_000003 | https://medium.com/nomad-xyz-blog/nomad-bridge-relaunch-guide-3a4ef6624f90 |
+| `bir_src_000076` | bir_bridge_000015 | active | x.com | official_social | bir_ev_000058 | bir_inc_000019 | https://x.com/CelerNetwork/status/1560046913436946432 |
+| `bir_src_000080` | bir_bridge_000016 | active | x.com | official_social | bir_ev_000062 | bir_inc_000020 | https://x.com/SocketDotTech/status/1747349422730813525 |
+| `bir_src_000081` | bir_bridge_000016 | active | x.com | official_social | bir_ev_000063 | bir_inc_000020 | https://x.com/SocketDotTech/status/1747363921265344812 |
+| `bir_src_000096` | bir_bridge_000018 | active | x.com | official_social | bir_ev_000076 | bir_inc_000023 | https://x.com/AlexAuroraDev/status/1520657556962000896 |
+| `bir_src_000099` | bir_bridge_000018 | active | x.com | official_social | bir_ev_000078 | bir_inc_000024 | https://x.com/AlexAuroraDev/status/1561686828367003648 |
+| `bir_src_000102` | bir_bridge_000019 | active | medium.com | official_blog | bir_ev_000082 | — | https://medium.com/synapse-protocol/introducing-synapse-protocol-2af926143deb |
+| `bir_src_000103` | bir_bridge_000019 | active | medium.com | official_blog | bir_ev_000082 | — | https://medium.com/synapse-protocol/synapses-mainnet-launch-the-hadean-phase-d09fc74b2272 |
+| `bir_src_000112` | bir_bridge_000021 | inactive | twitter.com | official_social | bir_ev_000090 | bir_inc_000027 | https://twitter.com/holographxyz/status/1801332482262110301 |
+| `bir_src_000138` | bir_bridge_000025 | active | medium.com | official_blog | bir_ev_000115 | — | https://medium.com/avalancheavax/new-avalanche-bridge-builds-on-intel-sgx-technology-in-breakthrough-for-cross-chain-8f854e0e72e0 |
+| `bir_src_000139` | bir_bridge_000025 | active | medium.com | official_blog | bir_ev_000116 | — | https://medium.com/avalancheavax/avalanche-bridge-secure-cross-chain-asset-transfers-using-intel-sgx-b04f5a4c7ad1 |
+| `bir_src_000156` | bir_bridge_000028 | active | medium.com | postmortem | bir_ev_000133 | bir_inc_000029 | https://medium.com/@Magpieprotocol/magpie-protocol-smart-contract-vulnerability-post-mortem-f6400db0a25e |
+| `bir_src_000157` | bir_bridge_000028 | active | medium.com | official_blog | bir_ev_000134 | bir_inc_000029 | https://medium.com/@Magpieprotocol/magpie-protocol-charting-a-secure-path-following-exploit-c7046d9fc3ca |
+| `bir_src_000165` | bir_bridge_000029 | active | x.com | official_social | bir_ev_000140 | bir_inc_000031 | https://x.com/CryptoRubic/status/1606970530032230403 |
+| `bir_src_000167` | bir_bridge_000029 | active | medium.com | security_firm_report | bir_ev_000139 | bir_inc_000031 | https://medium.com/dcentralab-diligence/dcentralab-diligence-analysis-rubic-dex-aggregator-hack-d5ffd2505239 |
+| `bir_src_000168` | bir_bridge_000029 | active | medium.com | security_firm_report | bir_ev_000139 | bir_inc_000031 | https://medium.com/neptune-mutual/how-was-rubic-protocol-hacked-a39f4e9d8e00 |
+| `bir_src_000172` | bir_bridge_000030 | active | x.com | official_social | bir_ev_000147 | bir_inc_000032 | https://x.com/unizen_io/status/1767075963475505522 |
+| `bir_src_000173` | bir_bridge_000030 | active | x.com | blockchain_analytics_report | bir_ev_000144 | bir_inc_000032 | https://x.com/peckshield/status/1766210445415727608 |
+| `bir_src_000174` | bir_bridge_000030 | active | twitter.com | official_social | bir_ev_000145 | bir_inc_000032 | https://twitter.com/MartinGranstrom/status/1766898480386101440 |
+| `bir_src_000182` | bir_bridge_000031 | active | x.com | official_social | bir_ev_000152 | bir_inc_000033 | https://x.com/taikoxyz/status/2068858818352865626 |
+| `bir_src_000183` | bir_bridge_000031 | active | x.com | official_social | bir_ev_000157 | bir_inc_000033 | https://x.com/taikoxyz/status/2072533556224548918 |
+| `bir_src_000202` | bir_bridge_000002 | active | x.com | official_social | bir_ev_000175 | bir_inc_000002 | https://x.com/wormhole/status/1489232008521859079 |
+| `bir_src_000203` | bir_bridge_000005 | active | medium.com | official_blog | bir_ev_000176 | bir_inc_000005 | https://medium.com/poly-network/poly-network-mainnet-upgrade-goes-live-d708f4fa2cf1 |
+| `bir_src_000204` | bir_bridge_000005 | active | medium.com | official_blog | bir_ev_000177 | bir_inc_000005 | https://medium.com/poly-network/poly-network-monthly-report-sep-a4cdd9f3fb7a |
+| `bir_src_000207` | bir_bridge_000010 | paused | medium.com | official_blog | bir_ev_000179 | bir_inc_000010 | https://medium.com/thorchain/thorchains-layers-of-security-e308d537acf1 |
+| `bir_src_000208` | bir_bridge_000010 | paused | medium.com | official_blog | bir_ev_000180 | bir_inc_000010 | https://medium.com/thorchain/thorchains-layers-of-security-e308d537acf1 |
+| `bir_src_000209` | bir_bridge_000010 | paused | medium.com | official_blog | bir_ev_000181 | bir_inc_000011 | https://medium.com/thorchain/thorchains-layers-of-security-e308d537acf1 |
+| `bir_src_000217` | bir_bridge_000010 | paused | medium.com | official_blog | bir_ev_000030 | bir_inc_000010 | https://medium.com/thorchain/post-mortem-eth-router-exploits-1-2-and-premature-return-to-trading-incident-2908928c5fb |
+| `bir_src_000218` | bir_bridge_000010 | paused | medium.com | official_blog | bir_ev_000032 | bir_inc_000011 | https://medium.com/thorchain/thorchains-layers-of-security-e308d537acf1 |
+| `bir_src_000220` | bir_bridge_000011 | active | medium.com | postmortem | bir_ev_000035 | bir_inc_000013 | https://medium.com/meter-io/post-mortem-report-meter-passport-12af6b50393d |
+| `bir_src_000221` | bir_bridge_000011 | active | medium.com | postmortem | bir_ev_000037 | bir_inc_000013 | https://medium.com/meter-io/post-mortem-report-meter-passport-12af6b50393d |
+| `bir_src_000226` | bir_bridge_000013 | active | medium.com | security_firm_report | bir_ev_000044 | bir_inc_000015 | https://medium.com/@Knownsec_Blockchain_Lab/knownsec-blockchain-lab-li-finance-attack-incident-6304c6c728c9 |
+| `bir_src_000239` | bir_bridge_000021 | inactive | twitter.com | official_social | bir_ev_000091 | bir_inc_000027 | https://twitter.com/holographxyz/status/1801332482262110301 |
+| `bir_src_000251` | bir_bridge_000028 | active | medium.com | postmortem | bir_ev_000130 | bir_inc_000029 | https://medium.com/@Magpieprotocol/magpie-protocol-smart-contract-vulnerability-post-mortem-f6400db0a25e |
+| `bir_src_000252` | bir_bridge_000028 | active | medium.com | postmortem | bir_ev_000131 | bir_inc_000029 | https://medium.com/@Magpieprotocol/magpie-protocol-smart-contract-vulnerability-post-mortem-f6400db0a25e |
+| `bir_src_000253` | bir_bridge_000028 | active | medium.com | official_blog | bir_ev_000131 | bir_inc_000029 | https://medium.com/@Magpieprotocol/magpie-protocol-charting-a-secure-path-following-exploit-c7046d9fc3ca |
+| `bir_src_000254` | bir_bridge_000028 | active | medium.com | postmortem | bir_ev_000132 | bir_inc_000029 | https://medium.com/@Magpieprotocol/magpie-protocol-smart-contract-vulnerability-post-mortem-f6400db0a25e |
+| `bir_src_000255` | bir_bridge_000028 | active | medium.com | official_blog | bir_ev_000132 | bir_inc_000029 | https://medium.com/@Magpieprotocol/magpie-protocol-charting-a-secure-path-following-exploit-c7046d9fc3ca |
+| `bir_src_000256` | bir_bridge_000031 | active | x.com | official_social | bir_ev_000153 | bir_inc_000033 | https://x.com/taikoxyz/status/2068858818352865626 |
+| `bir_src_000257` | bir_bridge_000031 | active | x.com | official_social | bir_ev_000154 | bir_inc_000033 | https://x.com/taikoxyz/status/2068858818352865626 |
+| `bir_src_000258` | bir_bridge_000031 | active | x.com | official_social | bir_ev_000155 | bir_inc_000033 | https://x.com/taikoxyz/status/2072533556224548918 |
+| `bir_src_000259` | bir_bridge_000031 | active | x.com | official_social | bir_ev_000158 | bir_inc_000033 | https://x.com/taikoxyz/status/2072533556224548918 |
+
+## Reused URLs
+
+```text
+Repeated normalized URLs 46
+```
+
+- https://allbridge.medium.com/allbridge-core-updates-following-the-relaunch-9f7716eeb5da
+  - evidence: bir_src_000053, bir_src_000210, bir_src_000222, bir_src_000224
+  - events: bir_ev_000042, bir_ev_000182, bir_ev_000039, bir_ev_000040
+- https://arxiv.org/abs/2501.03423
+  - evidence: bir_src_000004, bir_src_000008, bir_src_000012, bir_src_000016
+  - events: bir_ev_000006, bir_ev_000009, bir_ev_000012
+- https://forum.conflux.fun/t/announcement-shuttleflow-is-closing-its-services-on-2023-11-08-asset-bridging-operations-will-migrate-to-zero-gravity/19507
+  - evidence: bir_src_000144, bir_src_000145, bir_src_000146, bir_src_000147
+  - events: bir_ev_000121, bir_ev_000122, bir_ev_000123
+- https://forum.cosmos.network/t/cosmos-sdk-ibc-vulnerability-retrospective-security-advisories-dragonberry-and-elderflower-october-2022/8735
+  - evidence: bir_src_000120, bir_src_000242, bir_src_000244, bir_src_000246
+  - events: bir_ev_000100, bir_ev_000097, bir_ev_000098, bir_ev_000099
+- https://medium.com/@Magpieprotocol/magpie-protocol-smart-contract-vulnerability-post-mortem-f6400db0a25e
+  - evidence: bir_src_000156, bir_src_000251, bir_src_000252, bir_src_000254
+  - events: bir_ev_000133, bir_ev_000130, bir_ev_000131, bir_ev_000132
+- https://medium.com/pnetwork/pgala-post-mortem-measures-taken-to-safeguard-the-ecosystem-from-malicious-actors-and-recovery-6407048f4497
+  - evidence: bir_src_000088, bir_src_000232, bir_src_000233, bir_src_000234
+  - events: bir_ev_000070, bir_ev_000071, bir_ev_000072, bir_ev_000073
+- https://medium.com/thorchain/thorchains-layers-of-security-e308d537acf1
+  - evidence: bir_src_000207, bir_src_000208, bir_src_000209, bir_src_000218
+  - events: bir_ev_000179, bir_ev_000180, bir_ev_000181, bir_ev_000032
+- https://forum.cosmos.network/t/ibc-security-advisory-dragonberry/7702
+  - evidence: bir_src_000119, bir_src_000243, bir_src_000245
+  - events: bir_ev_000097, bir_ev_000098, bir_ev_000099
+- https://medium.com/@Magpieprotocol/magpie-protocol-charting-a-secure-path-following-exploit-c7046d9fc3ca
+  - evidence: bir_src_000157, bir_src_000253, bir_src_000255
+  - events: bir_ev_000134, bir_ev_000131, bir_ev_000132
+- https://medium.com/meter-io/post-mortem-report-meter-passport-12af6b50393d
+  - evidence: bir_src_000048, bir_src_000220, bir_src_000221
+  - events: bir_ev_000036, bir_ev_000035, bir_ev_000037
+- https://medium.com/pnetwork/pnetwork-post-mortem-pbtc-on-bsc-exploit-170890c58d5f
+  - evidence: bir_src_000086, bir_src_000230, bir_src_000231
+  - events: bir_ev_000067, bir_ev_000068, bir_ev_000069
+- https://medium.com/thorchain/post-mortem-eth-router-exploits-1-2-and-premature-return-to-trading-incident-2908928c5fb
+  - evidence: bir_src_000040, bir_src_000042, bir_src_000217
+  - events: bir_ev_000029, bir_ev_000031, bir_ev_000030
+- https://twitter.com/syndicateio/status/2049352309784904187
+  - evidence: bir_src_000193, bir_src_000261, bir_src_000262
+  - events: bir_ev_000167, bir_ev_000168, bir_ev_000170
+- https://www.bnbchain.org/en/blog/bnb-chain-a-decentralized-response
+  - evidence: bir_src_000022, bir_src_000205, bir_src_000214
+  - events: bir_ev_000017, bir_ev_000178, bir_ev_000016
+- https://www.halborn.com/blog/post/explained-the-synapse-and-nerve-bridge-hacks-november-2021
+  - evidence: bir_src_000105, bir_src_000109, bir_src_000237
+  - events: bir_ev_000084, bir_ev_000088, bir_ev_000087
+- https://www.numencyber.com/transit-swap-hack-analysis
+  - evidence: bir_src_000150, bir_src_000249, bir_src_000250
+  - events: bir_ev_000124, bir_ev_000125, bir_ev_000126
+- https://x.com/taikoxyz/status/2068858818352865626
+  - evidence: bir_src_000182, bir_src_000256, bir_src_000257
+  - events: bir_ev_000152, bir_ev_000153, bir_ev_000154
+- https://x.com/taikoxyz/status/2072533556224548918
+  - evidence: bir_src_000183, bir_src_000258, bir_src_000259
+  - events: bir_ev_000157, bir_ev_000155, bir_ev_000158
+- https://aurora.dev/blog/the-rainbow-bridge-is-back
+  - evidence: bir_src_000100, bir_src_000235
+  - events: bir_ev_000080, bir_ev_000079
+- https://blocksec.com/blog/the-analysis-of-nerve-bridge-security-incident
+  - evidence: bir_src_000108, bir_src_000238
+  - events: bir_ev_000087, bir_ev_000088
+- https://blog.roninchain.com/p/the-ronin-bridge-is-open-
+  - evidence: bir_src_000200, bir_src_000201
+  - events: bir_ev_000003, bir_ev_000174
+- https://blog.thorchain.org/thorchain-exploit-report-1
+  - evidence: bir_src_000045, bir_src_000219
+  - events: bir_ev_000033, bir_ev_000034
+- https://chain-swap.medium.com/chainswap-post-mortem-and-compensation-plan-90cad50898ab
+  - evidence: bir_src_000071, bir_src_000228
+  - events: bir_ev_000052, bir_ev_000053
+- https://chain-swap.medium.com/chainswap-re-launch-we-are-live-5e85d2f9c80f
+  - evidence: bir_src_000074, bir_src_000211
+  - events: bir_ev_000056, bir_ev_000183
+- https://cointelegraph.com/news/allbridge-exploiter-returns-most-of-the-573k-stolen-in-attack
+  - evidence: bir_src_000055, bir_src_000223
+  - events: bir_ev_000040, bir_ev_000039
+- https://cointelegraph.com/news/li-finance-protocol-loses-600-000-in-latest-defi-exploit
+  - evidence: bir_src_000058, bir_src_000225
+  - events: bir_ev_000044, bir_ev_000043
+- https://commons.syndicate.io
+  - evidence: bir_src_000195, bir_src_000263
+  - events: bir_ev_000173, bir_ev_000171
+- https://dailycoin.com/celer-network-suspects-dns-hijacking-shuts-its-cbridge
+  - evidence: bir_src_000079, bir_src_000229
+  - events: bir_ev_000058, bir_ev_000059
+- https://forum.cosmos.network/t/ibc-security-advisory-huckleberry/10731
+  - evidence: bir_src_000122, bir_src_000247
+  - events: bir_ev_000101, bir_ev_000102
+- https://ibcprotocol.dev/blog/ibc-turns-3
+  - evidence: bir_src_000118, bir_src_000241
+  - events: bir_ev_000096, bir_ev_000095
+- https://li.fi/knowledge-hub/incident-report-16th-july
+  - evidence: bir_src_000060, bir_src_000227
+  - events: bir_ev_000046, bir_ev_000045
+- https://medium.com/@Knownsec_Blockchain_Lab/knownsec-blockchain-lab-li-finance-attack-incident-6304c6c728c9
+  - evidence: bir_src_000057, bir_src_000226
+  - events: bir_ev_000043, bir_ev_000044
+- https://medium.com/avalancheavax/avalanche-bridge-secure-cross-chain-asset-transfers-using-intel-sgx-b04f5a4c7ad1
+  - evidence: bir_src_000136, bir_src_000139
+  - events: bir_ev_000113, bir_ev_000116
+- https://medium.com/avalancheavax/new-avalanche-bridge-builds-on-intel-sgx-technology-in-breakthrough-for-cross-chain-8f854e0e72e0
+  - evidence: bir_src_000135, bir_src_000138
+  - events: bir_ev_000112, bir_ev_000115
+- https://medium.com/renprotocol/moving-on-from-alameda-da62a823ce93
+  - evidence: bir_src_000129, bir_src_000130
+  - events: bir_ev_000107, bir_ev_000108
+- https://slowmist.medium.com/cross-chain-dex-aggregator-transit-swap-hacked-analysis-74ba39c22020
+  - evidence: bir_src_000149, bir_src_000248
+  - events: bir_ev_000124, bir_ev_000125
+- https://synapseprotocol.medium.com/11-06-2021-post-mortem-of-synapse-metapool-exploit-3003b4df4ef4
+  - evidence: bir_src_000104, bir_src_000236
+  - events: bir_ev_000083, bir_ev_000085
+- https://twitter.com/holographxyz/status/1801332482262110301
+  - evidence: bir_src_000112, bir_src_000239
+  - events: bir_ev_000090, bir_ev_000091
+- https://twitter.com/MultichainOrg/status/1677180114227056641
+  - evidence: bir_src_000028, bir_src_000216
+  - events: bir_ev_000020, bir_ev_000021
+- https://www.bnbchain.org/en/blog/bnb-chain-ecosystem-update
+  - evidence: bir_src_000021, bir_src_000215
+  - events: bir_ev_000016, bir_ev_000017
+- https://www.chainalysis.com/blog/poly-network-hack-august-2021
+  - evidence: bir_src_000017, bir_src_000213
+  - events: bir_ev_000013, bir_ev_000014
+- https://www.coindesk.com/tech/2024/06/13/hlg-down-over-60-as-exploiter-mints-1-billion-new-tokens
+  - evidence: bir_src_000113, bir_src_000240
+  - events: bir_ev_000090, bir_ev_000091
+- https://www.everclear.org/blog
+  - evidence: bir_src_000189, bir_src_000260
+  - events: bir_ev_000163, bir_ev_000159
+- https://www.reuters.com/technology/cybersecurity/cryptos-biggest-hacks-heists-after-15-billion-theft-bybit-2025-02-24
+  - evidence: bir_src_000006, bir_src_000020
+  - events: bir_ev_000005, bir_ev_000015
+- https://www.wired.com/story/poly-network-theft-apple-corellium-suit-security-news
+  - evidence: bir_src_000018, bir_src_000212
+  - events: bir_ev_000014, bir_ev_000013
+- https://x.com/wormhole/status/1489232008521859079
+  - evidence: bir_src_000064, bir_src_000202
+  - events: bir_ev_000005, bir_ev_000175
+
+## Raw gap IDs
+
+### Bridges without primary evidence
+
+None.
+
+### Incidents without tier 1 evidence
+
+- `bir_inc_000026`
+
+### Events without tier 1 evidence
+
+- `bir_ev_000001`
+- `bir_ev_000006`
+- `bir_ev_000007`
+- `bir_ev_000009`
+- `bir_ev_000012`
+- `bir_ev_000015`
+- `bir_ev_000051`
+- `bir_ev_000059`
+- `bir_ev_000060`
+- `bir_ev_000064`
+- `bir_ev_000084`
+- `bir_ev_000087`
+- `bir_ev_000088`
+- `bir_ev_000093`
+- `bir_ev_000126`
+- `bir_ev_000127`
+- `bir_ev_000136`
+- `bir_ev_000139`
+- `bir_ev_000146`
+- `bir_ev_000150`
+- `bir_ev_000151`
+- `bir_ev_000156`
+- `bir_ev_000164`
+- `bir_ev_000166`
+- `bir_ev_000169`
+

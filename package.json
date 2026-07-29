@@ -16,6 +16,8 @@
     "audit:full-corpus:test": "node scripts/test-full-corpus-audit.mjs",
     "audit:source-count": "node scripts/check-source-count-equality.mjs",
     "audit:source-count:test": "node scripts/test-source-count-equality.mjs",
+    "audit:source-quality": "node scripts/check-source-quality-baseline.mjs",
+    "audit:source-quality:test": "node scripts/test-source-quality-baseline.mjs",
     "public:stage": "node scripts/build-public-data.mjs",
     "public:publish": "node scripts/publish-machine-data.mjs",
     "public:check": "node scripts/check-machine-data.mjs",
