@@ -24,6 +24,7 @@
     "public:build": "node scripts/build-public-site.mjs",
     "dist:check": "node scripts/check-dist-consistency.mjs",
     "dist:test": "node scripts/test-dist-consistency.mjs",
+    "production:content:test": "node scripts/test-production-content-equality.mjs",
     "production:verify": "node scripts/verify-production.mjs"
   },
   "dependencies": {
