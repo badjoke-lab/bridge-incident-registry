@@ -2,8 +2,13 @@ import process from "node:process";
 import { loadCanonicalData } from "./lib/canonical-data.mjs";
 import { canonicalJsonEqual, firstRecordMismatch } from "./lib/canonical-equality.mjs";
 import { buildLegacyRedirects } from "./lib/legacy-redirects.mjs";
+import { buildPublicRecords } from "./lib/public-records.mjs";
 
 const canonical = loadCanonicalData(process.cwd(), process.env);
+const expectedPublic = buildPublicRecords({
+  ...canonical,
+  generatedAt: canonical.latestVerifiedAt ?? "1970-01-01T00:00:00.000Z"
+});
 const origin = (process.env.PUBLIC_SITE_ORIGIN ?? canonical.config.canonical_origin).replace(/\/$/, "");
 const timeoutMs = Number(process.env.BIR_PRODUCTION_TIMEOUT_MS ?? 20000);
 const publicationAttempts = Number(process.env.BIR_PUBLICATION_ATTEMPTS ?? 20);
@@ -73,10 +78,10 @@ async function publicationContentState(attempt) {
         mismatches.push(`${key}: invalid JSON: ${error.message}`);
         continue;
       }
-      if (!canonicalJsonEqual(actual, canonical.data[key])) {
-        const mismatch = firstRecordMismatch(actual, canonical.data[key]);
+      if (!canonicalJsonEqual(actual, expectedPublic[key])) {
+        const mismatch = firstRecordMismatch(actual, expectedPublic[key]);
         const location = mismatch?.id ?? (mismatch?.index === null ? "dataset" : `index ${mismatch?.index}`);
-        mismatches.push(`${key}: canonical content mismatch at ${location}; ${mismatch?.reason ?? "unknown difference"}`);
+        mismatches.push(`${key}: public content mismatch at ${location}; ${mismatch?.reason ?? "unknown difference"}`);
       }
     } catch (error) {
       statuses[key] = null;
@@ -227,7 +232,7 @@ async function verifyHtml(route, identifier = null) {
   if (!hasCacheSignal) errors.push(`${route}: no cache observation header present`);
 }
 
-function compareCanonicalRecords(label, actual, expected) {
+function comparePublicRecords(label, actual, expected) {
   if (!Array.isArray(actual)) {
     errors.push(`${label}: expected an array`);
     return;
@@ -235,7 +240,7 @@ function compareCanonicalRecords(label, actual, expected) {
   if (!canonicalJsonEqual(actual, expected)) {
     const mismatch = firstRecordMismatch(actual, expected);
     const location = mismatch?.id ?? (mismatch?.index === null ? "dataset" : `index ${mismatch?.index}`);
-    errors.push(`${label}: canonical content mismatch at ${location}; ${mismatch?.reason ?? "unknown difference"}`);
+    errors.push(`${label}: public content mismatch at ${location}; ${mismatch?.reason ?? "unknown difference"}`);
   }
 }
 
@@ -269,11 +274,11 @@ if (manifest) {
   if (manifest.canonical_only !== true || manifest.data_safety?.canonical_only !== true) errors.push("manifest: canonical-only markers missing");
 }
 for (const key of canonicalKeys) {
-  compareCanonicalRecords(`/data/${key}.json`, publicData[key], canonical.data[key]);
+  comparePublicRecords(`/data/${key}.json`, publicData[key], expectedPublic[key]);
 }
 
 const publicAssets = await fetchJson("/data/reference/assets.json");
-if (publicAssets && !canonicalJsonEqual(publicAssets, canonical.data.assets)) {
+if (publicAssets && !canonicalJsonEqual(publicAssets, expectedPublic.references.assets)) {
   errors.push("/data/reference/assets.json: reference data mismatch");
 }
 
@@ -324,7 +329,7 @@ console.log("Production verification passed.");
 console.log(JSON.stringify({
   origin,
   record_counts: canonical.recordCounts,
-  canonical_content_match: true,
+  canonical_public_content_match: true,
   html_routes: staticRoutes.length + canonical.data.bridges.length + canonical.data.incidents.length,
   redirects: buildLegacyRedirects(canonical.data).length,
   observations
