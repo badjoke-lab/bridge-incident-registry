@@ -31,15 +31,15 @@ BIR is not:
 
 The static registry application, four-record canonical model, validation pipeline, list/detail pages, methodology pages, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
 
-Phase 2 record expansion is complete through Batch 7. Phase 3 reimbursement and restart normalization is production-verified with zero reimbursement or reopening warnings. The `source_count` contract, safe mechanical normalization, and remediation Batches 1 through 3 are merged and production-verified. Batch 3 added ten event-scoped evidence records, synchronized four affected incident derived counts, corrected two stale event counts, and reduced unresolved event mismatches from 27 to 17.
+Phase 2 record expansion is complete through Batch 7. Phase 3 reimbursement and restart normalization is production-verified with zero reimbursement or reopening warnings. The `source_count` contract, safe mechanical normalization, and remediation Batches 1 through 3 are production-verified. Batch 4 is implemented on a review branch with fifteen additional event-scoped evidence records, three incident derived-count synchronizations, no event count reductions, and an expected reduction from 17 to 7 remaining event mismatches.
 
-Current canonical counts:
+Current canonical review-branch counts:
 
 ```text
 Bridges     33
 Incidents   34
 Events      183
-Evidence    241
+Evidence    256
 ```
 
 The canonical datasets are the only source of truth:
@@ -106,6 +106,8 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/audits/phase3-source-count-batch3-canonical-2026-07-29.md` — Batch 3 canonical migration record
 - `docs/audits/production-deployment-retrigger-batch3-2026-07-29.md` — Batch 3 deployment retrigger record
 - `docs/audits/production-verification-phase3-source-count-batch3-2026-07-29.md` — Batch 3 production audit
+- `docs/audits/phase3-source-count-review-batch4-2026-07-29.md` — Batch 4 source-resolution boundary
+- `docs/audits/phase3-source-count-batch4-canonical-2026-07-29.md` — Batch 4 canonical migration record
 - `docs/batches/` — reviewed batch scopes
 
 ## Architecture
