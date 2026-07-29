@@ -3,13 +3,13 @@
 Status: active  
 Updated: 2026-07-29
 
-## Canonical state
+## Canonical review-branch state
 
 ```text
 Bridges     33
 Incidents   34
 Events      183
-Evidence    241
+Evidence    256
 ```
 
 Canonical source files:
@@ -18,7 +18,7 @@ Canonical source files:
 data/bridges.json       33
 data/incidents.json     34
 data/events.json        183
-data/evidence.json      241
+data/evidence.json      256
 ```
 
 ## Phase 2 record expansion
@@ -44,7 +44,8 @@ Safe source-count normalization      merged — PRs #79–#80
 Source-count remediation Batch 1     complete — PRs #81–#83
 Source-count remediation Batch 2     complete — PRs #84–#88
 Source-count remediation Batch 3     complete — PRs #89–#92
-Batch 3 production publication       verified — run 30424531817
+Source-count review Batch 4          merged — PR #93
+Source-count migration Batch 4       implemented — PR #94
 ```
 
 ## Source-count state
@@ -55,23 +56,21 @@ After safe normalization          47
 After Batch 1                     37
 After Batch 2                     27
 After Batch 3                     17
+After Batch 4                      7
 Incident mismatches                0
 ```
 
-Batch 3 changes:
+Batch 4 changes:
 
-- ten reviewed event-scoped evidence additions;
-- four affected incident derived-count synchronizations totaling eight added links;
-- `bir_ev_000079.source_count` corrected from 2 to 1;
-- `bir_ev_000096.source_count` corrected from 2 to 1;
+- fifteen reviewed event-scoped evidence additions;
+- three affected incident derived-count synchronizations totaling nine added links;
+- no event `source_count` corrections;
 - no event text, dates, statuses, amounts, or historical claims changed.
 
 Records:
 
-- `docs/audits/phase3-source-count-review-batch3-2026-07-29.md`
-- `docs/audits/phase3-source-count-batch3-canonical-2026-07-29.md`
-- `docs/audits/production-deployment-retrigger-batch3-2026-07-29.md`
-- `docs/audits/production-verification-phase3-source-count-batch3-2026-07-29.md`
+- `docs/audits/phase3-source-count-review-batch4-2026-07-29.md`
+- `docs/audits/phase3-source-count-batch4-canonical-2026-07-29.md`
 
 ## Latest completed production checkpoint
 
@@ -86,12 +85,13 @@ Verified HTML routes   72
 Verified redirects     74
 ```
 
-The first Batch 3 production-verification attempt failed correctly because production remained at the Batch 2 state. A docs-only main push retriggered Cloudflare Pages. The unchanged verifier then detected the canonical production state on attempt 1 and passed every public-contract assertion.
+Batch 3 remains the latest production-verified checkpoint until PR #94 merges and the live publication verifier passes. The Batch 4 review branch has removed all temporary generator, package-hook, and workflow-permission changes.
 
 ## Next
 
-1. review source-count Batch 4 against the remaining 17 event mismatches;
-2. migrate only source-backed event evidence links or correct unsupported stale counts;
-3. continue bounded batches until exact equality is reached;
-4. promote exact source-count equality to a hard CI gate only at zero mismatches;
-5. strengthen primary-source and archive coverage.
+1. complete normal CI for PR #94;
+2. merge the Batch 4 canonical migration;
+3. verify production at 33 / 34 / 183 / 256 with all 72 canonical HTML routes;
+4. complete the final source-count batch against the remaining 7 event mismatches;
+5. promote exact source-count equality to a hard CI gate at zero mismatches;
+6. strengthen primary-source and archive coverage.
