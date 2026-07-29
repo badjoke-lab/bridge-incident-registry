@@ -6,6 +6,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write
+
 jobs:
   check:
     runs-on: ubuntu-latest
@@ -36,8 +39,14 @@ jobs:
       - name: Audit full canonical corpus
         run: npm run audit:full-corpus
 
+      - name: Audit exact source counts
+        run: npm run audit:source-count
+
       - name: Test full-corpus audit failures
         run: npm run audit:full-corpus:test
+
+      - name: Test source-count equality failures
+        run: npm run audit:source-count:test
 
       - name: Build static site
         run: npm run build
