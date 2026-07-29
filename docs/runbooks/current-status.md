@@ -50,6 +50,8 @@ Final source-count migration         complete — PR #97
 Final deployment retrigger           complete — PR #99
 Final production publication         verified — run 30427603790
 Hard source-count equality gate      active
+Source-quality baseline              complete — PR #100
+Source-quality no-regression gate    active
 ```
 
 ## Source-count state
@@ -82,6 +84,39 @@ Records:
 - `docs/audits/production-deployment-retrigger-final-source-count-2026-07-29.md`
 - `docs/audits/production-verification-phase3-source-count-final-2026-07-29.md`
 
+## Source-quality baseline
+
+```text
+Primary evidence                         181 / 263
+Tier 1 evidence                          199 / 263
+Official-domain evidence                 121 / 263
+Evidence with archived_url                 0 / 263
+Bridges without primary evidence          0 / 33
+Bridges without tier 1 evidence           0 / 33
+Incidents without primary evidence        2 / 34
+Incidents without tier 1 evidence         1 / 34
+Events without primary evidence          36 / 183
+Events without tier 1 evidence           25 / 183
+Terminal evidence without archive        76
+Risky-host evidence without archive      90
+X/Twitter evidence without archive       29
+Unknown URL status                        2
+Unique archive-priority evidence        132
+```
+
+The permanent source-quality checker treats these gap and archive-risk values as ceilings. New work may reduce them but may not increase them. Invalid source URLs and invalid archive URLs are blocking failures. Controlled fixtures prove bridge-primary, event-tier-1, and risky-host archive regressions are rejected.
+
+Primary-source incident gaps:
+
+- `bir_inc_000015` — LI.FI 2022 approval-drain exploit;
+- `bir_inc_000026` — Nerve Bridge 2021 metapool exploit.
+
+The Nerve incident is the only incident with no tier-1 evidence. Twenty-five events still have no tier-1 evidence.
+
+Record:
+
+- `docs/audits/phase3-source-quality-baseline-2026-07-29.md`
+
 ## Latest completed production checkpoint
 
 ```text
@@ -100,9 +135,9 @@ The first final production-verification attempt correctly failed because product
 
 ## Next
 
-1. strengthen primary-source coverage;
-2. strengthen archive coverage;
-3. harden URLs and domain-state handling;
-4. strengthen remaining validators;
-5. proceed to monitoring and candidate collection;
-6. complete v1 documentation, accessibility, performance, and release checks.
+1. close the Nerve Bridge incident tier-1 and primary-source gap;
+2. close the LI.FI incident primary-source gap;
+3. remediate the 25 event tier-1 gaps in bounded batches;
+4. archive terminal and risky-host evidence, beginning with the 132-item priority queue;
+5. resolve the two unknown URL-status records;
+6. strengthen remaining validators and proceed to monitoring, candidate collection, and v1 hardening.
