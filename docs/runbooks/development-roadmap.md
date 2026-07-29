@@ -5,7 +5,7 @@ Updated: 2026-07-29
 
 GitHub state and canonical JSON are authoritative.
 
-## Canonical review-branch baseline
+## Canonical baseline
 
 ```text
 Bridges     33
@@ -29,27 +29,25 @@ Phase 3  Full-corpus quality strengthening         active
          Source-count remediation Batch 2          complete — PRs #84–#88
          Source-count remediation Batch 3          complete — PRs #89–#92
          Source-count remediation Batch 4          complete — PRs #93–#95
-         Final source-count migration              implemented — PRs #96–#97
-         Hard source-count equality gate           implemented — PR #97
+         Final source-count migration              complete — PRs #96–#99
+         Hard source-count equality gate           active
 Phase 4  Public contract stabilization             complete
 Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
 ```
 
-## Latest production checkpoint
+## Latest publication checkpoint
 
 ```text
-Canonical data PR        #94
-Canonical merge          fd210052b40ff038156b22d116848751990b5633
-Publication trigger      44e785c0e286ff16a5bcd1fddc1e9ce2b9fbc37c
-Production verify run    30426111329
-Canonical normal CI run  30425990662
-Verified state           33 / 34 / 183 / 256
+Canonical data PR        #97
+Canonical merge          e03386ab6d1242e2918700839b8449faff5c40c6
+Deployment retrigger     be5c6242647feb36c14d35f65e945f4e437ada70
+Production verify run    30427603790
+Canonical normal CI run  30427464812
+Verified state           33 / 34 / 183 / 263
 Verified HTML routes     72
 Verified redirects       74
 ```
-
-Batch 4 remains the production baseline until the final canonical migration is merged and explicitly verified live.
 
 ## Source-count trajectory
 
@@ -65,7 +63,7 @@ Incident mismatches         0
 Event mismatches            0
 ```
 
-## Implemented final migration
+## Completed final migration
 
 ```text
 New event-scoped evidence records    7
@@ -75,12 +73,14 @@ Resulting evidence                    263
 Remaining source-count mismatches       0
 ```
 
-The reviewed links satisfy all remaining event counts. Exact equality is now enforced by a permanent checker and two controlled drift fixtures in normal CI.
+The reviewed links satisfy all remaining event counts. Exact equality is enforced by a permanent checker and two controlled drift fixtures in normal CI. Production publication has been verified at the exact-equality state.
 
 Records:
 
 - `docs/audits/phase3-source-count-review-final-2026-07-29.md`
 - `docs/audits/phase3-source-count-final-canonical-2026-07-29.md`
+- `docs/audits/production-deployment-retrigger-final-source-count-2026-07-29.md`
+- `docs/audits/production-verification-phase3-source-count-final-2026-07-29.md`
 
 ## Production publication gate
 
@@ -94,13 +94,12 @@ After convergence, every count, ID, route, reference, metadata, sitemap, robots,
 
 ## Remaining roadmap
 
-1. merge and production-verify the final source-count migration;
-2. strengthen primary-source and archive coverage;
-3. harden URLs and archives;
-4. strengthen remaining validators;
-5. complete public-contract compatibility review;
-6. add monitoring with no automatic publication;
-7. complete v1 documentation, accessibility, performance, and release checks.
+1. strengthen primary-source and archive coverage;
+2. harden URLs and archives;
+3. strengthen remaining validators;
+4. complete public-contract compatibility review;
+5. add monitoring with no automatic publication;
+6. complete v1 documentation, accessibility, performance, and release checks.
 
 ## Permanent rules
 
