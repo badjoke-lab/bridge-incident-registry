@@ -31,9 +31,9 @@ BIR is not:
 
 The static registry application, four-record canonical model, validation pipeline, list/detail pages, methodology pages, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
 
-Phase 2 record expansion is complete through Batch 7. Phase 3 reimbursement and restart normalization is production-verified with zero reimbursement or reopening warnings. The `source_count` contract, safe mechanical normalization, and remediation Batches 1 and 2 are production-verified. Batch 3 is implemented on a review branch with ten additional event-scoped evidence records, four incident derived-count synchronizations, two event count corrections, and an expected reduction from 27 to 17 remaining event mismatches.
+Phase 2 record expansion is complete through Batch 7. Phase 3 reimbursement and restart normalization is production-verified with zero reimbursement or reopening warnings. The `source_count` contract, safe mechanical normalization, and remediation Batches 1 through 3 are merged and production-verified. Batch 3 added ten event-scoped evidence records, synchronized four affected incident derived counts, corrected two stale event counts, and reduced unresolved event mismatches from 27 to 17.
 
-Current canonical review-branch counts:
+Current canonical counts:
 
 ```text
 Bridges     33
@@ -104,6 +104,8 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/audits/production-deployment-retrigger-batch2-2026-07-28.md` — Batch 2 deployment retrigger record
 - `docs/audits/phase3-source-count-review-batch3-2026-07-29.md` — Batch 3 source-resolution boundary
 - `docs/audits/phase3-source-count-batch3-canonical-2026-07-29.md` — Batch 3 canonical migration record
+- `docs/audits/production-deployment-retrigger-batch3-2026-07-29.md` — Batch 3 deployment retrigger record
+- `docs/audits/production-verification-phase3-source-count-batch3-2026-07-29.md` — Batch 3 production audit
 - `docs/batches/` — reviewed batch scopes
 
 ## Architecture
