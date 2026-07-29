@@ -31,6 +31,8 @@ Phase 3  Full-corpus quality strengthening         active
          Source-count remediation Batch 4          complete — PRs #93–#95
          Final source-count migration              complete — PRs #96–#99
          Hard source-count equality gate           active
+         Source-quality baseline                   complete — PR #100
+         Source-quality no-regression gate         active
 Phase 4  Public contract stabilization             complete
 Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
@@ -82,6 +84,39 @@ Records:
 - `docs/audits/production-deployment-retrigger-final-source-count-2026-07-29.md`
 - `docs/audits/production-verification-phase3-source-count-final-2026-07-29.md`
 
+## Source-quality baseline
+
+```text
+Primary evidence                         181 / 263
+Tier 1 evidence                          199 / 263
+Official-domain evidence                 121 / 263
+Evidence with archived_url                 0 / 263
+Bridges without primary evidence          0
+Bridges without tier 1 evidence           0
+Incidents without primary evidence        2
+Incidents without tier 1 evidence         1
+Events without primary evidence          36
+Events without tier 1 evidence           25
+Terminal evidence without archive        76
+Risky-host evidence without archive      90
+Unknown URL status                        2
+Unique archive-priority evidence        132
+```
+
+Normal CI now blocks regressions beyond these ceilings and rejects invalid source and archive URLs. Three controlled fixtures prove bridge-primary, event-tier-1, and risky-host archive regressions fail. The ceilings must be tightened as remediation batches reduce each queue.
+
+Immediate source-quality targets:
+
+1. `bir_inc_000026` — Nerve Bridge 2021 metapool exploit: close both primary and tier-1 gaps;
+2. `bir_inc_000015` — LI.FI 2022 approval-drain exploit: close the primary-source gap;
+3. the 25 events without tier-1 evidence;
+4. the 132-item archive-priority queue, starting with terminal bridges and X/Twitter sources;
+5. the two evidence records with unknown URL status.
+
+Record:
+
+- `docs/audits/phase3-source-quality-baseline-2026-07-29.md`
+
 ## Production publication gate
 
 ```text
@@ -94,12 +129,14 @@ After convergence, every count, ID, route, reference, metadata, sitemap, robots,
 
 ## Remaining roadmap
 
-1. strengthen primary-source and archive coverage;
-2. harden URLs and archives;
-3. strengthen remaining validators;
-4. complete public-contract compatibility review;
-5. add monitoring with no automatic publication;
-6. complete v1 documentation, accessibility, performance, and release checks.
+1. close incident-level primary and tier-1 gaps;
+2. reduce event-level tier-1 and primary gaps in bounded batches;
+3. add archive captures for terminal and risky-host evidence and tighten archive-risk ceilings;
+4. resolve unknown URL states and harden domain-state handling;
+5. strengthen remaining validators;
+6. complete public-contract compatibility review;
+7. add monitoring with no automatic publication;
+8. complete v1 documentation, accessibility, performance, and release checks.
 
 ## Permanent rules
 
@@ -113,3 +150,4 @@ After convergence, every count, ID, route, reference, metadata, sitemap, robots,
 8. A relaunch announcement is not proof of reimbursement completion.
 9. Historical SHAs are not live branch pointers.
 10. Every PR must pass checks appropriate to its stage.
+11. Source-quality gap and archive-risk ceilings may decrease but must not increase.
