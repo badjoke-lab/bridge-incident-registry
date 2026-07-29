@@ -9,7 +9,7 @@ Updated: 2026-07-29
 Bridges     33
 Incidents   34
 Events      183
-Evidence    263
+Evidence    265
 ```
 
 Canonical source files:
@@ -18,7 +18,7 @@ Canonical source files:
 data/bridges.json       33
 data/incidents.json     34
 data/events.json        183
-data/evidence.json      263
+data/evidence.json      265
 ```
 
 ## Phase 2 record expansion
@@ -52,70 +52,45 @@ Final production publication         verified — run 30427603790
 Hard source-count equality gate      active
 Source-quality baseline              complete — PR #100
 Source-quality no-regression gate    active
+Source-quality remediation Batch 1   canonical complete — PR #101
 ```
 
-## Source-count state
+## Exact source-count state
 
 ```text
-Initial total mismatches          60
-After safe normalization          47
-After Batch 1                     37
-After Batch 2                     27
-After Batch 3                     17
-After Batch 4                      7
-After final migration              0
-Incident mismatches                0
-Event mismatches                   0
+Incident mismatches  0
+Event mismatches     0
 ```
 
-Final migration changes:
-
-- seven reviewed event-scoped evidence additions;
-- two affected incident derived-count synchronizations totaling six added links;
-- no event `source_count` corrections;
-- permanent exact-equality checker added;
-- controlled incident and event drift fixtures added;
-- no event text, dates, statuses, amounts, or historical claims changed.
-
-Records:
-
-- `docs/audits/phase3-source-count-review-final-2026-07-29.md`
-- `docs/audits/phase3-source-count-final-canonical-2026-07-29.md`
-- `docs/audits/production-deployment-retrigger-final-source-count-2026-07-29.md`
-- `docs/audits/production-verification-phase3-source-count-final-2026-07-29.md`
-
-## Source-quality baseline
+## Source-quality state
 
 ```text
-Primary evidence                         181 / 263
-Tier 1 evidence                          199 / 263
-Official-domain evidence                 121 / 263
-Evidence with archived_url                 0 / 263
+Primary evidence                         183 / 265
+Tier 1 evidence                          201 / 265
+Official-domain evidence                 123 / 265
+Evidence with archived_url                 0 / 265
 Bridges without primary evidence          0 / 33
 Bridges without tier 1 evidence           0 / 33
-Incidents without primary evidence        2 / 34
+Incidents without primary evidence        1 / 34
 Incidents without tier 1 evidence         1 / 34
-Events without primary evidence          36 / 183
+Events without primary evidence          34 / 183
 Events without tier 1 evidence           25 / 183
 Terminal evidence without archive        76
 Risky-host evidence without archive      90
 X/Twitter evidence without archive       29
 Unknown URL status                        2
-Unique archive-priority evidence        132
 ```
 
-The permanent source-quality checker treats these gap and archive-risk values as ceilings. New work may reduce them but may not increase them. Invalid source URLs and invalid archive URLs are blocking failures. Controlled fixtures prove bridge-primary, event-tier-1, and risky-host archive regressions are rejected.
+Batch 1 resolved the LI.FI 2022 incident primary-source gap with LI.FI's first-party postmortem. The incident now records completed operator-funded reimbursement of all 29 affected wallets, while attacker-fund recovery remains `none`.
 
-Primary-source incident gaps:
+Remaining incident-level gap:
 
-- `bir_inc_000015` — LI.FI 2022 approval-drain exploit;
-- `bir_inc_000026` — Nerve Bridge 2021 metapool exploit.
+- `bir_inc_000026` — Nerve Bridge 2021 metapool exploit: no reviewed first-party incident source and no Tier 1 incident evidence.
 
-The Nerve incident is the only incident with no tier-1 evidence. Twenty-five events still have no tier-1 evidence.
-
-Record:
+Records:
 
 - `docs/audits/phase3-source-quality-baseline-2026-07-29.md`
+- `docs/audits/phase3-source-quality-remediation-batch1-2026-07-29.md`
 
 ## Latest completed production checkpoint
 
@@ -131,12 +106,12 @@ Verified redirects     74
 Generated at           2026-07-29T06:23:49.183Z
 ```
 
-The first final production-verification attempt correctly failed because production remained at the 256-evidence state. The docs-only retrigger caused Cloudflare Pages to publish, after which the unchanged verifier passed on attempt 1.
+The live production checkpoint remains the previously verified 263-evidence state until PR #101 is merged and explicit production verification completes.
 
 ## Next
 
-1. close the Nerve Bridge incident tier-1 and primary-source gap;
-2. close the LI.FI incident primary-source gap;
+1. merge and production-verify source-quality remediation Batch 1;
+2. continue the search for a stable Nerve Bridge first-party incident source without downgrading source hierarchy rules;
 3. remediate the 25 event tier-1 gaps in bounded batches;
 4. archive terminal and risky-host evidence, beginning with the 132-item priority queue;
 5. resolve the two unknown URL-status records;

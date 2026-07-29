@@ -31,7 +31,7 @@ BIR is not:
 
 The static registry application, four-record canonical model, validation pipeline, list/detail pages, methodology pages, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
 
-Phase 2 record expansion is complete through Batch 7. Phase 3 reimbursement and restart normalization is production-verified with zero reimbursement or reopening warnings. Source-count remediation is complete and production-verified. Canonical data, generated public JSON, normal CI, and the live site now agree exactly, and permanent CI rejects any future incident or event source-count drift.
+Phase 2 record expansion is complete through Batch 7. Phase 3 reimbursement and restart normalization is production-verified. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active, and remediation Batch 1 adds LI.FI's first-party 2022 postmortem while correcting the incident to completed operator-funded reimbursement.
 
 Current canonical counts:
 
@@ -39,7 +39,7 @@ Current canonical counts:
 Bridges     33
 Incidents   34
 Events      183
-Evidence    263
+Evidence    265
 ```
 
 The canonical datasets are the only source of truth:
@@ -85,6 +85,8 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/runbooks/development-roadmap.md` — roadmap to v1
 - `docs/runbooks/public-consistency-remediation.md` — completed remediation sequence
 - `docs/audits/full-corpus-quality-baseline-2026-07-28.md` — Phase 3 audit baseline
+- `docs/audits/phase3-source-quality-baseline-2026-07-29.md` — source-quality baseline and no-regression ceilings
+- `docs/audits/phase3-source-quality-remediation-batch1-2026-07-29.md` — LI.FI first-party source and outcome correction
 - `docs/audits/phase3-source-count-review-batch1-2026-07-28.md` — Batch 1 review boundary
 - `docs/audits/phase3-source-count-batch1-canonical-2026-07-28.md` — Batch 1 canonical migration
 - `docs/audits/production-verification-phase3-source-count-batch1-2026-07-28.md` — Batch 1 production audit
