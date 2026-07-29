@@ -11,7 +11,7 @@ GitHub state and canonical JSON are authoritative.
 Bridges     33
 Incidents   34
 Events      183
-Evidence    263
+Evidence    265
 ```
 
 ## Current position
@@ -33,12 +33,13 @@ Phase 3  Full-corpus quality strengthening         active
          Hard source-count equality gate           active
          Source-quality baseline                   complete — PR #100
          Source-quality no-regression gate         active
+         Source-quality remediation Batch 1        canonical complete — PR #101
 Phase 4  Public contract stabilization             complete
 Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
 ```
 
-## Latest publication checkpoint
+## Latest production checkpoint
 
 ```text
 Canonical data PR        #97
@@ -51,71 +52,47 @@ Verified HTML routes     72
 Verified redirects       74
 ```
 
-## Source-count trajectory
+Production remains at 263 evidence until PR #101 is merged and explicitly verified. The canonical branch state is 265 evidence.
+
+## Source-count state
 
 ```text
-Initial total mismatches   60
-After safe normalization   47
-After Batch 1              37
-After Batch 2              27
-After Batch 3              17
-After Batch 4               7
-After final migration       0
-Incident mismatches         0
-Event mismatches            0
+Incident mismatches  0
+Event mismatches     0
 ```
 
-## Completed final migration
+Exact equality remains enforced by permanent CI and controlled incident/event drift fixtures.
+
+## Source-quality trajectory
 
 ```text
-New event-scoped evidence records    7
-Affected incident updates             2 incidents / +6 records
-Event source_count reductions          0
-Resulting evidence                    263
-Remaining source-count mismatches       0
+                                      Baseline   After Batch 1
+Primary evidence                      181 / 263   183 / 265
+Tier 1 evidence                       199 / 263   201 / 265
+Official-domain evidence              121 / 263   123 / 265
+Incidents without primary evidence      2           1
+Incidents without tier 1 evidence       1           1
+Events without primary evidence        36          34
+Events without tier 1 evidence         25          25
+Terminal evidence without archive      76          76
+Risky-host evidence without archive    90          90
+Unknown URL status                      2           2
 ```
 
-The reviewed links satisfy all remaining event counts. Exact equality is enforced by a permanent checker and two controlled drift fixtures in normal CI. Production publication has been verified at the exact-equality state.
+Batch 1 uses LI.FI's first-party March 2022 postmortem to correct the incident from partial reimbursement and unresolved status to completed operator-funded reimbursement and resolved status. Attacker-fund recovery remains `none`.
 
 Records:
 
-- `docs/audits/phase3-source-count-review-final-2026-07-29.md`
-- `docs/audits/phase3-source-count-final-canonical-2026-07-29.md`
-- `docs/audits/production-deployment-retrigger-final-source-count-2026-07-29.md`
-- `docs/audits/production-verification-phase3-source-count-final-2026-07-29.md`
+- `docs/audits/phase3-source-quality-baseline-2026-07-29.md`
+- `docs/audits/phase3-source-quality-remediation-batch1-2026-07-29.md`
 
-## Source-quality baseline
+## Immediate source-quality targets
 
-```text
-Primary evidence                         181 / 263
-Tier 1 evidence                          199 / 263
-Official-domain evidence                 121 / 263
-Evidence with archived_url                 0 / 263
-Bridges without primary evidence          0
-Bridges without tier 1 evidence           0
-Incidents without primary evidence        2
-Incidents without tier 1 evidence         1
-Events without primary evidence          36
-Events without tier 1 evidence           25
-Terminal evidence without archive        76
-Risky-host evidence without archive      90
-Unknown URL status                        2
-Unique archive-priority evidence        132
-```
-
-Normal CI now blocks regressions beyond these ceilings and rejects invalid source and archive URLs. Three controlled fixtures prove bridge-primary, event-tier-1, and risky-host archive regressions fail. The ceilings must be tightened as remediation batches reduce each queue.
-
-Immediate source-quality targets:
-
-1. `bir_inc_000026` — Nerve Bridge 2021 metapool exploit: close both primary and tier-1 gaps;
-2. `bir_inc_000015` — LI.FI 2022 approval-drain exploit: close the primary-source gap;
-3. the 25 events without tier-1 evidence;
+1. `bir_inc_000026` — Nerve Bridge 2021 metapool exploit: continue searching for stable first-party incident evidence; do not misclassify a security-firm report as Tier 1 merely to close the metric;
+2. the 25 events without Tier 1 evidence;
+3. the 34 events without primary evidence;
 4. the 132-item archive-priority queue, starting with terminal bridges and X/Twitter sources;
 5. the two evidence records with unknown URL status.
-
-Record:
-
-- `docs/audits/phase3-source-quality-baseline-2026-07-29.md`
 
 ## Production publication gate
 
@@ -129,14 +106,15 @@ After convergence, every count, ID, route, reference, metadata, sitemap, robots,
 
 ## Remaining roadmap
 
-1. close incident-level primary and tier-1 gaps;
-2. reduce event-level tier-1 and primary gaps in bounded batches;
-3. add archive captures for terminal and risky-host evidence and tighten archive-risk ceilings;
-4. resolve unknown URL states and harden domain-state handling;
-5. strengthen remaining validators;
-6. complete public-contract compatibility review;
-7. add monitoring with no automatic publication;
-8. complete v1 documentation, accessibility, performance, and release checks.
+1. merge and production-verify source-quality remediation Batch 1;
+2. close or document the remaining incident-level primary and Tier 1 gap;
+3. reduce event-level Tier 1 and primary gaps in bounded batches;
+4. add archive captures for terminal and risky-host evidence and tighten archive-risk ceilings;
+5. resolve unknown URL states and harden domain-state handling;
+6. strengthen remaining validators;
+7. complete public-contract compatibility review;
+8. add monitoring with no automatic publication;
+9. complete v1 documentation, accessibility, performance, and release checks.
 
 ## Permanent rules
 
@@ -151,3 +129,4 @@ After convergence, every count, ID, route, reference, metadata, sitemap, robots,
 9. Historical SHAs are not live branch pointers.
 10. Every PR must pass checks appropriate to its stage.
 11. Source-quality gap and archive-risk ceilings may decrease but must not increase.
+12. Source hierarchy must not be weakened to improve coverage metrics.
