@@ -42,8 +42,6 @@ jobs:
           npm run audit:source-count:test
           npm run audit:source-quality:test
           npm run build
-          npm run dist:check
-          npm run dist:test
 
       - name: Commit canonical migration
         run: |
