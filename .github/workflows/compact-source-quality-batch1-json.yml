@@ -1,0 +1,46 @@
+name: Compact Source Quality Batch 1 JSON
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  compact:
+    if: ${{ github.actor != 'github-actions[bot]' && github.head_ref == 'agent/phase3-source-quality-remediation-batch1-final' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/phase3-source-quality-remediation-batch1-final
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Compact canonical JSON
+        run: node scripts/compact-source-quality-batch1-json.mjs
+
+      - name: Validate compacted canonical data
+        run: |
+          npm install
+          npm run validate:data
+          npm run validate:enums
+          npm run audit:full-corpus
+          npm run audit:source-count
+          npm run audit:source-quality
+
+      - name: Commit compacted canonical JSON
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/incidents.json data/events.json data/evidence.json
+          git commit -m "data: compact source quality Batch 1 canonical JSON [format]"
+          git push origin HEAD:agent/phase3-source-quality-remediation-batch1-final
