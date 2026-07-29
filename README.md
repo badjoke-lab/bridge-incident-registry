@@ -29,9 +29,11 @@ BIR is not:
 
 ## Current status
 
-The static registry application, four-record canonical model, validation pipeline, list/detail pages, methodology pages, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
+The static registry application, four-record canonical model, validation pipeline, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
 
-Phase 2 record expansion is complete through Batch 7. Phase 3 reimbursement and restart normalization is production-verified. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Source-quality remediation Batch 1 is production-verified and adds LI.FI's first-party 2022 postmortem while correcting the incident to completed operator-funded reimbursement.
+Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. LI.FI's first-party 2022 postmortem and completed reimbursement are production-verified. The final unknown URL statuses were resolved for Holograph, and canonical data now requires zero unknown URL states.
+
+Production verification compares every transformed field in all four public datasets with the generated public contract. Counts and IDs alone cannot prove publication.
 
 Current canonical and production counts:
 
@@ -40,6 +42,15 @@ Bridges     33
 Incidents   34
 Events      183
 Evidence    265
+```
+
+Current hard states:
+
+```text
+Incident source-count mismatches  0
+Event source-count mismatches     0
+Unknown URL status                0
+Canonical public content match    true
 ```
 
 The canonical datasets are the only source of truth:
@@ -68,9 +79,9 @@ Each build generates:
 /ai.txt
 ```
 
-The generated files derive from canonical JSON, include current record counts and generation metadata, and are checked before the Astro build completes and again in the final `dist` tree.
+The generated files derive from canonical JSON, include current record counts and generation metadata, and are checked before the Astro build completes, in the final `dist` tree, and against the live production output.
 
-They are build products rather than independently maintained source files.
+The live production check requires complete generated-record equality and includes controlled same-count field-drift tests in normal CI.
 
 See `docs/machine-readable-public-layer.md` for the current contract and limits.
 
@@ -84,26 +95,13 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/runbooks/recovery-checkpoint.md` — short restart point
 - `docs/runbooks/development-roadmap.md` — roadmap to v1
 - `docs/runbooks/public-consistency-remediation.md` — completed remediation sequence
-- `docs/audits/full-corpus-quality-baseline-2026-07-28.md` — Phase 3 audit baseline
-- `docs/audits/phase3-source-quality-baseline-2026-07-29.md` — source-quality baseline and no-regression ceilings
-- `docs/audits/phase3-source-quality-remediation-batch1-2026-07-29.md` — LI.FI first-party source and outcome correction
-- `docs/audits/production-deployment-retrigger-source-quality-batch1-2026-07-29.md` — LI.FI deployment retrigger record
+- `docs/audits/phase3-source-quality-baseline-2026-07-29.md` — source-quality baseline and ceilings
+- `docs/audits/phase3-source-quality-remediation-batch1-2026-07-29.md` — LI.FI first-party correction
 - `docs/audits/production-verification-phase3-source-quality-batch1-2026-07-29.md` — LI.FI production audit
-- `docs/audits/phase3-source-count-review-batch1-2026-07-28.md` — Batch 1 review boundary
-- `docs/audits/phase3-source-count-batch1-canonical-2026-07-28.md` — Batch 1 canonical migration
-- `docs/audits/production-verification-phase3-source-count-batch1-2026-07-28.md` — Batch 1 production audit
-- `docs/audits/phase3-source-count-review-batch2-2026-07-28.md` — Batch 2 review boundary
-- `docs/audits/phase3-source-count-batch2-canonical-2026-07-28.md` — Batch 2 canonical migration
-- `docs/audits/production-verification-phase3-source-count-batch2-2026-07-28.md` — Batch 2 production audit
-- `docs/audits/phase3-source-count-review-batch3-2026-07-29.md` — Batch 3 review boundary
-- `docs/audits/phase3-source-count-batch3-canonical-2026-07-29.md` — Batch 3 canonical migration
-- `docs/audits/production-verification-phase3-source-count-batch3-2026-07-29.md` — Batch 3 production audit
-- `docs/audits/phase3-source-count-review-batch4-2026-07-29.md` — Batch 4 review boundary
-- `docs/audits/phase3-source-count-batch4-canonical-2026-07-29.md` — Batch 4 canonical migration
-- `docs/audits/production-verification-phase3-source-count-batch4-2026-07-29.md` — Batch 4 production audit
-- `docs/audits/phase3-source-count-review-final-2026-07-29.md` — final review boundary
-- `docs/audits/phase3-source-count-final-canonical-2026-07-29.md` — final canonical migration
-- `docs/audits/production-deployment-retrigger-final-source-count-2026-07-29.md` — final deployment retrigger
+- `docs/audits/phase3-url-status-remediation-batch1-2026-07-29.md` — Holograph URL-status correction
+- `docs/audits/production-verification-phase3-url-status-batch1-2026-07-29.md` — Holograph and full-content production audit
+- `docs/audits/phase3-source-count-review-final-2026-07-29.md` — final source-count review boundary
+- `docs/audits/phase3-source-count-final-canonical-2026-07-29.md` — final source-count migration
 - `docs/audits/production-verification-phase3-source-count-final-2026-07-29.md` — final source-count production audit
 - `docs/batches/` — reviewed batch scopes
 
@@ -118,7 +116,7 @@ GitHub pull-request workflow
 client-side search and filters
 ```
 
-Canonical data and generated machine-readable output are validated during the build. Production verification checks live HTML, JSON, metadata, sitemap, robots, redirects, content types, and observable cache behavior. The current version requires no database, authentication, wallet connection, paid API, or server runtime.
+Canonical data and generated machine-readable output are validated during the build. Production verification checks complete JSON content, live HTML, metadata, sitemap, robots, redirects, content types, and observable cache behavior. The current version requires no database, authentication, wallet connection, paid API, or server runtime.
 
 ## Development rule
 
