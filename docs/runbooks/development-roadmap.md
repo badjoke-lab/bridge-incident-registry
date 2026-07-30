@@ -62,13 +62,13 @@ Incidents without Tier 1               1
 Events without primary                28
 Events without Tier 1                 19
 Terminal unarchived unique URLs       59
-Risky-host unarchived unique URLs     63
+Risky-host unarchived unique URLs     83
 Unknown URL status                     0
 ```
 
 Event Tier 1 Batch 1 adds six first-party event links for Commons Bridge, Ronin, Nomad, Poly Network, and Celer. It preserves four intentional secondary-source events where first-party evidence would not establish the recorded research or community-proposal claim.
 
-Archive-risk metrics operate on normalized unique source URLs and match configured hosts by exact host or subdomain. Event-scoped copies of an already counted URL do not inflate the preservation queue. Batch 1 adds three genuinely new risky-host URLs—Ronin Substack, Poly Network Medium, and Celer X—moving the unique risky-host queue from 60 to 63. The terminal unique-URL queue remains 59.
+Archive-risk metrics operate on normalized unique source URLs and match configured hosts by exact host or subdomain. Event-scoped copies of an already counted URL do not inflate the preservation queue. The full subdomain-aware baseline is 80 risky-host unique URLs before this batch; Ronin Substack, Poly Network Medium, and Celer X move it to 83. The terminal unique-URL queue remains 59.
 
 Records:
 
