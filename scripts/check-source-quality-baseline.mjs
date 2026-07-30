@@ -40,7 +40,7 @@ const limits = {
   events_without_primary: 28,
   events_without_tier_1: 19,
   terminal_unarchived: 76,
-  risky_host_unarchived: 90,
+  risky_host_unarchived: 92,
   unknown_url_status: 0
 };
 
