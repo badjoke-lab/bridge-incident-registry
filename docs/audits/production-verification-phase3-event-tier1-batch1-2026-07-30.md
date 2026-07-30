@@ -1,21 +1,22 @@
 # Phase 3 event Tier 1 Batch 1 production verification — 2026-07-30
 
-Status: in progress  
+Status: complete  
 Production origin: `https://bridge-incident-registry.pages.dev`  
 Canonical merge: `da066fb29b5b45f6c8602ef36becf6536bfe6a29`
 
-## Expected production state
+## Verified production state
 
 ```text
-Bridges     33
-Incidents   34
-Events      183
-Evidence    271
-HTML routes 72
-Redirects   74
+Bridges                         33
+Incidents                       34
+Events                         183
+Evidence                       271
+HTML routes                     72
+Redirects                       74
+Canonical public content match  true
 ```
 
-## Expected quality state
+## Verified quality state
 
 ```text
 Incident source mismatches              0
@@ -27,9 +28,9 @@ Terminal unarchived unique URLs        59
 Risky-host unarchived unique URLs      83
 ```
 
-## Expected evidence publication
+## Verified evidence publication
 
-The public evidence dataset must include ordered IDs through `bir_src_000271` and publish the reviewed fields for:
+The public evidence dataset includes ordered IDs through `bir_src_000271` and the complete canonical-derived fields for:
 
 - `bir_src_000266` — Commons Bridge proxy compromise;
 - `bir_src_000267` — Syndicate investigation and tracing;
@@ -38,19 +39,34 @@ The public evidence dataset must include ordered IDs through `bir_src_000271` an
 - `bir_src_000270` — Poly Network asset recovery completion;
 - `bir_src_000271` — Celer compensation commitment.
 
-## Verification scope
+## Verification result
 
-- wait for production to converge to the complete canonical public contract;
-- compare every transformed field in all four public datasets;
-- verify all five static routes;
-- verify all 33 bridge detail routes;
-- verify all 34 incident detail routes;
-- verify version, manifest, and canonical-only markers;
-- verify exact 72-route sitemap equality;
-- verify all 74 legacy redirects;
-- verify canonical links, JSON-LD, robots, content types, and cache signals;
-- reject the earlier 265-evidence deployment even if routes remain available.
+```text
+Production verification run  30540271827
+Production-PR normal CI       30540271837
+Canonical-PR normal CI        30540042953
+Generated at                  2026-07-30T11:53:51.220Z
+Publication attempt           6
+```
 
-## Result
+Attempts 1 through 5 observed the previous 265-evidence deployment. Attempt 6 observed 33 / 34 / 183 / 271 and complete canonical-derived JSON equality.
 
-Pending the existing production-verification workflow and explicit final-head normal CI.
+The verifier also passed:
+
+- all five static routes;
+- all 33 bridge detail routes;
+- all 34 incident detail routes;
+- version and manifest counts and canonical-only markers;
+- exact 72-route sitemap equality;
+- all 74 legacy redirects;
+- canonical links, JSON-LD, robots, content types, and cache signals.
+
+## Conclusion
+
+Event Tier 1 remediation Batch 1 is canonical and production-verified. The public registry now exposes 271 evidence records, including all six reviewed event-scoped first-party additions. The full-content gate rejected the old 265-record deployment until the new generated public contract was available.
+
+## Next
+
+1. review the remaining 19 event Tier 1 gaps in bounded Batch 2;
+2. continue Nerve Bridge first-party/Tier 1 research without weakening source hierarchy;
+3. begin verified archive captures for the 83 risky-host and 59 terminal unique-URL queues.
