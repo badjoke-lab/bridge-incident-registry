@@ -5,7 +5,7 @@ Updated: 2026-07-30
 
 GitHub state and canonical JSON are authoritative.
 
-## Canonical baseline
+## Canonical and production baseline
 
 ```text
 Bridges     33
@@ -27,7 +27,8 @@ Phase 3  Full-corpus quality strengthening         active
          Source-quality remediation Batch 1        complete — PRs #103–#105
          URL-status remediation Batch 1            complete — PRs #106–#107
          Event Tier 1 review Batch 1               complete — PR #108
-         Event Tier 1 canonical Batch 1            pending merge — PR #109
+         Event Tier 1 canonical Batch 1            complete — PR #109
+         Batch 1 production publication            verified — PR #110 / run 30540271827
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
@@ -35,24 +36,26 @@ Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
 ```
 
-## Latest completed production checkpoint
-
-The completed production checkpoint remains the 265-evidence state until event Tier 1 Batch 1 is merged and explicitly verified.
+## Latest production checkpoint
 
 ```text
-Canonical data PR        #106
-Canonical merge          d0e9674745996fc1d85a32710890fa880d8946ad
-Production audit PR      #107
-Production verify run    30457429225
-Normal CI run            30457429426
-Verified state           33 / 34 / 183 / 265
+Canonical data PR        #109
+Canonical merge          da066fb29b5b45f6c8602ef36becf6536bfe6a29
+Production audit PR      #110
+Production verify run    30540271827
+Canonical normal CI      30540042953
+Production-PR normal CI  30540271837
+Verified state           33 / 34 / 183 / 271
 Canonical content match  true
 Verified HTML routes     72
 Verified redirects       74
-Generated at             2026-07-29T13:30:13.794Z
+Generated at             2026-07-30T11:53:51.220Z
+Publication attempt      6
 ```
 
-## Canonical quality state after Batch 1
+Attempts 1–5 observed the earlier 265-evidence deployment. Attempt 6 observed the complete 271-evidence public contract and passed all route and content assertions.
+
+## Quality state
 
 ```text
 Incident source-count mismatches       0
@@ -68,21 +71,21 @@ Unknown URL status                     0
 
 Event Tier 1 Batch 1 adds six first-party event links for Commons Bridge, Ronin, Nomad, Poly Network, and Celer. It preserves four intentional secondary-source events where first-party evidence would not establish the recorded research or community-proposal claim.
 
-Archive-risk metrics operate on normalized unique source URLs and match configured hosts by exact host or subdomain. Event-scoped copies of an already counted URL do not inflate the preservation queue. The full subdomain-aware baseline is 80 risky-host unique URLs before this batch; Ronin Substack, Poly Network Medium, and Celer X move it to 83. The terminal unique-URL queue remains 59.
+Archive-risk metrics operate on normalized unique source URLs and match configured hosts by exact host or subdomain. Event-scoped copies of an already counted URL do not inflate the preservation queue. The full subdomain-aware baseline was 80 risky-host unique URLs before this batch; Ronin Substack, Poly Network Medium, and Celer X moved it to 83. The terminal unique-URL queue remains 59.
 
 Records:
 
 - `docs/audits/phase3-event-tier1-review-batch1-2026-07-29.md`
 - `docs/audits/phase3-event-tier1-canonical-batch1-2026-07-30.md`
+- `docs/audits/production-verification-phase3-event-tier1-batch1-2026-07-30.md`
 
 ## Immediate source-quality targets
 
-1. merge and production-verify event Tier 1 Batch 1;
-2. review the remaining 19 events without Tier 1 evidence;
-3. continue Nerve Bridge first-party research without weakening source hierarchy;
-4. reduce the remaining 28 events without primary evidence;
-5. begin verified archive captures for terminal bridges and risky hosts;
-6. tighten archive-risk ceilings as verified captures are added.
+1. review the remaining 19 events without Tier 1 evidence in bounded Batch 2;
+2. continue Nerve Bridge first-party research without weakening source hierarchy;
+3. reduce the remaining 28 events without primary evidence;
+4. begin verified archive captures for terminal bridges and risky hosts;
+5. tighten archive-risk ceilings as verified captures are added.
 
 ## Production publication gate
 
