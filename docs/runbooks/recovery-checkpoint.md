@@ -5,7 +5,7 @@ Updated: 2026-07-30
 
 GitHub state and canonical JSON are authoritative. Completed merge SHAs are checkpoints, not live branch pointers.
 
-## Canonical counts
+## Canonical and production counts
 
 ```text
 Bridges     33
@@ -23,28 +23,27 @@ PR #104      LI.FI production verification
 PR #106      Holograph URL-status canonical remediation
 PR #107      Holograph production verification and content gate
 PR #108–110  Event Tier 1 Batch 1 review, canonical, and production verification
-PR #111      Event Tier 1 Batch 2 review boundary
-PR #112      Event Tier 1 Batch 2 canonical migration — pending merge
+PR #111–113  Event Tier 1 Batch 2 review, canonical, and production verification
 ```
 
-## Latest completed production checkpoint
-
-The latest completed production checkpoint remains 271 evidence until PR #112 merges and the 279-evidence state is verified.
+## Latest production checkpoint
 
 ```text
-Canonical data PR        #109
-Canonical merge          da066fb29b5b45f6c8602ef36becf6536bfe6a29
-Production audit PR      #110
-Production verify        30540271827
-Canonical normal CI      30540042953
-Production-PR normal CI  30540776235
-Verified state           33 / 34 / 183 / 271
+Canonical data PR        #112
+Canonical merge          7c52a3804043bc9d16da5ddcf6faeef608da804d
+Production audit PR      #113
+Production verify        30542396678
+Canonical normal CI      30542215442
+Production-PR normal CI  30542393855
+Verified state           33 / 34 / 183 / 279
 Canonical content match  true
 HTML routes              72
 Redirects                74
-Generated at             2026-07-30T11:53:51.220Z
-Publication attempt      6
+Generated at             2026-07-30T12:24:11.345Z
+Publication attempt      2
 ```
+
+Attempt 1 observed the old 271-evidence deployment. Attempt 2 observed the complete canonical-derived 279-evidence public output.
 
 ## Permanent guards
 
@@ -74,6 +73,7 @@ Unknown URL status                    0
 ```text
 Review boundary       PR #111
 Canonical migration   PR #112
+Production audit      PR #113
 Evidence added        bir_src_000272–bir_src_000279
 Evidence total        271 -> 279
 Primary evidence      189 -> 197
@@ -87,15 +87,9 @@ The eight additions support Rubic, Taiko, Celer, SOCKET, Synapse, Holograph, and
 
 Archive-risk is counted by normalized unique source URL and exact-or-subdomain risky-host matching. Raw evidence-record counts are 78 terminal and 131 risky-host records, while the actionable unique-URL queues are 59 and 87.
 
-Audits:
-
-- `docs/audits/phase3-event-tier1-review-batch2-2026-07-30.md`
-- `docs/audits/phase3-event-tier1-canonical-batch2-2026-07-30.md`
-
 ## Next
 
-1. merge PR #112 after normal CI passes;
-2. production-verify the complete 279-evidence public output;
-3. review the final five unreviewed event Tier 1 gaps;
-4. continue Nerve Bridge first-party/Tier 1 research;
-5. start verified archive capture work for the 87 risky-host and 59 terminal unique URLs.
+1. review the final five unreviewed event Tier 1 gaps;
+2. continue Nerve Bridge first-party/Tier 1 research;
+3. start verified archive capture work for the 87 risky-host and 59 terminal unique URLs;
+4. continue validator and v1 hardening.
