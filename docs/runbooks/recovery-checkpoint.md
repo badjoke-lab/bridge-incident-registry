@@ -5,7 +5,7 @@ Updated: 2026-07-30
 
 GitHub state and canonical JSON are authoritative. Completed merge SHAs are checkpoints, not live branch pointers.
 
-## Canonical counts
+## Canonical and production counts
 
 ```text
 Bridges     33
@@ -23,24 +23,28 @@ PR #104      LI.FI production verification
 PR #106      Holograph URL-status canonical remediation
 PR #107      Holograph production verification and content gate
 PR #108      Event Tier 1 Batch 1 review boundary
-PR #109      Event Tier 1 Batch 1 canonical migration — pending merge
+PR #109      Event Tier 1 Batch 1 canonical migration
+PR #110      Event Tier 1 Batch 1 production verification
 ```
 
-## Latest completed production checkpoint
-
-The latest completed production checkpoint remains 265 evidence until PR #109 merges and the 271-evidence state is verified.
+## Latest production checkpoint
 
 ```text
-Canonical merge          d0e9674745996fc1d85a32710890fa880d8946ad
-Production verify        30457429225
-Normal CI                30457429426
-Verified state           33 / 34 / 183 / 265
+Canonical data PR        #109
+Canonical merge          da066fb29b5b45f6c8602ef36becf6536bfe6a29
+Production audit PR      #110
+Production verify        30540271827
+Canonical normal CI      30540042953
+Production-PR normal CI  30540271837
+Verified state           33 / 34 / 183 / 271
 Canonical content match  true
 HTML routes              72
 Redirects                74
-Generated at             2026-07-29T13:30:13.794Z
-Publication attempt      1
+Generated at             2026-07-30T11:53:51.220Z
+Publication attempt      6
 ```
+
+Attempts 1–5 observed the old 265-evidence deployment. Attempt 6 observed the complete canonical-derived 271-evidence public output.
 
 ## Permanent guards
 
@@ -70,6 +74,7 @@ Unknown URL status                    0
 ```text
 Review boundary       PR #108
 Canonical migration   PR #109
+Production audit      PR #110
 Evidence added        bir_src_000266–bir_src_000271
 Evidence total        265 -> 271
 Primary evidence      183 -> 189
@@ -87,11 +92,11 @@ Audits:
 
 - `docs/audits/phase3-event-tier1-review-batch1-2026-07-29.md`
 - `docs/audits/phase3-event-tier1-canonical-batch1-2026-07-30.md`
+- `docs/audits/production-verification-phase3-event-tier1-batch1-2026-07-30.md`
 
 ## Next
 
-1. merge PR #109 after normal CI passes;
-2. production-verify the complete 271-evidence public output;
-3. review the remaining 19 event Tier 1 gaps;
-4. continue Nerve Bridge first-party/Tier 1 research;
-5. start verified archive capture work for the 83 risky-host and 59 terminal unique URLs.
+1. review the remaining 19 event Tier 1 gaps in bounded Batch 2;
+2. continue Nerve Bridge first-party/Tier 1 research;
+3. start verified archive capture work for the 83 risky-host and 59 terminal unique URLs;
+4. continue validator and v1 hardening.
