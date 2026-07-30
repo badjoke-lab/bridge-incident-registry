@@ -37,8 +37,8 @@ const limits = {
   bridges_without_tier_1: 0,
   incidents_without_primary: 1,
   incidents_without_tier_1: 1,
-  events_without_primary: 34,
-  events_without_tier_1: 25,
+  events_without_primary: 28,
+  events_without_tier_1: 19,
   terminal_unarchived: 76,
   risky_host_unarchived: 90,
   unknown_url_status: 0
@@ -50,6 +50,23 @@ function hostOf(url) {
   } catch {
     return "invalid-url";
   }
+}
+
+function normalizedUrl(url) {
+  try {
+    return new URL(url).toString();
+  } catch {
+    return null;
+  }
+}
+
+function uniqueByUrl(records) {
+  const unique = new Map();
+  for (const record of records) {
+    const key = normalizedUrl(record.url) ?? `invalid:${record.id}`;
+    if (!unique.has(key)) unique.set(key, record);
+  }
+  return [...unique.values()];
 }
 
 function hasArchive(source) {
@@ -79,6 +96,14 @@ const invalidArchiveUrls = evidence.filter((source) => {
   }
 });
 
+const terminalUnarchivedRecords = evidence.filter((source) => {
+  const bridge = bridgesById.get(source.bridge_id);
+  return bridge && terminalStatuses.has(bridge.status) && !hasArchive(source);
+});
+const riskyHostUnarchivedRecords = evidence.filter(
+  (source) => riskyHosts.has(hostOf(source.url)) && !hasArchive(source)
+);
+
 const metrics = {
   bridges_without_primary: countMissing(bridges, evidenceByBridge, isPrimary),
   bridges_without_tier_1: countMissing(bridges, evidenceByBridge, isTierOne),
@@ -86,11 +111,8 @@ const metrics = {
   incidents_without_tier_1: countMissing(incidents, evidenceByIncident, isTierOne),
   events_without_primary: countMissing(events, evidenceByEvent, isPrimary),
   events_without_tier_1: countMissing(events, evidenceByEvent, isTierOne),
-  terminal_unarchived: evidence.filter((source) => {
-    const bridge = bridgesById.get(source.bridge_id);
-    return bridge && terminalStatuses.has(bridge.status) && !hasArchive(source);
-  }),
-  risky_host_unarchived: evidence.filter((source) => riskyHosts.has(hostOf(source.url)) && !hasArchive(source)),
+  terminal_unarchived: uniqueByUrl(terminalUnarchivedRecords),
+  risky_host_unarchived: uniqueByUrl(riskyHostUnarchivedRecords),
   unknown_url_status: evidence.filter((source) => source.url_status === "unknown")
 };
 
@@ -121,6 +143,11 @@ const summary = {
   },
   baseline_limits: limits,
   observed: Object.fromEntries(Object.entries(metrics).map(([key, records]) => [key, records.length])),
+  archive_risk_unit: "unique_source_url",
+  archive_risk_record_counts: {
+    terminal_unarchived: terminalUnarchivedRecords.length,
+    risky_host_unarchived: riskyHostUnarchivedRecords.length
+  },
   archive_count: evidence.filter(hasArchive).length,
   primary_evidence: evidence.filter(isPrimary).length,
   tier_1_evidence: evidence.filter(isTierOne).length,
