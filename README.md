@@ -33,19 +33,19 @@ The static registry application, four-record canonical model, validation pipelin
 
 Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. LI.FI reimbursement correction, Holograph URL-state correction, and event Tier 1 remediation Batch 1 are production-verified.
 
-Event Tier 1 Batch 1 adds six event-scoped first-party sources for Commons Bridge, Ronin, Nomad, Poly Network, and Celer. Evidence is now 271, event primary gaps are 28, and event Tier 1 gaps are 19.
+Event Tier 1 canonical Batch 2 adds eight event-scoped first-party sources for Rubic, Taiko, Celer, SOCKET, Synapse, Holograph, and Transit Finance. Canonical evidence is now 279, event primary gaps are 20, and event Tier 1 gaps are 11. Production verification remains required after PR #112 merges.
 
 Archive-risk metrics count normalized unique source URLs with exact-or-subdomain host matching. Duplicate event-scoped links do not create duplicate preservation obligations.
 
 Production verification compares every transformed field in all four public datasets with the generated public contract. Counts and IDs alone cannot prove publication.
 
-Current canonical and production counts:
+Current canonical counts:
 
 ```text
 Bridges     33
 Incidents   34
 Events      183
-Evidence    271
+Evidence    279
 ```
 
 Current hard states:
@@ -54,10 +54,11 @@ Current hard states:
 Incident source-count mismatches  0
 Event source-count mismatches     0
 Unknown URL status                0
-Events without primary           28
-Events without Tier 1            19
-Canonical public content match    true
+Events without primary           20
+Events without Tier 1            11
 ```
+
+The latest completed production verification remains the 271-evidence checkpoint until the 279-evidence canonical state is explicitly verified.
 
 The canonical datasets are the only source of truth:
 
@@ -106,12 +107,11 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/audits/production-verification-phase3-source-quality-batch1-2026-07-29.md` — LI.FI production audit
 - `docs/audits/phase3-url-status-remediation-batch1-2026-07-29.md` — Holograph URL-status correction
 - `docs/audits/production-verification-phase3-url-status-batch1-2026-07-29.md` — Holograph and full-content production audit
-- `docs/audits/phase3-event-tier1-review-batch1-2026-07-29.md` — event Tier 1 review boundary
-- `docs/audits/phase3-event-tier1-canonical-batch1-2026-07-30.md` — six-source canonical migration and archive-risk semantics
+- `docs/audits/phase3-event-tier1-review-batch1-2026-07-29.md` — event Tier 1 Batch 1 review boundary
+- `docs/audits/phase3-event-tier1-canonical-batch1-2026-07-30.md` — Batch 1 canonical migration
 - `docs/audits/production-verification-phase3-event-tier1-batch1-2026-07-30.md` — 271-evidence production audit
-- `docs/audits/phase3-source-count-review-final-2026-07-29.md` — final source-count review boundary
-- `docs/audits/phase3-source-count-final-canonical-2026-07-29.md` — final source-count migration
-- `docs/audits/production-verification-phase3-source-count-final-2026-07-29.md` — final source-count production audit
+- `docs/audits/phase3-event-tier1-review-batch2-2026-07-30.md` — event Tier 1 Batch 2 review boundary
+- `docs/audits/phase3-event-tier1-canonical-batch2-2026-07-30.md` — Batch 2 canonical migration
 - `docs/batches/` — reviewed batch scopes
 
 ## Architecture

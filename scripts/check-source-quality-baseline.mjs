@@ -37,10 +37,10 @@ const limits = {
   bridges_without_tier_1: 0,
   incidents_without_primary: 1,
   incidents_without_tier_1: 1,
-  events_without_primary: 28,
-  events_without_tier_1: 19,
+  events_without_primary: 20,
+  events_without_tier_1: 11,
   terminal_unarchived: 59,
-  risky_host_unarchived: 83,
+  risky_host_unarchived: 87,
   unknown_url_status: 0
 };
 

@@ -5,13 +5,13 @@ Updated: 2026-07-30
 
 GitHub state and canonical JSON are authoritative.
 
-## Canonical and production baseline
+## Canonical baseline
 
 ```text
 Bridges     33
 Incidents   34
 Events      183
-Evidence    271
+Evidence    279
 ```
 
 ## Current position
@@ -26,9 +26,9 @@ Phase 3  Full-corpus quality strengthening         active
          Source-quality baseline                   complete — PR #100
          Source-quality remediation Batch 1        complete — PRs #103–#105
          URL-status remediation Batch 1            complete — PRs #106–#107
-         Event Tier 1 review Batch 1               complete — PR #108
-         Event Tier 1 canonical Batch 1            complete — PR #109
-         Batch 1 production publication            verified — PR #110 / run 30540271827
+         Event Tier 1 Batch 1                      production-verified — PRs #108–#110
+         Event Tier 1 review Batch 2               complete — PR #111
+         Event Tier 1 canonical Batch 2            pending merge — PR #112
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
@@ -36,7 +36,9 @@ Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
 ```
 
-## Latest production checkpoint
+## Latest completed production checkpoint
+
+The completed production checkpoint remains 271 evidence until Batch 2 is merged and explicitly verified.
 
 ```text
 Canonical data PR        #109
@@ -44,7 +46,7 @@ Canonical merge          da066fb29b5b45f6c8602ef36becf6536bfe6a29
 Production audit PR      #110
 Production verify run    30540271827
 Canonical normal CI      30540042953
-Production-PR normal CI  30540271837
+Production-PR normal CI  30540776235
 Verified state           33 / 34 / 183 / 271
 Canonical content match  true
 Verified HTML routes     72
@@ -53,39 +55,36 @@ Generated at             2026-07-30T11:53:51.220Z
 Publication attempt      6
 ```
 
-Attempts 1–5 observed the earlier 265-evidence deployment. Attempt 6 observed the complete 271-evidence public contract and passed all route and content assertions.
-
-## Quality state
+## Canonical quality state after Batch 2
 
 ```text
 Incident source-count mismatches       0
 Event source-count mismatches          0
 Incidents without primary              1
 Incidents without Tier 1               1
-Events without primary                28
-Events without Tier 1                 19
+Events without primary                20
+Events without Tier 1                 11
 Terminal unarchived unique URLs       59
-Risky-host unarchived unique URLs     83
+Risky-host unarchived unique URLs     87
 Unknown URL status                     0
 ```
 
-Event Tier 1 Batch 1 adds six first-party event links for Commons Bridge, Ronin, Nomad, Poly Network, and Celer. It preserves four intentional secondary-source events where first-party evidence would not establish the recorded research or community-proposal claim.
+Batch 2 adds eight first-party event links for Rubic, Taiko, Celer, SOCKET, Synapse, Holograph, and Transit Finance. Nerve exploit and root-cause events remain intentionally Tier 2 because no reviewed operator source exists and security-firm analyses are not reclassified.
 
-Archive-risk metrics operate on normalized unique source URLs and match configured hosts by exact host or subdomain. Event-scoped copies of an already counted URL do not inflate the preservation queue. The full subdomain-aware baseline was 80 risky-host unique URLs before this batch; Ronin Substack, Poly Network Medium, and Celer X moved it to 83. The terminal unique-URL queue remains 59.
+Archive-risk metrics operate on normalized unique source URLs and exact-or-subdomain host matching. Four additions reuse existing risky URLs and four add new unique URLs, moving the risky-host queue from 83 to 87. The terminal queue remains 59.
 
 Records:
 
-- `docs/audits/phase3-event-tier1-review-batch1-2026-07-29.md`
-- `docs/audits/phase3-event-tier1-canonical-batch1-2026-07-30.md`
-- `docs/audits/production-verification-phase3-event-tier1-batch1-2026-07-30.md`
+- `docs/audits/phase3-event-tier1-review-batch2-2026-07-30.md`
+- `docs/audits/phase3-event-tier1-canonical-batch2-2026-07-30.md`
 
 ## Immediate source-quality targets
 
-1. review the remaining 19 events without Tier 1 evidence in bounded Batch 2;
-2. continue Nerve Bridge first-party research without weakening source hierarchy;
-3. reduce the remaining 28 events without primary evidence;
-4. begin verified archive captures for terminal bridges and risky hosts;
-5. tighten archive-risk ceilings as verified captures are added.
+1. merge and production-verify event Tier 1 Batch 2;
+2. review the final five unreviewed event Tier 1 gaps;
+3. continue Nerve Bridge first-party research without weakening source hierarchy;
+4. reduce the remaining 20 events without primary evidence;
+5. begin verified archive captures for terminal bridges and risky hosts.
 
 ## Production publication gate
 
@@ -95,17 +94,11 @@ Delay          15 seconds
 Maximum wait   5 minutes
 ```
 
-Publication convergence requires:
-
-- matching record counts;
-- canonical-only markers;
-- complete transformed JSON equality for bridges, incidents, events, and evidence;
-- exact record and array order;
-- all route, sitemap, metadata, redirect, content-type, and cache assertions.
+Publication convergence requires matching record counts, canonical-only markers, complete transformed JSON equality, exact record order, and all route, sitemap, metadata, redirect, content-type, and cache assertions.
 
 ## Remaining roadmap
 
-1. complete event-level Tier 1 and primary remediation in bounded batches;
+1. complete the final event-level Tier 1 review and canonical migration;
 2. close or document the remaining incident-level primary and Tier 1 gap;
 3. add verified archive captures for terminal and risky-host evidence;
 4. strengthen remaining validators;
