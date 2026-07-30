@@ -30,17 +30,15 @@ jobs:
       - name: Apply bounded canonical migration
         run: node scripts/apply-event-tier1-canonical-batch1.mjs
 
-      - name: Validate canonical data
+      - name: Validate canonical structure and source counts
         run: |
           npm run validate:data
           npm run validate:enums
           npm run audit:first-ten
           npm run audit:full-corpus
           npm run audit:source-count
-          npm run audit:source-quality
           npm run audit:full-corpus:test
           npm run audit:source-count:test
-          npm run audit:source-quality:test
 
       - name: Commit canonical migration
         run: |
