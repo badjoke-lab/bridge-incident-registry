@@ -6,6 +6,7 @@ import { spawnSync } from "node:child_process";
 
 const root = process.cwd();
 const checker = path.join(root, "scripts/check-source-quality-baseline.mjs");
+const riskyHosts = ["x.com", "twitter.com", "medium.com", "substack.com", "mirror.xyz", "docs.google.com", "notion.site"];
 
 function runCheck(fixtureRoot) {
   return spawnSync(process.execPath, [checker], {
@@ -23,6 +24,15 @@ function writeJson(fixtureRoot, relativePath, value) {
   fs.writeFileSync(path.join(fixtureRoot, relativePath), `${JSON.stringify(value, null, 2)}\n`);
 }
 
+function isRiskySource(item) {
+  try {
+    const host = new URL(item.url).hostname.replace(/^www\./, "").toLowerCase();
+    return riskyHosts.some((base) => host === base || host.endsWith(`.${base}`)) && !item.archived_url;
+  } catch {
+    return false;
+  }
+}
+
 function withFixture(name, mutate, expectedText) {
   const fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), `bir-quality-${name}-`));
   try {
@@ -35,6 +45,20 @@ function withFixture(name, mutate, expectedText) {
     }
     if (!output.includes(expectedText)) {
       throw new Error(`${name}: expected output containing ${JSON.stringify(expectedText)}\n${output}`);
+    }
+  } finally {
+    fs.rmSync(fixtureRoot, { recursive: true, force: true });
+  }
+}
+
+function withPassingFixture(name, mutate) {
+  const fixtureRoot = fs.mkdtempSync(path.join(os.tmpdir(), `bir-quality-${name}-`));
+  try {
+    fs.cpSync(path.join(root, "data"), path.join(fixtureRoot, "data"), { recursive: true });
+    mutate(fixtureRoot);
+    const result = runCheck(fixtureRoot);
+    if (result.status !== 0) {
+      throw new Error(`${name}: checker unexpectedly failed\n${result.stdout}\n${result.stderr}`);
     }
   } finally {
     fs.rmSync(fixtureRoot, { recursive: true, force: true });
@@ -82,22 +106,31 @@ withFixture(
 );
 
 withFixture(
-  "risky-host-archive-regression",
+  "new-risky-host-url-regression",
   (fixtureRoot) => {
     const evidence = readJson(fixtureRoot, "data/evidence.json");
-    const source = evidence.find((item) => {
-      try {
-        const host = new URL(item.url).hostname.replace(/^www\./, "").toLowerCase();
-        return ["x.com", "twitter.com", "medium.com"].includes(host) && !item.archived_url;
-      } catch {
-        return false;
-      }
-    });
+    const source = evidence.find(isRiskySource);
     if (!source) throw new Error("fixture requires unarchived risky-host evidence");
-    evidence.push({ ...source, id: "bir_src_fixture_quality_regression" });
+    const separator = source.url.includes("?") ? "&" : "?";
+    evidence.push({
+      ...source,
+      id: "bir_src_fixture_unique_risk_regression",
+      url: `${source.url}${separator}bir_fixture_unique=1`
+    });
     writeJson(fixtureRoot, "data/evidence.json", evidence);
   },
   "risky_host_unarchived"
 );
 
-console.log("Source-quality baseline controlled failure tests passed (3 fixtures).");
+withPassingFixture(
+  "duplicate-risky-host-url-is-not-new-risk",
+  (fixtureRoot) => {
+    const evidence = readJson(fixtureRoot, "data/evidence.json");
+    const source = evidence.find(isRiskySource);
+    if (!source) throw new Error("fixture requires unarchived risky-host evidence");
+    evidence.push({ ...source, id: "bir_src_fixture_duplicate_risk_url" });
+    writeJson(fixtureRoot, "data/evidence.json", evidence);
+  }
+);
+
+console.log("Source-quality baseline controlled tests passed (3 regressions, 1 duplicate-URL allowance, exact/subdomain host matching).");

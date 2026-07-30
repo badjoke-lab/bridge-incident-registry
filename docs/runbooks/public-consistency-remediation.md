@@ -1,20 +1,22 @@
 # Bridge Incident Registry — Public Consistency Remediation
 
 Status: complete  
-Updated: 2026-07-29
+Updated: 2026-07-30
 
-## Current canonical and production baseline
+## Current canonical baseline
 
 ```text
 Bridges     33
 Incidents   34
 Events      183
-Evidence    265
+Evidence    271
 HTML routes 72
 Redirects   74
 ```
 
 Canonical JSON remains the only record source. Generated public files are build products.
+
+The latest completed production checkpoint remains 265 evidence until event Tier 1 Batch 1 passes explicit full-content production verification.
 
 ## Completed remediation sequence
 
@@ -29,9 +31,9 @@ PR #59  Production verification
 PR #107 Full generated-content production equality
 ```
 
-## Latest production contract verification
+## Latest completed production contract verification
 
-URL-status Batch 1 production verification run `30457429225` passed against `https://bridge-incident-registry.pages.dev` at:
+URL-status Batch 1 production verification run `30457429225` passed against the production origin at:
 
 ```text
 33 bridges
@@ -53,6 +55,10 @@ Normal CI         30457429426
 Generated at      2026-07-29T13:30:13.794Z
 Attempt           1
 ```
+
+## Pending canonical publication
+
+Event Tier 1 canonical Batch 1 increases evidence from 265 to 271 and reduces event primary/Tier 1 gaps. After PR #109 merges, the unchanged full-content verifier must confirm all 271 transformed evidence records rather than accepting the earlier 265-record deployment.
 
 ## Full-content publication gate
 
@@ -97,7 +103,7 @@ Production verification requires:
 - every generated legacy redirect;
 - content types and observable cache-related headers.
 
-Latest production audit: `docs/audits/production-verification-phase3-url-status-batch1-2026-07-29.md`.
+Latest completed production audit: `docs/audits/production-verification-phase3-url-status-batch1-2026-07-29.md`.
 
 ## Closure
 
