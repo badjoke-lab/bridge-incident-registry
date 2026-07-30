@@ -3,7 +3,7 @@
 Status: active  
 Updated: 2026-07-30
 
-## Canonical state
+## Canonical and production state
 
 ```text
 Bridges     33
@@ -33,7 +33,8 @@ Source-quality no-regression gate    active
 Source-quality remediation Batch 1   complete — PRs #103–#105
 URL-status remediation Batch 1       complete — PRs #106–#107
 Event Tier 1 review Batch 1          complete — PR #108
-Event Tier 1 canonical Batch 1       pending merge — PR #109
+Event Tier 1 canonical Batch 1       complete — PR #109
+Batch 1 production publication       verified — PR #110 / run 30540271827
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
 ```
@@ -82,7 +83,7 @@ bir_src_000271  Celer compensation commitment
 
 The batch reduces event primary gaps from 34 to 28 and event Tier 1 gaps from 25 to 19 without changing event dates, incident amounts, statuses, or historical outcomes.
 
-The production verifier compares every transformed field in all four public datasets with the generated public contract. Same-count and same-ID field drift is a blocking failure.
+The production verifier compares every transformed field in all four public datasets with the generated public contract. Attempts 1–5 observed the old 265-evidence deployment; attempt 6 observed the complete 271-evidence contract.
 
 Remaining incident-level gap:
 
@@ -97,29 +98,28 @@ Records:
 - `docs/audits/production-verification-phase3-url-status-batch1-2026-07-29.md`
 - `docs/audits/phase3-event-tier1-review-batch1-2026-07-29.md`
 - `docs/audits/phase3-event-tier1-canonical-batch1-2026-07-30.md`
+- `docs/audits/production-verification-phase3-event-tier1-batch1-2026-07-30.md`
 
 ## Latest completed production checkpoint
 
-The latest completed production checkpoint remains the pre-Batch-1 265-evidence state until PR #109 merges and the 271-evidence state passes explicit production verification.
-
 ```text
-Canonical data PR       #106
-Canonical merge         d0e9674745996fc1d85a32710890fa880d8946ad
-Production audit PR     #107
-Production verify       30457429225
-Normal CI               30457429426
-Verified state          33 / 34 / 183 / 265
+Canonical data PR       #109
+Canonical merge         da066fb29b5b45f6c8602ef36becf6536bfe6a29
+Production audit PR     #110
+Production verify       30540271827
+Canonical normal CI     30540042953
+Production-PR normal CI 30540271837
+Verified state          33 / 34 / 183 / 271
 Canonical content match true
 Verified HTML routes    72
 Verified redirects      74
-Generated at            2026-07-29T13:30:13.794Z
-Publication attempt     1
+Generated at            2026-07-30T11:53:51.220Z
+Publication attempt     6
 ```
 
 ## Next
 
-1. merge PR #109 after final normal CI;
-2. production-verify the full 33 / 34 / 183 / 271 public state;
-3. review the remaining 19 event Tier 1 gaps in bounded Batch 2;
-4. continue Nerve Bridge primary/Tier 1 research without weakening source hierarchy;
-5. begin verified archive captures for the 83 risky-host and 59 terminal unique-URL queues.
+1. review the remaining 19 event Tier 1 gaps in bounded Batch 2;
+2. continue Nerve Bridge primary/Tier 1 research without weakening source hierarchy;
+3. begin verified archive captures for the 83 risky-host and 59 terminal unique-URL queues;
+4. continue validator, monitoring, candidate collection, and v1 hardening.
