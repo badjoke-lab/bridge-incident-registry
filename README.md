@@ -31,15 +31,15 @@ BIR is not:
 
 The static registry application, four-record canonical model, validation pipeline, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
 
-Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. LI.FI reimbursement correction, Holograph URL-state correction, and event Tier 1 remediation Batch 1 are production-verified.
+Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. LI.FI reimbursement correction, Holograph URL-state correction, and event Tier 1 remediation Batches 1 and 2 are production-verified.
 
-Event Tier 1 canonical Batch 2 adds eight event-scoped first-party sources for Rubic, Taiko, Celer, SOCKET, Synapse, Holograph, and Transit Finance. Canonical evidence is now 279, event primary gaps are 20, and event Tier 1 gaps are 11. Production verification remains required after PR #112 merges.
+Batch 2 adds eight event-scoped first-party sources for Rubic, Taiko, Celer, SOCKET, Synapse, Holograph, and Transit Finance. Evidence is now 279, event primary gaps are 20, and event Tier 1 gaps are 11.
 
 Archive-risk metrics count normalized unique source URLs with exact-or-subdomain host matching. Duplicate event-scoped links do not create duplicate preservation obligations.
 
 Production verification compares every transformed field in all four public datasets with the generated public contract. Counts and IDs alone cannot prove publication.
 
-Current canonical counts:
+Current canonical and production counts:
 
 ```text
 Bridges     33
@@ -56,9 +56,8 @@ Event source-count mismatches     0
 Unknown URL status                0
 Events without primary           20
 Events without Tier 1            11
+Canonical public content match    true
 ```
-
-The latest completed production verification remains the 271-evidence checkpoint until the 279-evidence canonical state is explicitly verified.
 
 The canonical datasets are the only source of truth:
 
@@ -112,6 +111,7 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/audits/production-verification-phase3-event-tier1-batch1-2026-07-30.md` — 271-evidence production audit
 - `docs/audits/phase3-event-tier1-review-batch2-2026-07-30.md` — event Tier 1 Batch 2 review boundary
 - `docs/audits/phase3-event-tier1-canonical-batch2-2026-07-30.md` — Batch 2 canonical migration
+- `docs/audits/production-verification-phase3-event-tier1-batch2-2026-07-30.md` — 279-evidence production audit
 - `docs/batches/` — reviewed batch scopes
 
 ## Architecture
