@@ -1,0 +1,55 @@
+name: Event Tier 1 Canonical Batch 1
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.event.pull_request.head.ref == 'agent/phase3-event-tier1-canonical-batch1'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Apply bounded canonical migration
+        run: node scripts/apply-event-tier1-canonical-batch1.mjs
+
+      - name: Validate canonical data
+        run: |
+          npm run validate:data
+          npm run validate:enums
+          npm run audit:first-ten
+          npm run audit:full-corpus
+          npm run audit:source-count
+          npm run audit:source-quality
+          npm run audit:full-corpus:test
+          npm run audit:source-count:test
+          npm run audit:source-quality:test
+
+      - name: Commit canonical migration
+        run: |
+          if git diff --quiet -- data/incidents.json data/events.json data/evidence.json; then
+            echo "No canonical diff generated."
+            exit 1
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/incidents.json data/events.json data/evidence.json
+          git commit -m "data: apply event Tier 1 canonical Batch 1"
+          git push origin HEAD:${{ github.event.pull_request.head.ref }}
