@@ -60,8 +60,8 @@ Incidents without primary             1
 Incidents without Tier 1              1
 Events without primary               28
 Events without Tier 1                19
-Terminal unarchived unique URLs      76
-Risky-host unarchived unique URLs    92
+Terminal unarchived unique URLs      59
+Risky-host unarchived unique URLs    63
 Unknown URL status                    0
 ```
 
@@ -81,7 +81,7 @@ Source-count drift      0
 
 The six additions support Commons Bridge, Ronin, Nomad, Poly Network, and Celer events with reviewed first-party evidence. Harmony, Wormhole, and Nomad research-context events and the Harmony community proposal remain intentionally secondary-source records.
 
-Archive-risk is counted by normalized unique source URL. Duplicate event-scoped evidence records do not inflate the queue. Raw evidence-record counts remain available in the source-quality summary.
+Archive-risk is counted by normalized unique source URL and exact-or-subdomain risky-host matching. Duplicate event-scoped evidence records do not inflate the queue. Raw evidence-record counts are 78 terminal and 96 risky-host records, while the actionable unique-URL queues are 59 and 63.
 
 Audits:
 
@@ -94,4 +94,4 @@ Audits:
 2. production-verify the complete 271-evidence public output;
 3. review the remaining 19 event Tier 1 gaps;
 4. continue Nerve Bridge first-party/Tier 1 research;
-5. start verified archive capture work for the 92 risky-host and 76 terminal unique URLs.
+5. start verified archive capture work for the 63 risky-host and 59 terminal unique URLs.
