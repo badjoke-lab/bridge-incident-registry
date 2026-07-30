@@ -22,7 +22,7 @@ for (const source of evidence) {
 }
 
 const terminalStatuses = new Set(["dead", "deprecated", "migrated"]);
-const riskyHosts = new Set([
+const riskyHosts = [
   "x.com",
   "twitter.com",
   "medium.com",
@@ -30,7 +30,7 @@ const riskyHosts = new Set([
   "substack.com",
   "docs.google.com",
   "notion.site"
-]);
+];
 
 const limits = {
   bridges_without_primary: 0,
@@ -39,8 +39,8 @@ const limits = {
   incidents_without_tier_1: 1,
   events_without_primary: 28,
   events_without_tier_1: 19,
-  terminal_unarchived: 76,
-  risky_host_unarchived: 92,
+  terminal_unarchived: 59,
+  risky_host_unarchived: 63,
   unknown_url_status: 0
 };
 
@@ -50,6 +50,10 @@ function hostOf(url) {
   } catch {
     return "invalid-url";
   }
+}
+
+function isRiskyHost(host) {
+  return riskyHosts.some((base) => host === base || host.endsWith(`.${base}`));
 }
 
 function normalizedUrl(url) {
@@ -101,7 +105,7 @@ const terminalUnarchivedRecords = evidence.filter((source) => {
   return bridge && terminalStatuses.has(bridge.status) && !hasArchive(source);
 });
 const riskyHostUnarchivedRecords = evidence.filter(
-  (source) => riskyHosts.has(hostOf(source.url)) && !hasArchive(source)
+  (source) => isRiskyHost(hostOf(source.url)) && !hasArchive(source)
 );
 
 const metrics = {
@@ -144,6 +148,7 @@ const summary = {
   baseline_limits: limits,
   observed: Object.fromEntries(Object.entries(metrics).map(([key, records]) => [key, records.length])),
   archive_risk_unit: "unique_source_url",
+  archive_risk_host_matching: "exact_or_subdomain",
   archive_risk_record_counts: {
     terminal_unarchived: terminalUnarchivedRecords.length,
     risky_host_unarchived: riskyHostUnarchivedRecords.length
