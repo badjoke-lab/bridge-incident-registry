@@ -29,8 +29,8 @@ jobs:
 
       - name: Commit generated inventory
         run: |
-          if git diff --quiet -- docs/audits/.event-tier1-review-batch2.md; then
-            echo "No inventory diff generated."
+          if [ -z "$(git status --porcelain -- docs/audits/.event-tier1-review-batch2.md)" ]; then
+            echo "No inventory change generated."
             exit 1
           fi
           git config user.name "github-actions[bot]"
