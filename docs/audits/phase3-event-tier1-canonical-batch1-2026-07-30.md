@@ -76,18 +76,18 @@ An event-scoped evidence copy of an already known URL creates a new claim linkag
 - fails when a genuinely new unarchived risky URL appears;
 - permits a duplicate event-scoped record that uses an already counted risky URL.
 
-Batch 1 adds three genuinely new risky-host URLs: Ronin's Substack alert, the Poly Network Medium notice, and Celer's X update. The unique risky-host ceiling moves from 60 to 63. The terminal unique-URL ceiling remains 59 because the two new Commons records reuse an already counted Syndicate URL.
+The full subdomain-aware baseline contains 80 risky-host unique URLs before this batch. Batch 1 adds three genuinely new risky-host URLs: Ronin's Substack alert, the Poly Network Medium notice, and Celer's X update. The ceiling is fixed at 83. The terminal unique-URL ceiling remains 59 because the two new Commons records reuse an already counted Syndicate URL.
 
 ```text
-Archive-risk unit                         unique source URL
-Risky-host matching                       exact host or subdomain
-Terminal unarchived unique URLs          59
-Terminal unarchived evidence records     78
-Risky-host unarchived unique URLs        63
-Risky-host unarchived evidence records   96
+Archive-risk unit                          unique source URL
+Risky-host matching                        exact host or subdomain
+Terminal unarchived unique URLs           59
+Terminal unarchived evidence records      78
+Risky-host unarchived unique URLs         83
+Risky-host unarchived evidence records   123
 ```
 
-The previous 76 and 90 limits were evidence-record counts. They are not carried forward as unique-URL limits.
+The earlier 76 and 90 limits were evidence-record counts under exact-host matching. They are not carried forward as unique-URL limits.
 
 ## Permanent guards
 
@@ -107,4 +107,4 @@ The previous 76 and 90 limits were evidence-record counts. They are not carried 
 1. merge PR #109 after final normal CI;
 2. verify the 271-evidence state and all public content in production;
 3. review the remaining 19 event Tier 1 gaps in the next bounded batch;
-4. begin verified archive capture work for the 63-URL risky-host queue and 59-URL terminal queue.
+4. begin verified archive capture work for the 83-URL risky-host queue and 59-URL terminal queue.
