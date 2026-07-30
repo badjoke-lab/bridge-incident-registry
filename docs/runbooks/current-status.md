@@ -59,15 +59,15 @@ Incidents without primary evidence        1 / 34
 Incidents without tier 1 evidence         1 / 34
 Events without primary evidence          28 / 183
 Events without tier 1 evidence           19 / 183
-Terminal unarchived unique URLs          76
+Terminal unarchived unique URLs          59
 Terminal unarchived evidence records     78
-Risky-host unarchived unique URLs        92
-Risky-host unarchived evidence records   95
+Risky-host unarchived unique URLs        63
+Risky-host unarchived evidence records   96
 X/Twitter evidence records unarchived    32
 Unknown URL status                        0
 ```
 
-Archive-risk ceilings use normalized unique source URLs. Multiple event-scoped evidence records that reuse the same source URL do not create multiple preservation obligations. Raw evidence-record counts remain reported for transparency.
+Archive-risk ceilings use normalized unique source URLs and exact-or-subdomain host matching. Multiple event-scoped evidence records that reuse the same source URL do not create multiple preservation obligations. Raw evidence-record counts remain reported for transparency.
 
 Event Tier 1 Batch 1 adds six event-scoped first-party records:
 
@@ -122,4 +122,4 @@ Publication attempt     1
 2. production-verify the full 33 / 34 / 183 / 271 public state;
 3. review the remaining 19 event Tier 1 gaps in bounded Batch 2;
 4. continue Nerve Bridge primary/Tier 1 research without weakening source hierarchy;
-5. begin verified archive captures for the 92 risky-host and 76 terminal unique-URL queues.
+5. begin verified archive captures for the 63 risky-host and 59 terminal unique-URL queues.
