@@ -61,8 +61,8 @@ Events without primary evidence          28 / 183
 Events without tier 1 evidence           19 / 183
 Terminal unarchived unique URLs          59
 Terminal unarchived evidence records     78
-Risky-host unarchived unique URLs        63
-Risky-host unarchived evidence records   96
+Risky-host unarchived unique URLs        83
+Risky-host unarchived evidence records  123
 X/Twitter evidence records unarchived    32
 Unknown URL status                        0
 ```
@@ -122,4 +122,4 @@ Publication attempt     1
 2. production-verify the full 33 / 34 / 183 / 271 public state;
 3. review the remaining 19 event Tier 1 gaps in bounded Batch 2;
 4. continue Nerve Bridge primary/Tier 1 research without weakening source hierarchy;
-5. begin verified archive captures for the 63 risky-host and 59 terminal unique-URL queues.
+5. begin verified archive captures for the 83 risky-host and 59 terminal unique-URL queues.
