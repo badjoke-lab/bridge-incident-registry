@@ -5,13 +5,13 @@ Updated: 2026-07-30
 
 GitHub state and canonical JSON are authoritative.
 
-## Canonical and production baseline
+## Canonical baseline
 
 ```text
 Bridges     33
 Incidents   34
 Events      183
-Evidence    279
+Evidence    284
 ```
 
 ## Current position
@@ -28,6 +28,8 @@ Phase 3  Full-corpus quality strengthening         active
          URL-status remediation Batch 1            complete — PRs #106–#107
          Event Tier 1 Batch 1                      production-verified — PRs #108–#110
          Event Tier 1 Batch 2                      production-verified — PRs #111–#113
+         Final event Tier 1 review                 complete — PR #114
+         Final event Tier 1 canonical              pending merge — PR #115
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
@@ -35,7 +37,9 @@ Phase 5  Monitoring and candidate collection       planned
 Release  v1 hardening                              planned
 ```
 
-## Latest production checkpoint
+## Latest completed production checkpoint
+
+The completed production checkpoint remains 279 evidence until the final migration is merged and explicitly verified.
 
 ```text
 Canonical data PR        #112
@@ -43,7 +47,7 @@ Canonical merge          7c52a3804043bc9d16da5ddcf6faeef608da804d
 Production audit PR      #113
 Production verify run    30542396678
 Canonical normal CI      30542215442
-Production-PR normal CI  30542393855
+Production-PR normal CI  30542791896
 Verified state           33 / 34 / 183 / 279
 Canonical content match  true
 Verified HTML routes     72
@@ -52,31 +56,30 @@ Generated at             2026-07-30T12:24:11.345Z
 Publication attempt      2
 ```
 
-Attempt 1 observed the earlier 271-evidence deployment. Attempt 2 observed the complete 279-evidence public contract and passed all route and content assertions.
-
-## Quality state
+## Canonical quality state after final migration
 
 ```text
 Incident source-count mismatches       0
 Event source-count mismatches          0
 Incidents without primary              1
 Incidents without Tier 1               1
-Events without primary                20
-Events without Tier 1                 11
+Events without primary                16
+Events without Tier 1                  6
+Unreviewed event Tier 1 gaps            0
 Terminal unarchived unique URLs       59
-Risky-host unarchived unique URLs     87
+Risky-host unarchived unique URLs     88
 Unknown URL status                     0
 ```
 
-Batch 2 added eight first-party event links for Rubic, Taiko, Celer, SOCKET, Synapse, Holograph, and Transit Finance. The two Nerve events remain intentionally Tier 2 because no reviewed operator source exists and security-firm analyses are not reclassified.
+All event Tier 1 gaps are reviewed. The remaining six are intentional secondary records covering retrospective research, a community proposal, and Nerve security-firm analysis. They are not candidates for source-tier weakening.
 
-Six of the 11 remaining event Tier 1 gaps are already documented as intentional secondary records. Five remain for final review.
+The final migration adds four primary event links and one non-primary Tier 1 PeckShieldAlert observation. One new unique risky-host URL moves the archive queue from 87 to 88. The terminal unique-URL queue remains 59.
 
 ## Immediate source-quality targets
 
-1. review the final five unreviewed event Tier 1 gaps;
+1. merge and production-verify the final event Tier 1 migration;
 2. close or document the remaining incident-level Nerve source gap;
-3. reduce the remaining 20 events without primary evidence where appropriate;
+3. reduce the remaining 16 events without primary evidence where appropriate;
 4. begin verified archive captures for terminal and risky-host evidence;
 5. tighten archive-risk ceilings as verified captures are added.
 
@@ -92,8 +95,8 @@ Publication convergence requires matching record counts, canonical-only markers,
 
 ## Remaining roadmap
 
-1. complete the final event-level Tier 1 review and any justified canonical migration;
-2. close or document the remaining incident-level primary and Tier 1 gap;
+1. close or document the remaining incident-level primary and Tier 1 gap;
+2. remediate justified primary-evidence gaps;
 3. add verified archive captures for terminal and risky-host evidence;
 4. strengthen remaining validators;
 5. complete public-contract compatibility review;

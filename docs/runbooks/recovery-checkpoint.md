@@ -5,13 +5,13 @@ Updated: 2026-07-30
 
 GitHub state and canonical JSON are authoritative. Completed merge SHAs are checkpoints, not live branch pointers.
 
-## Canonical and production counts
+## Canonical counts
 
 ```text
 Bridges     33
 Incidents   34
 Events      183
-Evidence    279
+Evidence    284
 ```
 
 ## Latest completed checkpoints
@@ -24,9 +24,13 @@ PR #106      Holograph URL-status canonical remediation
 PR #107      Holograph production verification and content gate
 PR #108–110  Event Tier 1 Batch 1 review, canonical, and production verification
 PR #111–113  Event Tier 1 Batch 2 review, canonical, and production verification
+PR #114      Final event Tier 1 review boundary
+PR #115      Final event Tier 1 canonical migration — pending merge
 ```
 
-## Latest production checkpoint
+## Latest completed production checkpoint
+
+The latest completed production checkpoint remains 279 evidence until PR #115 merges and the 284-evidence state is verified.
 
 ```text
 Canonical data PR        #112
@@ -34,7 +38,7 @@ Canonical merge          7c52a3804043bc9d16da5ddcf6faeef608da804d
 Production audit PR      #113
 Production verify        30542396678
 Canonical normal CI      30542215442
-Production-PR normal CI  30542393855
+Production-PR normal CI  30542791896
 Verified state           33 / 34 / 183 / 279
 Canonical content match  true
 HTML routes              72
@@ -42,8 +46,6 @@ Redirects                74
 Generated at             2026-07-30T12:24:11.345Z
 Publication attempt      2
 ```
-
-Attempt 1 observed the old 271-evidence deployment. Attempt 2 observed the complete canonical-derived 279-evidence public output.
 
 ## Permanent guards
 
@@ -61,35 +63,37 @@ Incident source-count mismatches      0
 Event source-count mismatches         0
 Incidents without primary             1
 Incidents without Tier 1              1
-Events without primary               20
-Events without Tier 1                11
+Events without primary               16
+Events without Tier 1                 6
+Unreviewed event Tier 1 gaps           0
 Terminal unarchived unique URLs      59
-Risky-host unarchived unique URLs    87
+Risky-host unarchived unique URLs    88
 Unknown URL status                    0
 ```
 
-## Event Tier 1 Batch 2
+## Final event Tier 1 migration
 
 ```text
-Review boundary       PR #111
-Canonical migration   PR #112
-Production audit      PR #113
-Evidence added        bir_src_000272–bir_src_000279
-Evidence total        271 -> 279
-Primary evidence      189 -> 197
-Tier 1 evidence       207 -> 215
-Event primary gaps     28 -> 20
-Event Tier 1 gaps      19 -> 11
+Review boundary       PR #114
+Canonical migration   PR #115
+Evidence added        bir_src_000280–bir_src_000284
+Evidence total        279 -> 284
+Primary evidence      197 -> 201
+Tier 1 evidence       215 -> 220
+Event primary gaps     20 -> 16
+Event Tier 1 gaps      11 -> 6
+Unreviewed gaps         5 -> 0
 Source-count drift      0
 ```
 
-The eight additions support Rubic, Taiko, Celer, SOCKET, Synapse, Holograph, and Transit Finance events with reviewed first-party evidence. The two Nerve events remain intentionally Tier 2.
+Four additions are first-party primary evidence. The PeckShieldAlert Tornado Cash observation remains Tier 1 non-primary. Five event counts and three incident records were synchronized, with the Unizen incident incremented twice.
 
-Archive-risk is counted by normalized unique source URL and exact-or-subdomain risky-host matching. Raw evidence-record counts are 78 terminal and 131 risky-host records, while the actionable unique-URL queues are 59 and 87.
+Archive-risk is counted by normalized unique source URL and exact-or-subdomain risky-host matching. Raw evidence-record counts are 79 terminal and 136 risky-host records, while the actionable unique-URL queues are 59 and 88.
 
 ## Next
 
-1. review the final five unreviewed event Tier 1 gaps;
-2. continue Nerve Bridge first-party/Tier 1 research;
-3. start verified archive capture work for the 87 risky-host and 59 terminal unique URLs;
-4. continue validator and v1 hardening.
+1. merge PR #115 after normal CI passes;
+2. production-verify the complete 284-evidence public output;
+3. continue Nerve Bridge first-party/Tier 1 research;
+4. start verified archive capture work for the 88 risky-host and 59 terminal unique URLs;
+5. continue validator and v1 hardening.

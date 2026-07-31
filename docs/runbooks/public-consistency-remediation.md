@@ -3,18 +3,20 @@
 Status: complete  
 Updated: 2026-07-30
 
-## Current canonical and production baseline
+## Current canonical baseline
 
 ```text
 Bridges     33
 Incidents   34
 Events      183
-Evidence    279
+Evidence    284
 HTML routes 72
 Redirects   74
 ```
 
 Canonical JSON remains the only record source. Generated public files are build products.
+
+The latest completed production checkpoint remains 279 evidence until the final event Tier 1 migration passes explicit full-content production verification.
 
 ## Completed remediation sequence
 
@@ -29,7 +31,7 @@ PR #59  Production verification
 PR #107 Full generated-content production equality
 ```
 
-## Latest production contract verification
+## Latest completed production contract verification
 
 Event Tier 1 Batch 2 production verification run `30542396678` passed at:
 
@@ -50,12 +52,14 @@ Canonical merge     7c52a3804043bc9d16da5ddcf6faeef608da804d
 Production audit PR #113
 Production run      30542396678
 Canonical CI        30542215442
-Production PR CI    30542393855
+Production PR CI    30542791896
 Generated at        2026-07-30T12:24:11.345Z
 Attempt             2
 ```
 
-Attempt 1 observed the old 271-evidence deployment. Attempt 2 observed the complete 279-evidence public contract and passed.
+## Pending canonical publication
+
+The final event Tier 1 migration increases evidence from 279 to 284, closes the unreviewed event Tier 1 backlog, and leaves six intentional secondary gaps. After PR #115 merges, the unchanged full-content verifier must confirm all 284 transformed evidence records rather than accepting the earlier 279-record deployment.
 
 ## Full-content publication gate
 
@@ -69,7 +73,7 @@ Normal CI requires type and Astro checks, canonical and enum validation, first-t
 
 Production verification requires matching counts and canonical-only markers, complete generated JSON equality, all static and detail routes, canonical links, JSON-LD, sitemap, robots, redirects, content types, and cache signals.
 
-Latest production audit: `docs/audits/production-verification-phase3-event-tier1-batch2-2026-07-30.md`.
+Latest completed production audit: `docs/audits/production-verification-phase3-event-tier1-batch2-2026-07-30.md`.
 
 ## Closure
 

@@ -64,7 +64,7 @@ Everclear's official wind-down announcement directly states that the protocol, u
 
 ## Expected canonical migration
 
-A fresh canonical branch should add five event-scoped Tier 1 records and synchronize five event counts across four incidents plus the entity-level Everclear shutdown event.
+A fresh canonical branch should add five event-scoped Tier 1 records and synchronize five event counts across three incident records. The Unizen incident receives two additions; the Everclear shutdown event has no incident linkage.
 
 ```text
 Evidence                       279 -> 284
