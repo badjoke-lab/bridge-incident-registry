@@ -5,7 +5,7 @@ Updated: 2026-07-31
 
 GitHub state and canonical JSON are authoritative. Completed merge SHAs are checkpoints, not live branch pointers.
 
-## Canonical and production counts
+## Canonical counts
 
 ```text
 Bridges     33
@@ -18,16 +18,16 @@ Evidence    284
 
 ```text
 PR #100      Source-quality baseline and no-regression gate
-PR #103      LI.FI source-quality canonical remediation
-PR #104      LI.FI production verification
-PR #106      Holograph URL-status canonical remediation
-PR #107      Holograph production verification and content gate
-PR #108–110  Event Tier 1 Batch 1 review, canonical, and production verification
-PR #111–113  Event Tier 1 Batch 2 review, canonical, and production verification
-PR #114–116  Final event Tier 1 review, canonical, and production verification
+PR #103–107  LI.FI and Holograph source-quality remediation
+PR #108–116  Event Tier 1 review, canonical remediation, and production verification
+PR #117      Nerve Bridge source boundary
+PR #118      Archive-risk inventory and Batch 1 review
+PR #119      Archive capture Batch 1 — pending merge
 ```
 
 ## Latest completed production checkpoint
+
+The latest completed production checkpoint remains the pre-archive 284-evidence state until PR #119 merges and all archive fields are explicitly verified.
 
 ```text
 Canonical data PR        #115
@@ -63,33 +63,50 @@ Incidents without Tier 1              1
 Events without primary               16
 Events without Tier 1                 6
 Unreviewed event Tier 1 gaps           0
-Terminal unarchived unique URLs      59
-Risky-host unarchived unique URLs    88
+Evidence with archived_url           10
+Terminal unarchived unique URLs      54
+Risky-host unarchived unique URLs    83
 Unknown URL status                    0
 ```
 
-## Final event Tier 1 migration
+## Archive capture Batch 1
 
 ```text
-Review boundary       PR #114
-Canonical migration   PR #115
-Production audit      PR #116
-Evidence added        bir_src_000280–bir_src_000284
-Evidence total        279 -> 284
-Primary evidence      197 -> 201
-Tier 1 evidence       215 -> 220
-Event primary gaps     20 -> 16
-Event Tier 1 gaps      11 -> 6
-Unreviewed gaps         5 -> 0
-Source-count drift      0
+Review boundary                    PR #118
+Canonical migration                PR #119
+Verified Wayback URLs                    5
+Evidence records updated                10
+Terminal unique queue             59 -> 54
+Risky-host unique queue           88 -> 83
+Terminal record queue             79 -> 69
+Risky-host record queue          136 -> 126
+Source-count drift                      0
 ```
 
-Four additions are first-party primary evidence. The PeckShieldAlert Tornado Cash observation remains Tier 1 non-primary. Five event counts and three incident records were synchronized, with the Unizen incident incremented twice.
+Updated evidence IDs:
 
-Archive-risk is counted by normalized unique source URL and exact-or-subdomain risky-host matching. Raw evidence-record counts are 79 terminal and 136 risky-host records, while the actionable unique-URL queues are 59 and 88.
+```text
+bir_src_000035
+bir_src_000039
+bir_src_000086
+bir_src_000088
+bir_src_000090
+bir_src_000230
+bir_src_000231
+bir_src_000232
+bir_src_000233
+bir_src_000234
+```
+
+`bir_src_000037` remains unarchived because no verified Wayback snapshot was available. No wildcard or guessed archive is permitted.
+
+## Nerve boundary
+
+PR #117 completed the first-party source search for `bir_inc_000026`. The remaining incident primary and Tier 1 gap is intentional. Current-operation pages and Tier 2 security analysis must not be repurposed or reclassified.
 
 ## Next
 
-1. continue Nerve Bridge first-party/Tier 1 research;
-2. start verified archive capture work for the 88 risky-host and 59 terminal unique URLs;
-3. continue validator, monitoring, candidate collection, and v1 hardening.
+1. merge PR #119 after final normal CI;
+2. production-verify all ten archive fields;
+3. continue verified capture work from 83 risky-host and 54 terminal unique URLs;
+4. continue validator, monitoring, candidate collection, and v1 hardening.
