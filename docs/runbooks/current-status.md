@@ -3,7 +3,7 @@
 Status: active  
 Updated: 2026-07-31
 
-## Canonical state
+## Canonical and production state
 
 ```text
 Bridges     33
@@ -32,12 +32,10 @@ Source-quality baseline              complete — PR #100
 Source-quality no-regression gate    active
 Source-quality remediation Batch 1   complete — PRs #103–#105
 URL-status remediation Batch 1       complete — PRs #106–#107
-Event Tier 1 Batch 1                 production-verified — PRs #108–#110
-Event Tier 1 Batch 2                 production-verified — PRs #111–#113
-Final event Tier 1 remediation       production-verified — PRs #114–#116
+Event Tier 1 remediation             production-verified — PRs #108–#116
 Nerve source boundary                reviewed — PR #117
 Archive-risk Batch 1 review          complete — PR #118
-Archive capture Batch 1              canonical pending merge — PR #119
+Archive capture Batch 1              production-verified — PRs #119–#120
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
 ```
@@ -74,7 +72,7 @@ Unknown URL status                        0
 
 Archive-risk ceilings use normalized unique source URLs and exact-or-subdomain host matching. Multiple evidence records that reuse the same source URL create one preservation obligation.
 
-Archive capture Batch 1 adds five verified Wayback snapshots to ten Qubit, pNetwork, and Gala Games evidence records. Source URLs, claims, source tiers, reliability, and linkages remain unchanged.
+Archive capture Batch 1 added five verified Wayback snapshots to ten Qubit, pNetwork, and Gala Games evidence records. Source URLs, claims, source tiers, reliability, and linkages remain unchanged. Attempt 1 of production verification observed the previous same-count dataset and failed on `bir_src_000035`; attempt 2 observed the full archive fields and passed.
 
 All event Tier 1 gaps are reviewed. The six remaining gaps are intentional secondary records:
 
@@ -93,26 +91,23 @@ Remaining incident-level gap:
 
 ## Latest completed production checkpoint
 
-The latest completed production checkpoint remains the pre-archive 284-evidence state until PR #119 merges and the archive fields pass explicit full-content verification.
-
 ```text
-Canonical data PR       #115
-Canonical merge         b07a33b6a61be8338466b5257e121a543884e2f3
-Production audit PR     #116
-Production verify       30612188969
-Canonical normal CI     30544058869
-Production-PR normal CI 30612188935
+Canonical data PR       #119
+Canonical merge         5a152f647e05018170e57721dfdef69d1cadf12b
+Production audit PR     #120
+Production verify       30614617534
+Canonical normal CI     30614478890
 Verified state          33 / 34 / 183 / 284
+Archived evidence       10 / 284
 Canonical content match true
 Verified HTML routes    72
 Verified redirects      74
-Generated at            2026-07-31T07:14:14.901Z
-Publication attempt     1
+Generated at            2026-07-31T07:57:38.614Z
+Publication attempt     2
 ```
 
 ## Next
 
-1. merge archive capture Batch 1 after final normal CI;
-2. production-verify all ten published `archived_url` fields;
-3. continue archive capture work from 83 risky-host and 54 terminal unique URLs;
-4. continue validator, monitoring, candidate collection, and v1 hardening.
+1. continue bounded archive capture work from 83 risky-host and 54 terminal unique URLs;
+2. reduce the remaining 16 events without primary evidence where justified;
+3. continue validator, monitoring, candidate collection, and v1 hardening.

@@ -6,12 +6,13 @@ Updated: 2026-07-31
 ## Current canonical and production baseline
 
 ```text
-Bridges     33
-Incidents   34
-Events      183
-Evidence    284
-HTML routes 72
-Redirects   74
+Bridges            33
+Incidents          34
+Events            183
+Evidence          284
+Archived evidence  10
+HTML routes        72
+Redirects          74
 ```
 
 Canonical JSON remains the only record source. Generated public files are build products.
@@ -31,13 +32,14 @@ PR #107 Full generated-content production equality
 
 ## Latest production contract verification
 
-Final event Tier 1 production verification run `30612188969` passed at:
+Archive capture Batch 1 production verification run `30614617534` passed at:
 
 ```text
 33 bridges
 34 incidents
 183 events
 284 evidence records
+10 evidence records with archived_url
 72 canonical HTML routes
 74 legacy redirects
 0 unknown URL statuses
@@ -45,17 +47,16 @@ complete public-content equality
 ```
 
 ```text
-Canonical data PR   #115
-Canonical merge     b07a33b6a61be8338466b5257e121a543884e2f3
-Production audit PR #116
-Production run      30612188969
-Canonical CI        30544058869
-Production PR CI    30612188935
-Generated at        2026-07-31T07:14:14.901Z
-Attempt             1
+Canonical data PR   #119
+Canonical merge     5a152f647e05018170e57721dfdef69d1cadf12b
+Production audit PR #120
+Production run      30614617534
+Canonical CI        30614478890
+Generated at        2026-07-31T07:57:38.614Z
+Attempt             2
 ```
 
-The final event Tier 1 migration increased evidence from 279 to 284, closed the unreviewed event Tier 1 backlog, and left six intentional secondary gaps. The unchanged full-content verifier confirmed all 284 transformed evidence records on the first publication attempt.
+Attempt 1 saw the same 284 record counts but rejected the stale evidence content at `bir_src_000035`. Attempt 2 confirmed the exact ten reviewed archive fields and every other transformed field.
 
 ## Full-content publication gate
 
@@ -69,11 +70,11 @@ Normal CI requires type and Astro checks, canonical and enum validation, first-t
 
 Production verification requires matching counts and canonical-only markers, complete generated JSON equality, all static and detail routes, canonical links, JSON-LD, sitemap, robots, redirects, content types, and cache signals.
 
-Latest completed production audit: `docs/audits/production-verification-phase3-event-tier1-final-2026-07-31.md`.
+Latest completed production audit: `docs/audits/production-verification-phase3-archive-capture-batch1-2026-07-31.md`.
 
 ## Closure
 
-The emergency public-consistency remediation remains closed. Canonical-derived publication, final-`dist` checking, full-content production verification, exact source-count equality, zero unknown URL status, and source-quality no-regression gates protect later canonical migrations.
+The emergency public-consistency remediation remains closed. Canonical-derived publication, final-`dist` checking, full-content production verification, exact source-count equality, zero unknown URL status, and source-quality no-regression gates protect later canonical migrations, including same-count archive-field changes.
 
 ## Resume rule
 
