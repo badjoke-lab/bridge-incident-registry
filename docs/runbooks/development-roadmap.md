@@ -5,7 +5,7 @@ Updated: 2026-07-31
 
 GitHub state and canonical JSON are authoritative.
 
-## Canonical baseline
+## Canonical and production baseline
 
 ```text
 Bridges     33
@@ -24,12 +24,11 @@ Phase 3  Full-corpus quality strengthening         active
          Source-count remediation                  complete — PRs #78–#99
          Hard source-count equality gate           active
          Source-quality baseline                   complete — PR #100
-         Source-quality remediation Batch 1        complete — PRs #103–#105
-         URL-status remediation Batch 1            complete — PRs #106–#107
+         Source-quality remediation                complete — PRs #103–#107
          Event Tier 1 remediation                  production-verified — PRs #108–#116
          Nerve source boundary                     reviewed — PR #117
          Archive-risk Batch 1 review               complete — PR #118
-         Archive capture Batch 1                   canonical pending merge — PR #119
+         Archive capture Batch 1                   production-verified — PRs #119–#120
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
@@ -39,24 +38,24 @@ Release  v1 hardening                              planned
 
 ## Latest completed production checkpoint
 
-The completed production checkpoint remains the pre-archive 284-evidence state until Batch 1 archive fields are explicitly verified.
-
 ```text
-Canonical data PR        #115
-Canonical merge          b07a33b6a61be8338466b5257e121a543884e2f3
-Production audit PR      #116
-Production verify run    30612188969
-Canonical normal CI      30544058869
-Production-PR normal CI  30612188935
+Canonical data PR        #119
+Canonical merge          5a152f647e05018170e57721dfdef69d1cadf12b
+Production audit PR      #120
+Production verify run    30614617534
+Canonical normal CI      30614478890
 Verified state           33 / 34 / 183 / 284
+Archived evidence        10 / 284
 Canonical content match  true
 Verified HTML routes     72
 Verified redirects       74
-Generated at             2026-07-31T07:14:14.901Z
-Publication attempt      1
+Generated at             2026-07-31T07:57:38.614Z
+Publication attempt      2
 ```
 
-## Current canonical quality state
+Attempt 1 rejected the prior same-count dataset because `bir_src_000035` lacked the reviewed archive field. Attempt 2 matched every transformed field.
+
+## Current quality state
 
 ```text
 Incident source-count mismatches       0
@@ -72,17 +71,17 @@ Risky-host unarchived unique URLs     83
 Unknown URL status                     0
 ```
 
-The remaining Nerve incident-level source gap is reviewed and intentional under PR #117. Current operation evidence is not reused as historical incident evidence, and Tier 2 security analysis is not reclassified.
+The remaining Nerve incident-level source gap is reviewed and intentional under PR #117. Current-operation evidence is not reused as historical incident evidence, and Tier 2 security analysis is not reclassified.
 
 Archive capture Batch 1 adds five verified Wayback snapshots to ten canonical evidence records and tightens both archive-risk ceilings. The unavailable Qubit compensation-plan page remains unarchived rather than receiving a guessed capture.
 
 ## Immediate source-quality targets
 
-1. merge and production-verify archive capture Batch 1;
-2. continue verified archive captures from the 83 risky-host and 54 terminal unique-URL queues;
-3. reduce the remaining 16 events without primary evidence where appropriate;
-4. strengthen remaining validators;
-5. continue monitoring, candidate collection, and v1 hardening.
+1. continue verified archive captures from the 83 risky-host and 54 terminal unique-URL queues;
+2. reduce the remaining 16 events without primary evidence where appropriate;
+3. strengthen remaining validators;
+4. continue monitoring and candidate collection;
+5. complete v1 hardening.
 
 ## Production publication gate
 
@@ -96,13 +95,12 @@ Publication convergence requires matching record counts, canonical-only markers,
 
 ## Remaining roadmap
 
-1. production-verify archive capture Batch 1;
-2. continue bounded archive preservation batches;
-3. remediate justified primary-evidence gaps;
-4. strengthen remaining validators;
-5. complete public-contract compatibility review;
-6. add monitoring with no automatic publication;
-7. complete v1 documentation, accessibility, performance, and release checks.
+1. continue bounded archive preservation batches;
+2. remediate justified primary-evidence gaps;
+3. strengthen remaining validators;
+4. complete public-contract compatibility review;
+5. add monitoring with no automatic publication;
+6. complete v1 documentation, accessibility, performance, and release checks.
 
 ## Permanent rules
 
