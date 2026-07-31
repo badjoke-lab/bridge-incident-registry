@@ -7,6 +7,10 @@ on:
     paths:
       - "scripts/apply-archive-capture-batch1.mjs"
       - ".github/workflows/apply-archive-capture-batch1.yml"
+  pull_request:
+    paths:
+      - "scripts/apply-archive-capture-batch1.mjs"
+      - ".github/workflows/apply-archive-capture-batch1.yml"
   workflow_dispatch:
 
 permissions:
