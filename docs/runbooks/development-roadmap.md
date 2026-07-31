@@ -5,7 +5,7 @@ Updated: 2026-07-31
 
 GitHub state and canonical JSON are authoritative.
 
-## Canonical and production baseline
+## Canonical baseline
 
 ```text
 Bridges     33
@@ -26,9 +26,10 @@ Phase 3  Full-corpus quality strengthening         active
          Source-quality baseline                   complete — PR #100
          Source-quality remediation Batch 1        complete — PRs #103–#105
          URL-status remediation Batch 1            complete — PRs #106–#107
-         Event Tier 1 Batch 1                      production-verified — PRs #108–#110
-         Event Tier 1 Batch 2                      production-verified — PRs #111–#113
-         Final event Tier 1 remediation            production-verified — PRs #114–#116
+         Event Tier 1 remediation                  production-verified — PRs #108–#116
+         Nerve source boundary                     reviewed — PR #117
+         Archive-risk Batch 1 review               complete — PR #118
+         Archive capture Batch 1                   canonical pending merge — PR #119
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
@@ -37,6 +38,8 @@ Release  v1 hardening                              planned
 ```
 
 ## Latest completed production checkpoint
+
+The completed production checkpoint remains the pre-archive 284-evidence state until Batch 1 archive fields are explicitly verified.
 
 ```text
 Canonical data PR        #115
@@ -53,7 +56,7 @@ Generated at             2026-07-31T07:14:14.901Z
 Publication attempt      1
 ```
 
-## Current quality state
+## Current canonical quality state
 
 ```text
 Incident source-count mismatches       0
@@ -63,22 +66,23 @@ Incidents without Tier 1               1
 Events without primary                16
 Events without Tier 1                  6
 Unreviewed event Tier 1 gaps            0
-Terminal unarchived unique URLs       59
-Risky-host unarchived unique URLs     88
+Evidence with archived_url            10
+Terminal unarchived unique URLs       54
+Risky-host unarchived unique URLs     83
 Unknown URL status                     0
 ```
 
-All event Tier 1 gaps are reviewed. The remaining six are intentional secondary records covering retrospective research, a community proposal, and Nerve security-firm analysis. They are not candidates for source-tier weakening.
+The remaining Nerve incident-level source gap is reviewed and intentional under PR #117. Current operation evidence is not reused as historical incident evidence, and Tier 2 security analysis is not reclassified.
 
-The final migration added four primary event links and one non-primary Tier 1 PeckShieldAlert observation. One new unique risky-host URL moved the archive queue from 87 to 88. The terminal unique-URL queue remains 59.
+Archive capture Batch 1 adds five verified Wayback snapshots to ten canonical evidence records and tightens both archive-risk ceilings. The unavailable Qubit compensation-plan page remains unarchived rather than receiving a guessed capture.
 
 ## Immediate source-quality targets
 
-1. close or document the remaining incident-level Nerve source gap;
-2. reduce the remaining 16 events without primary evidence where appropriate;
-3. begin verified archive captures for terminal and risky-host evidence;
-4. tighten archive-risk ceilings as verified captures are added;
-5. continue validator, monitoring, candidate collection, and v1 hardening.
+1. merge and production-verify archive capture Batch 1;
+2. continue verified archive captures from the 83 risky-host and 54 terminal unique-URL queues;
+3. reduce the remaining 16 events without primary evidence where appropriate;
+4. strengthen remaining validators;
+5. continue monitoring, candidate collection, and v1 hardening.
 
 ## Production publication gate
 
@@ -92,9 +96,9 @@ Publication convergence requires matching record counts, canonical-only markers,
 
 ## Remaining roadmap
 
-1. close or document the remaining incident-level primary and Tier 1 gap;
-2. remediate justified primary-evidence gaps;
-3. add verified archive captures for terminal and risky-host evidence;
+1. production-verify archive capture Batch 1;
+2. continue bounded archive preservation batches;
+3. remediate justified primary-evidence gaps;
 4. strengthen remaining validators;
 5. complete public-contract compatibility review;
 6. add monitoring with no automatic publication;
@@ -117,3 +121,4 @@ Publication convergence requires matching record counts, canonical-only markers,
 13. Source hierarchy must not be weakened to improve coverage metrics.
 14. Unknown URL statuses require explicit review and are not permitted in canonical data.
 15. Production publication is proven by full generated-content equality, not counts or IDs alone.
+16. An archive URL must resolve to a verified snapshot; wildcard or guessed captures are not canonical evidence.
