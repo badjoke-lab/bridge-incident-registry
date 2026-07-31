@@ -1,9 +1,9 @@
 # Current Status — Bridge Incident Registry
 
 Status: active  
-Updated: 2026-07-30
+Updated: 2026-07-31
 
-## Canonical state
+## Canonical and production state
 
 ```text
 Bridges     33
@@ -34,8 +34,7 @@ Source-quality remediation Batch 1   complete — PRs #103–#105
 URL-status remediation Batch 1       complete — PRs #106–#107
 Event Tier 1 Batch 1                 production-verified — PRs #108–#110
 Event Tier 1 Batch 2                 production-verified — PRs #111–#113
-Final event Tier 1 review            complete — PR #114
-Final event Tier 1 canonical         pending merge — PR #115
+Final event Tier 1 remediation       production-verified — PRs #114–#116
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
 ```
@@ -72,9 +71,9 @@ Unknown URL status                        0
 
 Archive-risk ceilings use normalized unique source URLs and exact-or-subdomain host matching. Multiple event-scoped evidence records that reuse the same source URL do not create multiple preservation obligations.
 
-The final migration adds `bir_src_000280` through `bir_src_000284` for Rubic, Unizen, Taiko, and Everclear. It reduces event primary gaps from 20 to 16 and event Tier 1 gaps from 11 to six.
+The final migration added `bir_src_000280` through `bir_src_000284` for Rubic, Unizen, Taiko, and Everclear. It reduced event primary gaps from 20 to 16 and event Tier 1 gaps from 11 to six.
 
-All event Tier 1 gaps are now reviewed. The six remaining gaps are intentional secondary records:
+All event Tier 1 gaps are reviewed. The six remaining gaps are intentional secondary records:
 
 ```text
 bir_ev_000006
@@ -91,27 +90,23 @@ Remaining incident-level gap:
 
 ## Latest completed production checkpoint
 
-The latest completed production checkpoint remains the 279-evidence state until PR #115 merges and the 284-evidence state passes explicit production verification.
-
 ```text
-Canonical data PR       #112
-Canonical merge         7c52a3804043bc9d16da5ddcf6faeef608da804d
-Production audit PR     #113
-Production verify       30542396678
-Canonical normal CI     30542215442
-Production-PR normal CI 30542791896
-Verified state          33 / 34 / 183 / 279
+Canonical data PR       #115
+Canonical merge         b07a33b6a61be8338466b5257e121a543884e2f3
+Production audit PR     #116
+Production verify       30612188969
+Canonical normal CI     30544058869
+Production-PR normal CI 30612188935
+Verified state          33 / 34 / 183 / 284
 Canonical content match true
 Verified HTML routes    72
 Verified redirects      74
-Generated at            2026-07-30T12:24:11.345Z
-Publication attempt     2
+Generated at            2026-07-31T07:14:14.901Z
+Publication attempt     1
 ```
 
 ## Next
 
-1. merge PR #115 after final normal CI;
-2. production-verify the full 33 / 34 / 183 / 284 public state;
-3. continue Nerve Bridge primary/Tier 1 research without weakening source hierarchy;
-4. begin verified archive captures for the 88 risky-host and 59 terminal unique-URL queues;
-5. continue validator, monitoring, candidate collection, and v1 hardening.
+1. continue Nerve Bridge primary/Tier 1 research without weakening source hierarchy;
+2. begin verified archive captures for the 88 risky-host and 59 terminal unique-URL queues;
+3. continue validator, monitoring, candidate collection, and v1 hardening.
