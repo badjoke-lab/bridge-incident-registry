@@ -7,11 +7,6 @@ const targets = [
     url: "https://medium.com/@QubitFin/protocol-exploit-report-305c34540fa3"
   },
   {
-    evidence_ids: ["bir_src_000037"],
-    label: "Qubit compensation plan",
-    url: "https://medium.com/@QubitFin/our-compensation-plan-1-63e7c64738ed"
-  },
-  {
     evidence_ids: ["bir_src_000039"],
     label: "Qubit markets reopening",
     url: "https://medium.com/@QubitFin/qubit-markets-reopening-d1d25f4fbfc4"
@@ -25,10 +20,19 @@ const targets = [
     evidence_ids: ["bir_src_000088", "bir_src_000232", "bir_src_000233", "bir_src_000234"],
     label: "pNetwork pGALA postmortem",
     url: "https://medium.com/pnetwork/pgala-post-mortem-measures-taken-to-safeguard-the-ecosystem-from-malicious-actors-and-recovery-6407048f4497"
+  },
+  {
+    evidence_ids: ["bir_src_000090"],
+    label: "Gala Games pGALA incident explanation",
+    url: "https://gogalagames.medium.com/pgala-what-happened-and-the-dangers-of-decentralization-62d64e1ea569"
   }
 ];
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+function secureWaybackUrl(url) {
+  return url.replace(/^http:\/\/web\.archive\.org\//, "https://web.archive.org/");
+}
 
 async function inspect(target) {
   const endpoint = `https://archive.org/wayback/available?url=${encodeURIComponent(target.url)}`;
@@ -56,17 +60,18 @@ async function inspect(target) {
     };
   }
 
+  const archivedUrl = secureWaybackUrl(snapshot.url);
   let snapshotStatus = null;
-  let finalUrl = snapshot.url;
+  let finalUrl = archivedUrl;
   let verificationError = null;
 
   try {
-    const snapshotResponse = await fetch(snapshot.url, {
+    const snapshotResponse = await fetch(archivedUrl, {
       redirect: "follow",
       headers: { "user-agent": "BridgeIncidentRegistry/1.0 archive verification" }
     });
     snapshotStatus = snapshotResponse.status;
-    finalUrl = snapshotResponse.url || snapshot.url;
+    finalUrl = snapshotResponse.url || archivedUrl;
     if (!snapshotResponse.ok) {
       verificationError = `Snapshot request returned ${snapshotResponse.status}`;
     }
@@ -78,7 +83,7 @@ async function inspect(target) {
     ...target,
     api_status: response.status,
     available: true,
-    archived_url: snapshot.url,
+    archived_url: archivedUrl,
     snapshot_timestamp: snapshot.timestamp ?? null,
     snapshot_status: snapshot.status ?? null,
     verified_http_status: snapshotStatus,
@@ -105,4 +110,4 @@ const output = {
 fs.writeFileSync("archive-capture-batch1-candidates.json", `${JSON.stringify(output, null, 2)}\n`);
 console.log(JSON.stringify(output, null, 2));
 
-if (output.available_count !== targets.length) process.exitCode = 1;
+if (output.available_count !== targets.length || output.verified_ok_count !== targets.length) process.exitCode = 1;
