@@ -5,7 +5,7 @@ Updated: 2026-07-31
 
 GitHub state and canonical JSON are authoritative. Completed merge SHAs are checkpoints, not live branch pointers.
 
-## Canonical counts
+## Canonical and production counts
 
 ```text
 Bridges     33
@@ -22,27 +22,27 @@ PR #103–107  LI.FI and Holograph source-quality remediation
 PR #108–116  Event Tier 1 review, canonical remediation, and production verification
 PR #117      Nerve Bridge source boundary
 PR #118      Archive-risk inventory and Batch 1 review
-PR #119      Archive capture Batch 1 — pending merge
+PR #119–120  Archive capture Batch 1 and production verification
 ```
 
 ## Latest completed production checkpoint
 
-The latest completed production checkpoint remains the pre-archive 284-evidence state until PR #119 merges and all archive fields are explicitly verified.
-
 ```text
-Canonical data PR        #115
-Canonical merge          b07a33b6a61be8338466b5257e121a543884e2f3
-Production audit PR      #116
-Production verify        30612188969
-Canonical normal CI      30544058869
-Production-PR normal CI  30612188935
+Canonical data PR        #119
+Canonical merge          5a152f647e05018170e57721dfdef69d1cadf12b
+Production audit PR      #120
+Production verify        30614617534
+Canonical normal CI      30614478890
 Verified state           33 / 34 / 183 / 284
+Archived evidence        10 / 284
 Canonical content match  true
 HTML routes              72
 Redirects                74
-Generated at             2026-07-31T07:14:14.901Z
-Publication attempt      1
+Generated at             2026-07-31T07:57:38.614Z
+Publication attempt      2
 ```
+
+Attempt 1 saw the previous same-count evidence dataset and failed at `bir_src_000035`. Attempt 2 saw the exact ten archive fields and passed.
 
 ## Permanent guards
 
@@ -74,6 +74,7 @@ Unknown URL status                    0
 ```text
 Review boundary                    PR #118
 Canonical migration                PR #119
+Production verification            PR #120
 Verified Wayback URLs                    5
 Evidence records updated                10
 Terminal unique queue             59 -> 54
@@ -106,7 +107,6 @@ PR #117 completed the first-party source search for `bir_inc_000026`. The remain
 
 ## Next
 
-1. merge PR #119 after final normal CI;
-2. production-verify all ten archive fields;
-3. continue verified capture work from 83 risky-host and 54 terminal unique URLs;
-4. continue validator, monitoring, candidate collection, and v1 hardening.
+1. continue bounded archive capture work from 83 risky-host and 54 terminal unique URLs;
+2. reduce remaining event primary gaps where justified;
+3. continue validator, monitoring, candidate collection, and v1 hardening.
