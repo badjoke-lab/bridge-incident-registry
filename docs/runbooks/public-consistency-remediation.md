@@ -1,9 +1,9 @@
 # Bridge Incident Registry — Public Consistency Remediation
 
 Status: complete  
-Updated: 2026-07-30
+Updated: 2026-07-31
 
-## Current canonical baseline
+## Current canonical and production baseline
 
 ```text
 Bridges     33
@@ -15,8 +15,6 @@ Redirects   74
 ```
 
 Canonical JSON remains the only record source. Generated public files are build products.
-
-The latest completed production checkpoint remains 279 evidence until the final event Tier 1 migration passes explicit full-content production verification.
 
 ## Completed remediation sequence
 
@@ -31,15 +29,15 @@ PR #59  Production verification
 PR #107 Full generated-content production equality
 ```
 
-## Latest completed production contract verification
+## Latest production contract verification
 
-Event Tier 1 Batch 2 production verification run `30542396678` passed at:
+Final event Tier 1 production verification run `30612188969` passed at:
 
 ```text
 33 bridges
 34 incidents
 183 events
-279 evidence records
+284 evidence records
 72 canonical HTML routes
 74 legacy redirects
 0 unknown URL statuses
@@ -47,19 +45,17 @@ complete public-content equality
 ```
 
 ```text
-Canonical data PR   #112
-Canonical merge     7c52a3804043bc9d16da5ddcf6faeef608da804d
-Production audit PR #113
-Production run      30542396678
-Canonical CI        30542215442
-Production PR CI    30542791896
-Generated at        2026-07-30T12:24:11.345Z
-Attempt             2
+Canonical data PR   #115
+Canonical merge     b07a33b6a61be8338466b5257e121a543884e2f3
+Production audit PR #116
+Production run      30612188969
+Canonical CI        30544058869
+Production PR CI    30612188935
+Generated at        2026-07-31T07:14:14.901Z
+Attempt             1
 ```
 
-## Pending canonical publication
-
-The final event Tier 1 migration increases evidence from 279 to 284, closes the unreviewed event Tier 1 backlog, and leaves six intentional secondary gaps. After PR #115 merges, the unchanged full-content verifier must confirm all 284 transformed evidence records rather than accepting the earlier 279-record deployment.
+The final event Tier 1 migration increased evidence from 279 to 284, closed the unreviewed event Tier 1 backlog, and left six intentional secondary gaps. The unchanged full-content verifier confirmed all 284 transformed evidence records on the first publication attempt.
 
 ## Full-content publication gate
 
@@ -73,7 +69,7 @@ Normal CI requires type and Astro checks, canonical and enum validation, first-t
 
 Production verification requires matching counts and canonical-only markers, complete generated JSON equality, all static and detail routes, canonical links, JSON-LD, sitemap, robots, redirects, content types, and cache signals.
 
-Latest completed production audit: `docs/audits/production-verification-phase3-event-tier1-batch2-2026-07-30.md`.
+Latest completed production audit: `docs/audits/production-verification-phase3-event-tier1-final-2026-07-31.md`.
 
 ## Closure
 

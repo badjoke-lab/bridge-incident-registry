@@ -1,11 +1,11 @@
 # BIR Live Recovery Checkpoint
 
 Status: active  
-Updated: 2026-07-30
+Updated: 2026-07-31
 
 GitHub state and canonical JSON are authoritative. Completed merge SHAs are checkpoints, not live branch pointers.
 
-## Canonical counts
+## Canonical and production counts
 
 ```text
 Bridges     33
@@ -24,27 +24,24 @@ PR #106      Holograph URL-status canonical remediation
 PR #107      Holograph production verification and content gate
 PR #108–110  Event Tier 1 Batch 1 review, canonical, and production verification
 PR #111–113  Event Tier 1 Batch 2 review, canonical, and production verification
-PR #114      Final event Tier 1 review boundary
-PR #115      Final event Tier 1 canonical migration — pending merge
+PR #114–116  Final event Tier 1 review, canonical, and production verification
 ```
 
 ## Latest completed production checkpoint
 
-The latest completed production checkpoint remains 279 evidence until PR #115 merges and the 284-evidence state is verified.
-
 ```text
-Canonical data PR        #112
-Canonical merge          7c52a3804043bc9d16da5ddcf6faeef608da804d
-Production audit PR      #113
-Production verify        30542396678
-Canonical normal CI      30542215442
-Production-PR normal CI  30542791896
-Verified state           33 / 34 / 183 / 279
+Canonical data PR        #115
+Canonical merge          b07a33b6a61be8338466b5257e121a543884e2f3
+Production audit PR      #116
+Production verify        30612188969
+Canonical normal CI      30544058869
+Production-PR normal CI  30612188935
+Verified state           33 / 34 / 183 / 284
 Canonical content match  true
 HTML routes              72
 Redirects                74
-Generated at             2026-07-30T12:24:11.345Z
-Publication attempt      2
+Generated at             2026-07-31T07:14:14.901Z
+Publication attempt      1
 ```
 
 ## Permanent guards
@@ -76,6 +73,7 @@ Unknown URL status                    0
 ```text
 Review boundary       PR #114
 Canonical migration   PR #115
+Production audit      PR #116
 Evidence added        bir_src_000280–bir_src_000284
 Evidence total        279 -> 284
 Primary evidence      197 -> 201
@@ -92,8 +90,6 @@ Archive-risk is counted by normalized unique source URL and exact-or-subdomain r
 
 ## Next
 
-1. merge PR #115 after normal CI passes;
-2. production-verify the complete 284-evidence public output;
-3. continue Nerve Bridge first-party/Tier 1 research;
-4. start verified archive capture work for the 88 risky-host and 59 terminal unique URLs;
-5. continue validator and v1 hardening.
+1. continue Nerve Bridge first-party/Tier 1 research;
+2. start verified archive capture work for the 88 risky-host and 59 terminal unique URLs;
+3. continue validator, monitoring, candidate collection, and v1 hardening.
