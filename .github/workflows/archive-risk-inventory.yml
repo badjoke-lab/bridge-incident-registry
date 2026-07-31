@@ -6,12 +6,14 @@ on:
       - agent/phase3-archive-risk-inventory
     paths:
       - "scripts/generate-archive-risk-inventory.mjs"
+      - "scripts/check-wayback-archive-batch1.mjs"
       - ".github/workflows/archive-risk-inventory.yml"
       - "data/bridges.json"
       - "data/evidence.json"
   pull_request:
     paths:
       - "scripts/generate-archive-risk-inventory.mjs"
+      - "scripts/check-wayback-archive-batch1.mjs"
       - ".github/workflows/archive-risk-inventory.yml"
       - "data/bridges.json"
       - "data/evidence.json"
@@ -35,10 +37,21 @@ jobs:
       - name: Generate archive-risk inventory
         run: node scripts/generate-archive-risk-inventory.mjs
 
+      - name: Check Wayback Batch 1 candidates
+        run: node scripts/check-wayback-archive-batch1.mjs
+
       - name: Upload inventory
         uses: actions/upload-artifact@v4
         with:
           name: archive-risk-inventory
           path: archive-risk-inventory.json
+          if-no-files-found: error
+          retention-days: 7
+
+      - name: Upload Wayback Batch 1 candidates
+        uses: actions/upload-artifact@v4
+        with:
+          name: archive-capture-batch1-candidates
+          path: archive-capture-batch1-candidates.json
           if-no-files-found: error
           retention-days: 7
