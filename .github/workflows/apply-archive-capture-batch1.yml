@@ -32,7 +32,7 @@ jobs:
           node-version: 22
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install --no-audit --no-fund
 
       - name: Apply reviewed archive captures
         run: node scripts/apply-archive-capture-batch1.mjs
