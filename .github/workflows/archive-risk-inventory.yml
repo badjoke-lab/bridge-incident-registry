@@ -9,6 +9,12 @@ on:
       - ".github/workflows/archive-risk-inventory.yml"
       - "data/bridges.json"
       - "data/evidence.json"
+  pull_request:
+    paths:
+      - "scripts/generate-archive-risk-inventory.mjs"
+      - ".github/workflows/archive-risk-inventory.yml"
+      - "data/bridges.json"
+      - "data/evidence.json"
   workflow_dispatch:
 
 permissions:
