@@ -1,11 +1,11 @@
 # Bridge Incident Registry — Development Roadmap to v1
 
 Status: active  
-Updated: 2026-07-30
+Updated: 2026-07-31
 
 GitHub state and canonical JSON are authoritative.
 
-## Canonical baseline
+## Canonical and production baseline
 
 ```text
 Bridges     33
@@ -28,8 +28,7 @@ Phase 3  Full-corpus quality strengthening         active
          URL-status remediation Batch 1            complete — PRs #106–#107
          Event Tier 1 Batch 1                      production-verified — PRs #108–#110
          Event Tier 1 Batch 2                      production-verified — PRs #111–#113
-         Final event Tier 1 review                 complete — PR #114
-         Final event Tier 1 canonical              pending merge — PR #115
+         Final event Tier 1 remediation            production-verified — PRs #114–#116
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
@@ -39,24 +38,22 @@ Release  v1 hardening                              planned
 
 ## Latest completed production checkpoint
 
-The completed production checkpoint remains 279 evidence until the final migration is merged and explicitly verified.
-
 ```text
-Canonical data PR        #112
-Canonical merge          7c52a3804043bc9d16da5ddcf6faeef608da804d
-Production audit PR      #113
-Production verify run    30542396678
-Canonical normal CI      30542215442
-Production-PR normal CI  30542791896
-Verified state           33 / 34 / 183 / 279
+Canonical data PR        #115
+Canonical merge          b07a33b6a61be8338466b5257e121a543884e2f3
+Production audit PR      #116
+Production verify run    30612188969
+Canonical normal CI      30544058869
+Production-PR normal CI  30612188935
+Verified state           33 / 34 / 183 / 284
 Canonical content match  true
 Verified HTML routes     72
 Verified redirects       74
-Generated at             2026-07-30T12:24:11.345Z
-Publication attempt      2
+Generated at             2026-07-31T07:14:14.901Z
+Publication attempt      1
 ```
 
-## Canonical quality state after final migration
+## Current quality state
 
 ```text
 Incident source-count mismatches       0
@@ -73,15 +70,15 @@ Unknown URL status                     0
 
 All event Tier 1 gaps are reviewed. The remaining six are intentional secondary records covering retrospective research, a community proposal, and Nerve security-firm analysis. They are not candidates for source-tier weakening.
 
-The final migration adds four primary event links and one non-primary Tier 1 PeckShieldAlert observation. One new unique risky-host URL moves the archive queue from 87 to 88. The terminal unique-URL queue remains 59.
+The final migration added four primary event links and one non-primary Tier 1 PeckShieldAlert observation. One new unique risky-host URL moved the archive queue from 87 to 88. The terminal unique-URL queue remains 59.
 
 ## Immediate source-quality targets
 
-1. merge and production-verify the final event Tier 1 migration;
-2. close or document the remaining incident-level Nerve source gap;
-3. reduce the remaining 16 events without primary evidence where appropriate;
-4. begin verified archive captures for terminal and risky-host evidence;
-5. tighten archive-risk ceilings as verified captures are added.
+1. close or document the remaining incident-level Nerve source gap;
+2. reduce the remaining 16 events without primary evidence where appropriate;
+3. begin verified archive captures for terminal and risky-host evidence;
+4. tighten archive-risk ceilings as verified captures are added;
+5. continue validator, monitoring, candidate collection, and v1 hardening.
 
 ## Production publication gate
 
