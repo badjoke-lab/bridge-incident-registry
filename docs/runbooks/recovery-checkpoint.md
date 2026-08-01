@@ -5,7 +5,7 @@ Updated: 2026-08-01
 
 GitHub state and canonical JSON are authoritative. Completed merge SHAs are checkpoints, not live branch pointers.
 
-## Canonical and production counts
+## Canonical counts
 
 ```text
 Bridges     33
@@ -23,9 +23,13 @@ PR #108–116  Event Tier 1 review, canonical remediation, and production verifi
 PR #117      Nerve Bridge source boundary
 PR #118–120  Archive capture Batch 1 review, canonical, and production verification
 PR #122–125  Archive capture Batch 2 review, canonical, deployment retrigger, and production verification
+PR #126      Archive capture Batch 3 review
+PR #127      Archive capture Batch 3 canonical — pending merge
 ```
 
 ## Latest completed production checkpoint
+
+The completed production checkpoint remains Archive Capture Batch 2 until PR #127 merges and all twenty-seven archive fields are explicitly verified.
 
 ```text
 Canonical data PR        #123
@@ -46,8 +50,6 @@ Generated at             2026-08-01T07:03:30.526Z
 Publication attempt      1
 ```
 
-The first verification attempt correctly rejected the pre-Batch-2 evidence content at `bir_src_000126` for twenty attempts. PR #125 retriggered Cloudflare with a docs-only main push; the unchanged rerun passed immediately.
-
 ## Permanent guards
 
 ```text
@@ -67,45 +69,38 @@ Incidents without Tier 1              1
 Events without primary               16
 Events without Tier 1                 6
 Unreviewed event Tier 1 gaps           0
-Evidence with archived_url           21
-Terminal unarchived unique URLs      46
-Risky-host unarchived unique URLs    75
+Evidence with archived_url           27
+Terminal unarchived unique URLs      40
+Risky-host unarchived unique URLs    69
 Unknown URL status                    0
 ```
 
-## Archive capture Batch 2
+## Archive capture Batch 3
 
 ```text
-Review boundary                    PR #122
-Canonical migration                PR #123
-Production audit                   PR #124
-Deployment retrigger               PR #125
-Verified Wayback URLs                    8
-Evidence records updated                11
-Terminal unique queue             54 -> 46
-Risky-host unique queue           83 -> 75
-Terminal record queue             69 -> 58
-Risky-host record queue          126 -> 115
+Review boundary                    PR #126
+Canonical migration                PR #127
+Verified Wayback URLs                    6
+Evidence records updated                 6
+Terminal unique queue             46 -> 40
+Risky-host unique queue           75 -> 69
+Terminal record queue             58 -> 52
+Risky-host record queue          115 -> 109
 Source-count drift                      0
 ```
 
 Updated evidence IDs:
 
 ```text
-bir_src_000126
-bir_src_000127
-bir_src_000128
-bir_src_000129
-bir_src_000130
-bir_src_000133
-bir_src_000134
-bir_src_000135
-bir_src_000136
-bir_src_000138
-bir_src_000139
+bir_src_000038
+bir_src_000085
+bir_src_000089
+bir_src_000141
+bir_src_000142
+bir_src_000143
 ```
 
-Only exact reviewed snapshots were added. Source URLs, historical claims, source hierarchy, dates, and linkages remain unchanged.
+Only exact reviewed snapshots were added. Source URLs, historical claims, source hierarchy, dates, and linkages remain unchanged. `bir_src_000037` remains unarchived because no verified snapshot is available.
 
 ## Nerve boundary
 
@@ -113,7 +108,8 @@ PR #117 completed the first-party source search for `bir_inc_000026`. The remain
 
 ## Next
 
-1. continue bounded archive work from 75 risky-host and 46 terminal unique URLs;
-2. reduce remaining event primary gaps where justified;
-3. strengthen validators;
-4. continue monitoring, candidate collection, and v1 hardening.
+1. merge PR #127 after final normal CI;
+2. production-verify all twenty-seven archive fields;
+3. continue bounded archive work from 69 risky-host and 40 terminal unique URLs;
+4. reduce remaining event primary gaps where justified;
+5. continue validator, monitoring, candidate collection, and v1 hardening.

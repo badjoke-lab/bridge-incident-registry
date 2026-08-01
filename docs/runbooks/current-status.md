@@ -3,7 +3,7 @@
 Status: active  
 Updated: 2026-08-01
 
-## Canonical and production state
+## Canonical state
 
 ```text
 Bridges     33
@@ -35,6 +35,8 @@ Event Tier 1 remediation             production-verified — PRs #108–#116
 Nerve source boundary                reviewed — PR #117
 Archive capture Batch 1              production-verified — PRs #118–#120
 Archive capture Batch 2              production-verified — PRs #122–#125
+Archive capture Batch 3 review       complete — PR #126
+Archive capture Batch 3 canonical    pending merge — PR #127
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
 ```
@@ -47,13 +49,13 @@ Event mismatches     0
 Unknown URL status   0
 ```
 
-## Source-quality state
+## Canonical source-quality state
 
 ```text
 Primary evidence                         201 / 284
 Tier 1 evidence                          220 / 284
 Official-domain evidence                 131 / 284
-Evidence with archived_url                21 / 284
+Evidence with archived_url                27 / 284
 Bridges without primary evidence          0 / 33
 Bridges without tier 1 evidence           0 / 33
 Incidents without primary evidence        1 / 34
@@ -61,19 +63,17 @@ Incidents without tier 1 evidence         1 / 34
 Events without primary evidence          16 / 183
 Events without tier 1 evidence            6 / 183
 Unreviewed event Tier 1 gaps               0
-Terminal unarchived unique URLs          46
-Terminal unarchived evidence records     58
-Risky-host unarchived unique URLs        75
-Risky-host unarchived evidence records  115
+Terminal unarchived unique URLs          40
+Terminal unarchived evidence records     52
+Risky-host unarchived unique URLs        69
+Risky-host unarchived evidence records  109
 X/Twitter evidence records unarchived    42
 Unknown URL status                        0
 ```
 
 Archive-risk ceilings use normalized unique source URLs and exact-or-subdomain host matching. Multiple evidence records that reuse the same source URL create one preservation obligation.
 
-Archive Capture Batch 2 added eight verified Wayback snapshots to eleven Ren Protocol and Avalanche bridge-family evidence records. Source URLs, claims, source tiers, reliability, dates, and linkages remain unchanged.
-
-The initial production-verification run correctly rejected the same-count Batch 1 dataset for all twenty attempts at `bir_src_000126`. PR #125 created a docs-only deployment retrigger. The unchanged verifier then passed on publication attempt 1 with all twenty-one archive fields and complete canonical-derived content equality.
+Archive Capture Batch 3 adds six verified Wayback snapshots to first-party ShuttleFlow, pNetwork, and Qubit/Bunny evidence records. Source URLs, claims, source tiers, reliability, dates, and linkages remain unchanged. The known unavailable Qubit compensation-plan page remains unarchived.
 
 All event Tier 1 gaps are reviewed. The six remaining gaps are intentional secondary records:
 
@@ -91,6 +91,8 @@ Remaining incident-level gap:
 - `bir_inc_000026` — Nerve Bridge 2021 metapool exploit. PR #117 records the completed first-party research boundary; no stable incident-specific primary source was located and the gap remains intentional.
 
 ## Latest completed production checkpoint
+
+The latest completed production checkpoint remains Archive Capture Batch 2 until PR #127 merges and all twenty-seven archive fields pass explicit full-content verification.
 
 ```text
 Canonical data PR       #123
@@ -113,7 +115,8 @@ Publication attempt     1
 
 ## Next
 
-1. continue bounded archive capture work from 75 risky-host and 46 terminal unique URLs;
-2. reduce the remaining 16 events without primary evidence where justified;
-3. strengthen remaining validators;
-4. continue monitoring, candidate collection, and v1 hardening.
+1. merge Archive Capture Batch 3 after final normal CI;
+2. production-verify all twenty-seven published `archived_url` fields;
+3. continue bounded archive capture work from 69 risky-host and 40 terminal unique URLs;
+4. reduce the remaining 16 events without primary evidence where justified;
+5. continue validator, monitoring, candidate collection, and v1 hardening.
