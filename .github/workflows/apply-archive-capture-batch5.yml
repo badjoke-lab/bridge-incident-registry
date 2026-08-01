@@ -1,0 +1,51 @@
+name: Apply Archive Capture Batch 5
+
+on:
+  pull_request:
+    paths:
+      - "scripts/apply-archive-capture-batch5.mjs"
+      - ".github/workflows/apply-archive-capture-batch5.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/phase3-archive-capture-batch5-canonical
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Apply reviewed archive captures
+        run: node scripts/apply-archive-capture-batch5.mjs
+
+      - name: Validate canonical data
+        run: |
+          npm run validate:data
+          npm run validate:enums
+          npm run audit:source-count
+          npm run audit:source-quality
+          npm run build
+          npm run dist:check
+
+      - name: Commit canonical migration
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/evidence.json scripts/check-source-quality-baseline.mjs
+          git diff --cached --quiet && exit 0
+          git commit -m "data: apply archive capture Batch 5 [canonical]"
+          git pull --rebase origin agent/phase3-archive-capture-batch5-canonical
+          git push origin HEAD:agent/phase3-archive-capture-batch5-canonical
