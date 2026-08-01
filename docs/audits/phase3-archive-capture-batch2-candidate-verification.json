@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-01T06:46:20.737Z",
+  "generated_at": "2026-08-01T06:47:37.908Z",
   "policy": {
     "source_scope": "official Medium URLs belonging to terminal or deprecated bridges",
     "discovery": "Wayback availability API with bounded CDX fallback",
