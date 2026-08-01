@@ -31,13 +31,13 @@ BIR is not:
 
 The static registry application, four-record canonical model, validation pipeline, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
 
-Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Event Tier 1 remediation, the Nerve source review boundary, and Archive Capture Batches 1 through 3 are complete and production-verified.
+Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Event Tier 1 remediation, the Nerve source review boundary, and Archive Capture Batches 1 through 4 are complete and production-verified.
 
-Evidence remains 284. Event primary gaps are 16, event Tier 1 gaps are six, and all remaining Tier 1 gaps are reviewed and intentionally secondary. Twenty-seven evidence records now publish nineteen verified Wayback snapshots.
+Evidence remains 284. Event primary gaps are 16, event Tier 1 gaps are six, and all remaining Tier 1 gaps are reviewed and intentionally secondary. Forty evidence records now publish twenty-three verified Wayback snapshots.
 
-Archive-risk metrics count normalized unique source URLs with exact-or-subdomain host matching. Duplicate evidence records sharing one source URL do not create duplicate preservation obligations. Current unarchived queues are 40 terminal unique URLs and 69 risky-host unique URLs.
+Archive-risk metrics count normalized unique source URLs with exact-or-subdomain host matching. Duplicate evidence records sharing one source URL do not create duplicate preservation obligations. Current unarchived queues are 39 terminal unique URLs and 65 risky-host unique URLs.
 
-Production verification compares every transformed field in all four public datasets with the generated public contract. Counts and IDs alone cannot prove publication. Archive Batch 3 remained on the same-count Batch 2 public dataset for nineteen checks and passed only after all twenty-seven `archived_url` fields converged on publication attempt 20.
+Production verification compares every transformed field in all four public datasets with the generated public contract. Counts and IDs alone cannot prove publication. Archive Batch 4 remained on the same-count Batch 3 public dataset for fourteen checks and passed only after all forty `archived_url` fields converged on publication attempt 15.
 
 Current canonical and production counts:
 
@@ -57,7 +57,7 @@ Unknown URL status                0
 Events without primary           16
 Events without Tier 1             6
 Unreviewed event Tier 1 gaps       0
-Evidence with archived_url       27
+Evidence with archived_url       40
 Canonical public content match    true
 ```
 
@@ -104,13 +104,10 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/runbooks/development-roadmap.md` — roadmap to v1
 - `docs/runbooks/public-consistency-remediation.md` — completed remediation sequence
 - `docs/audits/phase3-source-quality-baseline-2026-07-29.md` — source-quality baseline and ceilings
-- `docs/audits/phase3-source-quality-remediation-batch1-2026-07-29.md` — LI.FI first-party correction
-- `docs/audits/phase3-url-status-remediation-batch1-2026-07-29.md` — Holograph URL-status correction
 - `docs/audits/phase3-event-tier1-review-final-2026-07-30.md` — final event Tier 1 review boundary
 - `docs/audits/phase3-event-tier1-canonical-final-2026-07-30.md` — final event Tier 1 canonical migration
 - `docs/audits/production-verification-phase3-event-tier1-final-2026-07-31.md` — 284-evidence production audit
 - `docs/audits/phase3-nerve-bridge-source-review-2026-07-31.md` — reviewed Nerve source boundary
-- `docs/audits/phase3-archive-risk-inventory-batch1-2026-07-31.md` — archive inventory and Batch 1 review
 - `docs/audits/phase3-archive-capture-batch1-2026-07-31.md` — Archive Batch 1 canonical migration
 - `docs/audits/production-verification-phase3-archive-capture-batch1-2026-07-31.md` — Archive Batch 1 production audit
 - `docs/audits/phase3-archive-capture-batch2-review-2026-08-01.md` — Archive Batch 2 reviewed mappings
@@ -119,6 +116,9 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/audits/phase3-archive-capture-batch3-review-2026-08-01.md` — Archive Batch 3 reviewed mappings
 - `docs/audits/phase3-archive-capture-batch3-2026-08-01.md` — Archive Batch 3 canonical migration
 - `docs/audits/production-verification-phase3-archive-capture-batch3-2026-08-01.md` — Archive Batch 3 production audit
+- `docs/audits/phase3-archive-capture-batch4-review-2026-08-01.md` — Archive Batch 4 reviewed mappings
+- `docs/audits/phase3-archive-capture-batch4-2026-08-01.md` — Archive Batch 4 canonical migration
+- `docs/audits/production-verification-phase3-archive-capture-batch4-2026-08-01.md` — Archive Batch 4 production audit
 - `docs/batches/` — reviewed batch scopes
 
 ## Architecture
