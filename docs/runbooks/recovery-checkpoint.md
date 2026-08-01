@@ -1,11 +1,11 @@
 # BIR Live Recovery Checkpoint
 
 Status: active  
-Updated: 2026-07-31
+Updated: 2026-08-01
 
 GitHub state and canonical JSON are authoritative. Completed merge SHAs are checkpoints, not live branch pointers.
 
-## Canonical and production counts
+## Canonical counts
 
 ```text
 Bridges     33
@@ -21,11 +21,14 @@ PR #100      Source-quality baseline and no-regression gate
 PR #103–107  LI.FI and Holograph source-quality remediation
 PR #108–116  Event Tier 1 review, canonical remediation, and production verification
 PR #117      Nerve Bridge source boundary
-PR #118      Archive-risk inventory and Batch 1 review
-PR #119–120  Archive capture Batch 1 and production verification
+PR #118–120  Archive capture Batch 1 review, canonical, and production verification
+PR #122      Archive capture Batch 2 review
+PR #123      Archive capture Batch 2 canonical — pending merge
 ```
 
 ## Latest completed production checkpoint
+
+The completed production checkpoint remains Archive Capture Batch 1 until PR #123 merges and all twenty-one archive fields are explicitly verified.
 
 ```text
 Canonical data PR        #119
@@ -41,8 +44,6 @@ Redirects                74
 Generated at             2026-07-31T07:57:38.614Z
 Publication attempt      2
 ```
-
-Attempt 1 saw the previous same-count evidence dataset and failed at `bir_src_000035`. Attempt 2 saw the exact ten archive fields and passed.
 
 ## Permanent guards
 
@@ -63,43 +64,43 @@ Incidents without Tier 1              1
 Events without primary               16
 Events without Tier 1                 6
 Unreviewed event Tier 1 gaps           0
-Evidence with archived_url           10
-Terminal unarchived unique URLs      54
-Risky-host unarchived unique URLs    83
+Evidence with archived_url           21
+Terminal unarchived unique URLs      46
+Risky-host unarchived unique URLs    75
 Unknown URL status                    0
 ```
 
-## Archive capture Batch 1
+## Archive capture Batch 2
 
 ```text
-Review boundary                    PR #118
-Canonical migration                PR #119
-Production verification            PR #120
-Verified Wayback URLs                    5
-Evidence records updated                10
-Terminal unique queue             59 -> 54
-Risky-host unique queue           88 -> 83
-Terminal record queue             79 -> 69
-Risky-host record queue          136 -> 126
+Review boundary                    PR #122
+Canonical migration                PR #123
+Verified Wayback URLs                    8
+Evidence records updated                11
+Terminal unique queue             54 -> 46
+Risky-host unique queue           83 -> 75
+Terminal record queue             69 -> 58
+Risky-host record queue          126 -> 115
 Source-count drift                      0
 ```
 
 Updated evidence IDs:
 
 ```text
-bir_src_000035
-bir_src_000039
-bir_src_000086
-bir_src_000088
-bir_src_000090
-bir_src_000230
-bir_src_000231
-bir_src_000232
-bir_src_000233
-bir_src_000234
+bir_src_000126
+bir_src_000127
+bir_src_000128
+bir_src_000129
+bir_src_000130
+bir_src_000133
+bir_src_000134
+bir_src_000135
+bir_src_000136
+bir_src_000138
+bir_src_000139
 ```
 
-`bir_src_000037` remains unarchived because no verified Wayback snapshot was available. No wildcard or guessed archive is permitted.
+Only exact reviewed snapshots were added. Source URLs, historical claims, source hierarchy, dates, and linkages remain unchanged.
 
 ## Nerve boundary
 
@@ -107,6 +108,8 @@ PR #117 completed the first-party source search for `bir_inc_000026`. The remain
 
 ## Next
 
-1. continue bounded archive capture work from 83 risky-host and 54 terminal unique URLs;
-2. reduce remaining event primary gaps where justified;
-3. continue validator, monitoring, candidate collection, and v1 hardening.
+1. merge PR #123 after final normal CI;
+2. production-verify all twenty-one archive fields;
+3. continue bounded archive work from 75 risky-host and 46 terminal unique URLs;
+4. reduce remaining event primary gaps where justified;
+5. continue validator, monitoring, candidate collection, and v1 hardening.
