@@ -30,6 +30,7 @@ Phase 3  Full-corpus quality strengthening         active
          Archive capture Batch 1                   production-verified — PRs #118–#120
          Archive capture Batch 2                   production-verified — PRs #122–#125
          Archive capture Batch 3                   production-verified — PRs #126–#128
+         Archive capture Batch 4                   production-verified — PRs #129–#131
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
@@ -40,23 +41,23 @@ Release  v1 hardening                              planned
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR        #127
-Canonical merge          5d3d472a6851843d31c896f27aaff74ddc6b44f0
-Production audit PR      #128
-Production verify run    30689740068
-Production verify job    91342221102
-Canonical normal CI      30689665597
-Verification PR CI       30689740071
+Canonical data PR        #130
+Canonical merge          b72d0e68735e6a49718eb938630e65af89b2f12f
+Production audit PR      #131
+Production verify run    30690563060
+Production verify job    91344413654
+Canonical normal CI      30690487993
+Verification PR CI       30690563043
 Verified state           33 / 34 / 183 / 284
-Archived evidence        27 / 284
+Archived evidence        40 / 284
 Canonical content match  true
 Verified HTML routes     72
 Verified redirects       74
-Generated at             2026-08-01T07:30:44.916Z
-Publication attempt      20
+Generated at             2026-08-01T07:42:49.272Z
+Publication attempt      15
 ```
 
-The unchanged verifier rejected the prior same-count Batch 2 evidence dataset for publication attempts 1 through 19 at `bir_src_000038`. Production converged without a deployment retrigger on the final permitted attempt.
+The unchanged verifier rejected the prior same-count Batch 3 evidence dataset at `bir_src_000053` for publication attempts 1 through 14. Production converged without a deployment retrigger on attempt 15.
 
 ## Current quality state
 
@@ -68,23 +69,24 @@ Incidents without Tier 1               1
 Events without primary                16
 Events without Tier 1                  6
 Unreviewed event Tier 1 gaps            0
-Evidence with archived_url            27
-Terminal unarchived unique URLs       40
-Risky-host unarchived unique URLs     69
+Evidence with archived_url            40
+Terminal unarchived unique URLs       39
+Risky-host unarchived unique URLs     65
 Unknown URL status                     0
 ```
 
 The remaining Nerve incident-level source gap is reviewed and intentional under PR #117. Current-operation evidence is not reused as historical incident evidence, and Tier 2 security analysis is not reclassified.
 
-Archive Capture Batch 3 added six verified Wayback snapshots to first-party ShuttleFlow, pNetwork, and Qubit/Bunny evidence records. The unavailable Qubit compensation-plan page remains unarchived rather than receiving a guessed capture.
+Archive Capture Batch 4 added four verified Wayback snapshots to thirteen first-party Tier 1 Connext, Allbridge, Magpie, and THORChain evidence records. Six candidates with transient discovery or replay failures remain unarchived and may be retried without weakening acceptance requirements.
 
 ## Immediate source-quality targets
 
-1. continue verified archive captures from the 69 risky-host and 40 terminal unique-URL queues;
-2. reduce the remaining 16 events without primary evidence where appropriate;
-3. strengthen remaining validators;
-4. continue monitoring and candidate collection;
-5. complete v1 hardening.
+1. continue verified archive captures from the 65 risky-host and 39 terminal unique-URL queues;
+2. retry deferred official-source candidates with exact replay verification;
+3. reduce the remaining 16 events without primary evidence where appropriate;
+4. strengthen remaining validators;
+5. continue monitoring and candidate collection;
+6. complete v1 hardening.
 
 ## Production publication gate
 
