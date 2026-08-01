@@ -1,0 +1,146 @@
+{
+  "generated_at": "2026-08-01T07:16:22.633Z",
+  "policy": {
+    "source_scope": "official first-party Medium URLs attached to terminal bridge records",
+    "discovery": "Wayback availability API with bounded CDX fallback",
+    "acceptance": "exact snapshot replay returns HTTP 200 HTML with a non-trivial body",
+    "canonical_limit": "review only; no canonical file is modified by this verifier"
+  },
+  "candidate_count": 6,
+  "verified_url_count": 6,
+  "verified_evidence_record_count": 6,
+  "results": [
+    {
+      "url": "https://medium.com/conflux-network/shuttleflow-protocol-passes-peckshield-security-audit-fe0aa0f20d27",
+      "evidence_ids": [
+        "bir_src_000141"
+      ],
+      "bridge": "shuttleflow",
+      "publisher": "Conflux Network",
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20220922034804/https://medium.com/conflux-network/shuttleflow-protocol-passes-peckshield-security-audit-fe0aa0f20d27",
+      "timestamp": "20220922034804",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20220922034804/https://medium.com/conflux-network/shuttleflow-protocol-passes-peckshield-security-audit-fe0aa0f20d27",
+        "timestamp": "20220922034804",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20220922034804/https://medium.com/conflux-network/shuttleflow-protocol-passes-peckshield-security-audit-fe0aa0f20d27",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://medium.com/conflux-network/shuttleflow-enabling-the-future-of-defi-through-true-multi-chain-connection-e60c2bada7d4",
+      "evidence_ids": [
+        "bir_src_000142"
+      ],
+      "bridge": "shuttleflow",
+      "publisher": "Conflux Network",
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20241112012055/https://medium.com/conflux-network/shuttleflow-enabling-the-future-of-defi-through-true-multi-chain-connection-e60c2bada7d4",
+      "timestamp": "20241112012055",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20241112012055/https://medium.com/conflux-network/shuttleflow-enabling-the-future-of-defi-through-true-multi-chain-connection-e60c2bada7d4",
+        "timestamp": "20241112012055",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20241112012055/https://medium.com/conflux-network/shuttleflow-enabling-the-future-of-defi-through-true-multi-chain-connection-e60c2bada7d4",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://medium.com/conflux-network/shuttleflow-v1-3-0-front-end-upgrade-released-301b2ab59437",
+      "evidence_ids": [
+        "bir_src_000143"
+      ],
+      "bridge": "shuttleflow",
+      "publisher": "Conflux Network",
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20220921220844/https://medium.com/conflux-network/shuttleflow-v1-3-0-front-end-upgrade-released-301b2ab59437",
+      "timestamp": "20220921220844",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20220921220844/https://medium.com/conflux-network/shuttleflow-v1-3-0-front-end-upgrade-released-301b2ab59437",
+        "timestamp": "20220921220844",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20220921220844/https://medium.com/conflux-network/shuttleflow-v1-3-0-front-end-upgrade-released-301b2ab59437",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://medium.com/pnetwork/introducing-pnetwork-v2-bfa7fcdcedb8",
+      "evidence_ids": [
+        "bir_src_000085"
+      ],
+      "bridge": "pnetwork",
+      "publisher": "pNetwork",
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20220901155603/https://medium.com/pnetwork/introducing-pnetwork-v2-bfa7fcdcedb8",
+      "timestamp": "20220901155603",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20220901155603/https://medium.com/pnetwork/introducing-pnetwork-v2-bfa7fcdcedb8",
+        "timestamp": "20220901155603",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20220901155603/https://medium.com/pnetwork/introducing-pnetwork-v2-bfa7fcdcedb8",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://medium.com/pnetwork/lessons-learnt-from-the-pgala-exploit-50e686730b98",
+      "evidence_ids": [
+        "bir_src_000089"
+      ],
+      "bridge": "pnetwork",
+      "publisher": "pNetwork",
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20250523153354/https://medium.com/pnetwork/lessons-learnt-from-the-pgala-exploit-50e686730b98",
+      "timestamp": "20250523153354",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20250523153354/https://medium.com/pnetwork/lessons-learnt-from-the-pgala-exploit-50e686730b98",
+        "timestamp": "20250523153354",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20250523153354/https://medium.com/pnetwork/lessons-learnt-from-the-pgala-exploit-50e686730b98",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://pancakebunny.medium.com/the-next-chapter-dao-9630b2c087b",
+      "evidence_ids": [
+        "bir_src_000038"
+      ],
+      "bridge": "qubit-qbridge",
+      "publisher": "Bunny Finance / Team Mound",
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20251115174815/https://pancakebunny.medium.com/the-next-chapter-dao-9630b2c087b",
+      "timestamp": "20251115174815",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20251115174815/https://pancakebunny.medium.com/the-next-chapter-dao-9630b2c087b",
+        "timestamp": "20251115174815",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20251115174815/https://pancakebunny.medium.com/the-next-chapter-dao-9630b2c087b",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    }
+  ]
+}
