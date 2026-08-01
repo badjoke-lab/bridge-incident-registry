@@ -5,7 +5,7 @@ Updated: 2026-08-01
 
 GitHub state and canonical JSON are authoritative. Completed merge SHAs are checkpoints, not live branch pointers.
 
-## Canonical counts
+## Canonical and production counts
 
 ```text
 Bridges     33
@@ -22,28 +22,31 @@ PR #103–107  LI.FI and Holograph source-quality remediation
 PR #108–116  Event Tier 1 review, canonical remediation, and production verification
 PR #117      Nerve Bridge source boundary
 PR #118–120  Archive capture Batch 1 review, canonical, and production verification
-PR #122      Archive capture Batch 2 review
-PR #123      Archive capture Batch 2 canonical — pending merge
+PR #122–125  Archive capture Batch 2 review, canonical, deployment retrigger, and production verification
 ```
 
 ## Latest completed production checkpoint
 
-The completed production checkpoint remains Archive Capture Batch 1 until PR #123 merges and all twenty-one archive fields are explicitly verified.
-
 ```text
-Canonical data PR        #119
-Canonical merge          5a152f647e05018170e57721dfdef69d1cadf12b
-Production audit PR      #120
-Production verify        30614617534
-Canonical normal CI      30614478890
+Canonical data PR        #123
+Canonical merge          a0763951c612fae6149093ae7124de622a54e342
+Deployment retrigger     9718b8d8383f158ab8ef391ea491df9e2da0f397
+Production audit PR      #124
+Production verify        30688749856
+Successful rerun job     91340437658
+Canonical normal CI      30688662830
+Verification PR CI       30688749844
+Retrigger normal CI      30689003552
 Verified state           33 / 34 / 183 / 284
-Archived evidence        10 / 284
+Archived evidence        21 / 284
 Canonical content match  true
 HTML routes              72
 Redirects                74
-Generated at             2026-07-31T07:57:38.614Z
-Publication attempt      2
+Generated at             2026-08-01T07:03:30.526Z
+Publication attempt      1
 ```
+
+The first verification attempt correctly rejected the pre-Batch-2 evidence content at `bir_src_000126` for twenty attempts. PR #125 retriggered Cloudflare with a docs-only main push; the unchanged rerun passed immediately.
 
 ## Permanent guards
 
@@ -75,6 +78,8 @@ Unknown URL status                    0
 ```text
 Review boundary                    PR #122
 Canonical migration                PR #123
+Production audit                   PR #124
+Deployment retrigger               PR #125
 Verified Wayback URLs                    8
 Evidence records updated                11
 Terminal unique queue             54 -> 46
@@ -108,8 +113,7 @@ PR #117 completed the first-party source search for `bir_inc_000026`. The remain
 
 ## Next
 
-1. merge PR #123 after final normal CI;
-2. production-verify all twenty-one archive fields;
-3. continue bounded archive work from 75 risky-host and 46 terminal unique URLs;
-4. reduce remaining event primary gaps where justified;
-5. continue validator, monitoring, candidate collection, and v1 hardening.
+1. continue bounded archive work from 75 risky-host and 46 terminal unique URLs;
+2. reduce remaining event primary gaps where justified;
+3. strengthen validators;
+4. continue monitoring, candidate collection, and v1 hardening.
