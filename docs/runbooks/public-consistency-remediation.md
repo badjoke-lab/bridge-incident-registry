@@ -1,7 +1,7 @@
 # Bridge Incident Registry — Public Consistency Remediation
 
 Status: complete  
-Updated: 2026-07-31
+Updated: 2026-08-01
 
 ## Current canonical and production baseline
 
@@ -10,7 +10,7 @@ Bridges            33
 Incidents          34
 Events            183
 Evidence          284
-Archived evidence  10
+Archived evidence  21
 HTML routes        72
 Redirects          74
 ```
@@ -32,14 +32,14 @@ PR #107 Full generated-content production equality
 
 ## Latest production contract verification
 
-Archive capture Batch 1 production verification run `30614617534` passed at:
+Archive Capture Batch 2 production verification run `30688749856` passed at:
 
 ```text
 33 bridges
 34 incidents
 183 events
 284 evidence records
-10 evidence records with archived_url
+21 evidence records with archived_url
 72 canonical HTML routes
 74 legacy redirects
 0 unknown URL statuses
@@ -47,16 +47,20 @@ complete public-content equality
 ```
 
 ```text
-Canonical data PR   #119
-Canonical merge     5a152f647e05018170e57721dfdef69d1cadf12b
-Production audit PR #120
-Production run      30614617534
-Canonical CI        30614478890
-Generated at        2026-07-31T07:57:38.614Z
-Attempt             2
+Canonical data PR      #123
+Canonical merge        a0763951c612fae6149093ae7124de622a54e342
+Deployment retrigger   9718b8d8383f158ab8ef391ea491df9e2da0f397
+Production audit PR    #124
+Production run         30688749856
+Successful rerun job   91340437658
+Canonical CI           30688662830
+Verification PR CI     30688749844
+Retrigger CI           30689003552
+Generated at           2026-08-01T07:03:30.526Z
+Publication attempt    1
 ```
 
-Attempt 1 saw the same 284 record counts but rejected the stale evidence content at `bir_src_000035`. Attempt 2 confirmed the exact ten reviewed archive fields and every other transformed field.
+The first unchanged verification attempt exhausted all twenty checks because production remained on the same-count Batch 1 evidence dataset and differed first at `bir_src_000126`. PR #125 created a docs-only main push. The unchanged verifier then confirmed the exact twenty-one archive fields and every other transformed field on publication attempt 1.
 
 ## Full-content publication gate
 
@@ -70,7 +74,7 @@ Normal CI requires type and Astro checks, canonical and enum validation, first-t
 
 Production verification requires matching counts and canonical-only markers, complete generated JSON equality, all static and detail routes, canonical links, JSON-LD, sitemap, robots, redirects, content types, and cache signals.
 
-Latest completed production audit: `docs/audits/production-verification-phase3-archive-capture-batch1-2026-07-31.md`.
+Latest completed production audit: `docs/audits/production-verification-phase3-archive-capture-batch2-2026-08-01.md`.
 
 ## Closure
 
