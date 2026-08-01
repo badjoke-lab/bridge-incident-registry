@@ -24,28 +24,29 @@ PR #117      Nerve Bridge source boundary
 PR #118–120  Archive capture Batch 1 review, canonical, and production verification
 PR #122–125  Archive capture Batch 2 review, canonical, deployment retrigger, and production verification
 PR #126–128  Archive capture Batch 3 review, canonical, and production verification
+PR #129–131  Archive capture Batch 4 review, canonical, and production verification
 ```
 
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR        #127
-Canonical merge          5d3d472a6851843d31c896f27aaff74ddc6b44f0
-Production audit PR      #128
-Production verify        30689740068
-Production verify job    91342221102
-Canonical normal CI      30689665597
-Verification PR CI       30689740071
+Canonical data PR        #130
+Canonical merge          b72d0e68735e6a49718eb938630e65af89b2f12f
+Production audit PR      #131
+Production verify        30690563060
+Production verify job    91344413654
+Canonical normal CI      30690487993
+Verification PR CI       30690563043
 Verified state           33 / 34 / 183 / 284
-Archived evidence        27 / 284
+Archived evidence        40 / 284
 Canonical content match  true
 HTML routes              72
 Redirects                74
-Generated at             2026-08-01T07:30:44.916Z
-Publication attempt      20
+Generated at             2026-08-01T07:42:49.272Z
+Publication attempt      15
 ```
 
-The verifier rejected the prior same-count Batch 2 evidence content at `bir_src_000038` on attempts 1 through 19. Production converged without a deployment retrigger at the final permitted attempt.
+The verifier rejected the prior same-count Batch 3 evidence content at `bir_src_000053` on attempts 1 through 14. Production converged without a deployment retrigger on attempt 15.
 
 ## Permanent guards
 
@@ -66,39 +67,46 @@ Incidents without Tier 1              1
 Events without primary               16
 Events without Tier 1                 6
 Unreviewed event Tier 1 gaps           0
-Evidence with archived_url           27
-Terminal unarchived unique URLs      40
-Risky-host unarchived unique URLs    69
+Evidence with archived_url           40
+Terminal unarchived unique URLs      39
+Risky-host unarchived unique URLs    65
 Unknown URL status                    0
 ```
 
-## Archive capture Batch 3
+## Archive capture Batch 4
 
 ```text
-Review boundary                    PR #126
-Canonical migration                PR #127
-Production audit                   PR #128
-Verified Wayback URLs                    6
-Evidence records updated                 6
-Terminal unique queue             46 -> 40
-Risky-host unique queue           75 -> 69
-Terminal record queue             58 -> 52
-Risky-host record queue          115 -> 109
+Review boundary                    PR #129
+Canonical migration                PR #130
+Production audit                   PR #131
+Verified Wayback URLs                    4
+Evidence records updated                13
+Terminal unique queue             40 -> 39
+Risky-host unique queue           69 -> 65
+Terminal record queue             52 -> 51
+Risky-host record queue          109 -> 96
 Source-count drift                      0
 ```
 
 Updated evidence IDs:
 
 ```text
-bir_src_000038
-bir_src_000085
-bir_src_000089
-bir_src_000141
-bir_src_000142
-bir_src_000143
+bir_src_000053
+bir_src_000156
+bir_src_000190
+bir_src_000207
+bir_src_000208
+bir_src_000209
+bir_src_000210
+bir_src_000218
+bir_src_000222
+bir_src_000224
+bir_src_000251
+bir_src_000252
+bir_src_000254
 ```
 
-Only exact reviewed snapshots were added. Source URLs, historical claims, source hierarchy, dates, and linkages remain unchanged. `bir_src_000037` remains unarchived because no verified snapshot is available.
+Only exact reviewed snapshots were added. Source URLs, historical claims, source hierarchy, dates, and linkages remain unchanged. Six transiently failed candidates remain unarchived and received no guessed snapshot.
 
 ## Nerve boundary
 
@@ -106,7 +114,8 @@ PR #117 completed the first-party source search for `bir_inc_000026`. The remain
 
 ## Next
 
-1. continue bounded archive work from 69 risky-host and 40 terminal unique URLs;
-2. reduce remaining event primary gaps where justified;
-3. strengthen validators;
-4. continue monitoring, candidate collection, and v1 hardening.
+1. continue bounded archive work from 65 risky-host and 39 terminal unique URLs;
+2. retry deferred official sources under the same replay standard;
+3. reduce remaining event primary gaps where justified;
+4. strengthen validators;
+5. continue monitoring, candidate collection, and v1 hardening.
