@@ -1,0 +1,361 @@
+{
+  "generated_at": "2026-08-01T07:42:17.206Z",
+  "policy": {
+    "selection": "first ten unique unarchived first-party or official Medium/Mirror/Substack URLs, terminal-first, Tier-1-first",
+    "exclusion": "known unavailable Qubit compensation-plan URL",
+    "discovery": "Wayback availability API with bounded CDX fallback",
+    "acceptance": "exact snapshot replay returns HTTP 200 HTML with a non-trivial body",
+    "canonical_limit": "review only; no canonical file is modified by this verifier"
+  },
+  "selected_candidate_count": 10,
+  "verified_url_count": 4,
+  "verified_evidence_record_count": 13,
+  "candidates": [
+    {
+      "url": "https://medium.com/connext/xpollinate-is-now-connext-bridge-d294baea94c2",
+      "evidence_ids": [
+        "bir_src_000190"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000032"
+      ],
+      "bridge_slugs": [
+        "everclear"
+      ],
+      "bridge_statuses": [
+        "dead"
+      ],
+      "publishers": [
+        "Connext"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 1,
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20251010212405/https://medium.com/connext/xpollinate-is-now-connext-bridge-d294baea94c2",
+      "timestamp": "20251010212405",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20251010212405/https://medium.com/connext/xpollinate-is-now-connext-bridge-d294baea94c2",
+        "timestamp": "20251010212405",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20251010212405/https://medium.com/connext/xpollinate-is-now-connext-bridge-d294baea94c2",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://allbridge.medium.com/allbridge-core-updates-following-the-relaunch-9f7716eeb5da",
+      "evidence_ids": [
+        "bir_src_000053",
+        "bir_src_000210",
+        "bir_src_000222",
+        "bir_src_000224"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000012"
+      ],
+      "bridge_slugs": [
+        "allbridge-core"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "Allbridge"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 4,
+      "terminal_records": 0,
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20260727170405/https://allbridge.medium.com/allbridge-core-updates-following-the-relaunch-9f7716eeb5da",
+      "timestamp": "20260727170405",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20260727170405/https://allbridge.medium.com/allbridge-core-updates-following-the-relaunch-9f7716eeb5da",
+        "timestamp": "20260727170405",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20260727170405/https://allbridge.medium.com/allbridge-core-updates-following-the-relaunch-9f7716eeb5da",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://medium.com/@Magpieprotocol/magpie-protocol-smart-contract-vulnerability-post-mortem-f6400db0a25e",
+      "evidence_ids": [
+        "bir_src_000156",
+        "bir_src_000251",
+        "bir_src_000252",
+        "bir_src_000254"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000028"
+      ],
+      "bridge_slugs": [
+        "magpie-protocol"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "Magpie Protocol"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 4,
+      "terminal_records": 0,
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20250427092212/https://medium.com/@Magpieprotocol/magpie-protocol-smart-contract-vulnerability-post-mortem-f6400db0a25e",
+      "timestamp": "20250427092212",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20250427092212/https://medium.com/@Magpieprotocol/magpie-protocol-smart-contract-vulnerability-post-mortem-f6400db0a25e",
+        "timestamp": "20250427092212",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20250427092212/https://medium.com/@Magpieprotocol/magpie-protocol-smart-contract-vulnerability-post-mortem-f6400db0a25e",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://medium.com/thorchain/thorchains-layers-of-security-e308d537acf1",
+      "evidence_ids": [
+        "bir_src_000207",
+        "bir_src_000208",
+        "bir_src_000209",
+        "bir_src_000218"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000010"
+      ],
+      "bridge_slugs": [
+        "thorchain"
+      ],
+      "bridge_statuses": [
+        "paused"
+      ],
+      "publishers": [
+        "THORChain"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 4,
+      "terminal_records": 0,
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20260421175030/https://medium.com/thorchain/thorchains-layers-of-security-e308d537acf1",
+      "timestamp": "20260421175030",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20260421175030/https://medium.com/thorchain/thorchains-layers-of-security-e308d537acf1",
+        "timestamp": "20260421175030",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20260421175030/https://medium.com/thorchain/thorchains-layers-of-security-e308d537acf1",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://medium.com/thorchain/post-mortem-eth-router-exploits-1-2-and-premature-return-to-trading-incident-2908928c5fb",
+      "evidence_ids": [
+        "bir_src_000040",
+        "bir_src_000042",
+        "bir_src_000217"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000010"
+      ],
+      "bridge_slugs": [
+        "thorchain"
+      ],
+      "bridge_statuses": [
+        "paused"
+      ],
+      "publishers": [
+        "THORChain"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 3,
+      "terminal_records": 0,
+      "result": "no_capture_discovered",
+      "errors": [
+        "availability: TypeError: fetch failed",
+        "cdx: Error: HTTP 503"
+      ],
+      "replay_attempts": []
+    },
+    {
+      "url": "https://medium.com/meter-io/post-mortem-report-meter-passport-12af6b50393d",
+      "evidence_ids": [
+        "bir_src_000048",
+        "bir_src_000220",
+        "bir_src_000221"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000011"
+      ],
+      "bridge_slugs": [
+        "meter-passport"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "Meter.io"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 3,
+      "terminal_records": 0,
+      "result": "no_capture_discovered",
+      "errors": [
+        "availability: TypeError: fetch failed",
+        "cdx: TypeError: fetch failed"
+      ],
+      "replay_attempts": []
+    },
+    {
+      "url": "https://synapseprotocol.medium.com/11-06-2021-post-mortem-of-synapse-metapool-exploit-3003b4df4ef4",
+      "evidence_ids": [
+        "bir_src_000104",
+        "bir_src_000236",
+        "bir_src_000276"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000019"
+      ],
+      "bridge_slugs": [
+        "synapse-protocol"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "Synapse Protocol"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 3,
+      "terminal_records": 0,
+      "result": "no_capture_discovered",
+      "errors": [
+        "availability: AbortError: This operation was aborted",
+        "cdx: AbortError: This operation was aborted"
+      ],
+      "replay_attempts": []
+    },
+    {
+      "url": "https://medium.com/@Magpieprotocol/magpie-protocol-charting-a-secure-path-following-exploit-c7046d9fc3ca",
+      "evidence_ids": [
+        "bir_src_000157",
+        "bir_src_000253",
+        "bir_src_000255"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000028"
+      ],
+      "bridge_slugs": [
+        "magpie-protocol"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "Magpie Protocol"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 3,
+      "terminal_records": 0,
+      "result": "no_capture_discovered",
+      "errors": [
+        "availability: TypeError: fetch failed",
+        "cdx: TypeError: fetch failed"
+      ],
+      "replay_attempts": []
+    },
+    {
+      "url": "https://medium.com/nomad-xyz-blog/nomad-bridge-hack-root-cause-analysis-875ad2e5aacd",
+      "evidence_ids": [
+        "bir_src_000065",
+        "bir_src_000269"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000003"
+      ],
+      "bridge_slugs": [
+        "nomad-bridge"
+      ],
+      "bridge_statuses": [
+        "limited"
+      ],
+      "publishers": [
+        "Nomad"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 2,
+      "terminal_records": 0,
+      "result": "no_verified_replay",
+      "errors": [],
+      "replay_attempts": [
+        {
+          "archived_url": "https://web.archive.org/web/20250729023040/https://medium.com/nomad-xyz-blog/nomad-bridge-hack-root-cause-analysis-875ad2e5aacd",
+          "timestamp": "20250729023040",
+          "discovery_method": "availability_api",
+          "valid": false,
+          "error": "TypeError: fetch failed"
+        }
+      ]
+    },
+    {
+      "url": "https://chain-swap.medium.com/chainswap-post-mortem-and-compensation-plan-90cad50898ab",
+      "evidence_ids": [
+        "bir_src_000071",
+        "bir_src_000228"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000014"
+      ],
+      "bridge_slugs": [
+        "chainswap"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "ChainSwap"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 2,
+      "terminal_records": 0,
+      "result": "no_capture_discovered",
+      "errors": [
+        "availability: AbortError: This operation was aborted",
+        "cdx: TypeError: fetch failed"
+      ],
+      "replay_attempts": []
+    }
+  ]
+}
