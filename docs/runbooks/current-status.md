@@ -1,9 +1,9 @@
 # Current Status — Bridge Incident Registry
 
 Status: active  
-Updated: 2026-07-31
+Updated: 2026-08-01
 
-## Canonical and production state
+## Canonical state
 
 ```text
 Bridges     33
@@ -34,8 +34,9 @@ Source-quality remediation Batch 1   complete — PRs #103–#105
 URL-status remediation Batch 1       complete — PRs #106–#107
 Event Tier 1 remediation             production-verified — PRs #108–#116
 Nerve source boundary                reviewed — PR #117
-Archive-risk Batch 1 review          complete — PR #118
-Archive capture Batch 1              production-verified — PRs #119–#120
+Archive capture Batch 1              production-verified — PRs #118–#120
+Archive capture Batch 2 review       complete — PR #122
+Archive capture Batch 2 canonical    pending merge — PR #123
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
 ```
@@ -48,13 +49,13 @@ Event mismatches     0
 Unknown URL status   0
 ```
 
-## Source-quality state
+## Canonical source-quality state
 
 ```text
 Primary evidence                         201 / 284
 Tier 1 evidence                          220 / 284
 Official-domain evidence                 131 / 284
-Evidence with archived_url                10 / 284
+Evidence with archived_url                21 / 284
 Bridges without primary evidence          0 / 33
 Bridges without tier 1 evidence           0 / 33
 Incidents without primary evidence        1 / 34
@@ -62,17 +63,17 @@ Incidents without tier 1 evidence         1 / 34
 Events without primary evidence          16 / 183
 Events without tier 1 evidence            6 / 183
 Unreviewed event Tier 1 gaps               0
-Terminal unarchived unique URLs          54
-Terminal unarchived evidence records     69
-Risky-host unarchived unique URLs        83
-Risky-host unarchived evidence records  126
+Terminal unarchived unique URLs          46
+Terminal unarchived evidence records     58
+Risky-host unarchived unique URLs        75
+Risky-host unarchived evidence records  115
 X/Twitter evidence records unarchived    42
 Unknown URL status                        0
 ```
 
 Archive-risk ceilings use normalized unique source URLs and exact-or-subdomain host matching. Multiple evidence records that reuse the same source URL create one preservation obligation.
 
-Archive capture Batch 1 added five verified Wayback snapshots to ten Qubit, pNetwork, and Gala Games evidence records. Source URLs, claims, source tiers, reliability, and linkages remain unchanged. Attempt 1 of production verification observed the previous same-count dataset and failed on `bir_src_000035`; attempt 2 observed the full archive fields and passed.
+Archive capture Batch 2 adds eight verified Wayback snapshots to eleven Ren Protocol and Avalanche bridge-family evidence records. Source URLs, claims, source tiers, reliability, dates, and linkages remain unchanged.
 
 All event Tier 1 gaps are reviewed. The six remaining gaps are intentional secondary records:
 
@@ -91,6 +92,8 @@ Remaining incident-level gap:
 
 ## Latest completed production checkpoint
 
+The latest completed production checkpoint remains Archive Capture Batch 1 until PR #123 merges and all twenty-one archive fields pass explicit full-content verification.
+
 ```text
 Canonical data PR       #119
 Canonical merge         5a152f647e05018170e57721dfdef69d1cadf12b
@@ -108,6 +111,8 @@ Publication attempt     2
 
 ## Next
 
-1. continue bounded archive capture work from 83 risky-host and 54 terminal unique URLs;
-2. reduce the remaining 16 events without primary evidence where justified;
-3. continue validator, monitoring, candidate collection, and v1 hardening.
+1. merge Archive Capture Batch 2 after final normal CI;
+2. production-verify all twenty-one published `archived_url` fields;
+3. continue bounded archive capture work from 75 risky-host and 46 terminal unique URLs;
+4. reduce the remaining 16 events without primary evidence where justified;
+5. continue validator, monitoring, candidate collection, and v1 hardening.
