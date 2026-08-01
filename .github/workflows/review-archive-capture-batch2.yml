@@ -1,17 +1,15 @@
 name: Review Archive Capture Batch 2
 
 on:
-  push:
-    branches:
-      - agent/phase3-archive-capture-batch2-review
-    paths:
-      - "scripts/review-archive-capture-batch2.mjs"
-      - ".github/workflows/review-archive-capture-batch2.yml"
   pull_request:
     paths:
       - "scripts/review-archive-capture-batch2.mjs"
       - ".github/workflows/review-archive-capture-batch2.yml"
   workflow_dispatch:
+
+concurrency:
+  group: archive-capture-batch2-review
+  cancel-in-progress: true
 
 permissions:
   contents: write
