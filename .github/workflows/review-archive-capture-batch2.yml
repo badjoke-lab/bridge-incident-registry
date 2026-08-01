@@ -7,6 +7,10 @@ on:
     paths:
       - "scripts/review-archive-capture-batch2.mjs"
       - ".github/workflows/review-archive-capture-batch2.yml"
+  pull_request:
+    paths:
+      - "scripts/review-archive-capture-batch2.mjs"
+      - ".github/workflows/review-archive-capture-batch2.yml"
   workflow_dispatch:
 
 permissions:
@@ -37,4 +41,5 @@ jobs:
           git add docs/audits/phase3-archive-capture-batch2-candidate-verification.json
           git diff --cached --quiet && exit 0
           git commit -m "docs: capture archive Batch 2 candidate verification [inventory]"
+          git pull --rebase origin agent/phase3-archive-capture-batch2-review
           git push origin HEAD:agent/phase3-archive-capture-batch2-review
