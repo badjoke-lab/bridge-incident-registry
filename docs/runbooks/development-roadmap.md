@@ -1,7 +1,7 @@
 # Bridge Incident Registry — Development Roadmap to v1
 
 Status: active  
-Updated: 2026-08-01
+Updated: 2026-08-02
 
 GitHub state and canonical JSON are authoritative.
 
@@ -32,6 +32,7 @@ Phase 3  Full-corpus quality strengthening         active
          Archive capture Batch 3                   production-verified — PRs #126–#128
          Archive capture Batch 4                   production-verified — PRs #129–#131
          Archive capture Batch 5                   production-verified — PRs #132–#134
+         Archive capture Batch 6                   production-verified — PRs #135–#138
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
@@ -42,23 +43,27 @@ Release  v1 hardening                              planned
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR        #133
-Canonical merge          27afd411b0eae500b30f8f5a1f49121476e46ebd
-Production audit PR      #134
-Production verify run    30691464065
-Production verify job    91346826104
-Canonical normal CI      30691392132
-Verification PR CI       30691464063
+Canonical data PR        #136
+Canonical merge          f552007f5a37e6c988aec7884b0e122156102daf
+Deployment retrigger PR  #138
+Deployment retrigger     480913508dd1ae4c0ba0f30c4df7879587b0845c
+Production audit PR      #137
+Failed production run    30734330854
+Failed production job    91460170932
+Production verify run    30734550824
+Production verify job    91460859010
+Canonical normal CI      30734278053
+Verification PR CI       30734550837
 Verified state           33 / 34 / 183 / 284
-Archived evidence        53 / 284
+Archived evidence        64 / 284
 Canonical content match  true
 Verified HTML routes     72
 Verified redirects       74
-Generated at             2026-08-01T08:19:37.599Z
-Publication attempt      12
+Generated at             2026-08-02T05:38:31.010Z
+Publication attempt      1 after retrigger
 ```
 
-The unchanged verifier rejected the prior same-count Batch 4 evidence dataset at `bir_src_000030` for publication attempts 1 through 11. Production converged without a deployment retrigger on attempt 12.
+The first unchanged verifier run rejected the prior same-count Batch 5 evidence dataset at `bir_src_000032` for all twenty attempts. A docs-only `main` commit retriggered Cloudflare Pages without changing canonical data or verification logic. The same verifier then passed on the first attempt.
 
 ## Current quality state
 
@@ -70,19 +75,19 @@ Incidents without Tier 1               1
 Events without primary                16
 Events without Tier 1                  6
 Unreviewed event Tier 1 gaps            0
-Evidence with archived_url            53
+Evidence with archived_url            64
 Terminal unarchived unique URLs       39
-Risky-host unarchived unique URLs     59
+Risky-host unarchived unique URLs     53
 Unknown URL status                     0
 ```
 
 The remaining Nerve incident-level source gap is reviewed and intentional under PR #117. Current-operation evidence is not reused as historical incident evidence, and Tier 2 security analysis is not reclassified.
 
-Archive Capture Batch 5 added six verified Wayback snapshots to thirteen first-party Tier 1 THORChain, Meter, Synapse, Nomad, and Orbit evidence records. Four candidates that did not pass exact replay remain unarchived and may be retried without weakening acceptance requirements.
+Archive Capture Batch 6 added six verified Wayback snapshots to eleven first-party Tier 1 Magpie, ChainSwap, Rubic, and Orbit evidence records. Four Meter, Allbridge, and Nomad candidates that did not pass exact replay remain unarchived and may be retried without weakening acceptance requirements.
 
 ## Immediate source-quality targets
 
-1. continue verified archive captures from the 59 risky-host and 39 terminal unique-URL queues;
+1. continue verified archive captures from the 53 risky-host and 39 terminal unique-URL queues;
 2. retry deferred official-source candidates with exact replay verification;
 3. reduce the remaining 16 events without primary evidence where appropriate;
 4. strengthen remaining validators;

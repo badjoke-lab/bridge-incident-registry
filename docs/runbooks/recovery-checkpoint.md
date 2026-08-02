@@ -1,7 +1,7 @@
 # BIR Live Recovery Checkpoint
 
 Status: active  
-Updated: 2026-08-01
+Updated: 2026-08-02
 
 GitHub state and canonical JSON are authoritative. Completed merge SHAs are checkpoints, not live branch pointers.
 
@@ -26,28 +26,33 @@ PR #122–125  Archive capture Batch 2 review, canonical, deployment retrigger, 
 PR #126–128  Archive capture Batch 3 review, canonical, and production verification
 PR #129–131  Archive capture Batch 4 review, canonical, and production verification
 PR #132–134  Archive capture Batch 5 review, canonical, and production verification
+PR #135–138  Archive capture Batch 6 review, canonical, deployment retrigger, and production verification
 ```
 
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR        #133
-Canonical merge          27afd411b0eae500b30f8f5a1f49121476e46ebd
-Production audit PR      #134
-Production verify        30691464065
-Production verify job    91346826104
-Canonical normal CI      30691392132
-Verification PR CI       30691464063
+Canonical data PR        #136
+Canonical merge          f552007f5a37e6c988aec7884b0e122156102daf
+Deployment retrigger PR  #138
+Deployment retrigger     480913508dd1ae4c0ba0f30c4df7879587b0845c
+Production audit PR      #137
+Failed production run    30734330854
+Failed production job    91460170932
+Production verify        30734550824
+Production verify job    91460859010
+Canonical normal CI      30734278053
+Verification PR CI       30734550837
 Verified state           33 / 34 / 183 / 284
-Archived evidence        53 / 284
+Archived evidence        64 / 284
 Canonical content match  true
 HTML routes              72
 Redirects                74
-Generated at             2026-08-01T08:19:37.599Z
-Publication attempt      12
+Generated at             2026-08-02T05:38:31.010Z
+Publication attempt      1 after retrigger
 ```
 
-The verifier rejected the prior same-count Batch 4 evidence content at `bir_src_000030` on attempts 1 through 11. Production converged without a deployment retrigger on attempt 12.
+The first verifier run rejected the prior same-count Batch 5 evidence content at `bir_src_000032` on attempts 1 through 20. A docs-only main commit retriggered Cloudflare Pages. The unchanged verifier then passed on the first attempt.
 
 ## Permanent guards
 
@@ -68,46 +73,45 @@ Incidents without Tier 1              1
 Events without primary               16
 Events without Tier 1                 6
 Unreviewed event Tier 1 gaps           0
-Evidence with archived_url           53
+Evidence with archived_url           64
 Terminal unarchived unique URLs      39
-Risky-host unarchived unique URLs    59
+Risky-host unarchived unique URLs    53
 Unknown URL status                    0
 ```
 
-## Archive capture Batch 5
+## Archive capture Batch 6
 
 ```text
-Review boundary                    PR #132
-Canonical migration                PR #133
-Production audit                   PR #134
+Review boundary                    PR #135
+Canonical migration                PR #136
+Production audit                   PR #137
+Deployment retrigger               PR #138
 Verified Wayback URLs                    6
-Evidence records updated                13
+Evidence records updated                11
 Terminal unique queue                  39
-Risky-host unique queue           65 -> 59
+Risky-host unique queue           59 -> 53
 Terminal record queue                  51
-Risky-host record queue           96 -> 83
+Risky-host record queue           83 -> 72
 Source-count drift                      0
 ```
 
 Updated evidence IDs:
 
 ```text
-bir_src_000030
-bir_src_000031
-bir_src_000040
-bir_src_000042
-bir_src_000048
-bir_src_000065
-bir_src_000104
-bir_src_000217
-bir_src_000220
-bir_src_000221
-bir_src_000236
-bir_src_000269
-bir_src_000276
+bir_src_000032
+bir_src_000033
+bir_src_000071
+bir_src_000074
+bir_src_000157
+bir_src_000161
+bir_src_000211
+bir_src_000228
+bir_src_000253
+bir_src_000255
+bir_src_000280
 ```
 
-Only exact reviewed snapshots were added. Source URLs, historical claims, source hierarchy, dates, and linkages remain unchanged. Magpie, two ChainSwap sources, and Rubic remained unarchived because they did not pass exact replay.
+Only exact reviewed snapshots were added. Source URLs, historical claims, source hierarchy, dates, and linkages remain unchanged. Two Meter sources, the Allbridge compensation-plan source, and the Nomad road-to-recovery source remain unarchived because they did not pass exact replay.
 
 ## Nerve boundary
 
@@ -115,7 +119,7 @@ PR #117 completed the first-party source search for `bir_inc_000026`. The remain
 
 ## Next
 
-1. continue bounded archive work from 59 risky-host and 39 terminal unique URLs;
+1. continue bounded archive work from 53 risky-host and 39 terminal unique URLs;
 2. retry deferred official sources under the same replay standard;
 3. reduce remaining event primary gaps where justified;
 4. strengthen validators;
