@@ -41,3 +41,5 @@ jobs:
           git commit -m "docs: capture archive Batch 9 candidate verification [inventory]"
           git pull --rebase origin agent/phase3-archive-capture-batch9-review
           git push origin HEAD:agent/phase3-archive-capture-batch9-review
+
+# Batch 9 bounded review retrigger.
