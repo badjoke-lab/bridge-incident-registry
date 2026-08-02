@@ -1,0 +1,375 @@
+{
+  "generated_at": "2026-08-02T05:55:23.358Z",
+  "policy": {
+    "selection": "first ten unique unarchived first-party or official Medium/Mirror/Substack URLs, terminal-first, Tier-1-first",
+    "exclusion": "known unavailable Qubit compensation-plan URL",
+    "discovery": "Wayback availability API plus bounded CDX capture lookup",
+    "acceptance": "exact snapshot replay returns HTTP 200 HTML with a non-trivial body",
+    "retry_policy": "20-second requests and up to three replay attempts per capture",
+    "canonical_limit": "review only; no canonical file is modified by this verifier"
+  },
+  "selected_candidate_count": 10,
+  "verified_url_count": 7,
+  "verified_evidence_record_count": 7,
+  "candidates": [
+    {
+      "url": "https://medium.com/meter-io/the-meter-monthly-february-2022-7172b75f40a5",
+      "evidence_ids": [
+        "bir_src_000049"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000011"
+      ],
+      "bridge_slugs": [
+        "meter-passport"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "Meter.io"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 0,
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20221110135030/https://medium.com/meter-io/the-meter-monthly-february-2022-7172b75f40a5",
+      "timestamp": "20221110135030",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20221110135030/https://medium.com/meter-io/the-meter-monthly-february-2022-7172b75f40a5",
+        "timestamp": "20221110135030",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20221110135030/https://medium.com/meter-io/the-meter-monthly-february-2022-7172b75f40a5",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://medium.com/meter-io/meter-passport-v1-5-completes-a-rigorous-audit-by-haechi-760cbda5959",
+      "evidence_ids": [
+        "bir_src_000051"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000011"
+      ],
+      "bridge_slugs": [
+        "meter-passport"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "Meter.io"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 0,
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20260726003029/https://medium.com/meter-io/meter-passport-v1-5-completes-a-rigorous-audit-by-haechi-760cbda5959",
+      "timestamp": "20260726003029",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20260726003029/https://medium.com/meter-io/meter-passport-v1-5-completes-a-rigorous-audit-by-haechi-760cbda5959",
+        "timestamp": "20260726003029",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20260726003029/https://medium.com/meter-io/meter-passport-v1-5-completes-a-rigorous-audit-by-haechi-760cbda5959",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://allbridge.medium.com/compensation-plan-announcement-3c0593987763",
+      "evidence_ids": [
+        "bir_src_000054"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000012"
+      ],
+      "bridge_slugs": [
+        "allbridge-core"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "Allbridge"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 0,
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20230405082243/https://allbridge.medium.com/compensation-plan-announcement-3c0593987763",
+      "timestamp": "20230405082243",
+      "discovery_method": "cdx",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20230405082243/https://allbridge.medium.com/compensation-plan-announcement-3c0593987763",
+        "timestamp": "20230405082243",
+        "discovery_method": "cdx",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20230405082243/https://allbridge.medium.com/compensation-plan-announcement-3c0593987763",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://medium.com/nomad-xyz-blog/the-road-to-recovery-6abe5eec8ff1",
+      "evidence_ids": [
+        "bir_src_000066"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000003"
+      ],
+      "bridge_slugs": [
+        "nomad-bridge"
+      ],
+      "bridge_statuses": [
+        "limited"
+      ],
+      "publishers": [
+        "Nomad"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 0,
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20250612171546/https://medium.com/nomad-xyz-blog/the-road-to-recovery-6abe5eec8ff1",
+      "timestamp": "20250612171546",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20250612171546/https://medium.com/nomad-xyz-blog/the-road-to-recovery-6abe5eec8ff1",
+        "timestamp": "20250612171546",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20250612171546/https://medium.com/nomad-xyz-blog/the-road-to-recovery-6abe5eec8ff1",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://medium.com/nomad-xyz-blog/nomad-bridge-relaunch-guide-3a4ef6624f90",
+      "evidence_ids": [
+        "bir_src_000067"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000003"
+      ],
+      "bridge_slugs": [
+        "nomad-bridge"
+      ],
+      "bridge_statuses": [
+        "limited"
+      ],
+      "publishers": [
+        "Nomad"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 0,
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20251117051032/https://medium.com/nomad-xyz-blog/nomad-bridge-relaunch-guide-3a4ef6624f90",
+      "timestamp": "20251117051032",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20251117051032/https://medium.com/nomad-xyz-blog/nomad-bridge-relaunch-guide-3a4ef6624f90",
+        "timestamp": "20251117051032",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20251117051032/https://medium.com/nomad-xyz-blog/nomad-bridge-relaunch-guide-3a4ef6624f90",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://chain-swap.medium.com/chainswap-exploit-11-july-2021-post-mortem-6e4e346e5a32",
+      "evidence_ids": [
+        "bir_src_000072"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000014"
+      ],
+      "bridge_slugs": [
+        "chainswap"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "ChainSwap"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 0,
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20260322055929/https://chain-swap.medium.com/chainswap-exploit-11-july-2021-post-mortem-6e4e346e5a32",
+      "timestamp": "20260322055929",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20260322055929/https://chain-swap.medium.com/chainswap-exploit-11-july-2021-post-mortem-6e4e346e5a32",
+        "timestamp": "20260322055929",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20260322055929/https://chain-swap.medium.com/chainswap-exploit-11-july-2021-post-mortem-6e4e346e5a32",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://chain-swap.medium.com/asap-token-important-update-67073aae925c",
+      "evidence_ids": [
+        "bir_src_000073"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000014"
+      ],
+      "bridge_slugs": [
+        "chainswap"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "ChainSwap"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 0,
+      "result": "no_verified_replay",
+      "errors": [
+        "cdx: AbortError: This operation was aborted"
+      ],
+      "replay_attempts": [
+        {
+          "archived_url": "https://web.archive.org/web/20240305013123/https://chain-swap.medium.com/asap-token-important-update-67073aae925c",
+          "timestamp": "20240305013123",
+          "discovery_method": "availability_api",
+          "valid": false,
+          "error": "TypeError: fetch failed"
+        }
+      ]
+    },
+    {
+      "url": "https://medium.com/synapse-protocol/introducing-synapse-protocol-2af926143deb",
+      "evidence_ids": [
+        "bir_src_000102"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000019"
+      ],
+      "bridge_slugs": [
+        "synapse-protocol"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "Synapse Protocol"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 0,
+      "result": "no_capture_discovered",
+      "errors": [
+        "cdx: AbortError: This operation was aborted"
+      ],
+      "replay_attempts": []
+    },
+    {
+      "url": "https://medium.com/synapse-protocol/synapses-mainnet-launch-the-hadean-phase-d09fc74b2272",
+      "evidence_ids": [
+        "bir_src_000103"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000019"
+      ],
+      "bridge_slugs": [
+        "synapse-protocol"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "Synapse Protocol"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 0,
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20240714155645/https://medium.com/synapse-protocol/synapses-mainnet-launch-the-hadean-phase-d09fc74b2272",
+      "timestamp": "20240714155645",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20240714155645/https://medium.com/synapse-protocol/synapses-mainnet-launch-the-hadean-phase-d09fc74b2272",
+        "timestamp": "20240714155645",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20240714155645/https://medium.com/synapse-protocol/synapses-mainnet-launch-the-hadean-phase-d09fc74b2272",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://cryptorubic.medium.com/introducing-the-new-rubic-tokenomics-the-way-forward-abca6cf11d8d",
+      "evidence_ids": [
+        "bir_src_000162"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000029"
+      ],
+      "bridge_slugs": [
+        "rubic"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "Rubic"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 0,
+      "result": "no_verified_replay",
+      "errors": [
+        "cdx: TypeError: fetch failed"
+      ],
+      "replay_attempts": [
+        {
+          "archived_url": "https://web.archive.org/web/20250317123228/https://cryptorubic.medium.com/introducing-the-new-rubic-tokenomics-the-way-forward-abca6cf11d8d",
+          "timestamp": "20250317123228",
+          "discovery_method": "availability_api",
+          "valid": false,
+          "error": "TypeError: fetch failed"
+        }
+      ]
+    }
+  ]
+}
