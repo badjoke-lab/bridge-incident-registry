@@ -1,0 +1,53 @@
+{
+  "generated_at": "2026-08-02T06:38:48.281Z",
+  "policy": {
+    "selection": "first ten unique unarchived first-party or official Medium/Mirror/Substack URLs, terminal-first, Tier-1-first",
+    "exclusion": "known unavailable Qubit compensation-plan URL",
+    "discovery": "Wayback availability API plus bounded CDX capture lookup",
+    "acceptance": "exact snapshot replay returns HTTP 200 HTML with a non-trivial body",
+    "retry_policy": "20-second requests and up to three replay attempts per capture",
+    "canonical_limit": "review only; no canonical file is modified by this verifier"
+  },
+  "selected_candidate_count": 1,
+  "verified_url_count": 1,
+  "verified_evidence_record_count": 1,
+  "candidates": [
+    {
+      "url": "https://medium.com/poly-network/poly-network-mainnet-upgrade-goes-live-d708f4fa2cf1",
+      "evidence_ids": [
+        "bir_src_000203"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000005"
+      ],
+      "bridge_slugs": [
+        "poly-network"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "Poly Network"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 0,
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20230101195631/https://medium.com/poly-network/poly-network-mainnet-upgrade-goes-live-d708f4fa2cf1",
+      "timestamp": "20230101195631",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20230101195631/https://medium.com/poly-network/poly-network-mainnet-upgrade-goes-live-d708f4fa2cf1",
+        "timestamp": "20230101195631",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20230101195631/https://medium.com/poly-network/poly-network-mainnet-upgrade-goes-live-d708f4fa2cf1",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    }
+  ]
+}
