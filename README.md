@@ -31,13 +31,13 @@ BIR is not:
 
 The static registry application, four-record canonical model, validation pipeline, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
 
-Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Event Tier 1 remediation, the Nerve source review boundary, and Archive Capture Batches 1 through 7 are complete and production-verified.
+Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Event Tier 1 remediation, the Nerve source review boundary, and Archive Capture Batches 1 through 8 are complete and production-verified.
 
-Evidence remains 284. Event primary gaps are 16, event Tier 1 gaps are six, and all remaining Tier 1 gaps are reviewed and intentionally secondary. Seventy-one evidence records now publish forty-two verified Wayback snapshots.
+Evidence remains 284. Event primary gaps are 16, event Tier 1 gaps are six, and all remaining Tier 1 gaps are reviewed and intentionally secondary. Eighty evidence records now publish fifty-one verified Wayback snapshots.
 
-Archive-risk metrics count normalized unique source URLs with exact-or-subdomain host matching. Duplicate evidence records sharing one source URL do not create duplicate preservation obligations. Current unarchived queues are 39 terminal unique URLs and 46 risky-host unique URLs.
+Archive-risk metrics count normalized unique source URLs with exact-or-subdomain host matching. Duplicate evidence records sharing one source URL do not create duplicate preservation obligations. Current unarchived queues are 39 terminal unique URLs and 37 risky-host unique URLs.
 
-Production verification compares every transformed field in all four public datasets with the generated public contract. Counts and IDs alone cannot prove publication. Archive Batch 7 remained on the same-count Batch 6 public dataset for seventeen checks and passed only after all seventy-one `archived_url` fields converged on publication attempt 18.
+Production verification compares every transformed field in all four public datasets with the generated public contract. Counts and IDs alone cannot prove publication. Archive Batch 8 remained on the same-count Batch 7 public dataset for fourteen checks and passed only after all eighty `archived_url` fields converged on publication attempt 15.
 
 Current canonical and production counts:
 
@@ -57,7 +57,7 @@ Unknown URL status                0
 Events without primary           16
 Events without Tier 1             6
 Unreviewed event Tier 1 gaps       0
-Evidence with archived_url       71
+Evidence with archived_url       80
 Canonical public content match    true
 ```
 
@@ -129,6 +129,9 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/audits/phase3-archive-capture-batch7-review-2026-08-02.md` — Archive Batch 7 reviewed mappings
 - `docs/audits/phase3-archive-capture-batch7-2026-08-02.md` — Archive Batch 7 canonical migration
 - `docs/audits/production-verification-phase3-archive-capture-batch7-2026-08-02.md` — Archive Batch 7 production audit
+- `docs/audits/phase3-archive-capture-batch8-review-2026-08-02.md` — Archive Batch 8 reviewed mappings
+- `docs/audits/phase3-archive-capture-batch8-2026-08-02.md` — Archive Batch 8 canonical migration
+- `docs/audits/production-verification-phase3-archive-capture-batch8-2026-08-02.md` — Archive Batch 8 production audit
 - `docs/batches/` — reviewed batch scopes
 
 ## Architecture
