@@ -39,6 +39,7 @@ Archive capture Batch 3              production-verified — PRs #126–#128
 Archive capture Batch 4              production-verified — PRs #129–#131
 Archive capture Batch 5              production-verified — PRs #132–#134
 Archive capture Batch 6              production-verified — PRs #135–#138
+Archive capture Batch 7              production-verified — PRs #139–#141
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
 ```
@@ -57,7 +58,7 @@ Unknown URL status   0
 Primary evidence                         201 / 284
 Tier 1 evidence                          220 / 284
 Official-domain evidence                 131 / 284
-Evidence with archived_url                64 / 284
+Evidence with archived_url                71 / 284
 Bridges without primary evidence          0 / 33
 Bridges without tier 1 evidence           0 / 33
 Incidents without primary evidence        1 / 34
@@ -67,17 +68,17 @@ Events without tier 1 evidence            6 / 183
 Unreviewed event Tier 1 gaps               0
 Terminal unarchived unique URLs          39
 Terminal unarchived evidence records     51
-Risky-host unarchived unique URLs        53
-Risky-host unarchived evidence records   72
+Risky-host unarchived unique URLs        46
+Risky-host unarchived evidence records   65
 X/Twitter evidence records unarchived    42
 Unknown URL status                        0
 ```
 
 Archive-risk ceilings use normalized unique source URLs and exact-or-subdomain host matching. Multiple evidence records that reuse the same source URL create one preservation obligation.
 
-Archive Capture Batch 6 added six verified Wayback snapshots to eleven first-party Tier 1 Magpie, ChainSwap, Rubic, and Orbit evidence records. Source URLs, claims, source tiers, reliability, dates, and linkages remain unchanged. Four Meter, Allbridge, and Nomad candidates that did not pass exact replay remain unarchived and received no guessed snapshot.
+Archive Capture Batch 7 added seven verified Wayback snapshots to seven first-party Tier 1 Meter, Allbridge, Nomad, ChainSwap, and Synapse evidence records. Source URLs, claims, source tiers, reliability, dates, and linkages remain unchanged. Three ChainSwap, Synapse, and Rubic candidates that did not pass exact replay remain unarchived and received no guessed snapshot.
 
-The first unchanged production-verifier run rejected the same-count Batch 5 dataset at `bir_src_000032` for all twenty attempts. PR #138 added a docs-only `main` commit to retrigger Cloudflare Pages. The same verifier then passed on attempt 1 with all sixty-four archive fields and complete canonical-derived content equality.
+The unchanged production verifier rejected the same-count Batch 6 dataset at `bir_src_000049` for publication attempts 1 through 17. Production converged without a deployment retrigger on attempt 18, with all seventy-one archive fields and complete canonical-derived content equality.
 
 All event Tier 1 gaps are reviewed. The six remaining gaps are intentional secondary records:
 
@@ -97,29 +98,25 @@ Remaining incident-level gap:
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR       #136
-Canonical merge         f552007f5a37e6c988aec7884b0e122156102daf
-Deployment retrigger PR #138
-Deployment retrigger    480913508dd1ae4c0ba0f30c4df7879587b0845c
-Production audit PR     #137
-Failed production run   30734330854
-Failed production job   91460170932
-Production verify       30734550824
-Production verify job   91460859010
-Canonical normal CI     30734278053
-Verification PR CI      30734550837
+Canonical data PR       #140
+Canonical merge         9b9db5e48626ba7d919301d18c40dd9bbadd6d1f
+Production audit PR     #141
+Production verify       30735206567
+Production verify job   91462656791
+Canonical normal CI     30735138759
+Verification PR CI      30735206554
 Verified state          33 / 34 / 183 / 284
-Archived evidence       64 / 284
+Archived evidence       71 / 284
 Canonical content match true
 Verified HTML routes    72
 Verified redirects      74
-Generated at            2026-08-02T05:38:31.010Z
-Publication attempt     1 after retrigger
+Generated at            2026-08-02T06:06:48.014Z
+Publication attempt     18
 ```
 
 ## Next
 
-1. continue bounded archive capture work from 53 risky-host and 39 terminal unique URLs;
+1. continue bounded archive capture work from 46 risky-host and 39 terminal unique URLs;
 2. retry deferred official-source candidates without weakening replay requirements;
 3. reduce the remaining 16 events without primary evidence where justified;
 4. strengthen remaining validators;
