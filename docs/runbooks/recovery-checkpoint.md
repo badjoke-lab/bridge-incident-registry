@@ -27,32 +27,29 @@ PR #126–128  Archive capture Batch 3 review, canonical, and production verific
 PR #129–131  Archive capture Batch 4 review, canonical, and production verification
 PR #132–134  Archive capture Batch 5 review, canonical, and production verification
 PR #135–138  Archive capture Batch 6 review, canonical, deployment retrigger, and production verification
+PR #139–141  Archive capture Batch 7 review, canonical, and production verification
 ```
 
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR        #136
-Canonical merge          f552007f5a37e6c988aec7884b0e122156102daf
-Deployment retrigger PR  #138
-Deployment retrigger     480913508dd1ae4c0ba0f30c4df7879587b0845c
-Production audit PR      #137
-Failed production run    30734330854
-Failed production job    91460170932
-Production verify        30734550824
-Production verify job    91460859010
-Canonical normal CI      30734278053
-Verification PR CI       30734550837
+Canonical data PR        #140
+Canonical merge          9b9db5e48626ba7d919301d18c40dd9bbadd6d1f
+Production audit PR      #141
+Production verify        30735206567
+Production verify job    91462656791
+Canonical normal CI      30735138759
+Verification PR CI       30735206554
 Verified state           33 / 34 / 183 / 284
-Archived evidence        64 / 284
+Archived evidence        71 / 284
 Canonical content match  true
 HTML routes              72
 Redirects                74
-Generated at             2026-08-02T05:38:31.010Z
-Publication attempt      1 after retrigger
+Generated at             2026-08-02T06:06:48.014Z
+Publication attempt      18
 ```
 
-The first verifier run rejected the prior same-count Batch 5 evidence content at `bir_src_000032` on attempts 1 through 20. A docs-only main commit retriggered Cloudflare Pages. The unchanged verifier then passed on the first attempt.
+The verifier rejected the prior same-count Batch 6 evidence content at `bir_src_000049` on attempts 1 through 17. Production converged without a deployment retrigger on attempt 18.
 
 ## Permanent guards
 
@@ -73,45 +70,40 @@ Incidents without Tier 1              1
 Events without primary               16
 Events without Tier 1                 6
 Unreviewed event Tier 1 gaps           0
-Evidence with archived_url           64
+Evidence with archived_url           71
 Terminal unarchived unique URLs      39
-Risky-host unarchived unique URLs    53
+Risky-host unarchived unique URLs    46
 Unknown URL status                    0
 ```
 
-## Archive capture Batch 6
+## Archive capture Batch 7
 
 ```text
-Review boundary                    PR #135
-Canonical migration                PR #136
-Production audit                   PR #137
-Deployment retrigger               PR #138
-Verified Wayback URLs                    6
-Evidence records updated                11
+Review boundary                    PR #139
+Canonical migration                PR #140
+Production audit                   PR #141
+Verified Wayback URLs                    7
+Evidence records updated                 7
 Terminal unique queue                  39
-Risky-host unique queue           59 -> 53
+Risky-host unique queue           53 -> 46
 Terminal record queue                  51
-Risky-host record queue           83 -> 72
+Risky-host record queue           72 -> 65
 Source-count drift                      0
 ```
 
 Updated evidence IDs:
 
 ```text
-bir_src_000032
-bir_src_000033
-bir_src_000071
-bir_src_000074
-bir_src_000157
-bir_src_000161
-bir_src_000211
-bir_src_000228
-bir_src_000253
-bir_src_000255
-bir_src_000280
+bir_src_000049
+bir_src_000051
+bir_src_000054
+bir_src_000066
+bir_src_000067
+bir_src_000072
+bir_src_000103
 ```
 
-Only exact reviewed snapshots were added. Source URLs, historical claims, source hierarchy, dates, and linkages remain unchanged. Two Meter sources, the Allbridge compensation-plan source, and the Nomad road-to-recovery source remain unarchived because they did not pass exact replay.
+Only exact reviewed snapshots were added. Source URLs, historical claims, source hierarchy, dates, and linkages remain unchanged. The ChainSwap ASAP token update, Synapse protocol introduction, and Rubic tokenomics update remain unarchived because they did not pass exact replay.
 
 ## Nerve boundary
 
@@ -119,7 +111,7 @@ PR #117 completed the first-party source search for `bir_inc_000026`. The remain
 
 ## Next
 
-1. continue bounded archive work from 53 risky-host and 39 terminal unique URLs;
+1. continue bounded archive work from 46 risky-host and 39 terminal unique URLs;
 2. retry deferred official sources under the same replay standard;
 3. reduce remaining event primary gaps where justified;
 4. strengthen validators;
