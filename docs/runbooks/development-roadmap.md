@@ -34,6 +34,7 @@ Phase 3  Full-corpus quality strengthening         active
          Archive capture Batch 5                   production-verified — PRs #132–#134
          Archive capture Batch 6                   production-verified — PRs #135–#138
          Archive capture Batch 7                   production-verified — PRs #139–#141
+         Archive capture Batch 8                   production-verified — PRs #142–#144
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
@@ -44,23 +45,23 @@ Release  v1 hardening                              planned
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR        #140
-Canonical merge          9b9db5e48626ba7d919301d18c40dd9bbadd6d1f
-Production audit PR      #141
-Production verify run    30735206567
-Production verify job    91462656791
-Canonical normal CI      30735138759
-Verification PR CI       30735206554
+Canonical data PR        #143
+Canonical merge          915d0127d9d182ff76b5638fb008ee080dd4c081
+Production audit PR      #144
+Production verify run    30735942770
+Production verify job    91464653821
+Canonical normal CI      30735882106
+Verification PR CI       30735942760
 Verified state           33 / 34 / 183 / 284
-Archived evidence        71 / 284
+Archived evidence        80 / 284
 Canonical content match  true
 Verified HTML routes     72
 Verified redirects       74
-Generated at             2026-08-02T06:06:48.014Z
-Publication attempt      18
+Generated at             2026-08-02T06:20:07.688Z
+Publication attempt      15
 ```
 
-The unchanged verifier rejected the prior same-count Batch 6 evidence dataset at `bir_src_000049` for publication attempts 1 through 17. Production converged without a deployment retrigger on attempt 18.
+The unchanged verifier rejected the prior same-count Batch 7 evidence dataset at `bir_src_000073` for publication attempts 1 through 14. Production converged without a deployment retrigger on attempt 15.
 
 ## Current quality state
 
@@ -72,19 +73,19 @@ Incidents without Tier 1               1
 Events without primary                16
 Events without Tier 1                  6
 Unreviewed event Tier 1 gaps            0
-Evidence with archived_url            71
+Evidence with archived_url            80
 Terminal unarchived unique URLs       39
-Risky-host unarchived unique URLs     46
+Risky-host unarchived unique URLs     37
 Unknown URL status                     0
 ```
 
 The remaining Nerve incident-level source gap is reviewed and intentional under PR #117. Current-operation evidence is not reused as historical incident evidence, and Tier 2 security analysis is not reclassified.
 
-Archive Capture Batch 7 added seven verified Wayback snapshots to seven first-party Tier 1 Meter, Allbridge, Nomad, ChainSwap, and Synapse evidence records. Three ChainSwap, Synapse, and Rubic candidates that did not pass exact replay remain unarchived and may be retried without weakening acceptance requirements.
+Archive Capture Batch 8 added nine verified Wayback snapshots to nine first-party Tier 1 ChainSwap, Synapse, Rubic, Poly Network, Ronin, and Transit evidence records. The Poly Network mainnet-upgrade candidate that did not pass exact replay remains unarchived and may be retried without weakening acceptance requirements.
 
 ## Immediate source-quality targets
 
-1. continue verified archive captures from the 46 risky-host and 39 terminal unique-URL queues;
+1. continue verified archive captures from the 37 risky-host and 39 terminal unique-URL queues;
 2. retry deferred official-source candidates with exact replay verification;
 3. reduce the remaining 16 events without primary evidence where appropriate;
 4. strengthen remaining validators;
