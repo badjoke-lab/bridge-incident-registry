@@ -1,11 +1,11 @@
 # Phase 3 archive capture Batch 6 production verification — 2026-08-02
 
-Status: in progress  
+Status: complete  
 Production origin: `https://bridge-incident-registry.pages.dev`  
 Canonical merge: `f552007f5a37e6c988aec7884b0e122156102daf`  
 Deployment retrigger merge: `480913508dd1ae4c0ba0f30c4df7879587b0845c`
 
-## Expected production state
+## Verified production state
 
 ```text
 Bridges                         33
@@ -18,7 +18,7 @@ Redirects                       74
 Canonical public content match  true
 ```
 
-## Expected quality state
+## Verified quality state
 
 ```text
 Incident source mismatches              0
@@ -33,7 +33,8 @@ Unknown URL status                      0
 The initial production-verification run did not converge after twenty attempts. Production remained on the prior same-count Batch 5 dataset.
 
 ```text
-Failed run             30734330854
+Failed production run  30734330854
+Failed job             91460170932
 Observed generated_at  2026-08-02T05:31:08.973Z
 First mismatch          bir_src_000032
 Rejected attempts       1–20
@@ -41,12 +42,31 @@ Rejected attempts       1–20
 
 PR #138 added a docs-only `main` commit to retrigger the Cloudflare Pages Git deployment. Canonical data, archive mappings, validators, and expected production content were unchanged.
 
-## Verification scope
+## Successful verification
 
-The unchanged full-content verifier must confirm all sixty-four canonical `archived_url` fields, every other transformed field across all four public datasets, exact record order, all static and detail routes, sitemap equality, redirects, canonical metadata, JSON-LD, robots, content types, and cache signals.
+The unchanged verifier passed on the first publication attempt after the deployment retrigger.
 
-The prior same-count Batch 5 public dataset is not acceptable: production must contain the eleven newly reviewed Magpie, ChainSwap, Rubic, and Orbit archive fields.
+```text
+Production verification run  30734550824
+Production verification job  91460859010
+Canonical normal CI           30734278053
+Verification PR normal CI     30734550837
+Generated at                  2026-08-02T05:38:31.010Z
+Publication attempt           1 after retrigger
+```
 
-## Result
+## Verified content
 
-Pending repeated GitHub Actions production verification after the deployment retrigger.
+The verifier confirmed:
+
+- all sixty-four exact `archived_url` fields, including the eleven Magpie, ChainSwap, Rubic, and Orbit additions from Batch 6;
+- every transformed field in all 33 bridge, 34 incident, 183 event, and 284 evidence records;
+- exact public record ordering;
+- five static pages, all 33 bridge routes, and all 34 incident routes;
+- exact sitemap equality for 72 canonical HTML routes;
+- all 74 legacy redirects;
+- canonical links, metadata, JSON-LD, robots, content types, and cache assertions.
+
+## Closure
+
+Archive Capture Batch 6 is production-verified. The actionable archive queues are now 39 terminal unique URLs and 53 risky-host unique URLs. No source claim, hierarchy field, date, or record linkage changed.
