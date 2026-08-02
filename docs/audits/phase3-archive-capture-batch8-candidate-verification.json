@@ -1,0 +1,385 @@
+{
+  "generated_at": "2026-08-02T06:19:14.947Z",
+  "policy": {
+    "selection": "first ten unique unarchived first-party or official Medium/Mirror/Substack URLs, terminal-first, Tier-1-first",
+    "exclusion": "known unavailable Qubit compensation-plan URL",
+    "discovery": "Wayback availability API plus bounded CDX capture lookup",
+    "acceptance": "exact snapshot replay returns HTTP 200 HTML with a non-trivial body",
+    "retry_policy": "20-second requests and up to three replay attempts per capture",
+    "canonical_limit": "review only; no canonical file is modified by this verifier"
+  },
+  "selected_candidate_count": 10,
+  "verified_url_count": 9,
+  "verified_evidence_record_count": 9,
+  "candidates": [
+    {
+      "url": "https://chain-swap.medium.com/asap-token-important-update-67073aae925c",
+      "evidence_ids": [
+        "bir_src_000073"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000014"
+      ],
+      "bridge_slugs": [
+        "chainswap"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "ChainSwap"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 0,
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20240305013123/https://chain-swap.medium.com/asap-token-important-update-67073aae925c",
+      "timestamp": "20240305013123",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20240305013123/https://chain-swap.medium.com/asap-token-important-update-67073aae925c",
+        "timestamp": "20240305013123",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20240305013123/https://chain-swap.medium.com/asap-token-important-update-67073aae925c",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://medium.com/synapse-protocol/introducing-synapse-protocol-2af926143deb",
+      "evidence_ids": [
+        "bir_src_000102"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000019"
+      ],
+      "bridge_slugs": [
+        "synapse-protocol"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "Synapse Protocol"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 0,
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20250624094748/https://medium.com/synapse-protocol/introducing-synapse-protocol-2af926143deb",
+      "timestamp": "20250624094748",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20250624094748/https://medium.com/synapse-protocol/introducing-synapse-protocol-2af926143deb",
+        "timestamp": "20250624094748",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20250624094748/https://medium.com/synapse-protocol/introducing-synapse-protocol-2af926143deb",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://cryptorubic.medium.com/introducing-the-new-rubic-tokenomics-the-way-forward-abca6cf11d8d",
+      "evidence_ids": [
+        "bir_src_000162"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000029"
+      ],
+      "bridge_slugs": [
+        "rubic"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "Rubic"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 0,
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20250317123228/https://cryptorubic.medium.com/introducing-the-new-rubic-tokenomics-the-way-forward-abca6cf11d8d",
+      "timestamp": "20250317123228",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20250317123228/https://cryptorubic.medium.com/introducing-the-new-rubic-tokenomics-the-way-forward-abca6cf11d8d",
+        "timestamp": "20250317123228",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20250317123228/https://cryptorubic.medium.com/introducing-the-new-rubic-tokenomics-the-way-forward-abca6cf11d8d",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://cryptorubic.medium.com/cross-chain-bridge-rbc-brbc-and-brbc-tutorial-92158999cabe",
+      "evidence_ids": [
+        "bir_src_000163"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000029"
+      ],
+      "bridge_slugs": [
+        "rubic"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "Rubic"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 0,
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20221130071532/https://cryptorubic.medium.com/cross-chain-bridge-rbc-brbc-and-brbc-tutorial-92158999cabe",
+      "timestamp": "20221130071532",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20221130071532/https://cryptorubic.medium.com/cross-chain-bridge-rbc-brbc-and-brbc-tutorial-92158999cabe",
+        "timestamp": "20221130071532",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20221130071532/https://cryptorubic.medium.com/cross-chain-bridge-rbc-brbc-and-brbc-tutorial-92158999cabe",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://cryptorubic.medium.com/how-to-swap-using-rubic-contracts-3da46f0c830c",
+      "evidence_ids": [
+        "bir_src_000170"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000029"
+      ],
+      "bridge_slugs": [
+        "rubic"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "Rubic"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 0,
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20251010113314/https://cryptorubic.medium.com/how-to-swap-using-rubic-contracts-3da46f0c830c",
+      "timestamp": "20251010113314",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20251010113314/https://cryptorubic.medium.com/how-to-swap-using-rubic-contracts-3da46f0c830c",
+        "timestamp": "20251010113314",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20251010113314/https://cryptorubic.medium.com/how-to-swap-using-rubic-contracts-3da46f0c830c",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://medium.com/poly-network/poly-network-mainnet-upgrade-goes-live-d708f4fa2cf1",
+      "evidence_ids": [
+        "bir_src_000203"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000005"
+      ],
+      "bridge_slugs": [
+        "poly-network"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "Poly Network"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 0,
+      "result": "no_verified_replay",
+      "errors": [
+        "cdx: AbortError: This operation was aborted"
+      ],
+      "replay_attempts": [
+        {
+          "archived_url": "https://web.archive.org/web/20230101195631/https://medium.com/poly-network/poly-network-mainnet-upgrade-goes-live-d708f4fa2cf1",
+          "timestamp": "20230101195631",
+          "discovery_method": "availability_api",
+          "valid": false,
+          "error": "TypeError: fetch failed"
+        }
+      ]
+    },
+    {
+      "url": "https://medium.com/poly-network/poly-network-monthly-report-sep-a4cdd9f3fb7a",
+      "evidence_ids": [
+        "bir_src_000204"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000005"
+      ],
+      "bridge_slugs": [
+        "poly-network"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "Poly Network"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 0,
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20221126020156/https://medium.com/poly-network/poly-network-monthly-report-sep-a4cdd9f3fb7a",
+      "timestamp": "20221126020156",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20221126020156/https://medium.com/poly-network/poly-network-monthly-report-sep-a4cdd9f3fb7a",
+        "timestamp": "20221126020156",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20221126020156/https://medium.com/poly-network/poly-network-monthly-report-sep-a4cdd9f3fb7a",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://roninblockchain.substack.com/p/community-alert-ronin-validators",
+      "evidence_ids": [
+        "bir_src_000268"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000001"
+      ],
+      "bridge_slugs": [
+        "ronin-bridge"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "Ronin Network"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 0,
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20230401061939/https://roninblockchain.substack.com/p/community-alert-ronin-validators",
+      "timestamp": "20230401061939",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20230401061939/https://roninblockchain.substack.com/p/community-alert-ronin-validators",
+        "timestamp": "20230401061939",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20230401061939/https://roninblockchain.substack.com/p/community-alert-ronin-validators",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://medium.com/poly-network/poly-network-asset-recovery-complete-a7ba33c2f2e4",
+      "evidence_ids": [
+        "bir_src_000270"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000005"
+      ],
+      "bridge_slugs": [
+        "poly-network"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "Poly Network"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 0,
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20221013202750/https://medium.com/poly-network/poly-network-asset-recovery-complete-a7ba33c2f2e4",
+      "timestamp": "20221013202750",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20221013202750/https://medium.com/poly-network/poly-network-asset-recovery-complete-a7ba33c2f2e4",
+        "timestamp": "20221013202750",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20221013202750/https://medium.com/poly-network/poly-network-asset-recovery-complete-a7ba33c2f2e4",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    },
+    {
+      "url": "https://medium.com/@TransitSwap/updates-about-transitfinance-d05176918897",
+      "evidence_ids": [
+        "bir_src_000279"
+      ],
+      "bridge_ids": [
+        "bir_bridge_000027"
+      ],
+      "bridge_slugs": [
+        "transit-swap"
+      ],
+      "bridge_statuses": [
+        "active"
+      ],
+      "publishers": [
+        "Transit Finance"
+      ],
+      "source_tiers": [
+        "tier_1"
+      ],
+      "primary_records": 1,
+      "terminal_records": 0,
+      "result": "verified",
+      "archived_url": "https://web.archive.org/web/20221020165004/https://medium.com/@TransitSwap/updates-about-transitfinance-d05176918897",
+      "timestamp": "20221020165004",
+      "discovery_method": "availability_api",
+      "replay": {
+        "archived_url": "https://web.archive.org/web/20221020165004/https://medium.com/@TransitSwap/updates-about-transitfinance-d05176918897",
+        "timestamp": "20221020165004",
+        "discovery_method": "availability_api",
+        "status": 200,
+        "final_url": "https://web.archive.org/web/20221020165004/https://medium.com/@TransitSwap/updates-about-transitfinance-d05176918897",
+        "content_type": "text/html; charset=utf-8",
+        "prefix_bytes": 65536,
+        "valid": true
+      }
+    }
+  ]
+}
