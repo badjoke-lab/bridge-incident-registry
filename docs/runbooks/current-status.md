@@ -37,6 +37,7 @@ Archive capture Batch 1              production-verified — PRs #118–#120
 Archive capture Batch 2              production-verified — PRs #122–#125
 Archive capture Batch 3              production-verified — PRs #126–#128
 Archive capture Batch 4              production-verified — PRs #129–#131
+Archive capture Batch 5              production-verified — PRs #132–#134
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
 ```
@@ -55,7 +56,7 @@ Unknown URL status   0
 Primary evidence                         201 / 284
 Tier 1 evidence                          220 / 284
 Official-domain evidence                 131 / 284
-Evidence with archived_url                40 / 284
+Evidence with archived_url                53 / 284
 Bridges without primary evidence          0 / 33
 Bridges without tier 1 evidence           0 / 33
 Incidents without primary evidence        1 / 34
@@ -65,17 +66,17 @@ Events without tier 1 evidence            6 / 183
 Unreviewed event Tier 1 gaps               0
 Terminal unarchived unique URLs          39
 Terminal unarchived evidence records     51
-Risky-host unarchived unique URLs        65
-Risky-host unarchived evidence records   96
+Risky-host unarchived unique URLs        59
+Risky-host unarchived evidence records   83
 X/Twitter evidence records unarchived    42
 Unknown URL status                        0
 ```
 
 Archive-risk ceilings use normalized unique source URLs and exact-or-subdomain host matching. Multiple evidence records that reuse the same source URL create one preservation obligation.
 
-Archive Capture Batch 4 added four verified Wayback snapshots to thirteen first-party Tier 1 Connext, Allbridge, Magpie, and THORChain evidence records. Source URLs, claims, source tiers, reliability, dates, and linkages remain unchanged. Six transiently failed candidates remain unarchived and received no guessed snapshot.
+Archive Capture Batch 5 added six verified Wayback snapshots to thirteen first-party Tier 1 THORChain, Meter, Synapse, Nomad, and Orbit evidence records. Source URLs, claims, source tiers, reliability, dates, and linkages remain unchanged. Four candidates that did not pass exact replay remain unarchived and received no guessed snapshot.
 
-The unchanged production verifier rejected the same-count Batch 3 dataset at `bir_src_000053` for publication attempts 1 through 14. Production converged without a deployment retrigger on attempt 15, with all forty archive fields and complete canonical-derived content equality.
+The unchanged production verifier rejected the same-count Batch 4 dataset at `bir_src_000030` for publication attempts 1 through 11. Production converged without a deployment retrigger on attempt 12, with all fifty-three archive fields and complete canonical-derived content equality.
 
 All event Tier 1 gaps are reviewed. The six remaining gaps are intentional secondary records:
 
@@ -95,25 +96,25 @@ Remaining incident-level gap:
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR       #130
-Canonical merge         b72d0e68735e6a49718eb938630e65af89b2f12f
-Production audit PR     #131
-Production verify       30690563060
-Production verify job   91344413654
-Canonical normal CI     30690487993
-Verification PR CI      30690563043
+Canonical data PR       #133
+Canonical merge         27afd411b0eae500b30f8f5a1f49121476e46ebd
+Production audit PR     #134
+Production verify       30691464065
+Production verify job   91346826104
+Canonical normal CI     30691392132
+Verification PR CI      30691464063
 Verified state          33 / 34 / 183 / 284
-Archived evidence       40 / 284
+Archived evidence       53 / 284
 Canonical content match true
 Verified HTML routes    72
 Verified redirects      74
-Generated at            2026-08-01T07:42:49.272Z
-Publication attempt     15
+Generated at            2026-08-01T08:19:37.599Z
+Publication attempt     12
 ```
 
 ## Next
 
-1. continue bounded archive capture work from 65 risky-host and 39 terminal unique URLs;
+1. continue bounded archive capture work from 59 risky-host and 39 terminal unique URLs;
 2. retry deferred official-source candidates without weakening replay requirements;
 3. reduce the remaining 16 events without primary evidence where justified;
 4. strengthen remaining validators;
