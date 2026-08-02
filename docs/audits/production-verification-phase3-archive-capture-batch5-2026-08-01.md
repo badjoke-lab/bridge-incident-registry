@@ -1,10 +1,10 @@
 # Phase 3 archive capture Batch 5 production verification — 2026-08-01
 
-Status: in progress  
+Status: complete  
 Production origin: `https://bridge-incident-registry.pages.dev`  
 Canonical merge: `27afd411b0eae500b30f8f5a1f49121476e46ebd`
 
-## Expected production state
+## Verified production state
 
 ```text
 Bridges                         33
@@ -17,7 +17,7 @@ Redirects                       74
 Canonical public content match  true
 ```
 
-## Expected quality state
+## Verified quality state
 
 ```text
 Incident source mismatches              0
@@ -27,12 +27,41 @@ Risky-host unarchived unique URLs      59
 Unknown URL status                      0
 ```
 
-## Verification scope
+## Publication behavior
 
-The unchanged full-content verifier must confirm all fifty-three canonical `archived_url` fields, every other transformed field across all four public datasets, exact record order, all static and detail routes, sitemap equality, redirects, canonical metadata, JSON-LD, robots, content types, and cache signals.
+The unchanged verifier rejected the prior same-count Batch 4 evidence dataset on publication attempts 1 through 11. The first content difference was `bir_src_000030`, whose new archive field was absent from production.
 
-The prior same-count Batch 4 public dataset is not acceptable: production must contain the thirteen newly reviewed THORChain, Meter, Synapse, Nomad, and Orbit archive fields.
+```text
+Previous generated_at  2026-08-01T08:13:17.998Z
+First mismatch          bir_src_000030
+Rejected attempts       1–11
+```
 
-## Result
+Production converged on publication attempt 12 without a deployment retrigger.
 
-Pending GitHub Actions production verification.
+## Successful verification
+
+```text
+Production verification run  30691464065
+Production verification job  91346826104
+Canonical normal CI           30691392132
+Verification PR normal CI     30691464063
+Generated at                  2026-08-01T08:19:37.599Z
+Publication attempt           12
+```
+
+## Verified content
+
+The verifier confirmed:
+
+- all fifty-three exact `archived_url` fields, including the thirteen THORChain, Meter, Synapse, Nomad, and Orbit additions from Batch 5;
+- every transformed field in all 33 bridge, 34 incident, 183 event, and 284 evidence records;
+- exact public record ordering;
+- five static pages, all 33 bridge routes, and all 34 incident routes;
+- exact sitemap equality for 72 canonical HTML routes;
+- all 74 legacy redirects;
+- canonical links, metadata, JSON-LD, robots, content types, and cache assertions.
+
+## Closure
+
+Archive Capture Batch 5 is production-verified. The actionable archive queues are now 39 terminal unique URLs and 59 risky-host unique URLs. No source claim, hierarchy field, date, or record linkage changed.
