@@ -1,7 +1,7 @@
 # Bridge Incident Registry — Development Roadmap to v1
 
 Status: active  
-Updated: 2026-08-02
+Updated: 2026-08-03
 
 GitHub state and canonical JSON are authoritative.
 
@@ -35,6 +35,7 @@ Phase 3  Full-corpus quality strengthening         active
          Archive capture Batch 6                   production-verified — PRs #135–#138
          Archive capture Batch 7                   production-verified — PRs #139–#141
          Archive capture Batch 8                   production-verified — PRs #142–#144
+         Archive capture Batch 9                   production-verified — PRs #145–#147
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
@@ -45,23 +46,23 @@ Release  v1 hardening                              planned
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR        #143
-Canonical merge          915d0127d9d182ff76b5638fb008ee080dd4c081
-Production audit PR      #144
-Production verify run    30735942770
-Production verify job    91464653821
-Canonical normal CI      30735882106
-Verification PR CI       30735942760
+Canonical data PR        #146
+Canonical merge          dce643e53c1d2417aeca6eae235d38dc20d32ca6
+Production audit PR      #147
+Production verify run    30779827391
+Production verify job    91582150806
+Canonical normal CI      30736754061
+Verification PR CI       30779827393
 Verified state           33 / 34 / 183 / 284
-Archived evidence        80 / 284
+Archived evidence        81 / 284
 Canonical content match  true
 Verified HTML routes     72
 Verified redirects       74
-Generated at             2026-08-02T06:20:07.688Z
-Publication attempt      15
+Generated at             2026-08-03T02:40:37.000Z
+Publication attempt      7
 ```
 
-The unchanged verifier rejected the prior same-count Batch 7 evidence dataset at `bir_src_000073` for publication attempts 1 through 14. Production converged without a deployment retrigger on attempt 15.
+The unchanged verifier rejected the prior same-count Batch 8 evidence dataset at `bir_src_000203` for publication attempts 1 through 6. Production converged without a deployment retrigger on attempt 7.
 
 ## Current quality state
 
@@ -73,19 +74,19 @@ Incidents without Tier 1               1
 Events without primary                16
 Events without Tier 1                  6
 Unreviewed event Tier 1 gaps            0
-Evidence with archived_url            80
+Evidence with archived_url            81
 Terminal unarchived unique URLs       39
-Risky-host unarchived unique URLs     37
+Risky-host unarchived unique URLs     36
 Unknown URL status                     0
 ```
 
 The remaining Nerve incident-level source gap is reviewed and intentional under PR #117. Current-operation evidence is not reused as historical incident evidence, and Tier 2 security analysis is not reclassified.
 
-Archive Capture Batch 8 added nine verified Wayback snapshots to nine first-party Tier 1 ChainSwap, Synapse, Rubic, Poly Network, Ronin, and Transit evidence records. The Poly Network mainnet-upgrade candidate that did not pass exact replay remains unarchived and may be retried without weakening acceptance requirements.
+Archive Capture Batch 9 added one verified Wayback snapshot to the first-party Tier 1 Poly Network mainnet-upgrade evidence record `bir_src_000203`. The known unavailable Qubit compensation-plan source remains unarchived and may be retried without weakening acceptance requirements.
 
 ## Immediate source-quality targets
 
-1. continue verified archive captures from the 37 risky-host and 39 terminal unique-URL queues;
+1. continue verified archive captures from the 36 risky-host and 39 terminal unique-URL queues;
 2. retry deferred official-source candidates with exact replay verification;
 3. reduce the remaining 16 events without primary evidence where appropriate;
 4. strengthen remaining validators;

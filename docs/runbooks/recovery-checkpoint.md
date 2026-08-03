@@ -1,7 +1,7 @@
 # BIR Live Recovery Checkpoint
 
 Status: active  
-Updated: 2026-08-02
+Updated: 2026-08-03
 
 GitHub state and canonical JSON are authoritative. Completed merge SHAs are checkpoints, not live branch pointers.
 
@@ -29,28 +29,29 @@ PR #132–134  Archive capture Batch 5 review, canonical, and production verific
 PR #135–138  Archive capture Batch 6 review, canonical, deployment retrigger, and production verification
 PR #139–141  Archive capture Batch 7 review, canonical, and production verification
 PR #142–144  Archive capture Batch 8 review, canonical, and production verification
+PR #145–147  Archive capture Batch 9 review, canonical, and production verification
 ```
 
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR        #143
-Canonical merge          915d0127d9d182ff76b5638fb008ee080dd4c081
-Production audit PR      #144
-Production verify        30735942770
-Production verify job    91464653821
-Canonical normal CI      30735882106
-Verification PR CI       30735942760
+Canonical data PR        #146
+Canonical merge          dce643e53c1d2417aeca6eae235d38dc20d32ca6
+Production audit PR      #147
+Production verify        30779827391
+Production verify job    91582150806
+Canonical normal CI      30736754061
+Verification PR CI       30779827393
 Verified state           33 / 34 / 183 / 284
-Archived evidence        80 / 284
+Archived evidence        81 / 284
 Canonical content match  true
 HTML routes              72
 Redirects                74
-Generated at             2026-08-02T06:20:07.688Z
-Publication attempt      15
+Generated at             2026-08-03T02:40:37.000Z
+Publication attempt      7
 ```
 
-The verifier rejected the prior same-count Batch 7 evidence content at `bir_src_000073` on attempts 1 through 14. Production converged without a deployment retrigger on attempt 15.
+The verifier rejected the prior same-count Batch 8 evidence content at `bir_src_000203` on attempts 1 through 6. Production converged without a deployment retrigger on attempt 7.
 
 ## Permanent guards
 
@@ -71,42 +72,34 @@ Incidents without Tier 1              1
 Events without primary               16
 Events without Tier 1                 6
 Unreviewed event Tier 1 gaps           0
-Evidence with archived_url           80
+Evidence with archived_url           81
 Terminal unarchived unique URLs      39
-Risky-host unarchived unique URLs    37
+Risky-host unarchived unique URLs    36
 Unknown URL status                    0
 ```
 
-## Archive capture Batch 8
+## Archive capture Batch 9
 
 ```text
-Review boundary                    PR #142
-Canonical migration                PR #143
-Production audit                   PR #144
-Verified Wayback URLs                    9
-Evidence records updated                 9
+Review boundary                    PR #145
+Canonical migration                PR #146
+Production audit                   PR #147
+Verified Wayback URLs                    1
+Evidence records updated                 1
 Terminal unique queue                  39
-Risky-host unique queue           46 -> 37
+Risky-host unique queue           37 -> 36
 Terminal record queue                  51
-Risky-host record queue           65 -> 56
+Risky-host record queue           56 -> 55
 Source-count drift                      0
 ```
 
-Updated evidence IDs:
+Updated evidence ID:
 
 ```text
-bir_src_000073
-bir_src_000102
-bir_src_000162
-bir_src_000163
-bir_src_000170
-bir_src_000204
-bir_src_000268
-bir_src_000270
-bir_src_000279
+bir_src_000203
 ```
 
-Only exact reviewed snapshots were added. Source URLs, historical claims, source hierarchy, dates, and linkages remain unchanged. The Poly Network mainnet-upgrade source remains unarchived because it did not pass exact replay.
+Only the exact reviewed snapshot was added. Source URL, historical claim, source hierarchy, date, and linkages remain unchanged. The known unavailable Qubit compensation-plan source remains unarchived because it lacks a verified snapshot.
 
 ## Nerve boundary
 
@@ -114,7 +107,7 @@ PR #117 completed the first-party source search for `bir_inc_000026`. The remain
 
 ## Next
 
-1. continue bounded archive work from 37 risky-host and 39 terminal unique URLs;
+1. continue bounded archive work from 36 risky-host and 39 terminal unique URLs;
 2. retry deferred official sources under the same replay standard;
 3. reduce remaining event primary gaps where justified;
 4. strengthen validators;
