@@ -1,7 +1,7 @@
 # Current Status — Bridge Incident Registry
 
 Status: active  
-Updated: 2026-08-02
+Updated: 2026-08-03
 
 ## Canonical and production state
 
@@ -41,6 +41,7 @@ Archive capture Batch 5              production-verified — PRs #132–#134
 Archive capture Batch 6              production-verified — PRs #135–#138
 Archive capture Batch 7              production-verified — PRs #139–#141
 Archive capture Batch 8              production-verified — PRs #142–#144
+Archive capture Batch 9              production-verified — PRs #145–#147
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
 ```
@@ -59,7 +60,7 @@ Unknown URL status   0
 Primary evidence                         201 / 284
 Tier 1 evidence                          220 / 284
 Official-domain evidence                 131 / 284
-Evidence with archived_url                80 / 284
+Evidence with archived_url                81 / 284
 Bridges without primary evidence          0 / 33
 Bridges without tier 1 evidence           0 / 33
 Incidents without primary evidence        1 / 34
@@ -69,17 +70,17 @@ Events without tier 1 evidence            6 / 183
 Unreviewed event Tier 1 gaps               0
 Terminal unarchived unique URLs          39
 Terminal unarchived evidence records     51
-Risky-host unarchived unique URLs        37
-Risky-host unarchived evidence records   56
+Risky-host unarchived unique URLs        36
+Risky-host unarchived evidence records   55
 X/Twitter evidence records unarchived    42
 Unknown URL status                        0
 ```
 
 Archive-risk ceilings use normalized unique source URLs and exact-or-subdomain host matching. Multiple evidence records that reuse the same source URL create one preservation obligation.
 
-Archive Capture Batch 8 added nine verified Wayback snapshots to nine first-party Tier 1 ChainSwap, Synapse, Rubic, Poly Network, Ronin, and Transit evidence records. Source URLs, claims, source tiers, reliability, dates, and linkages remain unchanged. The Poly Network mainnet-upgrade candidate that did not pass exact replay remains unarchived and received no guessed snapshot.
+Archive Capture Batch 9 added one verified Wayback snapshot to the first-party Tier 1 Poly Network mainnet-upgrade evidence record `bir_src_000203`. Source URL, claim, source tier, reliability, date, and linkages remain unchanged. The known unavailable Qubit compensation-plan source remains unarchived and received no guessed snapshot.
 
-The unchanged production verifier rejected the same-count Batch 7 dataset at `bir_src_000073` for publication attempts 1 through 14. Production converged without a deployment retrigger on attempt 15, with all eighty archive fields and complete canonical-derived content equality.
+The unchanged production verifier rejected the same-count Batch 8 dataset at `bir_src_000203` for publication attempts 1 through 6. Production converged without a deployment retrigger on attempt 7, with all eighty-one archive fields and complete canonical-derived content equality.
 
 All event Tier 1 gaps are reviewed. The six remaining gaps are intentional secondary records:
 
@@ -99,25 +100,25 @@ Remaining incident-level gap:
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR       #143
-Canonical merge         915d0127d9d182ff76b5638fb008ee080dd4c081
-Production audit PR     #144
-Production verify       30735942770
-Production verify job   91464653821
-Canonical normal CI     30735882106
-Verification PR CI      30735942760
+Canonical data PR       #146
+Canonical merge         dce643e53c1d2417aeca6eae235d38dc20d32ca6
+Production audit PR     #147
+Production verify       30779827391
+Production verify job   91582150806
+Canonical normal CI     30736754061
+Verification PR CI      30779827393
 Verified state          33 / 34 / 183 / 284
-Archived evidence       80 / 284
+Archived evidence       81 / 284
 Canonical content match true
 Verified HTML routes    72
 Verified redirects      74
-Generated at            2026-08-02T06:20:07.688Z
-Publication attempt     15
+Generated at            2026-08-03T02:40:37.000Z
+Publication attempt     7
 ```
 
 ## Next
 
-1. continue bounded archive capture work from 37 risky-host and 39 terminal unique URLs;
+1. continue bounded archive capture work from 36 risky-host and 39 terminal unique URLs;
 2. retry deferred official-source candidates without weakening replay requirements;
 3. reduce the remaining 16 events without primary evidence where justified;
 4. strengthen remaining validators;
