@@ -31,13 +31,15 @@ BIR is not:
 
 The static registry application, four-record canonical model, validation pipeline, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
 
-Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Event Tier 1 remediation, the Nerve source review boundary, and Archive Capture Batches 1 through 11 are complete and production-verified.
+Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Event Tier 1 remediation, the Nerve source review boundary, and Archive Capture Batches 1 through 12 are complete and production-verified.
 
-Evidence remains 284. Event primary gaps are 16, event Tier 1 gaps are six, and all remaining Tier 1 gaps are reviewed and intentionally secondary. Eighty-five evidence records now publish fifty-five verified Wayback snapshots.
+Evidence remains 284. Event primary gaps are 16, event Tier 1 gaps are six, and all remaining Tier 1 gaps are reviewed and intentionally secondary. Ninety-one evidence records now publish fifty-nine verified Wayback snapshots.
 
-Archive-risk metrics count normalized unique source URLs with exact-or-subdomain host matching. Duplicate evidence records sharing one source URL do not create duplicate preservation obligations. Current unarchived queues are 36 terminal unique URLs and 33 risky-host unique URLs.
+Archive-risk metrics count normalized unique source URLs with exact-or-subdomain host matching. Duplicate evidence records sharing one source URL do not create duplicate preservation obligations. Current unarchived queues are 36 terminal unique URLs and 29 risky-host unique URLs.
 
-Production verification compares every transformed field in all four public datasets with the generated public contract. Counts and IDs alone cannot prove publication. Archive Batch 11 remained on the prior evidence content for two twenty-attempt verification jobs. A docs-only commit did not start a new Pages build; a behavior-neutral build-input refresh then forced publication, and all eighty-five `archived_url` fields converged on the first verification attempt.
+Archive Batch 12 added four exact snapshots to six Celer, SOCKET, and Rubic evidence records. A technically valid Holograph snapshot was rejected because its 2022 timestamp predates the 2026 canonical current-state claim. Replay validity and claim-time compatibility are both required.
+
+Production verification compares every transformed field in all four public datasets with the generated public contract. Counts and IDs alone cannot prove publication. Batch 12 remained on the prior same-count evidence content through an initial job and an immediate post-refresh rerun. The behavior-neutral build-input refresh completed later; a delayed rerun converged on attempt 18 and confirmed all ninety-one `archived_url` fields.
 
 Current canonical and production counts:
 
@@ -57,7 +59,9 @@ Unknown URL status                0
 Events without primary           16
 Events without Tier 1             6
 Unreviewed event Tier 1 gaps       0
-Evidence with archived_url       85
+Evidence with archived_url       91
+Terminal unarchived URLs         36
+Risky-host unarchived URLs       29
 Canonical public content match    true
 ```
 
@@ -143,6 +147,10 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/audits/phase3-archive-capture-batch11-2026-08-03.md` — Archive Batch 11 canonical migration
 - `docs/audits/phase3-archive-capture-batch11-deployment-retrigger-2026-08-03.md` — Archive Batch 11 deployment audit
 - `docs/audits/production-verification-phase3-archive-capture-batch11-2026-08-03.md` — Archive Batch 11 production audit
+- `docs/audits/phase3-archive-capture-batch12-review-2026-08-03.md` — Archive Batch 12 reviewed mappings and temporal-fit boundary
+- `docs/audits/phase3-archive-capture-batch12-2026-08-03.md` — Archive Batch 12 canonical migration
+- `docs/audits/phase3-archive-capture-batch12-deployment-refresh-2026-08-03.md` — Archive Batch 12 deployment refresh and delayed convergence
+- `docs/audits/production-verification-phase3-archive-capture-batch12-2026-08-03.md` — Archive Batch 12 production audit
 - `docs/batches/` — reviewed batch scopes
 
 ## Architecture
