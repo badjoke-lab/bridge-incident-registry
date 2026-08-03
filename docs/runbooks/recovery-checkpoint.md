@@ -31,31 +31,36 @@ PR #139–141  Archive capture Batch 7 review, canonical, and production verific
 PR #142–144  Archive capture Batch 8 review, canonical, and production verification
 PR #145–147  Archive capture Batch 9 review, canonical, and production verification
 PR #148–151  Archive capture Batch 10 review, canonical, deployment retrigger, and production verification
+PR #152–156  Archive capture Batch 11 review, canonical, deployment refresh, and production verification
 ```
 
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR        #149
-Canonical merge          6edc02270d1fdfd202ec13874a2a00845ce97897
-Deployment retrigger PR  #151
-Deployment retrigger     fd1d0cdd1ab7fc87052ea4308834ada77561205f
-Production audit PR      #150
-Production verify        30781383081
-Failed production job    91586560207
-Production verify job    91587613338
-Canonical normal CI      30781280526
-Initial verification CI  30781383082
+Canonical data PR        #153
+Canonical merge          f8c0772acbabbf7f468f818e3d8f00b83ca9e38a
+Docs-only retrigger PR   #155
+Docs-only retrigger      d143b3b12b11c79cd0d78e30b965a25ed4d5e480
+Build-input refresh PR   #156
+Build-input refresh      2276d4e37096e29f090c0238f9f0cd6f64a725eb
+Production audit PR      #154
+Production verify        30783692287
+First failed job         91593095620
+Second failed job        91594233914
+Production verify job    91595453784
+Canonical final CI       30783546644
+Initial verification CI  30783692322
+Build-input refresh CI   30784453676
 Verified state           33 / 34 / 183 / 284
-Archived evidence        84 / 284
+Archived evidence        85 / 284
 Canonical content match  true
 HTML routes              72
 Redirects                74
-Generated at             2026-08-03T03:20:41.394Z
-Publication attempt      1 after retrigger
+Generated at             2026-08-03T04:26:39.509Z
+Publication attempt      1 after build-input refresh
 ```
 
-The first verifier job rejected the prior same-count Batch 9 evidence content at `bir_src_000025` on all twenty attempts. PR #151 retriggered Cloudflare Pages with a docs-only main commit. The same workflow run then passed on the first attempt after retrigger.
+The first two verifier jobs rejected `bir_src_000029` for twenty attempts each. The docs-only retrigger left `generated_at` unchanged and did not start a Pages build. The behavior-neutral build-input refresh then published the canonical content, and the unchanged verifier passed on attempt 1.
 
 ## Permanent guards
 
@@ -76,37 +81,41 @@ Incidents without Tier 1              1
 Events without primary               16
 Events without Tier 1                 6
 Unreviewed event Tier 1 gaps           0
-Evidence with archived_url           84
-Terminal unarchived unique URLs      37
-Risky-host unarchived unique URLs    34
+Evidence with archived_url           85
+Terminal unarchived unique URLs      36
+Risky-host unarchived unique URLs    33
 Unknown URL status                    0
 ```
 
-## Archive capture Batch 10
+## Archive capture Batch 11
 
 ```text
-Review boundary                    PR #148
-Canonical migration                PR #149
-Production audit                   PR #150
-Deployment retrigger               PR #151
-Verified Wayback URLs                    2
-Evidence records updated                 3
-Terminal unique queue           39 -> 37
-Risky-host unique queue         36 -> 34
-Terminal record queue           51 -> 48
-Risky-host record queue         55 -> 52
+Review boundary                    PR #152
+Canonical migration                PR #153
+Production audit                   PR #154
+Docs-only retrigger                PR #155
+Build-input refresh                PR #156
+Verified Wayback URLs                    1
+Evidence records updated                 1
+Terminal unique queue           37 -> 36
+Risky-host unique queue         34 -> 33
+Terminal record queue           48 -> 47
+Risky-host record queue         52 -> 51
+X/Twitter record queue          39 -> 38
 Source-count drift                      0
 ```
 
-Updated evidence IDs:
+Updated evidence ID:
 
 ```text
-bir_src_000025
-bir_src_000028
-bir_src_000216
+bir_src_000029
 ```
 
-Only the two exact reviewed snapshots were added. Source URLs, historical claims, source hierarchy, dates, and linkages remain unchanged. Eight deferred candidates remain unarchived because they lacked a verified full replay under the permanent boundary.
+Only the exact reviewed Multichain cessation snapshot was added. Source URL, historical claim, source hierarchy, date, and linkage remain unchanged. Nine deferred candidates remain unarchived because they lacked a verified full replay under the permanent boundary.
+
+## Deployment resume rule
+
+A docs-only commit is not assumed to start a Cloudflare Pages build. When `generated_at` remains unchanged after a retrigger, use a bounded reviewed build-input change that preserves execution behavior, then rerun the unchanged full-content verifier.
 
 ## Nerve boundary
 
@@ -114,7 +123,7 @@ PR #117 completed the first-party source search for `bir_inc_000026`. The remain
 
 ## Next
 
-1. continue bounded archive work from 34 risky-host and 37 terminal unique URLs;
+1. continue bounded archive work from 33 risky-host and 36 terminal unique URLs;
 2. retry deferred official sources under the same replay standard;
 3. reduce remaining event primary gaps where justified;
 4. strengthen validators;
