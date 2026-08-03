@@ -1,11 +1,11 @@
 # Archive Capture Batch 11 deployment retrigger — 2026-08-03
 
-Status: build-input cache bust pending  
+Status: complete  
 Canonical merge: `f8c0772acbabbf7f468f818e3d8f00b83ca9e38a`
 
 ## Initial production verification
 
-The first explicit production-verification run for Archive Capture Batch 11 did not converge after twenty attempts. Production continued to return the prior evidence content for `bir_src_000029`.
+The first explicit production-verification job did not converge after twenty attempts. Production continued to return the prior evidence content for `bir_src_000029`.
 
 ```text
 Production verification run  30783692287
@@ -27,19 +27,29 @@ Observed generated_at      2026-08-03T04:13:42.118Z
 Rejected attempts          1–20
 ```
 
-The unchanged `generated_at` proves that the docs-only commit did not start a new Cloudflare Pages production build. The repository's deployment path filter or build cache therefore requires a changed build input.
+The unchanged `generated_at` proved that the docs-only commit did not start a new Cloudflare Pages production build.
 
-## Build-input cache bust
+## Build-input refresh
 
-A second bounded retrigger changes only one non-executable comment in `scripts/build-public-site.mjs`:
+PR #156 changed only one non-executable comment in `scripts/build-public-site.mjs`:
 
 ```js
 // Batch 11 deployment cache bust: execution order and public contract are unchanged.
 ```
 
-This ensures the Pages integration observes a build-input change while preserving exactly the same execution order and behavior.
+This build-input change passed the Pages path filter and forced a new production build while preserving the same execution order and behavior.
 
-It does not change:
+```text
+Build-input refresh merge  2276d4e37096e29f090c0238f9f0cd6f64a725eb
+Build-input normal CI      30784453676
+Successful production job  91595453784
+Generated at               2026-08-03T04:26:39.509Z
+Publication attempt        1 after build-input refresh
+```
+
+## Scope and safety
+
+The two retrigger PRs did not change:
 
 - canonical bridge, incident, event, or evidence data;
 - archive mappings;
@@ -48,4 +58,4 @@ It does not change:
 - validation or production-verification behavior;
 - routes, metadata, or public contract definitions.
 
-The unchanged full-content verifier must be rerun after the cache-bust commit reaches `main`. Archive Capture Batch 11 is not production-verified until all eighty-five canonical archive fields and every other transformed public field match production.
+The unchanged verifier confirmed all eighty-five canonical archive fields and complete public-content equality after the build-input refresh.
