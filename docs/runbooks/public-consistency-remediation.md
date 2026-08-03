@@ -10,7 +10,7 @@ Bridges            33
 Incidents          34
 Events            183
 Evidence          284
-Archived evidence  84
+Archived evidence  85
 HTML routes        72
 Redirects          74
 ```
@@ -32,14 +32,14 @@ PR #107 Full generated-content production equality
 
 ## Latest production contract verification
 
-Archive Capture Batch 10 production verification run `30781383081` passed after a docs-only deployment retrigger at:
+Archive Capture Batch 11 production verification run `30783692287` passed after a behavior-neutral build-input refresh at:
 
 ```text
 33 bridges
 34 incidents
 183 events
 284 evidence records
-84 evidence records with archived_url
+85 evidence records with archived_url
 72 canonical HTML routes
 74 legacy redirects
 0 unknown URL statuses
@@ -47,21 +47,25 @@ complete public-content equality
 ```
 
 ```text
-Canonical data PR       #149
-Canonical merge         6edc02270d1fdfd202ec13874a2a00845ce97897
-Deployment retrigger PR #151
-Deployment retrigger    fd1d0cdd1ab7fc87052ea4308834ada77561205f
-Production audit PR     #150
-Production run          30781383081
-Failed production job   91586560207
-Production job          91587613338
-Canonical CI            30781280526
-Initial verification CI 30781383082
-Generated at            2026-08-03T03:20:41.394Z
-Publication attempt     1 after retrigger
+Canonical data PR        #153
+Canonical merge          f8c0772acbabbf7f468f818e3d8f00b83ca9e38a
+Docs-only retrigger PR   #155
+Docs-only retrigger      d143b3b12b11c79cd0d78e30b965a25ed4d5e480
+Build-input refresh PR   #156
+Build-input refresh      2276d4e37096e29f090c0238f9f0cd6f64a725eb
+Production audit PR      #154
+Production run           30783692287
+First failed job         91593095620
+Second failed job        91594233914
+Production job           91595453784
+Canonical final CI       30783546644
+Initial verification CI  30783692322
+Build-input refresh CI   30784453676
+Generated at             2026-08-03T04:26:39.509Z
+Publication attempt      1 after build-input refresh
 ```
 
-The first unchanged verifier job rejected the prior same-count Batch 9 evidence dataset at `bir_src_000025` for all twenty attempts. Production remained at `generated_at 2026-08-03T03:13:51.429Z` during those checks. PR #151 added a docs-only main commit to retrigger Cloudflare Pages. The same unchanged workflow run then confirmed all eighty-four archive fields and every other transformed field on the first attempt after retrigger.
+The first verifier job rejected the prior public evidence content at `bir_src_000029` for all twenty attempts. PR #155 added a docs-only main commit, but the second twenty-attempt job observed the same `generated_at 2026-08-03T04:13:42.118Z`; no new Pages build had started. PR #156 changed only a non-executable build-script comment. That build-input refresh forced publication, after which the unchanged verifier confirmed all eighty-five archive fields and every other transformed field on attempt 1.
 
 ## Full-content publication gate
 
@@ -75,7 +79,11 @@ Normal CI requires type and Astro checks, canonical and enum validation, first-t
 
 Production verification requires matching counts and canonical-only markers, complete generated JSON equality, all static and detail routes, canonical links, JSON-LD, sitemap, robots, redirects, content types, and cache signals.
 
-Latest completed production audit: `docs/audits/production-verification-phase3-archive-capture-batch10-2026-08-03.md`.
+Latest completed production audit: `docs/audits/production-verification-phase3-archive-capture-batch11-2026-08-03.md`.
+
+## Deployment lesson
+
+A docs-only main commit is not assumed to trigger Cloudflare Pages. If a retry observes an unchanged `generated_at`, the deployment has not advanced. A bounded build-input change may be used only when it preserves execution behavior, canonical data, validators, and the public contract; the unchanged full-content verifier remains the publication authority.
 
 ## Closure
 
@@ -87,4 +95,5 @@ The emergency public-consistency remediation remains closed. Canonical-derived p
 2. derive IDs and counts from canonical JSON;
 3. keep canonical records separate from candidate and research material;
 4. run all repository checks before merge;
-5. run explicit full-content production verification after public-data changes.
+5. run explicit full-content production verification after public-data changes;
+6. confirm `generated_at` changes before treating a deployment retrigger as effective.
