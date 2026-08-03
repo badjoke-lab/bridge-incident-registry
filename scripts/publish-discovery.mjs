@@ -44,6 +44,8 @@ const robots = previewBuild
   : `User-agent: *\nAllow: /\nSitemap: ${absolute("/sitemap.xml")}\n`;
 
 const headerBlocks = [
+  "/robots.txt\n  Content-Type: text/plain; charset=utf-8\n  Cache-Control: public, max-age=0, must-revalidate",
+  "/sitemap.xml\n  Content-Type: application/xml; charset=utf-8\n  Cache-Control: public, max-age=0, must-revalidate",
   "/version.json\n  Content-Type: application/json; charset=utf-8\n  Cache-Control: public, max-age=300",
   "/data/*\n  Content-Type: application/json; charset=utf-8\n  Cache-Control: public, max-age=300",
   "/llms.txt\n  Content-Type: text/plain; charset=utf-8\n  Cache-Control: public, max-age=300",
