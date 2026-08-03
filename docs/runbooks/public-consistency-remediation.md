@@ -10,7 +10,7 @@ Bridges            33
 Incidents          34
 Events            183
 Evidence          284
-Archived evidence  85
+Archived evidence  91
 HTML routes        72
 Redirects          74
 ```
@@ -32,14 +32,14 @@ PR #107 Full generated-content production equality
 
 ## Latest production contract verification
 
-Archive Capture Batch 11 production verification run `30783692287` passed after a behavior-neutral build-input refresh at:
+Archive Capture Batch 12 production verification run `30791989085` passed after a behavior-neutral build-input refresh and delayed rerun at:
 
 ```text
 33 bridges
 34 incidents
 183 events
 284 evidence records
-85 evidence records with archived_url
+91 evidence records with archived_url
 72 canonical HTML routes
 74 legacy redirects
 0 unknown URL statuses
@@ -47,25 +47,23 @@ complete public-content equality
 ```
 
 ```text
-Canonical data PR        #153
-Canonical merge          f8c0772acbabbf7f468f818e3d8f00b83ca9e38a
-Docs-only retrigger PR   #155
-Docs-only retrigger      d143b3b12b11c79cd0d78e30b965a25ed4d5e480
-Build-input refresh PR   #156
-Build-input refresh      2276d4e37096e29f090c0238f9f0cd6f64a725eb
-Production audit PR      #154
-Production run           30783692287
-First failed job         91593095620
-Second failed job        91594233914
-Production job           91595453784
-Canonical final CI       30783546644
-Initial verification CI  30783692322
-Build-input refresh CI   30784453676
-Generated at             2026-08-03T04:26:39.509Z
-Publication attempt      1 after build-input refresh
+Canonical data PR             #158
+Canonical merge               7d5d6edfc2c7ed355fcfd78a51076e0bd4cc7029
+Build-input refresh PR        #160
+Build-input refresh           15023871b100b6b15b277163d09db8769a3bdb1b
+Production audit PR           #159
+Production run                30791989085
+Initial failed job            91617276143
+Immediate refresh failed job  91618712843
+Production job                91620118112
+Canonical final CI            30791883397
+Initial verification CI       30791989124
+Build-input refresh CI        30792375569
+Generated at                  2026-08-03T07:18:33.180Z
+Publication attempt           18 on delayed rerun after build-input refresh
 ```
 
-The first verifier job rejected the prior public evidence content at `bir_src_000029` for all twenty attempts. PR #155 added a docs-only main commit, but the second twenty-attempt job observed the same `generated_at 2026-08-03T04:13:42.118Z`; no new Pages build had started. PR #156 changed only a non-executable build-script comment. That build-input refresh forced publication, after which the unchanged verifier confirmed all eighty-five archive fields and every other transformed field on attempt 1.
+The initial unchanged verifier rejected the prior same-count evidence content at `bir_src_000076` for all twenty attempts. PR #160 changed only the non-executable build-input marker. An immediate rerun still observed `generated_at 2026-08-03T06:55:57.708Z` for twenty attempts, so no further refresh commit was added. A delayed rerun switched to `generated_at 2026-08-03T07:18:33.180Z` on attempt 18 and confirmed all ninety-one archive fields and every other transformed field.
 
 ## Full-content publication gate
 
@@ -79,11 +77,13 @@ Normal CI requires type and Astro checks, canonical and enum validation, first-t
 
 Production verification requires matching counts and canonical-only markers, complete generated JSON equality, all static and detail routes, canonical links, JSON-LD, sitemap, robots, redirects, content types, and cache signals.
 
-Latest completed production audit: `docs/audits/production-verification-phase3-archive-capture-batch11-2026-08-03.md`.
+Latest completed production audit: `docs/audits/production-verification-phase3-archive-capture-batch12-2026-08-03.md`.
 
-## Deployment lesson
+## Deployment lessons
 
-A docs-only main commit is not assumed to trigger Cloudflare Pages. If a retry observes an unchanged `generated_at`, the deployment has not advanced. A bounded build-input change may be used only when it preserves execution behavior, canonical data, validators, and the public contract; the unchanged full-content verifier remains the publication authority.
+A docs-only main commit is not assumed to trigger Cloudflare Pages. A bounded build-input change may be used only when it preserves execution behavior, canonical data, validators, and the public contract. The unchanged full-content verifier remains the publication authority.
+
+Batch 12 additionally proved that a valid Pages build may complete after an immediate five-minute rerun window. An unchanged `generated_at` after the first refresh rerun is not permission to stack more commits or weaken verification. Allow deployment latency and rerun the same failed job.
 
 ## Closure
 
@@ -96,4 +96,5 @@ The emergency public-consistency remediation remains closed. Canonical-derived p
 3. keep canonical records separate from candidate and research material;
 4. run all repository checks before merge;
 5. run explicit full-content production verification after public-data changes;
-6. confirm `generated_at` changes before treating a deployment retrigger as effective.
+6. confirm `generated_at` and complete dataset equality before declaring publication;
+7. after one reviewed build-input refresh, prefer delayed rerun over repeated refresh commits when the timestamp remains unchanged.

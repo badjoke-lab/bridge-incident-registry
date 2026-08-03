@@ -32,35 +32,34 @@ PR #142–144  Archive capture Batch 8 review, canonical, and production verific
 PR #145–147  Archive capture Batch 9 review, canonical, and production verification
 PR #148–151  Archive capture Batch 10 review, canonical, deployment retrigger, and production verification
 PR #152–156  Archive capture Batch 11 review, canonical, deployment refresh, and production verification
+PR #157–160  Archive capture Batch 12 review, canonical, deployment refresh, and production verification
 ```
 
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR        #153
-Canonical merge          f8c0772acbabbf7f468f818e3d8f00b83ca9e38a
-Docs-only retrigger PR   #155
-Docs-only retrigger      d143b3b12b11c79cd0d78e30b965a25ed4d5e480
-Build-input refresh PR   #156
-Build-input refresh      2276d4e37096e29f090c0238f9f0cd6f64a725eb
-Production audit PR      #154
-Production verify        30783692287
-First failed job         91593095620
-Second failed job        91594233914
-Production verify job    91595453784
-Canonical final CI       30783546644
-Initial verification CI  30783692322
-Build-input refresh CI   30784453676
-Verified state           33 / 34 / 183 / 284
-Archived evidence        85 / 284
-Canonical content match  true
-HTML routes              72
-Redirects                74
-Generated at             2026-08-03T04:26:39.509Z
-Publication attempt      1 after build-input refresh
+Canonical data PR             #158
+Canonical merge               7d5d6edfc2c7ed355fcfd78a51076e0bd4cc7029
+Build-input refresh PR        #160
+Build-input refresh           15023871b100b6b15b277163d09db8769a3bdb1b
+Production audit PR           #159
+Production verify             30791989085
+Initial failed job            91617276143
+Immediate refresh failed job  91618712843
+Production verify job         91620118112
+Canonical final CI            30791883397
+Initial verification CI       30791989124
+Build-input refresh CI        30792375569
+Verified state                33 / 34 / 183 / 284
+Archived evidence             91 / 284
+Canonical content match       true
+HTML routes                   72
+Redirects                     74
+Generated at                  2026-08-03T07:18:33.180Z
+Publication attempt           18 on delayed rerun after build-input refresh
 ```
 
-The first two verifier jobs rejected `bir_src_000029` for twenty attempts each. The docs-only retrigger left `generated_at` unchanged and did not start a Pages build. The behavior-neutral build-input refresh then published the canonical content, and the unchanged verifier passed on attempt 1.
+The initial verifier and the immediate post-refresh rerun rejected `bir_src_000076` for twenty attempts each while `generated_at` stayed `2026-08-03T06:55:57.708Z`. No second refresh was committed. The delayed rerun switched to `generated_at 2026-08-03T07:18:33.180Z` on attempt 18 and passed complete public-content equality.
 
 ## Permanent guards
 
@@ -81,41 +80,50 @@ Incidents without Tier 1              1
 Events without primary               16
 Events without Tier 1                 6
 Unreviewed event Tier 1 gaps           0
-Evidence with archived_url           85
+Evidence with archived_url           91
 Terminal unarchived unique URLs      36
-Risky-host unarchived unique URLs    33
+Terminal unarchived records          49
+Risky-host unarchived unique URLs    29
+Risky-host unarchived records        45
+X/Twitter records unarchived         32
 Unknown URL status                    0
 ```
 
-## Archive capture Batch 11
+## Archive capture Batch 12
 
 ```text
-Review boundary                    PR #152
-Canonical migration                PR #153
-Production audit                   PR #154
-Docs-only retrigger                PR #155
-Build-input refresh                PR #156
-Verified Wayback URLs                    1
-Evidence records updated                 1
-Terminal unique queue           37 -> 36
-Risky-host unique queue         34 -> 33
-Terminal record queue           48 -> 47
-Risky-host record queue         52 -> 51
-X/Twitter record queue          39 -> 38
+Review boundary                    PR #157
+Canonical migration                PR #158
+Production audit                   PR #159
+Build-input refresh                PR #160
+Verified Wayback URLs                    4
+Evidence records updated                 6
+Terminal unique queue           36 -> 36
+Terminal record queue           49 -> 49
+Risky-host unique queue         33 -> 29
+Risky-host record queue         51 -> 45
+X/Twitter record queue          38 -> 32
 Source-count drift                      0
 ```
 
-Updated evidence ID:
+Updated evidence IDs:
 
 ```text
-bir_src_000029
+bir_src_000076
+bir_src_000271
+bir_src_000274
+bir_src_000080
+bir_src_000165
+bir_src_000272
 ```
 
-Only the exact reviewed Multichain cessation snapshot was added. Source URL, historical claim, source hierarchy, date, and linkage remain unchanged. Nine deferred candidates remain unarchived because they lacked a verified full replay under the permanent boundary.
+Only exact reviewed Celer, SOCKET, and Rubic snapshots were added. Source URLs, historical claims, source hierarchy, dates, and linkages remain unchanged. A Holograph snapshot passed the replay-size boundary but was rejected because its 2022 capture predates the 2026 canonical current-state claim.
+
+The permanent validator proved that the approved records belong to active bridges and therefore reduce only the risky-host queue. It also established that the authoritative terminal record queue was 49 before and after Batch 12; the previous runbook value of 47 was a documentation error.
 
 ## Deployment resume rule
 
-A docs-only commit is not assumed to start a Cloudflare Pages build. When `generated_at` remains unchanged after a retrigger, use a bounded reviewed build-input change that preserves execution behavior, then rerun the unchanged full-content verifier.
+A docs-only commit is not assumed to start a Cloudflare Pages build. A reviewed behavior-neutral build-input change may be used when publication remains stale. When an immediate rerun still shows the same `generated_at`, do not stack another refresh automatically. Allow deployment latency and rerun the unchanged failed job. Full-content equality remains the only completion condition.
 
 ## Nerve boundary
 
@@ -123,8 +131,8 @@ PR #117 completed the first-party source search for `bir_inc_000026`. The remain
 
 ## Next
 
-1. continue bounded archive work from 33 risky-host and 36 terminal unique URLs;
-2. retry deferred official sources under the same replay standard;
+1. continue bounded archive work from 29 risky-host and 36 terminal unique URLs;
+2. retry deferred official sources under the same replay and temporal-fit standards;
 3. reduce remaining event primary gaps where justified;
 4. strengthen validators;
 5. continue monitoring, candidate collection, and v1 hardening.
