@@ -1,8 +1,9 @@
 # Phase 3 Archive Capture Batch 12 — 2026-08-03
 
-Status: canonical application pending  
+Status: canonical application complete; production verification pending  
 Review PR: `#157`  
-Review merge: `9d5fd337b1a8383613bc27fe844eee67794f8f3c`
+Review merge: `9d5fd337b1a8383613bc27fe844eee67794f8f3c`  
+Canonical PR: `#158`
 
 ## Approved canonical scope
 
@@ -21,15 +22,15 @@ The Holograph documentation replay is excluded because its 2022 capture predates
 
 ## Canonical changes
 
-- add six exact reviewed `archived_url` fields;
-- keep `terminal_unarchived` ceiling at 36 because the approved records belong to active bridges;
-- reduce `risky_host_unarchived` ceiling from 33 to 29.
+- added six exact reviewed `archived_url` fields;
+- kept `terminal_unarchived` ceiling at 36 because the approved records belong to active bridges;
+- reduced `risky_host_unarchived` ceiling from 33 to 29.
 
-No bridge, incident, event, or evidence record is added or removed. Source URLs, claims, source hierarchy, reliability, dates, linkages, and all non-archive fields remain unchanged.
+No bridge, incident, event, or evidence record was added or removed. Source URLs, claims, source hierarchy, reliability, dates, linkages, and all non-archive fields remain unchanged.
 
 ## Validator reconciliation
 
-The permanent validator establishes the authoritative pre-application record counts:
+The permanent validator established the authoritative pre-application record counts:
 
 ```text
 Terminal unarchived records   49
@@ -38,7 +39,7 @@ Risky-host unarchived records 51
 
 The previous runbook value of 47 terminal records was a documentation error. Batch 12 does not change the terminal queue.
 
-## Expected post-application state
+## Verified canonical state
 
 ```text
 Bridges                              33
@@ -55,5 +56,16 @@ Incident source mismatches            0
 Event source mismatches               0
 Unknown URL status                    0
 ```
+
+## Canonical checks
+
+```text
+Initial apply run with npm-ci error  30791446472
+Ceiling diagnostic run              30791544148
+Successful canonical apply run      30791671628
+Successful final normal CI          30791796732
+```
+
+The first apply failure occurred before validation because the temporary workflow incorrectly used `npm ci` without a lockfile. The second diagnostic run verified the mappings and exposed the provisional terminal-queue misclassification. The corrected third run passed canonical validation and source-quality validation before pushing the exact mappings. Temporary write code and workflow were removed before the final normal CI.
 
 Production verification remains required after canonical merge. Counts alone do not prove publication; every transformed field in all four public datasets must match.
