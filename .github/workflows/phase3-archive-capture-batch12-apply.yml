@@ -39,7 +39,7 @@ jobs:
 
       - name: Validate canonical state
         run: |
-          npm ci
+          npm install
           npm run validate:data
           npm run audit:source-quality
 
