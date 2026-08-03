@@ -1,6 +1,6 @@
 # Phase 3 Archive Capture Batch 12 review — 2026-08-03
 
-Status: review complete  
+Status: review complete; queue classification reconciled during canonical application  
 Base main: `f58f33e638e9781d8fd599a7778caf26deae3410`  
 Review PR: `#157`  
 Review run: `30791003886`  
@@ -8,7 +8,7 @@ Review job: `91614325087`
 
 ## Boundary
 
-Batch 12 reviewed ten exact canonical source URLs from the remaining terminal and risky-host queues.
+Batch 12 reviewed ten exact canonical source URLs selected from archive-risk candidates.
 
 A URL was technically eligible only when Wayback CDX returned a concrete exact-path capture and an independent replay passed all of the following:
 
@@ -36,7 +36,7 @@ Replay status  200
 Content-Type   text/html; charset=utf-8
 Replay bytes   130,815
 Evidence IDs   bir_src_000076
-Queues         terminal, risky-host
+Queue          risky-host
 ```
 
 ### Celer cBridge restoration and compensation update
@@ -48,7 +48,7 @@ Replay status  200
 Content-Type   text/html; charset=utf-8
 Replay bytes   273,965
 Evidence IDs   bir_src_000271, bir_src_000274
-Queues         terminal, risky-host
+Queue          risky-host
 ```
 
 ### SOCKET incident acknowledgement
@@ -60,7 +60,7 @@ Replay status  200
 Content-Type   text/html; charset=utf-8
 Replay bytes   198,358
 Evidence IDs   bir_src_000080
-Queues         terminal, risky-host
+Queue          risky-host
 ```
 
 ### Rubic incident announcement
@@ -72,13 +72,13 @@ Replay status  200
 Content-Type   text/html; charset=utf-8
 Replay bytes   196,516
 Evidence IDs   bir_src_000165, bir_src_000272
-Queues         terminal, risky-host
+Queue          risky-host
 ```
 
 Final approved scope:
 
 ```text
-Approved unique URLs     4
+Approved unique URLs      4
 Approved evidence records 6
 ```
 
@@ -112,17 +112,28 @@ Transit Finance recovery update                concrete captures found, replay f
 
 No wildcard, guessed, short, failed, or temporally incompatible snapshot is approved.
 
-## Expected canonical effect
+## Validator reconciliation
 
-If applied without source drift, the four approved unique URLs update six evidence records and reduce the no-regression ceilings as follows:
+The initial review notes provisionally treated the four approved social URLs as both terminal and risky-host candidates. Canonical application ran the permanent validator against the actual bridge statuses and proved that none belongs to the terminal queue. The authoritative pre-application state was:
+
+```text
+Terminal unarchived unique URLs   36
+Terminal unarchived records       49
+Risky-host unarchived unique URLs 33
+Risky-host unarchived records     51
+```
+
+The prior runbook value of 47 terminal records was a documentation error; the no-regression validator had consistently reported 49.
+
+## Expected canonical effect
 
 ```text
 Evidence with archived_url          85 -> 91
-Terminal unarchived unique URLs     36 -> 32
-Terminal unarchived evidence        47 -> 41
+Terminal unarchived unique URLs     36 -> 36
+Terminal unarchived evidence        49 -> 49
 Risky-host unarchived unique URLs   33 -> 29
 Risky-host unarchived evidence      51 -> 45
 X/Twitter evidence unarchived       38 -> 32
 ```
 
-Canonical source URLs, claims, source hierarchy, reliability, dates, linkages, and record counts must remain unchanged. This review PR does not modify canonical data.
+Canonical source URLs, claims, source hierarchy, reliability, dates, linkages, and record counts must remain unchanged.
