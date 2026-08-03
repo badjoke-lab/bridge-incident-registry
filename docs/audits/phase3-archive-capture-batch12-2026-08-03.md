@@ -19,13 +19,24 @@ bir_src_000272  Rubic incident announcement
 
 The Holograph documentation replay is excluded because its 2022 capture predates the current-state claim reviewed in 2026. BNB Chain Fusion, SOCKET restart, pNetwork end-of-life, Commons terminal, and Transit Finance remain deferred.
 
-## Intended canonical changes
+## Canonical changes
 
 - add six exact reviewed `archived_url` fields;
-- reduce `terminal_unarchived` ceiling from 36 to 32;
+- keep `terminal_unarchived` ceiling at 36 because the approved records belong to active bridges;
 - reduce `risky_host_unarchived` ceiling from 33 to 29.
 
-No bridge, incident, event, or evidence record is added or removed. Source URLs, claims, source hierarchy, reliability, dates, linkages, and all non-archive fields must remain unchanged.
+No bridge, incident, event, or evidence record is added or removed. Source URLs, claims, source hierarchy, reliability, dates, linkages, and all non-archive fields remain unchanged.
+
+## Validator reconciliation
+
+The permanent validator establishes the authoritative pre-application record counts:
+
+```text
+Terminal unarchived records   49
+Risky-host unarchived records 51
+```
+
+The previous runbook value of 47 terminal records was a documentation error. Batch 12 does not change the terminal queue.
 
 ## Expected post-application state
 
@@ -35,8 +46,8 @@ Incidents                            34
 Events                              183
 Evidence                            284
 Evidence with archived_url           91
-Terminal unarchived unique URLs      32
-Terminal unarchived records          41
+Terminal unarchived unique URLs      36
+Terminal unarchived records          49
 Risky-host unarchived unique URLs    29
 Risky-host unarchived records        45
 X/Twitter records unarchived         32
