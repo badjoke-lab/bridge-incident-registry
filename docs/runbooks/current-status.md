@@ -42,6 +42,7 @@ Archive capture Batch 6              production-verified — PRs #135–#138
 Archive capture Batch 7              production-verified — PRs #139–#141
 Archive capture Batch 8              production-verified — PRs #142–#144
 Archive capture Batch 9              production-verified — PRs #145–#147
+Archive capture Batch 10             production-verified — PRs #148–#151
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
 ```
@@ -60,7 +61,7 @@ Unknown URL status   0
 Primary evidence                         201 / 284
 Tier 1 evidence                          220 / 284
 Official-domain evidence                 131 / 284
-Evidence with archived_url                81 / 284
+Evidence with archived_url                84 / 284
 Bridges without primary evidence          0 / 33
 Bridges without tier 1 evidence           0 / 33
 Incidents without primary evidence        1 / 34
@@ -68,19 +69,19 @@ Incidents without tier 1 evidence         1 / 34
 Events without primary evidence          16 / 183
 Events without tier 1 evidence            6 / 183
 Unreviewed event Tier 1 gaps               0
-Terminal unarchived unique URLs          39
-Terminal unarchived evidence records     51
-Risky-host unarchived unique URLs        36
-Risky-host unarchived evidence records   55
-X/Twitter evidence records unarchived    42
+Terminal unarchived unique URLs          37
+Terminal unarchived evidence records     48
+Risky-host unarchived unique URLs        34
+Risky-host unarchived evidence records   52
+X/Twitter evidence records unarchived    39
 Unknown URL status                        0
 ```
 
 Archive-risk ceilings use normalized unique source URLs and exact-or-subdomain host matching. Multiple evidence records that reuse the same source URL create one preservation obligation.
 
-Archive Capture Batch 9 added one verified Wayback snapshot to the first-party Tier 1 Poly Network mainnet-upgrade evidence record `bir_src_000203`. Source URL, claim, source tier, reliability, date, and linkages remain unchanged. The known unavailable Qubit compensation-plan source remains unarchived and received no guessed snapshot.
+Archive Capture Batch 10 added two verified Wayback snapshots to three first-party Tier 1 Multichain evidence records: `bir_src_000025`, `bir_src_000028`, and `bir_src_000216`. Source URLs, claims, source tiers, reliability, dates, and linkages remain unchanged. Eight Everclear, Syndicate, Holograph, Wormhole, and Multichain candidates that did not pass the exact replay boundary remain unarchived and received no guessed snapshot.
 
-The unchanged production verifier rejected the same-count Batch 8 dataset at `bir_src_000203` for publication attempts 1 through 6. Production converged without a deployment retrigger on attempt 7, with all eighty-one archive fields and complete canonical-derived content equality.
+The first unchanged production-verifier job rejected the same-count Batch 9 dataset at `bir_src_000025` for all twenty attempts. PR #151 added a docs-only `main` commit to retrigger Cloudflare Pages. The same workflow run then passed on the first attempt after retrigger, with all eighty-four archive fields and complete canonical-derived content equality.
 
 All event Tier 1 gaps are reviewed. The six remaining gaps are intentional secondary records:
 
@@ -100,25 +101,28 @@ Remaining incident-level gap:
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR       #146
-Canonical merge         dce643e53c1d2417aeca6eae235d38dc20d32ca6
-Production audit PR     #147
-Production verify       30779827391
-Production verify job   91582150806
-Canonical normal CI     30736754061
-Verification PR CI      30779827393
+Canonical data PR       #149
+Canonical merge         6edc02270d1fdfd202ec13874a2a00845ce97897
+Deployment retrigger PR #151
+Deployment retrigger    fd1d0cdd1ab7fc87052ea4308834ada77561205f
+Production audit PR     #150
+Production verify       30781383081
+Failed production job   91586560207
+Production verify job   91587613338
+Canonical normal CI     30781280526
+Initial verification CI 30781383082
 Verified state          33 / 34 / 183 / 284
-Archived evidence       81 / 284
+Archived evidence       84 / 284
 Canonical content match true
 Verified HTML routes    72
 Verified redirects      74
-Generated at            2026-08-03T02:40:37.000Z
-Publication attempt     7
+Generated at            2026-08-03T03:20:41.394Z
+Publication attempt     1 after retrigger
 ```
 
 ## Next
 
-1. continue bounded archive capture work from 36 risky-host and 39 terminal unique URLs;
+1. continue bounded archive capture work from 34 risky-host and 37 terminal unique URLs;
 2. retry deferred official-source candidates without weakening replay requirements;
 3. reduce the remaining 16 events without primary evidence where justified;
 4. strengthen remaining validators;
