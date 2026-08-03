@@ -37,6 +37,7 @@ Phase 3  Full-corpus quality strengthening         active
          Archive capture Batch 8                   production-verified — PRs #142–#144
          Archive capture Batch 9                   production-verified — PRs #145–#147
          Archive capture Batch 10                  production-verified — PRs #148–#151
+         Archive capture Batch 11                  production-verified — PRs #152–#156
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
@@ -47,26 +48,30 @@ Release  v1 hardening                              planned
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR        #149
-Canonical merge          6edc02270d1fdfd202ec13874a2a00845ce97897
-Deployment retrigger PR  #151
-Deployment retrigger     fd1d0cdd1ab7fc87052ea4308834ada77561205f
-Production audit PR      #150
-Production verify run    30781383081
-Failed production job    91586560207
-Production verify job    91587613338
-Canonical normal CI      30781280526
-Initial verification CI  30781383082
+Canonical data PR        #153
+Canonical merge          f8c0772acbabbf7f468f818e3d8f00b83ca9e38a
+Docs-only retrigger PR   #155
+Docs-only retrigger      d143b3b12b11c79cd0d78e30b965a25ed4d5e480
+Build-input refresh PR   #156
+Build-input refresh      2276d4e37096e29f090c0238f9f0cd6f64a725eb
+Production audit PR      #154
+Production verify run    30783692287
+First failed job         91593095620
+Second failed job        91594233914
+Production verify job    91595453784
+Canonical final CI       30783546644
+Initial verification CI  30783692322
+Build-input refresh CI   30784453676
 Verified state           33 / 34 / 183 / 284
-Archived evidence        84 / 284
+Archived evidence        85 / 284
 Canonical content match  true
 Verified HTML routes     72
 Verified redirects       74
-Generated at             2026-08-03T03:20:41.394Z
-Publication attempt      1 after retrigger
+Generated at             2026-08-03T04:26:39.509Z
+Publication attempt      1 after build-input refresh
 ```
 
-The first unchanged verifier job rejected the prior same-count Batch 9 evidence dataset at `bir_src_000025` for all twenty attempts. A docs-only `main` commit retriggered Cloudflare Pages without changing canonical data or verification logic. The same workflow run then passed on the first attempt after retrigger.
+The first two verification jobs each rejected `bir_src_000029` for twenty attempts. The docs-only retrigger did not change `generated_at`, so it did not start a new Pages build. A behavior-neutral build-input comment forced publication; the same verifier then passed on attempt 1.
 
 ## Current quality state
 
@@ -78,19 +83,19 @@ Incidents without Tier 1               1
 Events without primary                16
 Events without Tier 1                  6
 Unreviewed event Tier 1 gaps            0
-Evidence with archived_url            84
-Terminal unarchived unique URLs       37
-Risky-host unarchived unique URLs     34
+Evidence with archived_url            85
+Terminal unarchived unique URLs       36
+Risky-host unarchived unique URLs     33
 Unknown URL status                     0
 ```
 
 The remaining Nerve incident-level source gap is reviewed and intentional under PR #117. Current-operation evidence is not reused as historical incident evidence, and Tier 2 security analysis is not reclassified.
 
-Archive Capture Batch 10 added two verified Wayback snapshots to three first-party Tier 1 Multichain evidence records. Eight Everclear, Syndicate, Holograph, Wormhole, and Multichain candidates that did not pass the exact replay boundary remain unarchived and may be retried without weakening acceptance requirements.
+Archive Capture Batch 11 added one verified Wayback snapshot to `bir_src_000029`. Nine Everclear, Syndicate, Holograph, Wormhole, and Taiko candidates that did not pass the exact replay boundary remain unarchived and may be retried without weakening acceptance requirements.
 
 ## Immediate source-quality targets
 
-1. continue verified archive captures from the 34 risky-host and 37 terminal unique-URL queues;
+1. continue verified archive captures from the 33 risky-host and 36 terminal unique-URL queues;
 2. retry deferred official-source candidates with exact replay verification;
 3. reduce the remaining 16 events without primary evidence where appropriate;
 4. strengthen remaining validators;
@@ -106,6 +111,8 @@ Maximum wait   5 minutes
 ```
 
 Publication convergence requires matching record counts, canonical-only markers, complete transformed JSON equality, exact record order, and all route, sitemap, metadata, redirect, content-type, and cache assertions.
+
+The Batch 11 deployment incident also established that docs-only commits may not pass the Cloudflare Pages path filter. A deployment refresh must change a reviewed build input without changing execution behavior when the public build does not start.
 
 ## Remaining roadmap
 
@@ -134,3 +141,4 @@ Publication convergence requires matching record counts, canonical-only markers,
 14. Unknown URL statuses require explicit review and are not permitted in canonical data.
 15. Production publication is proven by full generated-content equality, not counts or IDs alone.
 16. An archive URL must resolve to a verified snapshot; wildcard or guessed captures are not canonical evidence.
+17. A deployment retrigger must preserve canonical content and verification requirements; docs-only commits are not assumed to start a Pages build.
