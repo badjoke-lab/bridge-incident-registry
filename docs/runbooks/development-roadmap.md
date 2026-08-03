@@ -36,6 +36,7 @@ Phase 3  Full-corpus quality strengthening         active
          Archive capture Batch 7                   production-verified — PRs #139–#141
          Archive capture Batch 8                   production-verified — PRs #142–#144
          Archive capture Batch 9                   production-verified — PRs #145–#147
+         Archive capture Batch 10                  production-verified — PRs #148–#151
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
@@ -46,23 +47,26 @@ Release  v1 hardening                              planned
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR        #146
-Canonical merge          dce643e53c1d2417aeca6eae235d38dc20d32ca6
-Production audit PR      #147
-Production verify run    30779827391
-Production verify job    91582150806
-Canonical normal CI      30736754061
-Verification PR CI       30779827393
+Canonical data PR        #149
+Canonical merge          6edc02270d1fdfd202ec13874a2a00845ce97897
+Deployment retrigger PR  #151
+Deployment retrigger     fd1d0cdd1ab7fc87052ea4308834ada77561205f
+Production audit PR      #150
+Production verify run    30781383081
+Failed production job    91586560207
+Production verify job    91587613338
+Canonical normal CI      30781280526
+Initial verification CI  30781383082
 Verified state           33 / 34 / 183 / 284
-Archived evidence        81 / 284
+Archived evidence        84 / 284
 Canonical content match  true
 Verified HTML routes     72
 Verified redirects       74
-Generated at             2026-08-03T02:40:37.000Z
-Publication attempt      7
+Generated at             2026-08-03T03:20:41.394Z
+Publication attempt      1 after retrigger
 ```
 
-The unchanged verifier rejected the prior same-count Batch 8 evidence dataset at `bir_src_000203` for publication attempts 1 through 6. Production converged without a deployment retrigger on attempt 7.
+The first unchanged verifier job rejected the prior same-count Batch 9 evidence dataset at `bir_src_000025` for all twenty attempts. A docs-only `main` commit retriggered Cloudflare Pages without changing canonical data or verification logic. The same workflow run then passed on the first attempt after retrigger.
 
 ## Current quality state
 
@@ -74,19 +78,19 @@ Incidents without Tier 1               1
 Events without primary                16
 Events without Tier 1                  6
 Unreviewed event Tier 1 gaps            0
-Evidence with archived_url            81
-Terminal unarchived unique URLs       39
-Risky-host unarchived unique URLs     36
+Evidence with archived_url            84
+Terminal unarchived unique URLs       37
+Risky-host unarchived unique URLs     34
 Unknown URL status                     0
 ```
 
 The remaining Nerve incident-level source gap is reviewed and intentional under PR #117. Current-operation evidence is not reused as historical incident evidence, and Tier 2 security analysis is not reclassified.
 
-Archive Capture Batch 9 added one verified Wayback snapshot to the first-party Tier 1 Poly Network mainnet-upgrade evidence record `bir_src_000203`. The known unavailable Qubit compensation-plan source remains unarchived and may be retried without weakening acceptance requirements.
+Archive Capture Batch 10 added two verified Wayback snapshots to three first-party Tier 1 Multichain evidence records. Eight Everclear, Syndicate, Holograph, Wormhole, and Multichain candidates that did not pass the exact replay boundary remain unarchived and may be retried without weakening acceptance requirements.
 
 ## Immediate source-quality targets
 
-1. continue verified archive captures from the 36 risky-host and 39 terminal unique-URL queues;
+1. continue verified archive captures from the 34 risky-host and 37 terminal unique-URL queues;
 2. retry deferred official-source candidates with exact replay verification;
 3. reduce the remaining 16 events without primary evidence where appropriate;
 4. strengthen remaining validators;

@@ -10,7 +10,7 @@ Bridges            33
 Incidents          34
 Events            183
 Evidence          284
-Archived evidence  81
+Archived evidence  84
 HTML routes        72
 Redirects          74
 ```
@@ -32,14 +32,14 @@ PR #107 Full generated-content production equality
 
 ## Latest production contract verification
 
-Archive Capture Batch 9 production verification run `30779827391` passed at:
+Archive Capture Batch 10 production verification run `30781383081` passed after a docs-only deployment retrigger at:
 
 ```text
 33 bridges
 34 incidents
 183 events
 284 evidence records
-81 evidence records with archived_url
+84 evidence records with archived_url
 72 canonical HTML routes
 74 legacy redirects
 0 unknown URL statuses
@@ -47,18 +47,21 @@ complete public-content equality
 ```
 
 ```text
-Canonical data PR      #146
-Canonical merge        dce643e53c1d2417aeca6eae235d38dc20d32ca6
-Production audit PR    #147
-Production run         30779827391
-Production job         91582150806
-Canonical CI           30736754061
-Verification PR CI     30779827393
-Generated at           2026-08-03T02:40:37.000Z
-Publication attempt    7
+Canonical data PR       #149
+Canonical merge         6edc02270d1fdfd202ec13874a2a00845ce97897
+Deployment retrigger PR #151
+Deployment retrigger    fd1d0cdd1ab7fc87052ea4308834ada77561205f
+Production audit PR     #150
+Production run          30781383081
+Failed production job   91586560207
+Production job          91587613338
+Canonical CI            30781280526
+Initial verification CI 30781383082
+Generated at            2026-08-03T03:20:41.394Z
+Publication attempt     1 after retrigger
 ```
 
-The unchanged verifier rejected the prior same-count Batch 8 evidence dataset at `bir_src_000203` for publication attempts 1 through 6. Production remained at `generated_at 2026-08-02T06:46:56.286Z` during those checks. Production then converged without a deployment retrigger, and the verifier confirmed all eighty-one archive fields and every other transformed field on attempt 7.
+The first unchanged verifier job rejected the prior same-count Batch 9 evidence dataset at `bir_src_000025` for all twenty attempts. Production remained at `generated_at 2026-08-03T03:13:51.429Z` during those checks. PR #151 added a docs-only main commit to retrigger Cloudflare Pages. The same unchanged workflow run then confirmed all eighty-four archive fields and every other transformed field on the first attempt after retrigger.
 
 ## Full-content publication gate
 
@@ -72,7 +75,7 @@ Normal CI requires type and Astro checks, canonical and enum validation, first-t
 
 Production verification requires matching counts and canonical-only markers, complete generated JSON equality, all static and detail routes, canonical links, JSON-LD, sitemap, robots, redirects, content types, and cache signals.
 
-Latest completed production audit: `docs/audits/production-verification-phase3-archive-capture-batch9-2026-08-03.md`.
+Latest completed production audit: `docs/audits/production-verification-phase3-archive-capture-batch10-2026-08-03.md`.
 
 ## Closure
 
