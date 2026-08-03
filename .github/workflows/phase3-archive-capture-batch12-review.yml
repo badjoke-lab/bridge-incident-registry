@@ -1,0 +1,33 @@
+name: Phase 3 Archive Capture Batch 12 Review
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - scripts/review-archive-capture-batch12.mjs
+      - .github/workflows/phase3-archive-capture-batch12-review.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phase3-archive-capture-batch12-review-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Review exact Wayback captures
+        run: node scripts/review-archive-capture-batch12.mjs
