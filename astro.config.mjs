@@ -1,6 +1,6 @@
 import { defineConfig } from "astro/config";
 
-const site = process.env.PUBLIC_SITE_ORIGIN ?? "https://bridge-incident-registry.pages.dev";
+const site = process.env.PUBLIC_SITE_ORIGIN ?? "https://bir.badjoke-lab.com";
 
 export default defineConfig({
   output: "static",

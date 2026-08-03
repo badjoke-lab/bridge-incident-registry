@@ -27,6 +27,6 @@ jobs:
 
       - name: Verify production registry
         env:
-          PUBLIC_SITE_ORIGIN: https://bridge-incident-registry.pages.dev
+          PUBLIC_SITE_ORIGIN: https://bir.badjoke-lab.com
           BIR_PRODUCTION_TIMEOUT_MS: "30000"
         run: npm run production:verify
