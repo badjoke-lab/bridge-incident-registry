@@ -75,13 +75,10 @@ if (evidenceChanged) {
 }
 
 let baseline = fs.readFileSync(baselinePath, "utf8");
-const replacements = [
-  ["terminal_unarchived: 36,", "terminal_unarchived: 32,"],
-  ["risky_host_unarchived: 33,", "risky_host_unarchived: 29,"]
-];
+const before = "risky_host_unarchived: 33,";
+const after = "risky_host_unarchived: 29,";
 let baselineChanged = false;
-for (const [before, after] of replacements) {
-  if (baseline.includes(after)) continue;
+if (!baseline.includes(after)) {
   const occurrences = baseline.split(before).length - 1;
   if (occurrences !== 1) throw new Error(`Expected exactly one baseline token: ${before}`);
   baseline = baseline.replace(before, after);
@@ -92,5 +89,7 @@ if (baselineChanged) fs.writeFileSync(baselinePath, baseline, "utf8");
 console.log(JSON.stringify({
   evidence_changed: evidenceChanged,
   baseline_changed: baselineChanged,
+  terminal_ceiling_unchanged: 36,
+  risky_host_ceiling: 29,
   evidence_ids: [...mappings.keys()]
 }, null, 2));
