@@ -1,0 +1,45 @@
+name: Apply Archive Batch 11
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "scripts/apply-archive-batch11.mjs"
+      - ".github/workflows/archive-batch11-apply.yml"
+      - "docs/audits/phase3-archive-capture-batch11-2026-08-03.md"
+
+concurrency:
+  group: archive-batch11-apply-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.head_ref == 'agent/phase3-archive-capture-batch11-canonical'
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout canonical branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Apply reviewed mapping
+        run: node scripts/apply-archive-batch11.mjs
+      - name: Commit canonical result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/evidence.json scripts/check-source-quality-baseline.mjs
+          if git diff --cached --quiet; then
+            echo "No canonical changes to commit."
+            exit 0
+          fi
+          git commit -m "Apply verified archive capture Batch 11"
+          git push origin HEAD:${{ github.head_ref }}
