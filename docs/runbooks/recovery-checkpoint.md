@@ -30,28 +30,32 @@ PR #135–138  Archive capture Batch 6 review, canonical, deployment retrigger, 
 PR #139–141  Archive capture Batch 7 review, canonical, and production verification
 PR #142–144  Archive capture Batch 8 review, canonical, and production verification
 PR #145–147  Archive capture Batch 9 review, canonical, and production verification
+PR #148–151  Archive capture Batch 10 review, canonical, deployment retrigger, and production verification
 ```
 
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR        #146
-Canonical merge          dce643e53c1d2417aeca6eae235d38dc20d32ca6
-Production audit PR      #147
-Production verify        30779827391
-Production verify job    91582150806
-Canonical normal CI      30736754061
-Verification PR CI       30779827393
+Canonical data PR        #149
+Canonical merge          6edc02270d1fdfd202ec13874a2a00845ce97897
+Deployment retrigger PR  #151
+Deployment retrigger     fd1d0cdd1ab7fc87052ea4308834ada77561205f
+Production audit PR      #150
+Production verify        30781383081
+Failed production job    91586560207
+Production verify job    91587613338
+Canonical normal CI      30781280526
+Initial verification CI  30781383082
 Verified state           33 / 34 / 183 / 284
-Archived evidence        81 / 284
+Archived evidence        84 / 284
 Canonical content match  true
 HTML routes              72
 Redirects                74
-Generated at             2026-08-03T02:40:37.000Z
-Publication attempt      7
+Generated at             2026-08-03T03:20:41.394Z
+Publication attempt      1 after retrigger
 ```
 
-The verifier rejected the prior same-count Batch 8 evidence content at `bir_src_000203` on attempts 1 through 6. Production converged without a deployment retrigger on attempt 7.
+The first verifier job rejected the prior same-count Batch 9 evidence content at `bir_src_000025` on all twenty attempts. PR #151 retriggered Cloudflare Pages with a docs-only main commit. The same workflow run then passed on the first attempt after retrigger.
 
 ## Permanent guards
 
@@ -72,34 +76,37 @@ Incidents without Tier 1              1
 Events without primary               16
 Events without Tier 1                 6
 Unreviewed event Tier 1 gaps           0
-Evidence with archived_url           81
-Terminal unarchived unique URLs      39
-Risky-host unarchived unique URLs    36
+Evidence with archived_url           84
+Terminal unarchived unique URLs      37
+Risky-host unarchived unique URLs    34
 Unknown URL status                    0
 ```
 
-## Archive capture Batch 9
+## Archive capture Batch 10
 
 ```text
-Review boundary                    PR #145
-Canonical migration                PR #146
-Production audit                   PR #147
-Verified Wayback URLs                    1
-Evidence records updated                 1
-Terminal unique queue                  39
-Risky-host unique queue           37 -> 36
-Terminal record queue                  51
-Risky-host record queue           56 -> 55
+Review boundary                    PR #148
+Canonical migration                PR #149
+Production audit                   PR #150
+Deployment retrigger               PR #151
+Verified Wayback URLs                    2
+Evidence records updated                 3
+Terminal unique queue           39 -> 37
+Risky-host unique queue         36 -> 34
+Terminal record queue           51 -> 48
+Risky-host record queue         55 -> 52
 Source-count drift                      0
 ```
 
-Updated evidence ID:
+Updated evidence IDs:
 
 ```text
-bir_src_000203
+bir_src_000025
+bir_src_000028
+bir_src_000216
 ```
 
-Only the exact reviewed snapshot was added. Source URL, historical claim, source hierarchy, date, and linkages remain unchanged. The known unavailable Qubit compensation-plan source remains unarchived because it lacks a verified snapshot.
+Only the two exact reviewed snapshots were added. Source URLs, historical claims, source hierarchy, dates, and linkages remain unchanged. Eight deferred candidates remain unarchived because they lacked a verified full replay under the permanent boundary.
 
 ## Nerve boundary
 
@@ -107,7 +114,7 @@ PR #117 completed the first-party source search for `bir_inc_000026`. The remain
 
 ## Next
 
-1. continue bounded archive work from 36 risky-host and 39 terminal unique URLs;
+1. continue bounded archive work from 34 risky-host and 37 terminal unique URLs;
 2. retry deferred official sources under the same replay standard;
 3. reduce remaining event primary gaps where justified;
 4. strengthen validators;
