@@ -1,6 +1,7 @@
 import { spawnSync } from "node:child_process";
 import process from "node:process";
 
+// Batch 11 deployment cache bust: execution order and public contract are unchanged.
 const steps = [
   "scripts/build-public-data.mjs",
   "scripts/publish-machine-data.mjs",
