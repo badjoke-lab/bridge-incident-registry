@@ -3,6 +3,7 @@ name: Apply Boltz security shutdown
 on:
   push:
     branches:
+      - main
       - agent/record-boltz-security-shutdown-2026-08-04
   pull_request:
     types: [opened, synchronize, reopened]
