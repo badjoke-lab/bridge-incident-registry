@@ -1,10 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Callout from "../components/Callout.astro";
-import MaturityChip from "../components/MaturityChip.astro";
 import SectionHeader from "../components/SectionHeader.astro";
-import StatusChip from "../components/StatusChip.astro";
-import UpdateStatusChip from "../components/UpdateStatusChip.astro";
 import { getRegistryCounts, registryData } from "../lib/data";
 
 const counts = getRegistryCounts();
@@ -13,13 +10,17 @@ const latestVerifiedAt = [
   ...registryData.bridges.map((record) => record.last_verified_at),
   ...registryData.incidents.map((record) => record.last_verified_at)
 ].filter(Boolean).sort().at(-1);
-const site = Astro.site ?? new URL("https://bridge-incident-registry.pages.dev");
+const site = Astro.site ?? new URL("https://bir.badjoke-lab.com");
 const datasetJsonLd = {
   "@type": "Dataset",
+  "@id": new URL("/#dataset", site).toString(),
   name: "Bridge Incident Registry canonical datasets",
   description: "Canonical bridge, incident, event, and evidence records for historical cross-chain incident research.",
   url: new URL("/", site).toString(),
   dateModified: latestVerifiedAt,
+  isAccessibleForFree: true,
+  license: "https://creativecommons.org/licenses/by/4.0/",
+  creator: { "@type": "Organization", name: "BadJoke-Lab", url: "https://badjoke-lab.com/" },
   distribution: [
     { "@type": "DataDownload", encodingFormat: "application/json", contentUrl: new URL("/data/bridges.json", site).toString() },
     { "@type": "DataDownload", encodingFormat: "application/json", contentUrl: new URL("/data/incidents.json", site).toString() },
@@ -29,18 +30,18 @@ const datasetJsonLd = {
 };
 ---
 <BaseLayout
-  title="Bridge Incident Registry"
-  description="A historical registry of cross-chain bridge incidents, pauses, recoveries, reimbursements, and migrations."
+  title="Bridge Incident Registry — Cross-chain incident history"
+  description="A historical registry of cross-chain bridge incidents, pauses, recoveries, reimbursements, reopenings, migrations, and shutdowns."
   alternateDataPath="/data/manifest.json"
   dateModified={latestVerifiedAt}
   jsonLd={datasetJsonLd}
 >
   <section class="hero">
-    <div class="kicker">Quiet incident registry</div>
-    <h1>The registry for what happened after cross-chain bridge incidents.</h1>
+    <div class="kicker">Cross-chain incident history</div>
+    <h1>The registry for what happened after bridge incidents.</h1>
     <p class="lede">
-      Most hack databases stop at the exploit. Bridge Incident Registry tracks what happened after:
-      pauses, recoveries, reimbursements, reopenings, migrations, and shutdowns.
+      Bridge Incident Registry connects bridge records with exploit cases, pauses, recoveries,
+      reimbursements, reopenings, migrations, shutdowns, and the evidence behind each claim.
     </p>
   </section>
 
@@ -52,28 +53,41 @@ const datasetJsonLd = {
   </section>
 
   <SectionHeader
-    kicker="Foundation"
-    title="Registry primitives before registry data"
-    description="The first UI components establish status, maturity, freshness, callout, and empty-state patterns before canonical JSON records are added."
+    kicker="Reviewed registry"
+    title="Explore bridges, incidents, and their aftermath"
+    description="Start with a bridge entity, open an incident case, or review how the registry handles dates, loss figures, recovery, reimbursement, and unresolved outcomes."
   />
 
-  <div class="chip-row" aria-label="Sample registry chips">
-    <StatusChip status="active" />
-    <StatusChip status="paused" />
-    <StatusChip status="migrated" />
-    <MaturityChip maturity="reviewed" />
-    <UpdateStatusChip status="current" />
+  <div class="panel-grid" aria-label="Registry entry points">
+    <article class="panel">
+      <h2><a href="/bridges/">Bridge records</a></h2>
+      <p>Browse canonical bridge entities, operating status, connected chains and assets, incident history, and evidence coverage.</p>
+    </article>
+    <article class="panel">
+      <h2><a href="/incidents/">Incident cases</a></h2>
+      <p>Review exploit dates, reported losses, affected systems, recovery and reimbursement status, restarts, migrations, and final outcomes.</p>
+    </article>
+    <article class="panel">
+      <h2><a href="/methodology/">Methodology</a></h2>
+      <p>Read the inclusion rules, evidence hierarchy, date precision, confidence boundaries, and treatment of unknown or disputed facts.</p>
+    </article>
   </div>
 
-  <section class="panel-grid" aria-label="Registry focus">
-    <article class="panel"><h2>Incident aftermath</h2><p>Track pause, recovery, reimbursement, reopening, migration, and shutdown outcomes.</p></article>
-    <article class="panel"><h2>Evidence-first records</h2><p>Every major claim should point back to official, archival, analytical, or journalistic evidence.</p></article>
-    <article class="panel"><h2>Not a safety ranking</h2><p>BIR records historical incidents and outcomes. It does not recommend bridges or rank safety.</p></article>
-  </section>
+  <SectionHeader
+    kicker="Research scope"
+    title="The incident is the start of the record, not the end"
+    description="The registry follows material changes after the initial event instead of reducing each case to a single loss figure."
+  />
+
+  <div class="panel-grid" aria-label="Registry research scope">
+    <article class="panel"><h2>Operational response</h2><p>Pauses, emergency controls, validator or relayer changes, contract upgrades, and staged reopenings.</p></article>
+    <article class="panel"><h2>Customer and protocol outcome</h2><p>Recoveries, reimbursements, claim processes, recapitalization, migration, abandonment, and unresolved losses.</p></article>
+    <article class="panel"><h2>Evidence and uncertainty</h2><p>Source-linked claims, explicit date precision, confidence labels, known unknowns, and later corrections.</p></article>
+  </div>
 
   {!hasRegistryData && (
-    <Callout title="Static foundation only">
-      The canonical registry is currently empty. Bridge, incident, event, and evidence records will appear here automatically after reviewed JSON records are merged.
+    <Callout title="No reviewed records published">
+      Canonical bridge, incident, event, and evidence records will appear after reviewed JSON records are merged.
     </Callout>
   )}
 </BaseLayout>
