@@ -1,4 +1,5 @@
 # Trigger after temporary workflow installation on main.
+# Synchronize the open canonical PR so the base-branch pull_request workflow runs.
 name: Apply Boltz security shutdown
 
 on:
