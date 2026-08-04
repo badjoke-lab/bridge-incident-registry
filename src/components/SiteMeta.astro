@@ -17,51 +17,81 @@ const {
   jsonLd
 } = Astro.props;
 
-const site = Astro.site ?? new URL("https://bridge-incident-registry.pages.dev");
+const site = Astro.site ?? new URL("https://bir.badjoke-lab.com");
 const canonicalUrl = new URL(Astro.url.pathname, site);
+const socialImageUrl = new URL("/og/bir-og.svg", site);
 const buildEnv = import.meta.env as Record<string, string | boolean | undefined>;
 const productionBranch = String(buildEnv.CF_PAGES_PRODUCTION_BRANCH ?? "main");
 const currentBranch = buildEnv.CF_PAGES_BRANCH ? String(buildEnv.CF_PAGES_BRANCH) : undefined;
 const previewBuild = buildEnv.PUBLIC_NO_INDEX === "true" || Boolean(currentBranch && currentBranch !== productionBranch);
+const isDetailPage = Astro.url.pathname.startsWith('/bridge/') || Astro.url.pathname.startsWith('/incident/');
 
 const baseJsonLd: Record<string, unknown> = {
   "@context": "https://schema.org",
   "@type": pageType,
+  "@id": `${canonicalUrl.toString()}#webpage`,
   name: title,
   description,
   url: canonicalUrl.toString(),
+  inLanguage: "en",
+  isAccessibleForFree: true,
+  publisher: { "@type": "Organization", name: "BadJoke-Lab", url: "https://badjoke-lab.com/" },
   isPartOf: {
     "@type": "WebSite",
+    "@id": `${site.toString()}#website`,
     name: "Bridge Incident Registry",
     url: site.toString()
   }
 };
 if (dateModified) baseJsonLd.dateModified = dateModified;
 
+const breadcrumbJsonLd: Record<string, unknown> | null = isDetailPage ? {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "@id": `${canonicalUrl.toString()}#breadcrumb`,
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: new URL('/', site).toString() },
+    Astro.url.pathname.startsWith('/bridge/')
+      ? { "@type": "ListItem", position: 2, name: "Bridges", item: new URL('/bridges/', site).toString() }
+      : { "@type": "ListItem", position: 2, name: "Incidents", item: new URL('/incidents/', site).toString() },
+    { "@type": "ListItem", position: 3, name: title.replace(/\s+-\s+Bridge Incident Registry$/, ''), item: canonicalUrl.toString() }
+  ]
+} : null;
+
 const extras: Record<string, unknown>[] = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 const structuredData: Record<string, unknown>[] = [
   baseJsonLd,
+  ...(breadcrumbJsonLd ? [breadcrumbJsonLd] : []),
   ...extras.map((entry) => ({ "@context": "https://schema.org", ...entry }))
 ];
 const alternateDataUrl = alternateDataPath ? new URL(alternateDataPath, site) : null;
 ---
 <meta name="description" content={description} />
-<meta name="robots" content={previewBuild ? "noindex, nofollow" : "index, follow"} />
-<meta name="googlebot" content={previewBuild ? "noindex, nofollow" : "index, follow"} />
+<meta name="robots" content={previewBuild ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
+<meta name="googlebot" content={previewBuild ? "noindex, nofollow" : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1"} />
 <link rel="canonical" href={canonicalUrl.toString()} />
+<link rel="alternate" hreflang="en" href={canonicalUrl.toString()} />
+<link rel="alternate" hreflang="x-default" href={canonicalUrl.toString()} />
 <link rel="alternate" type="application/json" href={new URL("/data/manifest.json", site).toString()} title="Data manifest" />
 <link rel="alternate" type="application/json" href={new URL("/version.json", site).toString()} title="Version metadata" />
 {alternateDataUrl && <link rel="alternate" type="application/json" href={alternateDataUrl.toString()} title="Canonical page dataset" />}
 <link rel="alternate" type="text/plain" href={new URL("/llms.txt", site).toString()} title="Language model guidance" />
 <link rel="alternate" type="text/plain" href={new URL("/ai.txt", site).toString()} title="AI data guide" />
-<meta property="og:type" content="website" />
+<meta property="og:type" content={isDetailPage ? "article" : "website"} />
 <meta property="og:site_name" content="Bridge Incident Registry" />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonicalUrl.toString()} />
 <meta property="og:locale" content="en_US" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:image" content={socialImageUrl.toString()} />
+<meta property="og:image:type" content="image/svg+xml" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Bridge Incident Registry" />
+<meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={socialImageUrl.toString()} />
+<meta name="twitter:image:alt" content="Bridge Incident Registry" />
 {dateModified && <meta property="article:modified_time" content={dateModified} />}
 {structuredData.map((entry) => <script type="application/ld+json" set:html={JSON.stringify(entry)} />)}
