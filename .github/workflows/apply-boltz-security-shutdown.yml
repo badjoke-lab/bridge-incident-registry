@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - agent/record-boltz-security-shutdown-2026-08-04
+  pull_request:
+    types: [opened, synchronize, reopened]
   workflow_dispatch:
 
 permissions:
@@ -11,7 +13,7 @@ permissions:
 
 jobs:
   apply:
-    if: github.actor != 'github-actions[bot]'
+    if: github.actor != 'github-actions[bot]' && (github.event_name == 'push' || github.head_ref == 'agent/record-boltz-security-shutdown-2026-08-04')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
