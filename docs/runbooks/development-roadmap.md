@@ -29,6 +29,7 @@ Phase 3  Full-corpus quality strengthening         active
          Nerve source boundary                     reviewed — PR #117
          Archive capture Batches 1–12              production-verified — PRs #118–#160
          Archive capture Batch 13                  production-verified — PRs #173–#176
+         Archive capture Batch 14                  production-verified — PRs #177–#180
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
@@ -39,27 +40,28 @@ Release  v1 hardening                              planned
 ## Latest completed production checkpoint
 
 ```text
-Review PR                     #173
-Review merge                  fba6c668207ba1fb2613840df81123a54da5b669
-Canonical data PR             #174
-Canonical merge               ab0b45fb1f1cbe6cdddd1238c37fb99f201c934f
-Build-input refresh PR        #175
-Build-input refresh           15472395efdb4435380dbd0fdae8c7fe71e54b06
-Production audit PR           #176
-Initial production run        30970204138
-Initial failed job            92192668199
-Production verify run         30970746866
-Production verify job         92194294438
+Review PR                     #177
+Review merge                  09c11e838a3b157a9efb7388f531ff04f723e4ff
+Canonical data PR             #178
+Canonical merge               ca225d1df10b4a81d72a0fe60fd2713b6e8b543a
+Build-input refresh PR        #179
+Build-input refresh           3f0514b568e84b17daf9e0a2d14649b3a329c787
+Production audit PR           #180
+Initial production run        30976024931
+Immediate post-refresh run    30976430766
+First delayed run             30976783627
+Production verify run         30977144358
+Production verify job         92213419237
 Verified state                33 / 34 / 183 / 284
-Archived evidence             94 / 284
+Archived evidence             101 / 284
 Canonical content match       true
 Verified HTML routes          72
 Verified redirects            74
-Generated at                  2026-08-05T03:00:56.755Z
-Publication attempt           20 after one build-input refresh
+Generated at                  2026-08-05T05:06:09.501Z
+Publication attempt           1 on second delayed rerun after one refresh
 ```
 
-The first production verifier rejected stale same-count evidence content at `bir_src_000248` for twenty attempts while `generated_at` remained `2026-08-05T02:37:38.915Z`. PR #175 changed one non-executable build-input marker. The unchanged verifier continued to observe the old build through attempt 19, switched to the new build at attempt 20, and proved complete equality. No second refresh commit was made.
+The first three twenty-attempt windows rejected stale same-count content at `bir_src_000013`. One behavior-neutral refresh was committed and no second refresh was introduced. The next delayed run observed the new build on attempt 1 and proved complete equality.
 
 ## Current quality state
 
@@ -71,22 +73,22 @@ Incidents without Tier 1               1
 Events without primary                16
 Events without Tier 1                  6
 Unreviewed event Tier 1 gaps            0
-Evidence with archived_url            94
-Terminal unarchived unique URLs       36
-Terminal unarchived records           49
-Risky-host unarchived unique URLs     27
-Risky-host unarchived records         42
+Evidence with archived_url           101
+Terminal unarchived unique URLs       33
+Terminal unarchived records           45
+Risky-host unarchived unique URLs     24
+Risky-host unarchived records         38
 X/Twitter records unarchived          30
 Unknown URL status                     0
 ```
 
 The remaining Nerve incident-level source gap is reviewed and intentional under PR #117. Current-operation evidence is not reused as historical incident evidence, and Tier 2 security analysis is not reclassified.
 
-Archive Capture Batch 13 added three exact snapshots covering the SlowMist Transit Swap analysis, SOCKET recovery update, and Transit Finance recovery update. Holograph and Unizen short replays, plus Taiko, Syndicate Commons, and Everclear missing captures, remain deferred under the unchanged exact replay and temporal-fit boundary.
+Archive Capture Batch 14 added five reproducible exact snapshots to seven Qubit, Harmony, BNB Chain, and LI.FI records. A first-run-only Harmony forum replay was rejected as non-reproducible; pNetwork, Wormhole, and Rainbow Bridge candidates remain deferred under the unchanged exact replay, temporal-fit, size, and reproducibility boundaries.
 
 ## Immediate source-quality targets
 
-1. continue verified archive captures from the 27 risky-host and 36 terminal unique-URL queues;
+1. continue verified archive captures from the 24 risky-host and 33 terminal unique-URL queues;
 2. retry deferred official-source candidates with exact replay and claim-time verification;
 3. reduce the remaining 16 events without primary evidence where appropriate;
 4. strengthen remaining validators;
@@ -103,7 +105,7 @@ Maximum wait   5 minutes per job
 
 Publication convergence requires matching record counts, canonical-only markers, complete transformed JSON equality, exact record order, and all route, sitemap, metadata, redirect, content-type, and cache assertions.
 
-Batch 13 reconfirmed that a valid Pages build may become visible only at the end of the five-minute verification window. When `generated_at` remains unchanged after one reviewed build-input refresh, do not stack another refresh commit. Preserve the same verifier expectations and allow deployment latency.
+Batch 14 reconfirmed that a valid Pages build may become visible only after multiple unchanged five-minute verification windows. When `generated_at` remains unchanged after one reviewed build-input refresh, do not stack another refresh commit. Preserve the same verifier expectations and allow deployment latency.
 
 ## Remaining roadmap
 
