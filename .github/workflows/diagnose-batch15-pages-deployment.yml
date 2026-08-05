@@ -1,0 +1,53 @@
+name: Diagnose Batch 15 Pages Deployment
+
+on:
+  push:
+    branches:
+      - agent/batch15-pages-deployment-diagnostic
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CF_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
+      CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+      CLOUDFLARE_PAGES_DEPLOY_HOOK: ${{ secrets.CLOUDFLARE_PAGES_DEPLOY_HOOK }}
+      CF_PAGES_DEPLOY_HOOK: ${{ secrets.CF_PAGES_DEPLOY_HOOK }}
+      BIR_DEPLOY_HOOK: ${{ secrets.BIR_DEPLOY_HOOK }}
+      PAGES_DEPLOY_HOOK: ${{ secrets.PAGES_DEPLOY_HOOK }}
+      VAR_CLOUDFLARE_ACCOUNT_ID: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+      VAR_CF_ACCOUNT_ID: ${{ vars.CF_ACCOUNT_ID }}
+      VAR_CLOUDFLARE_PAGES_PROJECT: ${{ vars.CLOUDFLARE_PAGES_PROJECT }}
+      VAR_CF_PAGES_PROJECT: ${{ vars.CF_PAGES_PROJECT }}
+    steps:
+      - name: Report credential-name availability without exposing values
+        shell: bash
+        run: |
+          set -eu
+          for name in \
+            CLOUDFLARE_API_TOKEN \
+            CLOUDFLARE_ACCOUNT_ID \
+            CF_API_TOKEN \
+            CF_ACCOUNT_ID \
+            CLOUDFLARE_PAGES_DEPLOY_HOOK \
+            CF_PAGES_DEPLOY_HOOK \
+            BIR_DEPLOY_HOOK \
+            PAGES_DEPLOY_HOOK \
+            VAR_CLOUDFLARE_ACCOUNT_ID \
+            VAR_CF_ACCOUNT_ID \
+            VAR_CLOUDFLARE_PAGES_PROJECT \
+            VAR_CF_PAGES_PROJECT
+          do
+            if [ -n "${!name:-}" ]; then
+              printf '%s=present\n' "$name"
+            else
+              printf '%s=absent\n' "$name"
+            fi
+          done
