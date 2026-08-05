@@ -54,7 +54,7 @@ fs.writeFileSync(EVIDENCE_PATH, `[\n  ${evidence.map((record) => JSON.stringify(
 
 let qualitySource = fs.readFileSync(QUALITY_PATH, "utf8");
 const oldCeiling = "  risky_host_unarchived: 29,";
-const newCeiling = "  risky_host_unarchived: 26,";
+const newCeiling = "  risky_host_unarchived: 27,";
 const occurrences = qualitySource.split(oldCeiling).length - 1;
 if (occurrences !== 1) {
   throw new Error(`Expected one risky-host ceiling occurrence, observed ${occurrences}`);
@@ -65,5 +65,5 @@ fs.writeFileSync(QUALITY_PATH, qualitySource);
 console.log(JSON.stringify({
   evidence_records: evidence.length,
   updated_ids: updatedIds,
-  risky_host_ceiling: { before: 29, after: 26 }
+  risky_host_ceiling: { before: 29, after: 27 }
 }, null, 2));
