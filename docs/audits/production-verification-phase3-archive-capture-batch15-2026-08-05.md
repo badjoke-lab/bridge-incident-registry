@@ -93,6 +93,24 @@ Queue confirmation job    92245367899
 
 The unchanged production verifier then found canonical content on attempt 1 and passed.
 
+## Latest-main production follow-up
+
+The current `main` had advanced after the Batch 15 canonical merge because PR #183 was merged independently. Its preserved production deployment also completed after the preview queue was removed:
+
+```text
+Main commit               624c9448c3507d03660d4b01272f0cb881dee5b9
+Cloudflare deployment ID  33107963-1ed3-4035-85ae-b6200a3e130f
+Stage                     deploy
+Status                    success
+Started                   2026-08-05T08:18:53.256767Z
+Completed                 2026-08-05T08:18:59.717532Z
+Follow-up run             30987788334
+Successful follow-up job  92249132611
+Preview deployment        none
+```
+
+The first follow-up job reached the deployment build stage at the end of its bounded observation window and failed only because the window expired. Rerunning the same job confirmed success on attempt 1. No extra production commit or refresh was introduced.
+
 ## Verified contract
 
 - all transformed fields in all four public datasets exactly equal canonical-derived output;
@@ -109,4 +127,4 @@ The unchanged production verifier then found canonical content on attempt 1 and 
 
 The BIR Pages project now accepts production deployments from `main` and does not automatically build previews for arbitrary branches. Temporary review and verification branch pushes must not be allowed to recreate a Pages deployment queue. A future intentional preview workflow requires a separately reviewed configuration change rather than restoring `all`.
 
-All temporary BIR production-verification and Pages-diagnostic workflows, plus the temporary cross-repository Cloudflare diagnostic workflow, were removed after completion.
+All temporary BIR production-verification and Pages-diagnostic workflows, plus the temporary cross-repository Cloudflare diagnostic and latest-main monitoring workflows, were removed after completion.
