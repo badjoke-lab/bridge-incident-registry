@@ -26,6 +26,7 @@ jobs:
         with:
           node-version: 22
 
+      # Retry the unchanged review boundary after one transient CDX timeout.
       - name: Review exact archive captures
         run: node scripts/review-archive-capture-batch14.mjs
 
