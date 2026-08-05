@@ -1,0 +1,16 @@
+{
+  "site": "Bridge Incident Registry",
+  "devices": {
+    "desktop": { "width": 1440, "height": 1000 },
+    "mobile": { "width": 390, "height": 844, "isMobile": true, "hasTouch": true }
+  },
+  "pages": [
+    { "id": "home", "route": "/" },
+    { "id": "bridges", "route": "/bridges/" },
+    { "id": "incidents", "route": "/incidents/" },
+    { "id": "bridge-ronin", "route": "/bridge/ronin-bridge/" },
+    { "id": "incident-ronin", "route": "/incident/ronin-bridge-2022-validator-key-compromise/" },
+    { "id": "methodology", "route": "/methodology/" },
+    { "id": "about", "route": "/about/" }
+  ]
+}
