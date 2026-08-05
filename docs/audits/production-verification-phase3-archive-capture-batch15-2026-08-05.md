@@ -6,7 +6,8 @@ Review merge: `fcf932b51445831e1d67c3c14c3ee342eff854dc`
 Canonical PR: `#182`  
 Canonical merge: `39134a5d7b717c467a49d96b5fd7104047cd0a50`  
 Build-input refresh PR: `#184`  
-Build-input refresh: `7e13955c725e07ca66e01f7f9e321db7f7c764ff`
+Build-input refresh: `7e13955c725e07ca66e01f7f9e321db7f7c764ff`  
+Production checkpoint PR: `#185`
 
 ## Verified production state
 

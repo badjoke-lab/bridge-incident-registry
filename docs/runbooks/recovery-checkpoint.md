@@ -30,33 +30,37 @@ PR #177      Archive Capture Batch 14 reproducible review
 PR #178      Archive Capture Batch 14 canonical migration
 PR #179      Archive Capture Batch 14 build-input refresh
 PR #180      Archive Capture Batch 14 production verification and checkpoint sync
+PR #181      Archive Capture Batch 15 reproducible review
+PR #182      Archive Capture Batch 15 canonical migration
+PR #184      Archive Capture Batch 15 build-input refresh
+PR #185      Archive Capture Batch 15 production verification, queue remediation, and checkpoint sync
 ```
 
 ## Latest completed production checkpoint
 
 ```text
-Review PR                     #177
-Review merge                  09c11e838a3b157a9efb7388f531ff04f723e4ff
-Canonical data PR             #178
-Canonical merge               ca225d1df10b4a81d72a0fe60fd2713b6e8b543a
-Build-input refresh PR        #179
-Build-input refresh           3f0514b568e84b17daf9e0a2d14649b3a329c787
-Production audit PR           #180
-Initial production run        30976024931
-Immediate post-refresh run    30976430766
-First delayed run             30976783627
-Production verify run         30977144358
-Production verify job         92213419237
+Review PR                     #181
+Review merge                  fcf932b51445831e1d67c3c14c3ee342eff854dc
+Canonical data PR             #182
+Canonical merge               39134a5d7b717c467a49d96b5fd7104047cd0a50
+Build-input refresh PR        #184
+Build-input refresh           7e13955c725e07ca66e01f7f9e321db7f7c764ff
+Production audit PR           #185
+Initial production run        30983843765
+Cloudflare remediation run    30987353553
+Cloudflare remediation job    92245106402
+Production verify run         30986003440
+Production verify job         92245512645
 Verified state                33 / 34 / 183 / 284
-Archived evidence             101 / 284
+Archived evidence             110 / 284
 Canonical content match       true
 HTML routes                   72
 Redirects                     74
-Generated at                  2026-08-05T05:06:09.501Z
-Publication attempt           1 on second delayed rerun after one refresh
+Generated at                  2026-08-05T08:02:41.108Z
+Publication attempt           1 after preview-queue remediation
 ```
 
-The initial, immediate post-refresh, and first delayed verifiers each rejected stale same-count content for twenty attempts while `generated_at` remained `2026-08-05T04:41:17.057Z`. No second refresh was committed. The next delayed run switched to `2026-08-05T05:06:09.501Z` on attempt 1 and passed complete public-content equality.
+Batch 15 verifiers rejected stale same-count content while `generated_at` remained `2026-08-05T06:55:22.730Z`. No second refresh was committed. Cloudflare queue remediation removed 16 queued previews, preserved all production deployments, set preview deployment to `none`, and the unchanged verifier switched to `2026-08-05T08:02:41.108Z` on attempt 1.
 
 ## Permanent guards
 
@@ -77,29 +81,29 @@ Incidents without Tier 1              1
 Events without primary               16
 Events without Tier 1                 6
 Unreviewed event Tier 1 gaps           0
-Evidence with archived_url          101
-Terminal unarchived unique URLs      33
-Terminal unarchived records          45
-Risky-host unarchived unique URLs    24
-Risky-host unarchived records        38
+Evidence with archived_url          110
+Terminal unarchived unique URLs      28
+Terminal unarchived records          38
+Risky-host unarchived unique URLs    21
+Risky-host unarchived records        35
 X/Twitter records unarchived         30
 Unknown URL status                    0
 ```
 
-## Archive Capture Batch 14
+## Archive Capture Batch 15
 
 ```text
-Review boundary                    PR #177
-Canonical migration                PR #178
-Build-input refresh                PR #179
-Production audit                   PR #180
+Review boundary                    PR #181
+Canonical migration                PR #182
+Build-input refresh                PR #184
+Production audit                   PR #185
 Reviewed unique URLs                    10
-Verified Wayback URLs                    5
-Evidence records updated                 7
-Terminal unique queue           36 -> 33
-Terminal record queue           49 -> 45
-Risky-host unique queue         27 -> 24
-Risky-host record queue         42 -> 38
+Verified Wayback mappings                7
+Evidence records updated                 9
+Terminal unique queue           33 -> 28
+Terminal record queue           45 -> 38
+Risky-host unique queue         24 -> 21
+Risky-host record queue         38 -> 35
 X/Twitter record queue          30 -> 30
 Source-count drift                      0
 ```
@@ -107,20 +111,26 @@ Source-count drift                      0
 Updated evidence IDs:
 
 ```text
-bir_src_000036
-bir_src_000013
-bir_src_000021
-bir_src_000215
-bir_src_000057
-bir_src_000226
-bir_src_000059
+bir_src_000014
+bir_src_000022
+bir_src_000023
+bir_src_000091
+bir_src_000149
+bir_src_000167
+bir_src_000205
+bir_src_000206
+bir_src_000214
 ```
 
-Only captures reproduced in both completed review runs were accepted. The first-run-only Harmony forum replay was rejected. pNetwork, Wormhole, and Rainbow Bridge candidates remain deferred.
+Only captures reproduced in both completed review runs were accepted. Aurora had no accepted replay; one QuillAudits source remained unavailable and another passed only the second run, so all three candidates remain deferred.
+
+## Cloudflare Pages queue boundary
+
+The project now uses production branch `main`, production deployments enabled, and `preview_deployment_setting: none`. Batch 15 removed 16 queued previews and preserved all production deployments. Arbitrary temporary branches must not restore preview builds.
 
 ## Deployment resume rule
 
-A docs-only commit is not assumed to start a Cloudflare Pages build. A reviewed behavior-neutral build-input change may be used once when publication remains stale. When an immediate or in-window rerun still shows the same `generated_at`, do not stack another refresh automatically. Allow deployment latency and keep the full-content equality requirement unchanged.
+A docs-only commit is not assumed to start a Cloudflare Pages build. A reviewed behavior-neutral build-input change may be used once when publication remains stale. When an immediate or in-window rerun still shows the same `generated_at`, do not stack another refresh automatically. Inspect the Cloudflare production queue, keep preview deployment at `none`, allow deployment latency, and preserve full-content equality requirements.
 
 ## Nerve boundary
 
@@ -132,7 +142,7 @@ Issue #171 remains open as a monitoring signal. Boltz is not canonical because t
 
 ## Next
 
-1. continue bounded archive work from 24 risky-host and 33 terminal unique URLs;
+1. continue bounded archive work from 21 risky-host and 28 terminal unique URLs;
 2. retry deferred official sources under the same replay and temporal-fit standards;
 3. reduce remaining event primary gaps where justified;
 4. strengthen validators;

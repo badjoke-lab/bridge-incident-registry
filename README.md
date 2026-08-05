@@ -31,15 +31,15 @@ BIR is not:
 
 The static registry application, four-record canonical model, validation pipeline, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
 
-Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Event Tier 1 remediation, the Nerve source review boundary, and Archive Capture Batches 1 through 14 are complete and production-verified.
+Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Event Tier 1 remediation, the Nerve source review boundary, and Archive Capture Batches 1 through 15 are complete and production-verified.
 
-Evidence remains 284. Event primary gaps are 16, event Tier 1 gaps are six, and all remaining Tier 1 gaps are reviewed and intentionally secondary. One hundred one evidence records now publish sixty-seven verified Wayback snapshots.
+Evidence remains 284. Event primary gaps are 16, event Tier 1 gaps are six, and all remaining Tier 1 gaps are reviewed and intentionally secondary. One hundred ten evidence records now publish seventy-three verified Wayback snapshots.
 
-Archive-risk metrics count normalized unique source URLs with exact-or-subdomain host matching. Duplicate evidence records sharing one source URL do not create duplicate preservation obligations. Current unarchived queues are 33 terminal unique URLs and 24 risky-host unique URLs.
+Archive-risk metrics count normalized unique source URLs with exact-or-subdomain host matching. Duplicate evidence records sharing one source URL do not create duplicate preservation obligations. Current unarchived queues are 28 terminal unique URLs and 21 risky-host unique URLs.
 
-Archive Batch 14 added five reproducible exact snapshots to seven Qubit, Harmony, BNB Chain, and LI.FI evidence records. A Harmony forum capture that passed only the first run was rejected as non-reproducible; pNetwork, Wormhole, and Rainbow Bridge candidates remained missing or below the permanent replay-size boundary. Exact replay, temporal fit, and reproducibility remain mandatory.
+Archive Batch 15 added seven reproducible exact mappings to nine evidence records covering Elliptic, BNB Chain, SlowMist, the FBI, and Dcentralab. Aurora and two QuillAudits candidates remained unavailable or non-reproducible. Exact replay, temporal fit, minimum size, and two-run reproducibility remain mandatory.
 
-Production verification compares every transformed field in all four public datasets with the generated public contract. Counts and IDs alone cannot prove publication. Batch 14 remained on prior same-count evidence content through the initial, immediate post-refresh, and first delayed twenty-attempt windows. No second refresh was added. The next delayed run converged on attempt 1 and confirmed all one hundred one `archived_url` fields.
+Production verification compares every transformed field in all four public datasets with the generated public contract. Counts and IDs alone cannot prove publication. Batch 15 exposed a Cloudflare Pages queue caused by preview builds for every temporary branch. Sixteen queued previews were removed, preview deployment was restricted to `none`, all production deployments were preserved, and the unchanged verifier then converged on attempt 1 with all one hundred ten `archived_url` fields.
 
 Current canonical and production counts:
 
@@ -59,21 +59,21 @@ Unknown URL status                0
 Events without primary           16
 Events without Tier 1             6
 Unreviewed event Tier 1 gaps       0
-Evidence with archived_url      101
-Terminal unarchived URLs         33
-Risky-host unarchived URLs       24
+Evidence with archived_url      110
+Terminal unarchived URLs         28
+Risky-host unarchived URLs       21
 Canonical public content match    true
 ```
 
 Latest verified production checkpoint:
 
 ```text
-Canonical merge      ca225d1df10b4a81d72a0fe60fd2713b6e8b543a
-Build-input refresh  3f0514b568e84b17daf9e0a2d14649b3a329c787
-Production run       30977144358
-Production job       92213419237
-Generated at         2026-08-05T05:06:09.501Z
-Publication attempt  1 on second delayed rerun
+Canonical merge      39134a5d7b717c467a49d96b5fd7104047cd0a50
+Build-input refresh  7e13955c725e07ca66e01f7f9e321db7f7c764ff
+Production run       30986003440
+Production job       92245512645
+Generated at         2026-08-05T08:02:41.108Z
+Publication attempt  1 after preview-queue remediation
 HTML routes          72
 Redirects            74
 ```
@@ -172,6 +172,10 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/audits/phase3-archive-capture-batch14-2026-08-05.md` — Archive Batch 14 canonical migration
 - `docs/audits/phase3-archive-capture-batch14-deployment-refresh-2026-08-05.md` — Archive Batch 14 deployment refresh
 - `docs/audits/production-verification-phase3-archive-capture-batch14-2026-08-05.md` — Archive Batch 14 production audit
+- `docs/audits/phase3-archive-capture-batch15-review-2026-08-05.md` — Archive Batch 15 reproducible review boundary
+- `docs/audits/phase3-archive-capture-batch15-2026-08-05.md` — Archive Batch 15 canonical migration
+- `docs/audits/phase3-archive-capture-batch15-deployment-refresh-2026-08-05.md` — Archive Batch 15 deployment refresh
+- `docs/audits/production-verification-phase3-archive-capture-batch15-2026-08-05.md` — Archive Batch 15 production and Pages queue audit
 - `docs/batches/` — reviewed batch scopes
 
 ## Architecture
