@@ -34,12 +34,24 @@ for (const [deviceName, device] of Object.entries(devices)) {
           return rect.width > 0 && rect.height > 0 && style.display !== 'none' && style.visibility !== 'hidden';
         };
         const supportPattern = /(support|donat(?:e|ion)|contribut|fund|back this|help keep|wallet)/i;
-        const supportControls = [...document.querySelectorAll('a,button,[aria-current="page"]')].filter(visible).map((element) => {
-          const rect = element.getBoundingClientRect();
-          const text = `${element.textContent ?? ''} ${element.getAttribute('aria-label') ?? ''}`.replace(/\s+/g, ' ').trim();
-          const href = element instanceof HTMLAnchorElement ? element.href : '';
-          return { tag: element.tagName.toLowerCase(), text, href, in_initial_viewport: rect.bottom > 0 && rect.top < innerHeight };
-        }).filter((item) => supportPattern.test(`${item.text} ${item.href}`));
+        const supportControls = [...document.querySelectorAll('a,button,[aria-current="page"]')]
+          .filter(visible)
+          .map((element) => {
+            const rect = element.getBoundingClientRect();
+            const text = `${element.textContent ?? ''} ${element.getAttribute('aria-label') ?? ''}`.replace(/\s+/g, ' ').trim();
+            const href = element instanceof HTMLAnchorElement ? element.href : '';
+            return { tag: element.tagName.toLowerCase(), text, href, in_initial_viewport: rect.bottom > 0 && rect.top < innerHeight };
+          })
+          .filter((item) => {
+            if (supportPattern.test(item.text)) return true;
+            if (!item.href) return false;
+            try {
+              const url = new URL(item.href);
+              return url.pathname === '/support/' && !url.hash;
+            } catch {
+              return false;
+            }
+          });
         const root = document.documentElement;
         return {
           title: document.title,
@@ -51,7 +63,12 @@ for (const [deviceName, device] of Object.entries(devices)) {
           support_controls_in_initial_viewport: supportControls.filter((item) => item.in_initial_viewport).length,
           support_self_link_count: supportControls.filter((item) => {
             if (item.tag !== 'a' || !item.href || location.pathname !== '/support/') return false;
-            try { return new URL(item.href).pathname === '/support/'; } catch { return false; }
+            try {
+              const url = new URL(item.href);
+              return url.pathname === '/support/' && !url.hash;
+            } catch {
+              return false;
+            }
           }).length,
           footer_group_count: document.querySelectorAll('.footer-group').length,
           visible_registry_row_count: [...document.querySelectorAll('.registry-row')].filter(visible).length,
