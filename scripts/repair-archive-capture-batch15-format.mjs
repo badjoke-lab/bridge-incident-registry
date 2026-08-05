@@ -27,7 +27,9 @@ const output = lines.map((line) => {
   if (!mapping) return line;
   const [expectedUrl, archiveUrl] = mapping;
   if (item.url !== expectedUrl) throw new Error(`${item.id} URL mismatch: ${item.url}`);
-  if (Object.hasOwn(item, "archived_url")) throw new Error(`${item.id} unexpectedly already archived on main`);
+  if (typeof item.archived_url === "string" && item.archived_url.trim()) {
+    throw new Error(`${item.id} unexpectedly already archived on main: ${item.archived_url}`);
+  }
   item.archived_url = archiveUrl;
   changed.push(item.id);
   return `  ${JSON.stringify(item)}${hasComma ? "," : ""}`;
