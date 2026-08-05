@@ -31,15 +31,15 @@ BIR is not:
 
 The static registry application, four-record canonical model, validation pipeline, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
 
-Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Event Tier 1 remediation, the Nerve source review boundary, and Archive Capture Batches 1 through 12 are complete and production-verified.
+Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Event Tier 1 remediation, the Nerve source review boundary, and Archive Capture Batches 1 through 13 are complete and production-verified.
 
-Evidence remains 284. Event primary gaps are 16, event Tier 1 gaps are six, and all remaining Tier 1 gaps are reviewed and intentionally secondary. Ninety-one evidence records now publish fifty-nine verified Wayback snapshots.
+Evidence remains 284. Event primary gaps are 16, event Tier 1 gaps are six, and all remaining Tier 1 gaps are reviewed and intentionally secondary. Ninety-four evidence records now publish sixty-two verified Wayback snapshots.
 
-Archive-risk metrics count normalized unique source URLs with exact-or-subdomain host matching. Duplicate evidence records sharing one source URL do not create duplicate preservation obligations. Current unarchived queues are 36 terminal unique URLs and 29 risky-host unique URLs.
+Archive-risk metrics count normalized unique source URLs with exact-or-subdomain host matching. Duplicate evidence records sharing one source URL do not create duplicate preservation obligations. Current unarchived queues are 36 terminal unique URLs and 27 risky-host unique URLs.
 
-Archive Batch 12 added four exact snapshots to six Celer, SOCKET, and Rubic evidence records. A technically valid Holograph snapshot was rejected because its 2022 timestamp predates the 2026 canonical current-state claim. Replay validity and claim-time compatibility are both required.
+Archive Batch 13 added three exact snapshots to the SlowMist Transit Swap analysis, SOCKET recovery update, and Transit Finance recovery update. Holograph and Unizen exact replays remained below the permanent size boundary; Taiko, Syndicate Commons, and Everclear returned no accepted exact capture. Replay validity and claim-time compatibility remain mandatory.
 
-Production verification compares every transformed field in all four public datasets with the generated public contract. Counts and IDs alone cannot prove publication. Batch 12 remained on the prior same-count evidence content through an initial job and an immediate post-refresh rerun. The behavior-neutral build-input refresh completed later; a delayed rerun converged on attempt 18 and confirmed all ninety-one `archived_url` fields.
+Production verification compares every transformed field in all four public datasets with the generated public contract. Counts and IDs alone cannot prove publication. Batch 13 remained on the prior same-count evidence content for an initial twenty-attempt job. After one behavior-neutral build-input refresh, the unchanged verifier continued to reject the old build through attempt 19 and converged at attempt 20, confirming all ninety-four `archived_url` fields.
 
 Current canonical and production counts:
 
@@ -59,10 +59,23 @@ Unknown URL status                0
 Events without primary           16
 Events without Tier 1             6
 Unreviewed event Tier 1 gaps       0
-Evidence with archived_url       91
+Evidence with archived_url       94
 Terminal unarchived URLs         36
-Risky-host unarchived URLs       29
+Risky-host unarchived URLs       27
 Canonical public content match    true
+```
+
+Latest verified production checkpoint:
+
+```text
+Canonical merge      ab0b45fb1f1cbe6cdddd1238c37fb99f201c934f
+Build-input refresh  15472395efdb4435380dbd0fdae8c7fe71e54b06
+Production run       30970746866
+Production job       92194294438
+Generated at         2026-08-05T03:00:56.755Z
+Publication attempt  20
+HTML routes          72
+Redirects            74
 ```
 
 The canonical datasets are the only source of truth:
@@ -151,6 +164,10 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/audits/phase3-archive-capture-batch12-2026-08-03.md` — Archive Batch 12 canonical migration
 - `docs/audits/phase3-archive-capture-batch12-deployment-refresh-2026-08-03.md` — Archive Batch 12 deployment refresh and delayed convergence
 - `docs/audits/production-verification-phase3-archive-capture-batch12-2026-08-03.md` — Archive Batch 12 production audit
+- `docs/audits/phase3-archive-capture-batch13-review-2026-08-05.md` — Archive Batch 13 reviewed mappings and validator reconciliation
+- `docs/audits/phase3-archive-capture-batch13-2026-08-05.md` — Archive Batch 13 canonical migration
+- `docs/audits/phase3-archive-capture-batch13-deployment-refresh-2026-08-05.md` — Archive Batch 13 deployment refresh
+- `docs/audits/production-verification-phase3-archive-capture-batch13-2026-08-05.md` — Archive Batch 13 production audit
 - `docs/batches/` — reviewed batch scopes
 
 ## Architecture
