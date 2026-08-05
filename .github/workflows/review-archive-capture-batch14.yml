@@ -1,0 +1,39 @@
+name: Review Archive Capture Batch 14
+
+on:
+  push:
+    branches:
+      - agent/phase3-archive-capture-batch14-review
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: review-archive-capture-batch14
+  cancel-in-progress: true
+
+jobs:
+  review:
+    runs-on: macos-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Review exact archive captures
+        run: node scripts/review-archive-capture-batch14.mjs
+
+      - name: Upload review artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: archive-capture-batch14-review
+          path: |
+            artifacts/archive-capture-batch14-review.json
+            artifacts/archive-capture-batch14-review.md
+          if-no-files-found: error
