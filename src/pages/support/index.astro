@@ -1,0 +1,44 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+const issueUrl = "https://github.com/badjoke-lab/bridge-incident-registry/issues/new/choose";
+const title = "Support Bridge Incident Registry";
+const description = "Support official-source review, post-incident updates, recovery and reimbursement tracking, archive preservation, corrections, and long-term BIR maintenance.";
+---
+<BaseLayout title={`${title} - Bridge Incident Registry`} description={description} pageType="WebPage">
+  <article class="support-page">
+    <section class="hero">
+      <div class="kicker">Independent public registry</div>
+      <h1>{title}</h1>
+      <p class="lede">BIR records cross-chain bridge incidents and what happened after: pauses, recoveries, reimbursements, reopenings, migrations, shutdowns, and unresolved outcomes.</p>
+    </section>
+
+    <section class="home-section" aria-labelledby="support-funds-title">
+      <div class="home-section-header"><div><div class="kicker">Maintenance</div><h2 id="support-funds-title">What support funds</h2></div></div>
+      <div class="support-principles">
+        <article><h3>Official-source review</h3><p>Checking bridge, operator, foundation, auditor, court, law-enforcement, and regulator publications.</p></article>
+        <article><h3>Aftermath tracking</h3><p>Following recoveries, reimbursements, reopenings, migrations, shutdowns, and unresolved changes after the initial exploit.</p></article>
+        <article><h3>Archive preservation</h3><p>Replacing broken links, preserving historical URLs, and maintaining evidence-backed public datasets.</p></article>
+        <article><h3>Corrections and upkeep</h3><p>Reviewing submitted corrections and maintaining public pages, data exports, validation, and visual review workflows.</p></article>
+      </div>
+    </section>
+
+    <section class="home-section" aria-labelledby="support-methods-title">
+      <div class="home-section-header"><div><div class="kicker">Ways to help</div><h2 id="support-methods-title">Support options</h2></div></div>
+      <div class="support-principles">
+        <article><h3>Submit evidence or corrections</h3><p>Report missing official statements, incorrect dates, changed recovery outcomes, reimbursement updates, restart status, or broken links.</p><p><a href={issueUrl}>Open GitHub Issues →</a></p></article>
+        <article class="support-methods-note"><h3>Financial support methods</h3><p>A dedicated BIR payment address or payment link is not currently published. Do not send funds to an address copied from another BadJoke-Lab project. A verified method will be listed here only after it is approved for BIR.</p></article>
+      </div>
+    </section>
+
+    <section class="home-section" aria-labelledby="independence-title">
+      <div class="home-section-header"><div><div class="kicker">Editorial independence</div><h2 id="independence-title">What support does not buy</h2></div></div>
+      <div class="support-principles">
+        <article><h3>No guaranteed listing or removal</h3><p>Support does not guarantee inclusion, removal, suppression, or priority.</p></article>
+        <article><h3>No safety ranking or favorable outcome</h3><p>Support cannot buy a safer label, lower severity, different outcome, favorable description, or recommendation.</p></article>
+        <article><h3>No weaker evidence standard</h3><p>Evidence and review requirements remain the same for bridge operators, affected users, researchers, and supporters.</p></article>
+        <article><h3>Corrections remain open</h3><p>Corrections are reviewed regardless of whether the submitter or bridge operator has provided support.</p></article>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
