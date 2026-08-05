@@ -1,7 +1,7 @@
 import { spawnSync } from "node:child_process";
 import process from "node:process";
 
-// Batch 13 deployment refresh: execution order and public contract are unchanged.
+// Batch 14 deployment refresh: execution order and public contract are unchanged.
 const steps = [
   "scripts/build-public-data.mjs",
   "scripts/publish-machine-data.mjs",
