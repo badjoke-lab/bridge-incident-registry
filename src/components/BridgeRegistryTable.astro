@@ -7,43 +7,36 @@ import { formatLabel, formatUsd, joinLabels } from "../lib/format";
 import { getChainLabels } from "../lib/reference";
 import type { BridgeEntity } from "../lib/types";
 
-interface Props {
-  bridges: BridgeEntity[];
-}
-
+interface Props { bridges: BridgeEntity[]; }
 const { bridges } = Astro.props;
+const PAGE_SIZE = 25;
 ---
 <div class="registry-table-wrap">
   <table class="registry-table">
-    <thead>
-      <tr>
-        <th scope="col">Bridge</th>
-        <th scope="col">Type</th>
-        <th scope="col">Status</th>
-        <th scope="col">Maturity</th>
-        <th scope="col">Incidents</th>
-        <th scope="col">Reported loss</th>
-        <th scope="col">Chains</th>
-        <th scope="col">Evidence</th>
-        <th scope="col">Freshness</th>
-      </tr>
-    </thead>
+    <thead><tr><th scope="col">Bridge</th><th scope="col">Type</th><th scope="col">Status</th><th scope="col">Maturity</th><th scope="col">Incidents</th><th scope="col">Reported loss</th><th scope="col">Chains</th><th scope="col">Evidence</th><th scope="col">Freshness</th></tr></thead>
     <tbody id="bridge-table-body">
-      {bridges.map((bridge) => {
+      {bridges.map((bridge, index) => {
         const incidents = getIncidentsForBridge(bridge.id);
         const evidence = getEvidenceForBridge(bridge.id);
         const totalReportedLoss = incidents.reduce((sum, incident) => sum + (incident.reported_loss_usd ?? 0), 0);
         const chains = getChainLabels(bridge.primary_chains);
         const searchText = [bridge.canonical_name, ...(bridge.aliases ?? []), ...chains, bridge.operator_name ?? "", bridge.ecosystem_name ?? "", ...(bridge.related_protocols ?? [])].join(" ").toLowerCase();
-
         return (
-          <tr class="registry-row" data-search={searchText} data-type={bridge.type} data-status={bridge.status} data-maturity={bridge.record_maturity} data-update-status={bridge.update_status}>
-            <td data-label="Bridge">
-              <div class="registry-name">
-                <a href={`/bridge/${bridge.slug}/`}>{bridge.canonical_name}</a>
-                <span class="registry-summary">{bridge.summary}</span>
-              </div>
-            </td>
+          <tr
+            hidden={index >= PAGE_SIZE}
+            class="registry-row"
+            data-search={searchText}
+            data-name={bridge.canonical_name}
+            data-type={bridge.type}
+            data-status={bridge.status}
+            data-chains={(bridge.primary_chains ?? []).join(" ")}
+            data-major={String((bridge.major_incident_count ?? 0) > 0)}
+            data-major-count={String(bridge.major_incident_count ?? 0)}
+            data-unresolved={String(Boolean(bridge.has_unresolved_incident))}
+            data-reimbursement={String(Boolean(bridge.has_reimbursement_history))}
+            data-reviewed={bridge.last_verified_at ?? ""}
+          >
+            <td data-label="Bridge"><div class="registry-name"><a href={`/bridge/${bridge.slug}/`}>{bridge.canonical_name}</a><span class="registry-summary">{bridge.summary}</span></div></td>
             <td data-label="Type"><span class="registry-small">{formatLabel(bridge.type)}</span></td>
             <td data-label="Status"><StatusChip status={bridge.status} /></td>
             <td data-label="Maturity"><MaturityChip maturity={bridge.record_maturity} /></td>
@@ -58,3 +51,4 @@ const { bridges } = Astro.props;
     </tbody>
   </table>
 </div>
+<nav class="registry-pagination" aria-label="Bridge registry pages"><button id="bridge-previous-page" type="button">Previous</button><span>Page <strong id="bridge-current-page">1</strong> of <strong id="bridge-page-count">{Math.max(1, Math.ceil(bridges.length / PAGE_SIZE))}</strong></span><button id="bridge-next-page" type="button">Next</button></nav>
