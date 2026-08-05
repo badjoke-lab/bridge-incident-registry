@@ -38,11 +38,12 @@ jobs:
 
       - name: Assert bounded canonical diff
         run: |
-          changed="$(git diff --name-only | sort)"
+          changed="$(git status --porcelain | sed -E 's/^.. //' | sort)"
           expected="$(printf '%s\n' \
             data/evidence.json \
             docs/audits/phase3-archive-capture-batch15-2026-08-05.md \
             scripts/check-source-quality-baseline.mjs | sort)"
+          printf 'Observed diff:\n%s\n' "$changed"
           test "$changed" = "$expected"
 
       - name: Run complete repository checks
