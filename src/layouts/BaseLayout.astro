@@ -1,7 +1,9 @@
 ---
 import SiteMeta from "../components/SiteMeta.astro";
+import { projectNetwork } from "../lib/project-network";
 import "../styles/global.css";
 import "../styles/components.css";
+import "../styles/ui-improvements.css";
 
 interface Props {
   title?: string;
@@ -20,6 +22,26 @@ const {
   dateModified,
   jsonLd
 } = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const isSupportPage = currentPath === "/support/";
+const isBridgeDetail = currentPath.startsWith("/bridge/");
+const isIncidentDetail = currentPath.startsWith("/incident/");
+const isDetailPage = isBridgeDetail || isIncidentDetail;
+const issueUrl = "https://github.com/badjoke-lab/bridge-incident-registry/issues/new/choose";
+const isCurrent = (href: string) => currentPath === href || (href !== "/" && currentPath.startsWith(href));
+const registryLinks = [
+  { label: "Bridges", href: "/bridges/" },
+  { label: "Incidents", href: "/incidents/" },
+  { label: "Methodology", href: "/methodology/" },
+  { label: "About", href: "/about/" }
+];
+const dataLinks = [
+  { label: "Version JSON", href: "/version.json" },
+  { label: "Data manifest", href: "/data/manifest.json" },
+  { label: "LLM guide", href: "/llms.txt" },
+  { label: "AI guide", href: "/ai.txt" }
+];
 ---
 <!doctype html>
 <html lang="en">
@@ -37,41 +59,112 @@ const {
     <title>{title}</title>
   </head>
   <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="site-header">
       <div class="nav-wrap">
         <a class="brand" href="/">Bridge Incident Registry</a>
-        <nav class="nav-links" aria-label="Primary navigation">
-          <a href="/bridges/">Bridges</a>
-          <a href="/incidents/">Incidents</a>
-          <a href="/methodology/">Methodology</a>
-          <a href="/about/">About</a>
-        </nav>
+        <div class="header-actions">
+          <nav class="nav-links desktop-nav-links" aria-label="Primary navigation">
+            {registryLinks.map((item) => <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>{item.label}</a>)}
+          </nav>
+          {isSupportPage ? <span class="support-action current-action" aria-current="page">Support</span> : <a class="support-action" href="/support/">Support</a>}
+          <details class="mobile-navigation" data-navigation-disclosure>
+            <summary>Menu</summary>
+            <nav aria-label="Mobile navigation">
+              {registryLinks.map((item) => <a href={item.href} aria-current={isCurrent(item.href) ? "page" : undefined}>{item.label}</a>)}
+              <a href={issueUrl}>Corrections</a>
+              <a href="/version.json">Public data</a>
+              <a href="https://badjoke-lab.com/">Project network</a>
+            </nav>
+          </details>
+        </div>
       </div>
     </header>
-    <main><slot /></main>
+
+    <main id="main-content">
+      <slot />
+      {isDetailPage && (
+        <>
+          <section class="detail-support" aria-labelledby="detail-support-title">
+            <div>
+              <div class="kicker">Independent incident archive</div>
+              <h2 id="detail-support-title">{isIncidentDetail ? "Help maintain incident aftermath records" : "Help maintain bridge history"}</h2>
+              <p>{isIncidentDetail
+                ? "Support recovery, reimbursement, restart, migration, shutdown, evidence, and correction checks."
+                : "Support incident linkage, lifecycle updates, evidence preservation, broken-link replacement, and corrections."}</p>
+            </div>
+            <a class="support-action" href="/support/">Support BIR</a>
+          </section>
+          <section class="detail-correction" aria-labelledby="detail-correction-title">
+            <div><div class="kicker">Record maintenance</div><h2 id="detail-correction-title">Report a correction</h2><p>Report missing evidence, incorrect dates, outcome changes, recovery details, reimbursement status, or broken links.</p></div>
+            <a href={issueUrl}>Open GitHub Issues →</a>
+          </section>
+        </>
+      )}
+    </main>
+
     <footer class="site-footer">
-      <div class="footer-wrap">
-        <p>BIR is an informational historical registry. It does not rank bridge safety or recommend using any bridge.</p>
-        <nav aria-label="Project and data navigation">
-          <a href="https://badjoke-lab.com/">Hub</a>
-          <span aria-hidden="true"> · </span>
-          <a href="https://hei.badjoke-lab.com/">HEI</a>
-          <span aria-hidden="true"> · </span>
-          <a href="https://www.stableorgone.com/">SOG</a>
-          <span aria-hidden="true"> · </span>
-          <a href="https://cya.badjoke-lab.com/">CYA</a>
-          <span aria-hidden="true"> · </span>
-          <a href="https://bir.badjoke-lab.com/" aria-current="page">BIR</a>
-          <span aria-hidden="true"> · </span>
-          <a href="/version.json">Version</a>
-          <span aria-hidden="true"> · </span>
-          <a href="/data/manifest.json">Data manifest</a>
-          <span aria-hidden="true"> · </span>
-          <a href="/llms.txt">LLM guide</a>
-          <span aria-hidden="true"> · </span>
-          <a href="/ai.txt">AI guide</a>
-        </nav>
+      <div class="footer-groups">
+        <section class="footer-summary"><strong>Bridge Incident Registry</strong><p>A reviewed registry of cross-chain bridge incidents and what happened after the exploit.</p></section>
+        <section class="footer-group"><h2>Project network</h2><nav aria-label="Project network">
+          {projectNetwork.map((project) => project.id === "bir"
+            ? <span class="footer-current-project" aria-current="page"><strong>{project.name}</strong><small>Current project</small></span>
+            : <a href={project.href}><strong>{project.name}</strong><small>{project.description}</small></a>)}
+        </nav></section>
+        <section class="footer-group"><h2>Registry</h2><nav aria-label="Registry navigation">{registryLinks.map((item) => <a href={item.href}>{item.label}</a>)}</nav></section>
+        <section class="footer-group"><h2>Support</h2><nav aria-label="Support navigation">
+          {isSupportPage ? <span class="footer-current-link" aria-current="page">Support BIR</span> : <a class="footer-support-link" href="/support/">Support BIR</a>}
+          <a href={issueUrl}>Corrections</a>
+          <a href="https://github.com/badjoke-lab/bridge-incident-registry">GitHub</a>
+        </nav></section>
+        <section class="footer-group"><h2>Public data</h2><nav aria-label="Public data navigation">{dataLinks.map((item) => <a href={item.href}>{item.label}</a>)}</nav></section>
       </div>
+      <div class="footer-legal"><p>BIR is an informational historical registry. It does not rank bridge safety or recommend using any bridge.</p></div>
     </footer>
+
+    <script>
+      document.querySelectorAll('[data-navigation-disclosure]').forEach((element) => {
+        if (!(element instanceof HTMLDetailsElement)) return;
+        const summary = element.querySelector('summary');
+        const sync = () => summary?.setAttribute('aria-expanded', String(element.open));
+        sync();
+        element.addEventListener('toggle', sync);
+        element.addEventListener('keydown', (event) => {
+          if (event.key !== 'Escape' || !element.open) return;
+          element.open = false;
+          summary?.focus();
+        });
+      });
+
+      const detailHero = document.querySelector('.detail-hero');
+      const detailSections = [...document.querySelectorAll('main > .detail-grid, main > .detail-two-column, main > .detail-panel, main > .callout')];
+      if (detailHero instanceof HTMLElement && detailSections.length) {
+        const toc = document.createElement('nav');
+        toc.className = 'detail-page-toc';
+        toc.setAttribute('aria-label', 'On this page');
+        const label = document.createElement('strong');
+        label.textContent = 'On this page';
+        const list = document.createElement('ol');
+        toc.append(label, list);
+        const seen = new Set();
+        detailSections.forEach((section, index) => {
+          if (!(section instanceof HTMLElement)) return;
+          const headings = [...section.querySelectorAll('h2')];
+          headings.forEach((heading, headingIndex) => {
+            const text = heading.textContent?.trim();
+            if (!text || seen.has(text)) return;
+            seen.add(text);
+            if (!heading.id) heading.id = `detail-section-${index + 1}-${headingIndex + 1}`;
+            const item = document.createElement('li');
+            const link = document.createElement('a');
+            link.href = `#${heading.id}`;
+            link.textContent = text;
+            item.append(link);
+            list.append(item);
+          });
+        });
+        detailHero.after(toc);
+      }
+    </script>
   </body>
 </html>
