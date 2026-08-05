@@ -1,0 +1,60 @@
+name: Review Archive Capture Batch 15 v2
+
+on:
+  push:
+    branches:
+      - agent/phase3-archive-capture-batch15-review
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: review-archive-capture-batch15-v2
+  cancel-in-progress: true
+
+jobs:
+  review:
+    runs-on: macos-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Prepare fixed Batch 15 reviewer
+        run: |
+          git show 7bd452ee8a86073355266cd0bbeec4bada8eb1b9:scripts/review-archive-capture-batch14.mjs \
+            | sed -e 's/batch14/batch15/g' -e 's/Batch 14/Batch 15/g' \
+            > /tmp/review-archive-capture-batch15.mjs
+          test -s /tmp/review-archive-capture-batch15.mjs
+
+      - name: Run first exact replay review
+        run: |
+          node /tmp/review-archive-capture-batch15.mjs
+          mv artifacts/archive-capture-batch15-review.json artifacts/archive-capture-batch15-review-run1.json
+          mv artifacts/archive-capture-batch15-review.md artifacts/archive-capture-batch15-review-run1.md
+
+      - name: Run second exact replay review
+        run: |
+          sleep 5
+          node /tmp/review-archive-capture-batch15.mjs
+          mv artifacts/archive-capture-batch15-review.json artifacts/archive-capture-batch15-review-run2.json
+          mv artifacts/archive-capture-batch15-review.md artifacts/archive-capture-batch15-review-run2.md
+
+      - name: Upload review artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: archive-capture-batch15-review-v2
+          path: |
+            artifacts/archive-capture-batch15-review-run1.json
+            artifacts/archive-capture-batch15-review-run1.md
+            artifacts/archive-capture-batch15-review-run2.json
+            artifacts/archive-capture-batch15-review-run2.md
+          if-no-files-found: error
