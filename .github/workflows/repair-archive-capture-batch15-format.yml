@@ -1,0 +1,80 @@
+name: Repair Archive Capture Batch 15 Formatting
+
+on:
+  push:
+    branches:
+      - agent/phase3-archive-capture-batch15-canonical
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repair-archive-capture-batch15-format
+  cancel-in-progress: true
+
+jobs:
+  repair:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: macos-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout canonical branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/phase3-archive-capture-batch15-canonical
+          fetch-depth: 0
+
+      - name: Fetch latest main
+        run: git fetch origin main
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies without retaining generated lockfile
+        run: |
+          npm install
+          rm -f package-lock.json
+
+      - name: Restore canonical one-record-per-line formatting
+        run: node scripts/repair-archive-capture-batch15-format.mjs
+
+      - name: Assert repaired permanent diff
+        run: |
+          changed="$(git status --porcelain | sed -E 's/^.. //' | sort)"
+          expected="data/evidence.json"
+          printf 'Observed repair diff:\n%s\n' "$changed"
+          test "$changed" = "$expected"
+
+      - name: Run complete repository checks
+        run: |
+          npm run check
+          npm run validate:data
+          npm run validate:enums
+          npm run audit:first-ten
+          npm run audit:full-corpus
+          npm run audit:source-count
+          npm run audit:source-quality
+          npm run audit:full-corpus:test
+          npm run audit:source-count:test
+          npm run audit:source-quality:test
+          npm run production:content:test
+          npm run build
+          npm run dist:check
+          npm run dist:test
+
+      - name: Remove temporary repair tools
+        run: |
+          rm scripts/repair-archive-capture-batch15-format.mjs
+          rm .github/workflows/repair-archive-capture-batch15-format.yml
+
+      - name: Commit repaired canonical diff
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/evidence.json
+          git add -u scripts/repair-archive-capture-batch15-format.mjs .github/workflows/repair-archive-capture-batch15-format.yml
+          git commit -m "data: preserve evidence line formatting for Batch 15"
+          git push origin HEAD:agent/phase3-archive-capture-batch15-canonical
