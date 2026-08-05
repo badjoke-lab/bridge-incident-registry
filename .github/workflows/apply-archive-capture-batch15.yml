@@ -30,8 +30,10 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install locked dependencies
-        run: npm ci
+      - name: Install dependencies without retaining generated lockfile
+        run: |
+          npm install
+          rm -f package-lock.json
 
       - name: Apply reviewed Batch 15 mappings
         run: node scripts/apply-archive-capture-batch15.mjs
