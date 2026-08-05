@@ -23,8 +23,8 @@ After every merged pull request, report:
   - source-count remediation: complete
   - source-quality baseline and remediation: complete
   - event Tier 1 remediation: complete and production-verified
-  - Archive Capture Batches 1–14: complete and production-verified
-  - next: Batch 15 or justified primary-evidence remediation
+  - Archive Capture Batches 1–15: complete and production-verified
+  - next: Batch 16 or justified primary-evidence remediation
 - Phase 4 — public contract stabilization: complete
 - Phase 5 — monitoring and candidate collection: planned
 - Release — v1 documentation, accessibility, performance, compatibility, and release checks: planned
@@ -41,9 +41,9 @@ Evidence    284
 ## Current quality boundary
 
 ```text
-Evidence with archived_url           101
-Terminal unarchived unique URLs       33
-Risky-host unarchived unique URLs     24
+Evidence with archived_url           110
+Terminal unarchived unique URLs       28
+Risky-host unarchived unique URLs     21
 Events without primary                16
 Events without Tier 1                  6
 Unknown URL status                     0
@@ -52,7 +52,7 @@ Canonical production content match  true
 
 ## Immediate execution order
 
-1. choose Batch 15 from the remaining 24 risky-host and 33 terminal unique-URL queues;
+1. choose Batch 16 from the remaining 21 risky-host and 28 terminal unique-URL queues;
 2. run a review-only exact replay, temporal-fit, size, and reproducibility audit;
 3. apply only reviewed mappings in a separate canonical PR;
 4. explicitly verify production when canonical public content changes;
@@ -69,4 +69,5 @@ Canonical production content match  true
 - repository checks are the normal merge gate;
 - production verification is required for explicit canonical publication and release gates;
 - a build-input refresh may be used once when necessary, but it must not change canonical content or verification expectations;
-- unchanged `generated_at` values after the one refresh require delayed reruns, not stacked refresh commits.
+- unchanged `generated_at` values after the one refresh require queue inspection and delayed reruns, not stacked refresh commits;
+- Cloudflare Pages preview deployment remains `none`; arbitrary temporary branches must not enqueue previews.

@@ -30,6 +30,7 @@ Phase 3  Full-corpus quality strengthening         active
          Archive capture Batches 1–12              production-verified — PRs #118–#160
          Archive capture Batch 13                  production-verified — PRs #173–#176
          Archive capture Batch 14                  production-verified — PRs #177–#180
+         Archive capture Batch 15                  production-verified — PRs #181, #182, #184, #185
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
@@ -40,28 +41,28 @@ Release  v1 hardening                              planned
 ## Latest completed production checkpoint
 
 ```text
-Review PR                     #177
-Review merge                  09c11e838a3b157a9efb7388f531ff04f723e4ff
-Canonical data PR             #178
-Canonical merge               ca225d1df10b4a81d72a0fe60fd2713b6e8b543a
-Build-input refresh PR        #179
-Build-input refresh           3f0514b568e84b17daf9e0a2d14649b3a329c787
-Production audit PR           #180
-Initial production run        30976024931
-Immediate post-refresh run    30976430766
-First delayed run             30976783627
-Production verify run         30977144358
-Production verify job         92213419237
+Review PR                     #181
+Review merge                  fcf932b51445831e1d67c3c14c3ee342eff854dc
+Canonical data PR             #182
+Canonical merge               39134a5d7b717c467a49d96b5fd7104047cd0a50
+Build-input refresh PR        #184
+Build-input refresh           7e13955c725e07ca66e01f7f9e321db7f7c764ff
+Production audit PR           #185
+Initial production run        30983843765
+Cloudflare remediation run    30987353553
+Cloudflare remediation job    92245106402
+Production verify run         30986003440
+Production verify job         92245512645
 Verified state                33 / 34 / 183 / 284
-Archived evidence             101 / 284
+Archived evidence             110 / 284
 Canonical content match       true
 Verified HTML routes          72
 Verified redirects            74
-Generated at                  2026-08-05T05:06:09.501Z
-Publication attempt           1 on second delayed rerun after one refresh
+Generated at                  2026-08-05T08:02:41.108Z
+Publication attempt           1 after preview-queue remediation
 ```
 
-The first three twenty-attempt windows rejected stale same-count content at `bir_src_000013`. One behavior-neutral refresh was committed and no second refresh was introduced. The next delayed run observed the new build on attempt 1 and proved complete equality.
+Batch 15 verifiers repeatedly rejected stale same-count content at `bir_src_000014`. One behavior-neutral refresh was committed and no second refresh was introduced. Cloudflare queue inspection showed preview builds for every temporary branch; 16 queued previews were removed, preview deployment was set to `none`, and the unchanged verifier then proved complete equality on attempt 1.
 
 ## Current quality state
 
@@ -73,22 +74,22 @@ Incidents without Tier 1               1
 Events without primary                16
 Events without Tier 1                  6
 Unreviewed event Tier 1 gaps            0
-Evidence with archived_url           101
-Terminal unarchived unique URLs       33
-Terminal unarchived records           45
-Risky-host unarchived unique URLs     24
-Risky-host unarchived records         38
+Evidence with archived_url           110
+Terminal unarchived unique URLs       28
+Terminal unarchived records           38
+Risky-host unarchived unique URLs     21
+Risky-host unarchived records         35
 X/Twitter records unarchived          30
 Unknown URL status                     0
 ```
 
 The remaining Nerve incident-level source gap is reviewed and intentional under PR #117. Current-operation evidence is not reused as historical incident evidence, and Tier 2 security analysis is not reclassified.
 
-Archive Capture Batch 14 added five reproducible exact snapshots to seven Qubit, Harmony, BNB Chain, and LI.FI records. A first-run-only Harmony forum replay was rejected as non-reproducible; pNetwork, Wormhole, and Rainbow Bridge candidates remain deferred under the unchanged exact replay, temporal-fit, size, and reproducibility boundaries.
+Archive Capture Batch 15 added seven reproducible exact mappings to nine Elliptic, BNB Chain, SlowMist, FBI, and Dcentralab records. Aurora and QuillAudits candidates remain deferred under the unchanged exact replay, temporal-fit, size, and reproducibility boundaries.
 
 ## Immediate source-quality targets
 
-1. continue verified archive captures from the 24 risky-host and 33 terminal unique-URL queues;
+1. continue verified archive captures from the 21 risky-host and 28 terminal unique-URL queues;
 2. retry deferred official-source candidates with exact replay and claim-time verification;
 3. reduce the remaining 16 events without primary evidence where appropriate;
 4. strengthen remaining validators;
@@ -105,7 +106,7 @@ Maximum wait   5 minutes per job
 
 Publication convergence requires matching record counts, canonical-only markers, complete transformed JSON equality, exact record order, and all route, sitemap, metadata, redirect, content-type, and cache assertions.
 
-Batch 14 reconfirmed that a valid Pages build may become visible only after multiple unchanged five-minute verification windows. When `generated_at` remains unchanged after one reviewed build-input refresh, do not stack another refresh commit. Preserve the same verifier expectations and allow deployment latency.
+Batch 15 proved that arbitrary preview builds can saturate the Pages queue and delay production. The project now uses `preview_deployment_setting: none`; temporary branches must not create Pages previews. When `generated_at` remains unchanged after one reviewed build-input refresh, inspect the production queue without weakening expectations or stacking refresh commits.
 
 ## Remaining roadmap
 
@@ -137,3 +138,4 @@ Batch 14 reconfirmed that a valid Pages build may become visible only after mult
 17. A technically valid snapshot must also be temporally compatible with the canonical claim.
 18. A deployment refresh must preserve canonical content and verification requirements; docs-only commits are not assumed to start a Pages build.
 19. An unchanged `generated_at` after a build-input refresh is evidence of deployment latency, not permission to weaken or reset verification expectations.
+20. Cloudflare Pages preview deployment remains `none`; intentional preview support requires a separately reviewed configuration change.

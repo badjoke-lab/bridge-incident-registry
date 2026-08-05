@@ -47,6 +47,7 @@ Archive capture Batch 11             production-verified — PRs #152–#156
 Archive capture Batch 12             production-verified — PRs #157–#160
 Archive capture Batch 13             production-verified — PRs #173–#176
 Archive capture Batch 14             production-verified — PRs #177–#180
+Archive capture Batch 15             production-verified — PRs #181, #182, #184, #185
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
 ```
@@ -65,7 +66,7 @@ Unknown URL status   0
 Primary evidence                         201 / 284
 Tier 1 evidence                          220 / 284
 Official-domain evidence                 131 / 284
-Evidence with archived_url               101 / 284
+Evidence with archived_url               110 / 284
 Bridges without primary evidence          0 / 33
 Bridges without tier 1 evidence           0 / 33
 Incidents without primary evidence        1 / 34
@@ -73,21 +74,21 @@ Incidents without tier 1 evidence         1 / 34
 Events without primary evidence          16 / 183
 Events without tier 1 evidence             6 / 183
 Unreviewed event Tier 1 gaps               0
-Terminal unarchived unique URLs          33
-Terminal unarchived evidence records     45
-Risky-host unarchived unique URLs        24
-Risky-host unarchived evidence records   38
+Terminal unarchived unique URLs          28
+Terminal unarchived evidence records     38
+Risky-host unarchived unique URLs        21
+Risky-host unarchived evidence records   35
 X/Twitter evidence records unarchived    30
 Unknown URL status                        0
 ```
 
 Archive-risk ceilings use normalized unique source URLs and exact-or-subdomain host matching. Multiple evidence records that reuse one source URL create one preservation obligation.
 
-Archive Capture Batch 14 reviewed ten previously unreviewed exact canonical source URLs. Five reproducible exact captures were approved and published to seven records covering Qubit, Harmony Horizon reporting, BNB Chain, and two LI.FI analyses. The permanent validator confirmed 101 archived evidence records, 33 terminal unique URLs, and 24 risky-host unique URLs.
+Archive Capture Batch 15 reviewed ten previously unreviewed exact canonical source URLs. Seven reproducible mappings were approved and published to nine records covering Elliptic, BNB Chain, SlowMist, the FBI, and Dcentralab. The permanent validator confirmed 110 archived evidence records, 28 terminal unique URLs, and 21 risky-host unique URLs.
 
-One Harmony forum capture was rejected because it passed only the first review run. pNetwork returned no exact capture; Wormhole replay content remained short or absent; Rainbow Bridge returned no exact capture on the completed rerun. No wildcard, guessed, short, failed, temporally incompatible, or non-reproducible capture was accepted.
+Aurora returned no accepted replay. One QuillAudits source remained unavailable and another passed only the second run, so both were deferred. No wildcard, guessed, short, failed, temporally incompatible, or non-reproducible capture was accepted.
 
-The initial verifier, immediate post-refresh verifier, and first delayed verifier each rejected stale same-count evidence content at `bir_src_000013` for twenty attempts. Only one behavior-neutral build-input refresh was committed. The second delayed run converged on attempt 1 at `generated_at 2026-08-05T05:06:09.501Z`, confirming complete equality for all four datasets, 72 HTML routes, and 74 redirects.
+Repeated full-content verifiers rejected stale same-count evidence at `bir_src_000014`. Cloudflare Pages was configured to build previews for every temporary branch, creating a queue ahead of production. The account-level remediation set previews to `none`, deleted 16 queued previews, preserved all production deployments, and allowed the Batch 15 canonical deployment to complete. The unchanged verifier then passed on attempt 1 at `generated_at 2026-08-05T08:02:41.108Z`.
 
 All event Tier 1 gaps are reviewed. The six remaining gaps are intentional secondary records:
 
@@ -107,33 +108,30 @@ Remaining incident-level gap:
 ## Latest completed production checkpoint
 
 ```text
-Review PR                     #177
-Review merge                  09c11e838a3b157a9efb7388f531ff04f723e4ff
-Canonical data PR             #178
-Canonical merge               ca225d1df10b4a81d72a0fe60fd2713b6e8b543a
-Build-input refresh PR        #179
-Build-input refresh           3f0514b568e84b17daf9e0a2d14649b3a329c787
-Production audit PR           #180
-Initial production run        30976024931
-Initial failed job            92210067226
-Immediate refresh run         30976430766
-Immediate refresh failed job  92211270159
-First delayed run             30976783627
-First delayed failed job      92212328360
-Production verify run         30977144358
-Production verify job         92213419237
+Review PR                     #181
+Review merge                  fcf932b51445831e1d67c3c14c3ee342eff854dc
+Canonical data PR             #182
+Canonical merge               39134a5d7b717c467a49d96b5fd7104047cd0a50
+Build-input refresh PR        #184
+Build-input refresh           7e13955c725e07ca66e01f7f9e321db7f7c764ff
+Production audit PR           #185
+Initial production run        30983843765
+Cloudflare remediation run    30987353553
+Cloudflare remediation job    92245106402
+Production verify run         30986003440
+Production verify job         92245512645
 Verified state                33 / 34 / 183 / 284
-Archived evidence             101 / 284
+Archived evidence             110 / 284
 Canonical content match       true
 Verified HTML routes          72
 Verified redirects            74
-Generated at                  2026-08-05T05:06:09.501Z
-Publication attempt           1 on second delayed rerun after one refresh
+Generated at                  2026-08-05T08:02:41.108Z
+Publication attempt           1 after preview-queue remediation
 ```
 
 ## Next
 
-1. continue bounded archive capture work from 24 risky-host and 33 terminal unique URLs;
+1. continue bounded archive capture work from 21 risky-host and 28 terminal unique URLs;
 2. retry deferred official-source candidates without weakening replay or temporal-fit requirements;
 3. reduce the remaining 16 events without primary evidence where justified;
 4. strengthen remaining validators;

@@ -26,17 +26,17 @@ Evidence    284
 - Phase 5 — monitoring and candidate collection: planned
 - v1 hardening: planned
 
-Archive Capture Batches 1 through 14 are complete and production-verified. Evidence with `archived_url` is 101 / 284. The remaining archive queues are 24 risky-host unique URLs and 33 terminal unique URLs. Source-count mismatches and unknown URL statuses remain at zero, and complete canonical-derived public-content equality is enforced.
+Archive Capture Batches 1 through 15 are complete and production-verified. Evidence with `archived_url` is 110 / 284. The remaining archive queues are 21 risky-host unique URLs and 28 terminal unique URLs. Source-count mismatches and unknown URL statuses remain at zero, and complete canonical-derived public-content equality is enforced.
 
-The latest production checkpoint completed after one behavior-neutral build-input refresh and two additional delayed verifier windows:
+The latest production checkpoint completed after one behavior-neutral build-input refresh and Cloudflare preview-queue remediation:
 
 ```text
-Canonical merge       ca225d1df10b4a81d72a0fe60fd2713b6e8b543a
-Build-input refresh   3f0514b568e84b17daf9e0a2d14649b3a329c787
-Production run        30977144358
-Production job        92213419237
-Generated at          2026-08-05T05:06:09.501Z
-Publication attempt   1 on second delayed rerun
+Canonical merge       39134a5d7b717c467a49d96b5fd7104047cd0a50
+Build-input refresh   7e13955c725e07ca66e01f7f9e321db7f7c764ff
+Production run        30986003440
+Production job        92245512645
+Generated at          2026-08-05T08:02:41.108Z
+Publication attempt   1 after preview-queue remediation
 Content match         true
 HTML routes           72
 Redirects             74
@@ -46,7 +46,7 @@ The Boltz 2026 swap shutdown remains a monitoring signal in Issue #171. It is no
 
 ## Next bounded work
 
-1. continue archive preservation from the 24 risky-host and 33 terminal unique-URL queues;
+1. continue archive preservation from the 21 risky-host and 28 terminal unique-URL queues;
 2. retry deferred official-source candidates without weakening exact-replay, temporal-fit, size, or reproducibility requirements;
 3. reduce the remaining 16 events without primary evidence where justified;
 4. strengthen validators;
