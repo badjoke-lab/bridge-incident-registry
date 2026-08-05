@@ -1,0 +1,168 @@
+name: Review Archive Capture Batch 15
+
+on:
+  push:
+    branches:
+      - agent/phase3-archive-capture-batch15-review
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: review-archive-capture-batch15
+  cancel-in-progress: true
+
+jobs:
+  review:
+    runs-on: macos-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Prepare bounded Batch 15 reviewer
+        run: |
+          git fetch origin agent/phase3-archive-capture-batch14-review
+          git show origin/agent/phase3-archive-capture-batch14-review:../scripts/review-archive-capture-batch14.mjs >/dev/null 2>&1 || true
+          git show origin/agent/phase3-archive-capture-batch14-review:scripts/review-archive-capture-batch14.mjs \
+            | sed -e 's/batch14/batch15/g' -e 's/Batch 14/Batch 15/g' \
+            > /tmp/review-archive-capture-batch15.mjs
+
+      - name: Run first exact replay review
+        run: |
+          node /tmp/review-archive-capture-batch15.mjs
+          mv artifacts/archive-capture-batch15-review.json artifacts/archive-capture-batch15-review-run1.json
+          mv artifacts/archive-capture-batch15-review.md artifacts/archive-capture-batch15-review-run1.md
+
+      - name: Run second exact replay review
+        run: |
+          sleep 5
+          node /tmp/review-archive-capture-batch15.mjs
+          mv artifacts/archive-capture-batch15-review.json artifacts/archive-capture-batch15-review-run2.json
+          mv artifacts/archive-capture-batch15-review.md artifacts/archive-capture-batch15-review-run2.md
+
+      - name: Reconcile reproducible approvals
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const run1 = JSON.parse(fs.readFileSync('artifacts/archive-capture-batch15-review-run1.json', 'utf8'));
+          const run2 = JSON.parse(fs.readFileSync('artifacts/archive-capture-batch15-review-run2.json', 'utf8'));
+          const scope1 = run1.results.map((item) => JSON.stringify([item.url, item.evidence_ids]));
+          const scope2 = run2.results.map((item) => JSON.stringify([item.url, item.evidence_ids]));
+          if (JSON.stringify(scope1) !== JSON.stringify(scope2)) throw new Error('Batch 15 selected scope changed between runs');
+          const byUrl2 = new Map(run2.results.map((item) => [item.url, item]));
+          const results = run1.results.map((first) => {
+            const second = byUrl2.get(first.url);
+            const same = Boolean(
+              first.approved && second?.approved &&
+              first.approved.archive_url === second.approved.archive_url &&
+              first.approved.status === 200 && second.approved.status === 200 &&
+              first.approved.bytes >= 65536 && second.approved.bytes >= 65536
+            );
+            return {
+              label: first.label,
+              queue: first.queue,
+              url: first.url,
+              published_at: first.published_at,
+              evidence_ids: first.evidence_ids,
+              bridge_ids: first.bridge_ids,
+              run1: {
+                decision: first.decision,
+                approved: first.approved,
+                captures_discovered: first.captures_discovered,
+                temporally_eligible_captures: first.temporally_eligible_captures,
+                discovery_errors: first.discovery_errors
+              },
+              run2: {
+                decision: second.decision,
+                approved: second.approved,
+                captures_discovered: second.captures_discovered,
+                temporally_eligible_captures: second.temporally_eligible_captures,
+                discovery_errors: second.discovery_errors
+              },
+              reproducible_approved: same ? first.approved : null,
+              decision: same ? 'approved_reproducible_exact_replay' : 'deferred_not_reproducible_or_unavailable'
+            };
+          });
+          const report = {
+            generated_at: new Date().toISOString(),
+            source_runs: [run1.generated_at, run2.generated_at],
+            reviewed_ids_excluded: run1.selection.reviewed_ids,
+            eligible_unique_urls: run1.selection.eligible_unique_urls,
+            selected_unique_urls: results.length,
+            reproducible_approved_unique_urls: results.filter((item) => item.reproducible_approved).length,
+            reproducible_approved_evidence_records: results.filter((item) => item.reproducible_approved).reduce((sum, item) => sum + item.evidence_ids.length, 0),
+            results
+          };
+          fs.writeFileSync('artifacts/archive-capture-batch15-review-reconciled.json', `${JSON.stringify(report, null, 2)}\n`);
+          const lines = [
+            '# Phase 3 Archive Capture Batch 15 reproducible review',
+            '',
+            `Generated: ${report.generated_at}`,
+            '',
+            '## Boundary',
+            '',
+            `- prior reviewed evidence IDs excluded: ${report.reviewed_ids_excluded}`,
+            `- eligible previously unreviewed unique URLs: ${report.eligible_unique_urls}`,
+            `- selected exact canonical source URLs: ${report.selected_unique_urls}`,
+            '- two independent exact-CDX and replay passes',
+            '- approval requires the same exact archive URL in both passes',
+            '- minimum replay size: 65,536 bytes in both passes',
+            '- snapshot date must be on or after the latest canonical publication date for the grouped URL',
+            '',
+            '## Reproducible approved mappings',
+            ''
+          ];
+          const approved = results.filter((item) => item.reproducible_approved);
+          if (!approved.length) lines.push('None.', '');
+          for (const item of approved) {
+            lines.push(
+              `### ${item.label}`,
+              '',
+              '```text',
+              `Queue          ${item.queue}`,
+              `Canonical URL  ${item.url}`,
+              `Archive URL    ${item.reproducible_approved.archive_url}`,
+              `Run 1 bytes    ${item.run1.approved.bytes}`,
+              `Run 2 bytes    ${item.run2.approved.bytes}`,
+              `Evidence IDs   ${item.evidence_ids.join(', ')}`,
+              '```',
+              ''
+            );
+          }
+          lines.push('## Deferred', '');
+          for (const item of results.filter((entry) => !entry.reproducible_approved)) {
+            lines.push(
+              `- ${item.label}`,
+              `  - queue: ${item.queue}`,
+              `  - canonical: ${item.url}`,
+              `  - evidence: ${item.evidence_ids.join(', ')}`,
+              `  - run 1: ${item.run1.approved?.archive_url ?? item.run1.decision}`,
+              `  - run 2: ${item.run2.approved?.archive_url ?? item.run2.decision}`
+            );
+          }
+          lines.push('', '## Safety', '', 'This review changes no canonical data. Only mappings reproduced identically in both passes may proceed to a separate canonical PR.', '');
+          fs.writeFileSync('artifacts/archive-capture-batch15-review-reconciled.md', lines.join('\n'));
+          console.log(JSON.stringify(report, null, 2));
+          NODE
+
+      - name: Upload review artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: archive-capture-batch15-review
+          path: |
+            artifacts/archive-capture-batch15-review-run1.json
+            artifacts/archive-capture-batch15-review-run1.md
+            artifacts/archive-capture-batch15-review-run2.json
+            artifacts/archive-capture-batch15-review-run2.md
+            artifacts/archive-capture-batch15-review-reconciled.json
+            artifacts/archive-capture-batch15-review-reconciled.md
+          if-no-files-found: error
