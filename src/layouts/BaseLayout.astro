@@ -24,12 +24,13 @@ const {
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
-const isSupportPage = currentPath === "/support/";
-const isBridgeDetail = currentPath.startsWith("/bridge/");
-const isIncidentDetail = currentPath.startsWith("/incident/");
+const normalizedPath = currentPath === "/" ? "/" : `${currentPath.replace(/\/+$/, "")}/`;
+const isSupportPage = normalizedPath === "/support/";
+const isBridgeDetail = normalizedPath.startsWith("/bridge/");
+const isIncidentDetail = normalizedPath.startsWith("/incident/");
 const isDetailPage = isBridgeDetail || isIncidentDetail;
 const issueUrl = "https://github.com/badjoke-lab/bridge-incident-registry/issues/new/choose";
-const isCurrent = (href: string) => currentPath === href || (href !== "/" && currentPath.startsWith(href));
+const isCurrent = (href: string) => normalizedPath === href || (href !== "/" && normalizedPath.startsWith(href));
 const registryLinks = [
   { label: "Bridges", href: "/bridges/" },
   { label: "Incidents", href: "/incidents/" },
