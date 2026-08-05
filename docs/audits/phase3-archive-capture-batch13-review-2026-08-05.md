@@ -3,12 +3,13 @@
 Status: review complete  
 Base main: `2977e1534a5983afc312e04e8176ea2bc5fd339e`  
 Review PR: `#173`  
+Review merge: `fba6c668207ba1fb2613840df81123a54da5b669`  
 Completed review run: `30969286547`  
 Completed review job: `92189914803`
 
 ## Boundary
 
-Batch 13 reviewed ten exact canonical source URLs selected from the remaining risky-host archive queue.
+Batch 13 reviewed ten exact canonical source URLs selected from the remaining archive-preservation queue.
 
 A URL was technically eligible only when Wayback CDX returned a concrete exact-path capture and an independent replay passed all of the following:
 
@@ -51,7 +52,7 @@ Replay status  200
 Content-Type   text/html; charset=utf-8
 Replay bytes   106,310
 Evidence IDs   bir_src_000248
-Queue          risky-host
+Queue          general archive preservation; not counted by the risky-host validator
 ```
 
 ### SOCKET fund recovery update
@@ -85,7 +86,7 @@ Approved unique URLs      3
 Approved evidence records 3
 ```
 
-All three approved records belong to active bridges. They reduce only the risky-host queue; the terminal queue is unchanged.
+All three approved records belong to active bridges. The terminal queue is unchanged.
 
 ## Deferred candidates
 
@@ -154,13 +155,21 @@ Decision     deferred — no exact capture
 
 No wildcard, guessed, short, failed, or temporally incompatible snapshot is approved.
 
-## Expected canonical effect
+## Validator reconciliation
+
+The initial review estimate treated all three approved URLs as members of the risky-host queue and projected `29 -> 26`. The canonical source-quality validator established the authoritative classification:
+
+- the two X/Twitter URLs reduce the risky-host unique-URL queue;
+- the SlowMist Medium URL improves archive coverage but is not counted by the risky-host host set;
+- all three records reduce the risky-host evidence-record count because the record-level report includes their active-bridge preservation obligations.
+
+The corrected expected effect is:
 
 ```text
 Evidence with archived_url          91 -> 94
 Terminal unarchived unique URLs     36 -> 36
 Terminal unarchived evidence        49 -> 49
-Risky-host unarchived unique URLs   29 -> 26
+Risky-host unarchived unique URLs   29 -> 27
 Risky-host unarchived evidence      45 -> 42
 X/Twitter evidence unarchived       32 -> 30
 ```
