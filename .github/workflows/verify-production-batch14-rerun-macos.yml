@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: 22
 
-      # Delayed rerun after unchanged generated_at; production expectations are unchanged.
+      # Repeated delayed rerun; main and production expectations remain unchanged.
       - name: Verify production registry
         env:
           PUBLIC_SITE_ORIGIN: https://bir.badjoke-lab.com
