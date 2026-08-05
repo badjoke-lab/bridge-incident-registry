@@ -1,7 +1,7 @@
 # Bridge Incident Registry — Development Roadmap to v1
 
 Status: active  
-Updated: 2026-08-03
+Updated: 2026-08-05
 
 GitHub state and canonical JSON are authoritative.
 
@@ -27,18 +27,8 @@ Phase 3  Full-corpus quality strengthening         active
          Source-quality remediation                complete — PRs #103–#107
          Event Tier 1 remediation                  production-verified — PRs #108–#116
          Nerve source boundary                     reviewed — PR #117
-         Archive capture Batch 1                   production-verified — PRs #118–#120
-         Archive capture Batch 2                   production-verified — PRs #122–#125
-         Archive capture Batch 3                   production-verified — PRs #126–#128
-         Archive capture Batch 4                   production-verified — PRs #129–#131
-         Archive capture Batch 5                   production-verified — PRs #132–#134
-         Archive capture Batch 6                   production-verified — PRs #135–#138
-         Archive capture Batch 7                   production-verified — PRs #139–#141
-         Archive capture Batch 8                   production-verified — PRs #142–#144
-         Archive capture Batch 9                   production-verified — PRs #145–#147
-         Archive capture Batch 10                  production-verified — PRs #148–#151
-         Archive capture Batch 11                  production-verified — PRs #152–#156
-         Archive capture Batch 12                  production-verified — PRs #157–#160
+         Archive capture Batches 1–12              production-verified — PRs #118–#160
+         Archive capture Batch 13                  production-verified — PRs #173–#176
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
@@ -49,28 +39,27 @@ Release  v1 hardening                              planned
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR             #158
-Canonical merge               7d5d6edfc2c7ed355fcfd78a51076e0bd4cc7029
-Build-input refresh PR        #160
-Build-input refresh           15023871b100b6b15b277163d09db8769a3bdb1b
-Production audit PR           #159
-Production verify run         30791989085
-Initial failed job            91617276143
-Immediate refresh failed job  91618712843
-Production verify job         91620118112
-Canonical final CI            30791883397
-Initial verification CI       30791989124
-Build-input refresh CI        30792375569
+Review PR                     #173
+Review merge                  fba6c668207ba1fb2613840df81123a54da5b669
+Canonical data PR             #174
+Canonical merge               ab0b45fb1f1cbe6cdddd1238c37fb99f201c934f
+Build-input refresh PR        #175
+Build-input refresh           15472395efdb4435380dbd0fdae8c7fe71e54b06
+Production audit PR           #176
+Initial production run        30970204138
+Initial failed job            92192668199
+Production verify run         30970746866
+Production verify job         92194294438
 Verified state                33 / 34 / 183 / 284
-Archived evidence             91 / 284
+Archived evidence             94 / 284
 Canonical content match       true
 Verified HTML routes          72
 Verified redirects            74
-Generated at                  2026-08-03T07:18:33.180Z
-Publication attempt           18 on delayed rerun after build-input refresh
+Generated at                  2026-08-05T03:00:56.755Z
+Publication attempt           20 after one build-input refresh
 ```
 
-The initial verifier and an immediate post-refresh rerun each rejected the prior same-count evidence content at `bir_src_000076` for twenty attempts. The build-input refresh was not repeated. After the Pages deployment delay, the same workflow run converged on attempt 18 and verified all ninety-one archive fields.
+The first production verifier rejected stale same-count evidence content at `bir_src_000248` for twenty attempts while `generated_at` remained `2026-08-05T02:37:38.915Z`. PR #175 changed one non-executable build-input marker. The unchanged verifier continued to observe the old build through attempt 19, switched to the new build at attempt 20, and proved complete equality. No second refresh commit was made.
 
 ## Current quality state
 
@@ -82,27 +71,27 @@ Incidents without Tier 1               1
 Events without primary                16
 Events without Tier 1                  6
 Unreviewed event Tier 1 gaps            0
-Evidence with archived_url            91
+Evidence with archived_url            94
 Terminal unarchived unique URLs       36
 Terminal unarchived records           49
-Risky-host unarchived unique URLs     29
-Risky-host unarchived records         45
-X/Twitter records unarchived          32
+Risky-host unarchived unique URLs     27
+Risky-host unarchived records         42
+X/Twitter records unarchived          30
 Unknown URL status                     0
 ```
 
 The remaining Nerve incident-level source gap is reviewed and intentional under PR #117. Current-operation evidence is not reused as historical incident evidence, and Tier 2 security analysis is not reclassified.
 
-Archive Capture Batch 12 added four verified Wayback snapshots to six Celer, SOCKET, and Rubic evidence records. A technically valid Holograph replay was rejected because its 2022 timestamp predates the 2026 canonical current-state claim. Other deferred candidates remain unarchived and may be retried without weakening replay or temporal-fit requirements.
+Archive Capture Batch 13 added three exact snapshots covering the SlowMist Transit Swap analysis, SOCKET recovery update, and Transit Finance recovery update. Holograph and Unizen short replays, plus Taiko, Syndicate Commons, and Everclear missing captures, remain deferred under the unchanged exact replay and temporal-fit boundary.
 
 ## Immediate source-quality targets
 
-1. continue verified archive captures from the 29 risky-host and 36 terminal unique-URL queues;
+1. continue verified archive captures from the 27 risky-host and 36 terminal unique-URL queues;
 2. retry deferred official-source candidates with exact replay and claim-time verification;
 3. reduce the remaining 16 events without primary evidence where appropriate;
 4. strengthen remaining validators;
-5. continue monitoring and candidate collection;
-6. complete v1 hardening.
+5. begin review-gated monitoring and candidate collection with no automatic canonical publication;
+6. complete v1 documentation, accessibility, performance, compatibility, and release checks.
 
 ## Production publication gate
 
@@ -114,7 +103,7 @@ Maximum wait   5 minutes per job
 
 Publication convergence requires matching record counts, canonical-only markers, complete transformed JSON equality, exact record order, and all route, sitemap, metadata, redirect, content-type, and cache assertions.
 
-Batch 12 established that a valid Pages build may complete after the immediate five-minute rerun window. When `generated_at` remains unchanged after a reviewed build-input refresh, do not stack additional refresh commits automatically. Preserve the same verifier expectations, allow deployment latency, and rerun the failed job.
+Batch 13 reconfirmed that a valid Pages build may become visible only at the end of the five-minute verification window. When `generated_at` remains unchanged after one reviewed build-input refresh, do not stack another refresh commit. Preserve the same verifier expectations and allow deployment latency.
 
 ## Remaining roadmap
 
@@ -122,7 +111,7 @@ Batch 12 established that a valid Pages build may complete after the immediate f
 2. remediate justified primary-evidence gaps;
 3. strengthen remaining validators;
 4. complete public-contract compatibility review;
-5. add monitoring with no automatic publication;
+5. implement monitoring with no automatic publication;
 6. complete v1 documentation, accessibility, performance, and release checks.
 
 ## Permanent rules
