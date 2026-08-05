@@ -1,7 +1,7 @@
 # Current Status — Bridge Incident Registry
 
 Status: active  
-Updated: 2026-08-03
+Updated: 2026-08-05
 
 ## Canonical and production state
 
@@ -45,6 +45,7 @@ Archive capture Batch 9              production-verified — PRs #145–#147
 Archive capture Batch 10             production-verified — PRs #148–#151
 Archive capture Batch 11             production-verified — PRs #152–#156
 Archive capture Batch 12             production-verified — PRs #157–#160
+Archive capture Batch 13             production-verified — PRs #173–#176
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
 ```
@@ -63,7 +64,7 @@ Unknown URL status   0
 Primary evidence                         201 / 284
 Tier 1 evidence                          220 / 284
 Official-domain evidence                 131 / 284
-Evidence with archived_url                91 / 284
+Evidence with archived_url                94 / 284
 Bridges without primary evidence          0 / 33
 Bridges without tier 1 evidence           0 / 33
 Incidents without primary evidence        1 / 34
@@ -73,21 +74,29 @@ Events without tier 1 evidence             6 / 183
 Unreviewed event Tier 1 gaps               0
 Terminal unarchived unique URLs          36
 Terminal unarchived evidence records     49
-Risky-host unarchived unique URLs        29
-Risky-host unarchived evidence records   45
-X/Twitter evidence records unarchived    32
+Risky-host unarchived unique URLs        27
+Risky-host unarchived evidence records   42
+X/Twitter evidence records unarchived    30
 Unknown URL status                        0
 ```
 
-Archive-risk ceilings use normalized unique source URLs and exact-or-subdomain host matching. Multiple evidence records that reuse the same source URL create one preservation obligation.
+Archive-risk ceilings use normalized unique source URLs and exact-or-subdomain host matching. Multiple evidence records that reuse one source URL create one preservation obligation.
 
-Archive Capture Batch 12 added four verified Wayback snapshots to six first-party social evidence records: `bir_src_000076`, `bir_src_000271`, `bir_src_000274`, `bir_src_000080`, `bir_src_000165`, and `bir_src_000272`. The preserved sources cover Celer's DNS incident and restoration update, SOCKET's incident acknowledgement, and Rubic's incident announcement. Source URLs, claims, source tiers, reliability, dates, and linkages remain unchanged.
+Archive Capture Batch 13 reviewed ten exact canonical source URLs. Three exact, temporally compatible captures were approved and published:
 
-A technically valid 2022 Holograph documentation snapshot was rejected because it predates the 2026 current-state claim in `bir_src_000116`. BNB Chain Fusion, SOCKET restart, pNetwork end-of-life, Commons terminal, Transit Finance recovery, and Holograph therefore remain deferred rather than receiving guessed or temporally incompatible snapshots.
+```text
+bir_src_000248  SlowMist Transit Swap exploit analysis
+bir_src_000275  SOCKET fund recovery update
+bir_src_000278  Transit Finance recovery update
+```
 
-The permanent validator established that all six approved records belong to active bridges, so Batch 12 reduced the risky-host queue only. It also corrected the terminal evidence-record count from a stale runbook value of 47 to the authoritative validator value of 49.
+The SlowMist Medium capture improves overall archive coverage but is outside the risky-host host set. The SOCKET and Transit Finance X/Twitter captures reduce the risky-host unique-URL queue from 29 to 27. All three records reduce the record-level risky-host queue from 45 to 42. Terminal queues remain unchanged.
 
-The initial production job and an immediate post-refresh rerun each rejected `bir_src_000076` for twenty attempts while `generated_at` remained `2026-08-03T06:55:57.708Z`. No further repository change was made. A delayed rerun converged on attempt 18 at `generated_at 2026-08-03T07:18:33.180Z`, confirming all ninety-one archive fields and complete canonical-derived public-content equality.
+Holograph and Unizen exact replays remained below the permanent 65,536-byte boundary. Taiko, Syndicate Commons, and Everclear returned no accepted exact capture. They remain deferred rather than receiving wildcard, guessed, short, failed, or temporally incompatible snapshots.
+
+The first canonical application attempt projected a risky-host ceiling of 26. The permanent source-quality validator observed 27 and rejected the attempt before commit. The corrected bounded run passed all canonical, controlled-failure, build, and dist checks and removed its temporary write files.
+
+The initial production verifier then rejected stale same-count evidence content at `bir_src_000248` for twenty attempts. PR #175 introduced one behavior-neutral build-input refresh. The unchanged verifier continued to see the old build through attempt 19 and converged at attempt 20 with `generated_at 2026-08-05T03:00:56.755Z`. Complete equality was confirmed for all four public datasets, 72 HTML routes, and 74 redirects.
 
 All event Tier 1 gaps are reviewed. The six remaining gaps are intentional secondary records:
 
@@ -107,31 +116,31 @@ Remaining incident-level gap:
 ## Latest completed production checkpoint
 
 ```text
-Canonical data PR             #158
-Canonical merge               7d5d6edfc2c7ed355fcfd78a51076e0bd4cc7029
-Build-input refresh PR        #160
-Build-input refresh           15023871b100b6b15b277163d09db8769a3bdb1b
-Production audit PR           #159
-Production verify             30791989085
-Initial failed job            91617276143
-Immediate refresh failed job  91618712843
-Production verify job         91620118112
-Canonical final CI            30791883397
-Initial verification CI       30791989124
-Build-input refresh CI        30792375569
+Review PR                     #173
+Review merge                  fba6c668207ba1fb2613840df81123a54da5b669
+Canonical data PR             #174
+Canonical merge               ab0b45fb1f1cbe6cdddd1238c37fb99f201c934f
+Build-input refresh PR        #175
+Build-input refresh           15472395efdb4435380dbd0fdae8c7fe71e54b06
+Production audit PR           #176
+Initial production run        30970204138
+Initial failed job            92192668199
+Production verify run         30970746866
+Production verify job         92194294438
 Verified state                33 / 34 / 183 / 284
-Archived evidence             91 / 284
+Archived evidence             94 / 284
 Canonical content match       true
 Verified HTML routes          72
 Verified redirects            74
-Generated at                  2026-08-03T07:18:33.180Z
-Publication attempt           18 on delayed rerun after build-input refresh
+Generated at                  2026-08-05T03:00:56.755Z
+Publication attempt           20 after one build-input refresh
 ```
 
 ## Next
 
-1. continue bounded archive capture work from 29 risky-host and 36 terminal unique URLs;
+1. continue bounded archive capture work from 27 risky-host and 36 terminal unique URLs;
 2. retry deferred official-source candidates without weakening replay or temporal-fit requirements;
 3. reduce the remaining 16 events without primary evidence where justified;
 4. strengthen remaining validators;
-5. continue monitoring, candidate collection, and v1 hardening.
+5. begin review-gated monitoring and candidate collection without automatic canonical publication;
+6. continue v1 documentation, accessibility, performance, and release hardening.
