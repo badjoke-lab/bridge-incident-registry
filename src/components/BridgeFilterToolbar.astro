@@ -1,50 +1,20 @@
 ---
-import { bridgeStatuses, bridgeTypes, recordMaturities, updateStatuses } from "../lib/enums";
+import { bridgeStatuses, bridgeTypes } from "../lib/enums";
 import { formatLabel } from "../lib/format";
+import { registryData } from "../lib/data";
 
-interface Props {
-  disabled?: boolean;
-}
-
+interface Props { disabled?: boolean; }
 const { disabled = false } = Astro.props;
+const chainOptions = Array.from(new Set(registryData.bridges.flatMap((bridge) => bridge.primary_chains ?? []))).sort();
 ---
 <form class="registry-toolbar" id="bridge-filters" aria-label="Bridge registry filters">
-  <div class="registry-field registry-search-field">
-    <label for="bridge-search">Search</label>
-    <input id="bridge-search" name="search" type="search" placeholder="Name, alias, chain, operator, or ecosystem" autocomplete="off" disabled={disabled} />
-  </div>
-
-  <div class="registry-field">
-    <label for="bridge-type">Type</label>
-    <select id="bridge-type" name="type" disabled={disabled}>
-      <option value="">All types</option>
-      {bridgeTypes.map((type) => <option value={type}>{formatLabel(type)}</option>)}
-    </select>
-  </div>
-
-  <div class="registry-field">
-    <label for="bridge-status">Status</label>
-    <select id="bridge-status" name="status" disabled={disabled}>
-      <option value="">All statuses</option>
-      {bridgeStatuses.map((status) => <option value={status}>{formatLabel(status)}</option>)}
-    </select>
-  </div>
-
-  <div class="registry-field">
-    <label for="bridge-maturity">Maturity</label>
-    <select id="bridge-maturity" name="maturity" disabled={disabled}>
-      <option value="">All maturity</option>
-      {recordMaturities.map((maturity) => <option value={maturity}>{formatLabel(maturity)}</option>)}
-    </select>
-  </div>
-
-  <div class="registry-field">
-    <label for="bridge-update-status">Freshness</label>
-    <select id="bridge-update-status" name="update_status" disabled={disabled}>
-      <option value="">All freshness</option>
-      {updateStatuses.map((status) => <option value={status}>{formatLabel(status)}</option>)}
-    </select>
-  </div>
-
+  <div class="registry-field registry-search-field"><label for="bridge-search">Search</label><input id="bridge-search" name="search" type="search" placeholder="Name, alias, chain, operator, or ecosystem" autocomplete="off" disabled={disabled} /></div>
+  <div class="registry-field"><label for="bridge-type">Type</label><select id="bridge-type" name="type" disabled={disabled}><option value="">All types</option>{bridgeTypes.map((type) => <option value={type}>{formatLabel(type)}</option>)}</select></div>
+  <div class="registry-field"><label for="bridge-status">Status</label><select id="bridge-status" name="status" disabled={disabled}><option value="">All statuses</option>{bridgeStatuses.map((status) => <option value={status}>{formatLabel(status)}</option>)}</select></div>
+  <div class="registry-field"><label for="bridge-chain">Primary chain</label><select id="bridge-chain" name="chain" disabled={disabled}><option value="">All chains</option>{chainOptions.map((chain) => <option value={chain}>{formatLabel(chain)}</option>)}</select></div>
+  <div class="registry-field"><label for="bridge-major">Major incident</label><select id="bridge-major" name="major" disabled={disabled}><option value="">All</option><option value="true">Has major incident</option><option value="false">No major incident recorded</option></select></div>
+  <div class="registry-field"><label for="bridge-unresolved">Unresolved incident</label><select id="bridge-unresolved" name="unresolved" disabled={disabled}><option value="">All</option><option value="true">Has unresolved incident</option><option value="false">No unresolved incident recorded</option></select></div>
+  <div class="registry-field"><label for="bridge-reimbursement">Reimbursement history</label><select id="bridge-reimbursement" name="reimbursement" disabled={disabled}><option value="">All</option><option value="true">Has reimbursement history</option><option value="false">No reimbursement history recorded</option></select></div>
+  <div class="registry-field"><label for="bridge-sort">Sort</label><select id="bridge-sort" name="sort" disabled={disabled}><option value="incidents-desc">Major incidents first</option><option value="reviewed-desc">Recently reviewed</option><option value="name-asc">Name A–Z</option></select></div>
   <button class="registry-reset" id="bridge-reset" type="reset" disabled={disabled}>Reset</button>
 </form>

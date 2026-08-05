@@ -6,46 +6,40 @@ import { formatDateWithPrecision, formatLabel } from "../lib/format";
 import { getAssetLabels, getChainLabels } from "../lib/reference";
 import type { IncidentCase } from "../lib/types";
 
-interface Props {
-  incidents: IncidentCase[];
-}
-
+interface Props { incidents: IncidentCase[]; }
 const { incidents } = Astro.props;
 const bridgeNames = new Map(registryData.bridges.map((bridge) => [bridge.id, bridge.canonical_name]));
+const PAGE_SIZE = 25;
 ---
 <div class="registry-table-wrap">
   <table class="registry-table">
-    <thead>
-      <tr>
-        <th scope="col">Incident</th>
-        <th scope="col">Date</th>
-        <th scope="col">Bridge</th>
-        <th scope="col">Type</th>
-        <th scope="col">Reported loss</th>
-        <th scope="col">Recovery</th>
-        <th scope="col">Reimbursement</th>
-        <th scope="col">Outcome</th>
-        <th scope="col">Resolution</th>
-        <th scope="col">Maturity</th>
-        <th scope="col">Freshness</th>
-      </tr>
-    </thead>
+    <thead><tr><th scope="col">Incident</th><th scope="col">Date</th><th scope="col">Bridge</th><th scope="col">Type</th><th scope="col">Reported loss</th><th scope="col">Recovery</th><th scope="col">Reimbursement</th><th scope="col">Outcome</th><th scope="col">Resolution</th><th scope="col">Maturity</th><th scope="col">Freshness</th></tr></thead>
     <tbody id="incident-table-body">
-      {incidents.map((incident) => {
+      {incidents.map((incident, index) => {
         const bridgeName = bridgeNames.get(incident.bridge_id) ?? incident.bridge_id;
         const chains = getChainLabels(incident.affected_chains);
         const assets = getAssetLabels(incident.affected_assets);
         const searchText = [incident.title, bridgeName, ...chains, ...assets, incident.attack_vector_category ?? "", incident.incident_type].join(" ").toLowerCase();
         const unresolvedValue = String(Boolean(incident.is_unresolved));
-
         return (
-          <tr class="registry-row" data-search={searchText} data-type={incident.incident_type} data-recovery={incident.recovery_status ?? "unknown"} data-reimbursement={incident.reimbursement_status ?? "unknown"} data-outcome={incident.current_outcome ?? "unknown"} data-unresolved={unresolvedValue}>
-            <td data-label="Incident">
-              <div class="registry-name">
-                <a href={`/incident/${incident.slug}/`}>{incident.title}</a>
-                <span class="registry-summary">{incident.summary}</span>
-              </div>
-            </td>
+          <tr
+            hidden={index >= PAGE_SIZE}
+            class="registry-row"
+            data-search={searchText}
+            data-name={incident.title}
+            data-type={incident.incident_type}
+            data-attack={incident.attack_vector_category ?? "unknown"}
+            data-recovery={incident.recovery_status ?? "unknown"}
+            data-reimbursement={incident.reimbursement_status ?? "unknown"}
+            data-restart={incident.restart_status ?? "unknown"}
+            data-outcome={incident.current_outcome ?? "unknown"}
+            data-unresolved={unresolvedValue}
+            data-date={incident.incident_date}
+            data-loss={String(incident.reported_loss_usd ?? 0)}
+            data-loss-known={String(incident.reported_loss_usd != null)}
+            data-reviewed={incident.last_verified_at ?? ""}
+          >
+            <td data-label="Incident"><div class="registry-name"><a href={`/incident/${incident.slug}/`}>{incident.title}</a><span class="registry-summary">{incident.summary}</span></div></td>
             <td data-label="Date"><span class="registry-small">{formatDateWithPrecision(incident.incident_date, incident.incident_date_precision)}</span></td>
             <td data-label="Bridge"><span class="registry-small">{bridgeName}</span></td>
             <td data-label="Type"><span class="registry-small">{formatLabel(incident.incident_type)}</span></td>
@@ -62,3 +56,4 @@ const bridgeNames = new Map(registryData.bridges.map((bridge) => [bridge.id, bri
     </tbody>
   </table>
 </div>
+<nav class="registry-pagination" aria-label="Incident registry pages"><button id="incident-previous-page" type="button">Previous</button><span>Page <strong id="incident-current-page">1</strong> of <strong id="incident-page-count">{Math.max(1, Math.ceil(incidents.length / PAGE_SIZE))}</strong></span><button id="incident-next-page" type="button">Next</button></nav>

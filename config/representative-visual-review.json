@@ -11,6 +11,7 @@
     { "id": "bridge-ronin", "route": "/bridge/ronin-bridge/" },
     { "id": "incident-ronin", "route": "/incident/ronin-bridge-2022-validator-key-compromise/" },
     { "id": "methodology", "route": "/methodology/" },
-    { "id": "about", "route": "/about/" }
+    { "id": "about", "route": "/about/" },
+    { "id": "support", "route": "/support/" }
   ]
 }

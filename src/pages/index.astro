@@ -1,18 +1,22 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Callout from "../components/Callout.astro";
-import MaturityChip from "../components/MaturityChip.astro";
-import SectionHeader from "../components/SectionHeader.astro";
-import StatusChip from "../components/StatusChip.astro";
-import UpdateStatusChip from "../components/UpdateStatusChip.astro";
 import { getRegistryCounts, registryData } from "../lib/data";
+import { formatDateWithPrecision, formatLabel } from "../lib/format";
 
 const counts = getRegistryCounts();
-const hasRegistryData = Object.values(counts).some((count) => count > 0);
 const latestVerifiedAt = [
   ...registryData.bridges.map((record) => record.last_verified_at),
   ...registryData.incidents.map((record) => record.last_verified_at)
 ].filter(Boolean).sort().at(-1);
+const bridgeById = new Map(registryData.bridges.map((bridge) => [bridge.id, bridge]));
+const recentIncidents = [...registryData.incidents]
+  .sort((a, b) => String(b.last_verified_at || "").localeCompare(String(a.last_verified_at || "")) || b.incident_date.localeCompare(a.incident_date))
+  .slice(0, 6);
+const aftermathTypes = new Set(["recovery", "reimbursement", "restart", "reopening", "migration", "shutdown", "resolution"]);
+const recentAftermath = [...registryData.events]
+  .filter((event) => aftermathTypes.has(event.event_type) || [...aftermathTypes].some((type) => String(event.event_type).includes(type)))
+  .sort((a, b) => b.event_date.localeCompare(a.event_date))
+  .slice(0, 6);
 const site = Astro.site ?? new URL("https://bridge-incident-registry.pages.dev");
 const datasetJsonLd = {
   "@type": "Dataset",
@@ -28,20 +32,12 @@ const datasetJsonLd = {
   ]
 };
 ---
-<BaseLayout
-  title="Bridge Incident Registry"
-  description="A historical registry of cross-chain bridge incidents, pauses, recoveries, reimbursements, and migrations."
-  alternateDataPath="/data/manifest.json"
-  dateModified={latestVerifiedAt}
-  jsonLd={datasetJsonLd}
->
+<BaseLayout title="Bridge Incident Registry" description="A historical registry of cross-chain bridge incidents, pauses, recoveries, reimbursements, reopenings, migrations, and shutdowns." alternateDataPath="/data/manifest.json" dateModified={latestVerifiedAt} jsonLd={datasetJsonLd}>
   <section class="hero">
     <div class="kicker">Quiet incident registry</div>
     <h1>The registry for what happened after cross-chain bridge incidents.</h1>
-    <p class="lede">
-      Most hack databases stop at the exploit. Bridge Incident Registry tracks what happened after:
-      pauses, recoveries, reimbursements, reopenings, migrations, and shutdowns.
-    </p>
+    <p class="lede">Most hack databases stop at the exploit. Bridge Incident Registry tracks pauses, recoveries, reimbursements, reopenings, migrations, shutdowns, evidence, and unresolved outcomes.</p>
+    <div class="hero-actions"><a class="primary-action" href="/incidents/">Browse incidents</a><a class="secondary-action" href="/bridges/">Browse bridges</a></div>
   </section>
 
   <section class="summary-strip" aria-label="Registry record summary">
@@ -51,29 +47,29 @@ const datasetJsonLd = {
     <div class="stat"><div class="stat-value">{counts.evidence}</div><div class="stat-label">Evidence records</div></div>
   </section>
 
-  <SectionHeader
-    kicker="Foundation"
-    title="Registry primitives before registry data"
-    description="The first UI components establish status, maturity, freshness, callout, and empty-state patterns before canonical JSON records are added."
-  />
+  <section class="home-section" aria-labelledby="recent-incidents-title">
+    <div class="home-section-header"><div><div class="kicker">Recently reviewed</div><h2 id="recent-incidents-title">Incident records</h2></div><a href="/incidents/">Browse all incidents →</a></div>
+    <div class="home-card-grid">
+      {recentIncidents.map((incident) => {
+        const bridge = bridgeById.get(incident.bridge_id);
+        return <a class="home-record-card" href={`/incident/${incident.slug}/`}><strong>{incident.title}</strong><span>{bridge?.canonical_name ?? incident.bridge_id} · {formatDateWithPrecision(incident.incident_date, incident.incident_date_precision)} · {formatLabel(incident.current_outcome ?? "unknown")}</span><p>{incident.summary}</p><span>Last reviewed {incident.last_verified_at}</span></a>;
+      })}
+    </div>
+  </section>
 
-  <div class="chip-row" aria-label="Sample registry chips">
-    <StatusChip status="active" />
-    <StatusChip status="paused" />
-    <StatusChip status="migrated" />
-    <MaturityChip maturity="reviewed" />
-    <UpdateStatusChip status="current" />
-  </div>
+  <section class="home-section" aria-labelledby="aftermath-title">
+    <div class="home-section-header"><div><div class="kicker">Recent aftermath updates</div><h2 id="aftermath-title">Recovery, reimbursement, restart, migration, and shutdown</h2></div><a href="/incidents/">Open incident registry →</a></div>
+    {recentAftermath.length ? <div class="home-card-grid">{recentAftermath.map((event) => {
+      const incident = registryData.incidents.find((item) => item.id === event.incident_id);
+      return <a class="home-record-card" href={incident ? `/incident/${incident.slug}/` : "/incidents/"}><strong>{event.title}</strong><span>{formatLabel(event.event_type)} · {formatDateWithPrecision(event.event_date, event.event_date_precision)}</span><p>{event.description}</p></a>;
+    })}</div> : <p class="notice">No reviewed aftermath event currently matches the recovery, reimbursement, restart, migration, or shutdown categories.</p>}
+  </section>
 
   <section class="panel-grid" aria-label="Registry focus">
     <article class="panel"><h2>Incident aftermath</h2><p>Track pause, recovery, reimbursement, reopening, migration, and shutdown outcomes.</p></article>
-    <article class="panel"><h2>Evidence-first records</h2><p>Every major claim should point back to official, archival, analytical, or journalistic evidence.</p></article>
+    <article class="panel"><h2>Evidence-first records</h2><p>Major claims point back to official, archival, analytical, or journalistic evidence.</p></article>
     <article class="panel"><h2>Not a safety ranking</h2><p>BIR records historical incidents and outcomes. It does not recommend bridges or rank safety.</p></article>
   </section>
 
-  {!hasRegistryData && (
-    <Callout title="Static foundation only">
-      The canonical registry is currently empty. Bridge, incident, event, and evidence records will appear here automatically after reviewed JSON records are merged.
-    </Callout>
-  )}
+  <section class="home-support-callout" aria-labelledby="home-support-title"><div><div class="kicker">Independent maintenance</div><h2 id="home-support-title">Help maintain bridge incident history</h2><p>Support official-source review, post-incident updates, recovery and reimbursement tracking, broken-link replacement, and long-term maintenance. Support does not influence classifications or evidence standards.</p></div><a class="support-action" href="/support/">Support BIR</a></section>
 </BaseLayout>
