@@ -26,32 +26,37 @@ PR #173      Archive Capture Batch 13 review
 PR #174      Archive Capture Batch 13 canonical migration
 PR #175      Archive Capture Batch 13 build-input refresh
 PR #176      Archive Capture Batch 13 production verification and checkpoint sync
+PR #177      Archive Capture Batch 14 reproducible review
+PR #178      Archive Capture Batch 14 canonical migration
+PR #179      Archive Capture Batch 14 build-input refresh
+PR #180      Archive Capture Batch 14 production verification and checkpoint sync
 ```
 
 ## Latest completed production checkpoint
 
 ```text
-Review PR                     #173
-Review merge                  fba6c668207ba1fb2613840df81123a54da5b669
-Canonical data PR             #174
-Canonical merge               ab0b45fb1f1cbe6cdddd1238c37fb99f201c934f
-Build-input refresh PR        #175
-Build-input refresh           15472395efdb4435380dbd0fdae8c7fe71e54b06
-Production audit PR           #176
-Initial production run        30970204138
-Initial failed job            92192668199
-Production verify run         30970746866
-Production verify job         92194294438
+Review PR                     #177
+Review merge                  09c11e838a3b157a9efb7388f531ff04f723e4ff
+Canonical data PR             #178
+Canonical merge               ca225d1df10b4a81d72a0fe60fd2713b6e8b543a
+Build-input refresh PR        #179
+Build-input refresh           3f0514b568e84b17daf9e0a2d14649b3a329c787
+Production audit PR           #180
+Initial production run        30976024931
+Immediate post-refresh run    30976430766
+First delayed run             30976783627
+Production verify run         30977144358
+Production verify job         92213419237
 Verified state                33 / 34 / 183 / 284
-Archived evidence             94 / 284
+Archived evidence             101 / 284
 Canonical content match       true
 HTML routes                   72
 Redirects                     74
-Generated at                  2026-08-05T03:00:56.755Z
-Publication attempt           20 after one build-input refresh
+Generated at                  2026-08-05T05:06:09.501Z
+Publication attempt           1 on second delayed rerun after one refresh
 ```
 
-The initial verifier rejected `bir_src_000248` for all twenty attempts while `generated_at` stayed `2026-08-05T02:37:38.915Z`. PR #175 introduced one behavior-neutral build-input refresh. The unchanged rerun continued to observe the old build through attempt 19 and switched to `generated_at 2026-08-05T03:00:56.755Z` on attempt 20. Complete public-content equality then passed. No second refresh was committed.
+The initial, immediate post-refresh, and first delayed verifiers each rejected stale same-count content for twenty attempts while `generated_at` remained `2026-08-05T04:41:17.057Z`. No second refresh was committed. The next delayed run switched to `2026-08-05T05:06:09.501Z` on attempt 1 and passed complete public-content equality.
 
 ## Permanent guards
 
@@ -72,46 +77,46 @@ Incidents without Tier 1              1
 Events without primary               16
 Events without Tier 1                 6
 Unreviewed event Tier 1 gaps           0
-Evidence with archived_url           94
-Terminal unarchived unique URLs      36
-Terminal unarchived records          49
-Risky-host unarchived unique URLs    27
-Risky-host unarchived records        42
+Evidence with archived_url          101
+Terminal unarchived unique URLs      33
+Terminal unarchived records          45
+Risky-host unarchived unique URLs    24
+Risky-host unarchived records        38
 X/Twitter records unarchived         30
 Unknown URL status                    0
 ```
 
-## Archive Capture Batch 13
+## Archive Capture Batch 14
 
 ```text
-Review boundary                    PR #173
-Canonical migration                PR #174
-Build-input refresh                PR #175
-Production audit                   PR #176
+Review boundary                    PR #177
+Canonical migration                PR #178
+Build-input refresh                PR #179
+Production audit                   PR #180
 Reviewed unique URLs                    10
-Verified Wayback URLs                    3
-Evidence records updated                 3
-Terminal unique queue           36 -> 36
-Terminal record queue           49 -> 49
-Risky-host unique queue         29 -> 27
-Risky-host record queue         45 -> 42
-X/Twitter record queue          32 -> 30
+Verified Wayback URLs                    5
+Evidence records updated                 7
+Terminal unique queue           36 -> 33
+Terminal record queue           49 -> 45
+Risky-host unique queue         27 -> 24
+Risky-host record queue         42 -> 38
+X/Twitter record queue          30 -> 30
 Source-count drift                      0
 ```
 
 Updated evidence IDs:
 
 ```text
-bir_src_000248
-bir_src_000275
-bir_src_000278
+bir_src_000036
+bir_src_000013
+bir_src_000021
+bir_src_000215
+bir_src_000057
+bir_src_000226
+bir_src_000059
 ```
 
-Only the exact reviewed SlowMist, SOCKET, and Transit Finance snapshots were added. Source URLs, historical claims, source hierarchy, reliability, dates, and linkages remain unchanged.
-
-The first canonical attempt used a provisional risky-host ceiling of 26. The permanent validator observed 27 because SlowMist Medium is not part of the risky-host host set; the attempt failed before commit. The corrected run passed all checks and removed its temporary write code.
-
-Holograph and Unizen remained below the replay-size boundary. Taiko, Syndicate Commons, and Everclear returned no accepted exact capture. They remain deferred.
+Only captures reproduced in both completed review runs were accepted. The first-run-only Harmony forum replay was rejected. pNetwork, Wormhole, and Rainbow Bridge candidates remain deferred.
 
 ## Deployment resume rule
 
@@ -127,7 +132,7 @@ Issue #171 remains open as a monitoring signal. Boltz is not canonical because t
 
 ## Next
 
-1. continue bounded archive work from 27 risky-host and 36 terminal unique URLs;
+1. continue bounded archive work from 24 risky-host and 33 terminal unique URLs;
 2. retry deferred official sources under the same replay and temporal-fit standards;
 3. reduce remaining event primary gaps where justified;
 4. strengthen validators;

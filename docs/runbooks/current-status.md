@@ -46,6 +46,7 @@ Archive capture Batch 10             production-verified — PRs #148–#151
 Archive capture Batch 11             production-verified — PRs #152–#156
 Archive capture Batch 12             production-verified — PRs #157–#160
 Archive capture Batch 13             production-verified — PRs #173–#176
+Archive capture Batch 14             production-verified — PRs #177–#180
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
 ```
@@ -64,7 +65,7 @@ Unknown URL status   0
 Primary evidence                         201 / 284
 Tier 1 evidence                          220 / 284
 Official-domain evidence                 131 / 284
-Evidence with archived_url                94 / 284
+Evidence with archived_url               101 / 284
 Bridges without primary evidence          0 / 33
 Bridges without tier 1 evidence           0 / 33
 Incidents without primary evidence        1 / 34
@@ -72,31 +73,21 @@ Incidents without tier 1 evidence         1 / 34
 Events without primary evidence          16 / 183
 Events without tier 1 evidence             6 / 183
 Unreviewed event Tier 1 gaps               0
-Terminal unarchived unique URLs          36
-Terminal unarchived evidence records     49
-Risky-host unarchived unique URLs        27
-Risky-host unarchived evidence records   42
+Terminal unarchived unique URLs          33
+Terminal unarchived evidence records     45
+Risky-host unarchived unique URLs        24
+Risky-host unarchived evidence records   38
 X/Twitter evidence records unarchived    30
 Unknown URL status                        0
 ```
 
 Archive-risk ceilings use normalized unique source URLs and exact-or-subdomain host matching. Multiple evidence records that reuse one source URL create one preservation obligation.
 
-Archive Capture Batch 13 reviewed ten exact canonical source URLs. Three exact, temporally compatible captures were approved and published:
+Archive Capture Batch 14 reviewed ten previously unreviewed exact canonical source URLs. Five reproducible exact captures were approved and published to seven records covering Qubit, Harmony Horizon reporting, BNB Chain, and two LI.FI analyses. The permanent validator confirmed 101 archived evidence records, 33 terminal unique URLs, and 24 risky-host unique URLs.
 
-```text
-bir_src_000248  SlowMist Transit Swap exploit analysis
-bir_src_000275  SOCKET fund recovery update
-bir_src_000278  Transit Finance recovery update
-```
+One Harmony forum capture was rejected because it passed only the first review run. pNetwork returned no exact capture; Wormhole replay content remained short or absent; Rainbow Bridge returned no exact capture on the completed rerun. No wildcard, guessed, short, failed, temporally incompatible, or non-reproducible capture was accepted.
 
-The SlowMist Medium capture improves overall archive coverage but is outside the risky-host host set. The SOCKET and Transit Finance X/Twitter captures reduce the risky-host unique-URL queue from 29 to 27. All three records reduce the record-level risky-host queue from 45 to 42. Terminal queues remain unchanged.
-
-Holograph and Unizen exact replays remained below the permanent 65,536-byte boundary. Taiko, Syndicate Commons, and Everclear returned no accepted exact capture. They remain deferred rather than receiving wildcard, guessed, short, failed, or temporally incompatible snapshots.
-
-The first canonical application attempt projected a risky-host ceiling of 26. The permanent source-quality validator observed 27 and rejected the attempt before commit. The corrected bounded run passed all canonical, controlled-failure, build, and dist checks and removed its temporary write files.
-
-The initial production verifier then rejected stale same-count evidence content at `bir_src_000248` for twenty attempts. PR #175 introduced one behavior-neutral build-input refresh. The unchanged verifier continued to see the old build through attempt 19 and converged at attempt 20 with `generated_at 2026-08-05T03:00:56.755Z`. Complete equality was confirmed for all four public datasets, 72 HTML routes, and 74 redirects.
+The initial verifier, immediate post-refresh verifier, and first delayed verifier each rejected stale same-count evidence content at `bir_src_000013` for twenty attempts. Only one behavior-neutral build-input refresh was committed. The second delayed run converged on attempt 1 at `generated_at 2026-08-05T05:06:09.501Z`, confirming complete equality for all four datasets, 72 HTML routes, and 74 redirects.
 
 All event Tier 1 gaps are reviewed. The six remaining gaps are intentional secondary records:
 
@@ -116,29 +107,33 @@ Remaining incident-level gap:
 ## Latest completed production checkpoint
 
 ```text
-Review PR                     #173
-Review merge                  fba6c668207ba1fb2613840df81123a54da5b669
-Canonical data PR             #174
-Canonical merge               ab0b45fb1f1cbe6cdddd1238c37fb99f201c934f
-Build-input refresh PR        #175
-Build-input refresh           15472395efdb4435380dbd0fdae8c7fe71e54b06
-Production audit PR           #176
-Initial production run        30970204138
-Initial failed job            92192668199
-Production verify run         30970746866
-Production verify job         92194294438
+Review PR                     #177
+Review merge                  09c11e838a3b157a9efb7388f531ff04f723e4ff
+Canonical data PR             #178
+Canonical merge               ca225d1df10b4a81d72a0fe60fd2713b6e8b543a
+Build-input refresh PR        #179
+Build-input refresh           3f0514b568e84b17daf9e0a2d14649b3a329c787
+Production audit PR           #180
+Initial production run        30976024931
+Initial failed job            92210067226
+Immediate refresh run         30976430766
+Immediate refresh failed job  92211270159
+First delayed run             30976783627
+First delayed failed job      92212328360
+Production verify run         30977144358
+Production verify job         92213419237
 Verified state                33 / 34 / 183 / 284
-Archived evidence             94 / 284
+Archived evidence             101 / 284
 Canonical content match       true
 Verified HTML routes          72
 Verified redirects            74
-Generated at                  2026-08-05T03:00:56.755Z
-Publication attempt           20 after one build-input refresh
+Generated at                  2026-08-05T05:06:09.501Z
+Publication attempt           1 on second delayed rerun after one refresh
 ```
 
 ## Next
 
-1. continue bounded archive capture work from 27 risky-host and 36 terminal unique URLs;
+1. continue bounded archive capture work from 24 risky-host and 33 terminal unique URLs;
 2. retry deferred official-source candidates without weakening replay or temporal-fit requirements;
 3. reduce the remaining 16 events without primary evidence where justified;
 4. strengthen remaining validators;
