@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: 22
 
-      # Third delayed rerun; no second refresh and no expectation changes.
+      # Fourth delayed rerun after later main activity; no second refresh or expectation changes.
       - name: Verify production registry
         env:
           PUBLIC_SITE_ORIGIN: https://bir.badjoke-lab.com
