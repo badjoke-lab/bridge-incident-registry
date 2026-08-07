@@ -1,6 +1,34 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
+interface SupportWallet {
+  asset: string;
+  name: string;
+  network: string;
+  address: string;
+  note?: string;
+  addressReference?: string;
+}
+
+const evmAddress = "0xea2a0fb0def0473d161b7958f6d584533db9202d";
+const primaryWallets: SupportWallet[] = [
+  { asset: "BTC", name: "Bitcoin", network: "Bitcoin network", address: "bc1qk3y8x72me37aj8d236z9v0gu42t8xxr2ytspmd" },
+  {
+    asset: "ETH · USDT · USDC",
+    name: "EVM address",
+    network: "Ethereum Mainnet · ERC-20",
+    address: evmAddress,
+    note: "Use this address for ETH, ERC-20 USDT, and ERC-20 USDC on Ethereum Mainnet."
+  }
+];
+const additionalWallets: SupportWallet[] = [
+  { asset: "SOL", name: "Solana", network: "Solana network", address: "9e9kZkwA6tYYAfCzb76aimta26yyPEgR39GZK2oBVH3q" },
+  { asset: "BNB", name: "BNB", network: "BNB Smart Chain · BEP-20", address: evmAddress, addressReference: "Use the EVM address shown in Primary options." },
+  { asset: "DOGE", name: "Dogecoin", network: "Dogecoin network", address: "DP1m7675rSCZC5s5wzWSHNaA9bLVpsyjse" },
+  { asset: "AVAX", name: "Avalanche", network: "Avalanche C-Chain", address: evmAddress, addressReference: "Use the EVM address shown in Primary options." },
+  { asset: "XRP", name: "XRP", network: "XRP Ledger", address: "rUHSmDUteyPSr7FDq4p3BzQV627gSiJdCr", note: "Destination tag / memo is optional for this address. Leave it blank unless your wallet requires a value." }
+];
+
 const issueUrl = "https://github.com/badjoke-lab/bridge-incident-registry/issues/new/choose";
 const title = "Support Bridge Incident Registry";
 const description = "Support official-source review, post-incident updates, recovery and reimbursement tracking, archive preservation, corrections, and long-term BIR maintenance.";
@@ -23,11 +51,62 @@ const description = "Support official-source review, post-incident updates, reco
       </div>
     </section>
 
-    <section class="home-section" aria-labelledby="support-methods-title">
-      <div class="home-section-header"><div><div class="kicker">Ways to help</div><h2 id="support-methods-title">Support options</h2></div></div>
+    <section class="home-section wallet-section" aria-labelledby="support-methods-title">
+      <div class="home-section-header"><div><div class="kicker">Financial support</div><h2 id="support-methods-title">Support options</h2></div></div>
+      <div class="shared-wallet-note">
+        <strong>Shared BadJoke-Lab support wallets</strong>
+        <p>These addresses are intentionally reused from the wallet set already published by Stable or Gone. BIR does not require a separate wallet. Transfers to these shared addresses are not automatically attributable to one project.</p>
+      </div>
+      <div class="wallet-warning">Verify the exact asset, chain, and full address before sending. Sending through a different network may be unrecoverable. Consider a small test transfer first.</div>
+
+      <section class="wallet-option-group" aria-labelledby="primary-wallet-options">
+        <h3 id="primary-wallet-options">Primary options</h3>
+        <div class="wallet-grid">
+          {primaryWallets.map((wallet) => (
+            <article class="wallet-card" data-copy-container>
+              <header>
+                <div><span class="asset-symbol">{wallet.asset}</span><h4>{wallet.name}</h4></div>
+                <span class="network-chip">{wallet.network}</span>
+              </header>
+              {wallet.note && <p class="wallet-note">{wallet.note}</p>}
+              <div class="address-block">
+                <span>Address</span>
+                <code>{wallet.address}</code>
+                <button type="button" data-copy-address={wallet.address} aria-label={`Copy ${wallet.asset} support address`}>Copy address</button>
+                <small data-copy-feedback aria-live="polite"></small>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <details class="additional-wallet-options">
+        <summary>Additional networks</summary>
+        <div class="wallet-grid">
+          {additionalWallets.map((wallet) => (
+            <article class="wallet-card" data-copy-container>
+              <header>
+                <div><span class="asset-symbol">{wallet.asset}</span><h4>{wallet.name}</h4></div>
+                <span class="network-chip">{wallet.network}</span>
+              </header>
+              {wallet.addressReference ? (
+                <p class="wallet-note"><strong>{wallet.addressReference}</strong> The copy button uses that same address.</p>
+              ) : (
+                <div class="address-block address-block--plain"><span>Address</span><code>{wallet.address}</code></div>
+              )}
+              {wallet.note && <p class="wallet-note">{wallet.note}</p>}
+              <button class="standalone-copy" type="button" data-copy-address={wallet.address} aria-label={`Copy ${wallet.asset} support address`}>Copy address</button>
+              <small data-copy-feedback aria-live="polite"></small>
+            </article>
+          ))}
+        </div>
+      </details>
+    </section>
+
+    <section class="home-section" aria-labelledby="other-support-title">
+      <div class="home-section-header"><div><div class="kicker">Other ways to help</div><h2 id="other-support-title">Evidence and corrections</h2></div></div>
       <div class="support-principles">
         <article><h3>Submit evidence or corrections</h3><p>Report missing official statements, incorrect dates, changed recovery outcomes, reimbursement updates, restart status, or broken links.</p><p><a href={issueUrl}>Open GitHub Issues →</a></p></article>
-        <article class="support-methods-note"><h3>Financial support methods</h3><p>A dedicated BIR payment address or payment link is not currently published. Do not send funds to an address copied from another BadJoke-Lab project. A verified method will be listed here only after it is approved for BIR.</p></article>
       </div>
     </section>
 
@@ -40,5 +119,77 @@ const description = "Support official-source review, post-incident updates, reco
         <article><h3>Corrections remain open</h3><p>Corrections are reviewed regardless of whether the submitter or bridge operator has provided support.</p></article>
       </div>
     </section>
+
+    <script is:inline>
+      (() => {
+        const fallbackCopy = (value) => {
+          const textarea = document.createElement('textarea');
+          textarea.value = value;
+          textarea.setAttribute('readonly', '');
+          textarea.style.position = 'fixed';
+          textarea.style.opacity = '0';
+          document.body.appendChild(textarea);
+          textarea.select();
+          const copied = document.execCommand('copy');
+          textarea.remove();
+          return copied;
+        };
+        document.querySelectorAll('[data-copy-address]').forEach((button) => {
+          button.addEventListener('click', async () => {
+            const address = button.getAttribute('data-copy-address') || '';
+            const original = button.textContent;
+            let copied = false;
+            try {
+              if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(address);
+                copied = true;
+              } else copied = fallbackCopy(address);
+            } catch {
+              copied = fallbackCopy(address);
+            }
+            button.textContent = copied ? 'Copied' : 'Copy failed';
+            const feedback = button.closest('[data-copy-container]')?.querySelector('[data-copy-feedback]');
+            if (feedback) feedback.textContent = copied ? ' Address copied.' : ' Copy failed; select the address manually.';
+            window.setTimeout(() => {
+              button.textContent = original;
+              if (feedback) feedback.textContent = '';
+            }, 2000);
+          });
+        });
+      })();
+    </script>
+
+    <style>
+      .wallet-section { display: grid; gap: 18px; }
+      .shared-wallet-note, .wallet-warning { padding: 16px 18px; border: 1px solid var(--line); border-radius: 10px; }
+      .shared-wallet-note { background: rgba(157, 116, 57, .12); border-color: #7f6337; }
+      .shared-wallet-note p { margin: 6px 0 0; color: var(--muted); }
+      .wallet-warning { color: var(--muted); font-size: .86rem; }
+      .wallet-option-group { display: grid; gap: 12px; }
+      .wallet-option-group > h3 { margin: 0; }
+      .wallet-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+      .wallet-card { min-width: 0; padding: 18px; border: 1px solid var(--line); border-radius: 10px; background: rgba(255,255,255,.02); }
+      .wallet-card header { display: flex; justify-content: space-between; gap: 12px; align-items: flex-start; }
+      .wallet-card h4 { margin: 4px 0 0; }
+      .asset-symbol { font-weight: 800; }
+      .network-chip { flex: 0 0 auto; max-width: 50%; padding: 4px 8px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-size: .72rem; text-align: right; }
+      .wallet-note { color: var(--muted); font-size: .82rem; line-height: 1.5; }
+      .address-block { display: grid; gap: 8px; margin-top: 14px; }
+      .address-block > span { color: var(--muted); font-size: .72rem; text-transform: uppercase; letter-spacing: .06em; }
+      .address-block code { display: block; max-width: 100%; overflow-wrap: anywhere; padding: 10px 12px; border: 1px solid var(--line); border-radius: 7px; background: rgba(255,255,255,.04); font-size: .78rem; }
+      .address-block button, .standalone-copy { min-height: 42px; padding: 8px 12px; border: 1px solid #7f6337; border-radius: 8px; background: rgba(157,116,57,.16); color: inherit; cursor: pointer; font-weight: 700; }
+      [data-copy-feedback] { display: block; min-height: 1.2em; color: var(--muted); }
+      .additional-wallet-options { border: 1px solid var(--line); border-radius: 10px; }
+      .additional-wallet-options summary { min-height: 46px; padding: 13px 16px; cursor: pointer; font-weight: 800; }
+      .additional-wallet-options[open] summary { border-bottom: 1px solid var(--line); }
+      .additional-wallet-options .wallet-grid { padding: 14px; }
+      .standalone-copy { width: 100%; margin-top: 12px; }
+      @media (max-width: 720px) {
+        .wallet-grid { grid-template-columns: 1fr; }
+        .wallet-card header { display: grid; }
+        .network-chip { max-width: 100%; justify-self: start; text-align: left; }
+        .address-block button, .standalone-copy { min-height: 46px; width: 100%; }
+      }
+    </style>
   </article>
 </BaseLayout>
