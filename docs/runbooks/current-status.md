@@ -33,25 +33,9 @@ Source-quality no-regression gate    active
 Source-quality remediation           complete — PRs #103–#107
 Event Tier 1 remediation             production-verified — PRs #108–#116
 Nerve source boundary                reviewed — PR #117
-Archive capture Batch 1              production-verified — PRs #118–#120
-Archive capture Batch 2              production-verified — PRs #122–#125
-Archive capture Batch 3              production-verified — PRs #126–#128
-Archive capture Batch 4              production-verified — PRs #129–#131
-Archive capture Batch 5              production-verified — PRs #132–#134
-Archive capture Batch 6              production-verified — PRs #135–#138
-Archive capture Batch 7              production-verified — PRs #139–#141
-Archive capture Batch 8              production-verified — PRs #142–#144
-Archive capture Batch 9              production-verified — PRs #145–#147
-Archive capture Batch 10             production-verified — PRs #148–#151
-Archive capture Batch 11             production-verified — PRs #152–#156
-Archive capture Batch 12             production-verified — PRs #157–#160
-Archive capture Batch 13             production-verified — PRs #173–#176
-Archive capture Batch 14             production-verified — PRs #177–#180
-Archive capture Batch 15             production-verified — PRs #181, #182, #184, #185
-Archive capture Batch 16             production-verified — PRs #188–#190
-Archive capture Batch 17             production-verified — PRs #191–#193
-Archive capture Batch 18             production-verified — PRs #194, #195, #197, #198
+Archive capture Batches 1–18         production-verified — PRs #118–#198
 Previously-unreviewed archive queue  exhausted
+Deferred Archive Retry 01            production-verified — PRs #199–#201
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
 ```
@@ -64,7 +48,7 @@ PR #186  Incident discovery, filters, pagination, detail TOCs, support, and proj
 PR #187  Shared BadJoke-Lab support-wallet presentation
 ```
 
-These changes did not alter canonical record counts. Cloudflare Pages preview deployment remains `none`.
+Cloudflare Pages preview deployment remains `none`.
 
 ## Exact source-count and URL state
 
@@ -80,7 +64,7 @@ Unknown URL status   0
 Primary evidence                         201 / 284
 Tier 1 evidence                          220 / 284
 Official-domain evidence                 131 / 284
-Evidence with archived_url               124 / 284
+Evidence with archived_url               126 / 284
 Bridges without primary evidence           0 / 33
 Bridges without tier 1 evidence            0 / 33
 Incidents without primary evidence         1 / 34
@@ -88,21 +72,26 @@ Incidents without tier 1 evidence          1 / 34
 Events without primary evidence           16 / 183
 Events without tier 1 evidence              6 / 183
 Unreviewed event Tier 1 gaps                0
-Terminal unarchived unique URLs           17
-Terminal unarchived evidence records      27
-Risky-host unarchived unique URLs         18
-Risky-host unarchived evidence records    32
+Terminal unarchived unique URLs           15
+Terminal unarchived evidence records      25
+Risky-host unarchived unique URLs         17
+Risky-host unarchived evidence records    31
 X/Twitter evidence records unarchived     29
 Unknown URL status                         0
 ```
 
-Archive-risk ceilings use normalized unique source URLs and exact-or-subdomain host matching. Multiple evidence records that reuse one source URL create one preservation obligation.
+Archive Capture Batch 18 exhausted the previously-unreviewed archive candidate set. A repository-derived inventory then found 45 reviewed-but-unarchived evidence records across 32 unique URLs.
 
-Archive Capture Batch 18 reviewed all nine remaining previously-unreviewed terminal/risky-host candidate URLs visible to the established reviewer. Four mappings reproduced identically in both independent review passes and were published to Avalanche Bridge AEB, Syndicate exploit reporting, Everclear wind-down reporting, and the renproject GitHub evidence record. The permanent validator confirmed 124 archived evidence records, 17 terminal unique URLs, and 18 risky-host unique URLs.
+Deferred Archive Retry 01 selected ten higher-value reviewed unresolved URLs, prioritising terminal and first-party/official material while excluding X/Twitter from the first retry pass. Two sources newly satisfied the unchanged two-pass exact-replay boundary:
 
-The first Batch 18 review run failed before candidate replay because the historical reviewer assumed ten candidates while only nine remained. The temporary wrapper was corrected to review the complete remaining set without changing selection order or acceptance requirements. The remaining five reviewed URLs did not satisfy the reproducible exact-replay boundary and remain deferred.
+```text
+bir_src_000037  Qubit — Our Compensation Plan 1
+bir_src_000068  Harmony — Summary of the Horizon Bridge Incident
+```
 
-Batch 18 therefore closes the untouched archive-review queue. The unresolved terminal/risky-host counts are not unreviewed work; future archive preservation must be a deliberate retry of reviewed deferred candidates or a response to newly introduced canonical source URLs.
+The other eight selected URLs remain deferred. No acceptance rule was weakened.
+
+The canonical migration in PR #200 raised archived evidence from 124 to 126, reduced terminal unique URLs from 17 to 15, and reduced risky-host unique URLs from 18 to 17.
 
 All event Tier 1 gaps are reviewed. The six remaining gaps are intentional secondary records:
 
@@ -122,31 +111,29 @@ Remaining incident-level gap:
 ## Latest completed production checkpoint
 
 ```text
-Review PR                     #194
-Review merge                  1717b5dbea5fd38756e60120be2d131dcb4fe43a
-Canonical data PR             #195
-Canonical merge               50ca3782c4940e095ff94de2cce220a3ee0c7da5
-Build-input refresh PR        #197
-Build-input refresh           59b74d26a86373e6e97e6e630b54becd35f64910
-Production audit PR           #198
-Initial production run        31266002708
-Initial production job        93124105488
-Successful production run     31266360510
-Successful production job     93125031659
+Review PR                     #199
+Review merge                  53bcdc47f4269a00dc1c671f7428f75a8fe35c1e
+Canonical data PR             #200
+Canonical merge               934c85c49f7db71773721c5f4d64cc769f1361b0
+Production audit PR           #201
+Production verify run         31267226936
+Production verify job         93127231682
+Read-only production probe    31267391787
+Read-only probe job           93127650808
 Verified state                33 / 34 / 183 / 284
-Archived evidence             124 / 284
+Archived evidence             126 / 284
 Canonical content match       true
 Verified HTML routes          72
 Verified redirects            74
-Generated at                  2026-08-08T16:07:52.937Z
-Publication attempt           1 after refresh
+Generated at                  2026-08-08T16:33:32.318Z
+Build-input refresh           not required
 ```
 
-The initial production verifier rejected same-count stale evidence at `bir_src_000132` for all twenty attempts. A newer generated build appeared inside that window but remained stale. The single permitted behavior-neutral build-input refresh changed no canonical content or verification expectations. The unchanged verifier then passed on its first post-refresh attempt. No second refresh was used.
+The read-only probe independently confirmed live canonical-only version metadata and the exact archive URLs for both Deferred Retry 01 records.
 
 ## Next
 
-1. create a bounded deferred archive-retry inventory from already-reviewed unresolved sources and retry only justified candidates under unchanged acceptance requirements;
+1. run Deferred Archive Retry 02 against a different high-value subset of the remaining reviewed-unresolved URLs; do not immediately recycle the eight Retry 01 failures;
 2. reduce the remaining 16 events without primary evidence where justified;
 3. strengthen remaining validators;
 4. begin review-gated monitoring and candidate collection without automatic canonical publication;

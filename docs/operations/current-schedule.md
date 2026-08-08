@@ -25,7 +25,8 @@ After every merged pull request, report:
   - event Tier 1 remediation: complete and production-verified
   - Archive Capture Batches 1–18: complete and production-verified
   - untouched archive-review queue: exhausted
-  - next: deferred archive retry, justified primary-evidence remediation, then validator strengthening
+  - Deferred Archive Retry 01: complete and production-verified
+  - next: Deferred Archive Retry 02, justified primary-evidence remediation, then validator strengthening
 - Phase 4 — public contract stabilization: complete
 - Phase 5 — monitoring and candidate collection: planned
 - Release — v1 documentation, accessibility, performance, compatibility, and release checks: planned
@@ -42,9 +43,9 @@ Evidence    284
 ## Current quality boundary
 
 ```text
-Evidence with archived_url           124
-Terminal unarchived unique URLs       17
-Risky-host unarchived unique URLs     18
+Evidence with archived_url           126
+Terminal unarchived unique URLs       15
+Risky-host unarchived unique URLs     17
 Events without primary                16
 Events without Tier 1                  6
 Unknown URL status                     0
@@ -54,22 +55,19 @@ Canonical production content match  true
 ## Latest production checkpoint
 
 ```text
-Review PR              #194
-Canonical data PR      #195
-Canonical merge        50ca3782c4940e095ff94de2cce220a3ee0c7da5
-Build-input refresh PR #197
-Build-input refresh    59b74d26a86373e6e97e6e630b54becd35f64910
-Production audit PR    #198
-Initial production     31266002708 / 93124105488
-Successful production  31266360510 / 93125031659
-Generated at           2026-08-08T16:07:52.937Z
-Publication attempt    1 after refresh
+Review PR             #199
+Canonical data PR     #200
+Canonical merge       934c85c49f7db71773721c5f4d64cc769f1361b0
+Production audit PR   #201
+Production run        31267226936 / 93127231682
+Read-only live probe  31267391787 / 93127650808
+Generated at          2026-08-08T16:33:32.318Z
 ```
 
 ## Immediate execution order
 
-1. build a bounded deferred archive-retry inventory from already-reviewed unresolved candidates;
-2. retry justified deferred sources under the unchanged exact replay, temporal-fit, minimum-size, and two-run reproducibility boundary;
+1. run Deferred Archive Retry 02 against a different high-value subset of the remaining reviewed-unresolved sources;
+2. do not immediately recycle the eight sources that failed Retry 01;
 3. remediate event primary-evidence gaps where source hierarchy can be improved safely;
 4. strengthen validators;
 5. implement review-gated monitoring and candidate collection;
@@ -81,6 +79,7 @@ Publication attempt    1 after refresh
 - do not treat monitoring signals as canonical incidents;
 - do not accept wildcard, guessed, short, failed, temporally incompatible, or non-reproducible archive captures;
 - do not invent another untouched archive batch after Batch 18; the established reviewer has exhausted its previously-unreviewed terminal/risky-host candidate set;
+- deferred retries must use explicit reviewed-unresolved targets and the same acceptance rules;
 - repository checks are the normal merge gate;
 - production verification is required for explicit canonical publication and release gates;
 - a build-input refresh may be used once when necessary, but it must not change canonical content or verification expectations;

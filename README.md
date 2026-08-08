@@ -31,15 +31,15 @@ BIR is not:
 
 The static registry application, four-record canonical model, validation pipeline, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
 
-Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Event Tier 1 remediation, the Nerve source review boundary, and Archive Capture Batches 1 through 18 are complete and production-verified.
+Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Event Tier 1 remediation, the Nerve source review boundary, Archive Capture Batches 1 through 18, and Deferred Archive Retry 01 are complete and production-verified.
 
-Evidence remains 284. Event primary gaps are 16, event Tier 1 gaps are six, and all remaining Tier 1 gaps are reviewed and intentionally secondary. One hundred twenty-four evidence records now publish eighty-seven verified Wayback snapshots.
+Evidence remains 284. Event primary gaps are 16, event Tier 1 gaps are six, and all remaining Tier 1 gaps are reviewed and intentionally secondary. One hundred twenty-six evidence records now include verified archive URLs.
 
-Archive-risk metrics count normalized unique source URLs with exact-or-subdomain host matching. Duplicate evidence records sharing one source URL do not create duplicate preservation obligations. Current unresolved unarchived queues are 17 terminal unique URLs and 18 risky-host unique URLs.
+Archive-risk metrics count normalized unique source URLs with exact-or-subdomain host matching. Duplicate evidence records sharing one source URL do not create duplicate preservation obligations. Current unresolved unarchived queues are 15 terminal unique URLs and 17 risky-host unique URLs.
 
 Archive Batch 18 reviewed all nine remaining previously-unreviewed terminal/risky-host candidate URLs visible to the established reviewer. Four reproducible exact mappings were published for Avalanche Bridge AEB support material, Syndicate exploit reporting, Everclear wind-down reporting, and the renproject GitHub organization. The other five reviewed URLs remain deferred under the same exact replay, temporal fit, minimum-size, and two-run reproducibility requirements.
 
-There is no untouched archive-review Batch 19. Further archive preservation must retry explicitly deferred reviewed sources or handle newly introduced canonical source URLs.
+There is no untouched archive-review Batch 19. Deferred Archive Retry 01 reconstructed the reviewed-unresolved pool and newly recovered Qubit’s compensation plan (`bir_src_000037`) and Harmony’s Horizon Bridge incident summary (`bir_src_000068`). The other eight Retry 01 targets remained deferred under unchanged acceptance rules. Further archive preservation must continue with explicit deferred-retry scopes or newly introduced canonical source URLs.
 
 Production verification compares every transformed field in all four public datasets with the generated public contract. Counts and IDs alone cannot prove publication. For Batch 18, the initial twenty-attempt verifier rejected same-count stale evidence at `bir_src_000132`, including after a newer `generated_at` appeared. One behavior-neutral build-input refresh was then used; the unchanged verifier passed complete equality on the first post-refresh attempt. No second refresh was used. Cloudflare Pages preview deployment remains restricted to `none` after the Batch 15 queue remediation.
 
@@ -63,25 +63,22 @@ Unknown URL status                0
 Events without primary           16
 Events without Tier 1             6
 Unreviewed event Tier 1 gaps       0
-Evidence with archived_url      124
-Terminal unarchived URLs         17
-Risky-host unarchived URLs       18
+Evidence with archived_url      126
+Terminal unarchived URLs         15
+Risky-host unarchived URLs       17
 Canonical public content match    true
 ```
 
 Latest verified production checkpoint:
 
 ```text
-Review PR              #194
-Canonical data PR      #195
-Canonical merge        50ca3782c4940e095ff94de2cce220a3ee0c7da5
-Build-input refresh PR #197
-Build-input refresh    59b74d26a86373e6e97e6e630b54becd35f64910
-Production audit PR    #198
-Initial production     31266002708 / 93124105488
-Successful production  31266360510 / 93125031659
-Generated at           2026-08-08T16:07:52.937Z
-Publication attempt    1 after refresh
+Review PR              #199
+Canonical data PR      #200
+Canonical merge        934c85c49f7db71773721c5f4d64cc769f1361b0
+Production audit PR    #201
+Production verify      31267226936 / 93127231682
+Read-only live probe   31267391787 / 93127650808
+Generated at           2026-08-08T16:33:32.318Z
 HTML routes            72
 Redirects              74
 ```
@@ -194,6 +191,9 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/audits/phase3-archive-capture-batch18-2026-08-09.md` — Archive Batch 18 canonical migration
 - `docs/audits/phase3-archive-capture-batch18-deployment-refresh-2026-08-09.md` — Archive Batch 18 single deployment refresh boundary
 - `docs/audits/production-verification-phase3-archive-capture-batch18-2026-08-09.md` — Archive Batch 18 production audit
+- `docs/audits/phase3-archive-deferred-retry-01-review-2026-08-09.md` — Deferred Archive Retry 01 reproducible review
+- `docs/audits/phase3-archive-deferred-retry-01-2026-08-09.md` — Deferred Archive Retry 01 canonical migration
+- `docs/audits/production-verification-phase3-archive-deferred-retry-01-2026-08-09.md` — Deferred Archive Retry 01 production audit
 - `docs/batches/` — reviewed batch scopes
 
 ## Architecture
