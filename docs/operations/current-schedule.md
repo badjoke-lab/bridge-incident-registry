@@ -23,8 +23,8 @@ After every merged pull request, report:
   - source-count remediation: complete
   - source-quality baseline and remediation: complete
   - event Tier 1 remediation: complete and production-verified
-  - Archive Capture Batches 1–16: complete and production-verified
-  - next: Batch 17 or justified primary-evidence remediation
+  - Archive Capture Batches 1–17: complete and production-verified
+  - next: Batch 18 or justified primary-evidence remediation
 - Phase 4 — public contract stabilization: complete
 - Phase 5 — monitoring and candidate collection: planned
 - Release — v1 documentation, accessibility, performance, compatibility, and release checks: planned
@@ -41,8 +41,8 @@ Evidence    284
 ## Current quality boundary
 
 ```text
-Evidence with archived_url           116
-Terminal unarchived unique URLs       25
+Evidence with archived_url           120
+Terminal unarchived unique URLs       21
 Risky-host unarchived unique URLs     18
 Events without primary                16
 Events without Tier 1                  6
@@ -53,19 +53,20 @@ Canonical production content match  true
 ## Latest production checkpoint
 
 ```text
-Review PR            #188
-Canonical data PR    #189
-Canonical merge      f9c6395d400358543bb3a761aa209be97ca1c266
-Production audit PR  #190
-Production run       31264440303
-Production job       93120202656
-Generated at         2026-08-08T15:23:20.361Z
-Publication attempt  1
+Review PR            #191
+Canonical data PR    #192
+Canonical merge      3aa5f6cbd7a38ac1da5332e5dd3ea038409776d7
+Production audit PR  #193
+Production run       31265282488
+Production job       93122316026
+Generated at         2026-08-08T15:46:44.950Z
+Publication attempt  5
+Build-input refresh  not required
 ```
 
 ## Immediate execution order
 
-1. choose Batch 17 from the remaining 18 risky-host and 25 terminal unique-URL queues;
+1. choose Batch 18 from the remaining 18 risky-host and 21 terminal unique-URL queues;
 2. run a review-only exact replay, temporal-fit, size, and reproducibility audit;
 3. apply only reviewed mappings in a separate canonical PR;
 4. explicitly verify production when canonical public content changes;
