@@ -27,14 +27,9 @@ Phase 3  Full-corpus quality strengthening         active
          Source-quality remediation                complete — PRs #103–#107
          Event Tier 1 remediation                  production-verified — PRs #108–#116
          Nerve source boundary                     reviewed — PR #117
-         Archive capture Batches 1–12              production-verified — PRs #118–#160
-         Archive capture Batch 13                  production-verified — PRs #173–#176
-         Archive capture Batch 14                  production-verified — PRs #177–#180
-         Archive capture Batch 15                  production-verified — PRs #181, #182, #184, #185
-         Archive capture Batch 16                  production-verified — PRs #188–#190
-         Archive capture Batch 17                  production-verified — PRs #191–#193
-         Archive capture Batch 18                  production-verified — PRs #194, #195, #197, #198
+         Archive capture Batches 1–18              production-verified — PRs #118–#198
          Previously-unreviewed archive queue       exhausted
+         Deferred Archive Retry 01                 production-verified — PRs #199–#201
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
@@ -47,27 +42,25 @@ The public UI/support follow-up is current through PR #187. Representative scree
 ## Latest completed production checkpoint
 
 ```text
-Review PR                     #194
-Review merge                  1717b5dbea5fd38756e60120be2d131dcb4fe43a
-Canonical data PR             #195
-Canonical merge               50ca3782c4940e095ff94de2cce220a3ee0c7da5
-Build-input refresh PR        #197
-Build-input refresh           59b74d26a86373e6e97e6e630b54becd35f64910
-Production audit PR           #198
-Initial production run        31266002708
-Initial production job        93124105488
-Successful production run     31266360510
-Successful production job     93125031659
+Review PR                     #199
+Review merge                  53bcdc47f4269a00dc1c671f7428f75a8fe35c1e
+Canonical data PR             #200
+Canonical merge               934c85c49f7db71773721c5f4d64cc769f1361b0
+Production audit PR           #201
+Production verify run         31267226936
+Production verify job         93127231682
+Read-only production probe    31267391787
+Read-only probe job           93127650808
 Verified state                33 / 34 / 183 / 284
-Archived evidence             124 / 284
+Archived evidence             126 / 284
 Canonical content match       true
 Verified HTML routes          72
 Verified redirects            74
-Generated at                  2026-08-08T16:07:52.937Z
-Publication attempt           1 after refresh
+Generated at                  2026-08-08T16:33:32.318Z
+Build-input refresh           not required
 ```
 
-The initial Batch 18 verifier rejected same-count stale evidence at `bir_src_000132` for all twenty attempts. A newer generated build appeared inside the window but still lacked the canonical field change. The single permitted behavior-neutral build-input refresh changed no canonical content, build semantics, or verification expectations. The unchanged verifier then passed on the first post-refresh attempt. No second refresh was used.
+The read-only probe independently confirmed the live canonical-only `version.json` and exact archive fields for `bir_src_000037` and `bir_src_000068` after the successful full-content verifier.
 
 ## Current quality state
 
@@ -79,24 +72,24 @@ Incidents without Tier 1               1
 Events without primary                16
 Events without Tier 1                  6
 Unreviewed event Tier 1 gaps            0
-Evidence with archived_url           124
-Terminal unarchived unique URLs       17
-Terminal unarchived records           27
-Risky-host unarchived unique URLs     18
-Risky-host unarchived records         32
+Evidence with archived_url           126
+Terminal unarchived unique URLs       15
+Terminal unarchived records           25
+Risky-host unarchived unique URLs     17
+Risky-host unarchived records         31
 X/Twitter records unarchived          29
 Unknown URL status                     0
 ```
 
-The remaining Nerve incident-level source gap is reviewed and intentional under PR #117. Current-operation evidence is not reused as historical incident evidence, and Tier 2 security analysis is not reclassified.
+Archive Capture Batch 18 exhausted the previously-unreviewed archive queue. The deferred inventory reconstructed 45 reviewed-but-unarchived evidence records across 32 unique URLs from permanent review audits and current canonical data.
 
-Archive Capture Batch 18 reviewed the final nine previously-unreviewed terminal/risky-host candidate URLs visible to the established reviewer. Four reproducible exact mappings were published for Avalanche Bridge AEB support material, Syndicate exploit reporting, Everclear wind-down reporting, and the renproject GitHub organization. The remaining reviewed URLs were deferred under the unchanged exact replay, temporal-fit, minimum-size, and two-run reproducibility boundaries.
+Deferred Archive Retry 01 selected ten higher-value reviewed unresolved URLs. Two reproducible exact mappings were published for Qubit's compensation plan and Harmony's Horizon Bridge incident summary. The other eight selected URLs remained below the unchanged exact-replay, temporal-fit, minimum-size, and two-run reproducibility boundary.
 
-There is no untouched archive-review Batch 19. The unresolved archive counts now represent reviewed deferred sources plus any sources outside the historical reviewer scope. Further archive preservation must use an explicit deferred-retry inventory or process newly introduced canonical sources.
+There is no untouched archive-review Batch 19. Future preservation work must use explicit deferred-retry scopes or newly introduced canonical source URLs.
 
 ## Immediate source-quality targets
 
-1. build and run a bounded deferred archive-retry pass against already-reviewed unresolved sources, prioritizing official-domain and temporally eligible candidates without weakening acceptance rules;
+1. run Deferred Archive Retry 02 against a different high-value subset of the remaining reviewed-unresolved sources; do not immediately recycle Retry 01 failures;
 2. reduce the remaining 16 events without primary evidence where appropriate;
 3. strengthen remaining validators;
 4. begin review-gated monitoring and candidate collection with no automatic canonical publication;
@@ -112,7 +105,7 @@ Maximum wait   5 minutes per job
 
 Publication convergence requires matching record counts, canonical-only markers, complete transformed JSON equality, exact record order, and all route, sitemap, metadata, redirect, content-type, and cache assertions.
 
-Batch 15 proved that arbitrary preview builds can saturate the Pages queue and delay production. The project continues to use `preview_deployment_setting: none`; temporary branches must not create Pages previews. Batch 18 additionally proved that a newer `generated_at` alone is not proof of canonical publication: the field-level verifier still rejected stale `bir_src_000132`. Only the single permitted behavior-neutral refresh was used, and the unchanged verifier remained authoritative.
+Batch 18 proved that a newer `generated_at` alone is not proof of canonical publication. Field-level equality remained authoritative. Deferred Retry 01 required no refresh and was independently confirmed by a read-only live probe.
 
 ## Remaining roadmap
 
@@ -147,3 +140,4 @@ Batch 15 proved that arbitrary preview builds can saturate the Pages queue and d
 20. Only one reviewed behavior-neutral build-input refresh is permitted per publication batch; a second refresh must not be stacked.
 21. Cloudflare Pages preview deployment remains `none`; intentional preview support requires a separately reviewed configuration change.
 22. Do not create an artificial untouched archive batch after the reviewer has exhausted its previously-unreviewed candidate set.
+23. Deferred retries must use explicit reviewed-unresolved targets and preserve the same acceptance boundary.
