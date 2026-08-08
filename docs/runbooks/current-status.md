@@ -49,6 +49,7 @@ Archive capture Batch 13             production-verified — PRs #173–#176
 Archive capture Batch 14             production-verified — PRs #177–#180
 Archive capture Batch 15             production-verified — PRs #181, #182, #184, #185
 Archive capture Batch 16             production-verified — PRs #188–#190
+Archive capture Batch 17             production-verified — PRs #191–#193
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
 ```
@@ -77,7 +78,7 @@ Unknown URL status   0
 Primary evidence                         201 / 284
 Tier 1 evidence                          220 / 284
 Official-domain evidence                 131 / 284
-Evidence with archived_url               116 / 284
+Evidence with archived_url               120 / 284
 Bridges without primary evidence           0 / 33
 Bridges without tier 1 evidence            0 / 33
 Incidents without primary evidence         1 / 34
@@ -85,8 +86,8 @@ Incidents without tier 1 evidence          1 / 34
 Events without primary evidence           16 / 183
 Events without tier 1 evidence              6 / 183
 Unreviewed event Tier 1 gaps                0
-Terminal unarchived unique URLs           25
-Terminal unarchived evidence records      35
+Terminal unarchived unique URLs           21
+Terminal unarchived evidence records      31
 Risky-host unarchived unique URLs         18
 Risky-host unarchived evidence records    32
 X/Twitter evidence records unarchived     29
@@ -95,9 +96,9 @@ Unknown URL status                         0
 
 Archive-risk ceilings use normalized unique source URLs and exact-or-subdomain host matching. Multiple evidence records that reuse one source URL create one preservation obligation.
 
-Archive Capture Batch 16 reviewed ten previously unreviewed exact canonical source URLs. Six mappings reproduced identically in both independent review passes and were published to six evidence records covering Harmony, Multichain, Rubic, and Unizen sources. The permanent validator confirmed 116 archived evidence records, 25 terminal unique URLs, and 18 risky-host unique URLs.
+Archive Capture Batch 17 reviewed ten previously unreviewed exact canonical source URLs. Four mappings reproduced identically in both independent review passes and were published to four evidence records covering Everclear, BNB Chain Fusion, a Harmony recovery proposal, and Syndicate bridging documentation. The permanent validator confirmed 120 archived evidence records, 21 terminal unique URLs, and 18 risky-host unique URLs.
 
-Reuters Harmony, the ShuttleFlow Conflux forum announcement, a SOCKET X update, and a Unizen CTO Twitter update did not satisfy the unchanged reproducible exact-replay boundary and remain deferred.
+Everclear Q3/blog material, the arXiv bridge-hacks review, KinetFlow Conflux material, PeckShieldAlert Unizen X material, and the Syndicate wind-down X thread did not satisfy the unchanged reproducible exact-replay boundary and remain deferred.
 
 All event Tier 1 gaps are reviewed. The six remaining gaps are intentional secondary records:
 
@@ -117,28 +118,28 @@ Remaining incident-level gap:
 ## Latest completed production checkpoint
 
 ```text
-Review PR                     #188
-Review merge                  76b437e39b60721cab816544a10d2b75c12d1543
-Canonical data PR             #189
-Canonical merge               f9c6395d400358543bb3a761aa209be97ca1c266
-Production audit PR           #190
-Production verify run         31264440303
-Production verify job         93120202656
+Review PR                     #191
+Review merge                  a51511460c390d1dce9eb35d70a26f03f58a948d
+Canonical data PR             #192
+Canonical merge               3aa5f6cbd7a38ac1da5332e5dd3ea038409776d7
+Production audit PR           #193
+Production verify run         31265282488
+Production verify job         93122316026
 Verified state                33 / 34 / 183 / 284
-Archived evidence             116 / 284
+Archived evidence             120 / 284
 Canonical content match       true
 Verified HTML routes          72
 Verified redirects            74
-Generated at                  2026-08-08T15:23:20.361Z
-Publication attempt           1
+Generated at                  2026-08-08T15:46:44.950Z
+Publication attempt           5
 Build-input refresh           not required
 ```
 
-Production had already converged when the unchanged verifier started. Attempt 1 matched all four canonical-derived public datasets completely and passed all route, metadata, sitemap, robots, redirect, content-type, and cache assertions.
+Attempts 1 through 4 correctly rejected same-count stale evidence content at `bir_src_000024`. Attempt 5 observed the new production build and passed all four canonical-derived datasets plus all route, metadata, sitemap, robots, redirect, content-type, and cache assertions. No build-input refresh was required.
 
 ## Next
 
-1. continue bounded archive capture work from 18 risky-host and 25 terminal unique URLs as Batch 17;
+1. continue bounded archive capture work from 18 risky-host and 21 terminal unique URLs as Batch 18;
 2. retry deferred official-source candidates without weakening replay or temporal-fit requirements;
 3. reduce the remaining 16 events without primary evidence where justified;
 4. strengthen remaining validators;
