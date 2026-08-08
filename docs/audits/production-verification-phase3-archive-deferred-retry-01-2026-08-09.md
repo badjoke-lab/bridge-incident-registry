@@ -41,7 +41,7 @@ bir_src_000068  https://web.archive.org/web/20221009125416/https://talk.harmony.
 
 The verifier also passed all four public datasets, all 72 canonical HTML routes, 74 legacy redirects, canonical metadata and JSON-LD, sitemap, robots, content types, cache observations, version metadata, manifest metadata, and canonical-only markers.
 
-Counts alone were not used as publication proof. No build-input refresh was required for Deferred Retry 01.
+Counts alone were not used as publication proof. No build-input refresh or Cloudflare queue remediation was required for Deferred Retry 01.
 
 ## Publication boundary
 
