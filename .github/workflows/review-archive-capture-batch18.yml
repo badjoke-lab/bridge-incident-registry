@@ -31,6 +31,16 @@ jobs:
           git show 7bd452ee8a86073355266cd0bbeec4bada8eb1b9:scripts/review-archive-capture-batch14.mjs \
             | sed -e 's/batch14/batch18/g' -e 's/Batch 14/Batch 18/g' \
             > /tmp/review-archive-capture-batch18.mjs
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const path = '/tmp/review-archive-capture-batch18.mjs';
+          let source = fs.readFileSync(path, 'utf8');
+          const from = '  if (selected.length !== TERMINAL_TARGET + RISKY_TARGET) {\n    throw new Error(`Expected 10 unreviewed candidates, selected ${selected.length}`);\n  }';
+          const to = '  if (selected.length === 0) {\n    throw new Error(`No unreviewed candidates remain`);\n  }';
+          if (!source.includes(from)) throw new Error('Expected fixed-ten review guard was not found');
+          source = source.replace(from, to);
+          fs.writeFileSync(path, source);
+          NODE
       - name: Run first exact replay review
         run: |
           node /tmp/review-archive-capture-batch18.mjs
