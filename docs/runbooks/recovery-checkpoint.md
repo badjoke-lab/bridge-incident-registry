@@ -28,32 +28,37 @@ PR #181–185  Archive Capture Batch 15 review through production verification a
 PR #186      Incident discovery, filters, pagination, detail TOCs, Support, and project navigation
 PR #187      Shared BadJoke-Lab support-wallet presentation
 PR #188–190  Archive Capture Batch 16 review through production verification and checkpoint sync
-PR #191      Archive Capture Batch 17 reproducible review
-PR #192      Archive Capture Batch 17 canonical migration
-PR #193      Archive Capture Batch 17 production verification and checkpoint sync
+PR #191–193  Archive Capture Batch 17 review through production verification and checkpoint sync
+PR #194      Archive Capture Batch 18 final previously-unreviewed review
+PR #195      Archive Capture Batch 18 canonical migration
+PR #197      Archive Capture Batch 18 single behavior-neutral build-input refresh
+PR #198      Archive Capture Batch 18 post-refresh production verification and checkpoint sync
 ```
 
 ## Latest completed production checkpoint
 
 ```text
-Review PR                     #191
-Review merge                  a51511460c390d1dce9eb35d70a26f03f58a948d
-Canonical data PR             #192
-Canonical merge               3aa5f6cbd7a38ac1da5332e5dd3ea038409776d7
-Production audit PR           #193
-Production verify run         31265282488
-Production verify job         93122316026
+Review PR                     #194
+Review merge                  1717b5dbea5fd38756e60120be2d131dcb4fe43a
+Canonical data PR             #195
+Canonical merge               50ca3782c4940e095ff94de2cce220a3ee0c7da5
+Build-input refresh PR        #197
+Build-input refresh           59b74d26a86373e6e97e6e630b54becd35f64910
+Production audit PR           #198
+Initial production run        31266002708
+Initial production job        93124105488
+Successful production run     31266360510
+Successful production job     93125031659
 Verified state                33 / 34 / 183 / 284
-Archived evidence             120 / 284
+Archived evidence             124 / 284
 Canonical content match       true
 HTML routes                   72
 Redirects                     74
-Generated at                  2026-08-08T15:46:44.950Z
-Publication attempt           5
-Build-input refresh           not required
+Generated at                  2026-08-08T16:07:52.937Z
+Publication attempt           1 after refresh
 ```
 
-Attempts 1 through 4 correctly rejected same-count stale evidence content at `bir_src_000024`. Attempt 5 observed the new production build and passed all four canonical-derived datasets and every route/metadata/redirect contract. No build-input refresh or additional Cloudflare queue remediation was required.
+The initial Batch 18 verifier rejected same-count stale evidence at `bir_src_000132` for all twenty attempts. Attempts 15–20 observed a newer `generated_at` but still failed field-level equality. The single permitted behavior-neutral build-input refresh changed only the existing non-executable build marker and did not alter canonical content, build semantics, or verification requirements. The unchanged verifier then passed on the first post-refresh attempt. No second refresh was used.
 
 ## Permanent guards
 
@@ -74,50 +79,55 @@ Incidents without Tier 1              1
 Events without primary               16
 Events without Tier 1                 6
 Unreviewed event Tier 1 gaps           0
-Evidence with archived_url          120
-Terminal unarchived unique URLs      21
-Terminal unarchived records          31
+Evidence with archived_url          124
+Terminal unarchived unique URLs      17
+Terminal unarchived records          27
 Risky-host unarchived unique URLs    18
 Risky-host unarchived records        32
 X/Twitter records unarchived         29
 Unknown URL status                    0
 ```
 
-## Archive Capture Batch 17
+## Archive Capture Batch 18
 
 ```text
-Review boundary                    PR #191
-Canonical migration                PR #192
-Production audit                   PR #193
-Reviewed unique URLs                    10
-Verified Wayback mappings                4
-Evidence records updated                 4
-Terminal unique queue           25 -> 21
-Terminal record queue           35 -> 31
-Risky-host unique queue         18 -> 18
-Risky-host record queue         32 -> 32
-X/Twitter record queue          29 -> 29
-Source-count drift                      0
+Initial fixed-ten review run        31265648638
+Successful review run               31265683543
+Review boundary                           PR #194
+Canonical migration                       PR #195
+Build-input refresh                       PR #197
+Production audit                          PR #198
+Previously-unreviewed URLs reviewed             9
+Verified Wayback mappings                       4
+Evidence records updated                        4
+Terminal unique queue               21 -> 17
+Terminal record queue               31 -> 27
+Risky-host unique queue             18 -> 18
+Risky-host record queue             32 -> 32
+X/Twitter record queue              29 -> 29
+Source-count drift                           0
 ```
 
 Updated evidence IDs:
 
 ```text
-bir_src_000188
-bir_src_000024
-bir_src_000070
-bir_src_000196
+bir_src_000137
+bir_src_000197
+bir_src_000192
+bir_src_000132
 ```
 
-Only captures reproduced in both completed review runs were accepted. Everclear Q3/blog material, the arXiv bridge-hacks review, KinetFlow Conflux material, PeckShieldAlert Unizen X material, and the Syndicate wind-down X thread remain deferred because they did not satisfy the unchanged reproducible exact-replay boundary.
+The initial review run failed before replay because the historical reviewer expected exactly ten candidates while only nine remained. The wrapper was corrected only to review the complete remaining candidate set when fewer than ten exist. Acceptance requirements were unchanged.
+
+The remaining five previously-unreviewed URLs were reviewed and deferred. All previously-unreviewed terminal/risky-host candidates visible to the established reviewer are therefore exhausted. Future archive preservation must retry reviewed deferred candidates or handle newly introduced canonical source URLs; do not create an artificial untouched Batch 19.
 
 ## Cloudflare Pages queue boundary
 
-The project uses production branch `main`, production deployments enabled, and `preview_deployment_setting: none`. Batch 15 removed 16 queued previews and preserved all production deployments. Arbitrary temporary branches must not restore preview builds. Batch 17 converged normally on attempt 5 without a refresh.
+The project uses production branch `main`, production deployments enabled, and `preview_deployment_setting: none`. Batch 15 removed 16 queued previews and preserved all production deployments. Arbitrary temporary branches must not restore preview builds. Batch 18 required one permitted behavior-neutral build-input refresh; after that refresh the unchanged verifier passed on attempt 1.
 
 ## Deployment resume rule
 
-A docs-only commit is not assumed to start a Cloudflare Pages build. A reviewed behavior-neutral build-input change may be used once when publication remains stale. When an immediate or in-window rerun still shows the same `generated_at`, do not stack another refresh automatically. Inspect the Cloudflare production queue, keep preview deployment at `none`, allow deployment latency, and preserve full-content equality requirements.
+A docs-only commit is not assumed to start a Cloudflare Pages build. A reviewed behavior-neutral build-input change may be used once when publication remains stale. A changed `generated_at` without field-level canonical equality is still a failed publication. Never stack a second refresh automatically. Inspect queue/deployment state, keep preview deployment at `none`, allow deployment latency, and preserve full-content equality requirements.
 
 ## Nerve boundary
 
@@ -129,9 +139,8 @@ Issue #171 remains open as a monitoring signal. Boltz is not canonical because t
 
 ## Next
 
-1. continue bounded archive work from 18 risky-host and 21 terminal unique URLs as Batch 18;
-2. retry deferred official sources under the same replay and temporal-fit standards;
-3. reduce remaining event primary gaps where justified;
-4. strengthen validators;
-5. begin review-gated monitoring and candidate collection without automatic publication;
-6. continue v1 hardening.
+1. create a bounded deferred archive-retry inventory from already-reviewed unresolved sources and retry only justified targets under the same replay, temporal-fit, size, and reproducibility standards;
+2. reduce remaining event primary gaps where justified;
+3. strengthen validators;
+4. begin review-gated monitoring and candidate collection without automatic publication;
+5. continue v1 hardening.

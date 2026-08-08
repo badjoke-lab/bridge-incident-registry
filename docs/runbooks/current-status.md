@@ -50,6 +50,8 @@ Archive capture Batch 14             production-verified — PRs #177–#180
 Archive capture Batch 15             production-verified — PRs #181, #182, #184, #185
 Archive capture Batch 16             production-verified — PRs #188–#190
 Archive capture Batch 17             production-verified — PRs #191–#193
+Archive capture Batch 18             production-verified — PRs #194, #195, #197, #198
+Previously-unreviewed archive queue  exhausted
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
 ```
@@ -78,7 +80,7 @@ Unknown URL status   0
 Primary evidence                         201 / 284
 Tier 1 evidence                          220 / 284
 Official-domain evidence                 131 / 284
-Evidence with archived_url               120 / 284
+Evidence with archived_url               124 / 284
 Bridges without primary evidence           0 / 33
 Bridges without tier 1 evidence            0 / 33
 Incidents without primary evidence         1 / 34
@@ -86,8 +88,8 @@ Incidents without tier 1 evidence          1 / 34
 Events without primary evidence           16 / 183
 Events without tier 1 evidence              6 / 183
 Unreviewed event Tier 1 gaps                0
-Terminal unarchived unique URLs           21
-Terminal unarchived evidence records      31
+Terminal unarchived unique URLs           17
+Terminal unarchived evidence records      27
 Risky-host unarchived unique URLs         18
 Risky-host unarchived evidence records    32
 X/Twitter evidence records unarchived     29
@@ -96,9 +98,11 @@ Unknown URL status                         0
 
 Archive-risk ceilings use normalized unique source URLs and exact-or-subdomain host matching. Multiple evidence records that reuse one source URL create one preservation obligation.
 
-Archive Capture Batch 17 reviewed ten previously unreviewed exact canonical source URLs. Four mappings reproduced identically in both independent review passes and were published to four evidence records covering Everclear, BNB Chain Fusion, a Harmony recovery proposal, and Syndicate bridging documentation. The permanent validator confirmed 120 archived evidence records, 21 terminal unique URLs, and 18 risky-host unique URLs.
+Archive Capture Batch 18 reviewed all nine remaining previously-unreviewed terminal/risky-host candidate URLs visible to the established reviewer. Four mappings reproduced identically in both independent review passes and were published to Avalanche Bridge AEB, Syndicate exploit reporting, Everclear wind-down reporting, and the renproject GitHub evidence record. The permanent validator confirmed 124 archived evidence records, 17 terminal unique URLs, and 18 risky-host unique URLs.
 
-Everclear Q3/blog material, the arXiv bridge-hacks review, KinetFlow Conflux material, PeckShieldAlert Unizen X material, and the Syndicate wind-down X thread did not satisfy the unchanged reproducible exact-replay boundary and remain deferred.
+The first Batch 18 review run failed before candidate replay because the historical reviewer assumed ten candidates while only nine remained. The temporary wrapper was corrected to review the complete remaining set without changing selection order or acceptance requirements. The remaining five reviewed URLs did not satisfy the reproducible exact-replay boundary and remain deferred.
+
+Batch 18 therefore closes the untouched archive-review queue. The unresolved terminal/risky-host counts are not unreviewed work; future archive preservation must be a deliberate retry of reviewed deferred candidates or a response to newly introduced canonical source URLs.
 
 All event Tier 1 gaps are reviewed. The six remaining gaps are intentional secondary records:
 
@@ -118,30 +122,32 @@ Remaining incident-level gap:
 ## Latest completed production checkpoint
 
 ```text
-Review PR                     #191
-Review merge                  a51511460c390d1dce9eb35d70a26f03f58a948d
-Canonical data PR             #192
-Canonical merge               3aa5f6cbd7a38ac1da5332e5dd3ea038409776d7
-Production audit PR           #193
-Production verify run         31265282488
-Production verify job         93122316026
+Review PR                     #194
+Review merge                  1717b5dbea5fd38756e60120be2d131dcb4fe43a
+Canonical data PR             #195
+Canonical merge               50ca3782c4940e095ff94de2cce220a3ee0c7da5
+Build-input refresh PR        #197
+Build-input refresh           59b74d26a86373e6e97e6e630b54becd35f64910
+Production audit PR           #198
+Initial production run        31266002708
+Initial production job        93124105488
+Successful production run     31266360510
+Successful production job     93125031659
 Verified state                33 / 34 / 183 / 284
-Archived evidence             120 / 284
+Archived evidence             124 / 284
 Canonical content match       true
 Verified HTML routes          72
 Verified redirects            74
-Generated at                  2026-08-08T15:46:44.950Z
-Publication attempt           5
-Build-input refresh           not required
+Generated at                  2026-08-08T16:07:52.937Z
+Publication attempt           1 after refresh
 ```
 
-Attempts 1 through 4 correctly rejected same-count stale evidence content at `bir_src_000024`. Attempt 5 observed the new production build and passed all four canonical-derived datasets plus all route, metadata, sitemap, robots, redirect, content-type, and cache assertions. No build-input refresh was required.
+The initial production verifier rejected same-count stale evidence at `bir_src_000132` for all twenty attempts. A newer generated build appeared inside that window but remained stale. The single permitted behavior-neutral build-input refresh changed no canonical content or verification expectations. The unchanged verifier then passed on its first post-refresh attempt. No second refresh was used.
 
 ## Next
 
-1. continue bounded archive capture work from 18 risky-host and 21 terminal unique URLs as Batch 18;
-2. retry deferred official-source candidates without weakening replay or temporal-fit requirements;
-3. reduce the remaining 16 events without primary evidence where justified;
-4. strengthen remaining validators;
-5. begin review-gated monitoring and candidate collection without automatic canonical publication;
-6. continue v1 documentation, accessibility, performance, compatibility, and release hardening.
+1. create a bounded deferred archive-retry inventory from already-reviewed unresolved sources and retry only justified candidates under unchanged acceptance requirements;
+2. reduce the remaining 16 events without primary evidence where justified;
+3. strengthen remaining validators;
+4. begin review-gated monitoring and candidate collection without automatic canonical publication;
+5. continue v1 documentation, accessibility, performance, compatibility, and release hardening.
