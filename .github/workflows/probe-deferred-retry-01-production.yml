@@ -1,0 +1,45 @@
+name: Probe Deferred Retry 01 Production
+
+on:
+  push:
+    branches:
+      - agent/probe-deferred-retry-01-production
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/probe-deferred-retry-01-production
+      - name: Probe live version and evidence
+        run: |
+          mkdir -p artifacts
+          curl -fsS https://bir.badjoke-lab.com/version.json > /tmp/version.json
+          curl -fsS https://bir.badjoke-lab.com/data/evidence.json > /tmp/evidence.json
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const version = JSON.parse(fs.readFileSync('/tmp/version.json','utf8'));
+          const evidence = JSON.parse(fs.readFileSync('/tmp/evidence.json','utf8'));
+          const ids = ['bir_src_000037','bir_src_000068'];
+          const records = ids.map((id) => evidence.find((x) => x.id === id));
+          if (records.some((x) => !x)) throw new Error('Target evidence missing in production');
+          const result = {
+            probed_at: new Date().toISOString(),
+            version,
+            evidence: records.map(({id,url,archived_url}) => ({id,url,archived_url}))
+          };
+          fs.writeFileSync('artifacts/deferred-retry-01-production-probe.json', JSON.stringify(result,null,2)+'\n');
+          NODE
+      - name: Commit probe result to probe branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add artifacts/deferred-retry-01-production-probe.json
+          git commit -m "audit: capture deferred retry 01 production probe"
+          git push origin HEAD:agent/probe-deferred-retry-01-production
