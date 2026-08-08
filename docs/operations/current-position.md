@@ -1,7 +1,7 @@
 # Current position
 
 Status: active  
-Updated: 2026-08-05
+Updated: 2026-08-09
 
 This file is a compact compatibility pointer. The authoritative live state is maintained in:
 
@@ -26,27 +26,31 @@ Evidence    284
 - Phase 5 — monitoring and candidate collection: planned
 - v1 hardening: planned
 
-Archive Capture Batches 1 through 15 are complete and production-verified. Evidence with `archived_url` is 110 / 284. The remaining archive queues are 21 risky-host unique URLs and 28 terminal unique URLs. Source-count mismatches and unknown URL statuses remain at zero, and complete canonical-derived public-content equality is enforced.
+Archive Capture Batches 1 through 16 are complete and production-verified. Evidence with `archived_url` is 116 / 284. The remaining archive queues are 18 risky-host unique URLs and 25 terminal unique URLs. Source-count mismatches and unknown URL statuses remain at zero, and complete canonical-derived public-content equality is enforced.
 
-The latest production checkpoint completed after one behavior-neutral build-input refresh and Cloudflare preview-queue remediation:
+The latest canonical publication converged without a build-input refresh:
 
 ```text
-Canonical merge       39134a5d7b717c467a49d96b5fd7104047cd0a50
-Build-input refresh   7e13955c725e07ca66e01f7f9e321db7f7c764ff
-Production run        30986003440
-Production job        92245512645
-Generated at          2026-08-05T08:02:41.108Z
-Publication attempt   1 after preview-queue remediation
+Review PR             #188
+Canonical data PR     #189
+Canonical merge       f9c6395d400358543bb3a761aa209be97ca1c266
+Production audit PR   #190
+Production run        31264440303
+Production job        93120202656
+Generated at          2026-08-08T15:23:20.361Z
+Publication attempt   1
 Content match         true
 HTML routes           72
 Redirects             74
 ```
 
+The public UI/support follow-up is also current through PR #187: incident discovery, filters, pagination, detail TOCs, project navigation, Support, and the shared BadJoke-Lab support-wallet presentation are merged.
+
 The Boltz 2026 swap shutdown remains a monitoring signal in Issue #171. It is not canonical because the available first-party material does not identify one reviewable bridge incident boundary.
 
 ## Next bounded work
 
-1. continue archive preservation from the 21 risky-host and 28 terminal unique-URL queues;
+1. choose Archive Capture Batch 17 from the remaining 18 risky-host and 25 terminal unique-URL queues;
 2. retry deferred official-source candidates without weakening exact-replay, temporal-fit, size, or reproducibility requirements;
 3. reduce the remaining 16 events without primary evidence where justified;
 4. strengthen validators;

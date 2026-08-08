@@ -1,7 +1,7 @@
 # BIR Live Recovery Checkpoint
 
 Status: active  
-Updated: 2026-08-05
+Updated: 2026-08-09
 
 GitHub state and canonical JSON are authoritative. Completed merge SHAs are checkpoints, not live branch pointers.
 
@@ -22,45 +22,37 @@ PR #103–107  LI.FI and Holograph source-quality remediation
 PR #108–116  Event Tier 1 review, canonical remediation, and production verification
 PR #117      Nerve Bridge source boundary
 PR #118–160  Archive Capture Batches 1–12 review, canonical, deployment, and production verification
-PR #173      Archive Capture Batch 13 review
-PR #174      Archive Capture Batch 13 canonical migration
-PR #175      Archive Capture Batch 13 build-input refresh
-PR #176      Archive Capture Batch 13 production verification and checkpoint sync
-PR #177      Archive Capture Batch 14 reproducible review
-PR #178      Archive Capture Batch 14 canonical migration
-PR #179      Archive Capture Batch 14 build-input refresh
-PR #180      Archive Capture Batch 14 production verification and checkpoint sync
-PR #181      Archive Capture Batch 15 reproducible review
-PR #182      Archive Capture Batch 15 canonical migration
-PR #184      Archive Capture Batch 15 build-input refresh
-PR #185      Archive Capture Batch 15 production verification, queue remediation, and checkpoint sync
+PR #173–176  Archive Capture Batch 13 review through production verification
+PR #177–180  Archive Capture Batch 14 review through production verification
+PR #181–185  Archive Capture Batch 15 review through production verification and queue remediation
+PR #186      Incident discovery, filters, pagination, detail TOCs, Support, and project navigation
+PR #187      Shared BadJoke-Lab support-wallet presentation
+PR #188      Archive Capture Batch 16 reproducible review
+PR #189      Archive Capture Batch 16 canonical migration
+PR #190      Archive Capture Batch 16 production verification and checkpoint sync
 ```
 
 ## Latest completed production checkpoint
 
 ```text
-Review PR                     #181
-Review merge                  fcf932b51445831e1d67c3c14c3ee342eff854dc
-Canonical data PR             #182
-Canonical merge               39134a5d7b717c467a49d96b5fd7104047cd0a50
-Build-input refresh PR        #184
-Build-input refresh           7e13955c725e07ca66e01f7f9e321db7f7c764ff
-Production audit PR           #185
-Initial production run        30983843765
-Cloudflare remediation run    30987353553
-Cloudflare remediation job    92245106402
-Production verify run         30986003440
-Production verify job         92245512645
+Review PR                     #188
+Review merge                  76b437e39b60721cab816544a10d2b75c12d1543
+Canonical data PR             #189
+Canonical merge               f9c6395d400358543bb3a761aa209be97ca1c266
+Production audit PR           #190
+Production verify run         31264440303
+Production verify job         93120202656
 Verified state                33 / 34 / 183 / 284
-Archived evidence             110 / 284
+Archived evidence             116 / 284
 Canonical content match       true
 HTML routes                   72
 Redirects                     74
-Generated at                  2026-08-05T08:02:41.108Z
-Publication attempt           1 after preview-queue remediation
+Generated at                  2026-08-08T15:23:20.361Z
+Publication attempt           1
+Build-input refresh           not required
 ```
 
-Batch 15 verifiers rejected stale same-count content while `generated_at` remained `2026-08-05T06:55:22.730Z`. No second refresh was committed. Cloudflare queue remediation removed 16 queued previews, preserved all production deployments, set preview deployment to `none`, and the unchanged verifier switched to `2026-08-05T08:02:41.108Z` on attempt 1.
+The Batch 16 publication was already current when the unchanged verifier began. Attempt 1 matched all four canonical-derived public datasets and every route/metadata/redirect contract. No build-input refresh or additional Cloudflare queue remediation was required.
 
 ## Permanent guards
 
@@ -81,52 +73,48 @@ Incidents without Tier 1              1
 Events without primary               16
 Events without Tier 1                 6
 Unreviewed event Tier 1 gaps           0
-Evidence with archived_url          110
-Terminal unarchived unique URLs      28
-Terminal unarchived records          38
-Risky-host unarchived unique URLs    21
-Risky-host unarchived records        35
-X/Twitter records unarchived         30
+Evidence with archived_url          116
+Terminal unarchived unique URLs      25
+Terminal unarchived records          35
+Risky-host unarchived unique URLs    18
+Risky-host unarchived records        32
+X/Twitter records unarchived         29
 Unknown URL status                    0
 ```
 
-## Archive Capture Batch 15
+## Archive Capture Batch 16
 
 ```text
-Review boundary                    PR #181
-Canonical migration                PR #182
-Build-input refresh                PR #184
-Production audit                   PR #185
+Review boundary                    PR #188
+Canonical migration                PR #189
+Production audit                   PR #190
 Reviewed unique URLs                    10
-Verified Wayback mappings                7
-Evidence records updated                 9
-Terminal unique queue           33 -> 28
-Terminal record queue           45 -> 38
-Risky-host unique queue         24 -> 21
-Risky-host record queue         38 -> 35
-X/Twitter record queue          30 -> 30
+Verified Wayback mappings                6
+Evidence records updated                 6
+Terminal unique queue           28 -> 25
+Terminal record queue           38 -> 35
+Risky-host unique queue         21 -> 18
+Risky-host record queue         35 -> 32
+X/Twitter record queue          30 -> 29
 Source-count drift                      0
 ```
 
 Updated evidence IDs:
 
 ```text
-bir_src_000014
-bir_src_000022
-bir_src_000023
-bir_src_000091
-bir_src_000149
-bir_src_000167
-bir_src_000205
-bir_src_000206
-bir_src_000214
+bir_src_000069
+bir_src_000027
+bir_src_000026
+bir_src_000168
+bir_src_000173
+bir_src_000176
 ```
 
-Only captures reproduced in both completed review runs were accepted. Aurora had no accepted replay; one QuillAudits source remained unavailable and another passed only the second run, so all three candidates remain deferred.
+Only captures reproduced in both completed review runs were accepted. Reuters Harmony, ShuttleFlow Conflux forum material, SOCKET X, and Unizen CTO Twitter candidates remain deferred because they did not satisfy the unchanged reproducible exact-replay boundary.
 
 ## Cloudflare Pages queue boundary
 
-The project now uses production branch `main`, production deployments enabled, and `preview_deployment_setting: none`. Batch 15 removed 16 queued previews and preserved all production deployments. Arbitrary temporary branches must not restore preview builds.
+The project uses production branch `main`, production deployments enabled, and `preview_deployment_setting: none`. Batch 15 removed 16 queued previews and preserved all production deployments. Arbitrary temporary branches must not restore preview builds. Batch 16 converged normally without a refresh.
 
 ## Deployment resume rule
 
@@ -142,7 +130,7 @@ Issue #171 remains open as a monitoring signal. Boltz is not canonical because t
 
 ## Next
 
-1. continue bounded archive work from 21 risky-host and 28 terminal unique URLs;
+1. continue bounded archive work from 18 risky-host and 25 terminal unique URLs as Batch 17;
 2. retry deferred official sources under the same replay and temporal-fit standards;
 3. reduce remaining event primary gaps where justified;
 4. strengthen validators;
