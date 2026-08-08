@@ -1,0 +1,142 @@
+name: Archive Deferred Retry Inventory
+
+on:
+  push:
+    branches:
+      - agent/phase3-archive-deferred-retry-inventory
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build reviewed-but-unarchived inventory
+        run: |
+          mkdir -p artifacts
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import path from 'node:path';
+
+          const auditDir = 'docs/audits';
+          const reviewFiles = fs.readdirSync(auditDir)
+            .filter((name) => /^phase3-archive-capture-batch\d+-review.*\.md$/.test(name))
+            .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+
+          const mentions = new Map();
+          for (const name of reviewFiles) {
+            const text = fs.readFileSync(path.join(auditDir, name), 'utf8');
+            const ids = [...new Set(text.match(/bir_src_\d{6}/g) ?? [])];
+            for (const id of ids) {
+              if (!mentions.has(id)) mentions.set(id, []);
+              mentions.get(id).push(name);
+            }
+          }
+
+          const evidence = JSON.parse(fs.readFileSync('data/evidence.json', 'utf8'));
+          const bridges = JSON.parse(fs.readFileSync('data/bridges.json', 'utf8'));
+          const byId = new Map(evidence.map((item) => [item.id, item]));
+          const bridgeById = new Map(bridges.map((item) => [item.id, item]));
+          const terminalStatuses = new Set(['dead', 'deprecated', 'migrated']);
+          const riskyHosts = ['x.com', 'twitter.com', 'medium.com', 'mirror.xyz', 'substack.com', 'docs.google.com', 'notion.site'];
+          const hostOf = (raw) => {
+            try { return new URL(raw).hostname.replace(/^www\./, '').toLowerCase(); }
+            catch { return ''; }
+          };
+          const isRisky = (host) => riskyHosts.some((base) => host === base || host.endsWith(`.${base}`));
+          const hasArchive = (item) => typeof item?.archived_url === 'string' && item.archived_url.trim().length > 0;
+
+          const reviewedIds = [...mentions.keys()].sort();
+          const missingCanonicalIds = reviewedIds.filter((id) => !byId.has(id));
+          const unresolved = reviewedIds
+            .map((id) => byId.get(id))
+            .filter(Boolean)
+            .filter((item) => !hasArchive(item))
+            .map((item) => {
+              const host = hostOf(item.url);
+              const bridge = bridgeById.get(item.bridge_id);
+              return {
+                id: item.id,
+                bridge_id: item.bridge_id ?? null,
+                bridge_name: bridge?.canonical_name ?? bridge?.name ?? null,
+                bridge_status: bridge?.status ?? null,
+                terminal: terminalStatuses.has(bridge?.status),
+                risky_host: isRisky(host),
+                x_twitter: host === 'x.com' || host === 'twitter.com',
+                host,
+                title: item.title ?? null,
+                publisher: item.publisher ?? null,
+                published_at: item.published_at ?? null,
+                source_type: item.source_type ?? null,
+                source_tier: item.source_tier ?? null,
+                reliability: item.reliability ?? null,
+                url_status: item.url_status ?? null,
+                is_primary: item.is_primary ?? null,
+                is_official_domain: item.is_official_domain ?? null,
+                url: item.url,
+                review_files: mentions.get(item.id) ?? []
+              };
+            })
+            .sort((a, b) => {
+              const terminal = Number(b.terminal) - Number(a.terminal);
+              if (terminal) return terminal;
+              const risky = Number(b.risky_host) - Number(a.risky_host);
+              if (risky) return risky;
+              return String(a.published_at ?? '').localeCompare(String(b.published_at ?? '')) || a.id.localeCompare(b.id);
+            });
+
+          const result = {
+            generated_at: new Date().toISOString(),
+            review_files_scanned: reviewFiles,
+            reviewed_evidence_ids: reviewedIds.length,
+            reviewed_ids_missing_from_canonical: missingCanonicalIds,
+            reviewed_but_unarchived_records: unresolved.length,
+            terminal_records: unresolved.filter((item) => item.terminal).length,
+            risky_host_records: unresolved.filter((item) => item.risky_host).length,
+            x_twitter_records: unresolved.filter((item) => item.x_twitter).length,
+            records: unresolved
+          };
+
+          fs.writeFileSync('artifacts/archive-deferred-retry-inventory.json', `${JSON.stringify(result, null, 2)}\n`);
+          const lines = [
+            '# Archive deferred retry inventory', '',
+            `Generated: ${result.generated_at}`, '',
+            `Review files scanned: ${reviewFiles.length}`,
+            `Reviewed evidence IDs: ${result.reviewed_evidence_ids}`,
+            `Reviewed but still unarchived records: ${result.reviewed_but_unarchived_records}`,
+            `Terminal records: ${result.terminal_records}`,
+            `Risky-host records: ${result.risky_host_records}`,
+            `X/Twitter records: ${result.x_twitter_records}`, '',
+            '## Records', ''
+          ];
+          for (const item of unresolved) {
+            lines.push(`- ${item.id} — ${item.title ?? '(untitled)'}`);
+            lines.push(`  - URL: ${item.url}`);
+            lines.push(`  - host: ${item.host}; bridge_status: ${item.bridge_status}; terminal: ${item.terminal}; risky: ${item.risky_host}`);
+            lines.push(`  - publisher: ${item.publisher}; published_at: ${item.published_at}; tier: ${item.source_tier}; primary: ${item.is_primary}; official_domain: ${item.is_official_domain}`);
+            lines.push(`  - reviews: ${item.review_files.join(', ')}`);
+          }
+          fs.writeFileSync('artifacts/archive-deferred-retry-inventory.md', `${lines.join('\n')}\n`);
+
+          console.log('DEFERRED_INVENTORY_START');
+          console.log(JSON.stringify(result, null, 2));
+          console.log('DEFERRED_INVENTORY_END');
+          NODE
+
+      - name: Upload inventory
+        uses: actions/upload-artifact@v4
+        with:
+          name: archive-deferred-retry-inventory
+          path: artifacts/archive-deferred-retry-inventory.*
+          if-no-files-found: error
