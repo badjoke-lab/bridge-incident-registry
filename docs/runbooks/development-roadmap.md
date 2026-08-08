@@ -32,6 +32,7 @@ Phase 3  Full-corpus quality strengthening         active
          Archive capture Batch 14                  production-verified — PRs #177–#180
          Archive capture Batch 15                  production-verified — PRs #181, #182, #184, #185
          Archive capture Batch 16                  production-verified — PRs #188–#190
+         Archive capture Batch 17                  production-verified — PRs #191–#193
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
@@ -44,24 +45,24 @@ The public UI/support follow-up is current through PR #187. Representative scree
 ## Latest completed production checkpoint
 
 ```text
-Review PR                     #188
-Review merge                  76b437e39b60721cab816544a10d2b75c12d1543
-Canonical data PR             #189
-Canonical merge               f9c6395d400358543bb3a761aa209be97ca1c266
-Production audit PR           #190
-Production verify run         31264440303
-Production verify job         93120202656
+Review PR                     #191
+Review merge                  a51511460c390d1dce9eb35d70a26f03f58a948d
+Canonical data PR             #192
+Canonical merge               3aa5f6cbd7a38ac1da5332e5dd3ea038409776d7
+Production audit PR           #193
+Production verify run         31265282488
+Production verify job         93122316026
 Verified state                33 / 34 / 183 / 284
-Archived evidence             116 / 284
+Archived evidence             120 / 284
 Canonical content match       true
 Verified HTML routes          72
 Verified redirects            74
-Generated at                  2026-08-08T15:23:20.361Z
-Publication attempt           1
+Generated at                  2026-08-08T15:46:44.950Z
+Publication attempt           5
 Build-input refresh           not required
 ```
 
-Batch 16 production had already converged when the unchanged verifier started. Attempt 1 proved complete canonical-derived equality; no deployment refresh or queue remediation was required.
+Attempts 1 through 4 rejected stale same-count evidence at `bir_src_000024`. Attempt 5 observed the new production build and proved complete canonical-derived equality. No deployment refresh or queue remediation was required.
 
 ## Current quality state
 
@@ -73,9 +74,9 @@ Incidents without Tier 1               1
 Events without primary                16
 Events without Tier 1                  6
 Unreviewed event Tier 1 gaps            0
-Evidence with archived_url           116
-Terminal unarchived unique URLs       25
-Terminal unarchived records           35
+Evidence with archived_url           120
+Terminal unarchived unique URLs       21
+Terminal unarchived records           31
 Risky-host unarchived unique URLs     18
 Risky-host unarchived records         32
 X/Twitter records unarchived          29
@@ -84,11 +85,11 @@ Unknown URL status                     0
 
 The remaining Nerve incident-level source gap is reviewed and intentional under PR #117. Current-operation evidence is not reused as historical incident evidence, and Tier 2 security analysis is not reclassified.
 
-Archive Capture Batch 16 added six reproducible exact mappings to six Harmony, Multichain, Rubic, and Unizen evidence records. Reuters Harmony, ShuttleFlow Conflux forum material, SOCKET X, and Unizen CTO Twitter candidates remain deferred under the unchanged exact replay, temporal-fit, size, and reproducibility boundaries.
+Archive Capture Batch 17 added four reproducible exact mappings to Everclear, BNB Chain Fusion, a Harmony recovery proposal, and Syndicate bridging documentation. Everclear Q3/blog material, the arXiv bridge-hacks review, KinetFlow Conflux material, PeckShieldAlert Unizen X material, and the Syndicate wind-down X thread remain deferred under the unchanged exact replay, temporal-fit, size, and reproducibility boundaries.
 
 ## Immediate source-quality targets
 
-1. continue verified archive captures from the 18 risky-host and 25 terminal unique-URL queues as Batch 17;
+1. continue verified archive captures from the 18 risky-host and 21 terminal unique-URL queues as Batch 18;
 2. retry deferred official-source candidates with exact replay and claim-time verification;
 3. reduce the remaining 16 events without primary evidence where appropriate;
 4. strengthen remaining validators;
@@ -105,7 +106,7 @@ Maximum wait   5 minutes per job
 
 Publication convergence requires matching record counts, canonical-only markers, complete transformed JSON equality, exact record order, and all route, sitemap, metadata, redirect, content-type, and cache assertions.
 
-Batch 15 proved that arbitrary preview builds can saturate the Pages queue and delay production. The project continues to use `preview_deployment_setting: none`; temporary branches must not create Pages previews. When `generated_at` remains unchanged after one reviewed build-input refresh, inspect the production queue without weakening expectations or stacking refresh commits. Batch 16 required no refresh and converged on attempt 1.
+Batch 15 proved that arbitrary preview builds can saturate the Pages queue and delay production. The project continues to use `preview_deployment_setting: none`; temporary branches must not create Pages previews. When `generated_at` remains unchanged after one reviewed build-input refresh, inspect the production queue without weakening expectations or stacking refresh commits. Batch 17 required no refresh and converged on attempt 5.
 
 ## Remaining roadmap
 
