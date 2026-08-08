@@ -26,25 +26,26 @@ Evidence    284
 - Phase 5 — monitoring and candidate collection: planned
 - v1 hardening: planned
 
-Archive Capture Batches 1 through 17 are complete and production-verified. Evidence with `archived_url` is 120 / 284. The remaining archive queues are 18 risky-host unique URLs and 21 terminal unique URLs. Source-count mismatches and unknown URL statuses remain at zero, and complete canonical-derived public-content equality is enforced.
+Archive Capture Batches 1 through 18 are complete and production-verified. Evidence with `archived_url` is 124 / 284. The remaining unresolved archive queues are 18 risky-host unique URLs and 17 terminal unique URLs, but all previously-unreviewed terminal/risky-host candidates visible to the established reviewer have now been reviewed. Source-count mismatches and unknown URL statuses remain at zero, and complete canonical-derived public-content equality is enforced.
 
-The latest canonical publication converged within the unchanged production-verification window:
+The latest canonical publication required the one permitted behavior-neutral build-input refresh and then passed the unchanged full-content verifier immediately:
 
 ```text
-Review PR             #191
-Canonical data PR     #192
-Canonical merge       3aa5f6cbd7a38ac1da5332e5dd3ea038409776d7
-Production audit PR   #193
-Production run        31265282488
-Production job        93122316026
-Generated at          2026-08-08T15:46:44.950Z
-Publication attempt   5
+Review PR             #194
+Canonical data PR     #195
+Canonical merge       50ca3782c4940e095ff94de2cce220a3ee0c7da5
+Build-input refresh   #197 / 59b74d26a86373e6e97e6e630b54becd35f64910
+Production audit PR   #198
+Initial production    31266002708 / 93124105488
+Successful production 31266360510 / 93125031659
+Generated at          2026-08-08T16:07:52.937Z
+Publication attempt   1 after refresh
 Content match         true
 HTML routes           72
 Redirects             74
 ```
 
-Attempts 1–4 correctly rejected same-count stale evidence content at `bir_src_000024`; attempt 5 observed the new build and passed. No build-input refresh was required.
+The initial twenty-attempt verifier correctly rejected same-count stale evidence at `bir_src_000132`. The single refresh did not change canonical content or verification requirements; the unchanged verifier then passed on its first post-refresh attempt. No second refresh was used.
 
 The public UI/support follow-up is current through PR #187: incident discovery, filters, pagination, detail TOCs, project navigation, Support, and the shared BadJoke-Lab support-wallet presentation are merged.
 
@@ -52,9 +53,8 @@ The Boltz 2026 swap shutdown remains a monitoring signal in Issue #171. It is no
 
 ## Next bounded work
 
-1. choose Archive Capture Batch 18 from the remaining 18 risky-host and 21 terminal unique-URL queues;
-2. retry deferred official-source candidates without weakening exact-replay, temporal-fit, size, or reproducibility requirements;
-3. reduce the remaining 16 events without primary evidence where justified;
-4. strengthen validators;
-5. begin review-gated monitoring and candidate collection without automatic canonical publication;
-6. continue v1 hardening.
+1. build a deferred archive-retry inventory from reviewed-but-unresolved candidates and retry only justified targets under the unchanged exact-replay, temporal-fit, size, and reproducibility requirements;
+2. reduce the remaining 16 events without primary evidence where justified;
+3. strengthen validators;
+4. begin review-gated monitoring and candidate collection without automatic canonical publication;
+5. continue v1 hardening.
