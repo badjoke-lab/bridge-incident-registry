@@ -1,0 +1,64 @@
+name: Sync Deferred Retry 01 README
+
+on:
+  push:
+    branches:
+      - agent/production-verification
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/production-verification
+          fetch-depth: 0
+      - name: Update bounded README fields
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const p = 'README.md';
+          let s = fs.readFileSync(p,'utf8');
+          const replace = (a,b) => {
+            if (!s.includes(a)) throw new Error('README expected text missing: '+a.slice(0,80));
+            s = s.replace(a,b);
+          };
+          replace(
+            'Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Event Tier 1 remediation, the Nerve source review boundary, and Archive Capture Batches 1 through 18 are complete and production-verified.',
+            'Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Event Tier 1 remediation, the Nerve source review boundary, Archive Capture Batches 1 through 18, and Deferred Archive Retry 01 are complete and production-verified.'
+          );
+          replace(
+            'Evidence remains 284. Event primary gaps are 16, event Tier 1 gaps are six, and all remaining Tier 1 gaps are reviewed and intentionally secondary. One hundred twenty-four evidence records now publish eighty-seven verified Wayback snapshots.',
+            'Evidence remains 284. Event primary gaps are 16, event Tier 1 gaps are six, and all remaining Tier 1 gaps are reviewed and intentionally secondary. One hundred twenty-six evidence records now include verified archive URLs.'
+          );
+          replace(
+            'Archive-risk metrics count normalized unique source URLs with exact-or-subdomain host matching. Duplicate evidence records sharing one source URL do not create duplicate preservation obligations. Current unresolved unarchived queues are 17 terminal unique URLs and 18 risky-host unique URLs.',
+            'Archive-risk metrics count normalized unique source URLs with exact-or-subdomain host matching. Duplicate evidence records sharing one source URL do not create duplicate preservation obligations. Current unresolved unarchived queues are 15 terminal unique URLs and 17 risky-host unique URLs.'
+          );
+          replace(
+            'There is no untouched archive-review Batch 19. Further archive preservation must retry explicitly deferred reviewed sources or handle newly introduced canonical source URLs.',
+            'There is no untouched archive-review Batch 19. Deferred Archive Retry 01 reconstructed the reviewed-unresolved pool and newly recovered Qubit’s compensation plan (`bir_src_000037`) and Harmony’s Horizon Bridge incident summary (`bir_src_000068`). The other eight Retry 01 targets remained deferred under unchanged acceptance rules. Further archive preservation must continue with explicit deferred-retry scopes or newly introduced canonical source URLs.'
+          );
+          replace('Evidence with archived_url      124','Evidence with archived_url      126');
+          replace('Terminal unarchived URLs         17','Terminal unarchived URLs         15');
+          replace('Risky-host unarchived URLs       18','Risky-host unarchived URLs       17');
+          const checkpoint = `Latest verified production checkpoint:\n\n\`\`\`text\nReview PR              #194\nCanonical data PR      #195\nCanonical merge        50ca3782c4940e095ff94de2cce220a3ee0c7da5\nBuild-input refresh PR #197\nBuild-input refresh    59b74d26a86373e6e97e6e630b54becd35f64910\nProduction audit PR    #198\nInitial production     31266002708 / 93124105488\nSuccessful production  31266360510 / 93125031659\nGenerated at           2026-08-08T16:07:52.937Z\nPublication attempt    1 after refresh\nHTML routes            72\nRedirects              74\n\`\`\``;
+          const replacementCheckpoint = `Latest verified production checkpoint:\n\n\`\`\`text\nReview PR              #199\nCanonical data PR      #200\nCanonical merge        934c85c49f7db71773721c5f4d64cc769f1361b0\nProduction audit PR    #201\nProduction verify      31267226936 / 93127231682\nRead-only live probe   31267391787 / 93127650808\nGenerated at           2026-08-08T16:33:32.318Z\nHTML routes            72\nRedirects              74\n\`\`\``;
+          replace(checkpoint,replacementCheckpoint);
+          const marker = '- `docs/audits/production-verification-phase3-archive-capture-batch18-2026-08-09.md` — Archive Batch 18 production audit';
+          replace(marker, marker + '\n- `docs/audits/phase3-archive-deferred-retry-01-review-2026-08-09.md` — Deferred Archive Retry 01 reproducible review\n- `docs/audits/phase3-archive-deferred-retry-01-2026-08-09.md` — Deferred Archive Retry 01 canonical migration\n- `docs/audits/production-verification-phase3-archive-deferred-retry-01-2026-08-09.md` — Deferred Archive Retry 01 production audit');
+          fs.writeFileSync(p,s);
+          NODE
+      - name: Remove temporary workflow and commit README
+        run: |
+          rm .github/workflows/sync-deferred-retry-01-readme.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git add -u .github/workflows/sync-deferred-retry-01-readme.yml
+          git commit -m "docs: synchronize README through deferred retry 01"
+          git push origin HEAD:agent/production-verification
