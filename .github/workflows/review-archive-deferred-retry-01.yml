@@ -40,47 +40,46 @@ jobs:
           const start = source.indexOf('function buildCandidates() {');
           const end = source.indexOf('\nfunction timestampDate', start);
           if (start < 0 || end < 0) throw new Error('buildCandidates boundary not found');
-          const replacement = String.raw`function buildCandidates() {
-  const targets = [
-    "https://medium.com/@QubitFin/our-compensation-plan-1-63e7c64738ed",
-    "https://talk.harmony.one/t/summary-of-the-horizon-bridge-incident/20990",
-    "https://forum.conflux.fun/t/announcement-shuttleflow-is-closing-its-services-on-2023-11-08-asset-bridging-operations-will-migrate-to-zero-gravity/19507",
-    "https://www.everclear.org/blog/q3-recap",
-    "https://forum.conflux.fun/t/kinetflow-is-now-live/23143",
-    "https://www.everclear.org/blog",
-    "https://commons.syndicate.io/",
-    "https://dapp.p.network/",
-    "https://renprotocol.org/",
-    "https://www.reuters.com/technology/us-fbi-says-north-korean-hackers-stole-100-mln-harmony-bridge-2023-01-24/"
-  ];
-  const selected = [];
-  for (const target of targets) {
-    const key = canonicalUrlKey(target);
-    const records = evidence
-      .filter((item) => !hasArchive(item))
-      .filter((item) => {
-        try { return canonicalUrlKey(item.url) === key; } catch { return false; }
-      })
-      .sort((a, b) => a.id.localeCompare(b.id));
-    if (!records.length) throw new Error("Deferred retry target missing or already archived: " + target);
-    const publishedAt = records.map((item) => item.published_at).filter(Boolean).sort().at(-1);
-    if (!publishedAt) throw new Error("Deferred retry target missing published_at: " + target);
-    const terminal = records.some((item) => terminalStatuses.has(bridgesById.get(item.bridge_id)?.status));
-    const risky = records.some((item) => isRiskyHost(hostOf(item.url)));
-    selected.push({
-      label: records[0].title,
-      url: records[0].url,
-      published_at: publishedAt,
-      evidence_ids: records.map((item) => item.id),
-      bridge_ids: [...new Set(records.map((item) => item.bridge_id))],
-      queue: terminal && risky ? "terminal+risky" : terminal ? "terminal" : risky ? "risky" : "reviewed",
-      terminal,
-      risky
-    });
-  }
-  return { reviewed_ids: reviewedEvidenceIds().size, eligible_unique_urls: targets.length, selected };
-}
-`;
+          const targets = [
+            'https://medium.com/@QubitFin/our-compensation-plan-1-63e7c64738ed',
+            'https://talk.harmony.one/t/summary-of-the-horizon-bridge-incident/20990',
+            'https://forum.conflux.fun/t/announcement-shuttleflow-is-closing-its-services-on-2023-11-08-asset-bridging-operations-will-migrate-to-zero-gravity/19507',
+            'https://www.everclear.org/blog/q3-recap',
+            'https://forum.conflux.fun/t/kinetflow-is-now-live/23143',
+            'https://www.everclear.org/blog',
+            'https://commons.syndicate.io/',
+            'https://dapp.p.network/',
+            'https://renprotocol.org/',
+            'https://www.reuters.com/technology/us-fbi-says-north-korean-hackers-stole-100-mln-harmony-bridge-2023-01-24/'
+          ];
+          const replacement = [
+            'function buildCandidates() {',
+            `  const targets = ${JSON.stringify(targets)};`,
+            '  const selected = [];',
+            '  for (const target of targets) {',
+            '    const key = canonicalUrlKey(target);',
+            '    const records = evidence.filter((item) => !hasArchive(item)).filter((item) => {',
+            '      try { return canonicalUrlKey(item.url) === key; } catch { return false; }',
+            '    }).sort((a, b) => a.id.localeCompare(b.id));',
+            '    if (!records.length) throw new Error("Deferred retry target missing or already archived: " + target);',
+            '    const publishedAt = records.map((item) => item.published_at).filter(Boolean).sort().at(-1);',
+            '    if (!publishedAt) throw new Error("Deferred retry target missing published_at: " + target);',
+            '    const terminal = records.some((item) => terminalStatuses.has(bridgesById.get(item.bridge_id)?.status));',
+            '    const risky = records.some((item) => isRiskyHost(hostOf(item.url)));',
+            '    selected.push({',
+            '      label: records[0].title,',
+            '      url: records[0].url,',
+            '      published_at: publishedAt,',
+            '      evidence_ids: records.map((item) => item.id),',
+            '      bridge_ids: [...new Set(records.map((item) => item.bridge_id))],',
+            '      queue: terminal && risky ? "terminal+risky" : terminal ? "terminal" : risky ? "risky" : "reviewed",',
+            '      terminal, risky',
+            '    });',
+            '  }',
+            '  return { reviewed_ids: reviewedEvidenceIds().size, eligible_unique_urls: targets.length, selected };',
+            '}',
+            ''
+          ].join('\n');
           source = source.slice(0, start) + replacement + source.slice(end);
           fs.writeFileSync(file, source);
           NODE
