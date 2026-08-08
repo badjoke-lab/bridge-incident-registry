@@ -1,7 +1,7 @@
 # Current Status — Bridge Incident Registry
 
 Status: active  
-Updated: 2026-08-05
+Updated: 2026-08-09
 
 ## Canonical and production state
 
@@ -48,9 +48,20 @@ Archive capture Batch 12             production-verified — PRs #157–#160
 Archive capture Batch 13             production-verified — PRs #173–#176
 Archive capture Batch 14             production-verified — PRs #177–#180
 Archive capture Batch 15             production-verified — PRs #181, #182, #184, #185
+Archive capture Batch 16             production-verified — PRs #188–#190
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
 ```
+
+## Public UI/support follow-up
+
+```text
+PR #183  Representative desktop/mobile screenshot audit
+PR #186  Incident discovery, filters, pagination, detail TOCs, support, and project navigation
+PR #187  Shared BadJoke-Lab support-wallet presentation
+```
+
+These changes did not alter canonical record counts. Cloudflare Pages preview deployment remains `none`.
 
 ## Exact source-count and URL state
 
@@ -66,29 +77,27 @@ Unknown URL status   0
 Primary evidence                         201 / 284
 Tier 1 evidence                          220 / 284
 Official-domain evidence                 131 / 284
-Evidence with archived_url               110 / 284
-Bridges without primary evidence          0 / 33
-Bridges without tier 1 evidence           0 / 33
-Incidents without primary evidence        1 / 34
-Incidents without tier 1 evidence         1 / 34
-Events without primary evidence          16 / 183
-Events without tier 1 evidence             6 / 183
-Unreviewed event Tier 1 gaps               0
-Terminal unarchived unique URLs          28
-Terminal unarchived evidence records     38
-Risky-host unarchived unique URLs        21
-Risky-host unarchived evidence records   35
-X/Twitter evidence records unarchived    30
-Unknown URL status                        0
+Evidence with archived_url               116 / 284
+Bridges without primary evidence           0 / 33
+Bridges without tier 1 evidence            0 / 33
+Incidents without primary evidence         1 / 34
+Incidents without tier 1 evidence          1 / 34
+Events without primary evidence           16 / 183
+Events without tier 1 evidence              6 / 183
+Unreviewed event Tier 1 gaps                0
+Terminal unarchived unique URLs           25
+Terminal unarchived evidence records      35
+Risky-host unarchived unique URLs         18
+Risky-host unarchived evidence records    32
+X/Twitter evidence records unarchived     29
+Unknown URL status                         0
 ```
 
 Archive-risk ceilings use normalized unique source URLs and exact-or-subdomain host matching. Multiple evidence records that reuse one source URL create one preservation obligation.
 
-Archive Capture Batch 15 reviewed ten previously unreviewed exact canonical source URLs. Seven reproducible mappings were approved and published to nine records covering Elliptic, BNB Chain, SlowMist, the FBI, and Dcentralab. The permanent validator confirmed 110 archived evidence records, 28 terminal unique URLs, and 21 risky-host unique URLs.
+Archive Capture Batch 16 reviewed ten previously unreviewed exact canonical source URLs. Six mappings reproduced identically in both independent review passes and were published to six evidence records covering Harmony, Multichain, Rubic, and Unizen sources. The permanent validator confirmed 116 archived evidence records, 25 terminal unique URLs, and 18 risky-host unique URLs.
 
-Aurora returned no accepted replay. One QuillAudits source remained unavailable and another passed only the second run, so both were deferred. No wildcard, guessed, short, failed, temporally incompatible, or non-reproducible capture was accepted.
-
-Repeated full-content verifiers rejected stale same-count evidence at `bir_src_000014`. Cloudflare Pages was configured to build previews for every temporary branch, creating a queue ahead of production. The account-level remediation set previews to `none`, deleted 16 queued previews, preserved all production deployments, and allowed the Batch 15 canonical deployment to complete. The unchanged verifier then passed on attempt 1 at `generated_at 2026-08-05T08:02:41.108Z`.
+Reuters Harmony, the ShuttleFlow Conflux forum announcement, a SOCKET X update, and a Unizen CTO Twitter update did not satisfy the unchanged reproducible exact-replay boundary and remain deferred.
 
 All event Tier 1 gaps are reviewed. The six remaining gaps are intentional secondary records:
 
@@ -108,32 +117,30 @@ Remaining incident-level gap:
 ## Latest completed production checkpoint
 
 ```text
-Review PR                     #181
-Review merge                  fcf932b51445831e1d67c3c14c3ee342eff854dc
-Canonical data PR             #182
-Canonical merge               39134a5d7b717c467a49d96b5fd7104047cd0a50
-Build-input refresh PR        #184
-Build-input refresh           7e13955c725e07ca66e01f7f9e321db7f7c764ff
-Production audit PR           #185
-Initial production run        30983843765
-Cloudflare remediation run    30987353553
-Cloudflare remediation job    92245106402
-Production verify run         30986003440
-Production verify job         92245512645
+Review PR                     #188
+Review merge                  76b437e39b60721cab816544a10d2b75c12d1543
+Canonical data PR             #189
+Canonical merge               f9c6395d400358543bb3a761aa209be97ca1c266
+Production audit PR           #190
+Production verify run         31264440303
+Production verify job         93120202656
 Verified state                33 / 34 / 183 / 284
-Archived evidence             110 / 284
+Archived evidence             116 / 284
 Canonical content match       true
 Verified HTML routes          72
 Verified redirects            74
-Generated at                  2026-08-05T08:02:41.108Z
-Publication attempt           1 after preview-queue remediation
+Generated at                  2026-08-08T15:23:20.361Z
+Publication attempt           1
+Build-input refresh           not required
 ```
+
+Production had already converged when the unchanged verifier started. Attempt 1 matched all four canonical-derived public datasets completely and passed all route, metadata, sitemap, robots, redirect, content-type, and cache assertions.
 
 ## Next
 
-1. continue bounded archive capture work from 21 risky-host and 28 terminal unique URLs;
+1. continue bounded archive capture work from 18 risky-host and 25 terminal unique URLs as Batch 17;
 2. retry deferred official-source candidates without weakening replay or temporal-fit requirements;
 3. reduce the remaining 16 events without primary evidence where justified;
 4. strengthen remaining validators;
 5. begin review-gated monitoring and candidate collection without automatic canonical publication;
-6. continue v1 documentation, accessibility, performance, and release hardening.
+6. continue v1 documentation, accessibility, performance, compatibility, and release hardening.
