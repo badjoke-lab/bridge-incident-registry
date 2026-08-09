@@ -12,31 +12,25 @@ Events      183
 Evidence    287
 ```
 
-Canonical source files remain unchanged by monitoring:
+Canonical data remains unchanged by Phase 5 monitoring. Unknown URL status and source-count mismatches remain at 0.
+
+## Phase 3 quality boundary
 
 ```text
-data/bridges.json       33
-data/incidents.json     34
-data/events.json        183
-data/evidence.json      287
+Primary evidence                         206 / 287
+Tier 1 evidence                          223 / 287
+Official-domain evidence                 131 / 287
+Evidence with archived_url               130 / 287
+Incidents without primary                  1 / 34
+Incidents without Tier 1                   1 / 34
+Events without primary                    11 / 183
+Events without Tier 1                       6 / 183
+Terminal unarchived unique URLs           15
+Risky-host unarchived unique URLs         16
+Unknown URL status                         0
 ```
 
-## Phase 3 quality strengthening
-
-```text
-Full-corpus audit                    complete — PR #71
-Source-count remediation             complete — PRs #78–#99
-Source-quality baseline/remediation  complete — PRs #100–#107
-Event Tier 1 remediation             production-verified — PRs #108–#116
-Archive capture Batches 1–18         production-verified — PRs #118–#198
-Deferred Archive Retries 01–02       production-verified — PRs #199–#204
-Deferred Archive Retries 03–04       review complete — PRs #205–#206
-Event Primary Remediation 01         production-verified — PRs #207–#209
-Event Primary Remediation 02         production-verified — PRs #211–#214
-Cross-record bridge integrity        blocking — PR #218
-Unknown URL-status hard ceiling      active at 0
-Full production-content equality     active
-```
+Four non-intentional event-primary gaps remain deferred pending stronger first-party material: `bir_ev_000014`, `bir_ev_000143`, `bir_ev_000144`, and `bir_ev_000148`. Six Tier 1 gaps are intentional secondary-only records. `bir_ev_000150` remains intentionally non-primary direct security monitoring. `bir_inc_000026` remains the reviewed Nerve incident-level primary/Tier 1 gap.
 
 ## Phase 5 monitoring and candidate collection
 
@@ -48,93 +42,79 @@ Evidence health watch                live — PR #226
 External bridge-universe watch       live — PRs #228–#230
 Optional GDELT adapter               fail-closed — PRs #231–#232
 Structured bridge-hack feed          live — PRs #233–#239
-Active bridge/domain watch           next
+Active bridge/domain watch           live — PRs #241–#244
+RSS status-news watch                live — PRs #245–#246
+Monitoring state resolution health   next
 Site / SEO watch                     planned
 ```
 
-### Live monitoring proofs
-
-Issue #171 was emitted once as `Boltz — B / hold`; after PR #223 persisted its fingerprint, an unchanged rerun created no new review work.
-
-Evidence health run `31301765004` / job `93215576787`:
+### Live proof — evidence, external universe, and bridge hacks
 
 ```text
-Live evidence URLs                   287
-Selected URLs                         12
-Independent probes                    24
-Hard 404/410 findings                  0
-Canonical diff                         none
+Evidence selected                    12 / 287
+Evidence hard findings                0
+External rows                        98
+External exact canonical             11
+External unmatched baseline          87
+External repeat unchanged            87
+DefiLlama hacks parsed              613
+bridgeHack=true                      61
+Accepted bridge-hack baseline        61
+Bridge-hack exact canonical          20
+Bridge-hack repeat unchanged         61
+Candidates                            0
 ```
 
-External bridge-universe accepted baseline and repeat:
+The DefiLlama structured feed uses `https://api.llama.fi/hacks` as `legacy_public_json` with raw SHA-256 `e80fced996cf886ca0d2ca70c02dd04b869b628d63773d0b327f97b49aa2734a`. `bridgeHack=true` is the relevance gate before bridge identity matching.
+
+### Live proof — active bridge official-domain watch
+
+PR #241 added bounded two-pass probes for canonical `active`, `limited`, and `paused` bridge official URLs. Run `31313158492` exposed a false positive when Synapse's official URL lived at `bridge.synapseprotocol.com` while canonical `official_domain` was `synapseprotocol.com`. That review branch was discarded. PR #243 changed the comparison to treat parent/subdomain relationships as the same official site.
+
+Corrected run `31313312723` and accepted state PR #244:
 
 ```text
-Active external rows                  98
-Exact canonical matches               11
-Unmatched baseline fingerprints       87
-Baseline candidates                    0
-Repeat unchanged                      87
-Repeat candidates                      0
-Repeat state change                false
+Eligible bridges                       22
+Selected                                8
+Healthy baselines                       8
+Hard failures                           0
+Domain findings                         0
+Canonical diff                       none
 ```
 
-Structured DefiLlama bridge-hack feed:
+A post-merge rerun produced baseline changes 0, findings 0, and `state_changed=false`.
+
+Two independent 404/410 results are required for a hard finding. 401/403/405/429, timeout, 5xx, or mixed probes are insufficient. A consistent redirect outside the stored official-domain scope remains reviewable.
+
+### Live proof — RSS status-news discovery
+
+PR #245 added RSS/Atom parsing and bounded security/operations/regulatory triggers. Run `31313579371`, job `93245104559`, reached both configured feeds and initialized them with zero candidates:
 
 ```text
-Input URL        https://api.llama.fi/hacks
-Input kind       legacy_public_json
-Raw SHA-256      e80fced996cf886ca0d2ca70c02dd04b869b628d63773d0b327f97b49aa2734a
-Parsed hacks     613
-bridgeHack=true   61
-Accepted baseline 61
-Exact canonical   20
-Candidates         0
+Feeds reached                 2
+CoinDesk rows                25
+Cointelegraph rows           30
+Total parsed                 55
+Bridge + trigger rows         0
+Baseline candidates           0
+Findings                      0
+Canonical diff             none
 ```
 
-The live raw schema uses `bridgeHack`, `chain`, `source`, and `targetType`. Temporary probes proved that seven canonical-name matches with `bridgeHack=false` were ordinary protocol/DeFi exploits, so PR #238 made `bridgeHack=true` the incident-feed relevance gate before identity classification.
+PR #246 persisted the feed baseline. Rerun job `93245346339` again parsed 55 rows with no relevant rows, candidates, findings, or state change. An RSS item can only become `B / hold` when it contains both a canonical BIR bridge identity and a bounded security, pause/shutdown, or regulatory trigger. Primary-source review remains mandatory before any canonical work.
 
-After PR #239 merged the 61-row baseline, rerun job `93224464784` proved:
-
-```text
-Bridge-hack rows          61
-Unchanged                 61
-Candidates                 0
-State change           false
-External universe unchanged 87
-Evidence findings           0
-Canonical diff           none
-```
-
-GDELT remains optional code only: its first GitHub Actions live request was rate-limited with HTTP 429 and no GDELT baseline was created. Scheduled/default incident discovery therefore uses the best-effort DefiLlama raw `/hacks` route with exact provenance and fail-closed fallback behavior.
+GDELT remains optional/fail-closed code only because its first GitHub Actions live request returned HTTP 429.
 
 ## Monitoring safety boundary
 
 - canonical JSON is fingerprinted before and after every run;
 - canonical diffs, unknown URL status, and broken canonical references are blocking;
-- persistent monitoring output is restricted to `data-staging/monitoring/**` and `data-staging/watchlists/auto/**`;
-- initial external universes are zero-candidate baselines;
+- persistent output is restricted to `data-staging/monitoring/**` and `data-staging/watchlists/auto/**`;
+- first observations are reviewable zero-candidate baselines where appropriate;
 - unchanged signals are suppressed;
-- monitoring candidates are review material only;
-- DefiLlama/GDELT discovery can never become class A automatically;
+- monitoring candidates never publish canonical records;
+- secondary feeds can only create hold/review material;
 - canonical publication always requires a separate reviewed canonical branch and normal production verification.
-
-## Source-quality state
-
-```text
-Primary evidence                         206 / 287
-Tier 1 evidence                          223 / 287
-Official-domain evidence                 131 / 287
-Evidence with archived_url               130 / 287
-Incidents without primary                  1 / 34
-Incidents without tier 1                   1 / 34
-Events without primary                    11 / 183
-Events without tier 1                       6 / 183
-Terminal unarchived unique URLs           15
-Risky-host unarchived unique URLs         16
-Unknown URL status                         0
-```
-
-Four non-intentional event-primary gaps remain deferred pending stronger first-party material: `bir_ev_000014`, `bir_ev_000143`, `bir_ev_000144`, and `bir_ev_000148`. Six Tier 1 gaps are intentional secondary-only records. `bir_ev_000150` remains intentionally non-primary direct security monitoring. `bir_inc_000026` remains the reviewed Nerve incident-level primary/Tier 1 gap.
 
 ## Latest completed production checkpoint
 
@@ -152,8 +132,8 @@ Generated at                  2026-08-09T07:08:45.362Z
 
 ## Next
 
-1. implement bounded official-domain/status monitoring for canonical active bridges;
-2. add reproducible pause/shutdown/regulatory signals without weakening incident semantics;
+1. add explicit monitoring-state/watchlist resolution health and rearm behavior;
+2. add public-site/SEO monitoring;
 3. maintain source-quality, validator, public-contract, and UI compatibility gates;
 4. continue v1 hardening;
 5. revisit evidence/archive gaps only when source conditions materially change.

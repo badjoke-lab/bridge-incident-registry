@@ -24,8 +24,7 @@ PR #117      Nerve Bridge source boundary
 PR #118–198  Archive Capture Batches 1–18 and production checkpoints
 PR #199–204  Deferred Archive Retries 01–02 and production checkpoints
 PR #205–206  Deferred Archive Retries 03–04 review, no approvals
-PR #207–209  Event Primary Remediation 01 and production verification
-PR #211–214  Event Primary Remediation 02 review, migration, and production verification
+PR #207–214  Event Primary Remediation 01–02 and production verification
 PR #217      Review-gated Phase 5 monitoring foundation
 PR #218      Cross-record bridge-integrity validation
 PR #223      Initial live monitoring state / Issue #171 dedupe seed
@@ -34,6 +33,8 @@ PR #226      Bounded evidence-health watch
 PR #228–230  External bridge-universe watch and accepted baseline
 PR #231–232  News source boundary and optional fail-closed GDELT adapter
 PR #233–239  Structured DefiLlama bridge-hack discovery and accepted baseline
+PR #241–244  Active bridge official-domain monitoring and accepted baseline
+PR #245–246  RSS status-news discovery and accepted baseline
 ```
 
 ## Latest completed production checkpoint
@@ -73,7 +74,6 @@ Incidents without primary             1
 Incidents without Tier 1              1
 Events without primary               11
 Events without Tier 1                 6
-Unreviewed event Tier 1 gaps           0
 Evidence with archived_url          130
 Terminal unarchived unique URLs      15
 Risky-host unarchived unique URLs    16
@@ -99,61 +99,61 @@ Evidence-health run            31301765004 / 93215576787
 Evidence selected              12 / 287
 Two-pass probes                24
 Hard 404/410 findings           0
-Canonical diff                 none
 ```
 
-### External bridge universe
-
-PR #230 accepted a zero-candidate universe baseline:
+### External bridge universe and bridge-hack feed
 
 ```text
 External rows                  98
 Exact canonical matches        11
 Unmatched baseline             87
-Baseline candidates             0
-Source SHA-256                 3895dfff2a023c3f67aceacb0e4d56f90e4bd0028f34c94b6b0b03ceb4d253a0
+External repeat unchanged      87
+External candidates             0
+DefiLlama hacks parsed        613
+bridgeHack=true                61
+Bridge-hack baseline           61
+Exact canonical matches        20
+Bridge-hack repeat unchanged   61
+Bridge-hack candidates          0
 ```
 
-Rerun job `93220521310` proved all 87 unmatched rows unchanged, with candidate/state change 0.
+The bridge-hack source is `https://api.llama.fi/hacks`, kind `legacy_public_json`, raw SHA-256 `e80fced996cf886ca0d2ca70c02dd04b869b628d63773d0b327f97b49aa2734a`. `bridgeHack=true` is required before identity classification. New exact matches may become `B / hold`; unresolved bridge rows may become `C / hold`; neither is canonical evidence without separate primary-source research.
 
-### Structured bridge-hack incident feed
+### Active bridge official-domain watch
 
-The scheduled/default incident feed uses the best-effort public raw route:
+PR #241 added a rotating two-pass official-URL monitor for canonical `active`, `limited`, and `paused` bridges. The first enabled live run exposed a Synapse parent-domain/subdomain false positive; its auto branch was discarded. PR #243 fixed official-domain scope comparison before any incorrect state was accepted.
 
-```text
-URL          https://api.llama.fi/hacks
-Kind         legacy_public_json
-Raw SHA-256  e80fced996cf886ca0d2ca70c02dd04b869b628d63773d0b327f97b49aa2734a
-```
-
-The live schema uses `bridgeHack`, `chain`, `source`, and `targetType`. Temporary diagnostics proved `bridgeHack=true` is the required relevance gate. Seven canonical-name matches with `bridgeHack=false` were ordinary protocol/DeFi exploits and are excluded by PR #238.
-
-Accepted PR #239 baseline:
+Accepted run `31313312723`, persisted in PR #244:
 
 ```text
-Parsed hacks                 613
-bridgeHack=true               61
-Bridge-hack baseline          61
-Exact canonical matches       20
-Baseline candidates            0
+Eligible bridges              22
+Selected                       8
+Healthy baselines              8
+Hard failures                  0
+Domain findings                0
 Canonical diff              none
 ```
 
-Rerun job `93224464784` proved:
+The post-merge rerun produced baseline changes 0, findings 0, and no new review branch. Two 404/410 responses are required for a hard finding. 401/403/405/429, 5xx, timeout, and mixed results are insufficient. Parent/subdomain relationships are within the same official-domain scope; unrelated consistent final-host changes remain reviewable.
+
+### RSS status-news discovery
+
+PR #245 added RSS/Atom secondary discovery for canonical bridge identity plus bounded security, pause/shutdown, or regulatory triggers. Run `31313579371`, job `93245104559`, reached both configured publisher feeds:
 
 ```text
-Bridge-hack rows              61
-Unchanged                     61
-Candidates                     0
-State change               false
-External-universe unchanged   87
-Evidence findings              0
-Canonical diff              none
+Feeds reached                 2
+CoinDesk rows                25
+Cointelegraph rows           30
+Rows parsed                  55
+Bridge + trigger rows         0
+Baseline candidates           0
+Findings                      0
+Canonical diff             none
 ```
 
-A new `bridgeHack=true` row that exactly matches a canonical BIR bridge may enter review as `B / hold`; an unresolved `bridgeHack=true` row may enter as `C / hold`. Neither is canonical evidence without a separate primary-source investigation.
+PR #246 persisted the RSS baseline. Rerun job `93245346339` again parsed 55 rows and produced candidate 0, finding 0, `state_changed=false`, and no review branch. RSS findings are secondary `B / hold` discovery only; primary-source review is mandatory before canonical work.
 
-GDELT remains optional/fail-closed code only because the first GitHub Actions live request received HTTP 429. No GDELT baseline was accepted.
+GDELT remains optional/fail-closed because its first GitHub Actions live request received HTTP 429. No GDELT baseline was accepted.
 
 Repository Actions settings still disallow `GITHUB_TOKEN` PR creation. On that specific platform error, the workflow retains the already-validated monitoring branch and succeeds; connected GitHub access can open the review PR. All other PR-creation failures remain fatal.
 
@@ -163,8 +163,8 @@ Production branch is `main`, production deployments are enabled, and preview dep
 
 ## Next
 
-1. implement bounded official-domain/status monitoring for canonical active bridges;
-2. add pause/shutdown/regulatory review signals only when source behavior is reproducible;
-3. add public-site/SEO monitoring incrementally;
+1. add monitoring-state/watchlist resolution health and explicit rearm semantics;
+2. add public-site/SEO monitoring incrementally;
+3. continue bounded RSS security/pause/shutdown/regulatory discovery;
 4. continue v1 hardening;
 5. revisit deferred evidence/archive gaps only after source conditions change.
