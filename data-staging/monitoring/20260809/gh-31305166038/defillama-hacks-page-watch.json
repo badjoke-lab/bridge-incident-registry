@@ -1,0 +1,21 @@
+{
+  "source": {
+    "provider": "DefiLlama",
+    "source_id": "defillama-hacks-discovery",
+    "url": "https://api.llama.fi/hacks",
+    "source_kind": "legacy_public_json",
+    "sha256": "e80fced996cf886ca0d2ca70c02dd04b869b628d63773d0b327f97b49aa2734a"
+  },
+  "baseline_initialized": true,
+  "state_changed": true,
+  "parsed_count": 613,
+  "relevant_count": 61,
+  "baseline_seeded_count": 61,
+  "exact_canonical_matches": 20,
+  "bridge_flag_rows": 61,
+  "unchanged_count": 0,
+  "canonical_evidence_duplicates": 0,
+  "deferred_changed_count": 0,
+  "emitted_count": 0,
+  "candidates": []
+}
