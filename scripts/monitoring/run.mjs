@@ -5,10 +5,15 @@ import { canonicalFingerprints, assertCanonicalUnchanged, canonicalHealthSummary
 import { applySignal, loadState, writeState } from "./core/state.mjs";
 import { writeMonitoringOutputs } from "./core/report.mjs";
 import { watchGithubIssues } from "./monitors/github-issue-watch.mjs";
+import { watchEvidenceHealth } from "./monitors/evidence-health-watch.mjs";
 
 function arg(name, fallback = null) {
   const index = process.argv.indexOf(`--${name}`);
   return index >= 0 ? process.argv[index + 1] : fallback;
+}
+
+function flag(name) {
+  return process.argv.includes(`--${name}`);
 }
 
 function readIssues(file) {
@@ -24,6 +29,11 @@ const dateKey = arg("date", observedAt.slice(0, 10).replaceAll("-", ""));
 const runId = arg("run-id", `run-${observedAt.replace(/[-:.TZ]/g, "").slice(0, 14)}`);
 const issuesPath = arg("issues");
 const resultPath = arg("result", ".monitor-output/result.json");
+const evidenceHealthEnabled = flag("evidence-health");
+const evidenceProbeLimit = Number.parseInt(arg("evidence-probe-limit", "12"), 10);
+if (!Number.isInteger(evidenceProbeLimit) || evidenceProbeLimit < 0 || evidenceProbeLimit > 50) {
+  throw new Error(`invalid evidence probe limit: ${evidenceProbeLimit}`);
+}
 
 const before = canonicalFingerprints();
 const canonical = loadCanonicalData();
@@ -38,14 +48,29 @@ if (health.unknown_url_status > 0) {
 const state = loadState();
 const issues = readIssues(issuesPath);
 const issueResult = watchGithubIssues(issues, state, applySignal, observedAt);
-const findings = issueResult.findings;
-const candidates = issueResult.candidates;
+const evidenceResult = evidenceHealthEnabled
+  ? await watchEvidenceHealth({ evidence: canonical.evidence, state, applySignal, observedAt, limit: evidenceProbeLimit })
+  : { findings: [], probes: [], selected_count: 0, live_evidence_count: canonical.evidence.filter((source) => source.url_status === "live").length };
+
+const findings = [...issueResult.findings, ...evidenceResult.findings];
+const candidates = [...issueResult.candidates];
 const hasChanges = findings.length > 0 || candidates.length > 0;
 let outputs = null;
 
 if (hasChanges) {
   writeState(state);
-  outputs = writeMonitoringOutputs({ dateKey, runId, observedAt, findings, candidates, health, state });
+  outputs = writeMonitoringOutputs({
+    dateKey,
+    runId,
+    observedAt,
+    findings,
+    candidates,
+    health,
+    monitorReports: {
+      "github-issue-watch": issueResult,
+      "evidence-health-watch": evidenceResult
+    }
+  });
 }
 
 const after = canonicalFingerprints();
@@ -58,6 +83,12 @@ const result = {
   has_changes: hasChanges,
   findings_count: findings.length,
   candidate_count: candidates.length,
+  evidence_health: {
+    enabled: evidenceHealthEnabled,
+    selected_count: evidenceResult.selected_count,
+    live_evidence_count: evidenceResult.live_evidence_count,
+    finding_count: evidenceResult.findings.length
+  },
   canonical_counts: health.counts,
   outputs
 };
