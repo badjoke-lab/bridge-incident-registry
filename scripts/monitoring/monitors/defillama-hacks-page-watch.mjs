@@ -1,7 +1,7 @@
 import crypto from "node:crypto";
 
-const SOURCE_ID = "defillama-public-hacks-page";
-const SOURCE_URL = "https://defillama.com/hacks";
+const SOURCE_ID = "defillama-hacks-discovery";
+const DEFAULT_SOURCE_URL = "https://defillama.com/hacks";
 const BASELINE_KEY = `incident-feed:${SOURCE_ID}:baseline-v1`;
 
 function value(input) {
@@ -34,7 +34,7 @@ function decodeScriptJson(text) {
 
 function nextDataJson(html) {
   const match = html.match(/<script[^>]*\bid=["']__NEXT_DATA__["'][^>]*>([\s\S]*?)<\/script>/i);
-  if (!match) throw new Error("DefiLlama hacks page is missing __NEXT_DATA__");
+  if (!match) throw new Error("DefiLlama hacks input is missing __NEXT_DATA__");
   try {
     return JSON.parse(decodeScriptJson(match[1]));
   } catch (error) {
@@ -106,7 +106,7 @@ function normalizeBridgeFlag(input) {
 }
 
 export function parseDefillamaHacksPage(html) {
-  if (!value(html)) throw new Error("DefiLlama hacks page input is empty");
+  if (!value(html)) throw new Error("DefiLlama hacks input is empty");
   const rows = findHackArray(nextDataJson(html));
   return rows.map((row) => ({
     name: value(row.name),
@@ -159,8 +159,8 @@ function relevantRows(rows, identityIndex) {
   return rows.map((row) => ({ row, match: exactCanonicalMatch(row, identityIndex) })).filter(({ row, match }) => row.bridge || match);
 }
 
-function candidateFor(row, match) {
-  const sourceUrls = [...new Set([row.link, SOURCE_URL].filter(Boolean))];
+function candidateFor(row, match, sourceUrl) {
+  const sourceUrls = [...new Set([row.link, safeHttpUrl(sourceUrl)].filter(Boolean))];
   const details = {
     provider: "DefiLlama",
     source_id: SOURCE_ID,
@@ -184,7 +184,7 @@ function candidateFor(row, match) {
       likely_incident_type: "exploit",
       record_shape: "hold",
       headline: `${row.name} appears as a new or materially changed DefiLlama hack record`,
-      bir_relevance: "The public DefiLlama hacks database contains a new or changed row that exactly matches a canonical BIR bridge identity. This is discovery material only and requires claim-relative primary-source review.",
+      bir_relevance: "The DefiLlama hacks discovery input contains a new or changed row that exactly matches a canonical BIR bridge identity. This is discovery material only and requires claim-relative primary-source review.",
       duplicate_check: { matched_existing_record: true, bridge_id: match.bridge_id, method: "exact hack-name identity" },
       incident_feed: details,
       source_urls: sourceUrls,
@@ -203,7 +203,7 @@ function candidateFor(row, match) {
     likely_incident_type: "exploit",
     record_shape: "hold",
     headline: `${row.name} appears as a new or materially changed bridge hack record`,
-    bir_relevance: "The public DefiLlama hacks database marks this row as bridge-related, but no exact canonical BIR bridge identity was resolved. The incident and bridge identity must be reviewed before canonical work.",
+    bir_relevance: "The DefiLlama hacks discovery input marks this row as bridge-related, but no exact canonical BIR bridge identity was resolved. The incident and bridge identity must be reviewed before canonical work.",
     duplicate_check: { matched_existing_record: false, method: "bridge flag without exact canonical hack-name identity" },
     incident_feed: details,
     source_urls: sourceUrls,
@@ -212,19 +212,45 @@ function candidateFor(row, match) {
   };
 }
 
-export function watchDefillamaHacksPage({ html, canonicalBridges, canonicalEvidence, state, applySignal, observedAt, limit = 8 }) {
+function sourceMetadata({ html, sourceUrl, sourceKind, sourceSha256 }) {
+  const normalizedUrl = safeHttpUrl(sourceUrl) ?? DEFAULT_SOURCE_URL;
+  const digest = /^[a-f0-9]{64}$/i.test(value(sourceSha256))
+    ? value(sourceSha256).toLowerCase()
+    : crypto.createHash("sha256").update(html).digest("hex");
+  return {
+    provider: "DefiLlama",
+    source_id: SOURCE_ID,
+    url: normalizedUrl,
+    source_kind: value(sourceKind) || "public_page",
+    sha256: digest
+  };
+}
+
+export function watchDefillamaHacksPage({
+  html,
+  canonicalBridges,
+  canonicalEvidence,
+  state,
+  applySignal,
+  observedAt,
+  limit = 8,
+  sourceUrl = DEFAULT_SOURCE_URL,
+  sourceKind = "public_page",
+  sourceSha256 = null
+}) {
   if (!Number.isInteger(limit) || limit < 0 || limit > 50) throw new Error(`invalid DefiLlama hacks candidate limit: ${limit}`);
   const allRows = parseDefillamaHacksPage(html);
   const identityIndex = canonicalIdentityIndex(canonicalBridges);
   const relevant = relevantRows(allRows, identityIndex);
   const evidenceUrls = canonicalEvidenceUrls(canonicalEvidence);
   const baselineInitialized = Boolean(state.signals[BASELINE_KEY]);
+  const source = sourceMetadata({ html, sourceUrl, sourceKind, sourceSha256 });
 
   if (!baselineInitialized) {
     for (const { row } of relevant) applySignal(state, { key: rowKey(row), fingerprint: rowFingerprint(row), observedAt });
     applySignal(state, { key: BASELINE_KEY, fingerprint: "initialized-v1", observedAt });
     return {
-      source: { provider: "DefiLlama", source_id: SOURCE_ID, url: SOURCE_URL, sha256: crypto.createHash("sha256").update(html).digest("hex") },
+      source,
       baseline_initialized: true,
       state_changed: true,
       parsed_count: allRows.length,
@@ -261,11 +287,11 @@ export function watchDefillamaHacksPage({ html, canonicalBridges, canonicalEvide
       continue;
     }
     applySignal(state, { key, fingerprint, observedAt });
-    candidates.push(candidateFor(row, match));
+    candidates.push(candidateFor(row, match, source.url));
   }
 
   return {
-    source: { provider: "DefiLlama", source_id: SOURCE_ID, url: SOURCE_URL, sha256: crypto.createHash("sha256").update(html).digest("hex") },
+    source,
     baseline_initialized: false,
     state_changed: candidates.length > 0,
     parsed_count: allRows.length,
