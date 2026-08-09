@@ -20,5 +20,6 @@ export const MONITOR_NAMES = Object.freeze([
   "defillama-hacks-page-watch",
   "gdelt-news-watch",
   "rss-status-news-watch",
+  "public-site-health-watch",
   "monitoring-health-watch"
 ]);
