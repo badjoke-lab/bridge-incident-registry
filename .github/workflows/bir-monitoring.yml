@@ -150,6 +150,8 @@ jobs:
             --issues .monitor-input/github-issues.json \
             --evidence-health \
             --evidence-probe-limit 12 \
+            --active-bridge-domain-health \
+            --active-bridge-domain-probe-limit 8 \
             "${monitor_args[@]}" \
             --date "$date_key" \
             --run-id "$run_id" \
