@@ -63,7 +63,7 @@ jobs:
         if: steps.duplicate.outputs.skip != 'true'
         run: |
           mkdir -p .monitor-input
-          gh issue list --state open --limit 100 --json number,title,body,url,labels,updatedAt > .monitor-input/github-issues.json
+          gh issue list --state all --limit 100 --json number,title,body,url,labels,updatedAt,state > .monitor-input/github-issues.json
 
       - name: Collect external bridge registry
         if: steps.duplicate.outputs.skip != 'true'
