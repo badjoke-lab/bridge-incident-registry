@@ -28,6 +28,8 @@ PR #201      Deferred Archive Retry 01 production verification and checkpoint sy
 PR #202      Deferred Archive Retry 02 reproducible review
 PR #203      Deferred Archive Retry 02 canonical migration
 PR #204      Deferred Archive Retry 02 production verification and checkpoint sync
+PR #205      Deferred Archive Retry 03 review — approved 0
+PR #206      Deferred Archive Retry 04 review — approved 0; fresh pool exhausted
 ```
 
 ## Latest completed production checkpoint
@@ -97,9 +99,11 @@ Deferred Retry 02 reviewed a different ten-URL scope and recovered exactly one a
 bir_src_000166  QuillAudits — Decoding Rubic Exchange Exploit
 ```
 
-The accepted Retry 02 snapshot is `20221227131535`, HTTP 200 HTML, 155,612 bytes in both independent review passes. The other nine Retry 02 targets remained below the unchanged exact replay, temporal-fit, minimum-size, and two-run reproducibility requirements.
+Across Retries 01–02, the original deferred inventory was reduced by three evidence records on three unique URLs, leaving 42 reviewed-but-unarchived evidence records across 29 unique URLs.
 
-Across Retries 01–02, the original deferred inventory is reduced by three evidence records on three unique URLs, leaving 42 reviewed-but-unarchived evidence records across 29 unique URLs before any newly introduced canonical sources. Retry 03 must reconstruct this pool from permanent audits and current canonical state before selecting a fresh scope. Do not immediately recycle the recent Retry 01 or Retry 02 failures.
+Deferred Retry 03 reviewed ten of the twelve URLs that had not been part of the recent Retry 01/02 scopes and approved none. Deferred Retry 04 reviewed the final two fresh URLs, `bir_src_000277` and `bir_src_000282`, and also approved none. The not-recently-retried fresh deferred pool is now exhausted.
+
+The remaining reviewed-unarchived pool therefore consists only of URLs already explicitly retried under the current exact-replay, temporal-fit, minimum-size, and two-run reproducibility boundary. Do not immediately recycle those failures. Archive preservation may resume after conditions materially change or when new canonical source URLs enter the corpus.
 
 ## Cloudflare Pages boundary
 
@@ -115,8 +119,9 @@ Issue #171 remains open as a monitoring signal. Boltz is not canonical because t
 
 ## Next
 
-1. reconstruct the remaining reviewed-unresolved archive pool and run Deferred Archive Retry 03 against a fresh high-value subset;
-2. reduce remaining event primary gaps where justified;
+1. reduce the remaining 16 event primary-evidence gaps where source hierarchy can be improved safely;
+2. keep intentional secondary-only gaps explicit rather than weakening the evidence standard;
 3. strengthen validators;
 4. begin review-gated monitoring and candidate collection without automatic publication;
-5. continue v1 hardening.
+5. continue v1 hardening;
+6. revisit deferred archive failures only after conditions change or new canonical source URLs appear.
