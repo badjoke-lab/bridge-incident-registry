@@ -8,7 +8,7 @@ const active = {
   aliases: [],
   status: "active",
   official_url: "https://bridge.fixture.example/app",
-  official_domain: "bridge.fixture.example"
+  official_domain: "fixture.example"
 };
 const dead = {
   id: "bir_bridge_fixture_dead",
@@ -28,12 +28,12 @@ function constant(result) {
 const healthy = constant({ ok: true, status: 200, final_url: active.official_url, error: null });
 const hard404 = constant({ ok: false, status: 404, final_url: active.official_url, error: null });
 const blocked403 = constant({ ok: false, status: 403, final_url: active.official_url, error: null });
-const moved = constant({ ok: true, status: 200, final_url: "https://new.fixture.example/app", error: null });
+const moved = constant({ ok: true, status: 200, final_url: "https://new.external.example/app", error: null });
 
 const state = { version: 1, signals: {} };
 const baseline = await watchActiveBridgeDomains({ bridges, state, applySignal, observedAt: "2026-08-09T09:00:00Z", limit: 8, probe: healthy });
 if (baseline.eligible_count !== 1 || baseline.selected_count !== 1 || baseline.baseline_seeded_count !== 1 || baseline.findings.length !== 0 || !baseline.state_changed) {
-  throw new Error(`healthy first observation should seed one active bridge baseline without a finding: ${JSON.stringify(baseline)}`);
+  throw new Error(`healthy subdomain under stored parent official_domain should seed one active bridge baseline without a finding: ${JSON.stringify(baseline)}`);
 }
 if (state.signals[`bridge-domain:${active.id}`]?.fingerprint !== "healthy:bridge.fixture.example->bridge.fixture.example") {
   throw new Error("healthy baseline fingerprint mismatch");
@@ -73,7 +73,7 @@ if (blocked.state_changed || blocked.findings.length !== 0 || Object.keys(blocke
 const mismatchState = { version: 1, signals: {} };
 const mismatch = await watchActiveBridgeDomains({ bridges, state: mismatchState, applySignal, observedAt: "2026-08-09T09:07:00Z", limit: 8, probe: moved });
 if (!mismatch.state_changed || mismatch.baseline_seeded_count !== 1 || mismatch.findings.length !== 1 || mismatch.findings[0].category !== "bridge_official_domain_redirect_mismatch") {
-  throw new Error(`first healthy redirect to a different host must seed baseline plus review finding: ${JSON.stringify(mismatch)}`);
+  throw new Error(`first healthy redirect outside the stored official-domain scope must seed baseline plus review finding: ${JSON.stringify(mismatch)}`);
 }
 
 let pass = 0;
@@ -89,4 +89,4 @@ if (mixed.state_changed || mixed.findings.length !== 0 || Object.keys(mixedState
   throw new Error(`mixed probe results must not create monitoring state: ${JSON.stringify(mixed)}`);
 }
 
-console.log("Active bridge domain controlled tests passed (eligibility, baseline, dedupe, hard failure, recovery, domain change, blocked/mixed suppression).");
+console.log("Active bridge domain controlled tests passed (eligibility, parent/subdomain baseline, dedupe, hard failure, recovery, external domain change, blocked/mixed suppression).");

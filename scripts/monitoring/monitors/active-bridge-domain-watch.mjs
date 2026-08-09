@@ -18,6 +18,13 @@ function hostname(value) {
   return new URL(normalized).hostname.toLowerCase().replace(/^www\./, "");
 }
 
+function sameDomainScope(left, right) {
+  const a = String(left ?? "").toLowerCase().replace(/^www\./, "");
+  const b = String(right ?? "").toLowerCase().replace(/^www\./, "");
+  if (!a || !b) return false;
+  return a === b || a.endsWith(`.${b}`) || b.endsWith(`.${a}`);
+}
+
 function classifyProbe(result) {
   if (result.ok || (result.status >= 200 && result.status < 400)) return "healthy";
   if (HARD_FAILURE_STATUS.has(result.status)) return "hard_failure";
@@ -151,14 +158,14 @@ export async function watchActiveBridgeDomains({
       const signal = applySignal(state, { key, fingerprint, observedAt });
       stateChanged ||= signal.changed;
       if (signal.changed) baselineSeeded += 1;
-      if (expectedHost && firstHost !== expectedHost) {
+      if (expectedHost && !sameDomainScope(firstHost, expectedHost)) {
         findings.push({
           finding_id: `bridge_${bridge.id}_official_domain_mismatch`,
           monitor: "active-bridge-domain-watch",
           severity: "medium",
           category: "bridge_official_domain_redirect_mismatch",
           title: `${bridge.canonical_name} resolves to ${firstHost}`,
-          summary: `Two healthy probes consistently resolved the canonical official URL to a different host than the stored official_domain (${expectedHost}). Review whether this is an intentional migration or stale canonical metadata.`,
+          summary: `Two healthy probes consistently resolved the canonical official URL outside the stored official_domain scope (${expectedHost}). Review whether this is an intentional migration or stale canonical metadata.`,
           affected_bridge: { id: bridge.id, canonical_name: bridge.canonical_name, status: bridge.status, official_domain: bridge.official_domain ?? null },
           source_urls: [bridge.official_url, first.final_url].filter((item, index, all) => item && all.indexOf(item) === index),
           confidence: "high",
