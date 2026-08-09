@@ -1,4 +1,10 @@
 {
   "version": 1,
-  "signals": {}
+  "signals": {
+    "github-issue:171": {
+      "fingerprint": "35963909b6e20e24c73e4cd729f0ab3c12f33e5097aa5a725a033ac54ae73a60",
+      "first_seen_at": "2026-08-09T07:30:28Z",
+      "last_changed_at": "2026-08-09T07:30:28Z"
+    }
+  }
 }

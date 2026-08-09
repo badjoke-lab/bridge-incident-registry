@@ -1,0 +1,27 @@
+{
+  "run_id": "gh-31301301277",
+  "observed_at": "2026-08-09T07:30:28Z",
+  "candidates": [
+    {
+      "candidate_id": "github_issue_171",
+      "canonical_name": "Boltz",
+      "aliases": [],
+      "candidate_class": "B",
+      "likely_type": "unknown",
+      "likely_status": "unknown",
+      "likely_incident_type": "unknown",
+      "record_shape": "hold",
+      "headline": "Review Boltz 2026 security-driven swap shutdown",
+      "bir_relevance": "Repository issue is explicitly marked for monitoring/review and requires evidence review before canonical inclusion.",
+      "duplicate_check": {
+        "matched_existing_record": null,
+        "method": "not-run-in-foundation"
+      },
+      "source_urls": [
+        "https://github.com/badjoke-lab/bridge-incident-registry/issues/171"
+      ],
+      "source_quality": "review_required",
+      "next_action": "review_for_canonical_boundary"
+    }
+  ]
+}

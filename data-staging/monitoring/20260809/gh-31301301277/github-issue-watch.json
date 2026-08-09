@@ -1,0 +1,40 @@
+{
+  "findings": [
+    {
+      "finding_id": "issue_171_35963909b6",
+      "monitor": "github-issue-watch",
+      "severity": "medium",
+      "category": "review_signal",
+      "title": "Review Boltz 2026 security-driven swap shutdown",
+      "summary": "## Signal\n\nBoltz announced on 2026-08-03 that all swaps remain disabled until further notice after a multi-month increase in automated AI-assisted probing, several contained exploits, and internal security-scan findings. The operator stated that refund mechanisms and support remain available and that no user funds were at risk.\n\n## First-party sources\n\n- https://x.com/Boltzhq/status/2084311537502630319\n- https://boltz.exchange/\n- https://api.docs.boltz.exchange/claiming-swaps.html\n\n## Current BIR disposition\n\n`monitoring signal / needs evidence`, not canonical yet.\n\nThe current material does not identify one discrete bridge exploit with a public technical boundary, incident date, affected route, affected assets, loss amount, or postmortem. Creating a reviewed `incident_case` now would requ",
+      "source_urls": [
+        "https://github.com/badjoke-lab/bridge-incident-registry/issues/171"
+      ],
+      "confidence": "medium",
+      "dedupe_key": "github-issue:171"
+    }
+  ],
+  "candidates": [
+    {
+      "candidate_id": "github_issue_171",
+      "canonical_name": "Boltz",
+      "aliases": [],
+      "candidate_class": "B",
+      "likely_type": "unknown",
+      "likely_status": "unknown",
+      "likely_incident_type": "unknown",
+      "record_shape": "hold",
+      "headline": "Review Boltz 2026 security-driven swap shutdown",
+      "bir_relevance": "Repository issue is explicitly marked for monitoring/review and requires evidence review before canonical inclusion.",
+      "duplicate_check": {
+        "matched_existing_record": null,
+        "method": "not-run-in-foundation"
+      },
+      "source_urls": [
+        "https://github.com/badjoke-lab/bridge-incident-registry/issues/171"
+      ],
+      "source_quality": "review_required",
+      "next_action": "review_for_canonical_boundary"
+    }
+  ]
+}
