@@ -30,6 +30,7 @@ export function writeMonitoringOutputs({ dateKey, runId, observedAt, findings, c
   }
   writeJson(watchlistPath, { run_id: runId, observed_at: observedAt, candidates });
 
+  const external = monitorReports["external-bridge-candidate-watch"];
   const lines = [
     `# BIR Auto Monitoring Report — ${dateKey}`,
     "",
@@ -42,12 +43,25 @@ export function writeMonitoringOutputs({ dateKey, runId, observedAt, findings, c
     `- Events: ${health.counts.events}`,
     `- Evidence: ${health.counts.evidence}`,
     `- Unknown URL status: ${health.unknown_url_status}`,
-    `- Reference errors: ${health.reference_errors.length}`,
-    "",
-    "## New or changed findings",
-    ""
+    `- Reference errors: ${health.reference_errors.length}`
   ];
 
+  if (external?.baseline_initialized) {
+    lines.push(
+      "",
+      "## Monitoring state change",
+      "",
+      "External bridge discovery baseline initialized.",
+      "",
+      `- External rows parsed: ${external.parsed_count}`,
+      `- Existing canonical matches: ${external.matched_existing_count}`,
+      `- Unmatched rows fingerprinted as baseline: ${external.baseline_seeded_count}`,
+      `- Candidates emitted from baseline: ${external.emitted_count}`,
+      "- Baseline registry presence is not treated as an incident candidate."
+    );
+  }
+
+  lines.push("", "## New or changed findings", "");
   if (findings.length === 0) lines.push("None.");
   for (const finding of findings) {
     lines.push(`- **${finding.title}** — ${finding.severity} — ${finding.category}`);
