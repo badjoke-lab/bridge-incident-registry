@@ -90,13 +90,12 @@ withFixture(
   (fixtureRoot) => {
     const events = readJson(fixtureRoot, "data/events.json");
     const evidence = readJson(fixtureRoot, "data/evidence.json");
-    const target = events.find((event) => {
-      const sources = evidence.filter((source) => source.event_id === event.id);
-      return sources.some((source) => source.source_tier === "tier_1" && source.is_primary !== true);
-    });
-    if (!target) throw new Error("fixture requires an event with non-primary tier-1 evidence");
+    const target = events.find((event) =>
+      evidence.some((source) => source.event_id === event.id && source.source_tier === "tier_1")
+    );
+    if (!target) throw new Error("fixture requires an event with tier-1 evidence");
     for (const source of evidence) {
-      if (source.event_id === target.id && source.source_tier === "tier_1" && source.is_primary !== true) {
+      if (source.event_id === target.id && source.source_tier === "tier_1") {
         source.source_tier = "tier_2";
       }
     }
