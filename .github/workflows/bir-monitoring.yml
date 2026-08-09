@@ -68,6 +68,22 @@ jobs:
           mkdir -p .monitor-input
           gh issue list --state open --limit 100 --json number,title,body,url,labels,updatedAt > .monitor-input/github-issues.json
 
+      - name: Collect external bridge registry
+        if: steps.duplicate.outputs.skip != 'true'
+        shell: bash
+        run: |
+          source_url="https://raw.githubusercontent.com/DefiLlama/bridges-server/master/src/data/bridgeNetworkData.ts"
+          output=".monitor-input/defillama-bridgeNetworkData.ts"
+          if curl --fail --location --silent --show-error \
+            --retry 2 --retry-delay 2 --connect-timeout 10 --max-time 45 \
+            -H "User-Agent: BIR-review-monitor/1" \
+            "$source_url" -o "$output"; then
+            echo "Collected external bridge registry: $(wc -c < "$output") bytes"
+          else
+            rm -f "$output"
+            echo "::warning::External bridge registry was unavailable; candidate discovery is skipped for this run."
+          fi
+
       - name: Run guarded monitoring
         if: steps.duplicate.outputs.skip != 'true'
         id: monitor
@@ -76,10 +92,19 @@ jobs:
           date_key="$(date -u +%Y%m%d)"
           observed_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           run_id="gh-${GITHUB_RUN_ID}"
+          external_args=()
+          if [ -s .monitor-input/defillama-bridgeNetworkData.ts ]; then
+            external_args+=(
+              --external-bridge-source .monitor-input/defillama-bridgeNetworkData.ts
+              --external-bridge-source-url https://raw.githubusercontent.com/DefiLlama/bridges-server/master/src/data/bridgeNetworkData.ts
+              --external-candidate-limit 8
+            )
+          fi
           npm run monitoring:run -- \
             --issues .monitor-input/github-issues.json \
             --evidence-health \
             --evidence-probe-limit 12 \
+            "${external_args[@]}" \
             --date "$date_key" \
             --run-id "$run_id" \
             --observed-at "$observed_at" \
