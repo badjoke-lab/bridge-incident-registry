@@ -12,7 +12,7 @@ Events      183
 Evidence    287
 ```
 
-Canonical source files:
+Canonical source files remain unchanged by monitoring:
 
 ```text
 data/bridges.json       33
@@ -25,25 +25,14 @@ data/evidence.json      287
 
 ```text
 Full-corpus audit                    complete — PR #71
-Aftermath and restart normalization  complete — PRs #72–#77
 Source-count remediation             complete — PRs #78–#99
-Hard source-count equality gate      active
-Source-quality baseline              complete — PR #100
-Source-quality no-regression gate    active
-Source-quality remediation           complete — PRs #103–#107
+Source-quality baseline/remediation  complete — PRs #100–#107
 Event Tier 1 remediation             production-verified — PRs #108–#116
-Nerve source boundary                reviewed — PR #117
 Archive capture Batches 1–18         production-verified — PRs #118–#198
-Previously-unreviewed archive queue  exhausted
-Deferred Archive Retry 01            production-verified — PRs #199–#201
-Deferred Archive Retry 02            production-verified — PRs #202–#204
-Deferred Archive Retry 03            review complete — PR #205, approved 0
-Deferred Archive Retry 04            review complete — PR #206, approved 0
-Fresh deferred retry pool            exhausted
+Deferred Archive Retries 01–02       production-verified — PRs #199–#204
+Deferred Archive Retries 03–04       review complete — PRs #205–#206
 Event Primary Remediation 01         production-verified — PRs #207–#209
-Event Primary Review 02              complete — PR #211
-Event Tier 1 fixture strengthening   complete — PR #212
-Event Primary Remediation 02         production-verified — PRs #213–#214
+Event Primary Remediation 02         production-verified — PRs #211–#214
 Cross-record bridge integrity        blocking — PR #218
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
@@ -52,54 +41,82 @@ Full production-content equality     active
 ## Phase 5 monitoring and candidate collection
 
 ```text
-Review-gated monitoring foundation   complete — PR #217
+Review-gated foundation              complete — PR #217
 Initial Boltz monitoring state       merged — PR #223
 Review-branch fallback / dedupe      complete — PR #225
-Evidence health watch                complete — PR #226
-External candidate discovery         next
-News / regulatory event watch        planned
-Active bridge/domain watch           planned
+Evidence health watch                live — PR #226
+External bridge-universe watch       live — PRs #228–#230
+Optional GDELT adapter               fail-closed — PRs #231–#232
+Structured bridge-hack feed          live — PRs #233–#239
+Active bridge/domain watch           next
 Site / SEO watch                     planned
 ```
 
-Live monitoring proofs:
+### Live monitoring proofs
+
+Issue #171 was emitted once as `Boltz — B / hold`; after PR #223 persisted its fingerprint, an unchanged rerun created no new review work.
+
+Evidence health run `31301765004` / job `93215576787`:
 
 ```text
-Issue #171 first signal run          31301301277
-Initial candidate                    Boltz — B / hold
-Initial review state                 PR #223
-Unchanged rerun                      has_changes=false, no new review branch
-Evidence-health live run             31301765004 / 93215576787
 Live evidence URLs                   287
-Evidence URLs selected                12
-Two-pass probes                       24
+Selected URLs                         12
+Independent probes                    24
 Hard 404/410 findings                  0
 Canonical diff                         none
-Unknown URL status                     0
-Reference errors                       0
 ```
 
-The monitoring workflow is review-only. It fingerprints all canonical JSON before/after execution, rejects canonical diffs, writes only under `data-staging/monitoring/**` and `data-staging/watchlists/auto/**`, dedupes unchanged signals, and refuses duplicate scheduled work when an open monitoring PR or unmerged monitoring review branch exists.
-
-The repository Actions policy does not permit `GITHUB_TOKEN` to create pull requests. When that exact permission error occurs, the workflow retains the already-validated review branch and succeeds; a connected GitHub app/operator may open the PR later. Other PR-creation errors remain blocking.
-
-## Public UI/support follow-up
+External bridge-universe accepted baseline and repeat:
 
 ```text
-PR #183  Representative desktop/mobile screenshot audit
-PR #186  Incident discovery, filters, pagination, detail TOCs, support, and project navigation
-PR #187  Shared BadJoke-Lab support-wallet presentation
+Active external rows                  98
+Exact canonical matches               11
+Unmatched baseline fingerprints       87
+Baseline candidates                    0
+Repeat unchanged                      87
+Repeat candidates                      0
+Repeat state change                false
 ```
 
-Cloudflare Pages preview deployment remains `none`.
-
-## Exact source-count and URL state
+Structured DefiLlama bridge-hack feed:
 
 ```text
-Incident mismatches  0
-Event mismatches     0
-Unknown URL status   0
+Input URL        https://api.llama.fi/hacks
+Input kind       legacy_public_json
+Raw SHA-256      e80fced996cf886ca0d2ca70c02dd04b869b628d63773d0b327f97b49aa2734a
+Parsed hacks     613
+bridgeHack=true   61
+Accepted baseline 61
+Exact canonical   20
+Candidates         0
 ```
+
+The live raw schema uses `bridgeHack`, `chain`, `source`, and `targetType`. Temporary probes proved that seven canonical-name matches with `bridgeHack=false` were ordinary protocol/DeFi exploits, so PR #238 made `bridgeHack=true` the incident-feed relevance gate before identity classification.
+
+After PR #239 merged the 61-row baseline, rerun job `93224464784` proved:
+
+```text
+Bridge-hack rows          61
+Unchanged                 61
+Candidates                 0
+State change           false
+External universe unchanged 87
+Evidence findings           0
+Canonical diff           none
+```
+
+GDELT remains optional code only: its first GitHub Actions live request was rate-limited with HTTP 429 and no GDELT baseline was created. Scheduled/default incident discovery therefore uses the best-effort DefiLlama raw `/hacks` route with exact provenance and fail-closed fallback behavior.
+
+## Monitoring safety boundary
+
+- canonical JSON is fingerprinted before and after every run;
+- canonical diffs, unknown URL status, and broken canonical references are blocking;
+- persistent monitoring output is restricted to `data-staging/monitoring/**` and `data-staging/watchlists/auto/**`;
+- initial external universes are zero-candidate baselines;
+- unchanged signals are suppressed;
+- monitoring candidates are review material only;
+- DefiLlama/GDELT discovery can never become class A automatically;
+- canonical publication always requires a separate reviewed canonical branch and normal production verification.
 
 ## Source-quality state
 
@@ -108,50 +125,16 @@ Primary evidence                         206 / 287
 Tier 1 evidence                          223 / 287
 Official-domain evidence                 131 / 287
 Evidence with archived_url               130 / 287
-Bridges without primary evidence           0 / 33
-Bridges without tier 1 evidence            0 / 33
-Incidents without primary evidence         1 / 34
-Incidents without tier 1 evidence          1 / 34
-Events without primary evidence           11 / 183
-Events without tier 1 evidence              6 / 183
-Unreviewed event Tier 1 gaps                0
+Incidents without primary                  1 / 34
+Incidents without tier 1                   1 / 34
+Events without primary                    11 / 183
+Events without tier 1                       6 / 183
 Terminal unarchived unique URLs           15
-Terminal unarchived evidence records      25
 Risky-host unarchived unique URLs         16
-Risky-host unarchived evidence records    30
-X/Twitter evidence records unarchived     29
 Unknown URL status                         0
 ```
 
-Archive Capture Batch 18 exhausted the previously-unreviewed archive candidate set. Deferred Retries 03–04 exhausted the fresh reviewed-unresolved retry pool without weakening acceptance rules.
-
-Event Primary Remediation 01 reduced event primary gaps from 16 to 14. Event Primary Review 02 then approved three event-scoped first-party copies using already-canonical, already-archived Poly Network and Transit Finance source URLs. PR #213 applied those records and PR #214 production-verified them, reducing event primary gaps to 11 without increasing unique archive-risk queues.
-
-Four non-intentional reviewed candidates remain deferred pending stronger source-content support:
-
-```text
-bir_ev_000014
-bir_ev_000143
-bir_ev_000144
-bir_ev_000148
-```
-
-The six intentional secondary-only Tier 1 gaps remain:
-
-```text
-bir_ev_000006
-bir_ev_000009
-bir_ev_000012
-bir_ev_000051
-bir_ev_000087
-bir_ev_000088
-```
-
-`bir_ev_000150` remains intentionally non-primary because its PeckShield evidence is a direct security-monitoring observation rather than an operator statement.
-
-Remaining incident-level gap:
-
-- `bir_inc_000026` — Nerve Bridge 2021 metapool exploit. PR #117 records the completed first-party research boundary; no stable incident-specific primary source was located and the gap remains intentional.
+Four non-intentional event-primary gaps remain deferred pending stronger first-party material: `bir_ev_000014`, `bir_ev_000143`, `bir_ev_000144`, and `bir_ev_000148`. Six Tier 1 gaps are intentional secondary-only records. `bir_ev_000150` remains intentionally non-primary direct security monitoring. `bir_inc_000026` remains the reviewed Nerve incident-level primary/Tier 1 gap.
 
 ## Latest completed production checkpoint
 
@@ -163,22 +146,14 @@ Production audit PR           #214
 Production verify run         31300484236
 Production verify job         93212360938
 Verified state                33 / 34 / 183 / 287
-Primary evidence              206 / 287
-Tier 1 evidence               223 / 287
-Archived evidence             130 / 287
-Events without primary        11 / 183
 Canonical content match       true
-Verified HTML routes          72
-Verified redirects            74
 Generated at                  2026-08-09T07:08:45.362Z
-Publication attempt           3 / 20
-Build-input refresh           not required
 ```
 
 ## Next
 
-1. implement external bridge/protocol candidate discovery as the next review-only Phase 5 adapter;
-2. add closure/pause/hack/regulatory news monitoring after candidate discovery is stable;
-3. continue validator and public-contract hardening where justified;
-4. keep deferred evidence gaps research-triggered rather than metric-driven;
-5. continue v1 documentation, accessibility, performance, compatibility, and release hardening.
+1. implement bounded official-domain/status monitoring for canonical active bridges;
+2. add reproducible pause/shutdown/regulatory signals without weakening incident semantics;
+3. maintain source-quality, validator, public-contract, and UI compatibility gates;
+4. continue v1 hardening;
+5. revisit evidence/archive gaps only when source conditions materially change.
