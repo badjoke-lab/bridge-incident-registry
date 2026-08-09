@@ -3,12 +3,7 @@
 Status: active  
 Updated: 2026-08-09
 
-This file is a compact compatibility pointer. The authoritative live state is maintained in:
-
-- `docs/runbooks/recovery-checkpoint.md`
-- `docs/runbooks/current-status.md`
-- `docs/runbooks/development-roadmap.md`
-- current `main`, canonical JSON, open pull requests, and GitHub Actions
+This file is a compact compatibility pointer. Authoritative live state is current `main`, canonical JSON, GitHub Actions, `docs/runbooks/recovery-checkpoint.md`, `docs/runbooks/current-status.md`, and `docs/runbooks/development-roadmap.md`.
 
 ## Canonical and production baseline
 
@@ -19,7 +14,7 @@ Events      183
 Evidence    287
 ```
 
-Current quality boundary remains unchanged by Phase 5 monitoring:
+Phase 5 monitoring has not changed canonical counts or source-quality ceilings.
 
 ```text
 Primary evidence                       206 / 287
@@ -41,99 +36,77 @@ Canonical production content match      true
 - Phase 5 — monitoring and candidate collection: active
 - v1 hardening: planned
 
-## Phase 5 completed foundation
+## Phase 5 live stack
 
 ```text
-PR #217  Review-gated monitoring foundation
-PR #223  Issue #171 initial monitoring state / dedupe seed
-PR #225  Review-branch fallback and duplicate-work guard
-PR #226  Bounded evidence-health watch
-PR #228  External bridge-universe adapter
-PR #229  Baseline-before-alert correction
-PR #230  External bridge-universe baseline state
-PR #231  News-discovery source boundary
-PR #232  Optional fail-closed GDELT adapter
-PR #233  DefiLlama hacks discovery adapter
-PR #234  Legacy public /hacks fallback
-PR #235  Exact incident-feed provenance
-PR #237  Live bridgeHack/source/targetType schema support
-PR #238  bridgeHack=true relevance gate
-PR #239  Accepted DefiLlama bridge-hack baseline state
-```
-
-## Live monitoring proofs
-
-### Evidence health
-
-Run `31301765004`, job `93215576787`:
-
-```text
-Live evidence URLs        287
-Selected                   12
-Independent probes         24
-Hard 404/410 findings       0
-Canonical diff              none
+PR #217      Review-gated monitoring foundation
+PR #223      Issue #171 initial monitoring state / dedupe seed
+PR #225      Review-branch fallback and duplicate-work guard
+PR #226      Bounded evidence-health watch
+PR #228–230  External bridge-universe watch + accepted baseline
+PR #231–232  News source boundary + optional fail-closed GDELT adapter
+PR #233–239  Structured DefiLlama bridge-hack feed + accepted baseline
+PR #241–244  Active bridge official-domain watch + accepted baseline
+PR #245–246  RSS status-news discovery + accepted baseline
 ```
 
 ### External bridge universe
 
-Accepted baseline:
-
-```text
-DefiLlama bridge rows      98
-Exact canonical matches    11
-Unmatched baseline rows    87
-Baseline candidates         0
-```
-
-Repeated run `31303536548`, job `93220521310`:
-
 ```text
 Parsed                     98
-Exact matches              11
-Unchanged                  87
+Exact canonical matches    11
+Unmatched baseline         87
+Silent-repeat unchanged    87
 Candidates                  0
-State change            false
-Canonical diff           none
 ```
 
-### Structured bridge-hack incident feed
-
-Actual successful input:
+### Structured bridge-hack feed
 
 ```text
-URL          https://api.llama.fi/hacks
-Kind         legacy_public_json
-Raw SHA-256  e80fced996cf886ca0d2ca70c02dd04b869b628d63773d0b327f97b49aa2734a
+Input URL                   https://api.llama.fi/hacks
+Input kind                  legacy_public_json
+Raw SHA-256                 e80fced996cf886ca0d2ca70c02dd04b869b628d63773d0b327f97b49aa2734a
+Parsed hacks                613
+bridgeHack=true              61
+Accepted baseline            61
+Exact canonical matches      20
+Silent-repeat unchanged      61
+Candidates                    0
 ```
 
-Live schema probing established that the upstream bridge relevance field is `bridgeHack`. The accepted baseline in PR #239 contains only `bridgeHack=true` rows:
+### Active bridge official-domain watch
+
+After the first live smoke exposed and then removed a parent-domain/subdomain false positive, PR #244 accepted the corrected baseline from run `31313312723`.
 
 ```text
-Parsed hacks               613
-bridgeHack=true             61
-Bridge-relevant baseline    61
-Exact canonical matches     20
+Eligible active/limited/paused bridges  22
+Selected per run                         8
+Accepted healthy baselines               8
+Accepted findings                         0
+Silent-repeat baseline changes            0
+Silent-repeat findings                    0
+```
+
+Two 404/410 responses are required for a hard review finding. 401/403/405/429, 5xx, timeout, and mixed results are not terminal proof. Parent/subdomain relationships remain within the same official-domain scope; unrelated final-domain changes remain reviewable.
+
+### RSS status-news discovery
+
+PR #245 added bounded RSS/Atom secondary discovery. PR #246 accepted the first baseline from run `31313579371` / job `93245104559`.
+
+```text
+Feeds reached                2
+CoinDesk rows               25
+Cointelegraph rows          30
+Total parsed                55
+Bridge + bounded-trigger     0
 Baseline candidates          0
-Canonical diff            none
+Rerun state change       false
+Rerun candidates             0
 ```
 
-An unchanged rerun of run `31305166038`, job `93224464784`, proved:
+An RSS article is reviewable only when a canonical bridge name/alias and a bounded security, operations, or regulatory trigger are both present. RSS output is `B / hold` secondary discovery only; primary-source review is still mandatory.
 
-```text
-Parsed hacks               613
-Bridge-relevant             61
-Unchanged                   61
-Candidates                   0
-State change             false
-External bridge unchanged   87
-Evidence findings            0
-Canonical diff            none
-```
-
-The structured incident feed is secondary discovery material only. `bridgeHack=true` plus exact canonical identity may produce `B / hold`; an unresolved `bridgeHack=true` row may produce `C / hold`. No monitoring source can publish canonical data automatically.
-
-GDELT remains an optional fail-closed adapter only. Its first Actions live request received HTTP 429, so scheduled GDELT collection is not the primary incident feed.
+GDELT remains optional/fail-closed after the first GitHub Actions request returned HTTP 429.
 
 ## Latest completed production checkpoint
 
@@ -147,13 +120,12 @@ Generated at          2026-08-09T07:08:45.362Z
 Content match         true
 HTML routes           72
 Redirects             74
-Publication attempt   3 / 20
 ```
 
 ## Next bounded work
 
-1. add canonical active-bridge official-domain/status monitoring with bounded rotating probes and review-only output;
-2. add pause/shutdown/regulatory signals only where reproducible sources can be monitored without weakening the incident boundary;
-3. add public-site/SEO monitoring incrementally;
-4. keep deferred primary/archive gaps research-triggered rather than metric-driven;
+1. add monitoring-state/watchlist resolution health so old review signals can be explicitly recognized as resolved/rearmed;
+2. add public-site/SEO monitoring incrementally;
+3. keep pause/shutdown/regulatory RSS discovery bounded and secondary-only;
+4. maintain validator/source-quality/public-contract gates;
 5. continue v1 documentation, accessibility, performance, compatibility, and release hardening.
