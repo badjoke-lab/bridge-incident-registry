@@ -35,37 +35,41 @@ Phase 3  Full-corpus quality strengthening         active
          Deferred Archive Retry 04                 review complete — PR #206, approved 0
          Fresh deferred retry pool                 exhausted
          Event Primary Remediation 01              production-verified — PRs #207–#209
-         Event Primary Review 02                    complete — PR #211
-         Event Primary Remediation 02               canonical application in progress
+         Event Primary Review 02                   complete — PR #211
+         Event Tier 1 fixture strengthening        complete — PR #212
+         Event Primary Remediation 02              production-verified — PRs #213–#214
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
-Phase 5  Monitoring and candidate collection       planned
+Phase 5  Monitoring and candidate collection       next
 Release  v1 hardening                              planned
 ```
 
-The public UI/support follow-up is current through PR #187. Representative screenshots, expanded incident and bridge discovery, filters, pagination, detail TOCs, Support, project navigation, and shared BadJoke-Lab wallet presentation are merged without changing canonical counts.
+The public UI/support follow-up is current through PR #187. Representative screenshots, expanded incident and bridge discovery, filters, pagination, detail TOCs, Support, project navigation, and shared BadJoke-Lab wallet presentation are merged without changing canonical entity/event counts.
 
-## Latest completed production checkpoint before Remediation 02
+## Latest completed production checkpoint
 
 ```text
-Review PR                     #207
-Canonical data PR             #208
-Canonical merge               1638b47eb3c2e9066d0323d6d5a4abe8aa85cfb2
-Production audit PR           #209
-Production verify run         31299468964
-Production verify job         93209808769
-Verified state                33 / 34 / 183 / 284
-Events without primary        14 / 183
+Review PR                     #211
+Canonical data PR             #213
+Canonical merge               f2874a2d0ffe6877eadf6619cd6100a9b9b3991b
+Production audit PR           #214
+Production verify run         31300484236
+Production verify job         93212360938
+Verified state                33 / 34 / 183 / 287
+Primary evidence              206 / 287
+Tier 1 evidence               223 / 287
+Archived evidence             130 / 287
+Events without primary        11 / 183
 Canonical content match       true
 Verified HTML routes          72
 Verified redirects            74
-Generated at                  2026-08-09T06:42:13.747Z
-Publication attempt           4 / 20
+Generated at                  2026-08-09T07:08:45.362Z
+Publication attempt           3 / 20
 Build-input refresh           not required
 ```
 
-Attempts 1–3 correctly rejected stale same-count evidence at `bir_src_000003`. Attempt 4 observed the new generated build and passed complete canonical-derived field-level equality.
+Attempts 1–2 correctly rejected the old 284-evidence production build. Attempt 3 observed Evidence 287 and passed complete canonical-derived equality.
 
 ## Current quality state
 
@@ -86,18 +90,14 @@ X/Twitter records unarchived          29
 Unknown URL status                     0
 ```
 
-Archive Capture Batch 18 exhausted the previously-unreviewed archive queue. Deferred Retries 01–02 recovered three reviewed-unresolved source URLs. Deferred Retries 03–04 then reviewed all twelve fresh URLs outside the recent Retry 01/02 scopes and approved none. The remaining reviewed-unarchived pool consists only of URLs already explicitly retried under the unchanged acceptance boundary.
+The archive-preservation fresh queue is exhausted under the current acceptance boundary. Event-primary remediation has also reached a reviewed boundary: four non-intentional gaps remain deferred pending better first-party evidence, six Tier 1 gaps are intentional secondary-only records, and `bir_ev_000150` is intentionally non-primary direct security monitoring. Do not chase coverage metrics by weakening source semantics.
 
-There is no untouched archive-review Batch 19 and no fresh Deferred Retry 05 scope. Future preservation work must wait for materially changed conditions, deliberately selected re-review, or newly introduced canonical source URLs.
+## Immediate targets
 
-Event Primary Remediation 01 reduced event primary gaps from 16 to 14. Event Primary Review 02 then approved three event-scoped copies of already-canonical archived first-party evidence for Poly Network and Transit Finance. Remediation 02 raises evidence from 284 to 287, primary evidence from 203 to 206, Tier 1 evidence from 220 to 223, and reduces event primary gaps from 14 to 11 without increasing unique archive-risk queues. Four non-intentional reviewed candidates remain deferred pending stronger source-content support.
-
-## Immediate source-quality targets
-
-1. production-verify Event Primary Remediation 02, then review only the four deferred non-intentional gaps under the same claim-relative primary-source standard;
-2. remediate only defensible gaps and keep intentional secondary-only boundaries explicit;
-3. strengthen remaining validators;
-4. begin review-gated monitoring and candidate collection with no automatic canonical publication;
+1. strengthen remaining validators and controlled-failure fixtures where assumptions can be made more explicit;
+2. begin Phase 5 review-gated monitoring and candidate collection with no automatic canonical publication;
+3. retain the four deferred non-intentional primary gaps as research backlog items;
+4. maintain public-contract and UI compatibility checks;
 5. complete v1 documentation, accessibility, performance, compatibility, and release checks.
 
 ## Production publication gate
@@ -108,18 +108,15 @@ Delay          15 seconds
 Maximum wait   5 minutes per job
 ```
 
-Publication convergence requires matching record counts, canonical-only markers, complete transformed JSON equality, exact record order, and all route, sitemap, metadata, redirect, content-type, and cache assertions.
-
-Event Primary Remediation 01 again demonstrated that same-count production can still be stale: attempts 1–3 failed on field-level evidence mismatch and attempt 4 passed only after the generated content converged. Counts alone are never publication proof.
+Publication convergence requires matching record counts, canonical-only markers, complete transformed JSON equality, exact record order, and all route, sitemap, metadata, redirect, content-type, and cache assertions. Remediation 02 again proved that stale production must be rejected until complete content equality appears.
 
 ## Remaining roadmap
 
-1. continue justified event primary-evidence remediation;
-2. strengthen remaining validators;
-3. maintain public-contract and UI compatibility checks;
-4. implement monitoring with no automatic publication;
-5. complete v1 documentation, accessibility, performance, and release checks;
-6. revisit archive preservation only under a new explicit reviewed scope.
+1. validator strengthening;
+2. Phase 5 monitoring and candidate collection with review-only outputs;
+3. public-contract/UI compatibility maintenance;
+4. v1 documentation, accessibility, performance, compatibility, and release checks;
+5. research-triggered primary/archive remediation only when new source material or changed conditions justify it.
 
 ## Permanent rules
 
@@ -141,10 +138,11 @@ Event Primary Remediation 01 again demonstrated that same-count production can s
 16. An archive URL must resolve to a verified snapshot; wildcard or guessed captures are not canonical evidence.
 17. A technically valid snapshot must also be temporally compatible with the canonical claim.
 18. A deployment refresh must preserve canonical content and verification requirements; docs-only commits are not assumed to start a Pages build.
-19. A changed `generated_at` without field-level equality is still failed publication and does not justify weakening or resetting verification expectations.
-20. Only one reviewed behavior-neutral build-input refresh is permitted per publication batch; a second refresh must not be stacked.
-21. Cloudflare Pages preview deployment remains `none`; intentional preview support requires a separately reviewed configuration change.
+19. A changed `generated_at` without field-level equality is still failed publication.
+20. Only one reviewed behavior-neutral build-input refresh is permitted per publication batch.
+21. Cloudflare Pages preview deployment remains `none`.
 22. Do not create an artificial untouched archive batch after the reviewer has exhausted its previously-unreviewed candidate set.
 23. Deferred retries must use explicit reviewed-unresolved targets and preserve the same acceptance boundary.
-24. Do not immediately recycle deferred archive failures once the fresh retry pool is exhausted; wait for changed conditions, new canonical source URLs, or a separately justified reviewed retry scope.
+24. Do not immediately recycle deferred archive failures once the fresh retry pool is exhausted.
 25. Primary-evidence remediation must be claim-relative; do not upgrade secondary or research sources merely to reduce a coverage metric.
+26. Monitoring output is review material only and must never publish canonical records automatically.

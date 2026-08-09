@@ -16,49 +16,61 @@ This file is a compact compatibility pointer. The authoritative live state is ma
 Bridges     33
 Incidents   34
 Events      183
-Evidence    284
+Evidence    287
 ```
 
 ## Current phase
 
 - Phase 3 — full-corpus quality strengthening: active
 - Phase 4 — public contract stabilization: complete
-- Phase 5 — monitoring and candidate collection: planned
+- Phase 5 — monitoring and candidate collection: next
 - v1 hardening: planned
 
-Archive Capture Batches 1 through 18 are complete and production-verified, and the previously-unreviewed archive queue is exhausted. Deferred Archive Retries 01 and 02 are complete and production-verified. Deferred Archive Retries 03 and 04 are complete as review-only audits and recovered no additional canonical archive mappings. The not-recently-retried fresh deferred pool is now exhausted.
+Archive Capture Batches 1 through 18 are complete and production-verified. Deferred Archive Retries 01–02 are production-verified; Retries 03–04 are complete review-only audits with no additional canonical archive mappings. The not-recently-retried fresh deferred pool is exhausted.
 
-Event Primary Remediation 01 is complete and production-verified through PRs #207–#209. It corrected the Ronin OFAC source boundary, reclassified the FBI Horizon attribution source as claim-relative primary evidence, and reduced events without primary evidence from 16 to 14 without changing event wording or Tier 1 classifications.
+Event Primary Remediation 01 and 02 are both complete and production-verified. Remediation 02 added three event-scoped copies of already-canonical first-party Poly Network and Transit Finance evidence, raising evidence to 287 and reducing events without primary evidence from 14 to 11 without increasing the unique archive-risk queues.
 
-Evidence with `archived_url` remains 127 / 284. The remaining unresolved archive queues are 16 risky-host unique URLs and 15 terminal unique URLs. Source-count mismatches and unknown URL statuses remain at zero, and complete canonical-derived public-content equality is enforced.
-
-The latest completed canonical publication checkpoint is Event Primary Remediation 01:
+Current quality boundary:
 
 ```text
-Review PR             #207
-Canonical data PR     #208
-Canonical merge       1638b47eb3c2e9066d0323d6d5a4abe8aa85cfb2
-Production audit PR   #209
-Production run        31299468964 / 93209808769
-Generated at          2026-08-09T06:42:13.747Z
+Primary evidence                       206 / 287
+Tier 1 evidence                        223 / 287
+Evidence with archived_url             130 / 287
+Events without primary                  11 / 183
+Events without Tier 1                     6 / 183
+Terminal unarchived unique URLs          15
+Risky-host unarchived unique URLs        16
+Unknown URL status                        0
+Source-count mismatches                   0
+Canonical production content match      true
+```
+
+## Latest completed production checkpoint
+
+```text
+Review PR             #211
+Canonical data PR     #213
+Canonical merge       f2874a2d0ffe6877eadf6619cd6100a9b9b3991b
+Production audit PR   #214
+Production run        31300484236 / 93212360938
+Generated at          2026-08-09T07:08:45.362Z
 Content match         true
 HTML routes           72
 Redirects             74
-Publication attempt   4 / 20
+Publication attempt   3 / 20
 Build-input refresh   not required
 ```
 
-Attempts 1–3 correctly rejected stale same-count production at `bir_src_000003`; attempt 4 reached complete field-level canonical equality.
+Attempts 1–2 correctly rejected the prior 284-evidence production build. Attempt 3 observed Evidence 287 and passed complete field-level canonical equality.
 
-The public UI/support follow-up is current through PR #187: incident discovery, filters, pagination, detail TOCs, project navigation, Support, and the shared BadJoke-Lab support-wallet presentation are merged.
+Four non-intentional reviewed event-primary gaps remain deferred pending stronger first-party evidence: `bir_ev_000014`, `bir_ev_000143`, `bir_ev_000144`, and `bir_ev_000148`. Six Tier 1 gaps remain intentional secondary-only records, and `bir_ev_000150` remains intentionally non-primary because its PeckShield evidence is a direct security-monitoring observation rather than an operator statement. Do not weaken source hierarchy to reduce the metric further.
 
 The Boltz 2026 swap shutdown remains a monitoring signal in Issue #171. It is not canonical because the available first-party material does not identify one reviewable bridge incident boundary.
 
 ## Next bounded work
 
-1. review the remaining 14 events without primary evidence and remediate only claim-relative primary gaps that can be strengthened safely;
-2. keep intentional secondary-only gaps explicit rather than weakening source hierarchy;
-3. strengthen validators;
-4. begin review-gated monitoring and candidate collection without automatic canonical publication;
-5. continue v1 hardening;
-6. revisit deferred archive failures only after conditions change or new canonical source URLs enter the corpus.
+1. strengthen remaining validators where corpus-shape assumptions or coverage guards can still be made more explicit;
+2. begin Phase 5 review-gated monitoring and candidate collection with no automatic canonical publication;
+3. keep the four deferred primary gaps on a research backlog and revisit only when stronger first-party material appears;
+4. continue v1 documentation, accessibility, performance, compatibility, and release hardening;
+5. revisit deferred archive failures only after conditions change or new canonical source URLs enter the corpus.
