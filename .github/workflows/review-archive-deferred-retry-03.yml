@@ -1,0 +1,135 @@
+name: Review Archive Deferred Retry 03
+
+on:
+  push:
+    branches:
+      - agent/phase3-archive-deferred-retry-03-review
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: review-archive-deferred-retry-03
+  cancel-in-progress: true
+
+jobs:
+  review:
+    runs-on: macos-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Prepare bounded deferred retry reviewer
+        run: |
+          git show 7bd452ee8a86073355266cd0bbeec4bada8eb1b9:scripts/review-archive-capture-batch14.mjs \
+            | sed -e 's/archive-capture-batch14/archive-deferred-retry-03/g' -e 's/Archive Capture Batch 14/Archive Deferred Retry 03/g' \
+            > /tmp/review-archive-deferred-retry-03.mjs
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const file='/tmp/review-archive-deferred-retry-03.mjs';
+          let source=fs.readFileSync(file,'utf8');
+          const start=source.indexOf('function buildCandidates() {');
+          const end=source.indexOf('\nfunction timestampDate',start);
+          if(start<0||end<0) throw new Error('buildCandidates boundary not found');
+          const targetIds=[
+            'bir_src_000261',
+            'bir_src_000284',
+            'bir_src_000281',
+            'bir_src_000256',
+            'bir_src_000258',
+            'bir_src_000063',
+            'bir_src_000064',
+            'bir_src_000096',
+            'bir_src_000081',
+            'bir_src_000239'
+          ];
+          const replacement=[
+            'function buildCandidates() {',
+            `  const targetIds = ${JSON.stringify(targetIds)};`,
+            '  const selected = [];',
+            '  const seen = new Set();',
+            '  for (const targetId of targetIds) {',
+            '    const target = evidence.find((item) => item.id === targetId);',
+            '    if (!target) throw new Error("Deferred retry target ID missing: " + targetId);',
+            '    if (hasArchive(target)) throw new Error("Deferred retry target already archived: " + targetId);',
+            '    const key = canonicalUrlKey(target.url);',
+            '    if (seen.has(key)) throw new Error("Deferred retry target IDs collide on one URL: " + targetId);',
+            '    seen.add(key);',
+            '    const records = evidence.filter((item) => !hasArchive(item)).filter((item) => {',
+            '      try { return canonicalUrlKey(item.url) === key; } catch { return false; }',
+            '    }).sort((a, b) => a.id.localeCompare(b.id));',
+            '    const publishedAt = records.map((item) => item.published_at).filter(Boolean).sort().at(-1);',
+            '    if (!publishedAt) throw new Error("Deferred retry target missing published_at: " + targetId);',
+            '    const terminal = records.some((item) => terminalStatuses.has(bridgesById.get(item.bridge_id)?.status));',
+            '    const risky = records.some((item) => isRiskyHost(hostOf(item.url)));',
+            '    selected.push({',
+            '      label: records[0].title,',
+            '      url: records[0].url,',
+            '      published_at: publishedAt,',
+            '      evidence_ids: records.map((item) => item.id),',
+            '      bridge_ids: [...new Set(records.map((item) => item.bridge_id))],',
+            '      queue: terminal && risky ? "terminal+risky" : terminal ? "terminal" : risky ? "risky" : "reviewed",',
+            '      terminal, risky',
+            '    });',
+            '  }',
+            '  return { reviewed_ids: reviewedEvidenceIds().size, eligible_unique_urls: targetIds.length, selected };',
+            '}',
+            ''
+          ].join('\n');
+          source=source.slice(0,start)+replacement+source.slice(end);
+          fs.writeFileSync(file,source);
+          NODE
+
+      - name: Run first exact replay retry
+        run: |
+          node /tmp/review-archive-deferred-retry-03.mjs
+          mv artifacts/archive-deferred-retry-03-review.json artifacts/archive-deferred-retry-03-review-run1.json
+          mv artifacts/archive-deferred-retry-03-review.md artifacts/archive-deferred-retry-03-review-run1.md
+
+      - name: Run second exact replay retry
+        run: |
+          sleep 5
+          node /tmp/review-archive-deferred-retry-03.mjs
+          mv artifacts/archive-deferred-retry-03-review.json artifacts/archive-deferred-retry-03-review-run2.json
+          mv artifacts/archive-deferred-retry-03-review.md artifacts/archive-deferred-retry-03-review-run2.md
+
+      - name: Reconcile reproducible approvals
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const run1=JSON.parse(fs.readFileSync('artifacts/archive-deferred-retry-03-review-run1.json','utf8'));
+          const run2=JSON.parse(fs.readFileSync('artifacts/archive-deferred-retry-03-review-run2.json','utf8'));
+          const scope1=run1.results.map(item=>JSON.stringify([item.url,item.evidence_ids]));
+          const scope2=run2.results.map(item=>JSON.stringify([item.url,item.evidence_ids]));
+          if(JSON.stringify(scope1)!==JSON.stringify(scope2)) throw new Error('Deferred retry 03 scope changed between runs');
+          const byUrl2=new Map(run2.results.map(item=>[item.url,item]));
+          const results=run1.results.map(first=>{
+            const second=byUrl2.get(first.url);
+            const same=Boolean(first.approved&&second?.approved&&first.approved.archive_url===second.approved.archive_url&&first.approved.status===200&&second.approved.status===200&&first.approved.bytes>=65536&&second.approved.bytes>=65536);
+            return {label:first.label,queue:first.queue,url:first.url,published_at:first.published_at,evidence_ids:first.evidence_ids,bridge_ids:first.bridge_ids,run1:{decision:first.decision,approved:first.approved,captures_discovered:first.captures_discovered,temporally_eligible_captures:first.temporally_eligible_captures,discovery_errors:first.discovery_errors},run2:{decision:second.decision,approved:second.approved,captures_discovered:second.captures_discovered,temporally_eligible_captures:second.temporally_eligible_captures,discovery_errors:second.discovery_errors},reproducible_approved:same?first.approved:null,decision:same?'approved_reproducible_exact_replay':'deferred_not_reproducible_or_unavailable'};
+          });
+          const report={generated_at:new Date().toISOString(),source_runs:[run1.generated_at,run2.generated_at],selected_unique_urls:results.length,reproducible_approved_unique_urls:results.filter(item=>item.reproducible_approved).length,reproducible_approved_evidence_records:results.filter(item=>item.reproducible_approved).reduce((sum,item)=>sum+item.evidence_ids.length,0),results};
+          fs.writeFileSync('artifacts/archive-deferred-retry-03-reconciled.json',JSON.stringify(report,null,2)+'\n');
+          console.log('DEFERRED_RETRY_03_START'); console.log(JSON.stringify(report,null,2)); console.log('DEFERRED_RETRY_03_END');
+          NODE
+
+      - name: Upload retry artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: archive-deferred-retry-03
+          path: |
+            artifacts/archive-deferred-retry-03-review-run1.json
+            artifacts/archive-deferred-retry-03-review-run1.md
+            artifacts/archive-deferred-retry-03-review-run2.json
+            artifacts/archive-deferred-retry-03-review-run2.md
+            artifacts/archive-deferred-retry-03-reconciled.json
+          if-no-files-found: error
