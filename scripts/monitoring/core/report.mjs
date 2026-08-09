@@ -32,6 +32,7 @@ export function writeMonitoringOutputs({ dateKey, runId, observedAt, findings, c
   const external = monitorReports["external-bridge-candidate-watch"];
   const hacks = monitorReports["defillama-hacks-page-watch"];
   const gdelt = monitorReports["gdelt-news-watch"];
+  const rss = monitorReports["rss-status-news-watch"];
   const lines = [
     `# BIR Auto Monitoring Report — ${dateKey}`,
     "",
@@ -82,6 +83,16 @@ export function writeMonitoringOutputs({ dateKey, runId, observedAt, findings, c
       `- Unique article URLs fingerprinted: ${gdelt.baseline_seeded_count}`,
       `- Candidates emitted from baseline: ${gdelt.emitted_count}`,
       "- Baseline news coverage is not treated as an incident candidate.");
+  }
+
+  if (rss?.sources?.some((source) => source.baseline_initialized)) {
+    lines.push("", "## Monitoring state change", "", "RSS status-news baselines initialized or advanced.", "",
+      `- Feeds available: ${rss.source_count}`,
+      `- Feed rows parsed: ${rss.parsed_count}`,
+      `- Bridge + trigger rows: ${rss.relevant_count}`,
+      `- Relevant rows fingerprinted as baseline: ${rss.baseline_seeded_count}`,
+      `- Candidates emitted from baseline: ${rss.emitted_count}`,
+      "- Publisher RSS items are secondary discovery material only; first-party review is still required.");
   }
 
   lines.push("", "## New or changed findings", "");
