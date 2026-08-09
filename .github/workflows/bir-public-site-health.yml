@@ -1,0 +1,150 @@
+name: BIR Public Site Health
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/bir-public-site-health.yml
+      - scripts/monitoring/run-public-site-health.mjs
+      - scripts/monitoring/monitors/public-site-health-watch.mjs
+      - scripts/monitoring/test-public-site-health.mjs
+      - config/public-data.json
+  schedule:
+    - cron: "17 4 * * 1"
+  workflow_dispatch:
+    inputs:
+      force:
+        description: Run even when another monitoring review PR or pending review branch exists
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  site-health:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Avoid duplicate monitoring review work
+        id: duplicate
+        shell: bash
+        run: |
+          force="${{ inputs.force || false }}"
+          monitoring_prs="$(gh pr list --state open --search 'in:title "Auto monitoring report:"' --json number --jq 'length')"
+          site_prs="$(gh pr list --state open --search 'in:title "Auto site health report:"' --json number --jq 'length')"
+          git fetch --prune origin \
+            '+refs/heads/auto/monitoring/*:refs/remotes/origin/auto/monitoring/*' \
+            '+refs/heads/auto/site-health/*:refs/remotes/origin/auto/site-health/*' || true
+          pending_branch_count=0
+          for namespace in monitoring site-health; do
+            while IFS= read -r ref; do
+              [ -z "$ref" ] && continue
+              sha="$(git rev-parse "$ref")"
+              if ! git merge-base --is-ancestor "$sha" origin/main; then
+                pending_branch_count=$((pending_branch_count + 1))
+              fi
+            done < <(git for-each-ref --format='%(refname:short)' "refs/remotes/origin/auto/${namespace}/")
+          done
+          open_count=$((monitoring_prs + site_prs))
+          if [ "$force" != "true" ] && { [ "$open_count" -gt 0 ] || [ "$pending_branch_count" -gt 0 ]; }; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+            echo "Monitoring review work already exists (open_prs=$open_count, pending_branches=$pending_branch_count); public site health will not create duplicate work."
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Run guarded public site health
+        if: steps.duplicate.outputs.skip != 'true'
+        id: site
+        shell: bash
+        run: |
+          date_key="$(date -u +%Y%m%d)"
+          observed_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+          run_id="gh-${GITHUB_RUN_ID}"
+          npm run monitoring:site -- \
+            --date "$date_key" \
+            --run-id "$run_id" \
+            --observed-at "$observed_at" \
+            --result .monitor-output/public-site-result.json
+          has_changes="$(node -e "const r=require('./.monitor-output/public-site-result.json'); process.stdout.write(String(r.has_changes))")"
+          echo "has_changes=$has_changes" >> "$GITHUB_OUTPUT"
+          echo "date_key=$date_key" >> "$GITHUB_OUTPUT"
+          echo "run_id=$run_id" >> "$GITHUB_OUTPUT"
+
+      - name: Assert canonical data unchanged
+        if: steps.duplicate.outputs.skip != 'true'
+        run: git diff --exit-code -- data/bridges.json data/incidents.json data/events.json data/evidence.json
+
+      - name: Prepare permanent review-only diff
+        if: steps.duplicate.outputs.skip != 'true' && steps.site.outputs.has_changes == 'true'
+        shell: bash
+        run: |
+          rm -rf .monitor-output
+          changed="$({ git diff --name-only; git ls-files --others --exclude-standard; } | sort -u)"
+          printf 'Public site health diff:\n%s\n' "$changed"
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            case "$file" in
+              data-staging/monitoring/*) ;;
+              *) echo "Unexpected public site monitoring path: $file" >&2; exit 1 ;;
+            esac
+          done <<< "$changed"
+
+      - name: Queue public site health review
+        if: steps.duplicate.outputs.skip != 'true' && steps.site.outputs.has_changes == 'true'
+        shell: bash
+        run: |
+          branch="auto/site-health/${{ steps.site.outputs.date_key }}-${{ steps.site.outputs.run_id }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add data-staging/monitoring
+          git commit -m "monitoring: record public site health ${{ steps.site.outputs.date_key }}"
+          git push origin "$branch"
+          summary="data-staging/monitoring/${{ steps.site.outputs.date_key }}/${{ steps.site.outputs.run_id }}/summary.md"
+          body_file="$(mktemp)"
+          {
+            echo "## Review-only public site health output"; echo
+            cat "$summary"; echo
+            echo "## Operator boundary"; echo
+            echo "Merge only to retain public-site monitoring state. Any production repair or canonical record change requires a separate reviewed branch and PR."
+          } > "$body_file"
+          set +e
+          pr_output="$(gh pr create --base main --head "$branch" --title "Auto site health report: ${{ steps.site.outputs.date_key }}" --body-file "$body_file" 2>&1)"
+          pr_status=$?
+          set -e
+          if [ "$pr_status" -eq 0 ]; then
+            printf '%s\n' "$pr_output"
+            exit 0
+          fi
+          if grep -q "GitHub Actions is not permitted to create or approve pull requests" <<< "$pr_output"; then
+            echo "::warning::GitHub Actions cannot create pull requests under the current repository setting. Review branch retained: $branch"
+            {
+              echo "### Public site health review branch retained"; echo
+              echo "Review branch: \`$branch\`"; echo
+              echo "A repository operator or connected app can open the review PR later."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          printf '%s\n' "$pr_output" >&2
+          exit "$pr_status"
+
+      - name: No public site health changes
+        if: steps.duplicate.outputs.skip != 'true' && steps.site.outputs.has_changes != 'true'
+        run: echo "No new or changed public site health state; no PR or review branch created."
