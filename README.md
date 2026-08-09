@@ -31,9 +31,9 @@ BIR is not:
 
 The static registry application, four-record canonical model, validation pipeline, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
 
-Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Event Tier 1 remediation, the Nerve source review boundary, Archive Capture Batches 1 through 18, and Deferred Archive Retries 01 and 02 are complete and production-verified.
+Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Event Tier 1 remediation, the Nerve source review boundary, Archive Capture Batches 1 through 18, and Deferred Archive Retries 01 and 02 are complete and production-verified. Deferred Retries 03–04 exhausted the fresh retry pool without new approvals. Event Primary Remediation 01 is production-verified, and Remediation 02 adds three reviewed event-scoped first-party evidence records without introducing new unique source URLs.
 
-Evidence remains 284. Event primary gaps are 16, event Tier 1 gaps are six, and all remaining Tier 1 gaps are reviewed and intentionally secondary. One hundred twenty-seven evidence records now include verified archive URLs.
+Canonical evidence is now 287. Event primary gaps are 11, event Tier 1 gaps remain six, and all remaining Tier 1 gaps are reviewed and intentionally secondary. Primary evidence is 206 / 287, Tier 1 evidence is 223 / 287, and 130 evidence records include verified archive URLs. The three new archive fields reuse already-canonical snapshots, so unique archive-risk queues do not increase.
 
 Archive-risk metrics count normalized unique source URLs with exact-or-subdomain host matching. Duplicate evidence records sharing one source URL do not create duplicate preservation obligations. Current unresolved unarchived queues are 15 terminal unique URLs and 16 risky-host unique URLs.
 
@@ -45,13 +45,13 @@ Production verification compares every transformed field in all four public data
 
 The public UI/support layer is current through PR #187, including expanded incident and bridge discovery, filters, pagination, detail-page TOCs, Support, project navigation, representative desktop/mobile screenshot auditing, and the shared BadJoke-Lab support-wallet presentation.
 
-Current canonical and production counts:
+Current canonical counts:
 
 ```text
 Bridges     33
 Incidents   34
 Events      183
-Evidence    284
+Evidence    287
 ```
 
 Current hard states:
@@ -60,16 +60,16 @@ Current hard states:
 Incident source-count mismatches  0
 Event source-count mismatches     0
 Unknown URL status                0
-Events without primary           16
+Events without primary           11
 Events without Tier 1             6
 Unreviewed event Tier 1 gaps       0
-Evidence with archived_url      127
+Evidence with archived_url      130
 Terminal unarchived URLs         15
 Risky-host unarchived URLs       16
 Canonical public content match    true
 ```
 
-Latest verified production checkpoint:
+Latest verified production checkpoint before Remediation 02 publication verification:
 
 ```text
 Review PR              #202

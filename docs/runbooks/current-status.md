@@ -9,7 +9,7 @@ Updated: 2026-08-09
 Bridges     33
 Incidents   34
 Events      183
-Evidence    284
+Evidence    287
 ```
 
 Canonical source files:
@@ -18,7 +18,7 @@ Canonical source files:
 data/bridges.json       33
 data/incidents.json     34
 data/events.json        183
-data/evidence.json      284
+data/evidence.json      287
 ```
 
 ## Phase 3 quality strengthening
@@ -41,6 +41,8 @@ Deferred Archive Retry 03            review complete — PR #205, approved 0
 Deferred Archive Retry 04            review complete — PR #206, approved 0
 Fresh deferred retry pool            exhausted
 Event Primary Remediation 01         production-verified — PRs #207–#209
+Event Primary Review 02                complete — PR #211
+Event Primary Remediation 02           canonical application in progress
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
 ```
@@ -66,15 +68,15 @@ Unknown URL status   0
 ## Source-quality state
 
 ```text
-Primary evidence                         203 / 284
-Tier 1 evidence                          220 / 284
-Official-domain evidence                 131 / 284
-Evidence with archived_url               127 / 284
+Primary evidence                         206 / 287
+Tier 1 evidence                          223 / 287
+Official-domain evidence                 131 / 287
+Evidence with archived_url               130 / 287
 Bridges without primary evidence           0 / 33
 Bridges without tier 1 evidence            0 / 33
 Incidents without primary evidence         1 / 34
 Incidents without tier 1 evidence          1 / 34
-Events without primary evidence           14 / 183
+Events without primary evidence           11 / 183
 Events without tier 1 evidence              6 / 183
 Unreviewed event Tier 1 gaps                0
 Terminal unarchived unique URLs           15
@@ -98,13 +100,18 @@ bir_ev_000002 / bir_src_000003  corrected OFAC Ronin/Lazarus attribution source 
 bir_ev_000011 / bir_src_000014  FBI Horizon attribution source reclassified as claim-relative primary
 ```
 
-The other seven reviewed candidates remain deferred pending stronger source-content support:
+Event Primary Review 02 approved three additional event-scoped first-party copies without adding unique source URLs:
 
 ```text
-bir_ev_000013
+bir_ev_000013  Poly Network first-party source copy
+bir_ev_000124  Transit Finance first-party source copy
+bir_ev_000125  Transit Finance first-party source copy
+```
+
+Four non-intentional reviewed candidates remain deferred pending stronger source-content support:
+
+```text
 bir_ev_000014
-bir_ev_000124
-bir_ev_000125
 bir_ev_000143
 bir_ev_000144
 bir_ev_000148
@@ -125,7 +132,7 @@ Remaining incident-level gap:
 
 - `bir_inc_000026` — Nerve Bridge 2021 metapool exploit. PR #117 records the completed first-party research boundary; no stable incident-specific primary source was located and the gap remains intentional.
 
-## Latest completed production checkpoint
+## Latest completed production checkpoint before Remediation 02
 
 ```text
 Review PR                     #207
@@ -148,7 +155,7 @@ Attempts 1–3 correctly rejected stale same-count evidence at `bir_src_000003`.
 
 ## Next
 
-1. review the remaining 14 events without primary evidence and remediate only gaps with defensible claim-relative primary sources;
+1. production-verify Event Primary Remediation 02, then review the remaining 11 events without primary evidence while preserving intentional secondary-only boundaries;
 2. keep intentional secondary-only gaps explicit rather than weakening the evidence standard;
 3. strengthen remaining validators;
 4. begin review-gated monitoring and candidate collection without automatic canonical publication;
