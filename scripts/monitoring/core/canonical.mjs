@@ -43,7 +43,12 @@ export function canonicalHealthSummary(data) {
     if (!ids.bridge.has(incident.bridge_id)) errors.push(`incident ${incident.id} missing bridge ${incident.bridge_id}`);
   }
   for (const event of data.events) {
-    if (!ids.incident.has(event.incident_id)) errors.push(`event ${event.id} missing incident ${event.incident_id}`);
+    if (event.incident_id && !ids.incident.has(event.incident_id)) {
+      errors.push(`event ${event.id} missing incident ${event.incident_id}`);
+    }
+    if (event.bridge_id && !ids.bridge.has(event.bridge_id)) {
+      errors.push(`event ${event.id} missing bridge ${event.bridge_id}`);
+    }
   }
   for (const source of data.evidence) {
     if (source.bridge_id && !ids.bridge.has(source.bridge_id)) errors.push(`evidence ${source.id} missing bridge ${source.bridge_id}`);
