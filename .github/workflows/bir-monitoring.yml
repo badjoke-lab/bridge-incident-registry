@@ -67,6 +67,8 @@ jobs:
           run_id="gh-${GITHUB_RUN_ID}"
           npm run monitoring:run -- \
             --issues .monitor-input/github-issues.json \
+            --evidence-health \
+            --evidence-probe-limit 12 \
             --date "$date_key" \
             --run-id "$run_id" \
             --observed-at "$observed_at" \
