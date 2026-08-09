@@ -7,6 +7,7 @@ import { writeMonitoringOutputs } from "./core/report.mjs";
 import { watchGithubIssues } from "./monitors/github-issue-watch.mjs";
 import { watchEvidenceHealth } from "./monitors/evidence-health-watch.mjs";
 import { watchExternalBridgeCandidates } from "./monitors/external-bridge-candidate-watch.mjs";
+import { watchGdeltNews } from "./monitors/gdelt-news-watch.mjs";
 
 const DEFAULT_EXTERNAL_BRIDGE_SOURCE_URL = "https://raw.githubusercontent.com/DefiLlama/bridges-server/master/src/data/bridgeNetworkData.ts";
 
@@ -30,9 +31,9 @@ function readIssues(file) {
 function readTextInput(file, label) {
   if (!file) return null;
   if (!fs.existsSync(file)) throw new Error(`${label} input not found: ${file}`);
-  const text = fs.readFileSync(file, "utf8");
-  if (!text.trim()) throw new Error(`${label} input is empty: ${file}`);
-  return text;
+  const value = fs.readFileSync(file, "utf8");
+  if (!value.trim()) throw new Error(`${label} input is empty: ${file}`);
+  return value;
 }
 
 const observedAt = arg("observed-at", new Date().toISOString());
@@ -45,12 +46,22 @@ const evidenceProbeLimit = Number.parseInt(arg("evidence-probe-limit", "12"), 10
 const externalBridgeSourcePath = arg("external-bridge-source");
 const externalBridgeSourceUrl = arg("external-bridge-source-url", DEFAULT_EXTERNAL_BRIDGE_SOURCE_URL);
 const externalCandidateLimit = Number.parseInt(arg("external-candidate-limit", "8"), 10);
+const gdeltSecurityPath = arg("gdelt-security-input");
+const gdeltOperationsPath = arg("gdelt-operations-input");
+const gdeltSourceWindow = arg("gdelt-source-window");
+const gdeltCandidateLimit = Number.parseInt(arg("gdelt-candidate-limit", "8"), 10);
 
 if (!Number.isInteger(evidenceProbeLimit) || evidenceProbeLimit < 0 || evidenceProbeLimit > 50) {
   throw new Error(`invalid evidence probe limit: ${evidenceProbeLimit}`);
 }
 if (!Number.isInteger(externalCandidateLimit) || externalCandidateLimit < 0 || externalCandidateLimit > 50) {
   throw new Error(`invalid external candidate limit: ${externalCandidateLimit}`);
+}
+if (!Number.isInteger(gdeltCandidateLimit) || gdeltCandidateLimit < 0 || gdeltCandidateLimit > 50) {
+  throw new Error(`invalid GDELT candidate limit: ${gdeltCandidateLimit}`);
+}
+if (Boolean(gdeltSecurityPath) !== Boolean(gdeltOperationsPath)) {
+  throw new Error("GDELT monitoring requires both security and operations inputs or neither");
 }
 
 const before = canonicalFingerprints();
@@ -94,10 +105,39 @@ const externalBridgeResult = externalSourceText
       candidates: []
     };
 
+const gdeltEnabled = Boolean(gdeltSecurityPath && gdeltOperationsPath);
+const gdeltResult = gdeltEnabled
+  ? watchGdeltNews({
+      securityPayload: readTextInput(gdeltSecurityPath, "GDELT security"),
+      operationsPayload: readTextInput(gdeltOperationsPath, "GDELT operations"),
+      canonicalBridges: canonical.bridges,
+      canonicalEvidence: canonical.evidence,
+      state,
+      applySignal,
+      observedAt,
+      sourceWindow: gdeltSourceWindow,
+      limit: gdeltCandidateLimit
+    })
+  : {
+      source: null,
+      baseline_initialized: false,
+      state_changed: false,
+      security_rows: 0,
+      operations_rows: 0,
+      unique_rows: 0,
+      baseline_seeded_count: 0,
+      canonical_evidence_duplicates: 0,
+      irrelevant_count: 0,
+      unchanged_count: 0,
+      deferred_changed_count: 0,
+      emitted_count: 0,
+      candidates: []
+    };
+
 const findings = [...issueResult.findings, ...evidenceResult.findings];
-const candidates = [...issueResult.candidates, ...externalBridgeResult.candidates];
+const candidates = [...issueResult.candidates, ...externalBridgeResult.candidates, ...gdeltResult.candidates];
 const reviewSignalsChanged = findings.length > 0 || candidates.length > 0;
-const stateChanged = reviewSignalsChanged || externalBridgeResult.state_changed;
+const stateChanged = reviewSignalsChanged || externalBridgeResult.state_changed || gdeltResult.state_changed;
 const hasChanges = stateChanged;
 let outputs = null;
 
@@ -113,7 +153,8 @@ if (hasChanges) {
     monitorReports: {
       "github-issue-watch": issueResult,
       "evidence-health-watch": evidenceResult,
-      ...(externalSourceText ? { "external-bridge-candidate-watch": externalBridgeResult } : {})
+      ...(externalSourceText ? { "external-bridge-candidate-watch": externalBridgeResult } : {}),
+      ...(gdeltEnabled ? { "gdelt-news-watch": gdeltResult } : {})
     }
   });
 }
@@ -147,6 +188,21 @@ const result = {
     deferred_changed_count: externalBridgeResult.deferred_changed_count,
     emitted_count: externalBridgeResult.emitted_count,
     source: externalBridgeResult.source
+  },
+  gdelt_news: {
+    enabled: gdeltEnabled,
+    baseline_initialized: gdeltResult.baseline_initialized,
+    state_changed: gdeltResult.state_changed,
+    security_rows: gdeltResult.security_rows,
+    operations_rows: gdeltResult.operations_rows,
+    unique_rows: gdeltResult.unique_rows,
+    baseline_seeded_count: gdeltResult.baseline_seeded_count,
+    canonical_evidence_duplicates: gdeltResult.canonical_evidence_duplicates,
+    irrelevant_count: gdeltResult.irrelevant_count,
+    unchanged_count: gdeltResult.unchanged_count,
+    deferred_changed_count: gdeltResult.deferred_changed_count,
+    emitted_count: gdeltResult.emitted_count,
+    source: gdeltResult.source
   },
   canonical_counts: health.counts,
   outputs
