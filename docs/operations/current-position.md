@@ -26,9 +26,11 @@ Evidence    284
 - Phase 5 — monitoring and candidate collection: planned
 - v1 hardening: planned
 
-Archive Capture Batches 1 through 18 are complete and production-verified, and the previously-unreviewed archive queue is exhausted. Deferred Archive Retries 01 and 02 are also complete and production-verified. Evidence with `archived_url` is now 127 / 284. The remaining unresolved archive queues are 16 risky-host unique URLs and 15 terminal unique URLs. Source-count mismatches and unknown URL statuses remain at zero, and complete canonical-derived public-content equality is enforced.
+Archive Capture Batches 1 through 18 are complete and production-verified, and the previously-unreviewed archive queue is exhausted. Deferred Archive Retries 01 and 02 are complete and production-verified. Deferred Archive Retries 03 and 04 are complete as review-only audits and recovered no additional canonical archive mappings. The not-recently-retried fresh deferred pool is now exhausted.
 
-Deferred Retry 02 recovered one additional previously-reviewed unresolved source:
+Evidence with `archived_url` remains 127 / 284. The remaining unresolved archive queues are 16 risky-host unique URLs and 15 terminal unique URLs. Source-count mismatches and unknown URL statuses remain at zero, and complete canonical-derived public-content equality is enforced.
+
+The latest completed canonical publication checkpoint remains Deferred Retry 02:
 
 ```text
 Review PR             #202
@@ -42,7 +44,7 @@ HTML routes           72
 Redirects             74
 ```
 
-The production verifier reached complete four-dataset field-level equality on attempt 1 and confirmed the exact archive mapping for `bir_src_000166`. No build-input refresh or deployment retrigger was required.
+Deferred Retry 03 then reviewed ten fresh reviewed-but-unarchived URLs outside the recent Retry 01/02 scopes and approved none. Deferred Retry 04 reviewed the final two fresh URLs and approved none. PR #206 records that the remaining reviewed-unarchived pool now consists only of URLs already explicitly retried under the current acceptance boundary.
 
 The public UI/support follow-up is current through PR #187: incident discovery, filters, pagination, detail TOCs, project navigation, Support, and the shared BadJoke-Lab support-wallet presentation are merged.
 
@@ -50,8 +52,8 @@ The Boltz 2026 swap shutdown remains a monitoring signal in Issue #171. It is no
 
 ## Next bounded work
 
-1. reconstruct the remaining reviewed-unresolved archive pool after Retries 01–02 and run Deferred Archive Retry 03 against a fresh high-value subset; do not immediately recycle the recent Retry 01 or Retry 02 failures;
-2. reduce the remaining 16 events without primary evidence where justified;
-3. strengthen validators;
-4. begin review-gated monitoring and candidate collection without automatic canonical publication;
-5. continue v1 hardening.
+1. reduce the remaining 16 events without primary evidence where justified, without weakening source hierarchy;
+2. strengthen validators;
+3. begin review-gated monitoring and candidate collection without automatic canonical publication;
+4. continue v1 hardening;
+5. revisit deferred archive failures only after conditions change or new canonical source URLs enter the corpus.
