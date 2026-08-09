@@ -38,9 +38,6 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install dependencies without lockfile mutation
-        run: npm ci
-
       - name: Avoid duplicate monitoring PRs
         id: duplicate
         shell: bash
