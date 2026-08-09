@@ -13,7 +13,7 @@ The active monitoring foundation covers:
 - canonical reference/unknown-URL health checks;
 - open GitHub issue monitoring for explicit review/monitoring signals;
 - bounded evidence-link degradation monitoring;
-- external bridge/protocol candidate discovery from a public registry snapshot;
+- external bridge/protocol universe monitoring from a public registry snapshot;
 - fingerprint-based suppression of unchanged signals;
 - review-only JSON, watchlist, and Markdown outputs;
 - weekly or manual GitHub Actions execution;
@@ -66,10 +66,16 @@ Evidence-health key:
 evidence-health:<evidence_id>
 ```
 
-External bridge candidate key:
+External bridge row key:
 
 ```text
 external-bridge:defillama-bridges-server:<external_id>
+```
+
+External baseline marker:
+
+```text
+external-bridge:defillama-bridges-server:baseline-v1
 ```
 
 Scheduled runs refuse to create duplicate work when either an open `Auto monitoring report:` pull request or an unmerged `auto/monitoring/*` review branch already exists. Manual dispatch with `force=true` can explicitly override that guard.
@@ -89,15 +95,15 @@ New/changed issue signals enter the candidate watchlist as class `B` / `hold`. T
 
 The first live foundation smoke detected Issue #171 exactly once. PR #223 persisted only monitoring/watchlist state. An unchanged rerun then emitted no finding/candidate and created no new review branch, proving end-to-end dedupe.
 
-## External bridge/protocol candidate adapter
+## External bridge/protocol universe adapter
 
-The external candidate adapter uses the public bridge metadata maintained in DefiLlama's `bridges-server` repository:
+The external adapter uses the public bridge metadata maintained in DefiLlama's `bridges-server` repository:
 
 ```text
 https://raw.githubusercontent.com/DefiLlama/bridges-server/master/src/data/bridgeNetworkData.ts
 ```
 
-The paid Bridges API is not required. The weekly workflow downloads the public source snapshot with bounded curl timeouts/retries. If the source is temporarily unavailable, external candidate discovery is skipped for that run without weakening the canonical guard or other monitors.
+The paid Bridges API is not required. The weekly workflow downloads the public source snapshot with bounded curl timeouts/retries. If the source is temporarily unavailable, external monitoring is skipped for that run without weakening the canonical guard or other monitors.
 
 The parser reads active top-level bridge objects and ignores commented-out entries. It extracts only discovery metadata such as:
 
@@ -110,30 +116,52 @@ project URL
 chains
 ```
 
-Before a candidate can be emitted, the adapter compares it against canonical bridges using:
+Before external state is compared, the adapter checks canonical bridges using:
 
 1. exact normalized canonical name;
 2. exact normalized alias;
 3. exact normalized slug / previous slug / redirect slug;
 4. exact official-domain match.
 
-Matched records are suppressed. The adapter does not use fuzzy matching to silently merge identities.
+Matched records are suppressed. The adapter deliberately does not use fuzzy matching to silently merge identities.
 
-An unmatched external registry entry is only a class `C` / `hold` candidate. Registry presence establishes neither an incident nor a BIR inclusion boundary. The required next action is:
+### Baseline rule
+
+The first valid external-registry snapshot is a universe baseline, not a candidate batch.
+
+Every unmatched active external row is fingerprinted into monitoring state and the baseline marker is written. The review report records:
 
 ```text
-research_incident_boundary_and_primary_sources
+external rows parsed
+existing canonical matches
+unmatched rows fingerprinted
+candidates emitted = 0
+source SHA-256
 ```
 
-The initial changed-candidate ceiling is:
+This baseline state change is reviewed and merged, but the existing universe does not create dozens of fake BIR candidates merely because a bridge exists.
+
+The first live pre-baseline smoke proved why this boundary is required: 98 active external rows were parsed, only 11 exactly matched the 33 canonical BIR bridges, and a naive implementation would have produced 87 unmatched bridge-presence candidates. The first eight were Polygon PoS Bridge, Arbitrum Bridge, Optimism Gateway, Stargate, Hop, Gnosis Bridge, Axelar, and Across. Those were rejected as incident candidates because registry presence alone does not establish an incident boundary.
+
+### Post-baseline change rule
+
+After baseline initialization, an unchanged external row is silent.
+
+A new external row or a materially changed unmatched row may enter the review watchlist as class `C` / `hold`. Even then, the registry change establishes neither an incident nor a BIR inclusion boundary. The required next action is:
+
+```text
+correlate_with_incident_or_status_signal_before_research
+```
+
+The changed-candidate ceiling remains:
 
 ```text
 8 candidates per monitoring run
 ```
 
-The monitor scans in stable external-ID order. Previously emitted unchanged candidates are skipped through fingerprint state, allowing later runs to advance through the remaining unmatched registry without flooding one review PR. A materially changed external entry may re-enter review.
+Rows beyond that ceiling remain unacknowledged in state and are deferred to the next review cycle. This prevents a sudden upstream churn event from flooding one PR.
 
-The external source SHA-256 is written into the monitor report for provenance. Candidate records include the external source metadata and project URL when it is a valid HTTP(S) URL.
+The external source SHA-256 is written into the monitor report for provenance. Candidate records include the external metadata and project URL when it is a valid HTTP(S) URL.
 
 ## Evidence health adapter
 
@@ -150,10 +178,10 @@ The batch is selected deterministically by week so the live-evidence corpus is c
 Each selected URL is probed twice independently.
 
 ```text
-2xx / 3xx            healthy
-404 / 410 twice      hard failure → review finding
-401 / 403 / 405 /429 access/bot/rate-limit block → no dead-link finding
-5xx / timeout        soft/transient failure → no hard finding
+2xx / 3xx             healthy
+404 / 410 twice       hard failure → review finding
+401 / 403 / 405 / 429 access/bot/rate-limit block → no dead-link finding
+5xx / timeout         soft/transient failure → no hard finding
 mixed results         no hard finding
 ```
 
@@ -167,7 +195,7 @@ HTTP probing uses Node's built-in `fetch`, follows redirects, requests only a sm
 
 ## Workflow behavior
 
-`.github/workflows/bir-monitoring.yml` runs weekly at a non-hour boundary and can also be dispatched manually. A workflow-file change on `main` triggers a bounded smoke run.
+`.github/workflows/bir-monitoring.yml` runs weekly at a non-hour boundary and can also be dispatched manually. Changes to the monitoring workflow or monitoring scripts on `main` trigger a bounded smoke run.
 
 Execution order:
 
@@ -184,9 +212,9 @@ GitHub issue watch
 ↓
 bounded two-pass evidence health watch
 ↓
-external bridge/protocol candidate watch
+external bridge/protocol universe watch
 ↓
-signal fingerprint + dedupe
+signal fingerprint + dedupe / baseline state
 ↓
 review-only output generation
 ↓
@@ -201,11 +229,11 @@ try Auto monitoring report PR
 if Actions PR creation is disabled: retain validated review branch and finish successfully
 ```
 
-If there are no new or changed signals, no repository diff, review branch, or PR is created.
+If there are no new or changed signals or monitoring-state changes, no repository diff, review branch, or PR is created.
 
 If GitHub Actions is allowed to create pull requests, the workflow opens the review PR automatically. If repository settings disallow Actions-created PRs, only that known permission error is treated as non-fatal: the already-validated `auto/monitoring/*` branch is retained and reported in the Actions summary. Other PR-creation failures remain fatal.
 
-## First live foundation proof
+## Live proofs
 
 Run `31301301277` demonstrated the review-only path for Issue #171:
 
@@ -226,6 +254,8 @@ After PR #223 merged the signal fingerprint state, rerunning the same monitor pr
 
 The evidence-health live smoke in run `31301765004` selected 12 of 287 live evidence URLs, performed 24 independent probes, emitted zero hard 404/410 findings, and left canonical data byte-identical.
 
+The first external-registry smoke in run `31303100390` parsed 98 active rows, exact-matched 11 canonical bridges, selected eight unmatched bridge-presence records, and left canonical data unchanged. That output was intentionally not merged as monitoring state; it exposed the need for the baseline rule above. Its temporary review branch was reset to `main` so it cannot block future monitoring runs.
+
 ## Tests
 
 `npm run monitoring:test` verifies:
@@ -239,10 +269,11 @@ The evidence-health live smoke in run `31301765004` selected 12 of 287 live evid
 7. 403/access blocking does not become a dead-link signal;
 8. external-registry parsing ignores commented entries;
 9. an exact canonical bridge match is suppressed;
-10. one unmatched external bridge becomes a class `C` hold candidate;
-11. an unchanged external candidate is deduped;
-12. materially changed external metadata re-enters review;
-13. all four canonical files remain byte-identical.
+10. the initial unmatched external universe is fingerprinted without candidates;
+11. an unchanged post-baseline universe is silent;
+12. a new post-baseline external row emits one class `C` hold candidate;
+13. materially changed post-baseline metadata re-enters review;
+14. all four canonical files remain byte-identical.
 
 The normal repository `Check` workflow runs these controlled tests without external network access.
 

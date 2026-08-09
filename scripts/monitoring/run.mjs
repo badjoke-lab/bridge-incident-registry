@@ -83,8 +83,11 @@ const externalBridgeResult = externalSourceText
     })
   : {
       source: null,
+      baseline_initialized: false,
+      state_changed: false,
       parsed_count: 0,
       matched_existing_count: 0,
+      baseline_seeded_count: 0,
       unchanged_count: 0,
       deferred_changed_count: 0,
       emitted_count: 0,
@@ -93,7 +96,9 @@ const externalBridgeResult = externalSourceText
 
 const findings = [...issueResult.findings, ...evidenceResult.findings];
 const candidates = [...issueResult.candidates, ...externalBridgeResult.candidates];
-const hasChanges = findings.length > 0 || candidates.length > 0;
+const reviewSignalsChanged = findings.length > 0 || candidates.length > 0;
+const stateChanged = reviewSignalsChanged || externalBridgeResult.state_changed;
+const hasChanges = stateChanged;
 let outputs = null;
 
 if (hasChanges) {
@@ -121,6 +126,8 @@ const result = {
   run_id: runId,
   observed_at: observedAt,
   has_changes: hasChanges,
+  review_signals_changed: reviewSignalsChanged,
+  state_changed: stateChanged,
   findings_count: findings.length,
   candidate_count: candidates.length,
   evidence_health: {
@@ -131,8 +138,11 @@ const result = {
   },
   external_candidate_discovery: {
     enabled: Boolean(externalSourceText),
+    baseline_initialized: externalBridgeResult.baseline_initialized,
+    state_changed: externalBridgeResult.state_changed,
     parsed_count: externalBridgeResult.parsed_count,
     matched_existing_count: externalBridgeResult.matched_existing_count,
+    baseline_seeded_count: externalBridgeResult.baseline_seeded_count,
     unchanged_count: externalBridgeResult.unchanged_count,
     deferred_changed_count: externalBridgeResult.deferred_changed_count,
     emitted_count: externalBridgeResult.emitted_count,
