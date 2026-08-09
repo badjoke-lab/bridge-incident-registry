@@ -1,0 +1,98 @@
+name: Apply Event Primary Remediation 02 v2
+
+on:
+  push:
+    branches:
+      - agent/phase3-event-primary-remediation-02-v2
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout bounded branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/phase3-event-primary-remediation-02-v2
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Apply exact reviewed remediation
+        run: node scripts/apply-event-primary-remediation-02.mjs
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run complete repository checks
+        run: |
+          npm run check
+          npm run validate:data
+          npm run validate:enums
+          npm run audit:first-ten
+          npm run audit:full-corpus
+          npm run audit:source-count
+          npm run audit:source-quality
+          npm run audit:full-corpus:test
+          npm run audit:source-count:test
+          npm run audit:source-quality:test
+          npm run production:content:test
+          npm run build
+          npm run dist:check
+          npm run dist:test
+
+      - name: Assert exact canonical result
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const evidence = JSON.parse(fs.readFileSync('data/evidence.json', 'utf8'));
+          const events = JSON.parse(fs.readFileSync('data/events.json', 'utf8'));
+          const incidents = JSON.parse(fs.readFileSync('data/incidents.json', 'utf8'));
+          const byId = (items, id) => items.find((item) => item.id === id);
+          if (evidence.length !== 287) throw new Error(`evidence length ${evidence.length}`);
+          for (const id of ['bir_src_000285','bir_src_000286','bir_src_000287']) {
+            const source = byId(evidence, id);
+            if (!source || source.is_primary !== true || source.source_tier !== 'tier_1' || !source.archived_url) {
+              throw new Error(`invalid approved evidence ${id}`);
+            }
+          }
+          if (byId(events,'bir_ev_000013').source_count !== 3) throw new Error('bir_ev_000013 count');
+          if (byId(events,'bir_ev_000124').source_count !== 3) throw new Error('bir_ev_000124 count');
+          if (byId(events,'bir_ev_000125').source_count !== 3) throw new Error('bir_ev_000125 count');
+          if (byId(incidents,'bir_inc_000005').source_count !== 10) throw new Error('bir_inc_000005 count');
+          if (byId(incidents,'bir_inc_000028').source_count !== 14) throw new Error('bir_inc_000028 count');
+          const baseline = fs.readFileSync('scripts/check-source-quality-baseline.mjs', 'utf8');
+          if (!baseline.includes('  events_without_primary: 11,')) throw new Error('baseline not 11');
+          NODE
+
+      - name: Remove one-shot applicator
+        run: |
+          rm .github/workflows/apply-event-primary-remediation-02-v2.yml
+          rm scripts/apply-event-primary-remediation-02.mjs
+
+      - name: Assert permanent scope
+        run: |
+          git fetch origin main
+          actual="$(git diff --name-only origin/main | sort)"
+          expected="$(printf '%s\n' \
+            data/evidence.json \
+            data/events.json \
+            data/incidents.json \
+            docs/audits/phase3-event-primary-remediation-02-canonical-2026-08-09.md \
+            scripts/check-source-quality-baseline.mjs | sort)"
+          printf 'Permanent diff:\n%s\n' "$actual"
+          test "$actual" = "$expected"
+
+      - name: Commit and push permanent result
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "data: remediate event primary evidence 02"
+          git push origin HEAD:agent/phase3-event-primary-remediation-02-v2
