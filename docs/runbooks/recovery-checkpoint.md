@@ -22,41 +22,39 @@ PR #103–107  LI.FI and Holograph source-quality remediation
 PR #108–116  Event Tier 1 remediation and production verification
 PR #117      Nerve Bridge source boundary
 PR #118–198  Archive Capture Batches 1–18 and production checkpoints
-PR #199      Deferred Archive Retry 01 reproducible review
-PR #200      Deferred Archive Retry 01 canonical migration
-PR #201      Deferred Archive Retry 01 production verification and checkpoint sync
-PR #202      Deferred Archive Retry 02 reproducible review
-PR #203      Deferred Archive Retry 02 canonical migration
-PR #204      Deferred Archive Retry 02 production verification and checkpoint sync
+PR #199–204  Deferred Archive Retries 01–02 and production checkpoints
 PR #205      Deferred Archive Retry 03 review — approved 0
 PR #206      Deferred Archive Retry 04 review — approved 0; fresh pool exhausted
-PR #207      Event Primary Remediation 01 review — two approved
-PR #208      Event Primary Remediation 01 canonical application
-PR #209      Event Primary Remediation 01 production verification
+PR #207–209  Event Primary Remediation 01 and production verification
 PR #211      Event Primary Review 02 — three approved
 PR #212      Event Tier 1 controlled-failure fixture strengthening
+PR #213      Event Primary Remediation 02 canonical migration
+PR #214      Event Primary Remediation 02 production verification
 ```
 
-## Latest completed production checkpoint before Remediation 02
+## Latest completed production checkpoint
 
 ```text
-Review PR                     #207
-Canonical data PR             #208
-Canonical merge               1638b47eb3c2e9066d0323d6d5a4abe8aa85cfb2
-Production audit PR           #209
-Production verify run         31299468964
-Production verify job         93209808769
-Verified state                33 / 34 / 183 / 284
-Events without primary        14 / 183
+Review PR                     #211
+Canonical data PR             #213
+Canonical merge               f2874a2d0ffe6877eadf6619cd6100a9b9b3991b
+Production audit PR           #214
+Production verify run         31300484236
+Production verify job         93212360938
+Verified state                33 / 34 / 183 / 287
+Primary evidence              206 / 287
+Tier 1 evidence               223 / 287
+Archived evidence             130 / 287
+Events without primary        11 / 183
 Canonical content match       true
 HTML routes                   72
 Redirects                     74
-Generated at                  2026-08-09T06:42:13.747Z
-Publication attempt           4 / 20
+Generated at                  2026-08-09T07:08:45.362Z
+Publication attempt           3 / 20
 Build-input refresh           not required
 ```
 
-Attempts 1–3 correctly rejected stale same-count production at `bir_src_000003`; attempt 4 observed the new generated build and complete field-level equality across all four public canonical datasets.
+Attempts 1–2 correctly rejected the prior 284-evidence production build. Attempt 3 observed the 287-evidence build and complete field-level equality across all four public canonical datasets.
 
 ## Permanent guards
 
@@ -88,24 +86,30 @@ Unknown URL status                    0
 
 ## Archive preservation boundary
 
-Archive Capture Batch 18 exhausted the previously-unreviewed terminal/risky-host candidate set. Do not create an artificial untouched Batch 19.
-
-The permanent review-audit inventory identified 45 reviewed-but-unarchived evidence records across 32 unique URLs. Deferred Retries 01 and 02 recovered three evidence records on three unique URLs, leaving 42 records across 29 unique URLs.
-
-Deferred Retry 03 reviewed ten of the twelve URLs that had not been part of the recent Retry 01/02 scopes and approved none. Deferred Retry 04 reviewed the final two fresh URLs, `bir_src_000277` and `bir_src_000282`, and also approved none. The not-recently-retried fresh deferred pool is now exhausted.
-
-The remaining reviewed-unarchived pool therefore consists only of URLs already explicitly retried under the current exact-replay, temporal-fit, minimum-size, and two-run reproducibility boundary. Do not immediately recycle those failures. Archive preservation may resume after conditions materially change or when new canonical source URLs enter the corpus.
+Archive Capture Batch 18 exhausted the previously-unreviewed terminal/risky-host candidate set. Deferred Retries 03–04 exhausted the fresh reviewed-unresolved retry scope. The remaining reviewed-unarchived pool consists only of URLs already explicitly retried under the established exact-replay, temporal-fit, minimum-size, and two-run reproducibility boundary. Do not immediately recycle those failures.
 
 ## Event primary-evidence boundary
 
-PR #207 reviewed the nine non-intentional event primary-evidence gaps. Exactly two bounded remediations were approved and applied in PR #208:
+Event Primary Remediation 01 reduced event primary gaps from 16 to 14. Event Primary Review 02 approved three event-scoped copies of already-canonical first-party evidence:
 
 ```text
-bir_ev_000002 / bir_src_000003  OFAC Ronin/Lazarus attribution source corrected and marked primary
-bir_ev_000011 / bir_src_000014  FBI Horizon attribution source marked claim-relative primary
+bir_ev_000013  Poly Network
+bir_ev_000124  Transit Finance
+bir_ev_000125  Transit Finance
 ```
 
-Event Primary Review 02 approved event-scoped first-party copies for `bir_ev_000013`, `bir_ev_000124`, and `bir_ev_000125`. Remediation 02 raises evidence to 287 and tightens `events_without_primary` to 11 without increasing unique archive-risk queues. Four non-intentional reviewed candidates remain deferred: `bir_ev_000014`, `bir_ev_000143`, `bir_ev_000144`, and `bir_ev_000148`. Intentional secondary-only boundaries remain explicit and must not be reclassified merely to improve coverage.
+PR #213 applied those additions without increasing unique archive-risk queues, and PR #214 verified their live publication. The ceiling is now `events_without_primary = 11`.
+
+Four non-intentional reviewed candidates remain deferred pending stronger first-party material:
+
+```text
+bir_ev_000014
+bir_ev_000143
+bir_ev_000144
+bir_ev_000148
+```
+
+Six Tier 1 gaps are intentional secondary-only records, and `bir_ev_000150` remains intentionally non-primary because its PeckShield evidence is a direct security-monitoring observation rather than an operator statement. These are reviewed boundaries, not unresolved validator defects.
 
 ## Cloudflare Pages boundary
 
@@ -121,9 +125,8 @@ Issue #171 remains open as a monitoring signal. Boltz is not canonical because t
 
 ## Next
 
-1. production-verify Event Primary Remediation 02, then continue only with the four deferred non-intentional primary gaps and the explicitly intentional secondary-only set;
-2. remediate only gaps where source hierarchy can be improved safely and keep intentional secondary-only boundaries explicit;
-3. strengthen validators;
-4. begin review-gated monitoring and candidate collection without automatic publication;
-5. continue v1 hardening;
-6. revisit deferred archive failures only after conditions change or new canonical source URLs appear.
+1. strengthen validators where remaining corpus-shape assumptions can be made explicit;
+2. begin Phase 5 review-gated monitoring and candidate collection without automatic publication;
+3. preserve the four deferred event-primary gaps as research backlog items until stronger first-party sources appear;
+4. continue v1 hardening;
+5. revisit deferred archive failures only after conditions change or new canonical source URLs appear.
