@@ -28,6 +28,7 @@ export function writeMonitoringOutputs({ dateKey, runId, observedAt, findings, c
   for (const [name, report] of Object.entries(monitorReports)) writeJson(path.join(runDir, `${name}.json`), report);
   writeJson(watchlistPath, { run_id: runId, observed_at: observedAt, candidates });
 
+  const domain = monitorReports["active-bridge-domain-watch"];
   const external = monitorReports["external-bridge-candidate-watch"];
   const hacks = monitorReports["defillama-hacks-page-watch"];
   const gdelt = monitorReports["gdelt-news-watch"];
@@ -46,6 +47,15 @@ export function writeMonitoringOutputs({ dateKey, runId, observedAt, findings, c
     `- Reference errors: ${health.reference_errors.length}`
   ];
 
+  if (domain?.baseline_seeded_count > 0) {
+    lines.push("", "## Monitoring state change", "", "Active bridge official-domain baseline advanced.", "",
+      `- Eligible active/limited/paused bridges: ${domain.eligible_count}`,
+      `- Bridges selected this run: ${domain.selected_count}`,
+      `- Healthy domain baselines seeded: ${domain.baseline_seeded_count}`,
+      `- Domain findings: ${domain.findings.length}`,
+      "- Baseline state records observed final domains only; it does not modify canonical bridge metadata.");
+  }
+
   if (external?.baseline_initialized) {
     lines.push("", "## Monitoring state change", "", "External bridge discovery baseline initialized.", "",
       `- External rows parsed: ${external.parsed_count}`,
@@ -56,13 +66,13 @@ export function writeMonitoringOutputs({ dateKey, runId, observedAt, findings, c
   }
 
   if (hacks?.baseline_initialized) {
-    lines.push("", "## Monitoring state change", "", "DefiLlama public hacks bridge-incident baseline initialized.", "",
+    lines.push("", "## Monitoring state change", "", "DefiLlama bridge-hack discovery baseline initialized.", "",
       `- Hacks rows parsed: ${hacks.parsed_count}`,
       `- Bridge-relevant rows fingerprinted: ${hacks.baseline_seeded_count}`,
       `- Exact canonical bridge-name matches: ${hacks.exact_canonical_matches}`,
       `- Rows carrying the upstream bridge flag: ${hacks.bridge_flag_rows}`,
       `- Candidates emitted from baseline: ${hacks.emitted_count}`,
-      "- Historical public database rows are not treated as new BIR incidents.");
+      "- Historical secondary-database rows are not treated as new BIR incidents.");
   }
 
   if (gdelt?.baseline_initialized) {

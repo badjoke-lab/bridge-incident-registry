@@ -6,6 +6,7 @@ import { applySignal, loadState, writeState } from "./core/state.mjs";
 import { writeMonitoringOutputs } from "./core/report.mjs";
 import { watchGithubIssues } from "./monitors/github-issue-watch.mjs";
 import { watchEvidenceHealth } from "./monitors/evidence-health-watch.mjs";
+import { watchActiveBridgeDomains } from "./monitors/active-bridge-domain-watch.mjs";
 import { watchExternalBridgeCandidates } from "./monitors/external-bridge-candidate-watch.mjs";
 import { watchDefillamaHacksPage } from "./monitors/defillama-hacks-page-watch.mjs";
 import { watchGdeltNews } from "./monitors/gdelt-news-watch.mjs";
@@ -40,6 +41,8 @@ const issuesPath = arg("issues");
 const resultPath = arg("result", ".monitor-output/result.json");
 const evidenceHealthEnabled = flag("evidence-health");
 const evidenceProbeLimit = Number.parseInt(arg("evidence-probe-limit", "12"), 10);
+const activeBridgeDomainEnabled = flag("active-bridge-domain-health");
+const activeBridgeDomainLimit = Number.parseInt(arg("active-bridge-domain-probe-limit", "8"), 10);
 const externalBridgeSourcePath = arg("external-bridge-source");
 const externalBridgeSourceUrl = arg("external-bridge-source-url", DEFAULT_EXTERNAL_BRIDGE_SOURCE_URL);
 const externalCandidateLimit = Number.parseInt(arg("external-candidate-limit", "8"), 10);
@@ -54,8 +57,11 @@ const gdeltSourceWindow = arg("gdelt-source-window");
 const gdeltCandidateLimit = Number.parseInt(arg("gdelt-candidate-limit", "8"), 10);
 
 for (const [label, limit] of [
-  ["evidence probe", evidenceProbeLimit], ["external candidate", externalCandidateLimit],
-  ["DefiLlama hacks candidate", defillamaHacksCandidateLimit], ["GDELT candidate", gdeltCandidateLimit]
+  ["evidence probe", evidenceProbeLimit],
+  ["active bridge domain probe", activeBridgeDomainLimit],
+  ["external candidate", externalCandidateLimit],
+  ["DefiLlama hacks candidate", defillamaHacksCandidateLimit],
+  ["GDELT candidate", gdeltCandidateLimit]
 ]) {
   if (!Number.isInteger(limit) || limit < 0 || limit > 50) throw new Error(`invalid ${label} limit: ${limit}`);
 }
@@ -73,6 +79,9 @@ const issueResult = watchGithubIssues(issues, state, applySignal, observedAt);
 const evidenceResult = evidenceHealthEnabled
   ? await watchEvidenceHealth({ evidence: canonical.evidence, state, applySignal, observedAt, limit: evidenceProbeLimit })
   : { findings: [], probes: [], selected_count: 0, live_evidence_count: canonical.evidence.filter((source) => source.url_status === "live").length };
+const activeBridgeDomainResult = activeBridgeDomainEnabled
+  ? await watchActiveBridgeDomains({ bridges: canonical.bridges, state, applySignal, observedAt, limit: activeBridgeDomainLimit })
+  : { findings: [], probes: [], eligible_count: 0, selected_count: 0, baseline_seeded_count: 0, state_changed: false };
 
 const externalSourceText = readTextInput(externalBridgeSourcePath, "external bridge registry");
 const externalBridgeResult = externalSourceText
@@ -100,10 +109,10 @@ const gdeltResult = gdeltEnabled
   ? watchGdeltNews({ securityPayload: readTextInput(gdeltSecurityPath, "GDELT security"), operationsPayload: readTextInput(gdeltOperationsPath, "GDELT operations"), canonicalBridges: canonical.bridges, canonicalEvidence: canonical.evidence, state, applySignal, observedAt, sourceWindow: gdeltSourceWindow, limit: gdeltCandidateLimit })
   : { source: null, baseline_initialized: false, state_changed: false, security_rows: 0, operations_rows: 0, unique_rows: 0, baseline_seeded_count: 0, canonical_evidence_duplicates: 0, irrelevant_count: 0, unchanged_count: 0, deferred_changed_count: 0, emitted_count: 0, candidates: [] };
 
-const findings = [...issueResult.findings, ...evidenceResult.findings];
+const findings = [...issueResult.findings, ...evidenceResult.findings, ...activeBridgeDomainResult.findings];
 const candidates = [...issueResult.candidates, ...externalBridgeResult.candidates, ...defillamaHacksResult.candidates, ...gdeltResult.candidates];
 const reviewSignalsChanged = findings.length > 0 || candidates.length > 0;
-const stateChanged = reviewSignalsChanged || externalBridgeResult.state_changed || defillamaHacksResult.state_changed || gdeltResult.state_changed;
+const stateChanged = reviewSignalsChanged || activeBridgeDomainResult.state_changed || externalBridgeResult.state_changed || defillamaHacksResult.state_changed || gdeltResult.state_changed;
 const hasChanges = stateChanged;
 let outputs = null;
 
@@ -114,6 +123,7 @@ if (hasChanges) {
     monitorReports: {
       "github-issue-watch": issueResult,
       "evidence-health-watch": evidenceResult,
+      ...(activeBridgeDomainEnabled ? { "active-bridge-domain-watch": activeBridgeDomainResult } : {}),
       ...(externalSourceText ? { "external-bridge-candidate-watch": externalBridgeResult } : {}),
       ...(defillamaHacksHtml ? { "defillama-hacks-page-watch": defillamaHacksResult } : {}),
       ...(gdeltEnabled ? { "gdelt-news-watch": gdeltResult } : {})
@@ -125,14 +135,21 @@ const after = canonicalFingerprints();
 assertCanonicalUnchanged(before, after);
 
 const result = {
-  version: 1, run_id: runId, observed_at: observedAt, has_changes: hasChanges,
-  review_signals_changed: reviewSignalsChanged, state_changed: stateChanged,
-  findings_count: findings.length, candidate_count: candidates.length,
+  version: 1,
+  run_id: runId,
+  observed_at: observedAt,
+  has_changes: hasChanges,
+  review_signals_changed: reviewSignalsChanged,
+  state_changed: stateChanged,
+  findings_count: findings.length,
+  candidate_count: candidates.length,
   evidence_health: { enabled: evidenceHealthEnabled, selected_count: evidenceResult.selected_count, live_evidence_count: evidenceResult.live_evidence_count, finding_count: evidenceResult.findings.length },
+  active_bridge_domains: { enabled: activeBridgeDomainEnabled, eligible_count: activeBridgeDomainResult.eligible_count, selected_count: activeBridgeDomainResult.selected_count, baseline_seeded_count: activeBridgeDomainResult.baseline_seeded_count, finding_count: activeBridgeDomainResult.findings.length, state_changed: activeBridgeDomainResult.state_changed },
   external_candidate_discovery: { enabled: Boolean(externalSourceText), baseline_initialized: externalBridgeResult.baseline_initialized, state_changed: externalBridgeResult.state_changed, parsed_count: externalBridgeResult.parsed_count, matched_existing_count: externalBridgeResult.matched_existing_count, baseline_seeded_count: externalBridgeResult.baseline_seeded_count, unchanged_count: externalBridgeResult.unchanged_count, deferred_changed_count: externalBridgeResult.deferred_changed_count, emitted_count: externalBridgeResult.emitted_count, source: externalBridgeResult.source },
   defillama_hacks: { enabled: Boolean(defillamaHacksHtml), baseline_initialized: defillamaHacksResult.baseline_initialized, state_changed: defillamaHacksResult.state_changed, parsed_count: defillamaHacksResult.parsed_count, relevant_count: defillamaHacksResult.relevant_count, baseline_seeded_count: defillamaHacksResult.baseline_seeded_count, exact_canonical_matches: defillamaHacksResult.exact_canonical_matches, bridge_flag_rows: defillamaHacksResult.bridge_flag_rows, unchanged_count: defillamaHacksResult.unchanged_count, canonical_evidence_duplicates: defillamaHacksResult.canonical_evidence_duplicates, deferred_changed_count: defillamaHacksResult.deferred_changed_count, emitted_count: defillamaHacksResult.emitted_count, source: defillamaHacksResult.source },
   gdelt_news: { enabled: gdeltEnabled, baseline_initialized: gdeltResult.baseline_initialized, state_changed: gdeltResult.state_changed, security_rows: gdeltResult.security_rows, operations_rows: gdeltResult.operations_rows, unique_rows: gdeltResult.unique_rows, baseline_seeded_count: gdeltResult.baseline_seeded_count, canonical_evidence_duplicates: gdeltResult.canonical_evidence_duplicates, irrelevant_count: gdeltResult.irrelevant_count, unchanged_count: gdeltResult.unchanged_count, deferred_changed_count: gdeltResult.deferred_changed_count, emitted_count: gdeltResult.emitted_count, source: gdeltResult.source },
-  canonical_counts: health.counts, outputs
+  canonical_counts: health.counts,
+  outputs
 };
 
 fs.mkdirSync(path.dirname(resultPath), { recursive: true });
