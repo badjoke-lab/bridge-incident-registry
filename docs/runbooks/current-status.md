@@ -44,9 +44,44 @@ Event Primary Remediation 01         production-verified — PRs #207–#209
 Event Primary Review 02              complete — PR #211
 Event Tier 1 fixture strengthening   complete — PR #212
 Event Primary Remediation 02         production-verified — PRs #213–#214
+Cross-record bridge integrity        blocking — PR #218
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
 ```
+
+## Phase 5 monitoring and candidate collection
+
+```text
+Review-gated monitoring foundation   complete — PR #217
+Initial Boltz monitoring state       merged — PR #223
+Review-branch fallback / dedupe      complete — PR #225
+Evidence health watch                complete — PR #226
+External candidate discovery         next
+News / regulatory event watch        planned
+Active bridge/domain watch           planned
+Site / SEO watch                     planned
+```
+
+Live monitoring proofs:
+
+```text
+Issue #171 first signal run          31301301277
+Initial candidate                    Boltz — B / hold
+Initial review state                 PR #223
+Unchanged rerun                      has_changes=false, no new review branch
+Evidence-health live run             31301765004 / 93215576787
+Live evidence URLs                   287
+Evidence URLs selected                12
+Two-pass probes                       24
+Hard 404/410 findings                  0
+Canonical diff                         none
+Unknown URL status                     0
+Reference errors                       0
+```
+
+The monitoring workflow is review-only. It fingerprints all canonical JSON before/after execution, rejects canonical diffs, writes only under `data-staging/monitoring/**` and `data-staging/watchlists/auto/**`, dedupes unchanged signals, and refuses duplicate scheduled work when an open monitoring PR or unmerged monitoring review branch exists.
+
+The repository Actions policy does not permit `GITHUB_TOKEN` to create pull requests. When that exact permission error occurs, the workflow retains the already-validated review branch and succeeds; a connected GitHub app/operator may open the PR later. Other PR-creation errors remain blocking.
 
 ## Public UI/support follow-up
 
@@ -140,13 +175,10 @@ Publication attempt           3 / 20
 Build-input refresh           not required
 ```
 
-Attempts 1–2 correctly rejected the prior 284-evidence production build. Attempt 3 observed the new 287-evidence build and passed complete canonical-derived field-level equality.
-
 ## Next
 
-1. strengthen remaining validators and controlled-failure fixtures where corpus-shape assumptions remain;
-2. begin Phase 5 review-gated monitoring and candidate collection without automatic canonical publication;
-3. keep the four deferred non-intentional primary gaps on a research backlog until stronger first-party evidence appears;
-4. maintain public-contract and UI compatibility checks;
-5. continue v1 documentation, accessibility, performance, compatibility, and release hardening;
-6. revisit deferred archive failures only after conditions change or new canonical source URLs enter the corpus.
+1. implement external bridge/protocol candidate discovery as the next review-only Phase 5 adapter;
+2. add closure/pause/hack/regulatory news monitoring after candidate discovery is stable;
+3. continue validator and public-contract hardening where justified;
+4. keep deferred evidence gaps research-triggered rather than metric-driven;
+5. continue v1 documentation, accessibility, performance, compatibility, and release hardening.
