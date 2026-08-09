@@ -79,7 +79,7 @@ jobs:
       - name: Assert permanent scope
         run: |
           git fetch origin main
-          actual="$(git diff --name-only origin/main | sort)"
+          actual="$({ git diff --name-only origin/main; git ls-files --others --exclude-standard; } | sort -u)"
           expected="$(printf '%s\n' \
             README.md \
             data/evidence.json \
