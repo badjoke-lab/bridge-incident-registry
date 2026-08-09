@@ -79,19 +79,36 @@ jobs:
             echo "::warning::External bridge registry was unavailable; candidate discovery is skipped for this run."
           fi
 
-      - name: Collect public DefiLlama hacks page
+      - name: Collect DefiLlama hacks discovery data
         if: steps.duplicate.outputs.skip != 'true'
         shell: bash
         run: |
+          raw=".monitor-input/defillama-hacks.json"
           output=".monitor-input/defillama-hacks.html"
-          if curl --fail --location --silent --show-error --retry 2 --retry-delay 2 --connect-timeout 10 --max-time 60 \
-            -H "User-Agent: Mozilla/5.0 (compatible; BIR-review-monitor/1; +https://bir.badjoke-lab.com/)" \
-            -H "Accept: text/html,application/xhtml+xml" \
-            "https://defillama.com/hacks" -o "$output" && grep -q '__NEXT_DATA__' "$output"; then
-            echo "Collected DefiLlama public hacks page: $(wc -c < "$output") bytes"
+          if curl --fail --location --silent --show-error --retry 2 --retry-delay 2 --connect-timeout 10 --max-time 45 \
+            -H "User-Agent: BIR-review-monitor/1" -H "Accept: application/json" \
+            "https://api.llama.fi/hacks" -o "$raw" && \
+            RAW="$raw" OUT="$output" node -e '
+              const fs = require("fs");
+              const parsed = JSON.parse(fs.readFileSync(process.env.RAW, "utf8"));
+              if (!parsed || typeof parsed !== "object") process.exit(2);
+              const next = { props: { pageProps: { data: parsed } } };
+              fs.writeFileSync(process.env.OUT, `<script id="__NEXT_DATA__" type="application/json">${JSON.stringify(next)}</script>`);
+            '; then
+            rm -f "$raw"
+            echo "Collected legacy public DefiLlama hacks JSON and normalized it for the guarded parser: $(wc -c < "$output") bytes"
           else
-            rm -f "$output"
-            echo "::warning::DefiLlama public hacks page was unavailable or did not expose parseable page data; incident-feed adapter is skipped for this run."
+            rm -f "$raw" "$output"
+            echo "Legacy public hacks JSON unavailable; trying public page fallback."
+            if curl --fail --location --silent --show-error --retry 1 --retry-delay 2 --connect-timeout 10 --max-time 45 \
+              -H "User-Agent: Mozilla/5.0 (compatible; BIR-review-monitor/1; +https://bir.badjoke-lab.com/)" \
+              -H "Accept: text/html,application/xhtml+xml" \
+              "https://defillama.com/hacks" -o "$output" && grep -q '__NEXT_DATA__' "$output"; then
+              echo "Collected DefiLlama public hacks page fallback: $(wc -c < "$output") bytes"
+            else
+              rm -f "$output"
+              echo "::warning::DefiLlama hacks JSON and public-page fallback were both unavailable; incident-feed adapter is skipped for this run."
+            fi
           fi
 
       - name: Run guarded monitoring
