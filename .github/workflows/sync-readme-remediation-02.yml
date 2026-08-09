@@ -1,0 +1,42 @@
+name: Sync Remediation 02 README
+
+on:
+  push:
+    branches:
+      - agent/sync-readme-remediation-02
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-readme-remediation-02
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/sync-readme-remediation-02
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Synchronize README
+        run: node scripts/sync-readme-remediation-02.mjs
+      - name: Remove one-shot helpers and assert scope
+        run: |
+          rm .github/workflows/sync-readme-remediation-02.yml
+          rm scripts/sync-readme-remediation-02.mjs
+          git fetch origin main
+          actual="$({ git diff --name-only origin/main -- .; git ls-files --others --exclude-standard; } | sort -u)"
+          test "$actual" = "README.md"
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "docs: close Remediation 02 README checkpoint"
+          git push origin HEAD:agent/sync-readme-remediation-02
