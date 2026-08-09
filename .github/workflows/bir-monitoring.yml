@@ -121,6 +121,40 @@ jobs:
             fi
           fi
 
+      - name: Collect RSS status news feeds
+        if: steps.duplicate.outputs.skip != 'true'
+        shell: bash
+        run: |
+          mkdir -p .monitor-input/rss
+          bundle=".monitor-input/rss-status-news.json"
+          printf '[]\n' > "$bundle"
+          collect_feed() {
+            source_id="$1"
+            source_url="$2"
+            output="$3"
+            if curl --fail --location --silent --show-error --retry 2 --retry-delay 2 --connect-timeout 10 --max-time 45 \
+              -H "User-Agent: BIR-review-monitor/1" \
+              -H "Accept: application/rss+xml,application/atom+xml,application/xml,text/xml;q=0.9,*/*;q=0.5" \
+              "$source_url" -o "$output"; then
+              SOURCE_ID="$source_id" SOURCE_URL="$source_url" XML_FILE="$output" BUNDLE="$bundle" node - <<'NODE'
+          const fs = require("fs");
+          const bundle = JSON.parse(fs.readFileSync(process.env.BUNDLE, "utf8"));
+          bundle.push({
+            source_id: process.env.SOURCE_ID,
+            source_url: process.env.SOURCE_URL,
+            xml: fs.readFileSync(process.env.XML_FILE, "utf8")
+          });
+          fs.writeFileSync(process.env.BUNDLE, `${JSON.stringify(bundle)}\n`);
+          NODE
+              echo "Collected RSS feed ${source_id}: $(wc -c < "$output") bytes"
+            else
+              rm -f "$output"
+              echo "::warning::RSS feed ${source_id} unavailable; that source is skipped for this run."
+            fi
+          }
+          collect_feed "coindesk" "https://www.coindesk.com/arc/outboundfeeds/rss/" ".monitor-input/rss/coindesk.xml"
+          collect_feed "cointelegraph" "https://cointelegraph.com/rss" ".monitor-input/rss/cointelegraph.xml"
+
       - name: Run guarded monitoring
         if: steps.duplicate.outputs.skip != 'true'
         id: monitor
@@ -146,12 +180,18 @@ jobs:
               --defillama-hacks-candidate-limit 8
             )
           fi
+          if [ -s .monitor-input/rss-status-news.json ] && [ "$(node -e "const f=require('./.monitor-input/rss-status-news.json'); process.stdout.write(String(f.length))")" -gt 0 ]; then
+            monitor_args+=(
+              --rss-status-news-input .monitor-input/rss-status-news.json
+              --rss-status-news-candidate-limit 8
+            )
+          fi
           npm run monitoring:run -- \
             --issues .monitor-input/github-issues.json \
             --evidence-health \
             --evidence-probe-limit 12 \
-            --active-bridge-domains \
-            --active-bridge-domain-limit 8 \
+            --active-bridge-domain-health \
+            --active-bridge-domain-probe-limit 8 \
             "${monitor_args[@]}" \
             --date "$date_key" \
             --run-id "$run_id" \
