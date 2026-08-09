@@ -19,18 +19,7 @@ Events      183
 Evidence    287
 ```
 
-## Current phase
-
-- Phase 3 — full-corpus quality strengthening: active maintenance
-- Phase 4 — public contract stabilization: complete
-- Phase 5 — monitoring and candidate collection: active
-- v1 hardening: planned
-
-Archive Capture Batches 1 through 18 are complete and production-verified. Deferred Archive Retries 01–02 are production-verified; Retries 03–04 are complete review-only audits with no additional canonical archive mappings. The not-recently-retried fresh deferred pool is exhausted.
-
-Event Primary Remediation 01 and 02 are complete and production-verified. Remediation 02 raised evidence to 287 and reduced events without primary evidence from 14 to 11 without increasing unique archive-risk queues.
-
-Current quality boundary:
+Current quality boundary remains unchanged by Phase 5 monitoring:
 
 ```text
 Primary evidence                       206 / 287
@@ -45,6 +34,107 @@ Source-count mismatches                   0
 Canonical production content match      true
 ```
 
+## Current phase
+
+- Phase 3 — full-corpus quality strengthening: active maintenance
+- Phase 4 — public contract stabilization: complete
+- Phase 5 — monitoring and candidate collection: active
+- v1 hardening: planned
+
+## Phase 5 completed foundation
+
+```text
+PR #217  Review-gated monitoring foundation
+PR #223  Issue #171 initial monitoring state / dedupe seed
+PR #225  Review-branch fallback and duplicate-work guard
+PR #226  Bounded evidence-health watch
+PR #228  External bridge-universe adapter
+PR #229  Baseline-before-alert correction
+PR #230  External bridge-universe baseline state
+PR #231  News-discovery source boundary
+PR #232  Optional fail-closed GDELT adapter
+PR #233  DefiLlama hacks discovery adapter
+PR #234  Legacy public /hacks fallback
+PR #235  Exact incident-feed provenance
+PR #237  Live bridgeHack/source/targetType schema support
+PR #238  bridgeHack=true relevance gate
+PR #239  Accepted DefiLlama bridge-hack baseline state
+```
+
+## Live monitoring proofs
+
+### Evidence health
+
+Run `31301765004`, job `93215576787`:
+
+```text
+Live evidence URLs        287
+Selected                   12
+Independent probes         24
+Hard 404/410 findings       0
+Canonical diff              none
+```
+
+### External bridge universe
+
+Accepted baseline:
+
+```text
+DefiLlama bridge rows      98
+Exact canonical matches    11
+Unmatched baseline rows    87
+Baseline candidates         0
+```
+
+Repeated run `31303536548`, job `93220521310`:
+
+```text
+Parsed                     98
+Exact matches              11
+Unchanged                  87
+Candidates                  0
+State change            false
+Canonical diff           none
+```
+
+### Structured bridge-hack incident feed
+
+Actual successful input:
+
+```text
+URL          https://api.llama.fi/hacks
+Kind         legacy_public_json
+Raw SHA-256  e80fced996cf886ca0d2ca70c02dd04b869b628d63773d0b327f97b49aa2734a
+```
+
+Live schema probing established that the upstream bridge relevance field is `bridgeHack`. The accepted baseline in PR #239 contains only `bridgeHack=true` rows:
+
+```text
+Parsed hacks               613
+bridgeHack=true             61
+Bridge-relevant baseline    61
+Exact canonical matches     20
+Baseline candidates          0
+Canonical diff            none
+```
+
+An unchanged rerun of run `31305166038`, job `93224464784`, proved:
+
+```text
+Parsed hacks               613
+Bridge-relevant             61
+Unchanged                   61
+Candidates                   0
+State change             false
+External bridge unchanged   87
+Evidence findings            0
+Canonical diff            none
+```
+
+The structured incident feed is secondary discovery material only. `bridgeHack=true` plus exact canonical identity may produce `B / hold`; an unresolved `bridgeHack=true` row may produce `C / hold`. No monitoring source can publish canonical data automatically.
+
+GDELT remains an optional fail-closed adapter only. Its first Actions live request received HTTP 429, so scheduled GDELT collection is not the primary incident feed.
+
 ## Latest completed production checkpoint
 
 ```text
@@ -58,51 +148,12 @@ Content match         true
 HTML routes           72
 Redirects             74
 Publication attempt   3 / 20
-Build-input refresh   not required
 ```
-
-## Phase 5 monitoring checkpoint
-
-Phase 5 is now active rather than planned.
-
-Completed:
-
-```text
-PR #217  Review-gated monitoring foundation
-PR #223  First live review-only monitoring state for Issue #171
-PR #225  Pending review-branch fallback and duplicate-work guard
-PR #218  Cross-record bridge-integrity validator strengthening
-PR #226  Bounded evidence-health monitoring
-```
-
-The foundation has been proven live. Issue #171 was emitted once as `B / hold`, merged as review-only state in PR #223, and an unchanged rerun then produced `has_changes=false` with no new review branch.
-
-Evidence health was live-smoked after PR #226 in run `31301765004`, job `93215576787`:
-
-```text
-Live evidence URLs        287
-Selected this run          12
-Independent probes         24
-Hard 404/410 findings       0
-New issue candidates        0
-Canonical diff              none
-Unknown URL status          0
-Reference errors            0
-Job result                  success
-```
-
-No review branch or PR was created because there was no new or changed signal.
-
-The repository Actions setting still does not permit `GITHUB_TOKEN` to create pull requests. The workflow therefore keeps a validated `auto/monitoring/*` review branch and succeeds when that specific permission error occurs; the connected GitHub app/operator can open the PR. Canonical publication remains impossible from monitoring.
-
-Four non-intentional reviewed event-primary gaps remain deferred pending stronger first-party evidence: `bir_ev_000014`, `bir_ev_000143`, `bir_ev_000144`, and `bir_ev_000148`. Six Tier 1 gaps remain intentional secondary-only records, and `bir_ev_000150` remains intentionally non-primary direct security monitoring.
-
-The Boltz 2026 swap shutdown remains a monitoring signal in Issue #171, not a canonical incident.
 
 ## Next bounded work
 
-1. add the next Phase 5 candidate-discovery adapter using external bridge/protocol lists, review-only;
-2. add closure/pause/hack/regulatory news signals after candidate discovery is stable;
-3. continue validator/public-contract hardening where justified;
-4. keep deferred primary/archive gaps on research-triggered backlogs rather than weakening evidence rules;
+1. add canonical active-bridge official-domain/status monitoring with bounded rotating probes and review-only output;
+2. add pause/shutdown/regulatory signals only where reproducible sources can be monitored without weakening the incident boundary;
+3. add public-site/SEO monitoring incrementally;
+4. keep deferred primary/archive gaps research-triggered rather than metric-driven;
 5. continue v1 documentation, accessibility, performance, compatibility, and release hardening.
