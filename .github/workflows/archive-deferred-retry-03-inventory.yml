@@ -1,0 +1,67 @@
+name: Archive Deferred Retry 03 Inventory
+
+on:
+  push:
+    branches:
+      - agent/phase3-archive-deferred-retry-03-inventory
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build fresh reviewed-but-unarchived inventory
+        run: |
+          mkdir -p artifacts
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import path from 'node:path';
+
+          const auditDir='docs/audits';
+          const reviewFiles=fs.readdirSync(auditDir).filter(n=>/^phase3-archive-capture-batch\d+-review.*\.md$/.test(n)).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true}));
+          const mentions=new Map();
+          for(const name of reviewFiles){
+            const ids=[...new Set((fs.readFileSync(path.join(auditDir,name),'utf8').match(/bir_src_\d{6}/g))??[])];
+            for(const id of ids){if(!mentions.has(id))mentions.set(id,[]);mentions.get(id).push(name);}
+          }
+          const evidence=JSON.parse(fs.readFileSync('data/evidence.json','utf8'));
+          const bridges=JSON.parse(fs.readFileSync('data/bridges.json','utf8'));
+          const byId=new Map(evidence.map(x=>[x.id,x]));
+          const bridgeById=new Map(bridges.map(x=>[x.id,x]));
+          const terminalStatuses=new Set(['dead','deprecated','migrated']);
+          const riskyHosts=['x.com','twitter.com','medium.com','mirror.xyz','substack.com','docs.google.com','notion.site'];
+          const hostOf=u=>{try{return new URL(u).hostname.replace(/^www\./,'').toLowerCase();}catch{return'';}};
+          const canon=u=>{try{return new URL(u).toString();}catch{return u;}};
+          const risky=h=>riskyHosts.some(base=>h===base||h.endsWith(`.${base}`));
+          const hasArchive=x=>typeof x?.archived_url==='string'&&x.archived_url.trim().length>0;
+          const retryAuditNames=['phase3-archive-deferred-retry-01-review-2026-08-09.md','phase3-archive-deferred-retry-02-review-2026-08-09.md'];
+          const recentIds=new Set();
+          for(const name of retryAuditNames){
+            const text=fs.readFileSync(path.join(auditDir,name),'utf8');
+            for(const id of text.match(/bir_src_\d{6}/g)??[])recentIds.add(id);
+          }
+          const recentUrls=new Set([...recentIds].map(id=>byId.get(id)?.url).filter(Boolean).map(canon));
+          const records=[...mentions.keys()].map(id=>byId.get(id)).filter(Boolean).filter(x=>!hasArchive(x)).map(item=>{
+            const host=hostOf(item.url); const bridge=bridgeById.get(item.bridge_id); const urlKey=canon(item.url);
+            return {id:item.id,bridge_id:item.bridge_id??null,bridge_name:bridge?.canonical_name??bridge?.name??null,bridge_status:bridge?.status??null,terminal:terminalStatuses.has(bridge?.status),risky_host:risky(host),x_twitter:host==='x.com'||host==='twitter.com',recent_retry_url:recentUrls.has(urlKey),host,title:item.title??null,publisher:item.publisher??null,published_at:item.published_at??null,source_type:item.source_type??null,source_tier:item.source_tier??null,reliability:item.reliability??null,url_status:item.url_status??null,is_primary:item.is_primary??null,is_official_domain:item.is_official_domain??null,url:item.url,review_files:mentions.get(item.id)??[]};
+          });
+          const byUrl=new Map();
+          for(const r of records){const k=canon(r.url);if(!byUrl.has(k))byUrl.set(k,[]);byUrl.get(k).push(r);}
+          const groups=[...byUrl.entries()].map(([url,rs])=>({url,evidence_ids:rs.map(r=>r.id).sort(),terminal:rs.some(r=>r.terminal),risky_host:rs.some(r=>r.risky_host),x_twitter:rs.some(r=>r.x_twitter),recent_retry_url:rs.some(r=>r.recent_retry_url),primary:rs.some(r=>r.is_primary===true),official_domain:rs.some(r=>r.is_official_domain===true),published_at:rs.map(r=>r.published_at).filter(Boolean).sort().at(-1)??null,title:rs[0]?.title??null,publisher:rs[0]?.publisher??null,records:rs})).sort((a,b)=>Number(a.recent_retry_url)-Number(b.recent_retry_url)||Number(b.terminal)-Number(a.terminal)||Number(a.x_twitter)-Number(b.x_twitter)||Number(b.primary)-Number(a.primary)||Number(b.official_domain)-Number(a.official_domain)||Number(b.risky_host)-Number(a.risky_host)||String(a.published_at??'').localeCompare(String(b.published_at??''))||a.url.localeCompare(b.url));
+          const result={generated_at:new Date().toISOString(),review_files_scanned:reviewFiles,reviewed_evidence_ids:mentions.size,reviewed_but_unarchived_records:records.length,reviewed_but_unarchived_unique_urls:groups.length,recent_retry_unique_urls:groups.filter(g=>g.recent_retry_url).length,fresh_unique_urls:groups.filter(g=>!g.recent_retry_url).length,terminal_records:records.filter(r=>r.terminal).length,risky_host_records:records.filter(r=>r.risky_host).length,x_twitter_records:records.filter(r=>r.x_twitter).length,groups};
+          fs.writeFileSync('artifacts/archive-deferred-retry-03-inventory.json',JSON.stringify(result,null,2)+'\n');
+          console.log('RETRY03_INVENTORY_START'); console.log(JSON.stringify(result,null,2)); console.log('RETRY03_INVENTORY_END');
+          NODE
+      - uses: actions/upload-artifact@v4
+        with:
+          name: archive-deferred-retry-03-inventory
+          path: artifacts/archive-deferred-retry-03-inventory.json
+          if-no-files-found: error
