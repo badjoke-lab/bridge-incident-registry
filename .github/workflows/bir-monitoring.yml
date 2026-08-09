@@ -78,6 +78,8 @@ jobs:
           run_id="gh-${GITHUB_RUN_ID}"
           npm run monitoring:run -- \
             --issues .monitor-input/github-issues.json \
+            --evidence-health \
+            --evidence-probe-limit 12 \
             --date "$date_key" \
             --run-id "$run_id" \
             --observed-at "$observed_at" \
@@ -165,4 +167,4 @@ jobs:
 
       - name: No changed signals
         if: steps.duplicate.outputs.skip != 'true' && steps.monitor.outputs.has_changes != 'true'
-        run: echo "No new or changed review signals; no PR or review branch created."
+        run: echo "No new or changed signals; no PR or review branch created."
