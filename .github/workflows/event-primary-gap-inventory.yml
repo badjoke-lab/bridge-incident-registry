@@ -1,0 +1,66 @@
+name: Event Primary Gap Inventory
+
+on:
+  push:
+    branches:
+      - agent/phase3-event-primary-inventory
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Build inventory
+        run: |
+          mkdir -p artifacts
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const bridges=JSON.parse(fs.readFileSync('data/bridges.json','utf8'));
+          const incidents=JSON.parse(fs.readFileSync('data/incidents.json','utf8'));
+          const events=JSON.parse(fs.readFileSync('data/events.json','utf8'));
+          const evidence=JSON.parse(fs.readFileSync('data/evidence.json','utf8'));
+          const bridgeById=new Map(bridges.map(x=>[x.id,x]));
+          const incidentById=new Map(incidents.map(x=>[x.id,x]));
+          const byEvent=new Map(events.map(x=>[x.id,[]]));
+          const byIncident=new Map(incidents.map(x=>[x.id,[]]));
+          const byBridge=new Map(bridges.map(x=>[x.id,[]]));
+          for(const s of evidence){
+            byBridge.get(s.bridge_id)?.push(s);
+            if(s.incident_id) byIncident.get(s.incident_id)?.push(s);
+            if(s.event_id) byEvent.get(s.event_id)?.push(s);
+          }
+          const dateValue=s=>{const t=Date.parse(s??'');return Number.isFinite(t)?t:null;};
+          const days=(a,b)=>{const x=dateValue(a),y=dateValue(b);return x===null||y===null?null:Math.round(Math.abs(x-y)/86400000);};
+          const gaps=[];
+          for(const event of events){
+            const current=byEvent.get(event.id)??[];
+            if(current.some(s=>s.is_primary===true)) continue;
+            const relatedPool=[...(event.incident_id?(byIncident.get(event.incident_id)??[]):[]),...(byBridge.get(event.bridge_id)??[])];
+            const seen=new Set();
+            const relatedPrimary=[];
+            for(const s of relatedPool){
+              if(s.is_primary!==true||seen.has(s.id)) continue;
+              seen.add(s.id);
+              relatedPrimary.push({id:s.id,event_id:s.event_id??null,incident_id:s.incident_id??null,title:s.title,url:s.url,publisher:s.publisher,published_at:s.published_at,source_type:s.source_type,source_tier:s.source_tier,is_official_domain:s.is_official_domain,claim_scope:s.claim_scope,days_from_event:days(event.event_date??event.date,s.published_at)});
+            }
+            relatedPrimary.sort((a,b)=>(a.days_from_event??1e9)-(b.days_from_event??1e9)||a.id.localeCompare(b.id));
+            gaps.push({event,bridge:bridgeById.get(event.bridge_id)??null,incident:event.incident_id?(incidentById.get(event.incident_id)??null):null,current_evidence:current.map(s=>({id:s.id,title:s.title,url:s.url,publisher:s.publisher,published_at:s.published_at,source_type:s.source_type,source_tier:s.source_tier,is_primary:s.is_primary,is_official_domain:s.is_official_domain,claim_scope:s.claim_scope})),related_primary_evidence:relatedPrimary.slice(0,20)});
+          }
+          const result={generated_at:new Date().toISOString(),gap_count:gaps.length,gaps};
+          fs.writeFileSync('artifacts/event-primary-gap-inventory.json',JSON.stringify(result,null,2)+'\n');
+          console.log('EVENT_PRIMARY_INVENTORY_START');
+          console.log(JSON.stringify(result,null,2));
+          console.log('EVENT_PRIMARY_INVENTORY_END');
+          NODE
+      - uses: actions/upload-artifact@v4
+        with:
+          name: event-primary-gap-inventory
+          path: artifacts/event-primary-gap-inventory.json
+          if-no-files-found: error
