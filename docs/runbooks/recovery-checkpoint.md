@@ -25,30 +25,32 @@ PR #118–198  Archive Capture Batches 1–18 and production checkpoints
 PR #199      Deferred Archive Retry 01 reproducible review
 PR #200      Deferred Archive Retry 01 canonical migration
 PR #201      Deferred Archive Retry 01 production verification and checkpoint sync
+PR #202      Deferred Archive Retry 02 reproducible review
+PR #203      Deferred Archive Retry 02 canonical migration
+PR #204      Deferred Archive Retry 02 production verification and checkpoint sync
 ```
 
 ## Latest completed production checkpoint
 
 ```text
-Review PR                     #199
-Review merge                  53bcdc47f4269a00dc1c671f7428f75a8fe35c1e
-Canonical data PR             #200
-Canonical merge               934c85c49f7db71773721c5f4d64cc769f1361b0
-Production audit PR           #201
-Production verify run         31267226936
-Production verify job         93127231682
-Read-only production probe    31267391787
-Read-only probe job           93127650808
+Review PR                     #202
+Review merge                  e77695ddf0523533ad785a44e797480daa8d400a
+Canonical data PR             #203
+Canonical merge               46b6e19700d8553c75c4555549b9ca308cbc7292
+Production audit PR           #204
+Production verify run         31298305603
+Production verify job         93206834594
 Verified state                33 / 34 / 183 / 284
-Archived evidence             126 / 284
+Archived evidence             127 / 284
 Canonical content match       true
 HTML routes                   72
 Redirects                     74
-Generated at                  2026-08-08T16:33:32.318Z
+Generated at                  2026-08-09T06:10:37.053Z
+Publication attempt           1 / 20
 Build-input refresh           not required
 ```
 
-The read-only probe independently confirmed canonical-only live version metadata and the exact archive mappings for `bir_src_000037` and `bir_src_000068` after the successful full-content verifier.
+The production verifier independently confirmed the exact archive mapping for `bir_src_000166` and complete field-level equality across all four public canonical datasets on attempt 1.
 
 ## Permanent guards
 
@@ -69,11 +71,11 @@ Incidents without Tier 1              1
 Events without primary               16
 Events without Tier 1                 6
 Unreviewed event Tier 1 gaps           0
-Evidence with archived_url          126
+Evidence with archived_url          127
 Terminal unarchived unique URLs      15
 Terminal unarchived records          25
-Risky-host unarchived unique URLs    17
-Risky-host unarchived records        31
+Risky-host unarchived unique URLs    16
+Risky-host unarchived records        30
 X/Twitter records unarchived         29
 Unknown URL status                    0
 ```
@@ -82,14 +84,22 @@ Unknown URL status                    0
 
 Archive Capture Batch 18 exhausted the previously-unreviewed terminal/risky-host candidate set. Do not create an artificial untouched Batch 19.
 
-The permanent review-audit inventory identified 45 reviewed-but-unarchived evidence records across 32 unique URLs. Deferred Retry 01 selected ten higher-value unresolved URLs and newly recovered exactly two:
+The permanent review-audit inventory identified 45 reviewed-but-unarchived evidence records across 32 unique URLs. Deferred Retry 01 recovered exactly two:
 
 ```text
 bir_src_000037  Qubit — Our Compensation Plan 1
 bir_src_000068  Harmony — Summary of the Horizon Bridge Incident
 ```
 
-The remaining eight Retry 01 targets were re-reviewed and remained below the unchanged exact replay, temporal-fit, minimum-size, and two-run reproducibility requirements. Do not immediately recycle those same eight into Retry 02.
+Deferred Retry 02 reviewed a different ten-URL scope and recovered exactly one additional source:
+
+```text
+bir_src_000166  QuillAudits — Decoding Rubic Exchange Exploit
+```
+
+The accepted Retry 02 snapshot is `20221227131535`, HTTP 200 HTML, 155,612 bytes in both independent review passes. The other nine Retry 02 targets remained below the unchanged exact replay, temporal-fit, minimum-size, and two-run reproducibility requirements.
+
+Across Retries 01–02, the original deferred inventory is reduced by three evidence records on three unique URLs, leaving 42 reviewed-but-unarchived evidence records across 29 unique URLs before any newly introduced canonical sources. Retry 03 must reconstruct this pool from permanent audits and current canonical state before selecting a fresh scope. Do not immediately recycle the recent Retry 01 or Retry 02 failures.
 
 ## Cloudflare Pages boundary
 
@@ -105,7 +115,7 @@ Issue #171 remains open as a monitoring signal. Boltz is not canonical because t
 
 ## Next
 
-1. run Deferred Archive Retry 02 against a different high-value subset of remaining reviewed-unresolved sources;
+1. reconstruct the remaining reviewed-unresolved archive pool and run Deferred Archive Retry 03 against a fresh high-value subset;
 2. reduce remaining event primary gaps where justified;
 3. strengthen validators;
 4. begin review-gated monitoring and candidate collection without automatic publication;

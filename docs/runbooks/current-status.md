@@ -36,6 +36,7 @@ Nerve source boundary                reviewed — PR #117
 Archive capture Batches 1–18         production-verified — PRs #118–#198
 Previously-unreviewed archive queue  exhausted
 Deferred Archive Retry 01            production-verified — PRs #199–#201
+Deferred Archive Retry 02            production-verified — PRs #202–#204
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
 ```
@@ -64,7 +65,7 @@ Unknown URL status   0
 Primary evidence                         201 / 284
 Tier 1 evidence                          220 / 284
 Official-domain evidence                 131 / 284
-Evidence with archived_url               126 / 284
+Evidence with archived_url               127 / 284
 Bridges without primary evidence           0 / 33
 Bridges without tier 1 evidence            0 / 33
 Incidents without primary evidence         1 / 34
@@ -74,24 +75,30 @@ Events without tier 1 evidence              6 / 183
 Unreviewed event Tier 1 gaps                0
 Terminal unarchived unique URLs           15
 Terminal unarchived evidence records      25
-Risky-host unarchived unique URLs         17
-Risky-host unarchived evidence records    31
+Risky-host unarchived unique URLs         16
+Risky-host unarchived evidence records    30
 X/Twitter evidence records unarchived     29
 Unknown URL status                         0
 ```
 
 Archive Capture Batch 18 exhausted the previously-unreviewed archive candidate set. A repository-derived inventory then found 45 reviewed-but-unarchived evidence records across 32 unique URLs.
 
-Deferred Archive Retry 01 selected ten higher-value reviewed unresolved URLs, prioritising terminal and first-party/official material while excluding X/Twitter from the first retry pass. Two sources newly satisfied the unchanged two-pass exact-replay boundary:
+Deferred Archive Retry 01 selected ten higher-value reviewed unresolved URLs and newly recovered two sources:
 
 ```text
 bir_src_000037  Qubit — Our Compensation Plan 1
 bir_src_000068  Harmony — Summary of the Horizon Bridge Incident
 ```
 
-The other eight selected URLs remain deferred. No acceptance rule was weakened.
+Deferred Archive Retry 02 selected a different ten-URL scope. One source newly satisfied the unchanged two-pass exact-replay boundary:
 
-The canonical migration in PR #200 raised archived evidence from 124 to 126, reduced terminal unique URLs from 17 to 15, and reduced risky-host unique URLs from 18 to 17.
+```text
+bir_src_000166  QuillAudits — Decoding Rubic Exchange Exploit
+```
+
+The Retry 02 archive snapshot is `20221227131535`, HTTP 200 HTML, 155,612 bytes in both review passes. The other nine Retry 02 URLs remain deferred. No acceptance rule was weakened. Across Retries 01–02, three evidence records on three unique URLs have been removed from the original reviewed-unresolved inventory, leaving 42 reviewed-but-unarchived evidence records across 29 unique URLs before any newly introduced canonical sources.
+
+The canonical migration in PR #203 raised archived evidence from 126 to 127 and reduced risky-host unique URLs from 17 to 16. Terminal unique URLs remain 15.
 
 All event Tier 1 gaps are reviewed. The six remaining gaps are intentional secondary records:
 
@@ -111,29 +118,28 @@ Remaining incident-level gap:
 ## Latest completed production checkpoint
 
 ```text
-Review PR                     #199
-Review merge                  53bcdc47f4269a00dc1c671f7428f75a8fe35c1e
-Canonical data PR             #200
-Canonical merge               934c85c49f7db71773721c5f4d64cc769f1361b0
-Production audit PR           #201
-Production verify run         31267226936
-Production verify job         93127231682
-Read-only production probe    31267391787
-Read-only probe job           93127650808
+Review PR                     #202
+Review merge                  e77695ddf0523533ad785a44e797480daa8d400a
+Canonical data PR             #203
+Canonical merge               46b6e19700d8553c75c4555549b9ca308cbc7292
+Production audit PR           #204
+Production verify run         31298305603
+Production verify job         93206834594
 Verified state                33 / 34 / 183 / 284
-Archived evidence             126 / 284
+Archived evidence             127 / 284
 Canonical content match       true
 Verified HTML routes          72
 Verified redirects            74
-Generated at                  2026-08-08T16:33:32.318Z
+Generated at                  2026-08-09T06:10:37.053Z
+Publication attempt           1 / 20
 Build-input refresh           not required
 ```
 
-The read-only probe independently confirmed live canonical-only version metadata and the exact archive URLs for both Deferred Retry 01 records.
+The production verifier confirmed the exact `bir_src_000166.archived_url` mapping and complete field-level equality across all four public canonical datasets on the first attempt.
 
 ## Next
 
-1. run Deferred Archive Retry 02 against a different high-value subset of the remaining reviewed-unresolved URLs; do not immediately recycle the eight Retry 01 failures;
+1. reconstruct the remaining reviewed-unresolved pool from permanent review audits and current canonical data, then run Deferred Archive Retry 03 against a fresh high-value subset without immediately recycling the recent Retry 01 or Retry 02 failures;
 2. reduce the remaining 16 events without primary evidence where justified;
 3. strengthen remaining validators;
 4. begin review-gated monitoring and candidate collection without automatic canonical publication;

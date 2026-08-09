@@ -26,24 +26,23 @@ Evidence    284
 - Phase 5 — monitoring and candidate collection: planned
 - v1 hardening: planned
 
-Archive Capture Batches 1 through 18 are complete and production-verified, and the previously-unreviewed archive queue is exhausted. Deferred Archive Retry 01 is also complete and production-verified. Evidence with `archived_url` is now 126 / 284. The remaining unresolved archive queues are 17 risky-host unique URLs and 15 terminal unique URLs. Source-count mismatches and unknown URL statuses remain at zero, and complete canonical-derived public-content equality is enforced.
+Archive Capture Batches 1 through 18 are complete and production-verified, and the previously-unreviewed archive queue is exhausted. Deferred Archive Retries 01 and 02 are also complete and production-verified. Evidence with `archived_url` is now 127 / 284. The remaining unresolved archive queues are 16 risky-host unique URLs and 15 terminal unique URLs. Source-count mismatches and unknown URL statuses remain at zero, and complete canonical-derived public-content equality is enforced.
 
-Deferred Retry 01 recovered two previously-reviewed unresolved sources:
+Deferred Retry 02 recovered one additional previously-reviewed unresolved source:
 
 ```text
-Review PR             #199
-Canonical data PR     #200
-Canonical merge       934c85c49f7db71773721c5f4d64cc769f1361b0
-Production audit PR   #201
-Production run        31267226936 / 93127231682
-Read-only live probe  31267391787 / 93127650808
-Generated at          2026-08-08T16:33:32.318Z
+Review PR             #202
+Canonical data PR     #203
+Canonical merge       46b6e19700d8553c75c4555549b9ca308cbc7292
+Production audit PR   #204
+Production run        31298305603 / 93206834594
+Generated at          2026-08-09T06:10:37.053Z
 Content match         true
 HTML routes           72
 Redirects             74
 ```
 
-The read-only probe independently confirmed the live `version.json` and exact archive fields for `bir_src_000037` and `bir_src_000068`. No build-input refresh was required.
+The production verifier reached complete four-dataset field-level equality on attempt 1 and confirmed the exact archive mapping for `bir_src_000166`. No build-input refresh or deployment retrigger was required.
 
 The public UI/support follow-up is current through PR #187: incident discovery, filters, pagination, detail TOCs, project navigation, Support, and the shared BadJoke-Lab support-wallet presentation are merged.
 
@@ -51,7 +50,7 @@ The Boltz 2026 swap shutdown remains a monitoring signal in Issue #171. It is no
 
 ## Next bounded work
 
-1. run Deferred Archive Retry 02 against a different high-value subset of the remaining reviewed-unresolved sources; do not immediately recycle the eight sources that failed Retry 01;
+1. reconstruct the remaining reviewed-unresolved archive pool after Retries 01–02 and run Deferred Archive Retry 03 against a fresh high-value subset; do not immediately recycle the recent Retry 01 or Retry 02 failures;
 2. reduce the remaining 16 events without primary evidence where justified;
 3. strengthen validators;
 4. begin review-gated monitoring and candidate collection without automatic canonical publication;
