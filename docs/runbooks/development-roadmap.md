@@ -31,6 +31,10 @@ Phase 3  Full-corpus quality strengthening         active
          Previously-unreviewed archive queue       exhausted
          Deferred Archive Retry 01                 production-verified — PRs #199–#201
          Deferred Archive Retry 02                 production-verified — PRs #202–#204
+         Deferred Archive Retry 03                 review complete — PR #205, approved 0
+         Deferred Archive Retry 04                 review complete — PR #206, approved 0
+         Fresh deferred retry pool                 exhausted
+         Event Primary Remediation 01              production-verified — PRs #207–#209
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
@@ -43,24 +47,23 @@ The public UI/support follow-up is current through PR #187. Representative scree
 ## Latest completed production checkpoint
 
 ```text
-Review PR                     #202
-Review merge                  e77695ddf0523533ad785a44e797480daa8d400a
-Canonical data PR             #203
-Canonical merge               46b6e19700d8553c75c4555549b9ca308cbc7292
-Production audit PR           #204
-Production verify run         31298305603
-Production verify job         93206834594
+Review PR                     #207
+Canonical data PR             #208
+Canonical merge               1638b47eb3c2e9066d0323d6d5a4abe8aa85cfb2
+Production audit PR           #209
+Production verify run         31299468964
+Production verify job         93209808769
 Verified state                33 / 34 / 183 / 284
-Archived evidence             127 / 284
+Events without primary        14 / 183
 Canonical content match       true
 Verified HTML routes          72
 Verified redirects            74
-Generated at                  2026-08-09T06:10:37.053Z
-Publication attempt           1 / 20
+Generated at                  2026-08-09T06:42:13.747Z
+Publication attempt           4 / 20
 Build-input refresh           not required
 ```
 
-The production verifier confirmed the exact `bir_src_000166.archived_url` mapping and complete field-level equality across all four public canonical datasets on attempt 1.
+Attempts 1–3 correctly rejected stale same-count evidence at `bir_src_000003`. Attempt 4 observed the new generated build and passed complete canonical-derived field-level equality.
 
 ## Current quality state
 
@@ -69,7 +72,7 @@ Incident source-count mismatches       0
 Event source-count mismatches          0
 Incidents without primary              1
 Incidents without Tier 1               1
-Events without primary                16
+Events without primary                14
 Events without Tier 1                  6
 Unreviewed event Tier 1 gaps            0
 Evidence with archived_url           127
@@ -81,18 +84,16 @@ X/Twitter records unarchived          29
 Unknown URL status                     0
 ```
 
-Archive Capture Batch 18 exhausted the previously-unreviewed archive queue. The deferred inventory reconstructed 45 reviewed-but-unarchived evidence records across 32 unique URLs from permanent review audits and current canonical data.
+Archive Capture Batch 18 exhausted the previously-unreviewed archive queue. Deferred Retries 01–02 recovered three reviewed-unresolved source URLs. Deferred Retries 03–04 then reviewed all twelve fresh URLs outside the recent Retry 01/02 scopes and approved none. The remaining reviewed-unarchived pool consists only of URLs already explicitly retried under the unchanged acceptance boundary.
 
-Deferred Archive Retry 01 recovered Qubit's compensation plan and Harmony's Horizon Bridge incident summary. Deferred Archive Retry 02 then reviewed a different ten-URL scope and recovered the QuillAudits Rubic exploit analysis (`bir_src_000166`) at the exact `20221227131535` snapshot. The other nine Retry 02 targets remained below the unchanged exact-replay, temporal-fit, minimum-size, and two-run reproducibility boundary.
+There is no untouched archive-review Batch 19 and no fresh Deferred Retry 05 scope. Future preservation work must wait for materially changed conditions, deliberately selected re-review, or newly introduced canonical source URLs.
 
-Across Retries 01–02, three evidence records on three unique URLs have been resolved from the original deferred inventory, leaving 42 reviewed-but-unarchived evidence records across 29 unique URLs before any newly introduced canonical sources.
-
-There is no untouched archive-review Batch 19. Future preservation work must use explicit deferred-retry scopes or newly introduced canonical source URLs.
+Event Primary Remediation 01 reviewed the nine non-intentional event primary gaps. Exactly two bounded remediations were approved and published: the corrected OFAC Ronin/Lazarus attribution source and the FBI Horizon attribution source. Events without primary evidence fell from 16 to 14. The other seven reviewed candidates remain deferred pending stronger source-content support.
 
 ## Immediate source-quality targets
 
-1. reconstruct the current reviewed-unresolved pool and run Deferred Archive Retry 03 against a fresh high-value subset; do not immediately recycle the recent Retry 01 or Retry 02 failures;
-2. reduce the remaining 16 events without primary evidence where appropriate;
+1. review the remaining 14 events without primary evidence under the same claim-relative primary-source standard;
+2. remediate only defensible gaps and keep intentional secondary-only boundaries explicit;
 3. strengthen remaining validators;
 4. begin review-gated monitoring and candidate collection with no automatic canonical publication;
 5. complete v1 documentation, accessibility, performance, compatibility, and release checks.
@@ -107,16 +108,16 @@ Maximum wait   5 minutes per job
 
 Publication convergence requires matching record counts, canonical-only markers, complete transformed JSON equality, exact record order, and all route, sitemap, metadata, redirect, content-type, and cache assertions.
 
-Batch 18 proved that a newer `generated_at` alone is not proof of canonical publication. Field-level equality remained authoritative. Deferred Retries 01 and 02 required no refresh; Retry 02 converged on the first verifier attempt.
+Event Primary Remediation 01 again demonstrated that same-count production can still be stale: attempts 1–3 failed on field-level evidence mismatch and attempt 4 passed only after the generated content converged. Counts alone are never publication proof.
 
 ## Remaining roadmap
 
-1. retry selected deferred archive candidates under unchanged evidence-preservation rules;
-2. remediate justified primary-evidence gaps;
-3. strengthen remaining validators;
-4. maintain public-contract and UI compatibility checks;
-5. implement monitoring with no automatic publication;
-6. complete v1 documentation, accessibility, performance, and release checks.
+1. continue justified event primary-evidence remediation;
+2. strengthen remaining validators;
+3. maintain public-contract and UI compatibility checks;
+4. implement monitoring with no automatic publication;
+5. complete v1 documentation, accessibility, performance, and release checks;
+6. revisit archive preservation only under a new explicit reviewed scope.
 
 ## Permanent rules
 
@@ -143,3 +144,5 @@ Batch 18 proved that a newer `generated_at` alone is not proof of canonical publ
 21. Cloudflare Pages preview deployment remains `none`; intentional preview support requires a separately reviewed configuration change.
 22. Do not create an artificial untouched archive batch after the reviewer has exhausted its previously-unreviewed candidate set.
 23. Deferred retries must use explicit reviewed-unresolved targets and preserve the same acceptance boundary.
+24. Do not immediately recycle deferred archive failures once the fresh retry pool is exhausted; wait for changed conditions, new canonical source URLs, or a separately justified reviewed retry scope.
+25. Primary-evidence remediation must be claim-relative; do not upgrade secondary or research sources merely to reduce a coverage metric.
