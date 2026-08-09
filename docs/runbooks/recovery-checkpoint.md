@@ -23,13 +23,16 @@ PR #108–116  Event Tier 1 remediation and production verification
 PR #117      Nerve Bridge source boundary
 PR #118–198  Archive Capture Batches 1–18 and production checkpoints
 PR #199–204  Deferred Archive Retries 01–02 and production checkpoints
-PR #205      Deferred Archive Retry 03 review — approved 0
-PR #206      Deferred Archive Retry 04 review — approved 0; fresh pool exhausted
+PR #205–206  Deferred Archive Retries 03–04 review, no approvals
 PR #207–209  Event Primary Remediation 01 and production verification
 PR #211      Event Primary Review 02 — three approved
 PR #212      Event Tier 1 controlled-failure fixture strengthening
-PR #213      Event Primary Remediation 02 canonical migration
-PR #214      Event Primary Remediation 02 production verification
+PR #213–214  Event Primary Remediation 02 and production verification
+PR #217      Review-gated Phase 5 monitoring foundation
+PR #218      Cross-record bridge-integrity validation
+PR #223      Initial live monitoring state / Issue #171 dedupe seed
+PR #225      Pending monitoring review-branch fallback and duplicate-work guard
+PR #226      Bounded evidence-health watch
 ```
 
 ## Latest completed production checkpoint
@@ -54,8 +57,6 @@ Publication attempt           3 / 20
 Build-input refresh           not required
 ```
 
-Attempts 1–2 correctly rejected the prior 284-evidence production build. Attempt 3 observed the 287-evidence build and complete field-level equality across all four public canonical datasets.
-
 ## Permanent guards
 
 ```text
@@ -63,6 +64,7 @@ npm run audit:source-count
 npm run audit:source-count:test
 npm run audit:source-quality
 npm run audit:source-quality:test
+npm run monitoring:test
 npm run production:content:test
 ```
 
@@ -84,23 +86,11 @@ X/Twitter records unarchived         29
 Unknown URL status                    0
 ```
 
-## Archive preservation boundary
+## Archive and primary-evidence boundaries
 
-Archive Capture Batch 18 exhausted the previously-unreviewed terminal/risky-host candidate set. Deferred Retries 03–04 exhausted the fresh reviewed-unresolved retry scope. The remaining reviewed-unarchived pool consists only of URLs already explicitly retried under the established exact-replay, temporal-fit, minimum-size, and two-run reproducibility boundary. Do not immediately recycle those failures.
+Archive Capture Batch 18 and Deferred Retries 03–04 exhausted the fresh archive-review scope under the existing acceptance boundary. Do not immediately recycle failures.
 
-## Event primary-evidence boundary
-
-Event Primary Remediation 01 reduced event primary gaps from 16 to 14. Event Primary Review 02 approved three event-scoped copies of already-canonical first-party evidence:
-
-```text
-bir_ev_000013  Poly Network
-bir_ev_000124  Transit Finance
-bir_ev_000125  Transit Finance
-```
-
-PR #213 applied those additions without increasing unique archive-risk queues, and PR #214 verified their live publication. The ceiling is now `events_without_primary = 11`.
-
-Four non-intentional reviewed candidates remain deferred pending stronger first-party material:
+Event-primary remediation has reached a reviewed boundary. Four non-intentional candidates remain deferred pending stronger first-party evidence:
 
 ```text
 bir_ev_000014
@@ -109,7 +99,40 @@ bir_ev_000144
 bir_ev_000148
 ```
 
-Six Tier 1 gaps are intentional secondary-only records, and `bir_ev_000150` remains intentionally non-primary because its PeckShield evidence is a direct security-monitoring observation rather than an operator statement. These are reviewed boundaries, not unresolved validator defects.
+Six Tier 1 gaps are intentional secondary-only records, and `bir_ev_000150` remains intentionally non-primary direct security monitoring. Further remediation is research-triggered, not metric-driven.
+
+## Phase 5 monitoring boundary
+
+Phase 5 is active.
+
+The monitoring system:
+
+- fingerprints all four canonical JSON files before and after execution;
+- fails on canonical mutation, unknown URL status, or broken canonical references;
+- writes only review artifacts under `data-staging/monitoring/**` and `data-staging/watchlists/auto/**`;
+- dedupes unchanged signals by stable fingerprints;
+- refuses duplicate scheduled work when an open monitoring PR or unmerged `auto/monitoring/*` review branch already exists;
+- never publishes canonical data.
+
+Live proofs:
+
+```text
+Issue-monitor run              31301301277
+Issue #171 initial candidate   Boltz — B / hold
+State PR                       #223
+Unchanged rerun                has_changes=false, no new branch
+Evidence-health run            31301765004 / 93215576787
+Live evidence URLs             287
+Selected URLs                   12
+Two-pass probes                 24
+Hard 404/410 findings            0
+Canonical diff                  none
+Job result                      success
+```
+
+Evidence health only emits a hard degradation finding after two independent 404/410 results. `401/403/405/429`, 5xx, timeout, and mixed probes are treated as blocking/transient/insufficient rather than dead-link proof. A finding remains review-only.
+
+Repository Actions settings currently disallow `GITHUB_TOKEN` pull-request creation. The workflow handles only that known permission error non-fatally after pushing a validated review branch. The pending branch itself blocks duplicate scheduled work. A connected GitHub app/operator can open the PR. Other PR-creation errors remain fatal.
 
 ## Cloudflare Pages boundary
 
@@ -125,8 +148,8 @@ Issue #171 remains open as a monitoring signal. Boltz is not canonical because t
 
 ## Next
 
-1. strengthen validators where remaining corpus-shape assumptions can be made explicit;
-2. begin Phase 5 review-gated monitoring and candidate collection without automatic publication;
-3. preserve the four deferred event-primary gaps as research backlog items until stronger first-party sources appear;
+1. implement external bridge/protocol candidate discovery as the next review-only Phase 5 adapter;
+2. add closure/pause/hack/regulatory news signals after candidate discovery stabilizes;
+3. add active bridge/domain and site/SEO monitoring incrementally;
 4. continue v1 hardening;
-5. revisit deferred archive failures only after conditions change or new canonical source URLs appear.
+5. revisit deferred source/archive gaps only when new evidence or changed conditions justify it.
