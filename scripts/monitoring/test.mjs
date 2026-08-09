@@ -4,6 +4,8 @@ import os from "node:os";
 import path from "node:path";
 import process from "node:process";
 import { spawnSync } from "node:child_process";
+import { applySignal } from "./core/state.mjs";
+import { watchEvidenceHealth } from "./monitors/evidence-health-watch.mjs";
 
 const root = process.cwd();
 const runner = path.join(root, "scripts/monitoring/run.mjs");
@@ -38,6 +40,45 @@ function run(observedAt, issueBody) {
   return JSON.parse(fs.readFileSync(path.join(fixtureRoot, ".monitor-output/result.json"), "utf8"));
 }
 
+async function testEvidenceHealth() {
+  const evidence = [{
+    id: "bir_src_fixture_001",
+    bridge_id: "bir_bridge_000001",
+    incident_id: "bir_inc_000001",
+    event_id: "bir_ev_000001",
+    title: "Fixture primary source",
+    publisher: "Fixture Protocol",
+    url: "https://example.invalid/source",
+    url_status: "live",
+    source_tier: "tier_1",
+    is_primary: true,
+    archived_url: "https://web.archive.org/web/20260101000000/https://example.invalid/source"
+  }];
+  const state = { version: 1, signals: {} };
+  const hard404 = async () => ({ ok: false, status: 404, final_url: evidence[0].url, error: null });
+  const healthy = async () => ({ ok: true, status: 200, final_url: evidence[0].url, error: null });
+  const blocked = async () => ({ ok: false, status: 403, final_url: evidence[0].url, error: null });
+
+  const first = await watchEvidenceHealth({ evidence, state, applySignal, observedAt: "2026-08-09T07:30:00.000Z", limit: 10, probe: hard404 });
+  if (first.findings.length !== 1 || first.findings[0].category !== "evidence_hard_failure" || first.findings[0].severity !== "high") {
+    throw new Error(`two-pass 404 should emit one high finding: ${JSON.stringify(first)}`);
+  }
+
+  const repeated = await watchEvidenceHealth({ evidence, state, applySignal, observedAt: "2026-08-09T07:31:00.000Z", limit: 10, probe: hard404 });
+  if (repeated.findings.length !== 0) throw new Error(`unchanged 404 failure should be deduped: ${JSON.stringify(repeated)}`);
+
+  const recovered = await watchEvidenceHealth({ evidence, state, applySignal, observedAt: "2026-08-09T07:32:00.000Z", limit: 10, probe: healthy });
+  if (recovered.findings.length !== 1 || recovered.findings[0].category !== "evidence_recovered") {
+    throw new Error(`healthy two-pass probe should rearm previous failure: ${JSON.stringify(recovered)}`);
+  }
+
+  const blockedState = { version: 1, signals: {} };
+  const blockedResult = await watchEvidenceHealth({ evidence, state: blockedState, applySignal, observedAt: "2026-08-09T07:33:00.000Z", limit: 10, probe: blocked });
+  if (blockedResult.findings.length !== 0 || Object.keys(blockedState.signals).length !== 0) {
+    throw new Error(`403 bot/access blocking must not become a dead-link signal: ${JSON.stringify(blockedResult)}`);
+  }
+}
+
 try {
   fs.cpSync(path.join(root, "data"), path.join(fixtureRoot, "data"), { recursive: true });
   const canonicalFiles = ["bridges.json", "incidents.json", "events.json", "evidence.json"];
@@ -58,13 +99,15 @@ try {
     throw new Error(`changed signal should re-emit: ${JSON.stringify(third)}`);
   }
 
+  await testEvidenceHealth();
+
   const after = Object.fromEntries(canonicalFiles.map((name) => [name, sha(path.join(fixtureRoot, "data", name))]));
   if (JSON.stringify(before) !== JSON.stringify(after)) throw new Error("monitoring changed canonical fixture data");
 
   const state = JSON.parse(fs.readFileSync(path.join(fixtureRoot, "data-staging/monitoring/state.json"), "utf8"));
   if (!state.signals["github-issue:171"]) throw new Error("monitoring state did not retain issue signal");
 
-  console.log("Monitoring foundation controlled tests passed (new signal, dedupe, changed signal, canonical guard).");
+  console.log("Monitoring controlled tests passed (issue dedupe, evidence failure/recovery, access-block suppression, canonical guard).");
 } finally {
   fs.rmSync(fixtureRoot, { recursive: true, force: true });
 }
