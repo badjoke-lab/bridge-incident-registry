@@ -144,6 +144,9 @@ for (const event of events) {
     warn("event_source_count", `${event.id}: stored ${event.source_count}, directly linked ${linkedEvidence.length}`);
   }
   const incident = event.incident_id ? incidentsById.get(event.incident_id) : null;
+  if (incident && event.bridge_id !== incident.bridge_id) {
+    errors.push(`${event.id}: event bridge mismatch; incident ${incident.id} belongs to ${incident.bridge_id}, event has ${event.bridge_id}`);
+  }
   if (event.event_type === "reimbursement_completed" && incident?.reimbursement_status !== "completed") {
     errors.push(`${event.id}: reimbursement_completed requires incident reimbursement_status completed`);
   }
@@ -164,9 +167,18 @@ for (const source of evidence) {
   if (["dead", "archived"].includes(source.url_status) && !source.archived_url) {
     errors.push(`${source.id}: ${source.url_status} source requires archived_url`);
   }
+  if (source.incident_id) {
+    const incident = incidentsById.get(source.incident_id);
+    if (incident && source.bridge_id !== incident.bridge_id) {
+      errors.push(`${source.id}: incident evidence bridge mismatch; incident ${incident.id} belongs to ${incident.bridge_id}, evidence has ${source.bridge_id}`);
+    }
+  }
   if (source.event_id) {
     const event = eventsById.get(source.event_id);
     if (event) {
+      if (source.bridge_id !== event.bridge_id) {
+        errors.push(`${source.id}: event evidence bridge mismatch; event ${event.id} belongs to ${event.bridge_id}, evidence has ${source.bridge_id}`);
+      }
       const expectedIncidentId = event.incident_id ?? null;
       const actualIncidentId = source.incident_id ?? null;
       if (expectedIncidentId !== actualIncidentId) {
