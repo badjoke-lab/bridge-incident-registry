@@ -15,7 +15,8 @@ The foundation currently covers:
 - fingerprint-based suppression of unchanged signals;
 - review-only JSON, watchlist, and Markdown outputs;
 - weekly or manual GitHub Actions execution;
-- automatic PR creation only when a signal is new or materially changed.
+- automatic review-PR creation when repository Actions settings permit it;
+- a pending review-branch fallback when GitHub Actions is not permitted to create pull requests.
 
 External news, regulatory, incident-feed, domain-health, and evidence-link adapters are later Phase 5 modules. They must use the same review-only boundary.
 
@@ -39,7 +40,7 @@ data-staging/monitoring/**
 data-staging/watchlists/auto/**
 ```
 
-A monitoring PR is not a canonical-data PR. Any candidate that merits BIR inclusion must be investigated and applied on a separate reviewed branch.
+A monitoring PR or pending monitoring review branch is not a canonical-data change. Any candidate that merits BIR inclusion must be investigated and applied on a separate reviewed branch.
 
 ## Dedupe behavior
 
@@ -57,7 +58,14 @@ For GitHub issues the key is:
 github-issue:<number>
 ```
 
-This prevents a standing monitoring issue such as Issue #171 from generating the same PR every week while still allowing a changed evidence boundary to re-enter review.
+This prevents a standing monitoring issue such as Issue #171 from generating the same review work every week while still allowing a changed evidence boundary to re-enter review.
+
+Scheduled runs also refuse to create duplicate work when either of the following already exists:
+
+- an open `Auto monitoring report:` pull request;
+- an unmerged `auto/monitoring/*` review branch.
+
+Manual dispatch with `force=true` can explicitly override that guard.
 
 ## Current GitHub issue adapter
 
@@ -79,7 +87,7 @@ New/changed issue signals enter the candidate watchlist as class `B` / `hold`. T
 Execution order:
 
 ```text
-open-monitoring-PR guard
+open-PR / pending-review-branch guard
 ↓
 collect open GitHub review issues
 ↓
@@ -95,12 +103,35 @@ allowed-path scope guard
 ↓
 auto/monitoring/<date>-<run> branch
 ↓
-Auto monitoring report PR
+try Auto monitoring report PR
+↓
+if Actions PR creation is disabled: retain the validated review branch and finish successfully
 ```
 
-If there are no new or changed signals, no repository diff and no PR are created.
+If there are no new or changed signals, no repository diff, review branch, or PR is created.
 
-If another auto-monitoring PR is already open, scheduled runs do not create a duplicate. Manual dispatch can explicitly override that guard.
+If GitHub Actions is allowed to create pull requests, the workflow opens the review PR automatically. If repository settings disallow Actions-created PRs, the workflow treats only that known permission error as a non-fatal platform constraint, retains the already-validated `auto/monitoring/*` branch, records it in the Actions step summary, and exits successfully. Other PR-creation errors still fail the workflow.
+
+The retained branch can be converted into a review PR by a repository operator or connected GitHub app. Until it is merged, the duplicate-work guard prevents scheduled runs from creating another monitoring branch for the same pending review cycle.
+
+## First live foundation proof
+
+Run `31301301277` demonstrated the full review-only path for Issue #171:
+
+```text
+Signal candidates        1
+Candidate                Boltz — B / hold
+Canonical counts         33 / 34 / 183 / 287
+Unknown URL status       0
+Reference errors         0
+Canonical diff           none
+Allowed-path guard       passed
+Review branch            auto/monitoring/20260809-gh-31301301277
+Review PR                #223
+Canonical publication    none
+```
+
+PR #223 persisted only monitoring/watchlist state. The run exposed the repository-level GitHub Actions PR-creation restriction after the branch had already passed all safety guards; the review branch was subsequently surfaced and merged through the connected GitHub path.
 
 ## Tests
 
