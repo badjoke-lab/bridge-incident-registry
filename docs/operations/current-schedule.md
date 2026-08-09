@@ -26,7 +26,8 @@ After every merged pull request, report:
   - Archive Capture Batches 1–18: complete and production-verified
   - untouched archive-review queue: exhausted
   - Deferred Archive Retry 01: complete and production-verified
-  - next: Deferred Archive Retry 02, justified primary-evidence remediation, then validator strengthening
+  - Deferred Archive Retry 02: complete and production-verified
+  - next: reconstruct remaining reviewed-unresolved pool, Deferred Archive Retry 03, justified primary-evidence remediation, then validator strengthening
 - Phase 4 — public contract stabilization: complete
 - Phase 5 — monitoring and candidate collection: planned
 - Release — v1 documentation, accessibility, performance, compatibility, and release checks: planned
@@ -43,9 +44,9 @@ Evidence    284
 ## Current quality boundary
 
 ```text
-Evidence with archived_url           126
+Evidence with archived_url           127
 Terminal unarchived unique URLs       15
-Risky-host unarchived unique URLs     17
+Risky-host unarchived unique URLs     16
 Events without primary                16
 Events without Tier 1                  6
 Unknown URL status                     0
@@ -55,19 +56,22 @@ Canonical production content match  true
 ## Latest production checkpoint
 
 ```text
-Review PR             #199
-Canonical data PR     #200
-Canonical merge       934c85c49f7db71773721c5f4d64cc769f1361b0
-Production audit PR   #201
-Production run        31267226936 / 93127231682
-Read-only live probe  31267391787 / 93127650808
-Generated at          2026-08-08T16:33:32.318Z
+Review PR             #202
+Canonical data PR     #203
+Canonical merge       46b6e19700d8553c75c4555549b9ca308cbc7292
+Production audit PR   #204
+Production run        31298305603 / 93206834594
+Generated at          2026-08-09T06:10:37.053Z
+Content match         true
+HTML routes           72
+Redirects             74
+Build-input refresh   not required
 ```
 
 ## Immediate execution order
 
-1. run Deferred Archive Retry 02 against a different high-value subset of the remaining reviewed-unresolved sources;
-2. do not immediately recycle the eight sources that failed Retry 01;
+1. reconstruct the remaining reviewed-unresolved archive pool after Deferred Retries 01–02;
+2. select a fresh high-value Deferred Retry 03 scope without immediately recycling the recent Retry 01 or Retry 02 failures;
 3. remediate event primary-evidence gaps where source hierarchy can be improved safely;
 4. strengthen validators;
 5. implement review-gated monitoring and candidate collection;
