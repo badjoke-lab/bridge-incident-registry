@@ -1,6 +1,11 @@
 name: BIR Monitoring
 
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/bir-monitoring.yml
   schedule:
     - cron: "17 3 * * 1"
   workflow_dispatch:
