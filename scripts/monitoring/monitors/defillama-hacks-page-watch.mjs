@@ -167,7 +167,9 @@ function exactCanonicalMatch(row, identityIndex) {
 }
 
 function relevantRows(rows, identityIndex) {
-  return rows.map((row) => ({ row, match: exactCanonicalMatch(row, identityIndex) })).filter(({ row, match }) => row.bridge || match);
+  return rows
+    .filter((row) => row.bridge)
+    .map((row) => ({ row, match: exactCanonicalMatch(row, identityIndex) }));
 }
 
 function candidateFor(row, match, sourceUrl) {
@@ -194,9 +196,9 @@ function candidateFor(row, match, sourceUrl) {
       likely_status: "unknown",
       likely_incident_type: "exploit",
       record_shape: "hold",
-      headline: `${row.name} appears as a new or materially changed DefiLlama hack record`,
-      bir_relevance: "The DefiLlama hacks discovery input contains a new or changed row that exactly matches a canonical BIR bridge identity. This is discovery material only and requires claim-relative primary-source review.",
-      duplicate_check: { matched_existing_record: true, bridge_id: match.bridge_id, method: "exact hack-name identity" },
+      headline: `${row.name} appears as a new or materially changed DefiLlama bridge-hack record`,
+      bir_relevance: "The DefiLlama hacks discovery input marks this row as bridgeHack=true and the name exactly matches a canonical BIR bridge identity. This is discovery material only and requires claim-relative primary-source review.",
+      duplicate_check: { matched_existing_record: true, bridge_id: match.bridge_id, method: "bridgeHack=true plus exact hack-name identity" },
       incident_feed: details,
       source_urls: sourceUrls,
       source_quality: "secondary_incident_database",
@@ -214,8 +216,8 @@ function candidateFor(row, match, sourceUrl) {
     likely_incident_type: "exploit",
     record_shape: "hold",
     headline: `${row.name} appears as a new or materially changed bridge hack record`,
-    bir_relevance: "The DefiLlama hacks discovery input marks this row as bridge-related, but no exact canonical BIR bridge identity was resolved. The incident and bridge identity must be reviewed before canonical work.",
-    duplicate_check: { matched_existing_record: false, method: "bridge flag without exact canonical hack-name identity" },
+    bir_relevance: "The DefiLlama hacks discovery input marks this row as bridgeHack=true, but no exact canonical BIR bridge identity was resolved. The incident and bridge identity must be reviewed before canonical work.",
+    duplicate_check: { matched_existing_record: false, method: "bridgeHack=true without exact canonical hack-name identity" },
     incident_feed: details,
     source_urls: sourceUrls,
     source_quality: "secondary_incident_database",
@@ -268,7 +270,7 @@ export function watchDefillamaHacksPage({
       relevant_count: relevant.length,
       baseline_seeded_count: relevant.length,
       exact_canonical_matches: relevant.filter(({ match }) => match).length,
-      bridge_flag_rows: relevant.filter(({ row }) => row.bridge).length,
+      bridge_flag_rows: relevant.length,
       unchanged_count: 0,
       canonical_evidence_duplicates: 0,
       deferred_changed_count: 0,
@@ -309,7 +311,7 @@ export function watchDefillamaHacksPage({
     relevant_count: relevant.length,
     baseline_seeded_count: 0,
     exact_canonical_matches: relevant.filter(({ match }) => match).length,
-    bridge_flag_rows: relevant.filter(({ row }) => row.bridge).length,
+    bridge_flag_rows: relevant.length,
     unchanged_count: unchanged,
     canonical_evidence_duplicates: canonicalDuplicates,
     deferred_changed_count: deferred,
