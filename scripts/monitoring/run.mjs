@@ -7,6 +7,7 @@ import { writeMonitoringOutputs } from "./core/report.mjs";
 import { watchGithubIssues } from "./monitors/github-issue-watch.mjs";
 import { watchEvidenceHealth } from "./monitors/evidence-health-watch.mjs";
 import { watchExternalBridgeCandidates } from "./monitors/external-bridge-candidate-watch.mjs";
+import { watchDefillamaHacksPage } from "./monitors/defillama-hacks-page-watch.mjs";
 import { watchGdeltNews } from "./monitors/gdelt-news-watch.mjs";
 
 const DEFAULT_EXTERNAL_BRIDGE_SOURCE_URL = "https://raw.githubusercontent.com/DefiLlama/bridges-server/master/src/data/bridgeNetworkData.ts";
@@ -15,11 +16,7 @@ function arg(name, fallback = null) {
   const index = process.argv.indexOf(`--${name}`);
   return index >= 0 ? process.argv[index + 1] : fallback;
 }
-
-function flag(name) {
-  return process.argv.includes(`--${name}`);
-}
-
+function flag(name) { return process.argv.includes(`--${name}`); }
 function readIssues(file) {
   if (!file) return [];
   if (!fs.existsSync(file)) throw new Error(`issue input not found: ${file}`);
@@ -27,7 +24,6 @@ function readIssues(file) {
   if (!Array.isArray(parsed)) throw new Error("GitHub issue input must be an array");
   return parsed;
 }
-
 function readTextInput(file, label) {
   if (!file) return null;
   if (!fs.existsSync(file)) throw new Error(`${label} input not found: ${file}`);
@@ -46,33 +42,26 @@ const evidenceProbeLimit = Number.parseInt(arg("evidence-probe-limit", "12"), 10
 const externalBridgeSourcePath = arg("external-bridge-source");
 const externalBridgeSourceUrl = arg("external-bridge-source-url", DEFAULT_EXTERNAL_BRIDGE_SOURCE_URL);
 const externalCandidateLimit = Number.parseInt(arg("external-candidate-limit", "8"), 10);
+const defillamaHacksPagePath = arg("defillama-hacks-page-input");
+const defillamaHacksCandidateLimit = Number.parseInt(arg("defillama-hacks-candidate-limit", "8"), 10);
 const gdeltSecurityPath = arg("gdelt-security-input");
 const gdeltOperationsPath = arg("gdelt-operations-input");
 const gdeltSourceWindow = arg("gdelt-source-window");
 const gdeltCandidateLimit = Number.parseInt(arg("gdelt-candidate-limit", "8"), 10);
 
-if (!Number.isInteger(evidenceProbeLimit) || evidenceProbeLimit < 0 || evidenceProbeLimit > 50) {
-  throw new Error(`invalid evidence probe limit: ${evidenceProbeLimit}`);
+for (const [label, limit] of [
+  ["evidence probe", evidenceProbeLimit], ["external candidate", externalCandidateLimit],
+  ["DefiLlama hacks candidate", defillamaHacksCandidateLimit], ["GDELT candidate", gdeltCandidateLimit]
+]) {
+  if (!Number.isInteger(limit) || limit < 0 || limit > 50) throw new Error(`invalid ${label} limit: ${limit}`);
 }
-if (!Number.isInteger(externalCandidateLimit) || externalCandidateLimit < 0 || externalCandidateLimit > 50) {
-  throw new Error(`invalid external candidate limit: ${externalCandidateLimit}`);
-}
-if (!Number.isInteger(gdeltCandidateLimit) || gdeltCandidateLimit < 0 || gdeltCandidateLimit > 50) {
-  throw new Error(`invalid GDELT candidate limit: ${gdeltCandidateLimit}`);
-}
-if (Boolean(gdeltSecurityPath) !== Boolean(gdeltOperationsPath)) {
-  throw new Error("GDELT monitoring requires both security and operations inputs or neither");
-}
+if (Boolean(gdeltSecurityPath) !== Boolean(gdeltOperationsPath)) throw new Error("GDELT monitoring requires both security and operations inputs or neither");
 
 const before = canonicalFingerprints();
 const canonical = loadCanonicalData();
 const health = canonicalHealthSummary(canonical);
-if (health.reference_errors.length > 0) {
-  throw new Error(`canonical reference errors detected: ${health.reference_errors.join("; ")}`);
-}
-if (health.unknown_url_status > 0) {
-  throw new Error(`canonical unknown URL statuses detected: ${health.unknown_url_status}`);
-}
+if (health.reference_errors.length > 0) throw new Error(`canonical reference errors detected: ${health.reference_errors.join("; ")}`);
+if (health.unknown_url_status > 0) throw new Error(`canonical unknown URL statuses detected: ${health.unknown_url_status}`);
 
 const state = loadState();
 const issues = readIssues(issuesPath);
@@ -83,77 +72,35 @@ const evidenceResult = evidenceHealthEnabled
 
 const externalSourceText = readTextInput(externalBridgeSourcePath, "external bridge registry");
 const externalBridgeResult = externalSourceText
-  ? watchExternalBridgeCandidates({
-      sourceText: externalSourceText,
-      sourceUrl: externalBridgeSourceUrl,
-      canonicalBridges: canonical.bridges,
-      state,
-      applySignal,
-      observedAt,
-      limit: externalCandidateLimit
-    })
-  : {
-      source: null,
-      baseline_initialized: false,
-      state_changed: false,
-      parsed_count: 0,
-      matched_existing_count: 0,
-      baseline_seeded_count: 0,
-      unchanged_count: 0,
-      deferred_changed_count: 0,
-      emitted_count: 0,
-      candidates: []
-    };
+  ? watchExternalBridgeCandidates({ sourceText: externalSourceText, sourceUrl: externalBridgeSourceUrl, canonicalBridges: canonical.bridges, state, applySignal, observedAt, limit: externalCandidateLimit })
+  : { source: null, baseline_initialized: false, state_changed: false, parsed_count: 0, matched_existing_count: 0, baseline_seeded_count: 0, unchanged_count: 0, deferred_changed_count: 0, emitted_count: 0, candidates: [] };
+
+const defillamaHacksHtml = readTextInput(defillamaHacksPagePath, "DefiLlama hacks page");
+const defillamaHacksResult = defillamaHacksHtml
+  ? watchDefillamaHacksPage({ html: defillamaHacksHtml, canonicalBridges: canonical.bridges, canonicalEvidence: canonical.evidence, state, applySignal, observedAt, limit: defillamaHacksCandidateLimit })
+  : { source: null, baseline_initialized: false, state_changed: false, parsed_count: 0, relevant_count: 0, baseline_seeded_count: 0, exact_canonical_matches: 0, bridge_flag_rows: 0, unchanged_count: 0, canonical_evidence_duplicates: 0, deferred_changed_count: 0, emitted_count: 0, candidates: [] };
 
 const gdeltEnabled = Boolean(gdeltSecurityPath && gdeltOperationsPath);
 const gdeltResult = gdeltEnabled
-  ? watchGdeltNews({
-      securityPayload: readTextInput(gdeltSecurityPath, "GDELT security"),
-      operationsPayload: readTextInput(gdeltOperationsPath, "GDELT operations"),
-      canonicalBridges: canonical.bridges,
-      canonicalEvidence: canonical.evidence,
-      state,
-      applySignal,
-      observedAt,
-      sourceWindow: gdeltSourceWindow,
-      limit: gdeltCandidateLimit
-    })
-  : {
-      source: null,
-      baseline_initialized: false,
-      state_changed: false,
-      security_rows: 0,
-      operations_rows: 0,
-      unique_rows: 0,
-      baseline_seeded_count: 0,
-      canonical_evidence_duplicates: 0,
-      irrelevant_count: 0,
-      unchanged_count: 0,
-      deferred_changed_count: 0,
-      emitted_count: 0,
-      candidates: []
-    };
+  ? watchGdeltNews({ securityPayload: readTextInput(gdeltSecurityPath, "GDELT security"), operationsPayload: readTextInput(gdeltOperationsPath, "GDELT operations"), canonicalBridges: canonical.bridges, canonicalEvidence: canonical.evidence, state, applySignal, observedAt, sourceWindow: gdeltSourceWindow, limit: gdeltCandidateLimit })
+  : { source: null, baseline_initialized: false, state_changed: false, security_rows: 0, operations_rows: 0, unique_rows: 0, baseline_seeded_count: 0, canonical_evidence_duplicates: 0, irrelevant_count: 0, unchanged_count: 0, deferred_changed_count: 0, emitted_count: 0, candidates: [] };
 
 const findings = [...issueResult.findings, ...evidenceResult.findings];
-const candidates = [...issueResult.candidates, ...externalBridgeResult.candidates, ...gdeltResult.candidates];
+const candidates = [...issueResult.candidates, ...externalBridgeResult.candidates, ...defillamaHacksResult.candidates, ...gdeltResult.candidates];
 const reviewSignalsChanged = findings.length > 0 || candidates.length > 0;
-const stateChanged = reviewSignalsChanged || externalBridgeResult.state_changed || gdeltResult.state_changed;
+const stateChanged = reviewSignalsChanged || externalBridgeResult.state_changed || defillamaHacksResult.state_changed || gdeltResult.state_changed;
 const hasChanges = stateChanged;
 let outputs = null;
 
 if (hasChanges) {
   writeState(state);
   outputs = writeMonitoringOutputs({
-    dateKey,
-    runId,
-    observedAt,
-    findings,
-    candidates,
-    health,
+    dateKey, runId, observedAt, findings, candidates, health,
     monitorReports: {
       "github-issue-watch": issueResult,
       "evidence-health-watch": evidenceResult,
       ...(externalSourceText ? { "external-bridge-candidate-watch": externalBridgeResult } : {}),
+      ...(defillamaHacksHtml ? { "defillama-hacks-page-watch": defillamaHacksResult } : {}),
       ...(gdeltEnabled ? { "gdelt-news-watch": gdeltResult } : {})
     }
   });
@@ -163,49 +110,14 @@ const after = canonicalFingerprints();
 assertCanonicalUnchanged(before, after);
 
 const result = {
-  version: 1,
-  run_id: runId,
-  observed_at: observedAt,
-  has_changes: hasChanges,
-  review_signals_changed: reviewSignalsChanged,
-  state_changed: stateChanged,
-  findings_count: findings.length,
-  candidate_count: candidates.length,
-  evidence_health: {
-    enabled: evidenceHealthEnabled,
-    selected_count: evidenceResult.selected_count,
-    live_evidence_count: evidenceResult.live_evidence_count,
-    finding_count: evidenceResult.findings.length
-  },
-  external_candidate_discovery: {
-    enabled: Boolean(externalSourceText),
-    baseline_initialized: externalBridgeResult.baseline_initialized,
-    state_changed: externalBridgeResult.state_changed,
-    parsed_count: externalBridgeResult.parsed_count,
-    matched_existing_count: externalBridgeResult.matched_existing_count,
-    baseline_seeded_count: externalBridgeResult.baseline_seeded_count,
-    unchanged_count: externalBridgeResult.unchanged_count,
-    deferred_changed_count: externalBridgeResult.deferred_changed_count,
-    emitted_count: externalBridgeResult.emitted_count,
-    source: externalBridgeResult.source
-  },
-  gdelt_news: {
-    enabled: gdeltEnabled,
-    baseline_initialized: gdeltResult.baseline_initialized,
-    state_changed: gdeltResult.state_changed,
-    security_rows: gdeltResult.security_rows,
-    operations_rows: gdeltResult.operations_rows,
-    unique_rows: gdeltResult.unique_rows,
-    baseline_seeded_count: gdeltResult.baseline_seeded_count,
-    canonical_evidence_duplicates: gdeltResult.canonical_evidence_duplicates,
-    irrelevant_count: gdeltResult.irrelevant_count,
-    unchanged_count: gdeltResult.unchanged_count,
-    deferred_changed_count: gdeltResult.deferred_changed_count,
-    emitted_count: gdeltResult.emitted_count,
-    source: gdeltResult.source
-  },
-  canonical_counts: health.counts,
-  outputs
+  version: 1, run_id: runId, observed_at: observedAt, has_changes: hasChanges,
+  review_signals_changed: reviewSignalsChanged, state_changed: stateChanged,
+  findings_count: findings.length, candidate_count: candidates.length,
+  evidence_health: { enabled: evidenceHealthEnabled, selected_count: evidenceResult.selected_count, live_evidence_count: evidenceResult.live_evidence_count, finding_count: evidenceResult.findings.length },
+  external_candidate_discovery: { enabled: Boolean(externalSourceText), baseline_initialized: externalBridgeResult.baseline_initialized, state_changed: externalBridgeResult.state_changed, parsed_count: externalBridgeResult.parsed_count, matched_existing_count: externalBridgeResult.matched_existing_count, baseline_seeded_count: externalBridgeResult.baseline_seeded_count, unchanged_count: externalBridgeResult.unchanged_count, deferred_changed_count: externalBridgeResult.deferred_changed_count, emitted_count: externalBridgeResult.emitted_count, source: externalBridgeResult.source },
+  defillama_hacks: { enabled: Boolean(defillamaHacksHtml), baseline_initialized: defillamaHacksResult.baseline_initialized, state_changed: defillamaHacksResult.state_changed, parsed_count: defillamaHacksResult.parsed_count, relevant_count: defillamaHacksResult.relevant_count, baseline_seeded_count: defillamaHacksResult.baseline_seeded_count, exact_canonical_matches: defillamaHacksResult.exact_canonical_matches, bridge_flag_rows: defillamaHacksResult.bridge_flag_rows, unchanged_count: defillamaHacksResult.unchanged_count, canonical_evidence_duplicates: defillamaHacksResult.canonical_evidence_duplicates, deferred_changed_count: defillamaHacksResult.deferred_changed_count, emitted_count: defillamaHacksResult.emitted_count, source: defillamaHacksResult.source },
+  gdelt_news: { enabled: gdeltEnabled, baseline_initialized: gdeltResult.baseline_initialized, state_changed: gdeltResult.state_changed, security_rows: gdeltResult.security_rows, operations_rows: gdeltResult.operations_rows, unique_rows: gdeltResult.unique_rows, baseline_seeded_count: gdeltResult.baseline_seeded_count, canonical_evidence_duplicates: gdeltResult.canonical_evidence_duplicates, irrelevant_count: gdeltResult.irrelevant_count, unchanged_count: gdeltResult.unchanged_count, deferred_changed_count: gdeltResult.deferred_changed_count, emitted_count: gdeltResult.emitted_count, source: gdeltResult.source },
+  canonical_counts: health.counts, outputs
 };
 
 fs.mkdirSync(path.dirname(resultPath), { recursive: true });
