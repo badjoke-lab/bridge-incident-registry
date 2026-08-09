@@ -85,6 +85,52 @@ jobs:
             echo "::warning::External bridge registry was unavailable; candidate discovery is skipped for this run."
           fi
 
+      - name: Collect bounded GDELT news discovery inputs
+        if: steps.duplicate.outputs.skip != 'true'
+        shell: bash
+        run: |
+          start="$(date -u -d '8 days ago' +%Y%m%d%H%M%S)"
+          end="$(date -u +%Y%m%d%H%M%S)"
+          security_query='("cross-chain bridge" OR "blockchain bridge" OR "crypto bridge") (hack OR hacked OR exploit OR exploited OR attack OR drained)'
+          operations_query='("cross-chain bridge" OR "blockchain bridge" OR "crypto bridge") (paused OR pause OR suspended OR suspend OR shutdown OR "shut down")'
+
+          fetch_gdelt() {
+            local query="$1"
+            local output="$2"
+            local url
+            url="$(QUERY="$query" START="$start" END="$end" node -e '
+              const p = new URLSearchParams({
+                query: process.env.QUERY,
+                mode: "artlist",
+                maxrecords: "75",
+                startdatetime: process.env.START,
+                enddatetime: process.env.END,
+                sort: "datedesc",
+                format: "json"
+              });
+              process.stdout.write(`https://api.gdeltproject.org/api/v2/doc/doc?${p}`);
+            ')"
+            curl --fail --location --silent --show-error \
+              --retry 2 --retry-delay 3 --connect-timeout 10 --max-time 60 \
+              -H "User-Agent: BIR-review-monitor/1" \
+              "$url" -o "$output" || return 1
+            node -e '
+              const fs = require("fs");
+              const p = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
+              if (!p || typeof p !== "object" || (!Array.isArray(p.articles) && !Array.isArray(p.items))) process.exit(2);
+            ' "$output" || return 1
+          }
+
+          security_output=".monitor-input/gdelt-security.json"
+          operations_output=".monitor-input/gdelt-operations.json"
+          if fetch_gdelt "$security_query" "$security_output" && fetch_gdelt "$operations_query" "$operations_output"; then
+            printf '%s..%s\n' "$start" "$end" > .monitor-input/gdelt-window.txt
+            echo "Collected complete GDELT input pair for $start..$end"
+          else
+            rm -f "$security_output" "$operations_output" .monitor-input/gdelt-window.txt
+            echo "::warning::GDELT input pair was unavailable or malformed; news discovery is skipped for this run."
+          fi
+
       - name: Run guarded monitoring
         if: steps.duplicate.outputs.skip != 'true'
         id: monitor
@@ -93,19 +139,27 @@ jobs:
           date_key="$(date -u +%Y%m%d)"
           observed_at="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
           run_id="gh-${GITHUB_RUN_ID}"
-          external_args=()
+          monitor_args=()
           if [ -s .monitor-input/defillama-bridgeNetworkData.ts ]; then
-            external_args+=(
+            monitor_args+=(
               --external-bridge-source .monitor-input/defillama-bridgeNetworkData.ts
               --external-bridge-source-url https://raw.githubusercontent.com/DefiLlama/bridges-server/master/src/data/bridgeNetworkData.ts
               --external-candidate-limit 8
+            )
+          fi
+          if [ -s .monitor-input/gdelt-security.json ] && [ -s .monitor-input/gdelt-operations.json ] && [ -s .monitor-input/gdelt-window.txt ]; then
+            monitor_args+=(
+              --gdelt-security-input .monitor-input/gdelt-security.json
+              --gdelt-operations-input .monitor-input/gdelt-operations.json
+              --gdelt-source-window "$(cat .monitor-input/gdelt-window.txt)"
+              --gdelt-candidate-limit 8
             )
           fi
           npm run monitoring:run -- \
             --issues .monitor-input/github-issues.json \
             --evidence-health \
             --evidence-probe-limit 12 \
-            "${external_args[@]}" \
+            "${monitor_args[@]}" \
             --date "$date_key" \
             --run-id "$run_id" \
             --observed-at "$observed_at" \
