@@ -24,8 +24,10 @@ The authoritative roadmap is `docs/runbooks/development-roadmap.md`; the restart
   - evidence health watch: live
   - external bridge universe: live, baseline + silent repeat proven
   - structured DefiLlama bridge-hack feed: live, baseline + silent repeat proven
+  - active bridge official-domain watch: live, baseline + silent repeat proven
+  - RSS status-news discovery: live, baseline + silent repeat proven
   - optional GDELT adapter: fail-closed, not scheduled/default after Actions 429
-  - active bridge/domain watch: next
+  - monitoring-state/watchlist resolution health: next
   - site/SEO watch: planned
 - Release — v1 documentation, accessibility, performance, compatibility, and release checks: planned
 
@@ -42,26 +44,27 @@ Evidence    287
 
 ```text
 Evidence health                  12 / 287 selected, 24 probes, 0 hard findings
-External bridge universe         98 parsed / 11 exact / 87 baseline / 0 candidates
-External repeat                  87 unchanged / 0 candidates / state false
-DefiLlama hacks input            https://api.llama.fi/hacks
-DefiLlama hacks kind             legacy_public_json
-DefiLlama hacks raw SHA          e80fced996cf886ca0d2ca70c02dd04b869b628d63773d0b327f97b49aa2734a
-DefiLlama hacks parsed           613
-bridgeHack=true                  61
-Accepted bridge-hack baseline    61
-Exact canonical matches          20
-Baseline candidates               0
-Bridge-hack repeat unchanged     61
-Bridge-hack repeat candidates     0
+External bridge universe         98 parsed / 11 exact / 87 baseline
+External silent repeat           87 unchanged / 0 candidates
+DefiLlama bridgeHack feed        613 parsed / 61 bridge rows / 61 baseline
+BridgeHack silent repeat         61 unchanged / 0 candidates
+Active-domain eligible           22
+Active-domain batch               8
+Accepted domain baseline          8 / 0 findings
+Domain silent repeat              0 state change / 0 findings
+RSS feeds reached                 2
+RSS rows parsed                  55
+RSS relevant baseline rows        0
+RSS baseline candidates           0
+RSS silent repeat                 0 state change / 0 candidates
 Canonical monitoring diff       none
 ```
 
 ## Immediate execution order
 
-1. implement bounded official-domain/status monitoring for canonical active bridges;
-2. add pause/shutdown/regulatory review signals only from reproducible source paths;
-3. add public-site/SEO checks;
+1. add monitoring-state/watchlist resolution health and explicit rearm semantics;
+2. add public-site/SEO checks;
+3. maintain RSS security/pause/shutdown/regulatory discovery as bounded secondary review material;
 4. maintain validator/source-quality/public-contract gates;
 5. complete v1 hardening and release closure;
 6. revisit deferred evidence/archive gaps only on new source material or changed conditions.
@@ -75,6 +78,8 @@ Canonical monitoring diff       none
 - upstream relevance fields such as `bridgeHack` must be live-schema validated;
 - repeated hard evidence/domain failure requires bounded reproducible probes;
 - 401/403/405/429, timeout, 5xx, or mixed results are not dead-proof by themselves;
+- parent/subdomain official-host relationships are not treated as migrations by themselves;
+- RSS candidates require both a canonical bridge identity and a bounded trigger;
 - no duplicate scheduled review work while an open monitoring PR or unmerged review branch exists;
 - production verification remains required for canonical/public output changes;
 - Cloudflare Pages preview deployment remains `none`.
