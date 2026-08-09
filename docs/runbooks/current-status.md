@@ -37,6 +37,9 @@ Archive capture Batches 1–18         production-verified — PRs #118–#198
 Previously-unreviewed archive queue  exhausted
 Deferred Archive Retry 01            production-verified — PRs #199–#201
 Deferred Archive Retry 02            production-verified — PRs #202–#204
+Deferred Archive Retry 03            review complete — PR #205, approved 0
+Deferred Archive Retry 04            review complete — PR #206, approved 0
+Fresh deferred retry pool            exhausted
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
 ```
@@ -83,22 +86,24 @@ Unknown URL status                         0
 
 Archive Capture Batch 18 exhausted the previously-unreviewed archive candidate set. A repository-derived inventory then found 45 reviewed-but-unarchived evidence records across 32 unique URLs.
 
-Deferred Archive Retry 01 selected ten higher-value reviewed unresolved URLs and newly recovered two sources:
+Deferred Archive Retry 01 selected ten higher-value reviewed unresolved URLs and recovered two sources:
 
 ```text
 bir_src_000037  Qubit — Our Compensation Plan 1
 bir_src_000068  Harmony — Summary of the Horizon Bridge Incident
 ```
 
-Deferred Archive Retry 02 selected a different ten-URL scope. One source newly satisfied the unchanged two-pass exact-replay boundary:
+Deferred Archive Retry 02 selected a different ten-URL scope and recovered one source:
 
 ```text
 bir_src_000166  QuillAudits — Decoding Rubic Exchange Exploit
 ```
 
-The Retry 02 archive snapshot is `20221227131535`, HTTP 200 HTML, 155,612 bytes in both review passes. The other nine Retry 02 URLs remain deferred. No acceptance rule was weakened. Across Retries 01–02, three evidence records on three unique URLs have been removed from the original reviewed-unresolved inventory, leaving 42 reviewed-but-unarchived evidence records across 29 unique URLs before any newly introduced canonical sources.
+Across Retries 01–02, three evidence records on three unique URLs were removed from the original reviewed-unresolved inventory, leaving 42 reviewed-but-unarchived evidence records across 29 unique URLs.
 
-The canonical migration in PR #203 raised archived evidence from 126 to 127 and reduced risky-host unique URLs from 17 to 16. Terminal unique URLs remain 15.
+Deferred Retry 03 then reviewed ten of the twelve URLs that had not been part of the recent Retry 01/02 scopes. None satisfied the unchanged two-pass exact-replay boundary. Deferred Retry 04 reviewed the final two fresh URLs — `bir_src_000277` and `bir_src_000282` — and also approved none. The not-recently-retried fresh pool is therefore exhausted. The remaining reviewed-unarchived pool consists only of URLs already explicitly retried under the current acceptance boundary.
+
+The canonical migration in PR #203 remains the latest archive publication. It raised archived evidence from 126 to 127 and reduced risky-host unique URLs from 17 to 16. Terminal unique URLs remain 15.
 
 All event Tier 1 gaps are reviewed. The six remaining gaps are intentional secondary records:
 
@@ -139,8 +144,8 @@ The production verifier confirmed the exact `bir_src_000166.archived_url` mappin
 
 ## Next
 
-1. reconstruct the remaining reviewed-unresolved pool from permanent review audits and current canonical data, then run Deferred Archive Retry 03 against a fresh high-value subset without immediately recycling the recent Retry 01 or Retry 02 failures;
-2. reduce the remaining 16 events without primary evidence where justified;
-3. strengthen remaining validators;
-4. begin review-gated monitoring and candidate collection without automatic canonical publication;
-5. continue v1 documentation, accessibility, performance, compatibility, and release hardening.
+1. reduce the remaining 16 events without primary evidence where justified and keep intentional secondary-only gaps explicit;
+2. strengthen remaining validators;
+3. begin review-gated monitoring and candidate collection without automatic canonical publication;
+4. continue v1 documentation, accessibility, performance, compatibility, and release hardening;
+5. revisit deferred archive failures only after conditions change or new canonical source URLs enter the corpus.
