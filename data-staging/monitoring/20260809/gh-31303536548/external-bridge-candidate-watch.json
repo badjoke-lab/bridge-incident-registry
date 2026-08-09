@@ -1,0 +1,17 @@
+{
+  "source": {
+    "provider": "DefiLlama",
+    "source_id": "defillama-bridges-server",
+    "url": "https://raw.githubusercontent.com/DefiLlama/bridges-server/master/src/data/bridgeNetworkData.ts",
+    "sha256": "3895dfff2a023c3f67aceacb0e4d56f90e4bd0028f34c94b6b0b03ceb4d253a0"
+  },
+  "baseline_initialized": true,
+  "state_changed": true,
+  "parsed_count": 98,
+  "matched_existing_count": 11,
+  "baseline_seeded_count": 87,
+  "unchanged_count": 0,
+  "deferred_changed_count": 0,
+  "emitted_count": 0,
+  "candidates": []
+}

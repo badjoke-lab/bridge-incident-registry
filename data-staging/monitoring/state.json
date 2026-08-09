@@ -5,6 +5,446 @@
       "fingerprint": "35963909b6e20e24c73e4cd729f0ab3c12f33e5097aa5a725a033ac54ae73a60",
       "first_seen_at": "2026-08-09T07:30:28Z",
       "last_changed_at": "2026-08-09T07:30:28Z"
+    },
+    "external-bridge:defillama-bridges-server:1": {
+      "fingerprint": "1dc26503c2debbb0418cf4706ad5bbf7c587ec3b263b3a5136288a161039684f",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:2": {
+      "fingerprint": "a6a95244038d478528fbb8e9eebb009bd16c44dacd773e6d8c220f765fe460e7",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:4": {
+      "fingerprint": "7f0e391657d9d6897637cb63eb0bbd1ee3090405f5331c8662db28c6ce5ee1ec",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:12": {
+      "fingerprint": "27bcae30ec02f11f7430acd5f5c6979116395578db0e3488fff1972ddb4fd1bc",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:13": {
+      "fingerprint": "0c97e633710a13ed52783fc97bcbb7bef74335abf364290a06cea882ad5118ab",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:16": {
+      "fingerprint": "acd8e904a5c38b7a909f58993363378830258031607784e55c9d119a182e6959",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:17": {
+      "fingerprint": "62c33e8b243f0eb278b5cd8e5f68980db89b4e48d192c8036864420eb237fc5e",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:19": {
+      "fingerprint": "62db780d7b8803125859d325dd89fe7ed1f0b850df898994229324d1686982a1",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:20": {
+      "fingerprint": "4520d408ee2c08f98be9b818479f095bb2fdb02520bd3d4ff0d3f66076554959",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:22": {
+      "fingerprint": "dee3749beb3279a9cd46ba84cdc303d8fbc5de5e080a7e92d24fa393c3229831",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:23": {
+      "fingerprint": "05c5a1eaf42264ad6ef60734e9e47bb4858e9eb937a139df0ab916b9da7ff26f",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:26": {
+      "fingerprint": "da006edc86c033ccf2c3c8b6bfc3ab5f7623bff3c5810b07a2a107a0c884bf89",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:27": {
+      "fingerprint": "c7c50e41bd5820774286f9947eebb9186944ab4b6cd2ab7561c1614af47ba01f",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:28": {
+      "fingerprint": "864c70a8f8f0305646ad936e89ff98ab2ea3f02413c063f947d99abb4bb46d26",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:29": {
+      "fingerprint": "80eb2c3b215b016227328cae2d464d4733f7c21e9203a66e9317a27a58428895",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:30": {
+      "fingerprint": "4a95819f29702aafcf60b040c5330751e45147d25397b3a55c76eeffe3b564a1",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:32": {
+      "fingerprint": "b7d2781d49ddf265f09aaac1733b9d89a5376800dbe42eb9c740c1a76f6dff0c",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:34": {
+      "fingerprint": "321ecbe38edef0683cbeb23b5456db87e9e260eb05355343ec1c3fc9fe38fab7",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:35": {
+      "fingerprint": "31c5fce9ada3e3cb90bc42b5ce80c5005ace5ac72dc1f2854ae1ffe1341c7ad2",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:37": {
+      "fingerprint": "51e4e4398472bb90ff360336ae9212e1f5e07599d2e3d430a6f078304a264928",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:39": {
+      "fingerprint": "a0be9236737d6afaf92bcbcd9191ec1463a651f5f96f23ffe41d9b97d5951c15",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:41": {
+      "fingerprint": "f5983067f01237a495ec47af4114c3476324143a2da19637ec5f39726bd2c4ec",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:44": {
+      "fingerprint": "afb855b91709f508931ca8080dd3d38dc761b93c7841f680ef60e15be94e1613",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:45": {
+      "fingerprint": "00e44d566473539605beb2a80ba015ff44d023954cb31b3164042f098020ed44",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:46": {
+      "fingerprint": "e58bbb6cafb7df65b127922993395796427c82cc7b6f77dd42e3f2e7dba904dc",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:47": {
+      "fingerprint": "a91648b3c8543178e0dc72223f29100b05cf6d42f23977e76bca7c2c490f2d94",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:48": {
+      "fingerprint": "15d50013186b2ed6f4fc035c110eae3f702ec446963ce32b70f431c576d0bafd",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:49": {
+      "fingerprint": "cc79b64e5722adb03397695d447a962930e71108b9a97fb749e8862f18a5652c",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:50": {
+      "fingerprint": "a9c1bd590aedb15e59e32bbda0d5cc942a403098659fe899add7474f8c3b7ca7",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:51": {
+      "fingerprint": "bb68fa065fb102a6449f0e36816ec836577791dc0c2d46a70f988eccb5c30036",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:53": {
+      "fingerprint": "30c284f9f22ff7878a26102f091a83588b8904fd792e40a45331f54b57468cc6",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:54": {
+      "fingerprint": "9e46a801ad40173c337ed641f157048d71e46bffa9d4eaf1ba542fc9a9591cd9",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:55": {
+      "fingerprint": "79ec377eebab8911319058ce40bf7504fc189b751d19202c2173219cc9cd205a",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:56": {
+      "fingerprint": "9cb7864dc963a62fd448ccf773367ff009fc24ed2c27c0dbe2a7692912022d59",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:58": {
+      "fingerprint": "19ae67ce2a828268d37c4e699239821de80917e3997144b081045d1840dc88c2",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:61": {
+      "fingerprint": "11d3de57d08b93c4af9765726c6da65039de83eb09afb747d07f1aff16073272",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:64": {
+      "fingerprint": "b8ab441e0876fb8f82c39354abed0ee7fd9cfa1d0c6d256e2a3c2c3335fb60a0",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:65": {
+      "fingerprint": "dca6e7671b822db26ddb75443d09e0752c24cc2e1fc75d11698fa5c68c82b8d5",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:66": {
+      "fingerprint": "113485d75d422694e13149d03a24cbdcade9ba506b33ab5e43a79fc84fae1cc4",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:67": {
+      "fingerprint": "261067352d549e122c2b8c973347fedfecd36feab02887e0938833da672a2758",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:68": {
+      "fingerprint": "e8f094ff2bd7abaa30cd75c257060f62ececa297dd20f0683afe95b63e74741a",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:69": {
+      "fingerprint": "9ba451b59ed38e090ff88a50f8165d1af481eeedf3657fa026e569f0c7bc1113",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:70": {
+      "fingerprint": "49659b846f4722ee660c9bc9c9c5170cb5f321cb596c5426973e970b3f262791",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:71": {
+      "fingerprint": "7aba53caeb0bca2613fc6c6d263a56d56a1d7004839567c1283d21c727885a82",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:72": {
+      "fingerprint": "de0c981830c272f793ca416adc0e2cd08517b5120abb239bd2e6dcbfc6695849",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:73": {
+      "fingerprint": "d0cf47c8cccbc4ead4ad237a30dd8209cb80c7a3f78adbe9bee59188235c9af1",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:74": {
+      "fingerprint": "84002342b3da997a93ad2d66399fabd77429d7d533b82782c638d7a292034791",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:75": {
+      "fingerprint": "ce801d56df3ff4ce437f3f38dc872ac4cefaed9da055c1776c5a42332fca7d53",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:76": {
+      "fingerprint": "fa1bfab6b98e26b60f76a17b383a8f0651184b0ab2befddb68317e1173576df4",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:78": {
+      "fingerprint": "d1cdd9e8856a046f8f9bfbc3e431b9ec8833b2b508a2de214f2b7a005f7c70b9",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:79": {
+      "fingerprint": "7201979d4526214eaa338bab876690986983a0dc195807c6ebd44979bddae7ae",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:80": {
+      "fingerprint": "c49c8ac52167d260231c06e7a0ba79378a73e5b5db724ae016780183c775349e",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:81": {
+      "fingerprint": "69cb756653b9cc519a9f22d6972ac6413a266eaaf3be6f9d50cdccaaf8983ca5",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:82": {
+      "fingerprint": "7149e70e39f238b3171d1332b638b3f1ca962f29ff2b5bf4999b87adcd2759bf",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:83": {
+      "fingerprint": "89128ee73410238b34231271a442e1df3b6640d0b0c709f3ac0f50d5ed8912d8",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:84": {
+      "fingerprint": "f2ff94d9c418a031ca2cf0bf13e2aa31898e6a0f4c9147ff3e73670aaa303e58",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:85": {
+      "fingerprint": "0fc9a4e3c8f2cdc0e9ce1c5de3f67a2b590d21c8aaf3c1a6e32ffbeced47d12c",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:86": {
+      "fingerprint": "9b1c61b79deeb7434315190726bbcb790ce688e4d6786cd32c911836d887389a",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:87": {
+      "fingerprint": "798da0e0f70fd791ea053fad85538f3734f429832501cd4e5990e57dcf7d58af",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:88": {
+      "fingerprint": "91fd7ca06ab904541fa253cdfb32cf17321a80d69bc9813cd71183e79ff376c0",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:89": {
+      "fingerprint": "506249c94ee0f9abe64f234711cee68de2a991495b37061632ce6dda190358a0",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:90": {
+      "fingerprint": "e0ac98f45c14145867a6463c14b6d8a48e26c2e849374b893678c5b8ccd97f16",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:92": {
+      "fingerprint": "aaa7b02221f9dce0e7943713ffddcfe23ddd531ee28ca316ca803d2e8bd0a6fb",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:93": {
+      "fingerprint": "bec854e1494cb3dc312867197e33ecaff8dfbe9d751a27f1c7c31a665a6002c9",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:94": {
+      "fingerprint": "8cc98d080dc8458608ee9b375b0729c1d290c174c5bad2bf8e353c8a74f9801d",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:95": {
+      "fingerprint": "5166a852040b60cc04f5398627da005354c7093ec02c784b9ad16725d18b8ced",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:96": {
+      "fingerprint": "8aca755eaf7c7bcd4e9a0f092bae58aa97dd95f6c642d5ad7638c6b1556006df",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:97": {
+      "fingerprint": "8fcd5630e1ed0fa121adbbb2510c8d67bcbda0512c349a9ff723133699b21077",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:98": {
+      "fingerprint": "092e44a475eac0dad9c08e5ea98b323b94d1e75d419ac344e16e1f222e75487f",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:99": {
+      "fingerprint": "68fd78ea525fb893b217797e0ff863b53dd40c1146b98bdad48b66ff8f52c905",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:100": {
+      "fingerprint": "0f89644ec9568d2b8ff4ca736554e8f672983d0b0ba14347f179e2f8bfb0ca2d",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:101": {
+      "fingerprint": "1f36e03b8e3de759b2dd4b73f99a2900bf8fa5cb2f8d84ca520f6a1569b0895d",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:102": {
+      "fingerprint": "8ce32d1e65dcd3ac0d5565485f97a268cf8229ff089e586931e637e6688bc711",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:103": {
+      "fingerprint": "34d4a75edad01b341797c9888aac8e8526476b33eef4371f4c1ffb1fcfb294b8",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:104": {
+      "fingerprint": "0386aeb2cb21b4a8e10863d72730de3d9f81136cb9ab32ffbf7b63b7629de270",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:105": {
+      "fingerprint": "0e0e4c7ee82dda3db537da5d0310f446460aefe1f000f7a72a89d3332cd11a66",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:106": {
+      "fingerprint": "1425a1ae50462d63f53a0ad6475746047ab8c5f84de84516aece0f1c3b470abd",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:107": {
+      "fingerprint": "18f0a3151eba5dae032b53fdbfd5ff2d23d3fd7f92f8907d2fa14b47df257b49",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:108": {
+      "fingerprint": "48eb37198d8c17d25a0fa79f954e6d8e57c877ed88a0748f8687093996dee2f1",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:109": {
+      "fingerprint": "d86a8b9677d7273282ab4d7e4daf1ec47d2f00961ff8db8bfb0aac459fa24476",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:110": {
+      "fingerprint": "2e8329c5ec541741bc8c923abd9ed946d4a6082cbb754dd75e8db84d1a8cb1a0",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:111": {
+      "fingerprint": "71b526461fb9352430c78f96d995cb0c0dce0633193ec2a8053261e8fe0aa2ce",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:112": {
+      "fingerprint": "8678515bc2cd9b2d1beb306ed6545197be7b7e3d0efb16ff11a90c24b66c53dc",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:113": {
+      "fingerprint": "1391934be34ee38ad779f56a9c06427f11526502f2d344b7c170fd2169cf7c31",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:114": {
+      "fingerprint": "457c736f51c7ba2bce64171449282797d949ce5746f69399cd6118f7a5a10406",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:115": {
+      "fingerprint": "35b6251387656380239f1966d8ef232d2dc43035e0cb8a097ed6d0eb5cbdcfa5",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:9999": {
+      "fingerprint": "12a70116454a0c3db5ccdfccf510c55f4a14707120d9b7be291e5661d84ead5d",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
+    },
+    "external-bridge:defillama-bridges-server:baseline-v1": {
+      "fingerprint": "initialized-v1",
+      "first_seen_at": "2026-08-09T08:27:11Z",
+      "last_changed_at": "2026-08-09T08:27:11Z"
     }
   }
 }
