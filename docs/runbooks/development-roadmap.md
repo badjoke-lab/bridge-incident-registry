@@ -31,6 +31,9 @@ Phase 3  Full-corpus quality strengthening         active
          Previously-unreviewed archive queue       exhausted
          Deferred Archive Retry 01                 production-verified — PRs #199–#201
          Deferred Archive Retry 02                 production-verified — PRs #202–#204
+         Deferred Archive Retry 03                 review complete — PR #205, approved 0
+         Deferred Archive Retry 04                 review complete — PR #206, approved 0
+         Fresh deferred retry pool                 exhausted
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
@@ -83,16 +86,16 @@ Unknown URL status                     0
 
 Archive Capture Batch 18 exhausted the previously-unreviewed archive queue. The deferred inventory reconstructed 45 reviewed-but-unarchived evidence records across 32 unique URLs from permanent review audits and current canonical data.
 
-Deferred Archive Retry 01 recovered Qubit's compensation plan and Harmony's Horizon Bridge incident summary. Deferred Archive Retry 02 then reviewed a different ten-URL scope and recovered the QuillAudits Rubic exploit analysis (`bir_src_000166`) at the exact `20221227131535` snapshot. The other nine Retry 02 targets remained below the unchanged exact-replay, temporal-fit, minimum-size, and two-run reproducibility boundary.
+Deferred Archive Retry 01 recovered Qubit's compensation plan and Harmony's Horizon Bridge incident summary. Deferred Archive Retry 02 recovered the QuillAudits Rubic exploit analysis (`bir_src_000166`). Across Retries 01–02, three evidence records on three unique URLs were resolved, leaving 42 reviewed-but-unarchived evidence records across 29 unique URLs.
 
-Across Retries 01–02, three evidence records on three unique URLs have been resolved from the original deferred inventory, leaving 42 reviewed-but-unarchived evidence records across 29 unique URLs before any newly introduced canonical sources.
+Deferred Retry 03 reviewed ten of the twelve fresh URLs outside the recent Retry 01/02 scopes and approved none. Deferred Retry 04 reviewed the final two fresh URLs and approved none. The remaining reviewed-unarchived pool now consists only of URLs already explicitly retried under the unchanged acceptance boundary.
 
-There is no untouched archive-review Batch 19. Future preservation work must use explicit deferred-retry scopes or newly introduced canonical source URLs.
+There is no untouched archive-review Batch 19 and no fresh Deferred Retry 05 scope. Future preservation work must wait for materially changed conditions, deliberately selected re-review, or newly introduced canonical source URLs.
 
 ## Immediate source-quality targets
 
-1. reconstruct the current reviewed-unresolved pool and run Deferred Archive Retry 03 against a fresh high-value subset; do not immediately recycle the recent Retry 01 or Retry 02 failures;
-2. reduce the remaining 16 events without primary evidence where appropriate;
+1. reduce the remaining 16 events without primary evidence where appropriate, without weakening source hierarchy;
+2. keep intentional secondary-only gaps explicit and reviewed;
 3. strengthen remaining validators;
 4. begin review-gated monitoring and candidate collection with no automatic canonical publication;
 5. complete v1 documentation, accessibility, performance, compatibility, and release checks.
@@ -111,12 +114,12 @@ Batch 18 proved that a newer `generated_at` alone is not proof of canonical publ
 
 ## Remaining roadmap
 
-1. retry selected deferred archive candidates under unchanged evidence-preservation rules;
-2. remediate justified primary-evidence gaps;
-3. strengthen remaining validators;
-4. maintain public-contract and UI compatibility checks;
-5. implement monitoring with no automatic publication;
-6. complete v1 documentation, accessibility, performance, and release checks.
+1. remediate justified event primary-evidence gaps;
+2. strengthen remaining validators;
+3. maintain public-contract and UI compatibility checks;
+4. implement monitoring with no automatic publication;
+5. complete v1 documentation, accessibility, performance, and release checks;
+6. revisit archive preservation only under a new explicit reviewed scope.
 
 ## Permanent rules
 
@@ -143,3 +146,4 @@ Batch 18 proved that a newer `generated_at` alone is not proof of canonical publ
 21. Cloudflare Pages preview deployment remains `none`; intentional preview support requires a separately reviewed configuration change.
 22. Do not create an artificial untouched archive batch after the reviewer has exhausted its previously-unreviewed candidate set.
 23. Deferred retries must use explicit reviewed-unresolved targets and preserve the same acceptance boundary.
+24. Do not immediately recycle deferred archive failures once the fresh retry pool is exhausted; wait for changed conditions, new canonical source URLs, or a separately justified reviewed retry scope.
