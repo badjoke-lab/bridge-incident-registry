@@ -7,7 +7,7 @@ function writeJson(file, value) {
   fs.writeFileSync(file, `${JSON.stringify(value, null, 2)}\n`);
 }
 
-export function writeMonitoringOutputs({ dateKey, runId, observedAt, findings, candidates, health, state }) {
+export function writeMonitoringOutputs({ dateKey, runId, observedAt, findings, candidates, health }) {
   const runDir = path.join(OUTPUT_ROOT, dateKey, runId);
   const watchlistPath = path.join(WATCHLIST_ROOT, `recent-candidates-${dateKey}-${runId}.json`);
   fs.mkdirSync(runDir, { recursive: true });
