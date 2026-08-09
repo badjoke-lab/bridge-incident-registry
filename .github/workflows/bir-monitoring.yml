@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - .github/workflows/bir-monitoring.yml
+      - scripts/monitoring/**
   schedule:
     - cron: "17 3 * * 1"
   workflow_dispatch:
@@ -133,7 +134,7 @@ jobs:
             esac
           done <<< "$changed"
 
-      - name: Queue review when signals changed
+      - name: Queue review when monitoring state changes
         if: steps.duplicate.outputs.skip != 'true' && steps.monitor.outputs.has_changes == 'true'
         shell: bash
         run: |
@@ -190,6 +191,6 @@ jobs:
           printf '%s\n' "$pr_output" >&2
           exit "$pr_status"
 
-      - name: No changed signals
+      - name: No monitoring state changes
         if: steps.duplicate.outputs.skip != 'true' && steps.monitor.outputs.has_changes != 'true'
-        run: echo "No new or changed signals; no PR or review branch created."
+        run: echo "No new or changed monitoring state; no PR or review branch created."
