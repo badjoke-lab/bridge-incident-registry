@@ -31,6 +31,7 @@ export function writeMonitoringOutputs({ dateKey, runId, observedAt, findings, c
   writeJson(watchlistPath, { run_id: runId, observed_at: observedAt, candidates });
 
   const external = monitorReports["external-bridge-candidate-watch"];
+  const gdelt = monitorReports["gdelt-news-watch"];
   const lines = [
     `# BIR Auto Monitoring Report — ${dateKey}`,
     "",
@@ -58,6 +59,21 @@ export function writeMonitoringOutputs({ dateKey, runId, observedAt, findings, c
       `- Unmatched rows fingerprinted as baseline: ${external.baseline_seeded_count}`,
       `- Candidates emitted from baseline: ${external.emitted_count}`,
       "- Baseline registry presence is not treated as an incident candidate."
+    );
+  }
+
+  if (gdelt?.baseline_initialized) {
+    lines.push(
+      "",
+      "## Monitoring state change",
+      "",
+      "GDELT news discovery baseline initialized.",
+      "",
+      `- Security-family rows: ${gdelt.security_rows}`,
+      `- Operations-family rows: ${gdelt.operations_rows}`,
+      `- Unique article URLs fingerprinted: ${gdelt.baseline_seeded_count}`,
+      `- Candidates emitted from baseline: ${gdelt.emitted_count}`,
+      "- Baseline news coverage is not treated as an incident candidate."
     );
   }
 
