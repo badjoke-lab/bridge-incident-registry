@@ -105,7 +105,7 @@ export default [
 ];
 `;
 
-  const first = watchExternalBridgeCandidates({
+  const baseline = watchExternalBridgeCandidates({
     sourceText: source,
     sourceUrl,
     canonicalBridges,
@@ -114,14 +114,14 @@ export default [
     observedAt: "2026-08-09T07:40:00.000Z",
     limit: 8
   });
-  if (first.parsed_count !== 2 || first.matched_existing_count !== 1 || first.candidates.length !== 1) {
-    throw new Error(`external discovery should suppress canonical match and emit one new candidate: ${JSON.stringify(first)}`);
+  if (baseline.parsed_count !== 2 || baseline.matched_existing_count !== 1 || baseline.baseline_seeded_count !== 1) {
+    throw new Error(`external baseline should parse two active rows, match Ronin, and seed one unmatched row: ${JSON.stringify(baseline)}`);
   }
-  if (first.candidates[0].candidate_class !== "C" || first.candidates[0].canonical_name !== "Fixture Bridge") {
-    throw new Error(`external discovery candidate classification mismatch: ${JSON.stringify(first.candidates[0])}`);
+  if (!baseline.baseline_initialized || !baseline.state_changed || baseline.candidates.length !== 0) {
+    throw new Error(`initial external universe must seed state without emitting candidates: ${JSON.stringify(baseline)}`);
   }
-  if (!state.signals["external-bridge:defillama-bridges-server:999"]) {
-    throw new Error("external discovery did not persist its dedupe fingerprint");
+  if (!state.signals["external-bridge:defillama-bridges-server:baseline-v1"] || !state.signals["external-bridge:defillama-bridges-server:999"]) {
+    throw new Error("external discovery did not persist baseline and row fingerprints");
   }
 
   const repeated = watchExternalBridgeCandidates({
@@ -133,13 +133,22 @@ export default [
     observedAt: "2026-08-09T07:41:00.000Z",
     limit: 8
   });
-  if (repeated.candidates.length !== 0 || repeated.unchanged_count !== 1) {
-    throw new Error(`unchanged external candidate should be suppressed: ${JSON.stringify(repeated)}`);
+  if (repeated.candidates.length !== 0 || repeated.unchanged_count !== 1 || repeated.state_changed) {
+    throw new Error(`unchanged external universe should be silent after baseline: ${JSON.stringify(repeated)}`);
   }
 
-  const changedSource = source.replace("https://fixture.invalid/", "https://fixture.invalid/v2/");
-  const changed = watchExternalBridgeCandidates({
-    sourceText: changedSource,
+  const addedSource = source.replace("\n];", `
+  {
+    id: 1000,
+    displayName: "New Fixture Bridge",
+    bridgeDbName: "new-fixture",
+    slug: "new-fixture-bridge",
+    url: "https://new-fixture.invalid/",
+    chains: ["Ethereum", "NewFixture"],
+  },
+];`);
+  const added = watchExternalBridgeCandidates({
+    sourceText: addedSource,
     sourceUrl,
     canonicalBridges,
     state,
@@ -147,8 +156,22 @@ export default [
     observedAt: "2026-08-09T07:42:00.000Z",
     limit: 8
   });
+  if (added.candidates.length !== 1 || added.candidates[0].canonical_name !== "New Fixture Bridge" || added.candidates[0].candidate_class !== "C") {
+    throw new Error(`new post-baseline external row should emit one class C hold candidate: ${JSON.stringify(added)}`);
+  }
+
+  const changedSource = addedSource.replace("https://fixture.invalid/", "https://fixture.invalid/v2/");
+  const changed = watchExternalBridgeCandidates({
+    sourceText: changedSource,
+    sourceUrl,
+    canonicalBridges,
+    state,
+    applySignal,
+    observedAt: "2026-08-09T07:43:00.000Z",
+    limit: 8
+  });
   if (changed.candidates.length !== 1 || changed.candidates[0].canonical_name !== "Fixture Bridge") {
-    throw new Error(`materially changed external metadata should re-emit: ${JSON.stringify(changed)}`);
+    throw new Error(`materially changed post-baseline metadata should re-emit: ${JSON.stringify(changed)}`);
   }
 }
 
@@ -181,7 +204,7 @@ try {
   const state = JSON.parse(fs.readFileSync(path.join(fixtureRoot, "data-staging/monitoring/state.json"), "utf8"));
   if (!state.signals["github-issue:171"]) throw new Error("monitoring state did not retain issue signal");
 
-  console.log("Monitoring controlled tests passed (issue dedupe, evidence health, external candidate dedupe/change detection, canonical guard).");
+  console.log("Monitoring controlled tests passed (issue dedupe, evidence health, external baseline/new/change detection, canonical guard).");
 } finally {
   fs.rmSync(fixtureRoot, { recursive: true, force: true });
 }
