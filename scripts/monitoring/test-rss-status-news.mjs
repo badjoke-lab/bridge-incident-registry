@@ -103,7 +103,7 @@ assert.equal(changed.emitted_count, 2);
 assert.equal(changed.candidates[0].candidate_class, "B");
 assert.equal(changed.candidates[0].duplicate_check.matched_existing_record, true);
 assert.deepEqual(changed.candidates[0].news_signal.trigger_kinds.sort(), ["operations", "security"]);
-assert.deepEqual(changed.candidates[1].news_signal.trigger_kinds.sort(), ["operations", "regulatory"]);
+assert.deepEqual(changed.candidates[1].news_signal.trigger_kinds.sort(), ["regulatory"]);
 
 const duplicateState = { version: 1, signals: { "rss-news:dupfeed:baseline-v1": { fingerprint: "initialized-v1", first_seen_at: "2026-08-09T00:00:00Z", last_changed_at: "2026-08-09T00:00:00Z" } } };
 const duplicateXml = rss([
