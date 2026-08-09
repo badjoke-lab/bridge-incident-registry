@@ -1,0 +1,211 @@
+{
+  "findings": [],
+  "probes": [
+    {
+      "evidence_id": "bir_src_000013",
+      "url": "https://www.cnbc.com/2022/06/24/hackers-steal-100-million-in-crypto-from-harmonys-horizon-bridge.html",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://www.cnbc.com/2022/06/24/hackers-steal-100-million-in-crypto-from-harmonys-horizon-bridge.html",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://www.cnbc.com/2022/06/24/hackers-steal-100-million-in-crypto-from-harmonys-horizon-bridge.html",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000014",
+      "url": "https://www.fbi.gov/news/press-releases/fbi-confirms-lazarus-group-cyber-actors-responsible-for-harmonys-horizon-bridge-currency-theft",
+      "first": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://www.fbi.gov/news/press-releases/fbi-confirms-lazarus-group-cyber-actors-responsible-for-harmonys-horizon-bridge-currency-theft",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.fbi.gov/news/press-releases/fbi-confirms-lazarus-group-cyber-actors-responsible-for-harmonys-horizon-bridge-currency-theft",
+        "error": null
+      },
+      "classification": "mixed"
+    },
+    {
+      "evidence_id": "bir_src_000015",
+      "url": "https://www.reuters.com/technology/us-fbi-says-north-korean-hackers-stole-100-mln-harmony-bridge-2023-01-24/",
+      "first": {
+        "ok": false,
+        "status": 401,
+        "final_url": "https://www.reuters.com/technology/us-fbi-says-north-korean-hackers-stole-100-mln-harmony-bridge-2023-01-24/",
+        "error": null
+      },
+      "second": {
+        "ok": false,
+        "status": 401,
+        "final_url": "https://www.reuters.com/technology/us-fbi-says-north-korean-hackers-stole-100-mln-harmony-bridge-2023-01-24/",
+        "error": null
+      },
+      "classification": "blocked"
+    },
+    {
+      "evidence_id": "bir_src_000016",
+      "url": "https://arxiv.org/abs/2501.03423",
+      "first": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://arxiv.org/abs/2501.03423",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://arxiv.org/abs/2501.03423",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000017",
+      "url": "https://www.chainalysis.com/blog/poly-network-hack-august-2021/",
+      "first": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.chainalysis.com/blog/poly-network-hack-august-2021/",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.chainalysis.com/blog/poly-network-hack-august-2021/",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000018",
+      "url": "https://www.wired.com/story/poly-network-theft-apple-corellium-suit-security-news",
+      "first": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.wired.com/story/poly-network-theft-apple-corellium-suit-security-news/",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.wired.com/story/poly-network-theft-apple-corellium-suit-security-news/",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000019",
+      "url": "https://www.euronews.com/next/2021/08/23/uk-fintech-blockchain-polynetwork",
+      "first": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.euronews.com/next/2021/08/23/uk-fintech-blockchain-polynetwork",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.euronews.com/next/2021/08/23/uk-fintech-blockchain-polynetwork",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000020",
+      "url": "https://www.reuters.com/technology/cybersecurity/cryptos-biggest-hacks-heists-after-15-billion-theft-bybit-2025-02-24/",
+      "first": {
+        "ok": false,
+        "status": 401,
+        "final_url": "https://www.reuters.com/technology/cybersecurity/cryptos-biggest-hacks-heists-after-15-billion-theft-bybit-2025-02-24/",
+        "error": null
+      },
+      "second": {
+        "ok": false,
+        "status": 401,
+        "final_url": "https://www.reuters.com/technology/cybersecurity/cryptos-biggest-hacks-heists-after-15-billion-theft-bybit-2025-02-24/",
+        "error": null
+      },
+      "classification": "blocked"
+    },
+    {
+      "evidence_id": "bir_src_000021",
+      "url": "https://www.bnbchain.org/en/blog/bnb-chain-ecosystem-update",
+      "first": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.bnbchain.org/en/blog/bnb-chain-ecosystem-update",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.bnbchain.org/en/blog/bnb-chain-ecosystem-update",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000022",
+      "url": "https://www.bnbchain.org/en/blog/bnb-chain-a-decentralized-response",
+      "first": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.bnbchain.org/en/blog/bnb-chain-a-decentralized-response",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.bnbchain.org/en/blog/bnb-chain-a-decentralized-response",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000023",
+      "url": "https://www.elliptic.co/blog/analysis/attack-mints-569-million-worth-of-bnb-tokens-in-bsc-bridge-exploit",
+      "first": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.elliptic.co/insights/attack-mints-569-million-worth-of-bnb-tokens-in-bsc-bridge-exploit/",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.elliptic.co/insights/attack-mints-569-million-worth-of-bnb-tokens-in-bsc-bridge-exploit/",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000024",
+      "url": "https://www.bnbchain.org/en/bnb-chain-fusion",
+      "first": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.bnbchain.org/en/bnb-chain-fusion",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.bnbchain.org/en/bnb-chain-fusion",
+        "error": null
+      },
+      "classification": "healthy"
+    }
+  ],
+  "selected_count": 12,
+  "live_evidence_count": 287
+}
