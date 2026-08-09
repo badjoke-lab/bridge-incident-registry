@@ -20,32 +20,35 @@ Evidence    287
 Phase 0  Specification and foundation              complete
 Phase 1  Canonical model, UI, validation, seeds    complete
 Phase 2  Record expansion                          complete through Batch 7
-Phase 3  Full-corpus quality strengthening         active
+Phase 3  Full-corpus quality strengthening         active maintenance
          Source-count remediation                  complete — PRs #78–#99
          Hard source-count equality gate           active
-         Source-quality baseline                   complete — PR #100
-         Source-quality remediation                complete — PRs #103–#107
+         Source-quality baseline/remediation       complete — PRs #100–#107
          Event Tier 1 remediation                  production-verified — PRs #108–#116
          Nerve source boundary                     reviewed — PR #117
          Archive capture Batches 1–18              production-verified — PRs #118–#198
-         Previously-unreviewed archive queue       exhausted
-         Deferred Archive Retry 01                 production-verified — PRs #199–#201
-         Deferred Archive Retry 02                 production-verified — PRs #202–#204
-         Deferred Archive Retry 03                 review complete — PR #205, approved 0
-         Deferred Archive Retry 04                 review complete — PR #206, approved 0
+         Deferred Archive Retries 01–02            production-verified — PRs #199–#204
+         Deferred Archive Retries 03–04            review complete — PRs #205–#206
          Fresh deferred retry pool                 exhausted
          Event Primary Remediation 01              production-verified — PRs #207–#209
          Event Primary Review 02                   complete — PR #211
          Event Tier 1 fixture strengthening        complete — PR #212
          Event Primary Remediation 02              production-verified — PRs #213–#214
+         Cross-record bridge integrity             blocking — PR #218
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
-Phase 5  Monitoring and candidate collection       next
+Phase 5  Monitoring and candidate collection       active
+         Review-gated foundation                   complete — PR #217
+         Initial signal state / dedupe proof       complete — PR #223
+         Review-branch fallback + duplicate guard  complete — PR #225
+         Evidence health watch                     complete — PR #226
+         External candidate discovery              next
+         News / regulatory event watch             planned
+         Active bridge/domain watch                planned
+         Site / SEO watch                          planned
 Release  v1 hardening                              planned
 ```
-
-The public UI/support follow-up is current through PR #187. Representative screenshots, expanded incident and bridge discovery, filters, pagination, detail TOCs, Support, project navigation, and shared BadJoke-Lab wallet presentation are merged without changing canonical entity/event counts.
 
 ## Latest completed production checkpoint
 
@@ -69,8 +72,6 @@ Publication attempt           3 / 20
 Build-input refresh           not required
 ```
 
-Attempts 1–2 correctly rejected the old 284-evidence production build. Attempt 3 observed Evidence 287 and passed complete canonical-derived equality.
-
 ## Current quality state
 
 ```text
@@ -90,14 +91,36 @@ X/Twitter records unarchived          29
 Unknown URL status                     0
 ```
 
-The archive-preservation fresh queue is exhausted under the current acceptance boundary. Event-primary remediation has also reached a reviewed boundary: four non-intentional gaps remain deferred pending better first-party evidence, six Tier 1 gaps are intentional secondary-only records, and `bir_ev_000150` is intentionally non-primary direct security monitoring. Do not chase coverage metrics by weakening source semantics.
+The archive-preservation fresh queue and primary-remediation immediate queue have reached reviewed boundaries. Four non-intentional primary gaps remain deferred pending stronger first-party evidence; six Tier 1 gaps are intentional secondary-only records; `bir_ev_000150` remains intentionally non-primary direct security monitoring. Further improvements are research-triggered, not metric-driven.
+
+## Phase 5 live proof
+
+The monitoring foundation is no longer theoretical.
+
+```text
+First changed-signal run              31301301277
+Initial candidate                     Issue #171 Boltz — B / hold
+Initial review-state PR               #223
+Unchanged rerun                       has_changes=false
+Evidence-health live run              31301765004 / 93215576787
+Live evidence URLs                    287
+Selected URLs                          12
+Two-pass probes                        24
+Hard 404/410 findings                   0
+Canonical diff                          none
+Monitoring job result                 success
+```
+
+The workflow fingerprints canonical data before/after execution, rejects canonical diffs, writes review-only data under `data-staging`, suppresses unchanged signals, and refuses duplicate scheduled review work. Evidence health requires two independent 404/410 responses before emitting a degradation finding; access blocks, rate limits, transient failures, and mixed results do not become dead-link findings.
+
+Because repository Actions settings currently disallow `GITHUB_TOKEN` pull-request creation, the workflow retains an already-validated `auto/monitoring/*` review branch and succeeds on that specific permission error. A connected app/operator can open the PR. Automatic canonical publication remains prohibited.
 
 ## Immediate targets
 
-1. strengthen remaining validators and controlled-failure fixtures where assumptions can be made more explicit;
-2. begin Phase 5 review-gated monitoring and candidate collection with no automatic canonical publication;
-3. retain the four deferred non-intentional primary gaps as research backlog items;
-4. maintain public-contract and UI compatibility checks;
+1. implement external bridge/protocol candidate discovery with review-only output;
+2. add closure/pause/hack/regulatory news monitoring after candidate discovery is stable;
+3. add active bridge/domain and public-site monitoring incrementally;
+4. maintain source-quality, validator, public-contract, and UI compatibility gates;
 5. complete v1 documentation, accessibility, performance, compatibility, and release checks.
 
 ## Production publication gate
@@ -108,12 +131,12 @@ Delay          15 seconds
 Maximum wait   5 minutes per job
 ```
 
-Publication convergence requires matching record counts, canonical-only markers, complete transformed JSON equality, exact record order, and all route, sitemap, metadata, redirect, content-type, and cache assertions. Remediation 02 again proved that stale production must be rejected until complete content equality appears.
+Publication convergence requires matching record counts, canonical-only markers, complete transformed JSON equality, exact record order, and all route, sitemap, metadata, redirect, content-type, and cache assertions.
 
 ## Remaining roadmap
 
-1. validator strengthening;
-2. Phase 5 monitoring and candidate collection with review-only outputs;
+1. Phase 5 external candidate discovery;
+2. Phase 5 news/regulatory and active-status monitoring;
 3. public-contract/UI compatibility maintenance;
 4. v1 documentation, accessibility, performance, compatibility, and release checks;
 5. research-triggered primary/archive remediation only when new source material or changed conditions justify it.
@@ -146,3 +169,4 @@ Publication convergence requires matching record counts, canonical-only markers,
 24. Do not immediately recycle deferred archive failures once the fresh retry pool is exhausted.
 25. Primary-evidence remediation must be claim-relative; do not upgrade secondary or research sources merely to reduce a coverage metric.
 26. Monitoring output is review material only and must never publish canonical records automatically.
+27. Monitoring hard-failure signals require bounded reproducible conditions; access blocking or transient network failure is not canonical evidence degradation.
