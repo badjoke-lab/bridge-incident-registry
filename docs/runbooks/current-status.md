@@ -41,8 +41,9 @@ Deferred Archive Retry 03            review complete — PR #205, approved 0
 Deferred Archive Retry 04            review complete — PR #206, approved 0
 Fresh deferred retry pool            exhausted
 Event Primary Remediation 01         production-verified — PRs #207–#209
-Event Primary Review 02                complete — PR #211
-Event Primary Remediation 02           canonical application in progress
+Event Primary Review 02              complete — PR #211
+Event Tier 1 fixture strengthening   complete — PR #212
+Event Primary Remediation 02         production-verified — PRs #213–#214
 Unknown URL-status hard ceiling      active at 0
 Full production-content equality     active
 ```
@@ -87,26 +88,9 @@ X/Twitter evidence records unarchived     29
 Unknown URL status                         0
 ```
 
-Archive Capture Batch 18 exhausted the previously-unreviewed archive candidate set. A repository-derived inventory then found 45 reviewed-but-unarchived evidence records across 32 unique URLs.
+Archive Capture Batch 18 exhausted the previously-unreviewed archive candidate set. Deferred Retries 03–04 exhausted the fresh reviewed-unresolved retry pool without weakening acceptance rules.
 
-Deferred Archive Retry 01 recovered two sources and Retry 02 recovered one additional source. Across Retries 01–02, three evidence records on three unique URLs were removed from the original reviewed-unresolved inventory, leaving 42 reviewed-but-unarchived evidence records across 29 unique URLs.
-
-Deferred Retry 03 then reviewed ten of the twelve URLs that had not been part of the recent Retry 01/02 scopes. None satisfied the unchanged two-pass exact-replay boundary. Deferred Retry 04 reviewed the final two fresh URLs — `bir_src_000277` and `bir_src_000282` — and also approved none. The not-recently-retried fresh pool is therefore exhausted. The remaining reviewed-unarchived pool consists only of URLs already explicitly retried under the current acceptance boundary.
-
-Event Primary Remediation 01 reviewed the nine non-intentional primary-evidence gaps and approved exactly two bounded remediations:
-
-```text
-bir_ev_000002 / bir_src_000003  corrected OFAC Ronin/Lazarus attribution source and primary classification
-bir_ev_000011 / bir_src_000014  FBI Horizon attribution source reclassified as claim-relative primary
-```
-
-Event Primary Review 02 approved three additional event-scoped first-party copies without adding unique source URLs:
-
-```text
-bir_ev_000013  Poly Network first-party source copy
-bir_ev_000124  Transit Finance first-party source copy
-bir_ev_000125  Transit Finance first-party source copy
-```
+Event Primary Remediation 01 reduced event primary gaps from 16 to 14. Event Primary Review 02 then approved three event-scoped first-party copies using already-canonical, already-archived Poly Network and Transit Finance source URLs. PR #213 applied those records and PR #214 production-verified them, reducing event primary gaps to 11 without increasing unique archive-risk queues.
 
 Four non-intentional reviewed candidates remain deferred pending stronger source-content support:
 
@@ -117,7 +101,7 @@ bir_ev_000144
 bir_ev_000148
 ```
 
-All event Tier 1 gaps remain reviewed. The six intentional secondary-only Tier 1 gaps are:
+The six intentional secondary-only Tier 1 gaps remain:
 
 ```text
 bir_ev_000006
@@ -128,36 +112,41 @@ bir_ev_000087
 bir_ev_000088
 ```
 
+`bir_ev_000150` remains intentionally non-primary because its PeckShield evidence is a direct security-monitoring observation rather than an operator statement.
+
 Remaining incident-level gap:
 
 - `bir_inc_000026` — Nerve Bridge 2021 metapool exploit. PR #117 records the completed first-party research boundary; no stable incident-specific primary source was located and the gap remains intentional.
 
-## Latest completed production checkpoint before Remediation 02
+## Latest completed production checkpoint
 
 ```text
-Review PR                     #207
-Canonical data PR             #208
-Canonical merge               1638b47eb3c2e9066d0323d6d5a4abe8aa85cfb2
-Production audit PR           #209
-Production verify run         31299468964
-Production verify job         93209808769
-Verified state                33 / 34 / 183 / 284
-Events without primary        14 / 183
+Review PR                     #211
+Canonical data PR             #213
+Canonical merge               f2874a2d0ffe6877eadf6619cd6100a9b9b3991b
+Production audit PR           #214
+Production verify run         31300484236
+Production verify job         93212360938
+Verified state                33 / 34 / 183 / 287
+Primary evidence              206 / 287
+Tier 1 evidence               223 / 287
+Archived evidence             130 / 287
+Events without primary        11 / 183
 Canonical content match       true
 Verified HTML routes          72
 Verified redirects            74
-Generated at                  2026-08-09T06:42:13.747Z
-Publication attempt           4 / 20
+Generated at                  2026-08-09T07:08:45.362Z
+Publication attempt           3 / 20
 Build-input refresh           not required
 ```
 
-Attempts 1–3 correctly rejected stale same-count evidence at `bir_src_000003`. Attempt 4 observed the new generated build and passed complete canonical-derived field-level equality.
+Attempts 1–2 correctly rejected the prior 284-evidence production build. Attempt 3 observed the new 287-evidence build and passed complete canonical-derived field-level equality.
 
 ## Next
 
-1. production-verify Event Primary Remediation 02, then review the remaining 11 events without primary evidence while preserving intentional secondary-only boundaries;
-2. keep intentional secondary-only gaps explicit rather than weakening the evidence standard;
-3. strengthen remaining validators;
-4. begin review-gated monitoring and candidate collection without automatic canonical publication;
+1. strengthen remaining validators and controlled-failure fixtures where corpus-shape assumptions remain;
+2. begin Phase 5 review-gated monitoring and candidate collection without automatic canonical publication;
+3. keep the four deferred non-intentional primary gaps on a research backlog until stronger first-party evidence appears;
+4. maintain public-contract and UI compatibility checks;
 5. continue v1 documentation, accessibility, performance, compatibility, and release hardening;
 6. revisit deferred archive failures only after conditions change or new canonical source URLs enter the corpus.
