@@ -28,6 +28,17 @@ function safeHttpUrl(input) {
   }
 }
 
+function firstHttpUrl(input) {
+  if (Array.isArray(input)) {
+    for (const item of input) {
+      const url = safeHttpUrl(item);
+      if (url) return url;
+    }
+    return null;
+  }
+  return safeHttpUrl(input);
+}
+
 function decodeScriptJson(text) {
   return text.replace(/&quot;/g, '"').replace(/&amp;/g, "&").replace(/&#x27;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">");
 }
@@ -46,7 +57,7 @@ function hackLike(row) {
   if (!row || typeof row !== "object" || Array.isArray(row)) return false;
   if (!value(row.name)) return false;
   if (row.date == null) return false;
-  return row.amount != null || row.technique != null || row.classification != null || row.bridge != null || row.link != null;
+  return row.amount != null || row.technique != null || row.classification != null || row.bridgeHack != null || row.bridge != null || row.source != null || row.link != null;
 }
 
 function findHackArray(root) {
@@ -115,10 +126,10 @@ export function parseDefillamaHacksPage(html) {
     chains: normalizeChains(row.chains ?? row.chain),
     classification: value(row.classification) || null,
     technique: value(row.technique) || null,
-    target: value(row.target) || null,
+    target: value(row.target ?? row.targetType) || null,
     language: value(row.language) || null,
-    bridge: normalizeBridgeFlag(row.bridge),
-    link: safeHttpUrl(row.link ?? row.url)
+    bridge: normalizeBridgeFlag(row.bridgeHack ?? row.bridge),
+    link: firstHttpUrl(row.source ?? row.link ?? row.url)
   })).sort((a, b) => (b.date ?? "").localeCompare(a.date ?? "") || a.name.localeCompare(b.name));
 }
 
