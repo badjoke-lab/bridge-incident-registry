@@ -20,9 +20,10 @@ function fillerRows() {
     amount: 1000 + index,
     classification: "Protocol Logic",
     technique: "Fixture exploit",
-    bridge: false,
-    link: `https://news.example/nonbridge-${index}`,
-    chains: ["Ethereum"]
+    bridgeHack: false,
+    source: `https://news.example/nonbridge-${index}`,
+    chain: ["Ethereum"],
+    targetType: "DeFi Protocol"
   }));
 }
 
@@ -42,9 +43,10 @@ const initialRows = [
     amount: 1000000,
     classification: "Protocol Logic",
     technique: "Fixture verification exploit",
-    bridge: true,
-    link: "https://news.example/ronin-old",
-    chains: ["Ethereum", "Ronin"]
+    bridgeHack: true,
+    source: "https://news.example/ronin-old",
+    chain: ["Ethereum", "Ronin"],
+    targetType: "DeFi Protocol"
   },
   {
     name: "Historical Unknown Bridge",
@@ -52,14 +54,23 @@ const initialRows = [
     amount: 2000000,
     classification: "Infrastructure",
     technique: "Fixture key compromise",
-    bridge: true,
-    link: "https://news.example/unknown-old",
-    chains: ["Ethereum"]
+    bridgeHack: true,
+    source: ["not-a-url", "https://news.example/unknown-old"],
+    chain: ["Ethereum"],
+    targetType: "DeFi Protocol"
   }
 ];
 
 const parsed = parseDefillamaHacksPage(html(initialRows));
 if (parsed.length !== 26) throw new Error(`expected 26 parsed hack rows, got ${parsed.length}`);
+const parsedRonin = parsed.find((row) => row.name === "Ronin Bridge");
+const parsedUnknown = parsed.find((row) => row.name === "Historical Unknown Bridge");
+if (!parsedRonin?.bridge || parsedRonin.link !== "https://news.example/ronin-old" || parsedRonin.target !== "DeFi Protocol") {
+  throw new Error(`raw bridgeHack/source/targetType fields were not normalized: ${JSON.stringify(parsedRonin)}`);
+}
+if (!parsedUnknown?.bridge || parsedUnknown.link !== "https://news.example/unknown-old") {
+  throw new Error(`array source fallback was not normalized: ${JSON.stringify(parsedUnknown)}`);
+}
 
 const state = { version: 1, signals: {} };
 const fixtureSourceSha = "a".repeat(64);
@@ -71,7 +82,7 @@ const baseline = watchDefillamaHacksPage({
 if (!baseline.baseline_initialized || !baseline.state_changed || baseline.candidates.length !== 0) {
   throw new Error(`first hacks discovery run must be zero-candidate baseline: ${JSON.stringify(baseline)}`);
 }
-if (baseline.relevant_count !== 2 || baseline.baseline_seeded_count !== 2 || baseline.exact_canonical_matches !== 1) {
+if (baseline.relevant_count !== 2 || baseline.baseline_seeded_count !== 2 || baseline.exact_canonical_matches !== 1 || baseline.bridge_flag_rows !== 2) {
   throw new Error(`baseline relevant counts mismatch: ${JSON.stringify(baseline)}`);
 }
 if (baseline.source.url !== "https://api.llama.fi/hacks" || baseline.source.source_kind !== "legacy_public_json" || baseline.source.sha256 !== fixtureSourceSha) {
@@ -98,9 +109,10 @@ const changedRows = [
     amount: 3000000,
     classification: "Protocol Logic",
     technique: "New fixture exploit",
-    bridge: true,
-    link: "https://news.example/wormhole-new",
-    chains: ["Ethereum", "Solana"]
+    bridgeHack: true,
+    source: "https://news.example/wormhole-new",
+    chain: ["Ethereum", "Solana"],
+    targetType: "DeFi Protocol"
   },
   {
     name: "New Unknown Bridge",
@@ -108,9 +120,10 @@ const changedRows = [
     amount: 4000000,
     classification: "Infrastructure",
     technique: "New fixture compromise",
-    bridge: true,
-    link: "https://news.example/new-unknown",
-    chains: ["Ethereum"]
+    bridgeHack: true,
+    source: "https://news.example/new-unknown",
+    chain: ["Ethereum"],
+    targetType: "DeFi Protocol"
   },
   {
     name: "Canonical Duplicate Bridge",
@@ -118,9 +131,10 @@ const changedRows = [
     amount: 5000000,
     classification: "Protocol Logic",
     technique: "Duplicate fixture",
-    bridge: true,
-    link: canonicalDuplicateUrl,
-    chains: ["Ethereum"]
+    bridgeHack: true,
+    source: canonicalDuplicateUrl,
+    chain: ["Ethereum"],
+    targetType: "DeFi Protocol"
   }
 ];
 
@@ -135,17 +149,17 @@ if (changed.emitted_count !== 2 || changed.canonical_evidence_duplicates !== 1) 
 const known = changed.candidates.find((candidate) => candidate.candidate_class === "B");
 const unresolved = changed.candidates.find((candidate) => candidate.candidate_class === "C");
 if (!known || known.canonical_name !== "Wormhole") throw new Error(`exact canonical hack name must be B/hold: ${JSON.stringify(known)}`);
-if (!unresolved || unresolved.canonical_name !== "New Unknown Bridge") throw new Error(`unresolved bridge-flag hack must be C/hold: ${JSON.stringify(unresolved)}`);
+if (!unresolved || unresolved.canonical_name !== "New Unknown Bridge") throw new Error(`unresolved bridgeHack row must be C/hold: ${JSON.stringify(unresolved)}`);
 if (!known.source_urls.includes("https://api.llama.fi/hacks")) throw new Error("candidate must retain the actual discovery source URL");
 
 const capState = { version: 1, signals: {} };
 watchDefillamaHacksPage({ html: html(initialRows), canonicalBridges: bridges, canonicalEvidence: evidence, state: capState, applySignal, observedAt: "2026-08-09T08:23:00.000Z", limit: 8 });
 const capRows = [
   ...initialRows,
-  { name: "Cap Bridge A", date: 1786464000, amount: 1, bridge: true, technique: "x", link: "https://cap.example/a" },
-  { name: "Cap Bridge B", date: 1786550400, amount: 2, bridge: true, technique: "y", link: "https://cap.example/b" }
+  { name: "Cap Bridge A", date: 1786464000, amount: 1, bridgeHack: true, technique: "x", source: "https://cap.example/a", targetType: "DeFi Protocol" },
+  { name: "Cap Bridge B", date: 1786550400, amount: 2, bridgeHack: true, technique: "y", source: "https://cap.example/b", targetType: "DeFi Protocol" }
 ];
 const capped = watchDefillamaHacksPage({ html: html(capRows), canonicalBridges: bridges, canonicalEvidence: evidence, state: capState, applySignal, observedAt: "2026-08-09T08:24:00.000Z", limit: 1 });
 if (capped.emitted_count !== 1 || capped.deferred_changed_count !== 1) throw new Error(`candidate ceiling must defer overflow: ${JSON.stringify(capped)}`);
 
-console.log("DefiLlama hacks discovery controlled tests passed (fail-closed parser, exact provenance, bridge baseline, B/C classification, canonical URL suppression, cap deferral).");
+console.log("DefiLlama hacks discovery controlled tests passed (fail-closed parser, bridgeHack/source schema, exact provenance, bridge baseline, B/C classification, canonical URL suppression, cap deferral).");
