@@ -45,17 +45,13 @@ jobs:
         run: |
           force="${{ inputs.force || false }}"
           open_count="$(gh pr list --state open --search 'in:title "Auto monitoring report:"' --json number --jq 'length')"
-
           git fetch --prune origin '+refs/heads/auto/monitoring/*:refs/remotes/origin/auto/monitoring/*' || true
           pending_branch_count=0
           while IFS= read -r ref; do
             [ -z "$ref" ] && continue
             sha="$(git rev-parse "$ref")"
-            if ! git merge-base --is-ancestor "$sha" origin/main; then
-              pending_branch_count=$((pending_branch_count + 1))
-            fi
+            if ! git merge-base --is-ancestor "$sha" origin/main; then pending_branch_count=$((pending_branch_count + 1)); fi
           done < <(git for-each-ref --format='%(refname:short)' refs/remotes/origin/auto/monitoring/)
-
           if [ "$force" != "true" ] && { [ "$open_count" -gt 0 ] || [ "$pending_branch_count" -gt 0 ]; }; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
             echo "Monitoring review work already exists (open_prs=$open_count, pending_branches=$pending_branch_count); this run will not create another."
@@ -75,60 +71,27 @@ jobs:
         run: |
           source_url="https://raw.githubusercontent.com/DefiLlama/bridges-server/master/src/data/bridgeNetworkData.ts"
           output=".monitor-input/defillama-bridgeNetworkData.ts"
-          if curl --fail --location --silent --show-error \
-            --retry 2 --retry-delay 2 --connect-timeout 10 --max-time 45 \
-            -H "User-Agent: BIR-review-monitor/1" \
-            "$source_url" -o "$output"; then
+          if curl --fail --location --silent --show-error --retry 2 --retry-delay 2 --connect-timeout 10 --max-time 45 \
+            -H "User-Agent: BIR-review-monitor/1" "$source_url" -o "$output"; then
             echo "Collected external bridge registry: $(wc -c < "$output") bytes"
           else
             rm -f "$output"
             echo "::warning::External bridge registry was unavailable; candidate discovery is skipped for this run."
           fi
 
-      - name: Collect bounded GDELT news discovery inputs
+      - name: Collect public DefiLlama hacks page
         if: steps.duplicate.outputs.skip != 'true'
         shell: bash
         run: |
-          start="$(date -u -d '8 days ago' +%Y%m%d%H%M%S)"
-          end="$(date -u +%Y%m%d%H%M%S)"
-          security_query='("cross-chain bridge" OR "blockchain bridge" OR "crypto bridge") (hack OR hacked OR exploit OR exploited OR attack OR drained)'
-          operations_query='("cross-chain bridge" OR "blockchain bridge" OR "crypto bridge") (paused OR pause OR suspended OR suspend OR shutdown OR "shut down")'
-
-          fetch_gdelt() {
-            local query="$1"
-            local output="$2"
-            local url
-            url="$(QUERY="$query" START="$start" END="$end" node -e '
-              const p = new URLSearchParams({
-                query: process.env.QUERY,
-                mode: "artlist",
-                maxrecords: "75",
-                startdatetime: process.env.START,
-                enddatetime: process.env.END,
-                sort: "datedesc",
-                format: "json"
-              });
-              process.stdout.write(`https://api.gdeltproject.org/api/v2/doc/doc?${p}`);
-            ')"
-            curl --fail --location --silent --show-error \
-              --retry 2 --retry-delay 3 --connect-timeout 10 --max-time 60 \
-              -H "User-Agent: BIR-review-monitor/1" \
-              "$url" -o "$output" || return 1
-            node -e '
-              const fs = require("fs");
-              const p = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
-              if (!p || typeof p !== "object" || (!Array.isArray(p.articles) && !Array.isArray(p.items))) process.exit(2);
-            ' "$output" || return 1
-          }
-
-          security_output=".monitor-input/gdelt-security.json"
-          operations_output=".monitor-input/gdelt-operations.json"
-          if fetch_gdelt "$security_query" "$security_output" && fetch_gdelt "$operations_query" "$operations_output"; then
-            printf '%s..%s\n' "$start" "$end" > .monitor-input/gdelt-window.txt
-            echo "Collected complete GDELT input pair for $start..$end"
+          output=".monitor-input/defillama-hacks.html"
+          if curl --fail --location --silent --show-error --retry 2 --retry-delay 2 --connect-timeout 10 --max-time 60 \
+            -H "User-Agent: Mozilla/5.0 (compatible; BIR-review-monitor/1; +https://bir.badjoke-lab.com/)" \
+            -H "Accept: text/html,application/xhtml+xml" \
+            "https://defillama.com/hacks" -o "$output" && grep -q '__NEXT_DATA__' "$output"; then
+            echo "Collected DefiLlama public hacks page: $(wc -c < "$output") bytes"
           else
-            rm -f "$security_output" "$operations_output" .monitor-input/gdelt-window.txt
-            echo "::warning::GDELT input pair was unavailable or malformed; news discovery is skipped for this run."
+            rm -f "$output"
+            echo "::warning::DefiLlama public hacks page was unavailable or did not expose parseable page data; incident-feed adapter is skipped for this run."
           fi
 
       - name: Run guarded monitoring
@@ -147,12 +110,10 @@ jobs:
               --external-candidate-limit 8
             )
           fi
-          if [ -s .monitor-input/gdelt-security.json ] && [ -s .monitor-input/gdelt-operations.json ] && [ -s .monitor-input/gdelt-window.txt ]; then
+          if [ -s .monitor-input/defillama-hacks.html ]; then
             monitor_args+=(
-              --gdelt-security-input .monitor-input/gdelt-security.json
-              --gdelt-operations-input .monitor-input/gdelt-operations.json
-              --gdelt-source-window "$(cat .monitor-input/gdelt-window.txt)"
-              --gdelt-candidate-limit 8
+              --defillama-hacks-page-input .monitor-input/defillama-hacks.html
+              --defillama-hacks-candidate-limit 8
             )
           fi
           npm run monitoring:run -- \
@@ -199,49 +160,30 @@ jobs:
           git add data-staging/monitoring data-staging/watchlists/auto
           git commit -m "monitoring: record ${{ steps.monitor.outputs.date_key }} signals"
           git push origin "$branch"
-
           summary="$(find "data-staging/monitoring/${{ steps.monitor.outputs.date_key }}" -name summary.md -type f | sort | tail -n 1)"
           body_file="$(mktemp)"
           {
-            echo "## Review-only monitoring output"
-            echo
-            echo "This PR was generated by BIR Monitoring. It does not modify canonical bridge, incident, event, or evidence data."
-            echo
-            cat "$summary"
-            echo
-            echo "## Operator boundary"
-            echo
+            echo "## Review-only monitoring output"; echo
+            echo "This PR was generated by BIR Monitoring. It does not modify canonical bridge, incident, event, or evidence data."; echo
+            cat "$summary"; echo
+            echo "## Operator boundary"; echo
             echo "Merge only to retain the monitoring signal/state. Any canonical investigation or record change requires a separate reviewed branch and PR."
           } > "$body_file"
-
           set +e
-          pr_output="$(gh pr create \
-            --base main \
-            --head "$branch" \
-            --title "Auto monitoring report: ${{ steps.monitor.outputs.date_key }}" \
-            --body-file "$body_file" 2>&1)"
+          pr_output="$(gh pr create --base main --head "$branch" --title "Auto monitoring report: ${{ steps.monitor.outputs.date_key }}" --body-file "$body_file" 2>&1)"
           pr_status=$?
           set -e
-
-          if [ "$pr_status" -eq 0 ]; then
-            printf '%s\n' "$pr_output"
-            exit 0
-          fi
-
+          if [ "$pr_status" -eq 0 ]; then printf '%s\n' "$pr_output"; exit 0; fi
           if grep -q "GitHub Actions is not permitted to create or approve pull requests" <<< "$pr_output"; then
             echo "::warning::GitHub Actions cannot create pull requests under the current repository setting. Review branch retained: $branch"
             {
-              echo "### Monitoring review branch retained"
-              echo
-              echo "GitHub Actions is currently not permitted to create pull requests."
-              echo
-              echo "Review branch: \`$branch\`"
-              echo
+              echo "### Monitoring review branch retained"; echo
+              echo "GitHub Actions is currently not permitted to create pull requests."; echo
+              echo "Review branch: \`$branch\`"; echo
               echo "The branch contains only the already-validated review-only monitoring paths. A repository operator or connected app can open the PR later."
             } >> "$GITHUB_STEP_SUMMARY"
             exit 0
           fi
-
           printf '%s\n' "$pr_output" >&2
           exit "$pr_status"
 
