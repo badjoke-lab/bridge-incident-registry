@@ -795,6 +795,16 @@
       "fingerprint": "healthy:ibcprotocol.dev->ibcprotocol.dev",
       "first_seen_at": "2026-08-09T12:27:15Z",
       "last_changed_at": "2026-08-09T12:27:15Z"
+    },
+    "rss-news:coindesk:baseline-v1": {
+      "fingerprint": "initialized-v1",
+      "first_seen_at": "2026-08-09T12:33:29Z",
+      "last_changed_at": "2026-08-09T12:33:29Z"
+    },
+    "rss-news:cointelegraph:baseline-v1": {
+      "fingerprint": "initialized-v1",
+      "first_seen_at": "2026-08-09T12:33:29Z",
+      "last_changed_at": "2026-08-09T12:33:29Z"
     }
   }
 }
