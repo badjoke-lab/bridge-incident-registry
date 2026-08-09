@@ -13,6 +13,7 @@ The active monitoring foundation covers:
 - canonical reference/unknown-URL health checks;
 - open GitHub issue monitoring for explicit review/monitoring signals;
 - bounded evidence-link degradation monitoring;
+- external bridge/protocol candidate discovery from a public registry snapshot;
 - fingerprint-based suppression of unchanged signals;
 - review-only JSON, watchlist, and Markdown outputs;
 - weekly or manual GitHub Actions execution;
@@ -65,6 +66,12 @@ Evidence-health key:
 evidence-health:<evidence_id>
 ```
 
+External bridge candidate key:
+
+```text
+external-bridge:defillama-bridges-server:<external_id>
+```
+
 Scheduled runs refuse to create duplicate work when either an open `Auto monitoring report:` pull request or an unmerged `auto/monitoring/*` review branch already exists. Manual dispatch with `force=true` can explicitly override that guard.
 
 ## GitHub issue adapter
@@ -81,6 +88,52 @@ Review ...
 New/changed issue signals enter the candidate watchlist as class `B` / `hold`. They are not treated as proof of a bridge incident.
 
 The first live foundation smoke detected Issue #171 exactly once. PR #223 persisted only monitoring/watchlist state. An unchanged rerun then emitted no finding/candidate and created no new review branch, proving end-to-end dedupe.
+
+## External bridge/protocol candidate adapter
+
+The external candidate adapter uses the public bridge metadata maintained in DefiLlama's `bridges-server` repository:
+
+```text
+https://raw.githubusercontent.com/DefiLlama/bridges-server/master/src/data/bridgeNetworkData.ts
+```
+
+The paid Bridges API is not required. The weekly workflow downloads the public source snapshot with bounded curl timeouts/retries. If the source is temporarily unavailable, external candidate discovery is skipped for that run without weakening the canonical guard or other monitors.
+
+The parser reads active top-level bridge objects and ignores commented-out entries. It extracts only discovery metadata such as:
+
+```text
+external id
+display name
+bridge database name
+slug
+project URL
+chains
+```
+
+Before a candidate can be emitted, the adapter compares it against canonical bridges using:
+
+1. exact normalized canonical name;
+2. exact normalized alias;
+3. exact normalized slug / previous slug / redirect slug;
+4. exact official-domain match.
+
+Matched records are suppressed. The adapter does not use fuzzy matching to silently merge identities.
+
+An unmatched external registry entry is only a class `C` / `hold` candidate. Registry presence establishes neither an incident nor a BIR inclusion boundary. The required next action is:
+
+```text
+research_incident_boundary_and_primary_sources
+```
+
+The initial changed-candidate ceiling is:
+
+```text
+8 candidates per monitoring run
+```
+
+The monitor scans in stable external-ID order. Previously emitted unchanged candidates are skipped through fingerprint state, allowing later runs to advance through the remaining unmatched registry without flooding one review PR. A materially changed external entry may re-enter review.
+
+The external source SHA-256 is written into the monitor report for provenance. Candidate records include the external source metadata and project URL when it is a valid HTTP(S) URL.
 
 ## Evidence health adapter
 
@@ -123,11 +176,15 @@ open-PR / pending-review-branch guard
 ↓
 collect open GitHub review issues
 ↓
+collect public external bridge registry snapshot
+↓
 canonical fingerprint / health check
 ↓
 GitHub issue watch
 ↓
 bounded two-pass evidence health watch
+↓
+external bridge/protocol candidate watch
 ↓
 signal fingerprint + dedupe
 ↓
@@ -167,6 +224,8 @@ Canonical publication    none
 
 After PR #223 merged the signal fingerprint state, rerunning the same monitor produced `has_changes=false` and no new review branch.
 
+The evidence-health live smoke in run `31301765004` selected 12 of 287 live evidence URLs, performed 24 independent probes, emitted zero hard 404/410 findings, and left canonical data byte-identical.
+
 ## Tests
 
 `npm run monitoring:test` verifies:
@@ -178,7 +237,12 @@ After PR #223 merged the signal fingerprint state, rerunning the same monitor pr
 5. the same hard failure is deduped;
 6. a later two-pass healthy result emits one recovery finding;
 7. 403/access blocking does not become a dead-link signal;
-8. all four canonical files remain byte-identical.
+8. external-registry parsing ignores commented entries;
+9. an exact canonical bridge match is suppressed;
+10. one unmatched external bridge becomes a class `C` hold candidate;
+11. an unchanged external candidate is deduped;
+12. materially changed external metadata re-enters review;
+13. all four canonical files remain byte-identical.
 
 The normal repository `Check` workflow runs these controlled tests without external network access.
 
@@ -186,11 +250,10 @@ The normal repository `Check` workflow runs these controlled tests without exter
 
 Add adapters one at a time:
 
-1. external bridge/protocol candidate lists;
-2. closure/pause/hack/regulatory news signals;
-3. existing active bridge and official-domain status checks;
-4. archive-health refinement for already-dead sources;
-5. public site/SEO checks;
-6. monitoring-state and watchlist-resolution health.
+1. closure/pause/hack/regulatory news signals;
+2. existing active bridge and official-domain status checks;
+3. archive-health refinement for already-dead sources;
+4. public site/SEO checks;
+5. monitoring-state and watchlist-resolution health.
 
 Each module must first emit review artifacts only. Automatic canonical publication remains prohibited.

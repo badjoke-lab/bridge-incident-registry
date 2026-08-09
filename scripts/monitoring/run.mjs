@@ -6,6 +6,9 @@ import { applySignal, loadState, writeState } from "./core/state.mjs";
 import { writeMonitoringOutputs } from "./core/report.mjs";
 import { watchGithubIssues } from "./monitors/github-issue-watch.mjs";
 import { watchEvidenceHealth } from "./monitors/evidence-health-watch.mjs";
+import { watchExternalBridgeCandidates } from "./monitors/external-bridge-candidate-watch.mjs";
+
+const DEFAULT_EXTERNAL_BRIDGE_SOURCE_URL = "https://raw.githubusercontent.com/DefiLlama/bridges-server/master/src/data/bridgeNetworkData.ts";
 
 function arg(name, fallback = null) {
   const index = process.argv.indexOf(`--${name}`);
@@ -24,6 +27,14 @@ function readIssues(file) {
   return parsed;
 }
 
+function readTextInput(file, label) {
+  if (!file) return null;
+  if (!fs.existsSync(file)) throw new Error(`${label} input not found: ${file}`);
+  const text = fs.readFileSync(file, "utf8");
+  if (!text.trim()) throw new Error(`${label} input is empty: ${file}`);
+  return text;
+}
+
 const observedAt = arg("observed-at", new Date().toISOString());
 const dateKey = arg("date", observedAt.slice(0, 10).replaceAll("-", ""));
 const runId = arg("run-id", `run-${observedAt.replace(/[-:.TZ]/g, "").slice(0, 14)}`);
@@ -31,8 +42,15 @@ const issuesPath = arg("issues");
 const resultPath = arg("result", ".monitor-output/result.json");
 const evidenceHealthEnabled = flag("evidence-health");
 const evidenceProbeLimit = Number.parseInt(arg("evidence-probe-limit", "12"), 10);
+const externalBridgeSourcePath = arg("external-bridge-source");
+const externalBridgeSourceUrl = arg("external-bridge-source-url", DEFAULT_EXTERNAL_BRIDGE_SOURCE_URL);
+const externalCandidateLimit = Number.parseInt(arg("external-candidate-limit", "8"), 10);
+
 if (!Number.isInteger(evidenceProbeLimit) || evidenceProbeLimit < 0 || evidenceProbeLimit > 50) {
   throw new Error(`invalid evidence probe limit: ${evidenceProbeLimit}`);
+}
+if (!Number.isInteger(externalCandidateLimit) || externalCandidateLimit < 0 || externalCandidateLimit > 50) {
+  throw new Error(`invalid external candidate limit: ${externalCandidateLimit}`);
 }
 
 const before = canonicalFingerprints();
@@ -52,8 +70,29 @@ const evidenceResult = evidenceHealthEnabled
   ? await watchEvidenceHealth({ evidence: canonical.evidence, state, applySignal, observedAt, limit: evidenceProbeLimit })
   : { findings: [], probes: [], selected_count: 0, live_evidence_count: canonical.evidence.filter((source) => source.url_status === "live").length };
 
+const externalSourceText = readTextInput(externalBridgeSourcePath, "external bridge registry");
+const externalBridgeResult = externalSourceText
+  ? watchExternalBridgeCandidates({
+      sourceText: externalSourceText,
+      sourceUrl: externalBridgeSourceUrl,
+      canonicalBridges: canonical.bridges,
+      state,
+      applySignal,
+      observedAt,
+      limit: externalCandidateLimit
+    })
+  : {
+      source: null,
+      parsed_count: 0,
+      matched_existing_count: 0,
+      unchanged_count: 0,
+      deferred_changed_count: 0,
+      emitted_count: 0,
+      candidates: []
+    };
+
 const findings = [...issueResult.findings, ...evidenceResult.findings];
-const candidates = [...issueResult.candidates];
+const candidates = [...issueResult.candidates, ...externalBridgeResult.candidates];
 const hasChanges = findings.length > 0 || candidates.length > 0;
 let outputs = null;
 
@@ -68,7 +107,8 @@ if (hasChanges) {
     health,
     monitorReports: {
       "github-issue-watch": issueResult,
-      "evidence-health-watch": evidenceResult
+      "evidence-health-watch": evidenceResult,
+      ...(externalSourceText ? { "external-bridge-candidate-watch": externalBridgeResult } : {})
     }
   });
 }
@@ -88,6 +128,15 @@ const result = {
     selected_count: evidenceResult.selected_count,
     live_evidence_count: evidenceResult.live_evidence_count,
     finding_count: evidenceResult.findings.length
+  },
+  external_candidate_discovery: {
+    enabled: Boolean(externalSourceText),
+    parsed_count: externalBridgeResult.parsed_count,
+    matched_existing_count: externalBridgeResult.matched_existing_count,
+    unchanged_count: externalBridgeResult.unchanged_count,
+    deferred_changed_count: externalBridgeResult.deferred_changed_count,
+    emitted_count: externalBridgeResult.emitted_count,
+    source: externalBridgeResult.source
   },
   canonical_counts: health.counts,
   outputs

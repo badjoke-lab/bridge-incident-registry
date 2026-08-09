@@ -6,6 +6,7 @@ import process from "node:process";
 import { spawnSync } from "node:child_process";
 import { applySignal } from "./core/state.mjs";
 import { watchEvidenceHealth } from "./monitors/evidence-health-watch.mjs";
+import { watchExternalBridgeCandidates } from "./monitors/external-bridge-candidate-watch.mjs";
 
 const root = process.cwd();
 const runner = path.join(root, "scripts/monitoring/run.mjs");
@@ -79,6 +80,78 @@ async function testEvidenceHealth() {
   }
 }
 
+function testExternalCandidateDiscovery() {
+  const canonicalBridges = JSON.parse(fs.readFileSync(path.join(fixtureRoot, "data/bridges.json"), "utf8"));
+  const state = { version: 1, signals: {} };
+  const sourceUrl = "https://raw.githubusercontent.com/DefiLlama/bridges-server/master/src/data/bridgeNetworkData.ts";
+  const source = `
+export default [
+  {
+    id: 1,
+    displayName: "Ronin Bridge",
+    bridgeDbName: "ronin",
+    url: "https://bridge.roninchain.com/",
+    chains: ["Ethereum", "Ronin"],
+  },
+  // { id: 998, displayName: "Commented Bridge", bridgeDbName: "commented", url: "https://commented.invalid/", chains: ["Ethereum"] },
+  {
+    id: 999,
+    displayName: "Fixture Bridge",
+    bridgeDbName: "fixture",
+    slug: "fixture-bridge",
+    url: "https://fixture.invalid/",
+    chains: ["Ethereum", "Fixture"],
+  },
+];
+`;
+
+  const first = watchExternalBridgeCandidates({
+    sourceText: source,
+    sourceUrl,
+    canonicalBridges,
+    state,
+    applySignal,
+    observedAt: "2026-08-09T07:40:00.000Z",
+    limit: 8
+  });
+  if (first.parsed_count !== 2 || first.matched_existing_count !== 1 || first.candidates.length !== 1) {
+    throw new Error(`external discovery should suppress canonical match and emit one new candidate: ${JSON.stringify(first)}`);
+  }
+  if (first.candidates[0].candidate_class !== "C" || first.candidates[0].canonical_name !== "Fixture Bridge") {
+    throw new Error(`external discovery candidate classification mismatch: ${JSON.stringify(first.candidates[0])}`);
+  }
+  if (!state.signals["external-bridge:defillama-bridges-server:999"]) {
+    throw new Error("external discovery did not persist its dedupe fingerprint");
+  }
+
+  const repeated = watchExternalBridgeCandidates({
+    sourceText: source,
+    sourceUrl,
+    canonicalBridges,
+    state,
+    applySignal,
+    observedAt: "2026-08-09T07:41:00.000Z",
+    limit: 8
+  });
+  if (repeated.candidates.length !== 0 || repeated.unchanged_count !== 1) {
+    throw new Error(`unchanged external candidate should be suppressed: ${JSON.stringify(repeated)}`);
+  }
+
+  const changedSource = source.replace("https://fixture.invalid/", "https://fixture.invalid/v2/");
+  const changed = watchExternalBridgeCandidates({
+    sourceText: changedSource,
+    sourceUrl,
+    canonicalBridges,
+    state,
+    applySignal,
+    observedAt: "2026-08-09T07:42:00.000Z",
+    limit: 8
+  });
+  if (changed.candidates.length !== 1 || changed.candidates[0].canonical_name !== "Fixture Bridge") {
+    throw new Error(`materially changed external metadata should re-emit: ${JSON.stringify(changed)}`);
+  }
+}
+
 try {
   fs.cpSync(path.join(root, "data"), path.join(fixtureRoot, "data"), { recursive: true });
   const canonicalFiles = ["bridges.json", "incidents.json", "events.json", "evidence.json"];
@@ -100,6 +173,7 @@ try {
   }
 
   await testEvidenceHealth();
+  testExternalCandidateDiscovery();
 
   const after = Object.fromEntries(canonicalFiles.map((name) => [name, sha(path.join(fixtureRoot, "data", name))]));
   if (JSON.stringify(before) !== JSON.stringify(after)) throw new Error("monitoring changed canonical fixture data");
@@ -107,7 +181,7 @@ try {
   const state = JSON.parse(fs.readFileSync(path.join(fixtureRoot, "data-staging/monitoring/state.json"), "utf8"));
   if (!state.signals["github-issue:171"]) throw new Error("monitoring state did not retain issue signal");
 
-  console.log("Monitoring controlled tests passed (issue dedupe, evidence failure/recovery, access-block suppression, canonical guard).");
+  console.log("Monitoring controlled tests passed (issue dedupe, evidence health, external candidate dedupe/change detection, canonical guard).");
 } finally {
   fs.rmSync(fixtureRoot, { recursive: true, force: true });
 }
