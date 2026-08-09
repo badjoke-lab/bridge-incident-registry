@@ -128,6 +128,59 @@ withFixture(
 );
 
 withFixture(
+  "event-incident-bridge-mismatch",
+  (fixtureRoot) => {
+    const bridges = readJson(fixtureRoot, "data/bridges.json");
+    const incidents = readJson(fixtureRoot, "data/incidents.json");
+    const events = readJson(fixtureRoot, "data/events.json");
+    const event = events.find((item) => item.incident_id);
+    if (!event) throw new Error("fixture requires an incident-linked event");
+    const incident = incidents.find((item) => item.id === event.incident_id);
+    if (!incident) throw new Error("fixture requires a valid linked incident");
+    const otherBridge = bridges.find((item) => item.id !== incident.bridge_id);
+    if (!otherBridge) throw new Error("fixture requires a second bridge");
+    event.bridge_id = otherBridge.id;
+    writeJson(fixtureRoot, "data/events.json", events);
+  },
+  "event bridge mismatch"
+);
+
+withFixture(
+  "incident-evidence-bridge-mismatch",
+  (fixtureRoot) => {
+    const bridges = readJson(fixtureRoot, "data/bridges.json");
+    const incidents = readJson(fixtureRoot, "data/incidents.json");
+    const evidence = readJson(fixtureRoot, "data/evidence.json");
+    const source = evidence.find((item) => item.incident_id);
+    if (!source) throw new Error("fixture requires incident-linked evidence");
+    const incident = incidents.find((item) => item.id === source.incident_id);
+    if (!incident) throw new Error("fixture requires a valid linked incident");
+    const otherBridge = bridges.find((item) => item.id !== incident.bridge_id);
+    if (!otherBridge) throw new Error("fixture requires a second bridge");
+    source.bridge_id = otherBridge.id;
+    writeJson(fixtureRoot, "data/evidence.json", evidence);
+  },
+  "incident evidence bridge mismatch"
+);
+
+withFixture(
+  "event-evidence-bridge-mismatch",
+  (fixtureRoot) => {
+    const bridges = readJson(fixtureRoot, "data/bridges.json");
+    const events = readJson(fixtureRoot, "data/events.json");
+    const evidence = readJson(fixtureRoot, "data/evidence.json");
+    const source = evidence.find((item) => item.event_id);
+    if (!source) throw new Error("fixture requires event-linked evidence");
+    const event = events.find((item) => item.id === source.event_id);
+    if (!event) throw new Error("fixture requires a valid linked event");
+    const otherBridge = bridges.find((item) => item.id !== event.bridge_id);
+    if (!otherBridge) throw new Error("fixture requires a second bridge");
+    source.bridge_id = otherBridge.id;
+    writeJson(fixtureRoot, "data/evidence.json", evidence);
+  },
+  "event evidence bridge mismatch"
+);
+withFixture(
   "event-evidence-incident-mismatch",
   (fixtureRoot) => {
     const incidents = readJson(fixtureRoot, "data/incidents.json");
@@ -143,4 +196,4 @@ withFixture(
   "event evidence incident mismatch"
 );
 
-console.log("Full-corpus audit controlled failure tests passed (8 fixtures).");
+console.log("Full-corpus audit controlled failure tests passed (11 fixtures).");
