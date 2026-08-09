@@ -19,7 +19,7 @@
     "audit:source-quality": "node scripts/check-source-quality-baseline.mjs",
     "audit:source-quality:test": "node scripts/test-source-quality-baseline.mjs",
     "monitoring:run": "node scripts/monitoring/run.mjs",
-    "monitoring:test": "node scripts/monitoring/test.mjs && node scripts/monitoring/test-defillama-hacks-page.mjs && node scripts/monitoring/test-defillama-hacks-bridge-only.mjs && node scripts/monitoring/test-active-bridge-domain.mjs && node scripts/monitoring/test-rss-status-news.mjs",
+    "monitoring:test": "node scripts/monitoring/test.mjs && node scripts/monitoring/test-defillama-hacks-page.mjs && node scripts/monitoring/test-defillama-hacks-bridge-only.mjs && node scripts/monitoring/test-active-bridge-domain.mjs && node scripts/monitoring/test-rss-status-news.mjs && node scripts/monitoring/test-github-issue-lifecycle.mjs",
     "public:stage": "node scripts/build-public-data.mjs",
     "public:publish": "node scripts/publish-machine-data.mjs",
     "public:check": "node scripts/check-machine-data.mjs",
