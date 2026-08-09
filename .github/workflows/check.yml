@@ -51,6 +51,9 @@ jobs:
       - name: Test source quality regressions
         run: npm run audit:source-quality:test
 
+      - name: Test monitoring foundation
+        run: npm run monitoring:test
+
       - name: Test production content equality
         run: npm run production:content:test
 
