@@ -755,6 +755,46 @@
       "fingerprint": "initialized-v1",
       "first_seen_at": "2026-08-09T09:08:15Z",
       "last_changed_at": "2026-08-09T09:08:15Z"
+    },
+    "bridge-domain:bir_bridge_000013": {
+      "fingerprint": "healthy:li.fi->li.fi",
+      "first_seen_at": "2026-08-09T12:27:15Z",
+      "last_changed_at": "2026-08-09T12:27:15Z"
+    },
+    "bridge-domain:bir_bridge_000014": {
+      "fingerprint": "healthy:chainswap.com->chainswap.com",
+      "first_seen_at": "2026-08-09T12:27:15Z",
+      "last_changed_at": "2026-08-09T12:27:15Z"
+    },
+    "bridge-domain:bir_bridge_000015": {
+      "fingerprint": "healthy:cbridge.celer.network->cbridge.celer.network",
+      "first_seen_at": "2026-08-09T12:27:15Z",
+      "last_changed_at": "2026-08-09T12:27:15Z"
+    },
+    "bridge-domain:bir_bridge_000016": {
+      "fingerprint": "healthy:socket.tech->socket.tech",
+      "first_seen_at": "2026-08-09T12:27:15Z",
+      "last_changed_at": "2026-08-09T12:27:15Z"
+    },
+    "bridge-domain:bir_bridge_000018": {
+      "fingerprint": "healthy:rainbowbridge.app->rainbowbridge.app",
+      "first_seen_at": "2026-08-09T12:27:15Z",
+      "last_changed_at": "2026-08-09T12:27:15Z"
+    },
+    "bridge-domain:bir_bridge_000019": {
+      "fingerprint": "healthy:bridge.synapseprotocol.com->bridge.synapseprotocol.com",
+      "first_seen_at": "2026-08-09T12:27:15Z",
+      "last_changed_at": "2026-08-09T12:27:15Z"
+    },
+    "bridge-domain:bir_bridge_000020": {
+      "fingerprint": "healthy:nerve.network->nerve.network",
+      "first_seen_at": "2026-08-09T12:27:15Z",
+      "last_changed_at": "2026-08-09T12:27:15Z"
+    },
+    "bridge-domain:bir_bridge_000022": {
+      "fingerprint": "healthy:ibcprotocol.dev->ibcprotocol.dev",
+      "first_seen_at": "2026-08-09T12:27:15Z",
+      "last_changed_at": "2026-08-09T12:27:15Z"
     }
   }
 }

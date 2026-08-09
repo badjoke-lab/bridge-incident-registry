@@ -1,0 +1,185 @@
+{
+  "findings": [],
+  "probes": [
+    {
+      "bridge_id": "bir_bridge_000013",
+      "canonical_name": "LI.FI",
+      "status": "active",
+      "official_url": "https://li.fi/",
+      "official_domain": "li.fi",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://li.fi/",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://li.fi/",
+        "error": null
+      },
+      "classification": "healthy",
+      "final_host_consistent": true,
+      "observed_final_host": "li.fi"
+    },
+    {
+      "bridge_id": "bir_bridge_000014",
+      "canonical_name": "ChainSwap",
+      "status": "active",
+      "official_url": "https://www.chainswap.com/",
+      "official_domain": "chainswap.com",
+      "first": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.chainswap.com/",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.chainswap.com/",
+        "error": null
+      },
+      "classification": "healthy",
+      "final_host_consistent": true,
+      "observed_final_host": "chainswap.com"
+    },
+    {
+      "bridge_id": "bir_bridge_000015",
+      "canonical_name": "Celer cBridge",
+      "status": "active",
+      "official_url": "https://cbridge.celer.network/",
+      "official_domain": "cbridge.celer.network",
+      "first": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://cbridge.celer.network/",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://cbridge.celer.network/",
+        "error": null
+      },
+      "classification": "healthy",
+      "final_host_consistent": true,
+      "observed_final_host": "cbridge.celer.network"
+    },
+    {
+      "bridge_id": "bir_bridge_000016",
+      "canonical_name": "SOCKET Protocol",
+      "status": "active",
+      "official_url": "https://www.socket.tech/",
+      "official_domain": "socket.tech",
+      "first": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.socket.tech/",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.socket.tech/",
+        "error": null
+      },
+      "classification": "healthy",
+      "final_host_consistent": true,
+      "observed_final_host": "socket.tech"
+    },
+    {
+      "bridge_id": "bir_bridge_000018",
+      "canonical_name": "Rainbow Bridge",
+      "status": "active",
+      "official_url": "https://rainbowbridge.app/",
+      "official_domain": "rainbowbridge.app",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://rainbowbridge.app/",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://rainbowbridge.app/",
+        "error": null
+      },
+      "classification": "healthy",
+      "final_host_consistent": true,
+      "observed_final_host": "rainbowbridge.app"
+    },
+    {
+      "bridge_id": "bir_bridge_000019",
+      "canonical_name": "Synapse Protocol",
+      "status": "active",
+      "official_url": "https://bridge.synapseprotocol.com/",
+      "official_domain": "synapseprotocol.com",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bridge.synapseprotocol.com/",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bridge.synapseprotocol.com/",
+        "error": null
+      },
+      "classification": "healthy",
+      "final_host_consistent": true,
+      "observed_final_host": "bridge.synapseprotocol.com"
+    },
+    {
+      "bridge_id": "bir_bridge_000020",
+      "canonical_name": "NerveNetwork",
+      "status": "active",
+      "official_url": "https://nerve.network/",
+      "official_domain": "nerve.network",
+      "first": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://nerve.network/",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://nerve.network/",
+        "error": null
+      },
+      "classification": "healthy",
+      "final_host_consistent": true,
+      "observed_final_host": "nerve.network"
+    },
+    {
+      "bridge_id": "bir_bridge_000022",
+      "canonical_name": "Inter-Blockchain Communication Protocol",
+      "status": "active",
+      "official_url": "https://ibcprotocol.dev/",
+      "official_domain": "ibcprotocol.dev",
+      "first": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://ibcprotocol.dev/",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://ibcprotocol.dev/",
+        "error": null
+      },
+      "classification": "healthy",
+      "final_host_consistent": true,
+      "observed_final_host": "ibcprotocol.dev"
+    }
+  ],
+  "eligible_count": 22,
+  "selected_count": 8,
+  "baseline_seeded_count": 8,
+  "state_changed": true
+}

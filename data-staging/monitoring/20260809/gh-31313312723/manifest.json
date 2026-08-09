@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "run_id": "gh-31313312723",
+  "observed_at": "2026-08-09T12:27:15Z",
+  "findings_count": 0,
+  "candidate_count": 0,
+  "monitors": [
+    "active-bridge-domain-watch",
+    "defillama-hacks-page-watch",
+    "evidence-health-watch",
+    "external-bridge-candidate-watch",
+    "github-issue-watch"
+  ],
+  "canonical_counts": {
+    "bridges": 33,
+    "incidents": 34,
+    "events": 183,
+    "evidence": 287
+  },
+  "unknown_url_status": 0,
+  "reference_errors": 0
+}
