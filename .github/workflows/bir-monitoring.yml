@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
     inputs:
       force:
-        description: Run even when another auto-monitoring PR is already open
+        description: Run even when another monitoring review PR or pending review branch exists
         required: false
         type: boolean
         default: false
@@ -38,15 +38,26 @@ jobs:
         with:
           node-version: 22
 
-      - name: Avoid duplicate monitoring PRs
+      - name: Avoid duplicate monitoring review work
         id: duplicate
         shell: bash
         run: |
           force="${{ inputs.force || false }}"
           open_count="$(gh pr list --state open --search 'in:title "Auto monitoring report:"' --json number --jq 'length')"
-          if [ "$force" != "true" ] && [ "$open_count" -gt 0 ]; then
+
+          git fetch --prune origin '+refs/heads/auto/monitoring/*:refs/remotes/origin/auto/monitoring/*' || true
+          pending_branch_count=0
+          while IFS= read -r ref; do
+            [ -z "$ref" ] && continue
+            sha="$(git rev-parse "$ref")"
+            if ! git merge-base --is-ancestor "$sha" origin/main; then
+              pending_branch_count=$((pending_branch_count + 1))
+            fi
+          done < <(git for-each-ref --format='%(refname:short)' refs/remotes/origin/auto/monitoring/)
+
+          if [ "$force" != "true" ] && { [ "$open_count" -gt 0 ] || [ "$pending_branch_count" -gt 0 ]; }; then
             echo "skip=true" >> "$GITHUB_OUTPUT"
-            echo "An auto-monitoring PR is already open; this run will not create another."
+            echo "Monitoring review work already exists (open_prs=$open_count, pending_branches=$pending_branch_count); this run will not create another."
           else
             echo "skip=false" >> "$GITHUB_OUTPUT"
           fi
@@ -95,7 +106,7 @@ jobs:
             esac
           done <<< "$changed"
 
-      - name: Open review PR when signals changed
+      - name: Queue review when signals changed
         if: steps.duplicate.outputs.skip != 'true' && steps.monitor.outputs.has_changes == 'true'
         shell: bash
         run: |
@@ -106,6 +117,7 @@ jobs:
           git add data-staging/monitoring data-staging/watchlists/auto
           git commit -m "monitoring: record ${{ steps.monitor.outputs.date_key }} signals"
           git push origin "$branch"
+
           summary="$(find "data-staging/monitoring/${{ steps.monitor.outputs.date_key }}" -name summary.md -type f | sort | tail -n 1)"
           body_file="$(mktemp)"
           {
@@ -119,12 +131,38 @@ jobs:
             echo
             echo "Merge only to retain the monitoring signal/state. Any canonical investigation or record change requires a separate reviewed branch and PR."
           } > "$body_file"
-          gh pr create \
+
+          set +e
+          pr_output="$(gh pr create \
             --base main \
             --head "$branch" \
             --title "Auto monitoring report: ${{ steps.monitor.outputs.date_key }}" \
-            --body-file "$body_file"
+            --body-file "$body_file" 2>&1)"
+          pr_status=$?
+          set -e
+
+          if [ "$pr_status" -eq 0 ]; then
+            printf '%s\n' "$pr_output"
+            exit 0
+          fi
+
+          if grep -q "GitHub Actions is not permitted to create or approve pull requests" <<< "$pr_output"; then
+            echo "::warning::GitHub Actions cannot create pull requests under the current repository setting. Review branch retained: $branch"
+            {
+              echo "### Monitoring review branch retained"
+              echo
+              echo "GitHub Actions is currently not permitted to create pull requests."
+              echo
+              echo "Review branch: \`$branch\`"
+              echo
+              echo "The branch contains only the already-validated review-only monitoring paths. A repository operator or connected app can open the PR later."
+            } >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+
+          printf '%s\n' "$pr_output" >&2
+          exit "$pr_status"
 
       - name: No changed signals
         if: steps.duplicate.outputs.skip != 'true' && steps.monitor.outputs.has_changes != 'true'
-        run: echo "No new or changed review signals; no PR created."
+        run: echo "No new or changed review signals; no PR or review branch created."
