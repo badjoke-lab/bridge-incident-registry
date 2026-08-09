@@ -11,7 +11,7 @@ GitHub state and canonical JSON are authoritative.
 Bridges     33
 Incidents   34
 Events      183
-Evidence    284
+Evidence    287
 ```
 
 ## Current position
@@ -35,6 +35,8 @@ Phase 3  Full-corpus quality strengthening         active
          Deferred Archive Retry 04                 review complete — PR #206, approved 0
          Fresh deferred retry pool                 exhausted
          Event Primary Remediation 01              production-verified — PRs #207–#209
+         Event Primary Review 02                    complete — PR #211
+         Event Primary Remediation 02               canonical application in progress
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
@@ -44,7 +46,7 @@ Release  v1 hardening                              planned
 
 The public UI/support follow-up is current through PR #187. Representative screenshots, expanded incident and bridge discovery, filters, pagination, detail TOCs, Support, project navigation, and shared BadJoke-Lab wallet presentation are merged without changing canonical counts.
 
-## Latest completed production checkpoint
+## Latest completed production checkpoint before Remediation 02
 
 ```text
 Review PR                     #207
@@ -72,10 +74,10 @@ Incident source-count mismatches       0
 Event source-count mismatches          0
 Incidents without primary              1
 Incidents without Tier 1               1
-Events without primary                14
+Events without primary                11
 Events without Tier 1                  6
 Unreviewed event Tier 1 gaps            0
-Evidence with archived_url           127
+Evidence with archived_url           130
 Terminal unarchived unique URLs       15
 Terminal unarchived records           25
 Risky-host unarchived unique URLs     16
@@ -88,11 +90,11 @@ Archive Capture Batch 18 exhausted the previously-unreviewed archive queue. Defe
 
 There is no untouched archive-review Batch 19 and no fresh Deferred Retry 05 scope. Future preservation work must wait for materially changed conditions, deliberately selected re-review, or newly introduced canonical source URLs.
 
-Event Primary Remediation 01 reviewed the nine non-intentional event primary gaps. Exactly two bounded remediations were approved and published: the corrected OFAC Ronin/Lazarus attribution source and the FBI Horizon attribution source. Events without primary evidence fell from 16 to 14. The other seven reviewed candidates remain deferred pending stronger source-content support.
+Event Primary Remediation 01 reduced event primary gaps from 16 to 14. Event Primary Review 02 then approved three event-scoped copies of already-canonical archived first-party evidence for Poly Network and Transit Finance. Remediation 02 raises evidence from 284 to 287, primary evidence from 203 to 206, Tier 1 evidence from 220 to 223, and reduces event primary gaps from 14 to 11 without increasing unique archive-risk queues. Four non-intentional reviewed candidates remain deferred pending stronger source-content support.
 
 ## Immediate source-quality targets
 
-1. review the remaining 14 events without primary evidence under the same claim-relative primary-source standard;
+1. production-verify Event Primary Remediation 02, then review only the four deferred non-intentional gaps under the same claim-relative primary-source standard;
 2. remediate only defensible gaps and keep intentional secondary-only boundaries explicit;
 3. strengthen remaining validators;
 4. begin review-gated monitoring and candidate collection with no automatic canonical publication;

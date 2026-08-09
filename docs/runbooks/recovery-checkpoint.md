@@ -11,7 +11,7 @@ GitHub state and canonical JSON are authoritative. Completed merge SHAs are chec
 Bridges     33
 Incidents   34
 Events      183
-Evidence    284
+Evidence    287
 ```
 
 ## Latest completed checkpoints
@@ -33,9 +33,11 @@ PR #206      Deferred Archive Retry 04 review — approved 0; fresh pool exhaust
 PR #207      Event Primary Remediation 01 review — two approved
 PR #208      Event Primary Remediation 01 canonical application
 PR #209      Event Primary Remediation 01 production verification
+PR #211      Event Primary Review 02 — three approved
+PR #212      Event Tier 1 controlled-failure fixture strengthening
 ```
 
-## Latest completed production checkpoint
+## Latest completed production checkpoint before Remediation 02
 
 ```text
 Review PR                     #207
@@ -72,10 +74,10 @@ Incident source-count mismatches      0
 Event source-count mismatches         0
 Incidents without primary             1
 Incidents without Tier 1              1
-Events without primary               14
+Events without primary               11
 Events without Tier 1                 6
 Unreviewed event Tier 1 gaps           0
-Evidence with archived_url          127
+Evidence with archived_url          130
 Terminal unarchived unique URLs      15
 Terminal unarchived records          25
 Risky-host unarchived unique URLs    16
@@ -103,7 +105,7 @@ bir_ev_000002 / bir_src_000003  OFAC Ronin/Lazarus attribution source corrected 
 bir_ev_000011 / bir_src_000014  FBI Horizon attribution source marked claim-relative primary
 ```
 
-The source-quality ceiling is now `events_without_primary = 14`. Seven reviewed candidates remain deferred pending stronger source-content support. Intentional secondary-only boundaries remain explicit and must not be reclassified merely to improve coverage.
+Event Primary Review 02 approved event-scoped first-party copies for `bir_ev_000013`, `bir_ev_000124`, and `bir_ev_000125`. Remediation 02 raises evidence to 287 and tightens `events_without_primary` to 11 without increasing unique archive-risk queues. Four non-intentional reviewed candidates remain deferred: `bir_ev_000014`, `bir_ev_000143`, `bir_ev_000144`, and `bir_ev_000148`. Intentional secondary-only boundaries remain explicit and must not be reclassified merely to improve coverage.
 
 ## Cloudflare Pages boundary
 
@@ -119,7 +121,7 @@ Issue #171 remains open as a monitoring signal. Boltz is not canonical because t
 
 ## Next
 
-1. review the remaining 14 event primary-evidence gaps under the same claim-relative evidence standard;
+1. production-verify Event Primary Remediation 02, then continue only with the four deferred non-intentional primary gaps and the explicitly intentional secondary-only set;
 2. remediate only gaps where source hierarchy can be improved safely and keep intentional secondary-only boundaries explicit;
 3. strengthen validators;
 4. begin review-gated monitoring and candidate collection without automatic publication;
