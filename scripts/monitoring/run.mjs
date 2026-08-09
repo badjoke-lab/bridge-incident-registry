@@ -11,6 +11,7 @@ import { watchDefillamaHacksPage } from "./monitors/defillama-hacks-page-watch.m
 import { watchGdeltNews } from "./monitors/gdelt-news-watch.mjs";
 
 const DEFAULT_EXTERNAL_BRIDGE_SOURCE_URL = "https://raw.githubusercontent.com/DefiLlama/bridges-server/master/src/data/bridgeNetworkData.ts";
+const DEFAULT_DEFILLAMA_HACKS_SOURCE_URL = "https://defillama.com/hacks";
 
 function arg(name, fallback = null) {
   const index = process.argv.indexOf(`--${name}`);
@@ -43,6 +44,9 @@ const externalBridgeSourcePath = arg("external-bridge-source");
 const externalBridgeSourceUrl = arg("external-bridge-source-url", DEFAULT_EXTERNAL_BRIDGE_SOURCE_URL);
 const externalCandidateLimit = Number.parseInt(arg("external-candidate-limit", "8"), 10);
 const defillamaHacksPagePath = arg("defillama-hacks-page-input");
+const defillamaHacksSourceUrl = arg("defillama-hacks-source-url", DEFAULT_DEFILLAMA_HACKS_SOURCE_URL);
+const defillamaHacksSourceKind = arg("defillama-hacks-source-kind", "public_page");
+const defillamaHacksSourceSha256 = arg("defillama-hacks-source-sha256");
 const defillamaHacksCandidateLimit = Number.parseInt(arg("defillama-hacks-candidate-limit", "8"), 10);
 const gdeltSecurityPath = arg("gdelt-security-input");
 const gdeltOperationsPath = arg("gdelt-operations-input");
@@ -75,9 +79,20 @@ const externalBridgeResult = externalSourceText
   ? watchExternalBridgeCandidates({ sourceText: externalSourceText, sourceUrl: externalBridgeSourceUrl, canonicalBridges: canonical.bridges, state, applySignal, observedAt, limit: externalCandidateLimit })
   : { source: null, baseline_initialized: false, state_changed: false, parsed_count: 0, matched_existing_count: 0, baseline_seeded_count: 0, unchanged_count: 0, deferred_changed_count: 0, emitted_count: 0, candidates: [] };
 
-const defillamaHacksHtml = readTextInput(defillamaHacksPagePath, "DefiLlama hacks page");
+const defillamaHacksHtml = readTextInput(defillamaHacksPagePath, "DefiLlama hacks discovery input");
 const defillamaHacksResult = defillamaHacksHtml
-  ? watchDefillamaHacksPage({ html: defillamaHacksHtml, canonicalBridges: canonical.bridges, canonicalEvidence: canonical.evidence, state, applySignal, observedAt, limit: defillamaHacksCandidateLimit })
+  ? watchDefillamaHacksPage({
+      html: defillamaHacksHtml,
+      canonicalBridges: canonical.bridges,
+      canonicalEvidence: canonical.evidence,
+      state,
+      applySignal,
+      observedAt,
+      limit: defillamaHacksCandidateLimit,
+      sourceUrl: defillamaHacksSourceUrl,
+      sourceKind: defillamaHacksSourceKind,
+      sourceSha256: defillamaHacksSourceSha256
+    })
   : { source: null, baseline_initialized: false, state_changed: false, parsed_count: 0, relevant_count: 0, baseline_seeded_count: 0, exact_canonical_matches: 0, bridge_flag_rows: 0, unchanged_count: 0, canonical_evidence_duplicates: 0, deferred_changed_count: 0, emitted_count: 0, candidates: [] };
 
 const gdeltEnabled = Boolean(gdeltSecurityPath && gdeltOperationsPath);

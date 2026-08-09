@@ -85,6 +85,9 @@ jobs:
         run: |
           raw=".monitor-input/defillama-hacks.json"
           output=".monitor-input/defillama-hacks.html"
+          source_url_file=".monitor-input/defillama-hacks-source-url.txt"
+          source_kind_file=".monitor-input/defillama-hacks-source-kind.txt"
+          source_sha_file=".monitor-input/defillama-hacks-source-sha256.txt"
           if curl --fail --location --silent --show-error --retry 2 --retry-delay 2 --connect-timeout 10 --max-time 45 \
             -H "User-Agent: BIR-review-monitor/1" -H "Accept: application/json" \
             "https://api.llama.fi/hacks" -o "$raw" && \
@@ -95,18 +98,25 @@ jobs:
               const next = { props: { pageProps: { data: parsed } } };
               fs.writeFileSync(process.env.OUT, `<script id="__NEXT_DATA__" type="application/json">${JSON.stringify(next)}</script>`);
             '; then
+            sha="$(sha256sum "$raw" | awk '{print $1}')"
+            printf '%s\n' 'https://api.llama.fi/hacks' > "$source_url_file"
+            printf '%s\n' 'legacy_public_json' > "$source_kind_file"
+            printf '%s\n' "$sha" > "$source_sha_file"
             rm -f "$raw"
             echo "Collected legacy public DefiLlama hacks JSON and normalized it for the guarded parser: $(wc -c < "$output") bytes"
           else
-            rm -f "$raw" "$output"
+            rm -f "$raw" "$output" "$source_url_file" "$source_kind_file" "$source_sha_file"
             echo "Legacy public hacks JSON unavailable; trying public page fallback."
             if curl --fail --location --silent --show-error --retry 1 --retry-delay 2 --connect-timeout 10 --max-time 45 \
               -H "User-Agent: Mozilla/5.0 (compatible; BIR-review-monitor/1; +https://bir.badjoke-lab.com/)" \
               -H "Accept: text/html,application/xhtml+xml" \
               "https://defillama.com/hacks" -o "$output" && grep -q '__NEXT_DATA__' "$output"; then
+              printf '%s\n' 'https://defillama.com/hacks' > "$source_url_file"
+              printf '%s\n' 'public_page' > "$source_kind_file"
+              sha256sum "$output" | awk '{print $1}' > "$source_sha_file"
               echo "Collected DefiLlama public hacks page fallback: $(wc -c < "$output") bytes"
             else
-              rm -f "$output"
+              rm -f "$output" "$source_url_file" "$source_kind_file" "$source_sha_file"
               echo "::warning::DefiLlama hacks JSON and public-page fallback were both unavailable; incident-feed adapter is skipped for this run."
             fi
           fi
@@ -127,9 +137,12 @@ jobs:
               --external-candidate-limit 8
             )
           fi
-          if [ -s .monitor-input/defillama-hacks.html ]; then
+          if [ -s .monitor-input/defillama-hacks.html ] && [ -s .monitor-input/defillama-hacks-source-url.txt ] && [ -s .monitor-input/defillama-hacks-source-kind.txt ] && [ -s .monitor-input/defillama-hacks-source-sha256.txt ]; then
             monitor_args+=(
               --defillama-hacks-page-input .monitor-input/defillama-hacks.html
+              --defillama-hacks-source-url "$(cat .monitor-input/defillama-hacks-source-url.txt)"
+              --defillama-hacks-source-kind "$(cat .monitor-input/defillama-hacks-source-kind.txt)"
+              --defillama-hacks-source-sha256 "$(cat .monitor-input/defillama-hacks-source-sha256.txt)"
               --defillama-hacks-candidate-limit 8
             )
           fi

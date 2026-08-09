@@ -62,23 +62,29 @@ const parsed = parseDefillamaHacksPage(html(initialRows));
 if (parsed.length !== 26) throw new Error(`expected 26 parsed hack rows, got ${parsed.length}`);
 
 const state = { version: 1, signals: {} };
+const fixtureSourceSha = "a".repeat(64);
 const baseline = watchDefillamaHacksPage({
   html: html(initialRows), canonicalBridges: bridges, canonicalEvidence: evidence,
-  state, applySignal, observedAt: "2026-08-09T08:20:00.000Z", limit: 8
+  state, applySignal, observedAt: "2026-08-09T08:20:00.000Z", limit: 8,
+  sourceUrl: "https://api.llama.fi/hacks", sourceKind: "legacy_public_json", sourceSha256: fixtureSourceSha
 });
 if (!baseline.baseline_initialized || !baseline.state_changed || baseline.candidates.length !== 0) {
-  throw new Error(`first hacks page run must be zero-candidate baseline: ${JSON.stringify(baseline)}`);
+  throw new Error(`first hacks discovery run must be zero-candidate baseline: ${JSON.stringify(baseline)}`);
 }
 if (baseline.relevant_count !== 2 || baseline.baseline_seeded_count !== 2 || baseline.exact_canonical_matches !== 1) {
   throw new Error(`baseline relevant counts mismatch: ${JSON.stringify(baseline)}`);
 }
+if (baseline.source.url !== "https://api.llama.fi/hacks" || baseline.source.source_kind !== "legacy_public_json" || baseline.source.sha256 !== fixtureSourceSha) {
+  throw new Error(`exact input provenance was not retained: ${JSON.stringify(baseline.source)}`);
+}
 
 const repeat = watchDefillamaHacksPage({
   html: html(initialRows), canonicalBridges: bridges, canonicalEvidence: evidence,
-  state, applySignal, observedAt: "2026-08-09T08:21:00.000Z", limit: 8
+  state, applySignal, observedAt: "2026-08-09T08:21:00.000Z", limit: 8,
+  sourceUrl: "https://api.llama.fi/hacks", sourceKind: "legacy_public_json", sourceSha256: fixtureSourceSha
 });
 if (repeat.state_changed || repeat.emitted_count !== 0 || repeat.unchanged_count !== 2) {
-  throw new Error(`unchanged hacks page must be silent: ${JSON.stringify(repeat)}`);
+  throw new Error(`unchanged hacks discovery input must be silent: ${JSON.stringify(repeat)}`);
 }
 
 const canonicalDuplicateUrl = evidence.find((row) => typeof row.url === "string" && row.url.startsWith("http"))?.url;
@@ -120,7 +126,8 @@ const changedRows = [
 
 const changed = watchDefillamaHacksPage({
   html: html(changedRows), canonicalBridges: bridges, canonicalEvidence: evidence,
-  state, applySignal, observedAt: "2026-08-09T08:22:00.000Z", limit: 8
+  state, applySignal, observedAt: "2026-08-09T08:22:00.000Z", limit: 8,
+  sourceUrl: "https://api.llama.fi/hacks", sourceKind: "legacy_public_json", sourceSha256: "b".repeat(64)
 });
 if (changed.emitted_count !== 2 || changed.canonical_evidence_duplicates !== 1) {
   throw new Error(`expected two candidates and one canonical URL suppression: ${JSON.stringify(changed)}`);
@@ -129,6 +136,7 @@ const known = changed.candidates.find((candidate) => candidate.candidate_class =
 const unresolved = changed.candidates.find((candidate) => candidate.candidate_class === "C");
 if (!known || known.canonical_name !== "Wormhole") throw new Error(`exact canonical hack name must be B/hold: ${JSON.stringify(known)}`);
 if (!unresolved || unresolved.canonical_name !== "New Unknown Bridge") throw new Error(`unresolved bridge-flag hack must be C/hold: ${JSON.stringify(unresolved)}`);
+if (!known.source_urls.includes("https://api.llama.fi/hacks")) throw new Error("candidate must retain the actual discovery source URL");
 
 const capState = { version: 1, signals: {} };
 watchDefillamaHacksPage({ html: html(initialRows), canonicalBridges: bridges, canonicalEvidence: evidence, state: capState, applySignal, observedAt: "2026-08-09T08:23:00.000Z", limit: 8 });
@@ -140,4 +148,4 @@ const capRows = [
 const capped = watchDefillamaHacksPage({ html: html(capRows), canonicalBridges: bridges, canonicalEvidence: evidence, state: capState, applySignal, observedAt: "2026-08-09T08:24:00.000Z", limit: 1 });
 if (capped.emitted_count !== 1 || capped.deferred_changed_count !== 1) throw new Error(`candidate ceiling must defer overflow: ${JSON.stringify(capped)}`);
 
-console.log("DefiLlama hacks page controlled tests passed (fail-closed parser, bridge baseline, B/C classification, canonical URL suppression, cap deferral).");
+console.log("DefiLlama hacks discovery controlled tests passed (fail-closed parser, exact provenance, bridge baseline, B/C classification, canonical URL suppression, cap deferral).");
