@@ -25,12 +25,11 @@ export function writeMonitoringOutputs({ dateKey, runId, observedAt, findings, c
   };
 
   writeJson(path.join(runDir, "manifest.json"), manifest);
-  for (const [name, report] of Object.entries(monitorReports)) {
-    writeJson(path.join(runDir, `${name}.json`), report);
-  }
+  for (const [name, report] of Object.entries(monitorReports)) writeJson(path.join(runDir, `${name}.json`), report);
   writeJson(watchlistPath, { run_id: runId, observed_at: observedAt, candidates });
 
   const external = monitorReports["external-bridge-candidate-watch"];
+  const hacks = monitorReports["defillama-hacks-page-watch"];
   const gdelt = monitorReports["gdelt-news-watch"];
   const lines = [
     `# BIR Auto Monitoring Report — ${dateKey}`,
@@ -48,33 +47,31 @@ export function writeMonitoringOutputs({ dateKey, runId, observedAt, findings, c
   ];
 
   if (external?.baseline_initialized) {
-    lines.push(
-      "",
-      "## Monitoring state change",
-      "",
-      "External bridge discovery baseline initialized.",
-      "",
+    lines.push("", "## Monitoring state change", "", "External bridge discovery baseline initialized.", "",
       `- External rows parsed: ${external.parsed_count}`,
       `- Existing canonical matches: ${external.matched_existing_count}`,
       `- Unmatched rows fingerprinted as baseline: ${external.baseline_seeded_count}`,
       `- Candidates emitted from baseline: ${external.emitted_count}`,
-      "- Baseline registry presence is not treated as an incident candidate."
-    );
+      "- Baseline registry presence is not treated as an incident candidate.");
+  }
+
+  if (hacks?.baseline_initialized) {
+    lines.push("", "## Monitoring state change", "", "DefiLlama public hacks bridge-incident baseline initialized.", "",
+      `- Hacks rows parsed: ${hacks.parsed_count}`,
+      `- Bridge-relevant rows fingerprinted: ${hacks.baseline_seeded_count}`,
+      `- Exact canonical bridge-name matches: ${hacks.exact_canonical_matches}`,
+      `- Rows carrying the upstream bridge flag: ${hacks.bridge_flag_rows}`,
+      `- Candidates emitted from baseline: ${hacks.emitted_count}`,
+      "- Historical public database rows are not treated as new BIR incidents.");
   }
 
   if (gdelt?.baseline_initialized) {
-    lines.push(
-      "",
-      "## Monitoring state change",
-      "",
-      "GDELT news discovery baseline initialized.",
-      "",
+    lines.push("", "## Monitoring state change", "", "GDELT news discovery baseline initialized.", "",
       `- Security-family rows: ${gdelt.security_rows}`,
       `- Operations-family rows: ${gdelt.operations_rows}`,
       `- Unique article URLs fingerprinted: ${gdelt.baseline_seeded_count}`,
       `- Candidates emitted from baseline: ${gdelt.emitted_count}`,
-      "- Baseline news coverage is not treated as an incident candidate."
-    );
+      "- Baseline news coverage is not treated as an incident candidate.");
   }
 
   lines.push("", "## New or changed findings", "");
@@ -96,6 +93,5 @@ export function writeMonitoringOutputs({ dateKey, runId, observedAt, findings, c
 
   lines.push("", "## Safety", "", "Monitoring output is review material only. No canonical record was changed or published automatically.", "");
   fs.writeFileSync(path.join(runDir, "summary.md"), `${lines.join("\n")}\n`);
-
   return { runDir, watchlistPath, manifest };
 }
