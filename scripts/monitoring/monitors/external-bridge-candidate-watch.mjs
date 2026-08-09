@@ -1,6 +1,7 @@
 import crypto from "node:crypto";
 
 const SOURCE_ID = "defillama-bridges-server";
+const BASELINE_KEY = `external-bridge:${SOURCE_ID}:baseline-v1`;
 
 function normalize(value) {
   return String(value ?? "").trim();
@@ -277,6 +278,38 @@ function fingerprint(row) {
   return crypto.createHash("sha256").update(payload).digest("hex");
 }
 
+function candidateFor(row, sourceUrl) {
+  const projectUrl = safeHttpUrl(row.url);
+  const sourceUrls = [...new Set([sourceUrl, projectUrl].filter(Boolean))];
+  return {
+    candidate_id: `defillama_bridge_${row.id}`,
+    canonical_name: row.display_name,
+    aliases: [],
+    candidate_class: "C",
+    likely_type: "bridge_or_interoperability_protocol",
+    likely_status: "unknown",
+    likely_incident_type: "unknown",
+    record_shape: "hold",
+    headline: `${row.display_name} is new or materially changed in the external DefiLlama bridge registry`,
+    bir_relevance: "External bridge-registry change is a discovery signal only. It does not establish a BIR incident, loss, shutdown, recovery, or canonical inclusion boundary.",
+    duplicate_check: {
+      matched_existing_record: false,
+      method: "exact canonical name/alias/slug and official-domain check"
+    },
+    external_source: {
+      provider: "DefiLlama",
+      source_id: SOURCE_ID,
+      external_bridge_id: row.id,
+      bridge_db_name: row.bridge_db_name,
+      slug: row.slug,
+      chains: row.chains
+    },
+    source_urls: sourceUrls,
+    source_quality: "secondary_registry",
+    next_action: "correlate_with_incident_or_status_signal_before_research"
+  };
+}
+
 export function watchExternalBridgeCandidates({
   sourceText,
   sourceUrl,
@@ -291,17 +324,56 @@ export function watchExternalBridgeCandidates({
   if (rows.length === 0) throw new Error("external bridge registry parsed zero active entries");
 
   const indexes = canonicalIndexes(canonicalBridges);
-  const candidates = [];
+  const unmatchedRows = [];
   let matchedExisting = 0;
-  let unchanged = 0;
-  let deferred = 0;
 
   for (const row of rows) {
     if (matchCanonical(row, indexes)) {
       matchedExisting += 1;
-      continue;
+    } else {
+      unmatchedRows.push(row);
     }
+  }
 
+  const baselineInitialized = Boolean(state.signals[BASELINE_KEY]);
+  if (!baselineInitialized) {
+    for (const row of unmatchedRows) {
+      applySignal(state, {
+        key: `external-bridge:${SOURCE_ID}:${row.id}`,
+        fingerprint: fingerprint(row),
+        observedAt
+      });
+    }
+    applySignal(state, {
+      key: BASELINE_KEY,
+      fingerprint: "initialized-v1",
+      observedAt
+    });
+
+    return {
+      source: {
+        provider: "DefiLlama",
+        source_id: SOURCE_ID,
+        url: sourceUrl,
+        sha256: crypto.createHash("sha256").update(sourceText).digest("hex")
+      },
+      baseline_initialized: true,
+      state_changed: true,
+      parsed_count: rows.length,
+      matched_existing_count: matchedExisting,
+      baseline_seeded_count: unmatchedRows.length,
+      unchanged_count: 0,
+      deferred_changed_count: 0,
+      emitted_count: 0,
+      candidates: []
+    };
+  }
+
+  const candidates = [];
+  let unchanged = 0;
+  let deferred = 0;
+
+  for (const row of unmatchedRows) {
     const key = `external-bridge:${SOURCE_ID}:${row.id}`;
     const fp = fingerprint(row);
     if (state.signals[key]?.fingerprint === fp) {
@@ -315,35 +387,7 @@ export function watchExternalBridgeCandidates({
     }
 
     applySignal(state, { key, fingerprint: fp, observedAt });
-    const projectUrl = safeHttpUrl(row.url);
-    const sourceUrls = [...new Set([sourceUrl, projectUrl].filter(Boolean))];
-    candidates.push({
-      candidate_id: `defillama_bridge_${row.id}`,
-      canonical_name: row.display_name,
-      aliases: [],
-      candidate_class: "C",
-      likely_type: "bridge_or_interoperability_protocol",
-      likely_status: "unknown",
-      likely_incident_type: "unknown",
-      record_shape: "hold",
-      headline: `${row.display_name} appears in the external DefiLlama bridge registry`,
-      bir_relevance: "External bridge-registry presence is a discovery signal only. It does not establish a BIR incident, loss, shutdown, recovery, or canonical inclusion boundary.",
-      duplicate_check: {
-        matched_existing_record: false,
-        method: "exact canonical name/alias/slug and official-domain check"
-      },
-      external_source: {
-        provider: "DefiLlama",
-        source_id: SOURCE_ID,
-        external_bridge_id: row.id,
-        bridge_db_name: row.bridge_db_name,
-        slug: row.slug,
-        chains: row.chains
-      },
-      source_urls: sourceUrls,
-      source_quality: "secondary_registry",
-      next_action: "research_incident_boundary_and_primary_sources"
-    });
+    candidates.push(candidateFor(row, sourceUrl));
   }
 
   return {
@@ -353,8 +397,11 @@ export function watchExternalBridgeCandidates({
       url: sourceUrl,
       sha256: crypto.createHash("sha256").update(sourceText).digest("hex")
     },
+    baseline_initialized: false,
+    state_changed: candidates.length > 0,
     parsed_count: rows.length,
     matched_existing_count: matchedExisting,
+    baseline_seeded_count: 0,
     unchanged_count: unchanged,
     deferred_changed_count: deferred,
     emitted_count: candidates.length,
