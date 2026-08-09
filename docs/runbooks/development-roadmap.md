@@ -21,12 +21,10 @@ Phase 0  Specification and foundation              complete
 Phase 1  Canonical model, UI, validation, seeds    complete
 Phase 2  Record expansion                          complete through Batch 7
 Phase 3  Full-corpus quality strengthening         active maintenance
-         Source-count remediation                  complete
-         Source-quality baseline/remediation       complete
-         Event Tier 1 remediation                  production-verified
-         Archive capture Batches 1–18              production-verified
+         Source-count/source-quality work          complete to reviewed boundary
+         Event Tier 1 / Primary Remediation        production-verified
+         Archive Capture Batches 1–18              production-verified
          Deferred Archive Retries 01–04            complete to reviewed boundary
-         Event Primary Remediation 01–02           production-verified
          Cross-record bridge integrity             blocking
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
@@ -39,53 +37,64 @@ Phase 5  Monitoring and candidate collection       active
          External bridge universe                  live — PRs #228–#230
          Optional GDELT adapter                    fail-closed — PRs #231–#232
          Structured bridge-hack feed               live — PRs #233–#239
-         Active bridge/domain watch                next
+         Active bridge/domain watch                live — PRs #241–#244
+         RSS status-news watch                     live — PRs #245–#246
+         Monitoring state resolution health        next
          Site / SEO watch                          planned
 Release  v1 hardening                              planned
 ```
 
 ## Phase 5 live state
 
-### Evidence health
+### Evidence and structured discovery
 
 ```text
-Run / job                 31301765004 / 93215576787
-Live evidence             287
-Selected                   12
-Independent probes         24
-Hard 404/410                0
-Canonical diff            none
+Evidence health              12 / 287 selected, 24 probes, 0 hard findings
+External bridge rows         98 / 11 exact / 87 unmatched baseline
+External silent repeat       87 unchanged / 0 candidates
+DefiLlama hacks              613 parsed / 61 bridgeHack=true
+Bridge-hack baseline         61 / 20 exact canonical / 0 candidates
+Bridge-hack silent repeat    61 unchanged / 0 candidates
 ```
 
-### External bridge universe
+The structured incident feed uses `https://api.llama.fi/hacks` as `legacy_public_json`. `bridgeHack=true` is the relevance gate before identity classification. GDELT remains optional/fail-closed because its first GitHub Actions request returned HTTP 429.
+
+### Active bridge official-domain watch
+
+The monitor rotates through canonical bridges with status `active`, `limited`, or `paused`, selecting at most eight per run and probing each official URL twice.
+
+Corrected live baseline after PR #243:
 
 ```text
-Rows                        98
-Exact canonical             11
-Unmatched baseline          87
-Baseline candidates          0
-Silent-repeat unchanged     87
-Silent-repeat candidates     0
+Run                          31313312723
+Eligible bridges             22
+Selected                      8
+Healthy baselines             8
+Hard failures                 0
+Domain findings               0
+Silent-repeat changes         0
+Silent-repeat findings        0
 ```
 
-### Structured bridge-hack feed
+Parent/subdomain official hosts remain within the same official-domain scope. Unrelated final-domain changes remain reviewable. Two 404/410 results are required for a hard finding; access blocks, timeouts, transient server errors, and mixed probes are insufficient.
+
+### RSS status-news watch
+
+PR #245 added bounded RSS/Atom secondary discovery using canonical bridge identity plus security/operations/regulatory trigger families. PR #246 accepted the first live feed baseline.
 
 ```text
-Input URL                   https://api.llama.fi/hacks
-Input kind                  legacy_public_json
-Raw SHA-256                 e80fced996cf886ca0d2ca70c02dd04b869b628d63773d0b327f97b49aa2734a
-Parsed hacks                613
-bridgeHack=true              61
-Accepted baseline            61
-Exact canonical matches      20
+Run / first job              31313579371 / 93245104559
+Feeds reached                 2
+Rows parsed                  55
+Bridge + trigger rows         0
 Baseline candidates           0
-Silent-repeat unchanged      61
-Silent-repeat candidates      0
+Rerun job                    93245346339
+Rerun rows                   55
+Rerun candidates              0
+Rerun state change        false
 ```
 
-The upstream `bridgeHack=true` field is the relevance gate. Exact canonical-name matches with `bridgeHack=false` are excluded because live diagnostics showed they can be ordinary protocol/DeFi exploits. Identity matching occurs only after the bridge relevance gate.
-
-GDELT remains optional/fail-closed because its first GitHub Actions request was rate-limited with HTTP 429. The scheduled/default structured incident feed is the best-effort DefiLlama raw `/hacks` route with explicit source-kind and raw-input SHA provenance.
+RSS candidates are `B / hold` only. They are discovery material, not primary evidence or canonical status changes.
 
 ## Current quality state
 
@@ -118,40 +127,30 @@ Generated at                  2026-08-09T07:08:45.362Z
 
 ## Immediate targets
 
-1. implement bounded active-bridge official-domain/status monitoring;
-2. add reproducible pause/shutdown/regulatory review signals incrementally;
-3. add public-site/SEO monitoring;
+1. add monitoring-state/watchlist resolution health so stale review signals can be explicitly resolved and future recurrence rearmed;
+2. add public-site/SEO monitoring;
+3. maintain bounded RSS security/pause/shutdown/regulatory discovery;
 4. maintain source-quality, validator, public-contract, and UI compatibility gates;
 5. complete v1 documentation, accessibility, performance, compatibility, and release checks.
-
-## Production publication gate
-
-```text
-Attempts       20
-Delay          15 seconds
-Maximum wait   5 minutes per job
-```
-
-Production convergence still requires full canonical-derived content equality, not counts alone.
 
 ## Permanent rules
 
 1. Never write canonical changes directly to main.
 2. Use one branch and bounded PR per task.
-3. Read canonical JSON before assigning IDs or counts.
-4. Keep canonical and monitoring/working data separate.
-5. Do not merge temporary diagnostics or write-enabled workflows.
-6. Preserve distinctions among loss, return, recovery, reimbursement, freezing, minting, and burning.
-7. A disclosure or secondary database row is not automatically an exploit record.
-8. Historical SHAs are not live branch pointers.
-9. Every PR must pass checks appropriate to its stage.
-10. Source-quality gap ceilings may decrease but must not increase without review.
-11. Source hierarchy must not be weakened to improve coverage metrics.
-12. Unknown URL statuses are not permitted in canonical data.
-13. Production publication is proven by field-level generated-content equality.
-14. Monitoring output is review material only and must never publish canonical records automatically.
-15. Monitoring hard-failure signals require bounded reproducible conditions; access blocking or transient network failure is not proof of degradation.
-16. Initial external discovery sets must be reviewed zero-candidate baselines before new/change alerting.
-17. Upstream classification fields must be validated against live schema before they become relevance gates.
-18. A secondary incident feed may create only B/C hold candidates; primary-source investigation remains mandatory.
+3. Keep canonical and monitoring/working data separate.
+4. Do not merge temporary diagnostics or write-enabled workflows.
+5. Preserve distinctions among loss, return, recovery, reimbursement, freezing, minting, and burning.
+6. Secondary database/news rows are not canonical incidents or primary evidence.
+7. Historical SHAs are not live branch pointers.
+8. Every PR must pass checks appropriate to its stage.
+9. Source-quality gap ceilings may decrease but must not increase without review.
+10. Source hierarchy must not be weakened to improve coverage metrics.
+11. Unknown URL statuses are not permitted in canonical data.
+12. Production publication is proven by field-level generated-content equality.
+13. Monitoring output is review material only and must never publish canonical records automatically.
+14. Monitoring hard-failure signals require bounded reproducible conditions; blocking/transient errors are not proof of degradation.
+15. Initial external discovery sets must be reviewed zero-candidate baselines before new/change alerting.
+16. Upstream classification fields must be validated against live schema before they become relevance gates.
+17. A secondary incident/news feed may create only hold candidates; primary-source investigation remains mandatory.
+18. Parent/subdomain official hosts are not migrations by themselves.
 19. Cloudflare Pages preview deployment remains `none`.
