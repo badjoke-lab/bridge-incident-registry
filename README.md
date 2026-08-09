@@ -31,7 +31,7 @@ BIR is not:
 
 The static registry application, four-record canonical model, validation pipeline, canonical public-data layer, metadata, redirects, post-build consistency CI, production-verification gate, and Phase 3 full-corpus audit are implemented.
 
-Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Event Tier 1 remediation, the Nerve source review boundary, Archive Capture Batches 1 through 18, and Deferred Archive Retries 01 and 02 are complete and production-verified. Deferred Retries 03–04 exhausted the fresh retry pool without new approvals. Event Primary Remediation 01 is production-verified, and Remediation 02 adds three reviewed event-scoped first-party evidence records without introducing new unique source URLs.
+Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Event Tier 1 remediation, the Nerve source review boundary, Archive Capture Batches 1 through 18, and Deferred Archive Retries 01 and 02 are complete and production-verified. Deferred Retries 03–04 exhausted the fresh retry pool without new approvals. Event Primary Remediations 01 and 02 are production-verified. Remediation 02 added three reviewed event-scoped first-party evidence records without introducing new unique source URLs.
 
 Canonical evidence is now 287. Event primary gaps are 11, event Tier 1 gaps remain six, and all remaining Tier 1 gaps are reviewed and intentionally secondary. Primary evidence is 206 / 287, Tier 1 evidence is 223 / 287, and 130 evidence records include verified archive URLs. The three new archive fields reuse already-canonical snapshots, so unique archive-risk queues do not increase.
 
@@ -39,9 +39,9 @@ Archive-risk metrics count normalized unique source URLs with exact-or-subdomain
 
 Archive Batch 18 reviewed all nine remaining previously-unreviewed terminal/risky-host candidate URLs visible to the established reviewer. Four reproducible exact mappings were published for Avalanche Bridge AEB support material, Syndicate exploit reporting, Everclear wind-down reporting, and the renproject GitHub organization. The other five reviewed URLs remain deferred under the same exact replay, temporal fit, minimum-size, and two-run reproducibility requirements.
 
-There is no untouched archive-review Batch 19. Deferred Archive Retry 01 reconstructed the reviewed-unresolved pool and newly recovered Qubit’s compensation plan (`bir_src_000037`) and Harmony’s Horizon Bridge incident summary (`bir_src_000068`). Deferred Archive Retry 02 used a different ten-URL scope and newly recovered QuillAudits’ Rubic exploit analysis (`bir_src_000166`) at the exact `20221227131535` snapshot. The other nine Retry 02 targets remained deferred under unchanged acceptance rules. Across Retries 01–02, 42 reviewed-but-unarchived evidence records across 29 unique URLs remain from the original deferred inventory. Further archive preservation must continue with explicit deferred-retry scopes or newly introduced canonical source URLs.
+There is no untouched archive-review Batch 19. Deferred Retries 01–02 recovered three reviewed URLs; Retries 03–04 then exhausted all 12 not-recently-retried fresh URLs without another accepted mapping. The remaining reviewed-unarchived pool has already been explicitly retried under the current boundary and should not be immediately recycled.
 
-Production verification compares every transformed field in all four public datasets with the generated public contract. Counts and IDs alone cannot prove publication. For Batch 18, the initial twenty-attempt verifier rejected same-count stale evidence at `bir_src_000132`, including after a newer `generated_at` appeared. One behavior-neutral build-input refresh was then used; the unchanged verifier passed complete equality on the first post-refresh attempt. Deferred Retry 02 required no refresh: the verifier confirmed complete field-level equality on attempt 1. Cloudflare Pages preview deployment remains restricted to `none` after the Batch 15 queue remediation.
+Production verification compares every transformed field in all four public datasets with the generated public contract. Counts and IDs alone cannot prove publication. Event Primary Remediation 02 again demonstrated the boundary: attempts 1–2 still exposed 284 evidence and were rejected; attempt 3 exposed 287 evidence and passed complete four-dataset field-level equality at `generated_at 2026-08-09T07:08:45.362Z`. No build-input refresh was required. Cloudflare Pages preview deployment remains restricted to `none`.
 
 The public UI/support layer is current through PR #187, including expanded incident and bridge discovery, filters, pagination, detail-page TOCs, Support, project navigation, representative desktop/mobile screenshot auditing, and the shared BadJoke-Lab support-wallet presentation.
 
@@ -69,16 +69,16 @@ Risky-host unarchived URLs       16
 Canonical public content match    true
 ```
 
-Latest verified production checkpoint before Remediation 02 publication verification:
+Latest verified production checkpoint:
 
 ```text
-Review PR              #202
-Canonical data PR      #203
-Canonical merge        46b6e19700d8553c75c4555549b9ca308cbc7292
-Production audit PR    #204
-Production verify      31298305603 / 93206834594
-Generated at           2026-08-09T06:10:37.053Z
-Publication attempt    1 / 20
+Review PR              #211
+Canonical data PR      #213
+Canonical merge        f2874a2d0ffe6877eadf6619cd6100a9b9b3991b
+Production audit PR    #214
+Production verify      31300484236 / 93212360938
+Generated at           2026-08-09T07:08:45.362Z
+Publication attempt    3 / 20
 HTML routes            72
 Redirects              74
 Build-input refresh    not required
