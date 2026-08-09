@@ -15,6 +15,7 @@ export const SEVERITIES = Object.freeze(["critical", "high", "medium", "low"]);
 export const MONITOR_NAMES = Object.freeze([
   "github-issue-watch",
   "evidence-health-watch",
+  "active-bridge-domain-watch",
   "external-bridge-candidate-watch",
   "defillama-hacks-page-watch",
   "gdelt-news-watch",
