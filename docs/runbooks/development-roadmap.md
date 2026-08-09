@@ -30,6 +30,7 @@ Phase 3  Full-corpus quality strengthening         active
          Archive capture Batches 1–18              production-verified — PRs #118–#198
          Previously-unreviewed archive queue       exhausted
          Deferred Archive Retry 01                 production-verified — PRs #199–#201
+         Deferred Archive Retry 02                 production-verified — PRs #202–#204
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
@@ -42,25 +43,24 @@ The public UI/support follow-up is current through PR #187. Representative scree
 ## Latest completed production checkpoint
 
 ```text
-Review PR                     #199
-Review merge                  53bcdc47f4269a00dc1c671f7428f75a8fe35c1e
-Canonical data PR             #200
-Canonical merge               934c85c49f7db71773721c5f4d64cc769f1361b0
-Production audit PR           #201
-Production verify run         31267226936
-Production verify job         93127231682
-Read-only production probe    31267391787
-Read-only probe job           93127650808
+Review PR                     #202
+Review merge                  e77695ddf0523533ad785a44e797480daa8d400a
+Canonical data PR             #203
+Canonical merge               46b6e19700d8553c75c4555549b9ca308cbc7292
+Production audit PR           #204
+Production verify run         31298305603
+Production verify job         93206834594
 Verified state                33 / 34 / 183 / 284
-Archived evidence             126 / 284
+Archived evidence             127 / 284
 Canonical content match       true
 Verified HTML routes          72
 Verified redirects            74
-Generated at                  2026-08-08T16:33:32.318Z
+Generated at                  2026-08-09T06:10:37.053Z
+Publication attempt           1 / 20
 Build-input refresh           not required
 ```
 
-The read-only probe independently confirmed the live canonical-only `version.json` and exact archive fields for `bir_src_000037` and `bir_src_000068` after the successful full-content verifier.
+The production verifier confirmed the exact `bir_src_000166.archived_url` mapping and complete field-level equality across all four public canonical datasets on attempt 1.
 
 ## Current quality state
 
@@ -72,24 +72,26 @@ Incidents without Tier 1               1
 Events without primary                16
 Events without Tier 1                  6
 Unreviewed event Tier 1 gaps            0
-Evidence with archived_url           126
+Evidence with archived_url           127
 Terminal unarchived unique URLs       15
 Terminal unarchived records           25
-Risky-host unarchived unique URLs     17
-Risky-host unarchived records         31
+Risky-host unarchived unique URLs     16
+Risky-host unarchived records         30
 X/Twitter records unarchived          29
 Unknown URL status                     0
 ```
 
 Archive Capture Batch 18 exhausted the previously-unreviewed archive queue. The deferred inventory reconstructed 45 reviewed-but-unarchived evidence records across 32 unique URLs from permanent review audits and current canonical data.
 
-Deferred Archive Retry 01 selected ten higher-value reviewed unresolved URLs. Two reproducible exact mappings were published for Qubit's compensation plan and Harmony's Horizon Bridge incident summary. The other eight selected URLs remained below the unchanged exact-replay, temporal-fit, minimum-size, and two-run reproducibility boundary.
+Deferred Archive Retry 01 recovered Qubit's compensation plan and Harmony's Horizon Bridge incident summary. Deferred Archive Retry 02 then reviewed a different ten-URL scope and recovered the QuillAudits Rubic exploit analysis (`bir_src_000166`) at the exact `20221227131535` snapshot. The other nine Retry 02 targets remained below the unchanged exact-replay, temporal-fit, minimum-size, and two-run reproducibility boundary.
+
+Across Retries 01–02, three evidence records on three unique URLs have been resolved from the original deferred inventory, leaving 42 reviewed-but-unarchived evidence records across 29 unique URLs before any newly introduced canonical sources.
 
 There is no untouched archive-review Batch 19. Future preservation work must use explicit deferred-retry scopes or newly introduced canonical source URLs.
 
 ## Immediate source-quality targets
 
-1. run Deferred Archive Retry 02 against a different high-value subset of the remaining reviewed-unresolved sources; do not immediately recycle Retry 01 failures;
+1. reconstruct the current reviewed-unresolved pool and run Deferred Archive Retry 03 against a fresh high-value subset; do not immediately recycle the recent Retry 01 or Retry 02 failures;
 2. reduce the remaining 16 events without primary evidence where appropriate;
 3. strengthen remaining validators;
 4. begin review-gated monitoring and candidate collection with no automatic canonical publication;
@@ -105,7 +107,7 @@ Maximum wait   5 minutes per job
 
 Publication convergence requires matching record counts, canonical-only markers, complete transformed JSON equality, exact record order, and all route, sitemap, metadata, redirect, content-type, and cache assertions.
 
-Batch 18 proved that a newer `generated_at` alone is not proof of canonical publication. Field-level equality remained authoritative. Deferred Retry 01 required no refresh and was independently confirmed by a read-only live probe.
+Batch 18 proved that a newer `generated_at` alone is not proof of canonical publication. Field-level equality remained authoritative. Deferred Retries 01 and 02 required no refresh; Retry 02 converged on the first verifier attempt.
 
 ## Remaining roadmap
 
