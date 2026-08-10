@@ -60,6 +60,9 @@ jobs:
       - name: Build static site
         run: npm run build
 
+      - name: Check accessibility contract
+        run: npm run accessibility:check
+
       - name: Check built output consistency
         run: npm run dist:check
 
