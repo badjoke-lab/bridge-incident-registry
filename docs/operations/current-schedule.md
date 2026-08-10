@@ -29,14 +29,16 @@ The authoritative roadmap is `docs/runbooks/development-roadmap.md`; the restart
   - optional GDELT adapter: fail-closed, not scheduled/default after Actions 429
   - monitoring-state/watchlist resolution health: live — PR #248
   - public site/SEO health watch: live, baseline + silent repeat proven — PRs #249–#250
-- Release — v1 hardening: complete to reviewed boundary
+- Release — v1 hardening: complete
   - documentation/restart-state closure: complete — PR #251
   - accessibility foundation and gate: complete — PR #252
   - built-output performance budget: complete — PR #253
   - Chromium/Firefox/WebKit compatibility smoke: complete — PR #254
   - GitHub Actions runtime hardening: complete — PR #255
   - high-severity dependency audit + Astro 7.2 security upgrade: complete — PR #256
-  - release closure/checkpoint: next
+  - hardening checkpoint: complete — PR #257
+  - consolidated release-readiness gate: complete — PR #258
+  - v1 technical release closure: complete — main run `31367052981`
 
 ## Current baseline
 
@@ -72,9 +74,12 @@ Scheduled Public Site Health      31359554582 success / no state changes
 Canonical monitoring diff       none
 ```
 
-## v1 hardening checkpoint
+## v1 technical release checkpoint
 
 ```text
+Release-readiness merge           d9f545803104bffd829d93270965f53d9f3d1a45
+V1 Release Readiness run          31367052981
+Release-readiness job             93387599332
 Accessibility built pages         73 passing
 Performance max HTML budget       16 KiB gzip
 Performance CSS budget             5 KiB total / 5 KiB max file
@@ -83,15 +88,16 @@ Browser engines                    Chromium / Firefox / WebKit passing
 Actions runtimes                   checkout/setup-node/upload-artifact v7
 High-severity npm audit            0
 Astro                              ^7.2.0
-Canonical hardening diff           none
+Production equality               success
+Canonical hardening/release diff   none
 ```
 
 ## Immediate execution order
 
-1. complete v1 release closure/checkpoint documentation and define the final release-readiness execution path;
-2. run the normal release gates and production verification for any public-output-affecting release change;
-3. maintain all Phase 5 monitors in steady state and change them only on a demonstrated gap;
-4. maintain accessibility, performance, browser compatibility, dependency security, source-quality, validator, and public-contract gates;
+1. resume ordinary registry work: reviewed candidate/corpus expansion plus Phase 3 research-triggered quality maintenance;
+2. keep all Phase 5 monitors in steady state and investigate only new review signals;
+3. maintain accessibility, performance, browser compatibility, dependency security, source-quality, validator, and public-contract gates;
+4. reopen technical hardening only if one of those gates regresses or a production compatibility issue is demonstrated;
 5. revisit deferred evidence/archive gaps only on new source material or changed conditions.
 
 ## Permanent boundary
@@ -111,4 +117,5 @@ Canonical hardening diff           none
 - accessibility, performance, and browser compatibility gates must remain green;
 - no duplicate scheduled review work while an open monitoring PR or unmerged review branch exists;
 - production verification remains required for canonical/public output changes;
-- Cloudflare Pages preview deployment remains `none`.
+- Cloudflare Pages preview deployment remains `none`;
+- this technical closure does not create or imply a GitHub Release or semantic-version tag.
