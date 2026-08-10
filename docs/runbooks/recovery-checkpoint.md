@@ -37,6 +37,12 @@ PR #241–244  Active bridge official-domain monitoring and accepted baseline
 PR #245–246  RSS status-news discovery and accepted baseline
 PR #248      Review issue resolution and rearm lifecycle
 PR #249–250  Public site health monitor and accepted healthy baseline
+PR #251      Phase 5 restart/status checkpoint
+PR #252      Accessibility foundation and built-output gate
+PR #253      Built-output performance budget and regression test
+PR #254      Chromium / Firefox / WebKit compatibility smoke
+PR #255      GitHub Actions runtime hardening to v7 action majors
+PR #256      Astro 7.2.0 security upgrade and blocking high-severity npm audit
 ```
 
 ## Latest completed production checkpoint
@@ -60,13 +66,22 @@ Generated at                  2026-08-09T07:08:45.362Z
 ## Permanent guards
 
 ```text
+npm audit --audit-level=high
 npm run audit:source-count
 npm run audit:source-count:test
 npm run audit:source-quality
 npm run audit:source-quality:test
 npm run monitoring:test
 npm run production:content:test
+npm run performance:test
+npm run build
+npm run accessibility:check
+npm run performance:check
+npm run dist:check
+npm run dist:test
 ```
+
+Separate CI also covers Chromium / Firefox / WebKit compatibility and representative desktop/mobile screenshot capture when relevant paths change.
 
 ```text
 Blocking errors                       0
@@ -80,6 +95,7 @@ Evidence with archived_url          130
 Terminal unarchived unique URLs      15
 Risky-host unarchived unique URLs    16
 Unknown URL status                    0
+High-severity npm audit findings      0
 ```
 
 ## Archive and primary-evidence boundaries
@@ -192,14 +208,32 @@ The six targets are home, `robots.txt`, `sitemap.xml`, `version.json`, one rotat
 
 Repository Actions settings still disallow `GITHUB_TOKEN` PR creation. On that specific platform error, the workflow retains the already-validated monitoring branch and succeeds; connected GitHub access can open the review PR. All other PR-creation failures remain fatal.
 
+## v1 hardening recovery point
+
+Current v1 hardening main state is after PR #256.
+
+```text
+Accessibility contract        73 generated HTML pages passing
+Performance max HTML          16 KiB gzip ceiling
+Performance CSS                5 KiB total / 5 KiB max file
+Performance JS                 4 KiB total / 2 KiB max file
+Compatibility                  Chromium / Firefox / WebKit passing
+Actions runtimes               checkout/setup-node/upload-artifact v7 where used
+Astro                          ^7.2.0
+High-severity npm audit        0
+Canonical hardening diff       none
+```
+
+The first security-gate run intentionally failed on the pre-upgrade dependency graph with 1 low and 2 high npm findings. The high findings were rooted in the old Astro dependency graph. After upgrading to Astro 7.2.0, the high-severity audit, full `Check`, representative screenshots, and three-engine compatibility smoke all pass.
+
 ## Cloudflare Pages boundary
 
 Production branch is `main`, production deployments are enabled, and preview deployment remains `none`. Monitoring changes do not require production publication verification unless canonical/public output changes.
 
 ## Next
 
-1. finish this restart/status checkpoint and treat Phase 5 planned bounded monitoring modules as live steady-state infrastructure;
-2. begin v1 accessibility hardening;
-3. follow with performance, compatibility, and release checks;
-4. continue bounded RSS security/pause/shutdown/regulatory discovery without promoting secondary signals to canonical truth;
+1. complete v1 release closure/checkpoint and define the final release-readiness execution path;
+2. run normal release gates and production verification for any public-output-affecting release change;
+3. keep Phase 5 monitors live in steady state without weakening their review-only boundary;
+4. preserve accessibility, performance, browser compatibility, dependency-security, source-quality, validator, and public-contract gates;
 5. revisit deferred evidence/archive gaps only after source conditions change.
