@@ -1,0 +1,152 @@
+name: V1 Release Readiness
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/release-readiness.yml'
+      - 'docs/runbooks/v1-release-readiness.md'
+      - 'package.json'
+      - 'astro.config.mjs'
+      - 'config/**'
+      - 'data/**'
+      - 'public/**'
+      - 'scripts/**'
+      - 'src/**'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/release-readiness.yml'
+      - 'docs/runbooks/v1-release-readiness.md'
+      - 'package.json'
+      - 'astro.config.mjs'
+      - 'config/**'
+      - 'data/**'
+      - 'public/**'
+      - 'scripts/**'
+      - 'src/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bir-v1-release-readiness-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release-readiness:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Install project dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Audit high-severity dependencies
+        run: npm audit --audit-level=high
+
+      - name: Type and Astro check
+        run: npm run check
+
+      - name: Validate canonical data
+        run: npm run validate:data
+
+      - name: Validate schema enums
+        run: npm run validate:enums
+
+      - name: Audit full canonical corpus
+        run: npm run audit:full-corpus
+
+      - name: Audit exact source counts
+        run: npm run audit:source-count
+
+      - name: Audit source quality baseline
+        run: npm run audit:source-quality
+
+      - name: Test monitoring foundation
+        run: npm run monitoring:test
+
+      - name: Test production content equality
+        run: npm run production:content:test
+
+      - name: Test performance budget failures
+        run: npm run performance:test
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Check accessibility contract
+        run: npm run accessibility:check
+
+      - name: Enforce built-output performance budget
+        run: npm run performance:check
+
+      - name: Check built output consistency
+        run: npm run dist:check
+
+      - name: Test controlled consistency failures
+        run: npm run dist:test
+
+      - name: Assert canonical data unchanged
+        run: git diff --exit-code -- data/bridges.json data/incidents.json data/events.json data/evidence.json
+
+      - name: Install browser engines for compatibility smoke
+        run: |
+          npm install --no-save --ignore-scripts playwright@1.60.0
+          npx playwright install --with-deps chromium firefox webkit
+
+      - name: Start local static server
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 --directory dist > /tmp/bir-release-readiness.log 2>&1 &
+          echo $! > /tmp/bir-release-readiness.pid
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4173/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/bir-release-readiness.log
+          exit 1
+
+      - name: Run Chromium Firefox WebKit compatibility smoke
+        env:
+          BIR_COMPAT_BASE_URL: http://127.0.0.1:4173
+        run: node scripts/check-browser-compatibility.mjs
+
+      - name: Stop local static server
+        if: always()
+        run: |
+          if test -f /tmp/bir-release-readiness.pid; then
+            kill "$(cat /tmp/bir-release-readiness.pid)" || true
+          fi
+
+      - name: Verify production registry equality after merge
+        if: github.event_name == 'push'
+        env:
+          PUBLIC_SITE_ORIGIN: https://bir.badjoke-lab.com
+          BIR_PRODUCTION_TIMEOUT_MS: '30000'
+        run: npm run production:verify
+
+      - name: Write release readiness summary
+        if: always()
+        shell: bash
+        run: |
+          {
+            echo '## BIR v1 release readiness'
+            echo
+            echo "- Revision: \`${GITHUB_SHA}\`"
+            echo "- Event: \`${GITHUB_EVENT_NAME}\`"
+            echo '- Canonical baseline: `33 bridges / 34 incidents / 183 events / 287 evidence`'
+            echo '- Required local gates: dependency security, schema/data, corpus quality, monitoring tests, build, accessibility, performance, dist consistency, Chromium/Firefox/WebKit'
+            if [ "${GITHUB_EVENT_NAME}" = 'push' ]; then
+              echo '- Production equality: executed in this main-branch run'
+            else
+              echo '- Production equality: deferred until merge-to-main because a PR revision is not yet deployed'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
