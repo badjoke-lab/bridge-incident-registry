@@ -21,6 +21,9 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Audit high-severity dependencies
+        run: npm audit --audit-level=high
+
       - name: Type and Astro check
         run: npm run check
 
