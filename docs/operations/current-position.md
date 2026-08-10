@@ -14,7 +14,7 @@ Events      183
 Evidence    287
 ```
 
-Phase 5 monitoring has not changed canonical counts or source-quality ceilings.
+Phase 5 monitoring and v1 hardening have not changed canonical counts or source-quality ceilings.
 
 ```text
 Primary evidence                       206 / 287
@@ -33,8 +33,9 @@ Canonical production content match      true
 
 - Phase 3 — full-corpus quality strengthening: active maintenance
 - Phase 4 — public contract stabilization: complete
-- Phase 5 — monitoring and candidate collection: live through the planned bounded modules
-- v1 hardening: active next phase
+- Phase 5 — monitoring and candidate collection: steady-state live
+- v1 hardening — accessibility, performance, browser compatibility, Actions runtime, and high-severity dependency security: complete to reviewed boundary
+- v1 release closure: next
 
 ## Phase 5 live stack
 
@@ -144,6 +145,32 @@ Canonical diff              none
 
 Targets are `/`, `/robots.txt`, `/sitemap.xml`, `/version.json`, one rotating bridge detail route, and one rotating incident detail route. The scheduled run on 2026-08-10 (`31359554582`) completed successfully with no public-site state changes. The main BIR Monitoring schedule (`31356920691`) also completed successfully with no monitoring state changes and canonical data unchanged.
 
+## v1 hardening checkpoint
+
+```text
+PR #251  Phase 5 restart/status checkpoint
+PR #252  Accessibility foundation + built-output accessibility gate
+PR #253  Source-controlled performance budget + controlled regression test
+PR #254  Chromium / Firefox / WebKit browser compatibility smoke
+PR #255  GitHub Actions checkout/setup-node/upload-artifact v7 runtime update
+PR #256  Astro 7.2.0 security upgrade + blocking high-severity npm audit gate
+```
+
+Accepted v1 hardening proof:
+
+```text
+Built HTML accessibility contract       73 pages passing
+Max HTML gzip budget                    16 KiB
+CSS gzip budget                          5 KiB total / 5 KiB max file
+JS gzip budget                           4 KiB total / 2 KiB max file
+Browser engines                          Chromium / Firefox / WebKit passing
+High-severity npm audit findings         0
+Astro                                    ^7.2.0
+Canonical change from hardening          none
+```
+
+The browser smoke exercises registry pagination, URL-state synchronization, filtering/page reset, representative static routes, and support controls in all three engines. Performance limits are measured against built output and enforced in `Check`. High-severity dependency advisories are now blocking.
+
 ## Latest completed production checkpoint
 
 ```text
@@ -160,8 +187,8 @@ Redirects             74
 
 ## Next bounded work
 
-1. begin v1 hardening with documentation/restart-state closure, accessibility, performance, compatibility, and release checks;
+1. perform v1 release closure: consolidate release-readiness checks and documentation, then run the existing production verification after any public-output-affecting release change;
 2. keep Phase 5 monitors live and bounded; change them only when live evidence shows a concrete gap;
-3. maintain validator/source-quality/public-contract gates;
+3. maintain accessibility, performance, browser-compatibility, dependency-security, validator, source-quality, and public-contract gates;
 4. continue bounded RSS security/pause/shutdown/regulatory discovery as secondary review material;
 5. revisit deferred evidence/archive gaps only on new source material or changed conditions.
