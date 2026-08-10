@@ -153,5 +153,11 @@
     "aliases": [
       "Connext token"
     ]
+  },
+  "sys": {
+    "display_name": "SYS",
+    "aliases": [
+      "Syscoin"
+    ]
   }
 }
