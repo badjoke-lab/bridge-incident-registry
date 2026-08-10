@@ -1,7 +1,7 @@
 # Bridge Incident Registry — Development Roadmap to v1
 
 Status: active  
-Updated: 2026-08-09
+Updated: 2026-08-10
 
 GitHub state and canonical JSON are authoritative.
 
@@ -29,7 +29,7 @@ Phase 3  Full-corpus quality strengthening         active maintenance
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
-Phase 5  Monitoring and candidate collection       active
+Phase 5  Monitoring and candidate collection       live through planned bounded modules
          Review-gated foundation                   complete — PR #217
          Initial signal/dedupe proof               complete — PR #223
          Review-branch fallback                    complete — PR #225
@@ -39,9 +39,9 @@ Phase 5  Monitoring and candidate collection       active
          Structured bridge-hack feed               live — PRs #233–#239
          Active bridge/domain watch                live — PRs #241–#244
          RSS status-news watch                     live — PRs #245–#246
-         Monitoring state resolution health        next
-         Site / SEO watch                          planned
-Release  v1 hardening                              planned
+         Monitoring state resolution health        live — PR #248
+         Public site / SEO health watch            live — PRs #249–#250
+Release  v1 hardening                              active next phase
 ```
 
 ## Phase 5 live state
@@ -96,6 +96,38 @@ Rerun state change        false
 
 RSS candidates are `B / hold` only. They are discovery material, not primary evidence or canonical status changes.
 
+### Review issue lifecycle
+
+PR #248 added explicit resolution and rearm semantics for tracked review issues while preserving the existing open-signal fingerprint format.
+
+```text
+new/open issue              review finding + B/hold
+unchanged open              silent
+known issue closes          one low resolution finding
+unchanged closed            silent
+closed issue reopens        rearmed review finding + B/hold
+historical closed issue     ignored unless previously tracked
+```
+
+This is monitoring-state lifecycle only. Closing a GitHub issue is not evidence that a canonical incident or bridge state is resolved.
+
+### Public site / SEO health watch
+
+PR #249 added a separate weekly production monitor. PR #250 accepted the initial healthy baseline.
+
+```text
+Accepted baseline run       31314396266
+Origin                      https://bir.badjoke-lab.com
+Targets                     6
+Independent requests       12
+Healthy baselines seeded    6
+Findings                    0
+Canonical                   33 / 34 / 183 / 287
+Canonical diff              none
+```
+
+Targets are home, `robots.txt`, `sitemap.xml`, `version.json`, one deterministic rotating bridge detail route, and one deterministic rotating incident detail route. The scheduled run `31359554582` on 2026-08-10 completed successfully with no state changes. The main BIR Monitoring run `31356920691` also completed successfully and preserved canonical data byte-for-byte.
+
 ## Current quality state
 
 ```text
@@ -127,11 +159,12 @@ Generated at                  2026-08-09T07:08:45.362Z
 
 ## Immediate targets
 
-1. add monitoring-state/watchlist resolution health so stale review signals can be explicitly resolved and future recurrence rearmed;
-2. add public-site/SEO monitoring;
-3. maintain bounded RSS security/pause/shutdown/regulatory discovery;
-4. maintain source-quality, validator, public-contract, and UI compatibility gates;
-5. complete v1 documentation, accessibility, performance, compatibility, and release checks.
+1. close stale restart/status documentation against PRs #248–#250 and the 2026-08-10 scheduled monitoring proofs;
+2. begin bounded v1 accessibility hardening while preserving public-contract and production-content equality gates;
+3. add performance and compatibility checks after accessibility closure;
+4. complete v1 release checks and release closure;
+5. maintain Phase 5 monitors in steady state and adjust them only when live evidence shows a concrete gap;
+6. revisit evidence/archive gaps only when source conditions materially change.
 
 ## Permanent rules
 
@@ -153,4 +186,6 @@ Generated at                  2026-08-09T07:08:45.362Z
 16. Upstream classification fields must be validated against live schema before they become relevance gates.
 17. A secondary incident/news feed may create only hold candidates; primary-source investigation remains mandatory.
 18. Parent/subdomain official hosts are not migrations by themselves.
-19. Cloudflare Pages preview deployment remains `none`.
+19. Review issue resolution/rearm affects monitoring state only, never canonical truth.
+20. Public-site health monitoring complements but does not replace exhaustive production equality verification.
+21. Cloudflare Pages preview deployment remains `none`.
