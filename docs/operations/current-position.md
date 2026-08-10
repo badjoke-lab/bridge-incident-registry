@@ -1,41 +1,70 @@
 # Current position
 
-Status: active  
+Status: active maintenance  
 Updated: 2026-08-10
 
-This file is a compact compatibility pointer. Authoritative live state is current `main`, canonical JSON, GitHub Actions, `docs/runbooks/recovery-checkpoint.md`, `docs/runbooks/current-status.md`, and `docs/runbooks/development-roadmap.md`.
+This file is the compact restart pointer. Current `main`, canonical JSON, GitHub Actions, `docs/runbooks/recovery-checkpoint.md`, `docs/runbooks/current-status.md`, and `docs/runbooks/development-roadmap.md` are authoritative.
 
 ## Canonical and production baseline
 
 ```text
 Bridges     33
-Incidents   34
-Events      183
-Evidence    287
+Incidents   35
+Events      184
+Evidence    291
 ```
 
-Phase 5 monitoring and v1 hardening/release closure have not changed canonical counts or source-quality ceilings.
+Latest canonical maintenance addition: **Allbridge Core July 2026 Solana pool exploit** under existing `bir_bridge_000012`.
 
 ```text
-Primary evidence                       206 / 287
-Tier 1 evidence                        223 / 287
-Evidence with archived_url             130 / 287
-Events without primary                  11 / 183
-Events without Tier 1                     6 / 183
+Review PR                         #261
+Canonical PR                      #262
+Canonical merge                   d7cf47f2373c9c0b94b78b93807fc6d0239c2d98
+V1 Release Readiness main run     31393382470
+Release-readiness job             93470262367
+Production equality               success
+Built HTML pages                  74
+```
+
+## Current quality boundary
+
+```text
+Primary evidence                       209 / 291
+Tier 1 evidence                        226 / 291
+Evidence with archived_url             130 / 291
+Incidents without primary                1 / 35
+Incidents without Tier 1                 1 / 35
+Events without primary                  11 / 184
+Events without Tier 1                     6 / 184
 Terminal unarchived unique URLs          15
 Risky-host unarchived unique URLs        16
 Unknown URL status                        0
 Source-count mismatches                   0
+High-severity npm audit findings          0
 Canonical production content match      true
 ```
 
+The Allbridge batch added three Tier 1 primary Telegram records and one Tier 2 corroborating article. The unarchived official X post-mortem was deliberately not admitted, so the risky-host ceiling remains 16.
+
 ## Current phase
 
-- Phase 3 — full-corpus quality strengthening: active maintenance
+- Phase 3 — full-corpus quality strengthening: active, research-triggered maintenance
 - Phase 4 — public contract stabilization: complete
 - Phase 5 — monitoring and candidate collection: steady-state live
-- v1 hardening — accessibility, performance, browser compatibility, Actions runtime, and high-severity dependency security: complete
-- v1 technical release closure: complete — PR #258 / main run `31367052981`
+- v1 hardening and technical release closure: complete
+- ordinary reviewed registry/candidate expansion: active
+
+## Latest reviewed maintenance work
+
+```text
+PR #260  Remove stale Boltz canonical apply helper
+PR #261  Review Allbridge Core July 2026 Solana exploit
+PR #262  Apply and production-verify Allbridge 2026 canonical incident
+```
+
+Boltz remains Issue #171, a monitoring signal / needs-evidence item. It is not a canonical incident because the accepted review record still lacks one discrete exploit/incident boundary.
+
+Allbridge is different: the first-party record established a discrete pause, confirmed $1.65 million withdrawal, and later pool-less Core relaunch. It was therefore added as `bir_inc_000035` under the existing Allbridge entity rather than as a duplicate bridge.
 
 ## Phase 5 live stack
 
@@ -53,146 +82,34 @@ PR #248      Review issue resolution / rearm lifecycle
 PR #249–250  Public site health watch + accepted production baseline
 ```
 
-### External bridge universe
+The accepted monitoring baselines predate the Allbridge canonical addition and are historical monitoring checkpoints, not current canonical counts. Monitoring remains review-only and must never auto-write canonical records.
+
+## Permanent release gates
 
 ```text
-Parsed                     98
-Exact canonical matches    11
-Unmatched baseline         87
-Silent-repeat unchanged    87
-Candidates                  0
+npm audit --audit-level=high
+canonical + enum validation
+full-corpus / exact source-count / source-quality audits
+monitoring tests
+build + dist consistency
+accessibility contract
+built-output performance budget
+Chromium / Firefox / WebKit compatibility
+production registry equality after main merge
 ```
 
-### Structured bridge-hack feed
+Current budgets remain 16 KiB gzip max HTML, 5 KiB CSS total/max file, and 4 KiB JS total / 2 KiB max JS file. Astro remains `^7.2.0`.
 
-```text
-Input URL                   https://api.llama.fi/hacks
-Input kind                  legacy_public_json
-Raw SHA-256                 e80fced996cf886ca0d2ca70c02dd04b869b628d63773d0b327f97b49aa2734a
-Parsed hacks                613
-bridgeHack=true              61
-Accepted baseline            61
-Exact canonical matches      20
-Silent-repeat unchanged      61
-Candidates                    0
-```
+## v1 technical release history
 
-### Active bridge official-domain watch
+The original v1 technical closure was accepted by PR #258 and main run `31367052981` / job `93387599332`. That remains a historical release-contract checkpoint. The later Allbridge canonical update was independently accepted on main by run `31393382470` / job `93470262367`, including production equality.
 
-After the first live smoke exposed and then removed a parent-domain/subdomain false positive, PR #244 accepted the corrected baseline from run `31313312723`.
-
-```text
-Eligible active/limited/paused bridges  22
-Selected per run                         8
-Accepted healthy baselines               8
-Accepted findings                         0
-Silent-repeat baseline changes            0
-Silent-repeat findings                    0
-```
-
-Two 404/410 responses are required for a hard review finding. 401/403/405/429, 5xx, timeout, and mixed results are not terminal proof. Parent/subdomain relationships remain within the same official-domain scope; unrelated final-domain changes remain reviewable.
-
-### RSS status-news discovery
-
-PR #245 added bounded RSS/Atom secondary discovery. PR #246 accepted the first baseline from run `31313579371` / job `93245104559`.
-
-```text
-Feeds reached                2
-CoinDesk rows               25
-Cointelegraph rows          30
-Total parsed                55
-Bridge + bounded-trigger     0
-Baseline candidates          0
-Rerun state change       false
-Rerun candidates             0
-```
-
-An RSS article is reviewable only when a canonical bridge name/alias and a bounded security, operations, or regulatory trigger are both present. RSS output is `B / hold` secondary discovery only; primary-source review is still mandatory.
-
-GDELT remains optional/fail-closed after the first GitHub Actions request returned HTTP 429.
-
-### Monitoring issue resolution and rearm
-
-PR #248 made review-signal lifecycle explicit without changing the existing open-signal fingerprint format.
-
-```text
-new/open issue              review finding + B/hold
-unchanged open              silent
-known issue closes          one low resolved finding
-unchanged closed            silent
-closed issue reopens        rearmed review finding + B/hold
-historical closed issue     ignored unless previously tracked
-```
-
-Issue closure changes monitoring state only. It never proves that a bridge incident or canonical status has been resolved.
-
-### Public site health watch
-
-PR #249 added a separate bounded production monitor and PR #250 accepted the first healthy baseline.
-
-```text
-Accepted baseline run       31314396266
-Origin                      https://bir.badjoke-lab.com
-Targets                     6
-Independent requests       12
-Healthy baselines seeded    6
-Findings                    0
-Sampled bridge              bir_bridge_000017
-Sampled incident            bir_inc_000030
-Canonical                   33 / 34 / 183 / 287
-Canonical diff              none
-```
-
-Targets are `/`, `/robots.txt`, `/sitemap.xml`, `/version.json`, one rotating bridge detail route, and one rotating incident detail route. The scheduled run on 2026-08-10 (`31359554582`) completed successfully with no public-site state changes. The main BIR Monitoring schedule (`31356920691`) also completed successfully with no monitoring state changes and canonical data unchanged.
-
-## v1 hardening and release checkpoint
-
-```text
-PR #251  Phase 5 restart/status checkpoint
-PR #252  Accessibility foundation + built-output accessibility gate
-PR #253  Source-controlled performance budget + controlled regression test
-PR #254  Chromium / Firefox / WebKit browser compatibility smoke
-PR #255  GitHub Actions checkout/setup-node/upload-artifact v7 runtime update
-PR #256  Astro 7.2.0 security upgrade + blocking high-severity npm audit gate
-PR #257  v1 hardening restart/status checkpoint
-PR #258  Consolidated v1 release-readiness workflow and runbook
-```
-
-Accepted v1 hardening proof:
-
-```text
-Built HTML accessibility contract       73 pages passing
-Max HTML gzip budget                    16 KiB
-CSS gzip budget                          5 KiB total / 5 KiB max file
-JS gzip budget                           4 KiB total / 2 KiB max file
-Browser engines                          Chromium / Firefox / WebKit passing
-High-severity npm audit findings         0
-Astro                                    ^7.2.0
-Canonical change from hardening          none
-```
-
-The browser smoke exercises registry pagination, URL-state synchronization, filtering/page reset, representative static routes, and support controls in all three engines. Performance limits are measured against built output and enforced in `Check`. High-severity dependency advisories are blocking.
-
-## Accepted v1 technical release closure
-
-```text
-Release-readiness PR          #258
-Main merge                    d9f545803104bffd829d93270965f53d9f3d1a45
-V1 Release Readiness run      31367052981
-Release-readiness job         93387599332
-Local/static/security gates   success
-Chromium / Firefox / WebKit   success
-Production equality           success
-Canonical                     33 / 34 / 183 / 287
-Canonical mutation            none
-```
-
-This checkpoint means the v1 technical release contract is closed and accepted. It does **not** create or imply a semantic-version tag or GitHub Release.
+No semantic-version tag or GitHub Release is implied by either checkpoint.
 
 ## Next bounded work
 
-1. return to ordinary registry maintenance: Phase 3 research-triggered quality work and reviewed corpus/candidate expansion;
-2. keep Phase 5 monitoring and candidate collection live in steady state;
-3. maintain accessibility, performance, browser-compatibility, dependency-security, validator, source-quality, and public-contract gates;
-4. reopen v1 hardening only if a release gate regresses or a concrete production compatibility issue appears;
-5. continue bounded RSS security/pause/shutdown/regulatory discovery as secondary review material.
+1. inspect the latest Phase 5 monitoring/public-site runs against the new `33 / 35 / 184 / 291` canonical state;
+2. continue reviewed incident/corpus expansion from concrete first-party-backed candidates;
+3. keep Issue #171 Boltz review-only until stronger incident-boundary evidence appears;
+4. perform Phase 3 source/archive remediation only when new stronger material exists;
+5. preserve every permanent release and source-quality guard without widening ceilings to force coverage.
