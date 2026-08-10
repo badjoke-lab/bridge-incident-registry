@@ -85,7 +85,7 @@ function checkPage(file, html) {
         continue;
       }
       const labelPattern = new RegExp(`<label\\b[^>]*\\bfor\\s*=\\s*["']${escapeRegExp(id)}["'][^>]*>`, "i");
-      if (!labelPattern.test(form)) record(file, `registry control #${id} is missing a matching <label for>.");
+      if (!labelPattern.test(form)) record(file, `registry control #${id} is missing a matching <label for>.`);
     }
   }
 
