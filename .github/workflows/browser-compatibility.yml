@@ -1,0 +1,72 @@
+name: Browser Compatibility
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - 'scripts/check-browser-compatibility.mjs'
+      - '.github/workflows/browser-compatibility.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'package.json'
+      - 'scripts/check-browser-compatibility.mjs'
+      - '.github/workflows/browser-compatibility.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bir-browser-compatibility-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  browser-compatibility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install project and Playwright
+        run: |
+          npm install --no-audit --no-fund
+          npm install --no-save --ignore-scripts playwright@1.60.0
+          npx playwright install --with-deps chromium firefox webkit
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Start local static server
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 --directory dist > /tmp/bir-browser-compatibility.log 2>&1 &
+          echo $! > /tmp/bir-browser-compatibility.pid
+          for attempt in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:4173/ > /dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/bir-browser-compatibility.log
+          exit 1
+
+      - name: Run Chromium Firefox WebKit smoke
+        env:
+          BIR_COMPAT_BASE_URL: http://127.0.0.1:4173
+        run: node scripts/check-browser-compatibility.mjs
+
+      - name: Stop local static server
+        if: always()
+        run: |
+          if test -f /tmp/bir-browser-compatibility.pid; then
+            kill "$(cat /tmp/bir-browser-compatibility.pid)" || true
+          fi
