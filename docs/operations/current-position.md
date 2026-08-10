@@ -1,7 +1,7 @@
 # Current position
 
 Status: active  
-Updated: 2026-08-09
+Updated: 2026-08-10
 
 This file is a compact compatibility pointer. Authoritative live state is current `main`, canonical JSON, GitHub Actions, `docs/runbooks/recovery-checkpoint.md`, `docs/runbooks/current-status.md`, and `docs/runbooks/development-roadmap.md`.
 
@@ -33,8 +33,8 @@ Canonical production content match      true
 
 - Phase 3 — full-corpus quality strengthening: active maintenance
 - Phase 4 — public contract stabilization: complete
-- Phase 5 — monitoring and candidate collection: active
-- v1 hardening: planned
+- Phase 5 — monitoring and candidate collection: live through the planned bounded modules
+- v1 hardening: active next phase
 
 ## Phase 5 live stack
 
@@ -48,6 +48,8 @@ PR #231–232  News source boundary + optional fail-closed GDELT adapter
 PR #233–239  Structured DefiLlama bridge-hack feed + accepted baseline
 PR #241–244  Active bridge official-domain watch + accepted baseline
 PR #245–246  RSS status-news discovery + accepted baseline
+PR #248      Review issue resolution / rearm lifecycle
+PR #249–250  Public site health watch + accepted production baseline
 ```
 
 ### External bridge universe
@@ -108,6 +110,40 @@ An RSS article is reviewable only when a canonical bridge name/alias and a bound
 
 GDELT remains optional/fail-closed after the first GitHub Actions request returned HTTP 429.
 
+### Monitoring issue resolution and rearm
+
+PR #248 made review-signal lifecycle explicit without changing the existing open-signal fingerprint format.
+
+```text
+new/open issue              review finding + B/hold
+unchanged open              silent
+known issue closes          one low resolved finding
+unchanged closed            silent
+closed issue reopens        rearmed review finding + B/hold
+historical closed issue     ignored unless previously tracked
+```
+
+Issue closure changes monitoring state only. It never proves that a bridge incident or canonical status has been resolved.
+
+### Public site health watch
+
+PR #249 added a separate bounded production monitor and PR #250 accepted the first healthy baseline.
+
+```text
+Accepted baseline run       31314396266
+Origin                      https://bir.badjoke-lab.com
+Targets                     6
+Independent requests       12
+Healthy baselines seeded    6
+Findings                    0
+Sampled bridge              bir_bridge_000017
+Sampled incident            bir_inc_000030
+Canonical                   33 / 34 / 183 / 287
+Canonical diff              none
+```
+
+Targets are `/`, `/robots.txt`, `/sitemap.xml`, `/version.json`, one rotating bridge detail route, and one rotating incident detail route. The scheduled run on 2026-08-10 (`31359554582`) completed successfully with no public-site state changes. The main BIR Monitoring schedule (`31356920691`) also completed successfully with no monitoring state changes and canonical data unchanged.
+
 ## Latest completed production checkpoint
 
 ```text
@@ -124,8 +160,8 @@ Redirects             74
 
 ## Next bounded work
 
-1. add monitoring-state/watchlist resolution health so old review signals can be explicitly recognized as resolved/rearmed;
-2. add public-site/SEO monitoring incrementally;
-3. keep pause/shutdown/regulatory RSS discovery bounded and secondary-only;
-4. maintain validator/source-quality/public-contract gates;
-5. continue v1 documentation, accessibility, performance, compatibility, and release hardening.
+1. begin v1 hardening with documentation/restart-state closure, accessibility, performance, compatibility, and release checks;
+2. keep Phase 5 monitors live and bounded; change them only when live evidence shows a concrete gap;
+3. maintain validator/source-quality/public-contract gates;
+4. continue bounded RSS security/pause/shutdown/regulatory discovery as secondary review material;
+5. revisit deferred evidence/archive gaps only on new source material or changed conditions.

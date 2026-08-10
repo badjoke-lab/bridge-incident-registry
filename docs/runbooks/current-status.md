@@ -1,7 +1,7 @@
 # Current Status — Bridge Incident Registry
 
 Status: active  
-Updated: 2026-08-09
+Updated: 2026-08-10
 
 ## Canonical and production state
 
@@ -44,8 +44,8 @@ Optional GDELT adapter               fail-closed — PRs #231–#232
 Structured bridge-hack feed          live — PRs #233–#239
 Active bridge/domain watch           live — PRs #241–#244
 RSS status-news watch                live — PRs #245–#246
-Monitoring state resolution health   next
-Site / SEO watch                     planned
+Monitoring state resolution health   live — PR #248
+Public site / SEO health watch       live — PRs #249–#250
 ```
 
 ### Live proof — evidence, external universe, and bridge hacks
@@ -105,15 +105,50 @@ PR #246 persisted the feed baseline. Rerun job `93245346339` again parsed 55 row
 
 GDELT remains optional/fail-closed code only because its first GitHub Actions live request returned HTTP 429.
 
+### Live proof — review issue lifecycle
+
+PR #248 added explicit resolution/rearm handling for tracked review issues without changing existing open fingerprints.
+
+```text
+new/open issue              medium finding + B/hold
+unchanged open              silent
+known issue closes          one low resolved finding
+unchanged closed            silent
+closed issue reopens        rearmed medium finding + B/hold
+historical closed issue     ignored unless previously tracked
+```
+
+Issue resolution is monitoring-state resolution only. It never changes canonical incident or bridge state by itself.
+
+### Live proof — public site / SEO health
+
+PR #249 added the separate `BIR Public Site Health` workflow. PR #250 accepted the first healthy production baseline from run `31314396266`.
+
+```text
+Origin                      https://bir.badjoke-lab.com
+Targets                     6
+Independent requests       12
+Healthy baselines seeded    6
+Findings                    0
+Sampled bridge              bir_bridge_000017
+Sampled incident            bir_inc_000030
+Canonical                   33 / 34 / 183 / 287
+Canonical diff              none
+```
+
+The monitor checks `/`, `/robots.txt`, `/sitemap.xml`, `/version.json`, one rotating bridge detail route, and one rotating incident detail route. Scheduled run `31359554582` on 2026-08-10 completed successfully with no public-site state changes. Main BIR Monitoring run `31356920691` also completed successfully with no monitoring state changes.
+
 ## Monitoring safety boundary
 
 - canonical JSON is fingerprinted before and after every run;
 - canonical diffs, unknown URL status, and broken canonical references are blocking;
-- persistent output is restricted to `data-staging/monitoring/**` and `data-staging/watchlists/auto/**`;
+- persistent output is restricted to approved monitoring/watchlist staging paths;
 - first observations are reviewable zero-candidate baselines where appropriate;
 - unchanged signals are suppressed;
 - monitoring candidates never publish canonical records;
 - secondary feeds can only create hold/review material;
+- review issue resolution/rearm affects monitoring state only;
+- public-site health monitoring complements, but does not replace, full production-content equality verification;
 - canonical publication always requires a separate reviewed canonical branch and normal production verification.
 
 ## Latest completed production checkpoint
@@ -132,8 +167,8 @@ Generated at                  2026-08-09T07:08:45.362Z
 
 ## Next
 
-1. add explicit monitoring-state/watchlist resolution health and rearm behavior;
-2. add public-site/SEO monitoring;
-3. maintain source-quality, validator, public-contract, and UI compatibility gates;
-4. continue v1 hardening;
+1. close the stale restart/status checkpoint against PRs #248–#250 and the 2026-08-10 scheduled monitoring proofs;
+2. begin bounded v1 accessibility hardening;
+3. follow with performance, compatibility, and release checks;
+4. maintain source-quality, validator, public-contract, and UI compatibility gates;
 5. revisit evidence/archive gaps only when source conditions materially change.

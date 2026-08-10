@@ -1,7 +1,7 @@
 # BIR Live Recovery Checkpoint
 
 Status: active  
-Updated: 2026-08-09
+Updated: 2026-08-10
 
 GitHub state and canonical JSON are authoritative. Completed merge SHAs are checkpoints, not live branch pointers.
 
@@ -35,6 +35,8 @@ PR #231–232  News source boundary and optional fail-closed GDELT adapter
 PR #233–239  Structured DefiLlama bridge-hack discovery and accepted baseline
 PR #241–244  Active bridge official-domain monitoring and accepted baseline
 PR #245–246  RSS status-news discovery and accepted baseline
+PR #248      Review issue resolution and rearm lifecycle
+PR #249–250  Public site health monitor and accepted healthy baseline
 ```
 
 ## Latest completed production checkpoint
@@ -86,7 +88,7 @@ Archive Capture Batch 18 and Deferred Retries 03–04 exhausted the fresh archiv
 
 ## Phase 5 monitoring checkpoint
 
-Monitoring is review-only. It fingerprints all four canonical JSON files before and after execution, rejects canonical mutation/unknown URL status/broken references, writes only under `data-staging/monitoring/**` and `data-staging/watchlists/auto/**`, and suppresses unchanged signals by stable fingerprints.
+Monitoring is review-only. It fingerprints all four canonical JSON files before and after execution, rejects canonical mutation/unknown URL status/broken references, writes only under approved monitoring/watchlist staging paths, and suppresses unchanged signals by stable fingerprints.
 
 ### Issue and evidence-health proof
 
@@ -155,6 +157,39 @@ PR #246 persisted the RSS baseline. Rerun job `93245346339` again parsed 55 rows
 
 GDELT remains optional/fail-closed because its first GitHub Actions live request received HTTP 429. No GDELT baseline was accepted.
 
+### Review issue resolution and rearm
+
+PR #248 added explicit state transitions for tracked review issues while preserving legacy open fingerprints.
+
+```text
+new/open issue              medium review finding + B/hold
+unchanged open              silent
+known issue closes          one low review_signal_resolved finding
+unchanged closed            silent
+closed issue reopens        rearmed medium finding + B/hold
+historical closed issue     ignored unless previously tracked
+```
+
+This resolves/rearms monitoring state only. It does not resolve canonical incidents automatically.
+
+### Public site health proof
+
+PR #249 added a separate weekly public-site/SEO health workflow. PR #250 persisted the first accepted healthy baseline from run `31314396266`.
+
+```text
+Origin                      https://bir.badjoke-lab.com
+Targets                     6
+Independent requests       12
+Healthy baselines seeded    6
+Findings                    0
+Sampled bridge              bir_bridge_000017
+Sampled incident            bir_inc_000030
+Canonical                   33 / 34 / 183 / 287
+Canonical diff              none
+```
+
+The six targets are home, `robots.txt`, `sitemap.xml`, `version.json`, one rotating bridge detail route, and one rotating incident detail route. Scheduled run `31359554582` on 2026-08-10 completed successfully and reported no public-site state changes. Main monitoring run `31356920691` also completed successfully with no monitoring state changes and canonical data unchanged.
+
 Repository Actions settings still disallow `GITHUB_TOKEN` PR creation. On that specific platform error, the workflow retains the already-validated monitoring branch and succeeds; connected GitHub access can open the review PR. All other PR-creation failures remain fatal.
 
 ## Cloudflare Pages boundary
@@ -163,8 +198,8 @@ Production branch is `main`, production deployments are enabled, and preview dep
 
 ## Next
 
-1. add monitoring-state/watchlist resolution health and explicit rearm semantics;
-2. add public-site/SEO monitoring incrementally;
-3. continue bounded RSS security/pause/shutdown/regulatory discovery;
-4. continue v1 hardening;
+1. finish this restart/status checkpoint and treat Phase 5 planned bounded monitoring modules as live steady-state infrastructure;
+2. begin v1 accessibility hardening;
+3. follow with performance, compatibility, and release checks;
+4. continue bounded RSS security/pause/shutdown/regulatory discovery without promoting secondary signals to canonical truth;
 5. revisit deferred evidence/archive gaps only after source conditions change.
