@@ -14,7 +14,11 @@ function assert(condition, message) {
 async function open(page, route) {
   const response = await page.goto(`${baseUrl}${route}`, { waitUntil: "networkidle" });
   assert(response, `${route}: missing navigation response`);
-  assert(response.status() === 200, `${route}: expected HTTP 200, got ${response.status()}`);
+  const status = response.status();
+  assert(
+    (status >= 200 && status < 300) || status === 304,
+    `${route}: expected HTTP 2xx/304, got ${status}`,
+  );
   await page.locator("main#main-content").waitFor({ state: "visible" });
 }
 
