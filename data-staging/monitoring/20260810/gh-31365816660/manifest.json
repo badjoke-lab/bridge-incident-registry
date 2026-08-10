@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "run_id": "gh-31365816660",
+  "observed_at": "2026-08-10T13:47:36Z",
+  "monitor": "public-site-health-watch",
+  "origin": "https://bir.badjoke-lab.com",
+  "target_count": 6,
+  "baseline_seeded_count": 1,
+  "findings_count": 0,
+  "canonical_counts": {
+    "bridges": 33,
+    "incidents": 35,
+    "events": 184,
+    "evidence": 291
+  },
+  "unknown_url_status": 0,
+  "reference_errors": 0
+}
