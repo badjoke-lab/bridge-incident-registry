@@ -1,7 +1,7 @@
 # BIR implementation schedule
 
 Status: active  
-Updated: 2026-08-09
+Updated: 2026-08-10
 
 The authoritative roadmap is `docs/runbooks/development-roadmap.md`; the restart point is `docs/runbooks/recovery-checkpoint.md`.
 
@@ -17,7 +17,7 @@ The authoritative roadmap is `docs/runbooks/development-roadmap.md`; the restart
   - Deferred Archive Retries 01–04: complete to reviewed boundary
   - cross-record bridge integrity: blocking
 - Phase 4 — public contract stabilization: complete
-- Phase 5 — monitoring and candidate collection: active
+- Phase 5 — monitoring and candidate collection: live through the planned bounded modules
   - review-gated foundation: complete
   - Issue #171 dedupe state: complete
   - review-branch fallback and duplicate guard: complete
@@ -27,9 +27,14 @@ The authoritative roadmap is `docs/runbooks/development-roadmap.md`; the restart
   - active bridge official-domain watch: live, baseline + silent repeat proven
   - RSS status-news discovery: live, baseline + silent repeat proven
   - optional GDELT adapter: fail-closed, not scheduled/default after Actions 429
-  - monitoring-state/watchlist resolution health: next
-  - site/SEO watch: planned
-- Release — v1 documentation, accessibility, performance, compatibility, and release checks: planned
+  - monitoring-state/watchlist resolution health: live — PR #248
+  - public site/SEO health watch: live, baseline + silent repeat proven — PRs #249–#250
+- Release — v1 hardening: active next phase
+  - documentation/restart-state closure: first
+  - accessibility: next bounded implementation target
+  - performance: planned
+  - compatibility: planned
+  - release checks: planned
 
 ## Current baseline
 
@@ -57,16 +62,21 @@ RSS rows parsed                  55
 RSS relevant baseline rows        0
 RSS baseline candidates           0
 RSS silent repeat                 0 state change / 0 candidates
+Issue lifecycle                   close/reopen resolution + rearm live
+Public site targets               6
+Public site baseline              6 healthy / 0 findings
+Scheduled BIR Monitoring          31356920691 success / no state changes
+Scheduled Public Site Health      31359554582 success / no state changes
 Canonical monitoring diff       none
 ```
 
 ## Immediate execution order
 
-1. add monitoring-state/watchlist resolution health and explicit rearm semantics;
-2. add public-site/SEO checks;
-3. maintain RSS security/pause/shutdown/regulatory discovery as bounded secondary review material;
-4. maintain validator/source-quality/public-contract gates;
-5. complete v1 hardening and release closure;
+1. close stale restart/status documentation against PRs #248–#250 and the 2026-08-10 scheduled proofs;
+2. start bounded v1 accessibility hardening without weakening existing public-contract or production-content gates;
+3. add performance and compatibility checks after accessibility closure;
+4. complete release checks and v1 closure;
+5. maintain all Phase 5 monitors in steady state and change them only on a demonstrated gap;
 6. revisit deferred evidence/archive gaps only on new source material or changed conditions.
 
 ## Permanent boundary
@@ -80,6 +90,8 @@ Canonical monitoring diff       none
 - 401/403/405/429, timeout, 5xx, or mixed results are not dead-proof by themselves;
 - parent/subdomain official-host relationships are not treated as migrations by themselves;
 - RSS candidates require both a canonical bridge identity and a bounded trigger;
+- review issue closure is monitoring-state resolution only, not canonical incident resolution;
+- public-site health monitoring is bounded and does not replace exhaustive production equality verification;
 - no duplicate scheduled review work while an open monitoring PR or unmerged review branch exists;
 - production verification remains required for canonical/public output changes;
 - Cloudflare Pages preview deployment remains `none`.
