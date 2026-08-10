@@ -252,4 +252,27 @@ writeCompact("data/incidents.json", incidents);
 writeCompact("data/events.json", events);
 writeCompact("data/evidence.json", evidence);
 
+const documentCountFiles = [
+  "README.md",
+  "docs/runbooks/current-status.md",
+  "docs/runbooks/recovery-checkpoint.md",
+  "docs/runbooks/development-roadmap.md",
+  "docs/runbooks/public-consistency-remediation.md"
+];
+const countUpdates = [
+  ["Incidents", 34, 35],
+  ["Events", 183, 184],
+  ["Evidence", 287, 291]
+];
+for (const file of documentCountFiles) {
+  const target = path.join(root, file);
+  let text = fs.readFileSync(target, "utf8");
+  for (const [label, from, to] of countUpdates) {
+    const pattern = new RegExp(`(^|\\n)(${label})(\\s+)${from}(?=\\r?\\n)`);
+    if (!pattern.test(text)) throw new Error(`${file}: current ${label} ${from} baseline not found`);
+    text = text.replace(pattern, (_match, prefix, name, spacing) => `${prefix}${name}${spacing}${to}`);
+  }
+  fs.writeFileSync(target, text);
+}
+
 console.log("Applied approved Allbridge Core 2026 canonical incident: 33 bridges / 35 incidents / 184 events / 291 evidence.");
