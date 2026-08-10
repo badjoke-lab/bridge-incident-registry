@@ -7,9 +7,9 @@ Updated: 2026-08-10
 
 ```text
 Bridges     33
-Incidents   34
-Events      183
-Evidence    287
+Incidents   35
+Events      184
+Evidence    291
 ```
 
 Canonical data remains unchanged by Phase 5 monitoring, v1 hardening, and v1 technical release closure. Unknown URL status and source-count mismatches remain at 0.

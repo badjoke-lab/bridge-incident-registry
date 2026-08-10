@@ -9,9 +9,9 @@ GitHub state and canonical JSON are authoritative. Completed merge SHAs are chec
 
 ```text
 Bridges     33
-Incidents   34
-Events      183
-Evidence    287
+Incidents   35
+Events      184
+Evidence    291
 ```
 
 ## Latest completed checkpoints

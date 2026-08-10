@@ -7,9 +7,9 @@ Updated: 2026-08-03
 
 ```text
 Bridges            33
-Incidents          34
-Events            183
-Evidence          287
+Incidents          35
+Events            184
+Evidence          291
 Archived evidence 130
 HTML routes        72
 Redirects          74
