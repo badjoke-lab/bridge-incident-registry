@@ -72,6 +72,28 @@ a:hover {
   color: var(--link-hover);
 }
 
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--link-hover);
+  outline-offset: 3px;
+}
+
+[id] {
+  scroll-margin-top: 5rem;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
 main {
   width: min(var(--max-width), calc(100vw - 32px));
   margin: 0 auto;
@@ -230,6 +252,17 @@ h1 {
   border-radius: 14px;
   padding: 16px 18px;
   line-height: 1.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 @media (max-width: 760px) {
