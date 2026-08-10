@@ -12,7 +12,8 @@ const { bridges } = Astro.props;
 const PAGE_SIZE = 25;
 ---
 <div class="registry-table-wrap">
-  <table class="registry-table">
+  <table class="registry-table" aria-describedby="bridge-result-count">
+    <caption class="sr-only">Bridge registry results</caption>
     <thead><tr><th scope="col">Bridge</th><th scope="col">Type</th><th scope="col">Status</th><th scope="col">Maturity</th><th scope="col">Incidents</th><th scope="col">Reported loss</th><th scope="col">Chains</th><th scope="col">Evidence</th><th scope="col">Freshness</th></tr></thead>
     <tbody id="bridge-table-body">
       {bridges.map((bridge, index) => {
@@ -51,4 +52,8 @@ const PAGE_SIZE = 25;
     </tbody>
   </table>
 </div>
-<nav class="registry-pagination" aria-label="Bridge registry pages"><button id="bridge-previous-page" type="button">Previous</button><span>Page <strong id="bridge-current-page">1</strong> of <strong id="bridge-page-count">{Math.max(1, Math.ceil(bridges.length / PAGE_SIZE))}</strong></span><button id="bridge-next-page" type="button">Next</button></nav>
+<nav class="registry-pagination" aria-label="Bridge registry pages">
+  <button id="bridge-previous-page" type="button" aria-controls="bridge-table-body" aria-label="Previous bridge registry page">Previous</button>
+  <span id="bridge-page-status" aria-live="polite" aria-atomic="true">Page <strong id="bridge-current-page">1</strong> of <strong id="bridge-page-count">{Math.max(1, Math.ceil(bridges.length / PAGE_SIZE))}</strong></span>
+  <button id="bridge-next-page" type="button" aria-controls="bridge-table-body" aria-label="Next bridge registry page">Next</button>
+</nav>
