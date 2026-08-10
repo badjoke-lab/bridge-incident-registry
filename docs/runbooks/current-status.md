@@ -12,7 +12,7 @@ Events      183
 Evidence    287
 ```
 
-Canonical data remains unchanged by Phase 5 monitoring. Unknown URL status and source-count mismatches remain at 0.
+Canonical data remains unchanged by Phase 5 monitoring and v1 hardening. Unknown URL status and source-count mismatches remain at 0.
 
 ## Phase 3 quality boundary
 
@@ -138,17 +138,46 @@ Canonical diff              none
 
 The monitor checks `/`, `/robots.txt`, `/sitemap.xml`, `/version.json`, one rotating bridge detail route, and one rotating incident detail route. Scheduled run `31359554582` on 2026-08-10 completed successfully with no public-site state changes. Main BIR Monitoring run `31356920691` also completed successfully with no monitoring state changes.
 
-## Monitoring safety boundary
+## v1 hardening status
 
-- canonical JSON is fingerprinted before and after every run;
+```text
+Restart/status checkpoint             complete — PR #251
+Accessibility foundation              complete — PR #252
+Performance budget                    complete — PR #253
+Browser compatibility                 complete — PR #254
+Actions runtime hardening             complete — PR #255
+Dependency security hardening         complete — PR #256
+Release closure                       next
+```
+
+Accepted hardening proof:
+
+```text
+Built HTML accessibility contract       73 pages passing
+Performance max HTML                    16 KiB gzip ceiling
+Performance CSS                          5 KiB total / 5 KiB max
+Performance JS                           4 KiB total / 2 KiB max
+Browser engines                          Chromium / Firefox / WebKit passing
+Actions major runtimes                   v7 where used by release/monitoring workflows
+Astro                                    ^7.2.0
+High-severity npm audit findings         0
+Canonical hardening diff                 none
+```
+
+The initial dependency audit exposed 1 low and 2 high findings rooted in the older Astro dependency graph. Astro 7.2.0 cleared the blocking high-severity gate, and the full Check, visual review, and three-engine compatibility workflows passed after the major upgrade.
+
+## Monitoring and release safety boundary
+
+- canonical JSON is fingerprinted before and after every monitoring run;
 - canonical diffs, unknown URL status, and broken canonical references are blocking;
-- persistent output is restricted to approved monitoring/watchlist staging paths;
+- persistent monitoring output is restricted to approved monitoring/watchlist staging paths;
 - first observations are reviewable zero-candidate baselines where appropriate;
 - unchanged signals are suppressed;
 - monitoring candidates never publish canonical records;
 - secondary feeds can only create hold/review material;
 - review issue resolution/rearm affects monitoring state only;
 - public-site health monitoring complements, but does not replace, full production-content equality verification;
+- accessibility, performance, browser compatibility, and high-severity npm audit are release gates;
 - canonical publication always requires a separate reviewed canonical branch and normal production verification.
 
 ## Latest completed production checkpoint
@@ -167,8 +196,8 @@ Generated at                  2026-08-09T07:08:45.362Z
 
 ## Next
 
-1. close the stale restart/status checkpoint against PRs #248–#250 and the 2026-08-10 scheduled monitoring proofs;
-2. begin bounded v1 accessibility hardening;
-3. follow with performance, compatibility, and release checks;
-4. maintain source-quality, validator, public-contract, and UI compatibility gates;
+1. complete v1 release closure/checkpoint and consolidate the final release-readiness execution path;
+2. run the normal release gates and production verification for any public-output-affecting release change;
+3. maintain accessibility, performance, three-engine compatibility, high-severity dependency security, source-quality, validator, and public-contract gates;
+4. keep Phase 5 monitoring in steady state and change it only when a demonstrated gap appears;
 5. revisit evidence/archive gaps only when source conditions materially change.

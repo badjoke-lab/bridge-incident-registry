@@ -29,7 +29,7 @@ Phase 3  Full-corpus quality strengthening         active maintenance
          Unknown URL-status hard ceiling           active at 0
          Full production-content equality          active
 Phase 4  Public contract stabilization             complete
-Phase 5  Monitoring and candidate collection       live through planned bounded modules
+Phase 5  Monitoring and candidate collection       steady-state live
          Review-gated foundation                   complete — PR #217
          Initial signal/dedupe proof               complete — PR #223
          Review-branch fallback                    complete — PR #225
@@ -41,7 +41,14 @@ Phase 5  Monitoring and candidate collection       live through planned bounded 
          RSS status-news watch                     live — PRs #245–#246
          Monitoring state resolution health        live — PR #248
          Public site / SEO health watch            live — PRs #249–#250
-Release  v1 hardening                              active next phase
+Release  v1 hardening                              complete to reviewed boundary
+         Restart/status checkpoint                 complete — PR #251
+         Accessibility foundation                  complete — PR #252
+         Built-output performance budget           complete — PR #253
+         Browser compatibility                     complete — PR #254
+         GitHub Actions runtime hardening          complete — PR #255
+         Dependency security hardening             complete — PR #256
+         Release closure                           next
 ```
 
 ## Phase 5 live state
@@ -128,6 +135,32 @@ Canonical diff              none
 
 Targets are home, `robots.txt`, `sitemap.xml`, `version.json`, one deterministic rotating bridge detail route, and one deterministic rotating incident detail route. The scheduled run `31359554582` on 2026-08-10 completed successfully with no state changes. The main BIR Monitoring run `31356920691` also completed successfully and preserved canonical data byte-for-byte.
 
+## v1 hardening state
+
+### Accessibility
+
+PR #252 introduced a global keyboard focus treatment, reduced-motion handling, mobile table headers that remain in the accessibility tree, named registry tables/pagination, and a built-output contract. The contract currently passes all 73 generated HTML pages.
+
+### Performance
+
+PR #253 established measured gzip budgets and controlled regression tests.
+
+```text
+max HTML file   16 KiB
+CSS total        5 KiB
+max CSS file     5 KiB
+JS total         4 KiB
+max JS file      2 KiB
+```
+
+### Browser compatibility
+
+PR #254 added a dedicated Playwright smoke over Chromium, Firefox, and WebKit. It checks representative routes plus real bridge/incident pagination, URL-state synchronization, filtering/page reset, and support controls. All three engines pass.
+
+### CI runtime and dependency security
+
+PR #255 moved checkout/setup-node/upload-artifact action majors to v7 where used. PR #256 added blocking `npm audit --audit-level=high` and upgraded Astro from `^5.9.3` to `^7.2.0`. The initial audit exposed 1 low / 2 high findings rooted in the old Astro dependency graph; after the upgrade, the high-severity audit passes. Full Check, representative screenshots, and three-engine browser compatibility also pass on Astro 7.2.0.
+
 ## Current quality state
 
 ```text
@@ -141,6 +174,7 @@ Evidence with archived_url           130
 Terminal unarchived unique URLs       15
 Risky-host unarchived unique URLs     16
 Unknown URL status                     0
+High-severity npm audit findings       0
 ```
 
 Further primary/archive remediation is research-triggered rather than metric-driven.
@@ -159,12 +193,11 @@ Generated at                  2026-08-09T07:08:45.362Z
 
 ## Immediate targets
 
-1. close stale restart/status documentation against PRs #248–#250 and the 2026-08-10 scheduled monitoring proofs;
-2. begin bounded v1 accessibility hardening while preserving public-contract and production-content equality gates;
-3. add performance and compatibility checks after accessibility closure;
-4. complete v1 release checks and release closure;
-5. maintain Phase 5 monitors in steady state and adjust them only when live evidence shows a concrete gap;
-6. revisit evidence/archive gaps only when source conditions materially change.
+1. complete v1 release closure/checkpoint documentation and consolidate the final release-readiness execution path;
+2. run the normal release gates and production verification for any public-output-affecting release change;
+3. maintain accessibility, performance, three-engine compatibility, dependency-security, source-quality, validator, and public-contract gates;
+4. maintain Phase 5 monitors in steady state and adjust them only when live evidence shows a concrete gap;
+5. revisit evidence/archive gaps only when source conditions materially change.
 
 ## Permanent rules
 
@@ -188,4 +221,5 @@ Generated at                  2026-08-09T07:08:45.362Z
 18. Parent/subdomain official hosts are not migrations by themselves.
 19. Review issue resolution/rearm affects monitoring state only, never canonical truth.
 20. Public-site health monitoring complements but does not replace exhaustive production equality verification.
-21. Cloudflare Pages preview deployment remains `none`.
+21. Accessibility, performance, browser compatibility, and high-severity dependency security are release gates.
+22. Cloudflare Pages preview deployment remains `none`.
