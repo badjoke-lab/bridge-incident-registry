@@ -14,7 +14,7 @@ Events      183
 Evidence    287
 ```
 
-Phase 5 monitoring and v1 hardening have not changed canonical counts or source-quality ceilings.
+Phase 5 monitoring and v1 hardening/release closure have not changed canonical counts or source-quality ceilings.
 
 ```text
 Primary evidence                       206 / 287
@@ -34,8 +34,8 @@ Canonical production content match      true
 - Phase 3 — full-corpus quality strengthening: active maintenance
 - Phase 4 — public contract stabilization: complete
 - Phase 5 — monitoring and candidate collection: steady-state live
-- v1 hardening — accessibility, performance, browser compatibility, Actions runtime, and high-severity dependency security: complete to reviewed boundary
-- v1 release closure: next
+- v1 hardening — accessibility, performance, browser compatibility, Actions runtime, and high-severity dependency security: complete
+- v1 technical release closure: complete — PR #258 / main run `31367052981`
 
 ## Phase 5 live stack
 
@@ -145,7 +145,7 @@ Canonical diff              none
 
 Targets are `/`, `/robots.txt`, `/sitemap.xml`, `/version.json`, one rotating bridge detail route, and one rotating incident detail route. The scheduled run on 2026-08-10 (`31359554582`) completed successfully with no public-site state changes. The main BIR Monitoring schedule (`31356920691`) also completed successfully with no monitoring state changes and canonical data unchanged.
 
-## v1 hardening checkpoint
+## v1 hardening and release checkpoint
 
 ```text
 PR #251  Phase 5 restart/status checkpoint
@@ -154,6 +154,8 @@ PR #253  Source-controlled performance budget + controlled regression test
 PR #254  Chromium / Firefox / WebKit browser compatibility smoke
 PR #255  GitHub Actions checkout/setup-node/upload-artifact v7 runtime update
 PR #256  Astro 7.2.0 security upgrade + blocking high-severity npm audit gate
+PR #257  v1 hardening restart/status checkpoint
+PR #258  Consolidated v1 release-readiness workflow and runbook
 ```
 
 Accepted v1 hardening proof:
@@ -169,26 +171,28 @@ Astro                                    ^7.2.0
 Canonical change from hardening          none
 ```
 
-The browser smoke exercises registry pagination, URL-state synchronization, filtering/page reset, representative static routes, and support controls in all three engines. Performance limits are measured against built output and enforced in `Check`. High-severity dependency advisories are now blocking.
+The browser smoke exercises registry pagination, URL-state synchronization, filtering/page reset, representative static routes, and support controls in all three engines. Performance limits are measured against built output and enforced in `Check`. High-severity dependency advisories are blocking.
 
-## Latest completed production checkpoint
+## Accepted v1 technical release closure
 
 ```text
-Review PR             #211
-Canonical data PR     #213
-Canonical merge       f2874a2d0ffe6877eadf6619cd6100a9b9b3991b
-Production audit PR   #214
-Production run        31300484236 / 93212360938
-Generated at          2026-08-09T07:08:45.362Z
-Content match         true
-HTML routes           72
-Redirects             74
+Release-readiness PR          #258
+Main merge                    d9f545803104bffd829d93270965f53d9f3d1a45
+V1 Release Readiness run      31367052981
+Release-readiness job         93387599332
+Local/static/security gates   success
+Chromium / Firefox / WebKit   success
+Production equality           success
+Canonical                     33 / 34 / 183 / 287
+Canonical mutation            none
 ```
+
+This checkpoint means the v1 technical release contract is closed and accepted. It does **not** create or imply a semantic-version tag or GitHub Release.
 
 ## Next bounded work
 
-1. perform v1 release closure: consolidate release-readiness checks and documentation, then run the existing production verification after any public-output-affecting release change;
-2. keep Phase 5 monitors live and bounded; change them only when live evidence shows a concrete gap;
+1. return to ordinary registry maintenance: Phase 3 research-triggered quality work and reviewed corpus/candidate expansion;
+2. keep Phase 5 monitoring and candidate collection live in steady state;
 3. maintain accessibility, performance, browser-compatibility, dependency-security, validator, source-quality, and public-contract gates;
-4. continue bounded RSS security/pause/shutdown/regulatory discovery as secondary review material;
-5. revisit deferred evidence/archive gaps only on new source material or changed conditions.
+4. reopen v1 hardening only if a release gate regresses or a concrete production compatibility issue appears;
+5. continue bounded RSS security/pause/shutdown/regulatory discovery as secondary review material.

@@ -1,6 +1,6 @@
 # Current Status — Bridge Incident Registry
 
-Status: active  
+Status: active maintenance  
 Updated: 2026-08-10
 
 ## Canonical and production state
@@ -12,7 +12,7 @@ Events      183
 Evidence    287
 ```
 
-Canonical data remains unchanged by Phase 5 monitoring and v1 hardening. Unknown URL status and source-count mismatches remain at 0.
+Canonical data remains unchanged by Phase 5 monitoring, v1 hardening, and v1 technical release closure. Unknown URL status and source-count mismatches remain at 0.
 
 ## Phase 3 quality boundary
 
@@ -138,7 +138,7 @@ Canonical diff              none
 
 The monitor checks `/`, `/robots.txt`, `/sitemap.xml`, `/version.json`, one rotating bridge detail route, and one rotating incident detail route. Scheduled run `31359554582` on 2026-08-10 completed successfully with no public-site state changes. Main BIR Monitoring run `31356920691` also completed successfully with no monitoring state changes.
 
-## v1 hardening status
+## v1 technical release status
 
 ```text
 Restart/status checkpoint             complete — PR #251
@@ -147,24 +147,33 @@ Performance budget                    complete — PR #253
 Browser compatibility                 complete — PR #254
 Actions runtime hardening             complete — PR #255
 Dependency security hardening         complete — PR #256
-Release closure                       next
+Hardening checkpoint                  complete — PR #257
+Consolidated release-readiness gate   complete — PR #258
+Technical release closure             complete — run 31367052981
 ```
 
-Accepted hardening proof:
+Accepted proof:
 
 ```text
-Built HTML accessibility contract       73 pages passing
-Performance max HTML                    16 KiB gzip ceiling
-Performance CSS                          5 KiB total / 5 KiB max
-Performance JS                           4 KiB total / 2 KiB max
-Browser engines                          Chromium / Firefox / WebKit passing
-Actions major runtimes                   v7 where used by release/monitoring workflows
-Astro                                    ^7.2.0
-High-severity npm audit findings         0
-Canonical hardening diff                 none
+Main merge                               d9f545803104bffd829d93270965f53d9f3d1a45
+Release-readiness run                    31367052981
+Release-readiness job                    93387599332
+Built HTML accessibility contract        73 pages passing
+Performance max HTML                     16 KiB gzip ceiling
+Performance CSS                           5 KiB total / 5 KiB max
+Performance JS                            4 KiB total / 2 KiB max
+Browser engines                           Chromium / Firefox / WebKit passing
+Actions major runtimes                    v7 where used by release/monitoring workflows
+Astro                                     ^7.2.0
+High-severity npm audit findings          0
+Production registry equality              success
+Canonical                                 33 / 34 / 183 / 287
+Canonical release mutation                none
 ```
 
-The initial dependency audit exposed 1 low and 2 high findings rooted in the older Astro dependency graph. Astro 7.2.0 cleared the blocking high-severity gate, and the full Check, visual review, and three-engine compatibility workflows passed after the major upgrade.
+The first dependency audit exposed 1 low and 2 high findings rooted in the older Astro dependency graph. Astro 7.2.0 cleared the blocking high-severity gate, and the full Check, visual review, three-engine compatibility workflow, consolidated release-readiness run, and post-merge production equality proof all pass.
+
+This is **v1 technical release closure**, not a semantic-version publication event. No GitHub Release or version tag is created or implied by this checkpoint.
 
 ## Monitoring and release safety boundary
 
@@ -177,27 +186,13 @@ The initial dependency audit exposed 1 low and 2 high findings rooted in the old
 - secondary feeds can only create hold/review material;
 - review issue resolution/rearm affects monitoring state only;
 - public-site health monitoring complements, but does not replace, full production-content equality verification;
-- accessibility, performance, browser compatibility, and high-severity npm audit are release gates;
+- accessibility, performance, browser compatibility, and high-severity npm audit are permanent release gates;
 - canonical publication always requires a separate reviewed canonical branch and normal production verification.
 
-## Latest completed production checkpoint
+## Ongoing work after v1 technical closure
 
-```text
-Review PR                     #211
-Canonical data PR             #213
-Canonical merge               f2874a2d0ffe6877eadf6619cd6100a9b9b3991b
-Production audit PR           #214
-Production verify run         31300484236
-Production verify job         93212360938
-Verified state                33 / 34 / 183 / 287
-Canonical content match       true
-Generated at                  2026-08-09T07:08:45.362Z
-```
-
-## Next
-
-1. complete v1 release closure/checkpoint and consolidate the final release-readiness execution path;
-2. run the normal release gates and production verification for any public-output-affecting release change;
-3. maintain accessibility, performance, three-engine compatibility, high-severity dependency security, source-quality, validator, and public-contract gates;
-4. keep Phase 5 monitoring in steady state and change it only when a demonstrated gap appears;
-5. revisit evidence/archive gaps only when source conditions materially change.
+1. continue reviewed candidate/corpus expansion;
+2. continue Phase 3 research-triggered source-quality/archive work when stronger material appears;
+3. keep Phase 5 monitoring in steady state and investigate new signals without auto-promoting them to canonical truth;
+4. preserve accessibility, performance, three-engine compatibility, high-severity dependency security, source-quality, validator, and public-contract gates;
+5. reopen technical hardening only when a gate regresses or a production compatibility issue is demonstrated.

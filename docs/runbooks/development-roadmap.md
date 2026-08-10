@@ -1,6 +1,6 @@
 # Bridge Incident Registry — Development Roadmap to v1
 
-Status: active  
+Status: active maintenance  
 Updated: 2026-08-10
 
 GitHub state and canonical JSON are authoritative.
@@ -41,14 +41,16 @@ Phase 5  Monitoring and candidate collection       steady-state live
          RSS status-news watch                     live — PRs #245–#246
          Monitoring state resolution health        live — PR #248
          Public site / SEO health watch            live — PRs #249–#250
-Release  v1 hardening                              complete to reviewed boundary
+Release  v1 technical hardening / closure          complete
          Restart/status checkpoint                 complete — PR #251
          Accessibility foundation                  complete — PR #252
          Built-output performance budget           complete — PR #253
          Browser compatibility                     complete — PR #254
          GitHub Actions runtime hardening          complete — PR #255
          Dependency security hardening             complete — PR #256
-         Release closure                           next
+         Hardening checkpoint                      complete — PR #257
+         Consolidated release-readiness gate       complete — PR #258
+         Main production equality proof            success — run 31367052981
 ```
 
 ## Phase 5 live state
@@ -135,11 +137,11 @@ Canonical diff              none
 
 Targets are home, `robots.txt`, `sitemap.xml`, `version.json`, one deterministic rotating bridge detail route, and one deterministic rotating incident detail route. The scheduled run `31359554582` on 2026-08-10 completed successfully with no state changes. The main BIR Monitoring run `31356920691` also completed successfully and preserved canonical data byte-for-byte.
 
-## v1 hardening state
+## v1 hardening and release state
 
 ### Accessibility
 
-PR #252 introduced a global keyboard focus treatment, reduced-motion handling, mobile table headers that remain in the accessibility tree, named registry tables/pagination, and a built-output contract. The contract currently passes all 73 generated HTML pages.
+PR #252 introduced a global keyboard focus treatment, reduced-motion handling, mobile table headers that remain in the accessibility tree, named registry tables/pagination, and a built-output contract. The contract passes all 73 generated HTML pages.
 
 ### Performance
 
@@ -159,7 +161,23 @@ PR #254 added a dedicated Playwright smoke over Chromium, Firefox, and WebKit. I
 
 ### CI runtime and dependency security
 
-PR #255 moved checkout/setup-node/upload-artifact action majors to v7 where used. PR #256 added blocking `npm audit --audit-level=high` and upgraded Astro from `^5.9.3` to `^7.2.0`. The initial audit exposed 1 low / 2 high findings rooted in the old Astro dependency graph; after the upgrade, the high-severity audit passes. Full Check, representative screenshots, and three-engine browser compatibility also pass on Astro 7.2.0.
+PR #255 moved checkout/setup-node/upload-artifact action majors to v7 where used. PR #256 added blocking `npm audit --audit-level=high` and upgraded Astro from `^5.9.3` to `^7.2.0`. The initial audit exposed 1 low / 2 high findings rooted in the old Astro dependency graph; after the upgrade, high-severity findings are 0. Full Check, representative screenshots, and three-engine browser compatibility pass on Astro 7.2.0.
+
+### Accepted technical release closure
+
+PR #258 added the consolidated `V1 Release Readiness` contract. Its main-branch run passed the complete security/data/quality/build/accessibility/performance/browser stack and then the production registry equality verifier.
+
+```text
+Release-readiness PR          #258
+Main merge                    d9f545803104bffd829d93270965f53d9f3d1a45
+V1 Release Readiness run      31367052981
+Release-readiness job         93387599332
+Production equality           success
+Canonical                     33 / 34 / 183 / 287
+Canonical mutation            none
+```
+
+This is a technical release-closure checkpoint only. No semantic-version tag or GitHub Release is implied or created by it.
 
 ## Current quality state
 
@@ -179,25 +197,13 @@ High-severity npm audit findings       0
 
 Further primary/archive remediation is research-triggered rather than metric-driven.
 
-## Latest completed production checkpoint
+## Ongoing roadmap after v1 technical closure
 
-```text
-Canonical data PR             #213
-Production audit PR           #214
-Production verify run         31300484236
-Production verify job         93212360938
-Verified state                33 / 34 / 183 / 287
-Canonical content match       true
-Generated at                  2026-08-09T07:08:45.362Z
-```
-
-## Immediate targets
-
-1. complete v1 release closure/checkpoint documentation and consolidate the final release-readiness execution path;
-2. run the normal release gates and production verification for any public-output-affecting release change;
-3. maintain accessibility, performance, three-engine compatibility, dependency-security, source-quality, validator, and public-contract gates;
-4. maintain Phase 5 monitors in steady state and adjust them only when live evidence shows a concrete gap;
-5. revisit evidence/archive gaps only when source conditions materially change.
+1. continue reviewed candidate/corpus expansion rather than reopening completed hardening work;
+2. continue Phase 3 research-triggered quality strengthening without weakening source hierarchy;
+3. operate Phase 5 monitoring/candidate collection in steady state and investigate new review signals;
+4. preserve accessibility, performance, Chromium/Firefox/WebKit, dependency-security, source-quality, validator, and public-contract gates;
+5. reopen technical hardening only when a gate regresses, production compatibility breaks, or an explicit future release requirement demands it.
 
 ## Permanent rules
 
@@ -221,5 +227,6 @@ Generated at                  2026-08-09T07:08:45.362Z
 18. Parent/subdomain official hosts are not migrations by themselves.
 19. Review issue resolution/rearm affects monitoring state only, never canonical truth.
 20. Public-site health monitoring complements but does not replace exhaustive production equality verification.
-21. Accessibility, performance, browser compatibility, and high-severity dependency security are release gates.
+21. Accessibility, performance, browser compatibility, and high-severity dependency security are permanent release gates.
 22. Cloudflare Pages preview deployment remains `none`.
+23. Technical v1 closure does not create or imply a GitHub Release or semantic-version tag.

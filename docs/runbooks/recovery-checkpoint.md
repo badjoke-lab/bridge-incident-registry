@@ -1,6 +1,6 @@
 # BIR Live Recovery Checkpoint
 
-Status: active  
+Status: active maintenance  
 Updated: 2026-08-10
 
 GitHub state and canonical JSON are authoritative. Completed merge SHAs are checkpoints, not live branch pointers.
@@ -43,25 +43,24 @@ PR #253      Built-output performance budget and regression test
 PR #254      Chromium / Firefox / WebKit compatibility smoke
 PR #255      GitHub Actions runtime hardening to v7 action majors
 PR #256      Astro 7.2.0 security upgrade and blocking high-severity npm audit
+PR #257      v1 hardening restart/status checkpoint
+PR #258      Consolidated v1 release-readiness workflow and runbook
 ```
 
-## Latest completed production checkpoint
+## Accepted v1 technical release checkpoint
 
 ```text
-Review PR                     #211
-Canonical data PR             #213
-Canonical merge               f2874a2d0ffe6877eadf6619cd6100a9b9b3991b
-Production audit PR           #214
-Production verify run         31300484236
-Production verify job         93212360938
-Verified state                33 / 34 / 183 / 287
-Primary evidence              206 / 287
-Tier 1 evidence               223 / 287
-Archived evidence             130 / 287
-Events without primary        11 / 183
-Canonical content match       true
-Generated at                  2026-08-09T07:08:45.362Z
+Release-readiness merge       d9f545803104bffd829d93270965f53d9f3d1a45
+V1 Release Readiness run      31367052981
+Release-readiness job         93387599332
+Canonical                     33 / 34 / 183 / 287
+Production equality           success
+Canonical mutation            none
 ```
+
+The main-branch release-readiness run passed the same-revision dependency-security, schema/data, corpus-quality, monitoring-test, build, accessibility, performance, dist-consistency, and Chromium / Firefox / WebKit compatibility gates before the production equality verifier passed against `https://bir.badjoke-lab.com`.
+
+This checkpoint closes the **v1 technical release contract**. It does not create or imply a semantic-version tag or GitHub Release.
 
 ## Permanent guards
 
@@ -81,7 +80,7 @@ npm run dist:check
 npm run dist:test
 ```
 
-Separate CI also covers Chromium / Firefox / WebKit compatibility and representative desktop/mobile screenshot capture when relevant paths change.
+Separate CI covers Chromium / Firefox / WebKit compatibility and representative desktop/mobile screenshot capture. `V1 Release Readiness` consolidates the release-critical gates and runs production verification after merge to `main`.
 
 ```text
 Blocking errors                       0
@@ -210,8 +209,6 @@ Repository Actions settings still disallow `GITHUB_TOKEN` PR creation. On that s
 
 ## v1 hardening recovery point
 
-Current v1 hardening main state is after PR #256.
-
 ```text
 Accessibility contract        73 generated HTML pages passing
 Performance max HTML          16 KiB gzip ceiling
@@ -224,16 +221,16 @@ High-severity npm audit        0
 Canonical hardening diff       none
 ```
 
-The first security-gate run intentionally failed on the pre-upgrade dependency graph with 1 low and 2 high npm findings. The high findings were rooted in the old Astro dependency graph. After upgrading to Astro 7.2.0, the high-severity audit, full `Check`, representative screenshots, and three-engine compatibility smoke all pass.
+The first security-gate run intentionally failed on the pre-upgrade dependency graph with 1 low and 2 high npm findings. The high findings were rooted in the old Astro dependency graph. After upgrading to Astro 7.2.0, the high-severity audit, full `Check`, representative screenshots, three-engine compatibility smoke, and consolidated release-readiness workflow all pass.
 
 ## Cloudflare Pages boundary
 
 Production branch is `main`, production deployments are enabled, and preview deployment remains `none`. Monitoring changes do not require production publication verification unless canonical/public output changes.
 
-## Next
+## Restart point after v1 technical closure
 
-1. complete v1 release closure/checkpoint and define the final release-readiness execution path;
-2. run normal release gates and production verification for any public-output-affecting release change;
-3. keep Phase 5 monitors live in steady state without weakening their review-only boundary;
-4. preserve accessibility, performance, browser compatibility, dependency-security, source-quality, validator, and public-contract gates;
-5. revisit deferred evidence/archive gaps only after source conditions change.
+1. resume reviewed corpus/candidate expansion and Phase 3 research-triggered quality maintenance;
+2. keep Phase 5 monitors live in steady state and investigate new signals without automatic canonical promotion;
+3. preserve all permanent release gates, including security, accessibility, performance, browser compatibility, source quality, and production equality;
+4. reopen technical hardening only if a gate regresses or production compatibility fails;
+5. remember that this checkpoint does not represent a GitHub Release or semantic-version tag.
