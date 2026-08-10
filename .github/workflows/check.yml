@@ -57,11 +57,17 @@ jobs:
       - name: Test production content equality
         run: npm run production:content:test
 
+      - name: Test performance budget failures
+        run: npm run performance:test
+
       - name: Build static site
         run: npm run build
 
       - name: Check accessibility contract
         run: npm run accessibility:check
+
+      - name: Enforce built-output performance budget
+        run: npm run performance:check
 
       - name: Check built output consistency
         run: npm run dist:check

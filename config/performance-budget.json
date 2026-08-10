@@ -1,0 +1,18 @@
+{
+  "version": 1,
+  "basis": "2026-08-10 v1 performance baseline after accessibility foundation",
+  "observed_gzip": {
+    "max_html_file": "13.0 KiB",
+    "total_css": "3.6 KiB",
+    "total_js": "2.8 KiB",
+    "max_css_file": "3.6 KiB",
+    "max_js_file": "1.4 KiB"
+  },
+  "gzip_bytes": {
+    "max_html_file": 16384,
+    "total_css": 5120,
+    "total_js": 4096,
+    "max_css_file": 5120,
+    "max_js_file": 2048
+  }
+}

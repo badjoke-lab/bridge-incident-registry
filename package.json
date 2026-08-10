@@ -28,6 +28,8 @@
     "dist:check": "node scripts/check-dist-consistency.mjs",
     "dist:test": "node scripts/test-dist-consistency.mjs",
     "accessibility:check": "node scripts/check-accessibility-contract.mjs",
+    "performance:check": "node scripts/check-performance-budget.mjs",
+    "performance:test": "node scripts/test-performance-budget.mjs",
     "production:content:test": "node scripts/test-production-content-equality.mjs",
     "production:verify": "node scripts/verify-production.mjs"
   },
