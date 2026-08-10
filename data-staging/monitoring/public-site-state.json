@@ -30,6 +30,11 @@
       "fingerprint": "healthy:v1",
       "first_seen_at": "2026-08-09T12:53:25Z",
       "last_changed_at": "2026-08-09T12:53:25Z"
+    },
+    "public-site-health:incident:bir_inc_000014": {
+      "fingerprint": "healthy:v1",
+      "first_seen_at": "2026-08-10T13:47:36Z",
+      "last_changed_at": "2026-08-10T13:47:36Z"
     }
   }
 }
