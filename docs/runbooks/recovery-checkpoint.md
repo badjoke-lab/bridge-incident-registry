@@ -3,7 +3,7 @@
 Status: active maintenance  
 Updated: 2026-08-10
 
-GitHub state and canonical JSON are authoritative. Completed merge SHAs are checkpoints, not live branch pointers.
+GitHub state and canonical JSON are authoritative. Completed merge SHAs and run IDs below are checkpoints, not live branch pointers.
 
 ## Canonical and production counts
 
@@ -14,53 +14,103 @@ Events      184
 Evidence    291
 ```
 
+## Immediate recovery point
+
+The latest completed canonical maintenance item is the July 2026 Allbridge Core Solana pool exploit.
+
+```text
+Review PR                         #261
+Canonical PR                      #262
+Canonical merge                   d7cf47f2373c9c0b94b78b93807fc6d0239c2d98
+V1 Release Readiness main run     31393382470
+Release-readiness job             93470262367
+Production equality               success
+Built HTML pages                  74
+```
+
+Resume from current `main` after that merge. Do not use historical branch heads or the temporary application machinery from PR #262; the temporary generator and write-enabled workflow were removed before final review.
+
 ## Latest completed checkpoints
 
 ```text
 PR #100      Source-quality baseline and no-regression gate
 PR #103–107  LI.FI and Holograph source-quality remediation
 PR #108–116  Event Tier 1 remediation and production verification
-PR #117      Nerve Bridge source boundary
 PR #118–198  Archive Capture Batches 1–18 and production checkpoints
 PR #199–204  Deferred Archive Retries 01–02 and production checkpoints
 PR #205–206  Deferred Archive Retries 03–04 review, no approvals
 PR #207–214  Event Primary Remediation 01–02 and production verification
-PR #217      Review-gated Phase 5 monitoring foundation
-PR #218      Cross-record bridge-integrity validation
-PR #223      Initial live monitoring state / Issue #171 dedupe seed
-PR #225      Review-branch fallback and duplicate-work guard
-PR #226      Bounded evidence-health watch
-PR #228–230  External bridge-universe watch and accepted baseline
-PR #231–232  News source boundary and optional fail-closed GDELT adapter
-PR #233–239  Structured DefiLlama bridge-hack discovery and accepted baseline
-PR #241–244  Active bridge official-domain monitoring and accepted baseline
-PR #245–246  RSS status-news discovery and accepted baseline
-PR #248      Review issue resolution and rearm lifecycle
-PR #249–250  Public site health monitor and accepted healthy baseline
-PR #251      Phase 5 restart/status checkpoint
-PR #252      Accessibility foundation and built-output gate
-PR #253      Built-output performance budget and regression test
-PR #254      Chromium / Firefox / WebKit compatibility smoke
-PR #255      GitHub Actions runtime hardening to v7 action majors
-PR #256      Astro 7.2.0 security upgrade and blocking high-severity npm audit
-PR #257      v1 hardening restart/status checkpoint
-PR #258      Consolidated v1 release-readiness workflow and runbook
+PR #217–250  Phase 5 monitoring/candidate/public-site stack
+PR #251–258  v1 hardening and technical release closure
+PR #260      Remove stale Boltz canonical mutation helper
+PR #261      Review Allbridge Core July 2026 Solana exploit
+PR #262      Apply and production-verify Allbridge 2026 incident
 ```
 
-## Accepted v1 technical release checkpoint
+## Current quality boundary
 
 ```text
-Release-readiness merge       d9f545803104bffd829d93270965f53d9f3d1a45
-V1 Release Readiness run      31367052981
-Release-readiness job         93387599332
-Canonical                     33 / 34 / 183 / 287
-Production equality           success
-Canonical mutation            none
+Incident source-count mismatches      0
+Event source-count mismatches         0
+Primary evidence                    209 / 291
+Tier 1 evidence                     226 / 291
+Incidents without primary             1 / 35
+Incidents without Tier 1              1 / 35
+Events without primary               11 / 184
+Events without Tier 1                 6 / 184
+Evidence with archived_url          130 / 291
+Terminal unarchived unique URLs      15
+Risky-host unarchived unique URLs    16
+Unknown URL status                    0
+High-severity npm audit findings      0
 ```
 
-The main-branch release-readiness run passed the same-revision dependency-security, schema/data, corpus-quality, monitoring-test, build, accessibility, performance, dist-consistency, and Chromium / Firefox / WebKit compatibility gates before the production equality verifier passed against `https://bir.badjoke-lab.com`.
+The Allbridge application did not consume an existing primary/Tier 1 gap or increase the risky-host ceiling. The unarchived official X post-mortem was deliberately left out of canonical evidence.
 
-This checkpoint closes the **v1 technical release contract**. It does not create or imply a semantic-version tag or GitHub Release.
+## Allbridge 2026 canonical boundary
+
+```text
+Bridge                       bir_bridge_000012
+Incident                     bir_inc_000035
+Event                        bir_ev_000184
+Evidence                     bir_src_000288–bir_src_000291
+Date                         2026-07-19
+Loss                         $1.65 million
+Chain                        Solana
+Assets                       USDC / USDT
+Recovery                     unknown
+Reimbursement                unknown
+Restart                      reopened
+Outcome                      active_after_incident
+Attack category              liquidity_or_accounting_failure
+```
+
+Do not infer final attacker-fund recovery, final LP compensation, or completed Core/Classic migration from the relaunch record. A separate exact-date reopen event was intentionally not created because the admitted first-party rendering established reopening but not an independently stable exact calendar date for that event.
+
+## Boltz boundary
+
+Issue #171 remains `monitoring signal / needs evidence`. PR #260 removed the obsolete canonical apply helper because it contradicted the accepted review boundary. Do not recreate or execute that old one-incident proposal unless new evidence establishes a discrete supportable incident.
+
+## Phase 5 monitoring recovery point
+
+Monitoring is review-only. It fingerprints canonical files, rejects canonical mutation/unknown URL status/broken references, writes only to approved staging paths, and suppresses unchanged signals.
+
+The persisted accepted monitor baselines predate the Allbridge canonical addition:
+
+```text
+Evidence-health run            31301765004 / 93215576787
+External universe              98 parsed / 11 exact / 87 unmatched baseline
+DefiLlama bridge-hack feed      613 parsed / 61 bridge rows
+Active-domain accepted run     31313312723
+RSS accepted run               31313579371 / 93245104559
+Public-site baseline run       31314396266
+Scheduled BIR Monitoring       31356920691 success
+Scheduled Public Site Health   31359554582 success
+```
+
+These are historical monitor-state checkpoints, not the latest canonical counts. The current public/canonical state `33 / 35 / 184 / 291` is separately proven by main release-readiness run `31393382470`.
+
+Repository Actions settings still disallow `GITHUB_TOKEN` PR creation. On that exact platform error the monitoring workflow may retain an already-validated review branch; all other PR-creation failures remain fatal. Connected GitHub access can open the review PR when needed.
 
 ## Permanent guards
 
@@ -78,159 +128,26 @@ npm run accessibility:check
 npm run performance:check
 npm run dist:check
 npm run dist:test
+Chromium / Firefox / WebKit compatibility smoke
+post-merge production equality
 ```
 
-Separate CI covers Chromium / Firefox / WebKit compatibility and representative desktop/mobile screenshot capture. `V1 Release Readiness` consolidates the release-critical gates and runs production verification after merge to `main`.
+Current performance ceilings remain 16 KiB gzip max HTML, 5 KiB CSS total/max file, 4 KiB JS total, and 2 KiB max JS file. Astro remains `^7.2.0`.
 
-```text
-Blocking errors                       0
-Incident source-count mismatches      0
-Event source-count mismatches         0
-Incidents without primary             1
-Incidents without Tier 1              1
-Events without primary               11
-Events without Tier 1                 6
-Evidence with archived_url          130
-Terminal unarchived unique URLs      15
-Risky-host unarchived unique URLs    16
-Unknown URL status                    0
-High-severity npm audit findings      0
-```
+## Historical v1 technical closure
 
-## Archive and primary-evidence boundaries
+The original v1 technical release contract was accepted by PR #258, merge `d9f545803104bffd829d93270965f53d9f3d1a45`, run `31367052981`, job `93387599332`. It remains historical proof. The Allbridge maintenance change later passed the same release contract plus production equality under run `31393382470`.
 
-Archive Capture Batch 18 and Deferred Retries 03–04 exhausted the fresh archive-review scope under the current acceptance boundary. Event-primary remediation has also reached a reviewed boundary. Four non-intentional candidates remain deferred pending stronger first-party evidence: `bir_ev_000014`, `bir_ev_000143`, `bir_ev_000144`, and `bir_ev_000148`. Six Tier 1 gaps are intentional secondary-only records; `bir_ev_000150` remains intentionally non-primary direct security monitoring. Do not weaken source semantics to reduce metrics.
-
-## Phase 5 monitoring checkpoint
-
-Monitoring is review-only. It fingerprints all four canonical JSON files before and after execution, rejects canonical mutation/unknown URL status/broken references, writes only under approved monitoring/watchlist staging paths, and suppresses unchanged signals by stable fingerprints.
-
-### Issue and evidence-health proof
-
-```text
-Issue-monitor run              31301301277
-Issue #171 initial candidate   Boltz — B / hold
-State PR                       #223
-Unchanged rerun                no new review work
-Evidence-health run            31301765004 / 93215576787
-Evidence selected              12 / 287
-Two-pass probes                24
-Hard 404/410 findings           0
-```
-
-### External bridge universe and bridge-hack feed
-
-```text
-External rows                  98
-Exact canonical matches        11
-Unmatched baseline             87
-External repeat unchanged      87
-External candidates             0
-DefiLlama hacks parsed        613
-bridgeHack=true                61
-Bridge-hack baseline           61
-Exact canonical matches        20
-Bridge-hack repeat unchanged   61
-Bridge-hack candidates          0
-```
-
-The bridge-hack source is `https://api.llama.fi/hacks`, kind `legacy_public_json`, raw SHA-256 `e80fced996cf886ca0d2ca70c02dd04b869b628d63773d0b327f97b49aa2734a`. `bridgeHack=true` is required before identity classification. New exact matches may become `B / hold`; unresolved bridge rows may become `C / hold`; neither is canonical evidence without separate primary-source research.
-
-### Active bridge official-domain watch
-
-PR #241 added a rotating two-pass official-URL monitor for canonical `active`, `limited`, and `paused` bridges. The first enabled live run exposed a Synapse parent-domain/subdomain false positive; its auto branch was discarded. PR #243 fixed official-domain scope comparison before any incorrect state was accepted.
-
-Accepted run `31313312723`, persisted in PR #244:
-
-```text
-Eligible bridges              22
-Selected                       8
-Healthy baselines              8
-Hard failures                  0
-Domain findings                0
-Canonical diff              none
-```
-
-The post-merge rerun produced baseline changes 0, findings 0, and no new review branch. Two 404/410 responses are required for a hard finding. 401/403/405/429, 5xx, timeout, and mixed results are insufficient. Parent/subdomain relationships are within the same official-domain scope; unrelated consistent final-host changes remain reviewable.
-
-### RSS status-news discovery
-
-PR #245 added RSS/Atom secondary discovery for canonical bridge identity plus bounded security, pause/shutdown, or regulatory triggers. Run `31313579371`, job `93245104559`, reached both configured publisher feeds:
-
-```text
-Feeds reached                 2
-CoinDesk rows                25
-Cointelegraph rows           30
-Rows parsed                  55
-Bridge + trigger rows         0
-Baseline candidates           0
-Findings                      0
-Canonical diff             none
-```
-
-PR #246 persisted the RSS baseline. Rerun job `93245346339` again parsed 55 rows and produced candidate 0, finding 0, `state_changed=false`, and no review branch. RSS findings are secondary `B / hold` discovery only; primary-source review is mandatory before canonical work.
-
-GDELT remains optional/fail-closed because its first GitHub Actions live request received HTTP 429. No GDELT baseline was accepted.
-
-### Review issue resolution and rearm
-
-PR #248 added explicit state transitions for tracked review issues while preserving legacy open fingerprints.
-
-```text
-new/open issue              medium review finding + B/hold
-unchanged open              silent
-known issue closes          one low review_signal_resolved finding
-unchanged closed            silent
-closed issue reopens        rearmed medium finding + B/hold
-historical closed issue     ignored unless previously tracked
-```
-
-This resolves/rearms monitoring state only. It does not resolve canonical incidents automatically.
-
-### Public site health proof
-
-PR #249 added a separate weekly public-site/SEO health workflow. PR #250 persisted the first accepted healthy baseline from run `31314396266`.
-
-```text
-Origin                      https://bir.badjoke-lab.com
-Targets                     6
-Independent requests       12
-Healthy baselines seeded    6
-Findings                    0
-Sampled bridge              bir_bridge_000017
-Sampled incident            bir_inc_000030
-Canonical                   33 / 34 / 183 / 287
-Canonical diff              none
-```
-
-The six targets are home, `robots.txt`, `sitemap.xml`, `version.json`, one rotating bridge detail route, and one rotating incident detail route. Scheduled run `31359554582` on 2026-08-10 completed successfully and reported no public-site state changes. Main monitoring run `31356920691` also completed successfully with no monitoring state changes and canonical data unchanged.
-
-Repository Actions settings still disallow `GITHUB_TOKEN` PR creation. On that specific platform error, the workflow retains the already-validated monitoring branch and succeeds; connected GitHub access can open the review PR. All other PR-creation failures remain fatal.
-
-## v1 hardening recovery point
-
-```text
-Accessibility contract        73 generated HTML pages passing
-Performance max HTML          16 KiB gzip ceiling
-Performance CSS                5 KiB total / 5 KiB max file
-Performance JS                 4 KiB total / 2 KiB max file
-Compatibility                  Chromium / Firefox / WebKit passing
-Actions runtimes               checkout/setup-node/upload-artifact v7 where used
-Astro                          ^7.2.0
-High-severity npm audit        0
-Canonical hardening diff       none
-```
-
-The first security-gate run intentionally failed on the pre-upgrade dependency graph with 1 low and 2 high npm findings. The high findings were rooted in the old Astro dependency graph. After upgrading to Astro 7.2.0, the high-severity audit, full `Check`, representative screenshots, three-engine compatibility smoke, and consolidated release-readiness workflow all pass.
+Neither checkpoint creates or implies a semantic-version tag or GitHub Release.
 
 ## Cloudflare Pages boundary
 
-Production branch is `main`, production deployments are enabled, and preview deployment remains `none`. Monitoring changes do not require production publication verification unless canonical/public output changes.
+Production branch is `main`, production deployments are enabled, and preview deployment remains `none`. Canonical/public output changes require post-merge production equality; monitoring-only state changes do not.
 
-## Restart point after v1 technical closure
+## Restart actions
 
-1. resume reviewed corpus/candidate expansion and Phase 3 research-triggered quality maintenance;
-2. keep Phase 5 monitors live in steady state and investigate new signals without automatic canonical promotion;
-3. preserve all permanent release gates, including security, accessibility, performance, browser compatibility, source quality, and production equality;
-4. reopen technical hardening only if a gate regresses or production compatibility fails;
-5. remember that this checkpoint does not represent a GitHub Release or semantic-version tag.
+1. inspect the next BIR Monitoring and Public Site Health runs after the Allbridge canonical addition;
+2. investigate new monitoring/candidate signals only through review-first workflow;
+3. continue first-party-backed canonical expansion with a fresh branch per approved record batch;
+4. leave Boltz Issue #171 review-only unless stronger incident-boundary evidence appears;
+5. preserve source-quality ceilings and all release gates; do not weaken semantics to improve counts.
