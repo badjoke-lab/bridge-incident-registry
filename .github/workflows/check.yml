@@ -63,6 +63,9 @@ jobs:
       - name: Check accessibility contract
         run: npm run accessibility:check
 
+      - name: Report built-output performance
+        run: npm run performance:check
+
       - name: Check built output consistency
         run: npm run dist:check
 
