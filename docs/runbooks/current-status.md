@@ -6,10 +6,10 @@ Updated: 2026-08-11
 ## Canonical and production state
 
 ```text
-Bridges     34
-Incidents   36
-Events      185
-Evidence    293
+Bridges     35
+Incidents   37
+Events      187
+Evidence    295
 ```
 
 Latest reviewed canonical maintenance addition is the June 7, 2026 Syscoin UTXO–NEVM Bridge exploit.
