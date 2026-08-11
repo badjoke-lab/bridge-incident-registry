@@ -1,0 +1,40 @@
+{
+  "run_id": "gh-31365816669",
+  "observed_at": "2026-08-11T04:44:17Z",
+  "candidates": [
+    {
+      "candidate_id": "defillama_hack_eacb0ad98e50bd41",
+      "canonical_name": "Oraichain",
+      "aliases": [],
+      "candidate_class": "C",
+      "likely_type": "unresolved_bridge_security_incident_signal",
+      "likely_status": "unknown",
+      "likely_incident_type": "exploit",
+      "record_shape": "hold",
+      "headline": "Oraichain appears as a new or materially changed bridge hack record",
+      "bir_relevance": "The DefiLlama hacks discovery input marks this row as bridgeHack=true, but no exact canonical BIR bridge identity was resolved. The incident and bridge identity must be reviewed before canonical work.",
+      "duplicate_check": {
+        "matched_existing_record": false,
+        "method": "bridgeHack=true without exact canonical hack-name identity"
+      },
+      "incident_feed": {
+        "provider": "DefiLlama",
+        "source_id": "defillama-hacks-discovery",
+        "date": "2026-08-08",
+        "amount_usd": 0,
+        "chains": [
+          "Oraichain"
+        ],
+        "classification": "Bridge & Cross-Chain",
+        "technique": "Unbacked Cross-Chain Mint",
+        "target": "Chain",
+        "bridge_flag": true
+      },
+      "source_urls": [
+        "https://api.llama.fi/hacks"
+      ],
+      "source_quality": "secondary_incident_database",
+      "next_action": "resolve_bridge_identity_and_locate_primary_source"
+    }
+  ]
+}

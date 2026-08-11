@@ -1,0 +1,211 @@
+{
+  "findings": [],
+  "probes": [
+    {
+      "evidence_id": "bir_src_000037",
+      "url": "https://medium.com/@QubitFin/our-compensation-plan-1-63e7c64738ed",
+      "first": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://medium.com/@QubitFin/our-compensation-plan-1-63e7c64738ed",
+        "error": null
+      },
+      "second": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://medium.com/@QubitFin/our-compensation-plan-1-63e7c64738ed",
+        "error": null
+      },
+      "classification": "blocked"
+    },
+    {
+      "evidence_id": "bir_src_000038",
+      "url": "https://pancakebunny.medium.com/the-next-chapter-dao-9630b2c087b",
+      "first": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://pancakebunny.medium.com/the-next-chapter-dao-9630b2c087b",
+        "error": null
+      },
+      "second": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://pancakebunny.medium.com/the-next-chapter-dao-9630b2c087b",
+        "error": null
+      },
+      "classification": "blocked"
+    },
+    {
+      "evidence_id": "bir_src_000039",
+      "url": "https://medium.com/@QubitFin/qubit-markets-reopening-d1d25f4fbfc4",
+      "first": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://medium.com/@QubitFin/qubit-markets-reopening-d1d25f4fbfc4",
+        "error": null
+      },
+      "second": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://medium.com/@QubitFin/qubit-markets-reopening-d1d25f4fbfc4",
+        "error": null
+      },
+      "classification": "blocked"
+    },
+    {
+      "evidence_id": "bir_src_000040",
+      "url": "https://medium.com/thorchain/post-mortem-eth-router-exploits-1-2-and-premature-return-to-trading-incident-2908928c5fb",
+      "first": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://medium.com/thorchain/post-mortem-eth-router-exploits-1-2-and-premature-return-to-trading-incident-2908928c5fb",
+        "error": null
+      },
+      "second": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://medium.com/thorchain/post-mortem-eth-router-exploits-1-2-and-premature-return-to-trading-incident-2908928c5fb",
+        "error": null
+      },
+      "classification": "blocked"
+    },
+    {
+      "evidence_id": "bir_src_000041",
+      "url": "https://rekt.news/thorchain-rekt/",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://rekt.news/thorchain-rekt",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://rekt.news/thorchain-rekt",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000042",
+      "url": "https://medium.com/thorchain/post-mortem-eth-router-exploits-1-2-and-premature-return-to-trading-incident-2908928c5fb",
+      "first": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://medium.com/thorchain/post-mortem-eth-router-exploits-1-2-and-premature-return-to-trading-incident-2908928c5fb",
+        "error": null
+      },
+      "second": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://medium.com/thorchain/post-mortem-eth-router-exploits-1-2-and-premature-return-to-trading-incident-2908928c5fb",
+        "error": null
+      },
+      "classification": "blocked"
+    },
+    {
+      "evidence_id": "bir_src_000043",
+      "url": "https://github.com/HalbornSecurity/PublicReports/blob/master/Incident%20Reports/Thorchain_Incident_Analysis_July_23_2021.pdf",
+      "first": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://github.com/HalbornSecurity/PublicReports/blob/master/Incident%20Reports/Thorchain_Incident_Analysis_July_23_2021.pdf",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://github.com/HalbornSecurity/PublicReports/blob/master/Incident%20Reports/Thorchain_Incident_Analysis_July_23_2021.pdf",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000044",
+      "url": "https://rekt.news/thorchain-rekt2/",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://rekt.news/thorchain-rekt2",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://rekt.news/thorchain-rekt2",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000045",
+      "url": "https://blog.thorchain.org/thorchain-exploit-report-1",
+      "first": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://blog.thorchain.org/thorchain-exploit-report-1",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://blog.thorchain.org/thorchain-exploit-report-1",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000046",
+      "url": "https://www.trmlabs.com/resources/blog/thorchain-exploit-drains-usd-11m-across-at-least-nine-chains-what-trm-knows-now",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://www.trmlabs.com/resources/blog/thorchain-exploit-drains-usd-11m-across-at-least-nine-chains-what-trm-knows-now",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://www.trmlabs.com/resources/blog/thorchain-exploit-drains-usd-11m-across-at-least-nine-chains-what-trm-knows-now",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000047",
+      "url": "https://rekt.news/thorchain-rekt3",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://rekt.news/thorchain-rekt3",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://rekt.news/thorchain-rekt3",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000048",
+      "url": "https://medium.com/meter-io/post-mortem-report-meter-passport-12af6b50393d",
+      "first": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://medium.com/meter-io/post-mortem-report-meter-passport-12af6b50393d",
+        "error": null
+      },
+      "second": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://medium.com/meter-io/post-mortem-report-meter-passport-12af6b50393d",
+        "error": null
+      },
+      "classification": "blocked"
+    }
+  ],
+  "selected_count": 12,
+  "live_evidence_count": 293
+}
