@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">Bridge Incident Registry</title>
+  <desc id="desc">Social preview for the Bridge Incident Registry historical cross-chain bridge incident archive.</desc>
+  <rect width="1200" height="630" fill="#0b1728"/>
+  <rect x="64" y="64" width="1072" height="502" rx="28" fill="#111f34" stroke="#c7a15a" stroke-opacity="0.55" stroke-width="2"/>
+  <text x="108" y="188" fill="#c7a15a" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="700" letter-spacing="5">BADJOKE-LAB</text>
+  <text x="108" y="302" fill="#f3efe5" font-family="Arial, Helvetica, sans-serif" font-size="74" font-weight="700">Bridge Incident Registry</text>
+  <text x="108" y="382" fill="#aeb9c9" font-family="Arial, Helvetica, sans-serif" font-size="34">Cross-chain bridge incidents, aftermath, and evidence</text>
+  <line x1="108" y1="452" x2="1092" y2="452" stroke="#c7a15a" stroke-opacity="0.45"/>
+  <text x="108" y="512" fill="#aeb9c9" font-family="Arial, Helvetica, sans-serif" font-size="26">Historical registry · Evidence-led · No safety ranking</text>
+</svg>
