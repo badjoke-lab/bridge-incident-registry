@@ -189,5 +189,20 @@
       "TAC EVM",
       "TAC Network"
     ]
+  },
+  "xrpl": {
+    "display_name": "XRP Ledger",
+    "aliases": [
+      "XRPL",
+      "XRP Ledger mainnet"
+    ]
+  },
+  "tx": {
+    "display_name": "TX Chain",
+    "aliases": [
+      "TX blockchain",
+      "Coreum",
+      "Coreum Network"
+    ]
   }
 }

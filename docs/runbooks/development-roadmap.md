@@ -8,10 +8,10 @@ GitHub state and canonical JSON are authoritative.
 ## Canonical and production baseline
 
 ```text
-Bridges     35
-Incidents   37
-Events      187
-Evidence    295
+Bridges     36
+Incidents   38
+Events      188
+Evidence    297
 ```
 
 Latest production-verified canonical maintenance:
