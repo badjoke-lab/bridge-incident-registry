@@ -1,7 +1,7 @@
 # BIR Live Recovery Checkpoint
 
 Status: active maintenance  
-Updated: 2026-08-10
+Updated: 2026-08-11
 
 GitHub state and canonical JSON are authoritative. Completed merge SHAs and run IDs below are checkpoints, not live branch pointers.
 
@@ -16,19 +16,21 @@ Evidence    293
 
 ## Immediate recovery point
 
-The latest completed canonical maintenance item is the July 2026 Allbridge Core Solana pool exploit.
+The latest completed canonical maintenance item is the June 2026 Syscoin UTXO–NEVM Bridge exploit.
 
 ```text
-Review PR                         #261
-Canonical PR                      #262
-Canonical merge                   d7cf47f2373c9c0b94b78b93807fc6d0239c2d98
-V1 Release Readiness main run     31393382470
-Release-readiness job             93470262367
+Review PR                         #265
+Canonical PR                      #266
+Canonical merge                   679f40c55677ad9d89f508200e47004f40464922
+V1 Release Readiness main run     31458996854
+Release-readiness job             93678566693
 Production equality               success
-Built HTML pages                  74
+Built HTML pages                  76
+Canonical HTML routes             75
+Legacy redirects                  74
 ```
 
-Resume from current `main` after that merge. Do not use historical branch heads or the temporary application machinery from PR #262; the temporary generator and write-enabled workflow were removed before final review.
+Resume from current `main` after that merge. Do not use historical branch heads or the temporary application machinery from PR #266; the temporary generator and write-enabled workflow were removed before final review.
 
 ## Latest completed checkpoints
 
@@ -43,8 +45,10 @@ PR #207–214  Event Primary Remediation 01–02 and production verification
 PR #217–250  Phase 5 monitoring/candidate/public-site stack
 PR #251–258  v1 hardening and technical release closure
 PR #260      Remove stale Boltz canonical mutation helper
-PR #261      Review Allbridge Core July 2026 Solana exploit
-PR #262      Apply and production-verify Allbridge 2026 incident
+PR #261–262  Review/apply Allbridge Core July 2026 incident
+PR #263–264  Allbridge production checkpoint and healthy site baseline
+PR #265      Review Syscoin UTXO–NEVM Bridge June 2026 exploit
+PR #266      Apply and production-verify Syscoin 2026 incident
 ```
 
 ## Current quality boundary
@@ -52,63 +56,54 @@ PR #262      Apply and production-verify Allbridge 2026 incident
 ```text
 Incident source-count mismatches      0
 Event source-count mismatches         0
-Primary evidence                    209 / 291
-Tier 1 evidence                     226 / 291
-Incidents without primary             1 / 35
-Incidents without Tier 1              1 / 35
-Events without primary               11 / 184
-Events without Tier 1                 6 / 184
-Evidence with archived_url          130 / 291
+Primary evidence                    210 / 293
+Tier 1 evidence                     227 / 293
+Official-domain evidence            132 / 293
+Incidents without primary             1 / 36
+Incidents without Tier 1              1 / 36
+Events without primary               11 / 185
+Events without Tier 1                 6 / 185
+Evidence with archived_url          130 / 293
 Terminal unarchived unique URLs      15
 Risky-host unarchived unique URLs    16
 Unknown URL status                    0
 High-severity npm audit findings      0
 ```
 
-The Allbridge application did not consume an existing primary/Tier 1 gap or increase the risky-host ceiling. The unarchived official X post-mortem was deliberately left out of canonical evidence.
+The Syscoin application did not increase an accepted primary/Tier 1 gap or risky-host ceiling. It added one first-party Tier 1 postmortem and one Tier 2 security-firm report.
 
-## Allbridge 2026 canonical boundary
+## Syscoin 2026 canonical boundary
 
 ```text
-Bridge                       bir_bridge_000012
-Incident                     bir_inc_000035
-Event                        bir_ev_000184
-Evidence                     bir_src_000288–bir_src_000291
-Date                         2026-07-19
-Loss                         $1.65 million
-Chain                        Solana
-Assets                       USDC / USDT
-Recovery                     unknown
-Reimbursement                unknown
-Restart                      reopened
-Outcome                      active_after_incident
-Attack category              liquidity_or_accounting_failure
+Bridge                       bir_bridge_000034
+Incident                     bir_inc_000036
+Event                        bir_ev_000185
+Evidence                     bir_src_000292–bir_src_000293
+Date                         2026-06-07
+Unauthorized release         5 billion SYS
+Secondary valuation          about $10 million
+Recovery                     full_recovery
+Reimbursement                not_applicable
+Restart                      paused
+Outcome                      paused_long_term
+Attack category              message_verification_failure
 ```
 
-Do not infer final attacker-fund recovery, final LP compensation, or completed Core/Classic migration from the relaunch record. A separate exact-date reopen event was intentionally not created because the admitted first-party rendering established reopening but not an independently stable exact calendar date for that event.
+The first-party root-cause authority is Syscoin's technical postmortem. The 5 billion SYS quantity is first-party; the approximately $10 million figure is a secondary contemporaneous valuation from Halborn. The full 5 billion SYS was returned and burned. Do not infer bridge reopening from financial recovery: the latest explicit reviewed first-party operational state remains paused.
 
-## Boltz boundary
+Normalization keys `syscoin-utxo`, `syscoin-nevm`, and `sys` were added only to support the approved canonical values.
 
-Issue #171 remains `monitoring signal / needs evidence`. PR #260 removed the obsolete canonical apply helper because it contradicted the accepted review boundary. Do not recreate or execute that old one-incident proposal unless new evidence establishes a discrete supportable incident.
+## Allbridge and Boltz boundaries
+
+Allbridge remains `bir_inc_000035` under `bir_bridge_000012`, production-verified in PR #262. Its final attacker-fund recovery and LP compensation remain unknown.
+
+Boltz Issue #171 remains `monitoring signal / needs evidence`. PR #260 removed the obsolete canonical apply helper. Do not recreate that proposal unless new evidence establishes a discrete supported incident.
 
 ## Phase 5 monitoring recovery point
 
 Monitoring is review-only. It fingerprints canonical files, rejects canonical mutation/unknown URL status/broken references, writes only to approved staging paths, and suppresses unchanged signals.
 
-The persisted accepted monitor baselines predate the Allbridge canonical addition:
-
-```text
-Evidence-health run            31301765004 / 93215576787
-External universe              98 parsed / 11 exact / 87 unmatched baseline
-DefiLlama bridge-hack feed      613 parsed / 61 bridge rows
-Active-domain accepted run     31313312723
-RSS accepted run               31313579371 / 93245104559
-Public-site baseline run       31314396266
-Scheduled BIR Monitoring       31356920691 success
-Scheduled Public Site Health   31359554582 success
-```
-
-These are historical monitor-state checkpoints, not the latest canonical counts. The current public/canonical state `33 / 35 / 184 / 291` is separately proven by main release-readiness run `31393382470`.
+The persisted monitoring state includes historical baselines established before later canonical additions. The Allbridge-era Public Site Health change was accepted by PR #264 and then proved silent on repeat. Current canonical/public truth is `34 / 36 / 185 / 293`, proven independently by main release-readiness run `31458996854`.
 
 Repository Actions settings still disallow `GITHUB_TOKEN` PR creation. On that exact platform error the monitoring workflow may retain an already-validated review branch; all other PR-creation failures remain fatal. Connected GitHub access can open the review PR when needed.
 
@@ -134,11 +129,15 @@ post-merge production equality
 
 Current performance ceilings remain 16 KiB gzip max HTML, 5 KiB CSS total/max file, 4 KiB JS total, and 2 KiB max JS file. Astro remains `^7.2.0`.
 
-## Historical v1 technical closure
+## Release proof history
 
-The original v1 technical release contract was accepted by PR #258, merge `d9f545803104bffd829d93270965f53d9f3d1a45`, run `31367052981`, job `93387599332`. It remains historical proof. The Allbridge maintenance change later passed the same release contract plus production equality under run `31393382470`.
+Original v1 technical closure: PR #258, merge `d9f545803104bffd829d93270965f53d9f3d1a45`, run `31367052981`, job `93387599332`.
 
-Neither checkpoint creates or implies a semantic-version tag or GitHub Release.
+Allbridge post-closure proof: merge `d7cf47f2373c9c0b94b78b93807fc6d0239c2d98`, run `31393382470`, job `93470262367`.
+
+Current Syscoin post-closure proof: merge `679f40c55677ad9d89f508200e47004f40464922`, run `31458996854`, job `93678566693`, production equality success on the first availability attempt.
+
+No checkpoint creates or implies a semantic-version tag or GitHub Release.
 
 ## Cloudflare Pages boundary
 
@@ -146,8 +145,8 @@ Production branch is `main`, production deployments are enabled, and preview dep
 
 ## Restart actions
 
-1. inspect the next BIR Monitoring and Public Site Health runs after the Allbridge canonical addition;
-2. investigate new monitoring/candidate signals only through review-first workflow;
-3. continue first-party-backed canonical expansion with a fresh branch per approved record batch;
-4. leave Boltz Issue #171 review-only unless stronger incident-boundary evidence appears;
+1. rerun BIR Monitoring and Public Site Health after the Syscoin canonical addition;
+2. inspect any review-only state change and merge only healthy bounded monitoring data;
+3. prove silent repeat after any accepted monitoring-state seed;
+4. continue first-party-backed canonical expansion with a fresh branch per approved batch;
 5. preserve source-quality ceilings and all release gates; do not weaken semantics to improve counts.
