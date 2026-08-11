@@ -1,0 +1,125 @@
+{
+  "findings": [],
+  "probes": [
+    {
+      "target_id": "home",
+      "route": "/",
+      "kind": "html",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/",
+        "error": null,
+        "validation_errors": []
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/",
+        "error": null,
+        "validation_errors": []
+      }
+    },
+    {
+      "target_id": "robots",
+      "route": "/robots.txt",
+      "kind": "robots",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/robots.txt",
+        "error": null,
+        "validation_errors": []
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/robots.txt",
+        "error": null,
+        "validation_errors": []
+      }
+    },
+    {
+      "target_id": "sitemap",
+      "route": "/sitemap.xml",
+      "kind": "sitemap",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/sitemap.xml",
+        "error": null,
+        "validation_errors": []
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/sitemap.xml",
+        "error": null,
+        "validation_errors": []
+      }
+    },
+    {
+      "target_id": "version",
+      "route": "/version.json",
+      "kind": "version",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/version.json",
+        "error": null,
+        "validation_errors": []
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/version.json",
+        "error": null,
+        "validation_errors": []
+      }
+    },
+    {
+      "target_id": "bridge:bir_bridge_000030",
+      "route": "/bridge/unizen/",
+      "kind": "html",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/bridge/unizen/",
+        "error": null,
+        "validation_errors": []
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/bridge/unizen/",
+        "error": null,
+        "validation_errors": []
+      }
+    },
+    {
+      "target_id": "incident:bir_inc_000002",
+      "route": "/incident/wormhole-2022-weth-mint-exploit/",
+      "kind": "html",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/incident/wormhole-2022-weth-mint-exploit/",
+        "error": null,
+        "validation_errors": []
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/incident/wormhole-2022-weth-mint-exploit/",
+        "error": null,
+        "validation_errors": []
+      }
+    }
+  ],
+  "origin": "https://bir.badjoke-lab.com",
+  "target_count": 6,
+  "sampled_bridge_id": "bir_bridge_000030",
+  "sampled_incident_id": "bir_inc_000002",
+  "baseline_seeded_count": 2,
+  "state_changed": true
+}
