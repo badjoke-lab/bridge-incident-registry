@@ -1,7 +1,7 @@
 # BIR implementation schedule
 
 Status: active maintenance  
-Updated: 2026-08-10
+Updated: 2026-08-11
 
 The authoritative roadmap is `docs/runbooks/development-roadmap.md`; the restart point is `docs/runbooks/recovery-checkpoint.md`.
 
@@ -24,28 +24,31 @@ The authoritative roadmap is `docs/runbooks/development-roadmap.md`; the restart
   - optional GDELT adapter: fail-closed, not scheduled/default after Actions 429
 - Release — v1 hardening/technical closure: complete — PRs #251–#258
 - Maintenance — reviewed canonical/candidate expansion: active
-  - stale Boltz mutation helper removed — PR #260
-  - Allbridge Core July 2026 review — PR #261
-  - Allbridge Core July 2026 canonical application — PR #262
+  - Boltz stale mutation helper removed — PR #260
+  - Allbridge Core July 2026 review/application — PRs #261–#262
+  - Allbridge post-change checkpoint/site-health baseline — PRs #263–#264
+  - Syscoin UTXO–NEVM June 2026 review/application — PRs #265–#266
 
 ## Current baseline
 
 ```text
-Bridges     33
-Incidents   35
-Events      184
-Evidence    291
+Bridges     34
+Incidents   36
+Events      185
+Evidence    293
 ```
 
 ## Latest production checkpoint
 
 ```text
-Review PR                         #261
-Canonical PR                      #262
-Canonical merge                   d7cf47f2373c9c0b94b78b93807fc6d0239c2d98
-V1 Release Readiness run          31393382470
-Release-readiness job             93470262367
-Built pages                        74
+Review PR                         #265
+Canonical PR                      #266
+Canonical merge                   679f40c55677ad9d89f508200e47004f40464922
+V1 Release Readiness run          31458996854
+Release-readiness job             93678566693
+Built pages                        76
+Canonical routes                   75
+Legacy redirects                   74
 Chromium / Firefox / WebKit       success
 Production equality               success
 ```
@@ -53,13 +56,14 @@ Production equality               success
 ## Current quality checkpoint
 
 ```text
-Primary evidence                  209 / 291
-Tier 1 evidence                   226 / 291
-Archived evidence                 130 / 291
-Incidents without primary           1 / 35
-Incidents without Tier 1            1 / 35
-Events without primary             11 / 184
-Events without Tier 1                6 / 184
+Primary evidence                  210 / 293
+Tier 1 evidence                   227 / 293
+Official-domain evidence          132 / 293
+Archived evidence                 130 / 293
+Incidents without primary           1 / 36
+Incidents without Tier 1            1 / 36
+Events without primary             11 / 185
+Events without Tier 1                6 / 185
 Terminal unarchived URLs           15
 Risky-host unarchived URLs         16
 Unknown URL status                  0
@@ -67,11 +71,11 @@ Source-count mismatches             0
 High-severity npm audit             0
 ```
 
-The Allbridge addition did not widen any accepted source-quality ceiling. The unarchived X post-mortem remains excluded from canonical evidence until a safe archived/stable form can be admitted.
+The Syscoin addition increased primary/Tier 1/official-domain evidence without widening accepted gap ceilings. Its two normalization chain keys and one asset key are explicit reference-data additions, not new incident claims.
 
 ## Phase 5 historical accepted baseline
 
-The currently persisted monitoring baselines were accepted before the Allbridge canonical addition:
+The persisted monitoring baselines were accepted before later canonical additions and must be read as historical state checkpoints:
 
 ```text
 Evidence health                  12 / 287 selected, 24 probes, 0 hard findings
@@ -87,12 +91,10 @@ RSS relevant baseline rows        0
 RSS baseline candidates           0
 Issue lifecycle                   close/reopen resolution + rearm live
 Public site targets               6
-Public site baseline              6 healthy / 0 findings
-Scheduled BIR Monitoring          31356920691 success / no state changes
-Scheduled Public Site Health      31359554582 success / no state changes
+Public site baseline              healthy after Allbridge-era seed and silent repeat
 ```
 
-These are historical monitoring checkpoints. Current canonical truth is `33 / 35 / 184 / 291`, proven separately by main production equality run `31393382470`.
+Current canonical/public truth is `34 / 36 / 185 / 293`, proven by main production equality run `31458996854`. Phase 5 and Public Site Health must now be rerun against this state.
 
 ## Permanent release boundary
 
@@ -109,8 +111,8 @@ These are historical monitoring checkpoints. Current canonical truth is `33 / 35
 
 ## Immediate execution order
 
-1. verify the next Phase 5/Public Site Health cycle recognizes the new canonical counts without false review work;
-2. investigate only concrete new monitoring signals or first-party-backed incident candidates;
-3. keep Boltz Issue #171 at review-only/needs-evidence unless the incident boundary becomes supportable;
-4. continue Phase 3 quality/archive work only when new source material changes the reviewed boundary;
+1. rerun BIR Monitoring on current main and inspect any state transition caused by the Syscoin canonical addition;
+2. rerun Public Site Health and accept only healthy review-only state changes, then prove silent repeat;
+3. investigate only concrete new monitoring signals or first-party-backed incident candidates;
+4. keep Boltz Issue #171 review-only/needs-evidence unless its incident boundary becomes supportable;
 5. preserve all release and source-quality gates while expanding the corpus.
