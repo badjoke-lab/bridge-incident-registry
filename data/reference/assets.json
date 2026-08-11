@@ -169,5 +169,11 @@
   "tston": {
     "display_name": "tsTON",
     "aliases": []
+  },
+  "xrp": {
+    "display_name": "XRP",
+    "aliases": [
+      "XRP Ledger native asset"
+    ]
   }
 }
