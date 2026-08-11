@@ -1,4 +1,40 @@
 {
-  "findings": [],
-  "candidates": []
+  "findings": [
+    {
+      "finding_id": "issue_270_40f04a7f51",
+      "monitor": "github-issue-watch",
+      "severity": "medium",
+      "category": "review_signal",
+      "title": "Review Oraichain 2026-08-08 bridge-hack signal",
+      "summary": "## Status\n\nMonitoring signal / needs evidence. **Do not canonicalize from this issue alone.**\n\n## Trigger\n\nBIR Monitoring rerun `31365816669`, attempt 3, job `93679753427` detected a new DefiLlama bridge-hack row and persisted it in PR #268.\n\n```text\nCandidate              Oraichain\nCandidate class        C\nRecord shape           hold\nFeed date              2026-08-08\nClassification         Bridge & Cross-Chain\nTechnique              Unbacked Cross-Chain Mint\nTarget                 Chain\nFeed amount_usd        0\nExact BIR identity     unresolved\n```\n\nThe monitoring candidate ID is `defillama_hack_eacb0ad98e50bd41`.\n\n## Current evidence boundary\n\nDefiLlama is a secondary discovery database and is not canonical evidence by itself.\n\nCurrent official Oraichain documentation confirms that OBrid",
+      "source_urls": [
+        "https://github.com/badjoke-lab/bridge-incident-registry/issues/270"
+      ],
+      "confidence": "medium",
+      "dedupe_key": "github-issue:270"
+    }
+  ],
+  "candidates": [
+    {
+      "candidate_id": "github_issue_270",
+      "canonical_name": "Oraichain",
+      "aliases": [],
+      "candidate_class": "B",
+      "likely_type": "unknown",
+      "likely_status": "unknown",
+      "likely_incident_type": "unknown",
+      "record_shape": "hold",
+      "headline": "Review Oraichain 2026-08-08 bridge-hack signal",
+      "bir_relevance": "Repository issue is explicitly marked for monitoring/review and requires evidence review before canonical inclusion.",
+      "duplicate_check": {
+        "matched_existing_record": null,
+        "method": "not-run-in-foundation"
+      },
+      "source_urls": [
+        "https://github.com/badjoke-lab/bridge-incident-registry/issues/270"
+      ],
+      "source_quality": "review_required",
+      "next_action": "review_for_canonical_boundary"
+    }
+  ]
 }
