@@ -1,40 +1,27 @@
 {
   "run_id": "gh-31365816669",
-  "observed_at": "2026-08-11T04:44:17Z",
+  "observed_at": "2026-08-11T04:52:40Z",
   "candidates": [
     {
-      "candidate_id": "defillama_hack_eacb0ad98e50bd41",
+      "candidate_id": "github_issue_270",
       "canonical_name": "Oraichain",
       "aliases": [],
-      "candidate_class": "C",
-      "likely_type": "unresolved_bridge_security_incident_signal",
+      "candidate_class": "B",
+      "likely_type": "unknown",
       "likely_status": "unknown",
-      "likely_incident_type": "exploit",
+      "likely_incident_type": "unknown",
       "record_shape": "hold",
-      "headline": "Oraichain appears as a new or materially changed bridge hack record",
-      "bir_relevance": "The DefiLlama hacks discovery input marks this row as bridgeHack=true, but no exact canonical BIR bridge identity was resolved. The incident and bridge identity must be reviewed before canonical work.",
+      "headline": "Review Oraichain 2026-08-08 bridge-hack signal",
+      "bir_relevance": "Repository issue is explicitly marked for monitoring/review and requires evidence review before canonical inclusion.",
       "duplicate_check": {
-        "matched_existing_record": false,
-        "method": "bridgeHack=true without exact canonical hack-name identity"
-      },
-      "incident_feed": {
-        "provider": "DefiLlama",
-        "source_id": "defillama-hacks-discovery",
-        "date": "2026-08-08",
-        "amount_usd": 0,
-        "chains": [
-          "Oraichain"
-        ],
-        "classification": "Bridge & Cross-Chain",
-        "technique": "Unbacked Cross-Chain Mint",
-        "target": "Chain",
-        "bridge_flag": true
+        "matched_existing_record": null,
+        "method": "not-run-in-foundation"
       },
       "source_urls": [
-        "https://api.llama.fi/hacks"
+        "https://github.com/badjoke-lab/bridge-incident-registry/issues/270"
       ],
-      "source_quality": "secondary_incident_database",
-      "next_action": "resolve_bridge_identity_and_locate_primary_source"
+      "source_quality": "review_required",
+      "next_action": "review_for_canonical_boundary"
     }
   ]
 }
