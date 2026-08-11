@@ -48,10 +48,10 @@ The public UI/support layer is current through PR #187, including expanded incid
 Current canonical counts:
 
 ```text
-Bridges     33
-Incidents   35
-Events      184
-Evidence    291
+Bridges     34
+Incidents   36
+Events      185
+Evidence    293
 ```
 
 Current hard states:

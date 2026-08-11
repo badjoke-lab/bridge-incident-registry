@@ -6,10 +6,10 @@ Updated: 2026-08-10
 ## Canonical and production state
 
 ```text
-Bridges     33
-Incidents   35
-Events      184
-Evidence    291
+Bridges     34
+Incidents   36
+Events      185
+Evidence    293
 ```
 
 Latest reviewed canonical maintenance addition is the July 19, 2026 Allbridge Core Solana pool exploit under existing `bir_bridge_000012`.

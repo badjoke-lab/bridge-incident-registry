@@ -161,5 +161,19 @@
       "Commons",
       "Syndicate Commons"
     ]
+  },
+  "syscoin-utxo": {
+    "display_name": "Syscoin UTXO",
+    "aliases": [
+      "Syscoin UTXO chain",
+      "Syscoin UTXO layer"
+    ]
+  },
+  "syscoin-nevm": {
+    "display_name": "Syscoin NEVM",
+    "aliases": [
+      "NEVM",
+      "Syscoin NEVM layer"
+    ]
   }
 }
