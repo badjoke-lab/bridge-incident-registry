@@ -175,5 +175,19 @@
       "NEVM",
       "Syscoin NEVM layer"
     ]
+  },
+  "ton": {
+    "display_name": "TON",
+    "aliases": [
+      "The Open Network",
+      "TON Blockchain"
+    ]
+  },
+  "tac": {
+    "display_name": "TAC",
+    "aliases": [
+      "TAC EVM",
+      "TAC Network"
+    ]
   }
 }

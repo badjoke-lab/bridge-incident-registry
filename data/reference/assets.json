@@ -159,5 +159,15 @@
     "aliases": [
       "Syscoin"
     ]
+  },
+  "blum": {
+    "display_name": "BLUM",
+    "aliases": [
+      "Blum"
+    ]
+  },
+  "tston": {
+    "display_name": "tsTON",
+    "aliases": []
   }
 }
