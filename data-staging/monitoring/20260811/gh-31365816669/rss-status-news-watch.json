@@ -1,0 +1,35 @@
+{
+  "enabled": true,
+  "state_changed": false,
+  "source_count": 2,
+  "parsed_count": 55,
+  "relevant_count": 0,
+  "baseline_seeded_count": 0,
+  "unchanged_count": 0,
+  "canonical_evidence_duplicates": 0,
+  "deferred_changed_count": 0,
+  "emitted_count": 0,
+  "sources": [
+    {
+      "source_id": "coindesk",
+      "source_url": "https://www.coindesk.com/arc/outboundfeeds/rss/",
+      "baseline_initialized": false,
+      "parsed_count": 25,
+      "relevant_count": 0,
+      "baseline_seeded_count": 0,
+      "unchanged_count": 0,
+      "emitted_count": 0
+    },
+    {
+      "source_id": "cointelegraph",
+      "source_url": "https://cointelegraph.com/rss",
+      "baseline_initialized": false,
+      "parsed_count": 30,
+      "relevant_count": 0,
+      "baseline_seeded_count": 0,
+      "unchanged_count": 0,
+      "emitted_count": 0
+    }
+  ],
+  "candidates": []
+}

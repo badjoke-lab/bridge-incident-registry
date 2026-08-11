@@ -805,6 +805,11 @@
       "fingerprint": "initialized-v1",
       "first_seen_at": "2026-08-09T12:33:29Z",
       "last_changed_at": "2026-08-09T12:33:29Z"
+    },
+    "incident-feed:defillama-hacks-discovery:row:4cc758e46bbbf615131995731d7be876e9fb143f34ab745087f5d12fb351e9e0": {
+      "fingerprint": "1683bd118bbc85814d6d7bc4d8598ba74af8881125ec937f652741e3c13202a1",
+      "first_seen_at": "2026-08-11T04:44:17Z",
+      "last_changed_at": "2026-08-11T04:44:17Z"
     }
   }
 }
