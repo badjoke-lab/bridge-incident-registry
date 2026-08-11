@@ -19,6 +19,7 @@ const {
 
 const site = Astro.site ?? new URL("https://bridge-incident-registry.pages.dev");
 const canonicalUrl = new URL(Astro.url.pathname, site);
+const socialImageUrl = new URL("/og/bir-og.svg", site);
 const buildEnv = import.meta.env as Record<string, string | boolean | undefined>;
 const productionBranch = String(buildEnv.CF_PAGES_PRODUCTION_BRANCH ?? "main");
 const currentBranch = buildEnv.CF_PAGES_BRANCH ? String(buildEnv.CF_PAGES_BRANCH) : undefined;
@@ -30,6 +31,7 @@ const baseJsonLd: Record<string, unknown> = {
   name: title,
   description,
   url: canonicalUrl.toString(),
+  inLanguage: "en",
   isPartOf: {
     "@type": "WebSite",
     name: "Bridge Incident Registry",
@@ -49,6 +51,8 @@ const alternateDataUrl = alternateDataPath ? new URL(alternateDataPath, site) : 
 <meta name="robots" content={previewBuild ? "noindex, nofollow" : "index, follow"} />
 <meta name="googlebot" content={previewBuild ? "noindex, nofollow" : "index, follow"} />
 <link rel="canonical" href={canonicalUrl.toString()} />
+<link rel="alternate" hreflang="en" href={canonicalUrl.toString()} />
+<link rel="alternate" hreflang="x-default" href={canonicalUrl.toString()} />
 <link rel="alternate" type="application/json" href={new URL("/data/manifest.json", site).toString()} title="Data manifest" />
 <link rel="alternate" type="application/json" href={new URL("/version.json", site).toString()} title="Version metadata" />
 {alternateDataUrl && <link rel="alternate" type="application/json" href={alternateDataUrl.toString()} title="Canonical page dataset" />}
@@ -60,8 +64,15 @@ const alternateDataUrl = alternateDataPath ? new URL(alternateDataPath, site) : 
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonicalUrl.toString()} />
 <meta property="og:locale" content="en_US" />
-<meta name="twitter:card" content="summary" />
+<meta property="og:image" content={socialImageUrl.toString()} />
+<meta property="og:image:type" content="image/svg+xml" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Bridge Incident Registry" />
+<meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={socialImageUrl.toString()} />
+<meta name="twitter:image:alt" content="Bridge Incident Registry" />
 {dateModified && <meta property="article:modified_time" content={dateModified} />}
 {structuredData.map((entry) => <script type="application/ld+json" set:html={JSON.stringify(entry)} />)}
