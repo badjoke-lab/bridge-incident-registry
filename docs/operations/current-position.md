@@ -1,41 +1,44 @@
 # Current position
 
 Status: active maintenance  
-Updated: 2026-08-10
+Updated: 2026-08-11
 
 This file is the compact restart pointer. Current `main`, canonical JSON, GitHub Actions, `docs/runbooks/recovery-checkpoint.md`, `docs/runbooks/current-status.md`, and `docs/runbooks/development-roadmap.md` are authoritative.
 
 ## Canonical and production baseline
 
 ```text
-Bridges     33
-Incidents   35
-Events      184
-Evidence    291
+Bridges     34
+Incidents   36
+Events      185
+Evidence    293
 ```
 
-Latest canonical maintenance addition: **Allbridge Core July 2026 Solana pool exploit** under existing `bir_bridge_000012`.
+Latest canonical maintenance addition: **Syscoin UTXO–NEVM Bridge June 2026 exploit** as new `bir_bridge_000034` / `bir_inc_000036`.
 
 ```text
-Review PR                         #261
-Canonical PR                      #262
-Canonical merge                   d7cf47f2373c9c0b94b78b93807fc6d0239c2d98
-V1 Release Readiness main run     31393382470
-Release-readiness job             93470262367
+Review PR                         #265
+Canonical PR                      #266
+Canonical merge                   679f40c55677ad9d89f508200e47004f40464922
+V1 Release Readiness main run     31458996854
+Release-readiness job             93678566693
 Production equality               success
-Built HTML pages                  74
+Built HTML pages                  76
+Canonical HTML routes             75
+Legacy redirects                  74
 ```
 
 ## Current quality boundary
 
 ```text
-Primary evidence                       209 / 291
-Tier 1 evidence                        226 / 291
-Evidence with archived_url             130 / 291
-Incidents without primary                1 / 35
-Incidents without Tier 1                 1 / 35
-Events without primary                  11 / 184
-Events without Tier 1                     6 / 184
+Primary evidence                       210 / 293
+Tier 1 evidence                        227 / 293
+Official-domain evidence               132 / 293
+Evidence with archived_url             130 / 293
+Incidents without primary                1 / 36
+Incidents without Tier 1                 1 / 36
+Events without primary                  11 / 185
+Events without Tier 1                     6 / 185
 Terminal unarchived unique URLs          15
 Risky-host unarchived unique URLs        16
 Unknown URL status                        0
@@ -44,7 +47,7 @@ High-severity npm audit findings          0
 Canonical production content match      true
 ```
 
-The Allbridge batch added three Tier 1 primary Telegram records and one Tier 2 corroborating article. The unarchived official X post-mortem was deliberately not admitted, so the risky-host ceiling remains 16.
+The Syscoin batch added one Tier 1 primary first-party postmortem and one Tier 2 security-firm report. It did not increase the terminal-unarchived or risky-host ceilings and did not create a new primary/Tier 1 coverage gap.
 
 ## Current phase
 
@@ -60,11 +63,15 @@ The Allbridge batch added three Tier 1 primary Telegram records and one Tier 2 c
 PR #260  Remove stale Boltz canonical apply helper
 PR #261  Review Allbridge Core July 2026 Solana exploit
 PR #262  Apply and production-verify Allbridge 2026 canonical incident
+PR #263  Checkpoint Allbridge production state
+PR #264  Accept Allbridge-era healthy public-site baseline
+PR #265  Review Syscoin UTXO–NEVM Bridge June 2026 exploit
+PR #266  Apply and production-verify Syscoin 2026 canonical incident
 ```
 
-Boltz remains Issue #171, a monitoring signal / needs-evidence item. It is not a canonical incident because the accepted review record still lacks one discrete exploit/incident boundary.
+Syscoin is recorded as a distinct native UTXO–NEVM bridge. The June 7, 2026 exploit caused an unauthorized release of 5 billion SYS; the full amount was later returned and burned. Financial recovery is complete, but the latest explicit reviewed first-party operational state remains `paused`, so recovery and reopening remain separate fields.
 
-Allbridge is different: the first-party record established a discrete pause, confirmed $1.65 million withdrawal, and later pool-less Core relaunch. It was therefore added as `bir_inc_000035` under the existing Allbridge entity rather than as a duplicate bridge.
+Boltz remains Issue #171, a monitoring signal / needs-evidence item. It is not canonical because the accepted record still lacks one discrete supported exploit/incident boundary.
 
 ## Phase 5 live stack
 
@@ -82,7 +89,7 @@ PR #248      Review issue resolution / rearm lifecycle
 PR #249–250  Public site health watch + accepted production baseline
 ```
 
-The accepted monitoring baselines predate the Allbridge canonical addition and are historical monitoring checkpoints, not current canonical counts. Monitoring remains review-only and must never auto-write canonical records.
+The persisted monitoring baselines are historical checkpoints and may predate later canonical additions. Monitoring remains review-only and must never auto-write canonical records.
 
 ## Permanent release gates
 
@@ -100,16 +107,16 @@ production registry equality after main merge
 
 Current budgets remain 16 KiB gzip max HTML, 5 KiB CSS total/max file, and 4 KiB JS total / 2 KiB max JS file. Astro remains `^7.2.0`.
 
-## v1 technical release history
+## Release history
 
-The original v1 technical closure was accepted by PR #258 and main run `31367052981` / job `93387599332`. That remains a historical release-contract checkpoint. The later Allbridge canonical update was independently accepted on main by run `31393382470` / job `93470262367`, including production equality.
+The original v1 technical closure was accepted by PR #258 and main run `31367052981` / job `93387599332`. Allbridge was later production-verified by run `31393382470` / job `93470262367`. The current Syscoin maintenance revision is independently production-verified by run `31458996854` / job `93678566693`.
 
-No semantic-version tag or GitHub Release is implied by either checkpoint.
+No semantic-version tag or GitHub Release is implied by these technical checkpoints.
 
 ## Next bounded work
 
-1. inspect the latest Phase 5 monitoring/public-site runs against the new `33 / 35 / 184 / 291` canonical state;
-2. continue reviewed incident/corpus expansion from concrete first-party-backed candidates;
-3. keep Issue #171 Boltz review-only until stronger incident-boundary evidence appears;
-4. perform Phase 3 source/archive remediation only when new stronger material exists;
+1. rerun Phase 5 Monitoring and Public Site Health against the current `34 / 36 / 185 / 293` canonical state;
+2. inspect and accept only bounded healthy monitoring-state changes, then prove silent repeat;
+3. continue reviewed first-party-backed incident/corpus expansion;
+4. keep Issue #171 Boltz review-only until stronger incident-boundary evidence appears;
 5. preserve every permanent release and source-quality guard without widening ceilings to force coverage.
