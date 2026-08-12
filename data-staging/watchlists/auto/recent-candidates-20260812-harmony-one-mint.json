@@ -1,0 +1,30 @@
+{
+  "run_id": "manual-20260812-harmony-one-mint",
+  "observed_at": "2026-08-12T10:03:00Z",
+  "candidates": [
+    {
+      "candidate_id": "manual_harmony_2026_one_mint",
+      "canonical_name": "Harmony",
+      "aliases": ["Harmony Protocol", "ONE"],
+      "candidate_class": "B",
+      "likely_type": "unknown",
+      "likely_status": "unknown",
+      "likely_incident_type": "unauthorized_mint",
+      "record_shape": "hold",
+      "headline": "Review Harmony 2026 unauthorized ONE mint and exchange-freeze incident",
+      "bir_relevance": "Treat as a separate 2026 incident candidate from the existing 2022 Horizon Bridge exploit. Harmony has publicly described an exploit response involving exchange freezes and patch/rollback work, but the root cause and bridge/cross-chain relevance are not yet established. If bridge-related, create a new 2026 BIR incident; if L1-only, resolve as out of BIR scope.",
+      "duplicate_check": {
+        "matched_existing_record": true,
+        "matched_id": "bir_bridge_000004",
+        "matched_slug": "harmony-horizon-bridge",
+        "method": "existing Harmony Horizon Bridge record; incident-year separation required"
+      },
+      "source_urls": [
+        "https://x.com/harmonyprotocol",
+        "https://github.com/harmony-one/harmony/releases"
+      ],
+      "source_quality": "review_required",
+      "next_action": "verify_root_cause_bridge_relevance_mint_amount_exchange_freezes_and_rollback_outcome"
+    }
+  ]
+}
