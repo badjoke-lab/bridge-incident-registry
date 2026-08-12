@@ -1,0 +1,15 @@
+[
+  {
+    "id": "bir_notice_20260812_harmony_one_mint",
+    "bridge_id": "bir_bridge_000004",
+    "status": "under_review",
+    "title": "2026 Harmony / ONE exploit signal under review",
+    "date": "2026-08-12",
+    "summary": "Harmony has publicly described an exploit response that includes coordinating with exchanges to block or freeze traced funds and working on patch and rollback options. Separate on-chain analysis alleges a large unauthorized ONE mint and rapid exchange inflows. BIR has not yet established whether the 2026 event involved Horizon Bridge or another bridge/cross-chain component.",
+    "scope_note": "This is a reviewed monitoring notice, not a canonical BIR incident classification. The existing 2022 Horizon Bridge exploit remains a separate incident record. If bridge involvement is confirmed, the 2026 event will be recorded as a new incident rather than replacing the 2022 case.",
+    "source_urls": [
+      "https://x.com/harmonyprotocol"
+    ],
+    "public": true
+  }
+]
