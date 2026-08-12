@@ -32,7 +32,7 @@ const isDetailPage = isBridgeDetail || isIncidentDetail;
 const issueUrl = "https://github.com/badjoke-lab/bridge-incident-registry/issues/new/choose";
 const contactFormUrl = "https://docs.google.com/forms/d/e/1FAIpQLScdv3WFVHmQO_mz-p4_HJv1RyJItghrG6A0SGQ5ec4R2NBNOw/viewform?usp=sharing&ouid=106509672333862044652";
 const runtimeEnv = import.meta.env as Record<string, string | boolean | undefined>;
-const gaMeasurementId = String(runtimeEnv.PUBLIC_GA_MEASUREMENT_ID ?? "").trim();
+const gaMeasurementId = String(runtimeEnv.PUBLIC_GA_MEASUREMENT_ID ?? "G-DHWNS35P3K").trim();
 const gaTagUrl = gaMeasurementId ? `https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}` : "";
 const isCurrent = (href: string) => normalizedPath === href || (href !== "/" && normalizedPath.startsWith(href));
 const registryLinks = [
