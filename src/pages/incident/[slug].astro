@@ -18,6 +18,9 @@ const bridge = registryData.bridges.find((item) => item.id === incident.bridge_i
 const events = getEventsForIncident(incident.id).sort((a, b) => a.event_date.localeCompare(b.event_date));
 const evidence = getEvidenceForIncident(incident.id);
 const knownUnknowns = incident.known_unknowns ?? [];
+const unresolvedReasons = incident.unresolved_reason ?? [];
+const amountClaims = incident.amount_claims ?? [];
+const conflictingClaims = incident.conflicting_claims ?? [];
 const chains = getChainLabels(incident.affected_chains);
 const assets = getAssetLabels(incident.affected_assets);
 const pageTitle = `${incident.title} - Bridge Incident Registry`;
@@ -47,10 +50,13 @@ const facts = [
   { label: "Affected assets", value: joinLabels(assets) },
   { label: "Attack category", value: formatLabel(incident.attack_vector_category ?? "unknown") },
   { label: "Reported loss", value: incident.reported_loss_usd_display ?? incident.reported_loss_text ?? "Unknown" },
+  { label: "Amount confidence", value: formatLabel(incident.amount_confidence ?? "unknown") },
+  { label: "Loss amount basis", value: formatLabel(incident.loss_amount_basis ?? "unknown") },
   { label: "Recovery", value: formatLabel(incident.recovery_status ?? "unknown") },
   { label: "Reimbursement", value: formatLabel(incident.reimbursement_status ?? "unknown") },
   { label: "Restart", value: formatLabel(incident.restart_status ?? "unknown") },
   { label: "Current outcome", value: formatLabel(incident.current_outcome ?? "unknown") },
+  { label: "Postmortem", value: formatLabel(incident.postmortem_available ?? "unclear") },
   { label: "Resolution", value: incident.is_unresolved ? "Unresolved" : "Final outcome known" },
   { label: "Last reviewed", value: incident.last_reviewed_at },
   { label: "Last verified", value: incident.last_verified_at }
@@ -79,16 +85,43 @@ const facts = [
     </aside>
   </div>
 
+  {(incident.reported_loss_text || incident.amount_note || amountClaims.length > 0) && <section class="detail-panel">
+    <h2>Amount and valuation</h2>
+    {incident.reported_loss_text && <p>{incident.reported_loss_text}</p>}
+    {incident.amount_note && <p class="detail-muted">{incident.amount_note}</p>}
+    {amountClaims.length > 0 && <ul class="detail-list">{amountClaims.map((claim) => <li class="detail-card">
+      <p class="detail-card-title"><span>{claim.amount_text}</span>{claim.amount_usd_text && <span>{claim.amount_usd_text}</span>}</p>
+      <div class="detail-meta-line"><span>{formatLabel(claim.basis ?? "unknown")}</span>{claim.usd_valuation_date && <span>Valuation date {claim.usd_valuation_date}</span>}</div>
+      {claim.notes && <p class="detail-muted">{claim.notes}</p>}
+    </li>)}</ul>}
+  </section>}
+
+  {unresolvedReasons.length > 0 && <section class="detail-panel">
+    <h2>Why this remains unresolved</h2>
+    <ul class="detail-list">{unresolvedReasons.map((item) => <li class="detail-muted">{item}</li>)}</ul>
+  </section>}
+
   <section class="detail-two-column" aria-label="Incident timeline and evidence">
     <div class="detail-panel">
       <h2>Timeline events</h2>
-      {events.length > 0 ? <ul class="detail-list">{events.map((event) => <li class="detail-card"><p class="detail-card-title"><span>{event.title}</span><span>{formatDateWithPrecision(event.event_date, event.event_date_precision)}</span></p><p class="detail-muted">{event.description}</p><div class="detail-meta-line"><span>{formatLabel(event.event_type)}</span><span>{formatLabel(event.confidence)}</span></div></li>)}</ul> : <EmptyState title="No linked timeline events." message="Timeline events will appear here after event records are added." />}
+      {events.length > 0 ? <ul class="detail-list">{events.map((event) => <li class="detail-card"><p class="detail-card-title"><span>{event.title}</span><span>{formatDateWithPrecision(event.event_date, event.event_date_precision)}</span></p><p class="detail-muted">{event.description}</p><div class="detail-meta-line"><span>{formatLabel(event.event_type)}</span><span>{formatLabel(event.confidence)}</span></div>{event.notes && <p class="detail-muted">{event.notes}</p>}</li>)}</ul> : <EmptyState title="No linked timeline events." message="Timeline events will appear here after event records are added." />}
     </div>
     <div class="detail-panel">
       <h2>Evidence records</h2>
-      {evidence.length > 0 ? <ul class="detail-link-list">{evidence.map((source) => <li><a href={source.url}>{source.title}</a><div class="detail-muted">{source.publisher} · {formatLabel(source.source_tier)} · {formatDateWithPrecision(source.published_at, source.published_at_precision)}</div></li>)}</ul> : <EmptyState title="No linked evidence records." message="Evidence links will appear here after source records are added." />}
+      {evidence.length > 0 ? <ul class="detail-link-list">{evidence.map((source) => <li>
+        <a href={source.url}>{source.title}</a>
+        <div class="detail-muted">{source.publisher} · {formatLabel(source.source_tier)} · {formatLabel(source.reliability)} reliability · {source.is_primary ? "primary" : "secondary"} · {formatDateWithPrecision(source.published_at, source.published_at_precision)}</div>
+        {source.claim_scope && <div class="detail-muted">Claim scope: {formatLabel(source.claim_scope)}</div>}
+        {source.notes && <p class="detail-muted">{source.notes}</p>}
+      </li>)}</ul> : <EmptyState title="No linked evidence records." message="Evidence links will appear here after source records are added." />}
+      {evidence.length > 0 && <p class="detail-muted">Source tiers describe evidence authority, not certainty for every claim. Tier 1 is the strongest source class; Tier 2 and Tier 3 provide progressively more secondary or supporting context. Source notes define what each record actually supports.</p>}
     </div>
   </section>
 
   {knownUnknowns.length > 0 && <section class="detail-panel"><h2>Known unknowns</h2><ul class="detail-list">{knownUnknowns.map((item) => <li class="detail-muted">{item}</li>)}</ul></section>}
+
+  {conflictingClaims.length > 0 && <section class="detail-panel">
+    <h2>Conflicting claims</h2>
+    <ul class="detail-list">{conflictingClaims.map((claim) => <li class="detail-card"><p>{claim.claim}</p>{claim.values && <p class="detail-muted">Reported values: {claim.values.join(" · ")}</p>}{claim.resolution && <p class="detail-muted">Current treatment: {claim.resolution}</p>}</li>)}</ul>
+  </section>}
 </BaseLayout>
