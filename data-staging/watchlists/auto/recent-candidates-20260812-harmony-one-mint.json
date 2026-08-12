@@ -20,8 +20,7 @@
         "method": "existing Harmony Horizon Bridge record; incident-year separation required"
       },
       "source_urls": [
-        "https://x.com/harmonyprotocol",
-        "https://github.com/harmony-one/harmony/releases"
+        "https://x.com/harmonyprotocol"
       ],
       "source_quality": "review_required",
       "next_action": "verify_root_cause_bridge_relevance_mint_amount_exchange_freezes_and_rollback_outcome"
