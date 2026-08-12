@@ -3,6 +3,7 @@ import path from "node:path";
 
 const origin = "https://bir.badjoke-lab.com";
 const socialImage = `${origin}/og/bir-og.svg`;
+const gaMeasurementId = "G-DHWNS35P3K";
 
 function assert(value, message) {
   if (!value) throw new Error(message);
@@ -32,6 +33,8 @@ for (const file of htmlFiles) {
   assert(html.includes(`property="og:image" content="${socialImage}"`), `Open Graph image missing: ${file}`);
   assert(html.includes(`name="twitter:image" content="${socialImage}"`), `Twitter image missing: ${file}`);
   assert(html.includes('name="robots" content="index, follow"'), `production robots meta missing: ${file}`);
+  assert(html.includes(`googletagmanager.com/gtag/js?id=${gaMeasurementId}`), `GA4 loader missing: ${file}`);
+  assert(html.includes(gaMeasurementId), `GA4 measurement ID missing: ${file}`);
 }
 
 const sitemap = fs.readFileSync("dist/sitemap.xml", "utf8");
@@ -41,4 +44,4 @@ assert(sitemap.includes(`${origin}/`), "production origin missing from sitemap")
 assert(robots.includes(`Sitemap: ${origin}/sitemap.xml`), "robots sitemap URL mismatch");
 assert(fs.existsSync("dist/og/bir-og.svg"), "social image missing from dist");
 
-console.log(JSON.stringify({ html_pages: htmlFiles.length, ok: true }));
+console.log(JSON.stringify({ html_pages: htmlFiles.length, ga_measurement_id: gaMeasurementId, ok: true }));
