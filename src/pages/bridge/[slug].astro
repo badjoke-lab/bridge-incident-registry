@@ -9,7 +9,20 @@ import UpdateStatusChip from "../../components/UpdateStatusChip.astro";
 import { getEvidenceForBridge, getIncidentsForBridge, registryData } from "../../lib/data";
 import { formatDateWithPrecision, formatLabel, joinLabels } from "../../lib/format";
 import { getAssetLabels, getChainLabels } from "../../lib/reference";
+import publicNotices from "../../../data/public-notices.json";
 import "../../styles/detail.css";
+
+type PublicNotice = {
+  id: string;
+  bridge_id: string;
+  status: string;
+  title: string;
+  date: string;
+  summary: string;
+  scope_note: string;
+  source_urls?: string[];
+  public: boolean;
+};
 
 export function getStaticPaths() {
   return registryData.bridges.map((bridge) => ({ params: { slug: bridge.slug }, props: { bridge } }));
@@ -18,6 +31,7 @@ export function getStaticPaths() {
 const { bridge } = Astro.props;
 const incidents = getIncidentsForBridge(bridge.id).sort((a, b) => b.incident_date.localeCompare(a.incident_date));
 const evidence = getEvidenceForBridge(bridge.id);
+const notices = (publicNotices as PublicNotice[]).filter((notice) => notice.public && notice.bridge_id === bridge.id);
 const chains = getChainLabels(bridge.primary_chains);
 const assets = getAssetLabels(bridge.primary_assets);
 const pageTitle = `${bridge.canonical_name} - Bridge Incident Registry`;
@@ -66,6 +80,17 @@ const facts = [
       </div>
     </div>
   </section>
+
+  {notices.map((notice) => (
+    <Callout title={notice.title} tone="warning">
+      <p><strong>{formatLabel(notice.status)}</strong> · {notice.date}</p>
+      <p>{notice.summary}</p>
+      <p>{notice.scope_note}</p>
+      {notice.source_urls && notice.source_urls.length > 0 && (
+        <p>Source: {notice.source_urls.map((url, index) => <><a href={url}>{new URL(url).hostname}</a>{index < notice.source_urls!.length - 1 ? ", " : ""}</>)}</p>
+      )}
+    </Callout>
+  ))}
 
   <div class="detail-grid">
     <section class="detail-panel"><h2>Bridge facts</h2><KeyValueList items={facts} /></section>
