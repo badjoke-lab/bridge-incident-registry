@@ -1,100 +1,66 @@
 # BIR implementation schedule
 
-Status: active maintenance  
-Updated: 2026-08-11
+Status: active maintenance + Ledger Series Phase 2  
+Updated: 2026-08-17
 
-The authoritative roadmap is `docs/runbooks/development-roadmap.md`; the restart point is `docs/runbooks/recovery-checkpoint.md`.
+The authoritative BIR maintenance roadmap is `docs/runbooks/development-roadmap.md`; the restart point is `docs/runbooks/recovery-checkpoint.md`. The Ledger Series horizontal roadmap is governed by `docs/ai-era-execution-schedule.md` and `docs/ai-era-registry-spec.md`.
 
-## Current schedule
+## Naming boundary
 
-- Phase 0 — specification and foundation: complete
-- Phase 1 — canonical model, UI, validation, and seeds: complete
-- Phase 2 — record expansion: complete through Batch 7
-- Phase 3 — full-corpus quality strengthening: active research-triggered maintenance
-  - source-count/source-quality remediation: complete to reviewed boundary
-  - Event Tier 1 and Primary Remediation 01–02: production-verified
-  - Archive Capture Batches 1–18: production-verified
-  - Deferred Archive Retries 01–04: complete to reviewed boundary
-  - cross-record bridge integrity: blocking
-- Phase 4 — public contract stabilization: complete
-- Phase 5 — monitoring and candidate collection: steady-state live
-  - evidence health, external universe, structured hack feed, active-domain watch, RSS discovery: live
-  - review issue resolution/rearm: live — PR #248
-  - public site/SEO health: live — PRs #249–#250
-  - optional GDELT adapter: fail-closed, not scheduled/default after Actions 429
-- Release — v1 hardening/technical closure: complete — PRs #251–#258
+BIR's historical internal Phase 0–5 numbering and the cross-series **Ledger Series Phase 2** are separate. Ledger Series Phase 2 means BIR's AI-era horizontal strengthening; it does not rename or reopen the completed internal BIR phases.
+
+## Existing BIR schedule
+
+- Internal Phase 0 — specification and foundation: complete
+- Internal Phase 1 — canonical model, UI, validation, and seeds: complete
+- Internal Phase 2 — record expansion: complete through the established batches
+- Internal Phase 3 — full-corpus quality strengthening: active research-triggered maintenance
+- Internal Phase 4 — public contract stabilization: complete
+- Internal Phase 5 — monitoring and candidate collection: steady-state live
+- Release — v1 hardening/technical closure: complete
 - Maintenance — reviewed canonical/candidate expansion: active
-  - Boltz stale mutation helper removed — PR #260
-  - Allbridge Core July 2026 review/application — PRs #261–#262
-  - Allbridge post-change checkpoint/site-health baseline — PRs #263–#264
-  - Syscoin UTXO–NEVM June 2026 review/application — PRs #265–#266
 
-## Current baseline
+## Current canonical baseline
 
 ```text
-Bridges     34
-Incidents   36
-Events      185
-Evidence    293
+Bridges     36
+Incidents   38
+Events      188
+Evidence    297
 ```
 
-## Latest production checkpoint
+TAC Inner Bridge was added before the XRPL-TX Bridge August 2026 incident. XRPL-TX canonical application is PR #275 and its production verification is PR #276. Any older `34 / 36 / 185 / 293` restart text is a historical Syscoin-era checkpoint, not current canonical truth.
 
-```text
-Review PR                         #265
-Canonical PR                      #266
-Canonical merge                   679f40c55677ad9d89f508200e47004f40464922
-V1 Release Readiness run          31458996854
-Release-readiness job             93678566693
-Built pages                        76
-Canonical routes                   75
-Legacy redirects                   74
-Chromium / Firefox / WebKit       success
-Production equality               success
-```
+## Ledger Series Phase 2 execution
+
+1. **Complete** — baseline audit and schedule synchronization, PR #284.
+2. **Complete decision** — no lifecycle schema expansion required at the audited boundary; existing recovery/reimbursement/restart/outcome/evidence fields are sufficient.
+3. **Active** — deterministic per-record bridge and incident JSON, PR #285.
+4. **Next** — remaining structured-filter delta only; existing incident type, attack, recovery, reimbursement, restart, outcome, unresolved, date and loss filters must not be duplicated.
+5. **Pending** — Compare focused on aftermath/outcome differences.
+6. **Pending** — Stats for loss/recovery/reimbursement, attack vectors, chain distribution, response timelines and data quality.
+7. **Pending near closeout** — one bounded reviewed post-incident follow-up pass.
+8. **Deferred** — natural-language-to-filter translation belongs to Ledger Series Phase 10.
+9. **Closeout** — production verification plus schedule/completion-audit synchronization, then move the cross-series roadmap to SOG.
 
 ## Current quality checkpoint
 
 ```text
-Primary evidence                  210 / 293
-Tier 1 evidence                   227 / 293
-Official-domain evidence          132 / 293
-Archived evidence                 130 / 293
-Incidents without primary           1 / 36
-Incidents without Tier 1            1 / 36
-Events without primary             11 / 185
-Events without Tier 1                6 / 185
+Primary evidence                  213 / 297
+Tier 1 evidence                   230 / 297
+Archived evidence                 130 / 297
+Incidents without primary           1 / 38
+Incidents without Tier 1            1 / 38
+Events without primary             11 / 188
+Events without Tier 1                6 / 188
 Terminal unarchived URLs           15
 Risky-host unarchived URLs         16
 Unknown URL status                  0
-Source-count mismatches             0
-High-severity npm audit             0
+Source-count mismatches              0
+High-severity npm audit              0
 ```
 
-The Syscoin addition increased primary/Tier 1/official-domain evidence without widening accepted gap ceilings. Its two normalization chain keys and one asset key are explicit reference-data additions, not new incident claims.
-
-## Phase 5 historical accepted baseline
-
-The persisted monitoring baselines were accepted before later canonical additions and must be read as historical state checkpoints:
-
-```text
-Evidence health                  12 / 287 selected, 24 probes, 0 hard findings
-External bridge universe         98 parsed / 11 exact / 87 unmatched baseline
-External silent repeat           87 unchanged / 0 candidates
-DefiLlama bridgeHack feed        613 parsed / 61 bridge rows / 61 baseline
-BridgeHack silent repeat         61 unchanged / 0 candidates
-Active-domain eligible           22
-Active-domain batch               8
-Accepted domain baseline          8 / 0 findings
-RSS rows parsed                  55
-RSS relevant baseline rows        0
-RSS baseline candidates           0
-Issue lifecycle                   close/reopen resolution + rearm live
-Public site targets               6
-Public site baseline              healthy after Allbridge-era seed and silent repeat
-```
-
-Current canonical/public truth is `34 / 36 / 185 / 293`, proven by main production equality run `31458996854`. Phase 5 and Public Site Health must now be rerun against this state.
+Two current full-corpus warnings are non-blocking review signals: `bir_inc_000015` lacks a discrete reimbursement-completed event for its completed state, and `bir_inc_000035` lacks a discrete bridge-reopened event for its reopened state. They must not be auto-filled without evidence.
 
 ## Permanent release boundary
 
@@ -106,13 +72,14 @@ Current canonical/public truth is `34 / 36 / 185 / 293`, proven by main producti
 - high-severity npm audit findings are blocking;
 - accessibility, performance, Chromium/Firefox/WebKit, and dist consistency remain release gates;
 - production verification is required for canonical/public output changes;
-- Cloudflare Pages preview deployment remains `none`;
 - technical closure does not create or imply a GitHub Release or semantic-version tag.
 
 ## Immediate execution order
 
-1. rerun BIR Monitoring on current main and inspect any state transition caused by the Syscoin canonical addition;
-2. rerun Public Site Health and accept only healthy review-only state changes, then prove silent repeat;
-3. investigate only concrete new monitoring signals or first-party-backed incident candidates;
-4. keep Boltz Issue #171 review-only/needs-evidence unless its incident boundary becomes supportable;
-5. preserve all release and source-quality gates while expanding the corpus.
+1. finish PR #285 and merge only after all exact-head checks are green;
+2. verify the new record-level JSON endpoints in production;
+3. implement the structured-filter delta;
+4. implement Compare;
+5. implement Stats;
+6. run the bounded aftermath follow-up and close Ledger Series Phase 2;
+7. keep routine monitoring/candidate work parallel and review-only, without allowing it to displace the horizontal phase unless a high-severity correction requires intervention.

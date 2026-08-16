@@ -31,9 +31,17 @@ writeJson("evidence.json", output.evidence);
 writeJson("reference/chains.json", output.references.chains);
 writeJson("reference/assets.json", output.references.assets);
 
+for (const dossier of output.dossiers.bridges) {
+  writeJson(`record/bridge/${dossier.slug}.json`, dossier);
+}
+for (const dossier of output.dossiers.incidents) {
+  writeJson(`record/incident/${dossier.slug}.json`, dossier);
+}
+
 console.log(`Generated canonical-derived public staging data in ${path.relative(root, outputRoot) || "."}.`);
 console.log(
   `Records: ${output.metadata.record_counts.bridges} bridges, ${output.metadata.record_counts.incidents} incidents, ${output.metadata.record_counts.events} events, ${output.metadata.record_counts.evidence} evidence sources.`
 );
+console.log(`Record dossiers: ${output.dossiers.bridges.length} bridges, ${output.dossiers.incidents.length} incidents.`);
 console.log(`Canonical only: ${output.metadata.canonical_only}`);
 console.log(`Generated at: ${output.metadata.generated_at}`);

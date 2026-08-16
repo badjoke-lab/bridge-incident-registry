@@ -11,7 +11,7 @@ const DOCUMENT_COUNT_FILES = [
   "docs/runbooks/development-roadmap.md",
   "docs/runbooks/public-consistency-remediation.md"
 ];
-const ALLOWED_JSON_FILES = new Set([
+const STATIC_ALLOWED_JSON_FILES = new Set([
   "version.json",
   "data/manifest.json",
   "data/bridges.json",
@@ -164,6 +164,14 @@ function expectHtmlPage({ distRoot, origin, route, identifier, errors }) {
   }
 }
 
+function buildAllowedJsonFiles(canonical) {
+  return new Set([
+    ...STATIC_ALLOWED_JSON_FILES,
+    ...canonical.data.bridges.map((record) => `data/bridge/${record.slug}.json`),
+    ...canonical.data.incidents.map((record) => `data/incident/${record.slug}.json`)
+  ]);
+}
+
 export function checkDistConsistency(options = {}) {
   const root = path.resolve(options.root ?? process.cwd());
   const env = options.env ?? process.env;
@@ -172,6 +180,7 @@ export function checkDistConsistency(options = {}) {
   const docsRoot = path.resolve(options.docsRoot ?? root);
   const origin = canonical.config.canonical_origin;
   const errors = [];
+  const allowedJsonFiles = buildAllowedJsonFiles(canonical);
 
   if (!fs.existsSync(distRoot)) {
     errors.push(`dist root does not exist: ${distRoot}`);
@@ -278,7 +287,7 @@ export function checkDistConsistency(options = {}) {
     if (FORBIDDEN_EXTENSIONS.has(path.extname(lowered))) {
       errors.push(`forbidden published file type: ${relativePath}`);
     }
-    if (lowered.endsWith(".json") && !ALLOWED_JSON_FILES.has(relativePath)) {
+    if (lowered.endsWith(".json") && !allowedJsonFiles.has(relativePath)) {
       errors.push(`unexpected published JSON outside canonical contract: ${relativePath}`);
     }
   }

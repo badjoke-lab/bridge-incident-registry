@@ -58,6 +58,11 @@ const endpoints = Object.fromEntries(
   }).map(([key, value]) => [key, absoluteUrl(value)])
 );
 
+const recordEndpoints = {
+  bridge: `${config.canonical_origin}/data/bridge/{slug}.json`,
+  incident: `${config.canonical_origin}/data/incident/{slug}.json`
+};
+
 const version = {
   project_id: metadata.project_id,
   site_name: metadata.site_name,
@@ -79,9 +84,10 @@ const manifest = {
     reference_records: ["chain", "asset"]
   },
   endpoints,
+  record_endpoints: recordEndpoints,
   human_page_patterns: {
-    bridge: absoluteUrl("/bridge/{slug}/"),
-    incident: absoluteUrl("/incident/{slug}/")
+    bridge: `${config.canonical_origin}/bridge/{slug}/`,
+    incident: `${config.canonical_origin}/incident/{slug}/`
   },
   data_safety: {
     canonical_only: true,
@@ -89,7 +95,7 @@ const manifest = {
   }
 };
 
-const guides = buildMachineGuides({ metadata, endpoints, absoluteUrl });
+const guides = buildMachineGuides({ metadata, endpoints, recordEndpoints, absoluteUrl });
 
 fs.rmSync(path.join(publicRoot, "data"), { recursive: true, force: true });
 for (const filename of ["version.json", "llms.txt", "ai.txt"]) {
@@ -103,9 +109,18 @@ for (const key of ["bridges", "incidents", "events", "evidence"]) {
 }
 writeJson("data/reference/chains.json", datasets.chains);
 writeJson("data/reference/assets.json", datasets.assets);
+
+for (const bridge of datasets.bridges) {
+  writeJson(`data/bridge/${bridge.slug}.json`, readJson(`record/bridge/${bridge.slug}.json`));
+}
+for (const incident of datasets.incidents) {
+  writeJson(`data/incident/${incident.slug}.json`, readJson(`record/incident/${incident.slug}.json`));
+}
+
 writeText("llms.txt", guides.llms);
 writeText("ai.txt", guides.ai);
 
 const counts = metadata.record_counts;
 console.log(`Published machine-readable files under ${path.relative(root, publicRoot) || "."}.`);
 console.log(`Counts: ${counts.bridges} bridges, ${counts.incidents} incidents, ${counts.events} events, ${counts.evidence} evidence sources.`);
+console.log(`Record dossiers: ${datasets.bridges.length} bridges, ${datasets.incidents.length} incidents.`);

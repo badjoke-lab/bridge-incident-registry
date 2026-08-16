@@ -2,7 +2,7 @@
   "project_id": "bridge-incident-registry",
   "site_name": "Bridge Incident Registry",
   "registry_type": "bridge_incident_registry",
-  "schema_version": "1.0.0-draft",
+  "schema_version": "1.1.0-draft",
   "canonical_origin": "https://bir.badjoke-lab.com",
   "generated_output_dir": ".generated/public-data",
   "public_output_dir": "public",
