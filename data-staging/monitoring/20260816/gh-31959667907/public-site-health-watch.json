@@ -1,0 +1,149 @@
+{
+  "findings": [
+    {
+      "finding_id": "site_sitemap_public_site_metadata_regression",
+      "monitor": "public-site-health-watch",
+      "severity": "medium",
+      "category": "public_site_metadata_regression",
+      "title": "/sitemap.xml failed repeated public contract checks",
+      "summary": "Two independent healthy HTTP responses produced the same validation failures: sitemap_count_mismatch. Review production output before changing canonical data.",
+      "affected_route": {
+        "route": "/sitemap.xml",
+        "kind": "sitemap",
+        "record_id": null
+      },
+      "source_urls": [
+        "https://bir.badjoke-lab.com/sitemap.xml"
+      ],
+      "confidence": "high",
+      "recommended_action": "review_production_public_contract",
+      "dedupe_key": "public-site-health:sitemap"
+    }
+  ],
+  "probes": [
+    {
+      "target_id": "home",
+      "route": "/",
+      "kind": "html",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/",
+        "error": null,
+        "validation_errors": []
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/",
+        "error": null,
+        "validation_errors": []
+      }
+    },
+    {
+      "target_id": "robots",
+      "route": "/robots.txt",
+      "kind": "robots",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/robots.txt",
+        "error": null,
+        "validation_errors": []
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/robots.txt",
+        "error": null,
+        "validation_errors": []
+      }
+    },
+    {
+      "target_id": "sitemap",
+      "route": "/sitemap.xml",
+      "kind": "sitemap",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/sitemap.xml",
+        "error": null,
+        "validation_errors": [
+          "sitemap_count_mismatch"
+        ]
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/sitemap.xml",
+        "error": null,
+        "validation_errors": [
+          "sitemap_count_mismatch"
+        ]
+      }
+    },
+    {
+      "target_id": "version",
+      "route": "/version.json",
+      "kind": "version",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/version.json",
+        "error": null,
+        "validation_errors": []
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/version.json",
+        "error": null,
+        "validation_errors": []
+      }
+    },
+    {
+      "target_id": "bridge:bir_bridge_000003",
+      "route": "/bridge/nomad-bridge/",
+      "kind": "html",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/bridge/nomad-bridge/",
+        "error": null,
+        "validation_errors": []
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/bridge/nomad-bridge/",
+        "error": null,
+        "validation_errors": []
+      }
+    },
+    {
+      "target_id": "incident:bir_inc_000029",
+      "route": "/incident/magpie-protocol-2024-router-v2-exploit/",
+      "kind": "html",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/incident/magpie-protocol-2024-router-v2-exploit/",
+        "error": null,
+        "validation_errors": []
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/incident/magpie-protocol-2024-router-v2-exploit/",
+        "error": null,
+        "validation_errors": []
+      }
+    }
+  ],
+  "origin": "https://bir.badjoke-lab.com",
+  "target_count": 6,
+  "sampled_bridge_id": "bir_bridge_000003",
+  "sampled_incident_id": "bir_inc_000029",
+  "baseline_seeded_count": 2,
+  "state_changed": true
+}
