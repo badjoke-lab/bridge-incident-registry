@@ -59,8 +59,8 @@ const endpoints = Object.fromEntries(
 );
 
 const recordEndpoints = {
-  bridge: absoluteUrl("/data/bridge/{slug}.json"),
-  incident: absoluteUrl("/data/incident/{slug}.json")
+  bridge: `${config.canonical_origin}/data/bridge/{slug}.json`,
+  incident: `${config.canonical_origin}/data/incident/{slug}.json`
 };
 
 const version = {
@@ -86,8 +86,8 @@ const manifest = {
   endpoints,
   record_endpoints: recordEndpoints,
   human_page_patterns: {
-    bridge: absoluteUrl("/bridge/{slug}/"),
-    incident: absoluteUrl("/incident/{slug}/")
+    bridge: `${config.canonical_origin}/bridge/{slug}/`,
+    incident: `${config.canonical_origin}/incident/{slug}/`
   },
   data_safety: {
     canonical_only: true,
