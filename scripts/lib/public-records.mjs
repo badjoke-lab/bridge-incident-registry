@@ -29,6 +29,23 @@ function assertMatchingIds(label, canonicalRecords, publicRecords) {
   }
 }
 
+function dossierMetadata({ config, generatedAt, recordType, record, recordCounts }) {
+  return {
+    project_id: config.project_id,
+    registry_type: config.registry_type,
+    schema_version: config.schema_version,
+    generated_at: generatedAt,
+    verification_marker: config.verification_marker,
+    canonical_only: true,
+    record_type: recordType,
+    record_id: record.id,
+    slug: record.slug,
+    self_url: record.record_data_url,
+    canonical_page_url: record.canonical_page_url,
+    record_counts: recordCounts
+  };
+}
+
 export function buildPublicRecords({ config, data, recordCounts, latestVerifiedAt, generatedAt }) {
   const origin = config.canonical_origin;
   const bridgeById = new Map(data.bridges.map((record) => [record.id, record]));
@@ -37,8 +54,11 @@ export function buildPublicRecords({ config, data, recordCounts, latestVerifiedA
   const bridges = data.bridges.map((record) => ({
     ...record,
     canonical_page_url: joinUrl(origin, `/bridge/${record.slug}/`),
-    canonical_data_url: joinUrl(origin, "/data/bridges.json")
+    canonical_data_url: joinUrl(origin, "/data/bridges.json"),
+    record_data_url: joinUrl(origin, `/data/bridge/${record.slug}.json`)
   }));
+
+  const publicBridgeById = new Map(bridges.map((record) => [record.id, record]));
 
   const incidents = data.incidents.map((record) => {
     assertKnownBridge(record, bridgeById, "incident");
@@ -48,7 +68,8 @@ export function buildPublicRecords({ config, data, recordCounts, latestVerifiedA
       ...record,
       canonical_page_url: joinUrl(origin, `/incident/${record.slug}/`),
       bridge_page_url: joinUrl(origin, `/bridge/${bridge.slug}/`),
-      canonical_data_url: joinUrl(origin, "/data/incidents.json")
+      canonical_data_url: joinUrl(origin, "/data/incidents.json"),
+      record_data_url: joinUrl(origin, `/data/incident/${record.slug}.json`)
     };
   });
 
@@ -85,6 +106,57 @@ export function buildPublicRecords({ config, data, recordCounts, latestVerifiedA
   assertMatchingIds("events", data.events, events);
   assertMatchingIds("evidence", data.evidence, evidence);
 
+  const bridgeDossiers = bridges.map((bridge) => {
+    const relatedIncidents = incidents.filter((incident) => incident.bridge_id === bridge.id);
+    const relatedEvents = events.filter((event) => event.bridge_id === bridge.id);
+    const relatedEvidence = evidence.filter((source) => source.bridge_id === bridge.id);
+
+    return {
+      ...dossierMetadata({
+        config,
+        generatedAt,
+        recordType: "bridge",
+        record: bridge,
+        recordCounts: {
+          incidents: relatedIncidents.length,
+          events: relatedEvents.length,
+          evidence: relatedEvidence.length
+        }
+      }),
+      record: bridge,
+      related: {
+        incidents: relatedIncidents,
+        events: relatedEvents,
+        evidence: relatedEvidence
+      }
+    };
+  });
+
+  const incidentDossiers = incidents.map((incident) => {
+    const bridge = publicBridgeById.get(incident.bridge_id);
+    const relatedEvents = events.filter((event) => event.incident_id === incident.id);
+    const relatedEvidence = evidence.filter((source) => source.incident_id === incident.id);
+
+    return {
+      ...dossierMetadata({
+        config,
+        generatedAt,
+        recordType: "incident",
+        record: incident,
+        recordCounts: {
+          events: relatedEvents.length,
+          evidence: relatedEvidence.length
+        }
+      }),
+      record: incident,
+      bridge,
+      related: {
+        events: relatedEvents,
+        evidence: relatedEvidence
+      }
+    };
+  });
+
   const metadata = {
     project_id: config.project_id,
     site_name: config.site_name,
@@ -104,6 +176,10 @@ export function buildPublicRecords({ config, data, recordCounts, latestVerifiedA
     incidents,
     events,
     evidence,
+    dossiers: {
+      bridges: bridgeDossiers,
+      incidents: incidentDossiers
+    },
     references: {
       chains: data.chains,
       assets: data.assets
