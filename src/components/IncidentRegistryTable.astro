@@ -8,7 +8,7 @@ import type { IncidentCase } from "../lib/types";
 
 interface Props { incidents: IncidentCase[]; }
 const { incidents } = Astro.props;
-const bridgeNames = new Map(registryData.bridges.map((bridge) => [bridge.id, bridge.canonical_name]));
+const bridgesById = new Map(registryData.bridges.map((bridge) => [bridge.id, bridge]));
 const PAGE_SIZE = 25;
 ---
 <div class="registry-table-wrap">
@@ -17,7 +17,9 @@ const PAGE_SIZE = 25;
     <thead><tr><th scope="col">Incident</th><th scope="col">Date</th><th scope="col">Bridge</th><th scope="col">Type</th><th scope="col">Reported loss</th><th scope="col">Recovery</th><th scope="col">Reimbursement</th><th scope="col">Outcome</th><th scope="col">Resolution</th><th scope="col">Maturity</th><th scope="col">Freshness</th></tr></thead>
     <tbody id="incident-table-body">
       {incidents.map((incident, index) => {
-        const bridgeName = bridgeNames.get(incident.bridge_id) ?? incident.bridge_id;
+        const bridge = bridgesById.get(incident.bridge_id);
+        const bridgeName = bridge?.canonical_name ?? incident.bridge_id;
+        const bridgeType = bridge?.type ?? "";
         const chains = getChainLabels(incident.affected_chains);
         const assets = getAssetLabels(incident.affected_assets);
         const searchText = [incident.title, bridgeName, ...chains, ...assets, incident.attack_vector_category ?? "", incident.incident_type].join(" ").toLowerCase();
@@ -29,6 +31,8 @@ const PAGE_SIZE = 25;
             data-search={searchText}
             data-name={incident.title}
             data-type={incident.incident_type}
+            data-chains={(incident.affected_chains ?? []).join(" ")}
+            data-bridge-type={bridgeType}
             data-attack={incident.attack_vector_category ?? "unknown"}
             data-recovery={incident.recovery_status ?? "unknown"}
             data-reimbursement={incident.reimbursement_status ?? "unknown"}
