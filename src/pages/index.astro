@@ -3,6 +3,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 import { getRegistryCounts, registryData } from "../lib/data";
 import { formatDateWithPrecision, formatLabel } from "../lib/format";
 
+// Registry counts are always derived from reviewed canonical data at build time.
 const counts = getRegistryCounts();
 const latestVerifiedAt = [
   ...registryData.bridges.map((record) => record.last_verified_at),
