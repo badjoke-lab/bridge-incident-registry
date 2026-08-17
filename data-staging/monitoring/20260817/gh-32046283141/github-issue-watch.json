@@ -1,0 +1,108 @@
+{
+  "findings": [
+    {
+      "finding_id": "issue_305_4cf5d3278d",
+      "monitor": "github-issue-watch",
+      "severity": "medium",
+      "category": "review_signal",
+      "title": "Review ChainConnect July 2026 bridge incident",
+      "summary": "Candidate review promoted from the 2026-08-17 BIR monitoring watchlist after incident-specific ecosystem/first-party material was located.\n\n## Incident boundary\n\nVenom Foundation's official channel states that on July 26, 2026 an unauthorized caller exploited an access-control flaw in a ChainConnect bridge contract on Venom 2.0. The affected application-level callback is identified as `ProxyMultiVaultAlien_V10.onCheckAccumulatedFee`, which lacked proper sender verification and enabled minting of unbacked Alien TIP-3 tokens that were then bridged to Ethereum through the standard flow.\n\nVenom explicitly states that the issue was in ChainConnect application code and was not a compromise of Venom, TVM, TIP-3, network infrastructure, relays, keys, or privileged access. The same official update ",
+      "source_urls": [
+        "https://github.com/badjoke-lab/bridge-incident-registry/issues/305"
+      ],
+      "confidence": "medium",
+      "dedupe_key": "github-issue:305"
+    },
+    {
+      "finding_id": "issue_304_ab5bac94d8",
+      "monitor": "github-issue-watch",
+      "severity": "medium",
+      "category": "review_signal",
+      "title": "Review Wanchain Cardano–BNB bridge July 2026 incident",
+      "summary": "Candidate review promoted from the 2026-08-17 BIR monitoring watchlist after a detailed first-party Wanchain postmortem was located.\n\n## First-party incident boundary\n\nWanchain's July 28, 2026 postmortem states that on July 20 a malicious actor attacked a Wanchain Bridge smart contract on Cardano and withdrew approximately 515 million NIGHT tokens. Wanchain states that the bridge became unavailable shortly afterward.\n\nThe postmortem attributes the incident to a Cardano smart-contract serialization / field-boundary flaw: two adjacent numeric values were converted to bytes without a fixed boundary, allowing a valid MPC signature for a small approved withdrawal to be reinterpreted for a much larger withdrawal. Wanchain explicitly states that the MPC relayer was not compromised, private keys w",
+      "source_urls": [
+        "https://github.com/badjoke-lab/bridge-incident-registry/issues/304"
+      ],
+      "confidence": "medium",
+      "dedupe_key": "github-issue:304"
+    },
+    {
+      "finding_id": "issue_303_a60e38fb66",
+      "monitor": "github-issue-watch",
+      "severity": "medium",
+      "category": "review_signal",
+      "title": "Review AFX Trade July 2026 custody-bridge incident",
+      "summary": "Candidate review promoted from the 2026-08-17 BIR monitoring watchlist after first-party evidence was located.\n\n## First-party incident boundary\n\nAFX Trade's July 31, 2026 postmortem describes a targeted July 22, 2026 attack that compromised AFX-operated infrastructure and the custody bridge path. The postmortem describes a supply-chain / trust-boundary compromise progressing through developer and infrastructure access into validator-node compromise, followed by a bridge transfer. AFX states that the incident was confined to AFX-operated infrastructure rather than an Arbitrum/native Arbitrum bridge defect.\n\nThe first-party response section states that bridge operations were suspended, validator infrastructure was isolated, and the bridge contract was frozen while infrastructure was rebuilt",
+      "source_urls": [
+        "https://github.com/badjoke-lab/bridge-incident-registry/issues/303"
+      ],
+      "confidence": "medium",
+      "dedupe_key": "github-issue:303"
+    }
+  ],
+  "candidates": [
+    {
+      "candidate_id": "github_issue_305",
+      "canonical_name": "ChainConnect July",
+      "aliases": [],
+      "candidate_class": "B",
+      "likely_type": "unknown",
+      "likely_status": "unknown",
+      "likely_incident_type": "unknown",
+      "record_shape": "hold",
+      "headline": "Review ChainConnect July 2026 bridge incident",
+      "bir_relevance": "Repository issue is explicitly marked for monitoring/review and requires evidence review before canonical inclusion.",
+      "duplicate_check": {
+        "matched_existing_record": null,
+        "method": "not-run-in-foundation"
+      },
+      "source_urls": [
+        "https://github.com/badjoke-lab/bridge-incident-registry/issues/305"
+      ],
+      "source_quality": "review_required",
+      "next_action": "review_for_canonical_boundary"
+    },
+    {
+      "candidate_id": "github_issue_304",
+      "canonical_name": "Wanchain Cardano–BNB bridge July",
+      "aliases": [],
+      "candidate_class": "B",
+      "likely_type": "unknown",
+      "likely_status": "unknown",
+      "likely_incident_type": "unknown",
+      "record_shape": "hold",
+      "headline": "Review Wanchain Cardano–BNB bridge July 2026 incident",
+      "bir_relevance": "Repository issue is explicitly marked for monitoring/review and requires evidence review before canonical inclusion.",
+      "duplicate_check": {
+        "matched_existing_record": null,
+        "method": "not-run-in-foundation"
+      },
+      "source_urls": [
+        "https://github.com/badjoke-lab/bridge-incident-registry/issues/304"
+      ],
+      "source_quality": "review_required",
+      "next_action": "review_for_canonical_boundary"
+    },
+    {
+      "candidate_id": "github_issue_303",
+      "canonical_name": "AFX Trade July",
+      "aliases": [],
+      "candidate_class": "B",
+      "likely_type": "unknown",
+      "likely_status": "unknown",
+      "likely_incident_type": "unknown",
+      "record_shape": "hold",
+      "headline": "Review AFX Trade July 2026 custody-bridge incident",
+      "bir_relevance": "Repository issue is explicitly marked for monitoring/review and requires evidence review before canonical inclusion.",
+      "duplicate_check": {
+        "matched_existing_record": null,
+        "method": "not-run-in-foundation"
+      },
+      "source_urls": [
+        "https://github.com/badjoke-lab/bridge-incident-registry/issues/303"
+      ],
+      "source_quality": "review_required",
+      "next_action": "review_for_canonical_boundary"
+    }
+  ]
+}
