@@ -1,0 +1,185 @@
+{
+  "findings": [],
+  "probes": [
+    {
+      "bridge_id": "bir_bridge_000025",
+      "canonical_name": "Avalanche Bridge",
+      "status": "active",
+      "official_url": "https://core.app/bridge/",
+      "official_domain": "core.app",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://core.app/bridge/",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://core.app/bridge/",
+        "error": null
+      },
+      "classification": "healthy",
+      "final_host_consistent": true,
+      "observed_final_host": "core.app"
+    },
+    {
+      "bridge_id": "bir_bridge_000027",
+      "canonical_name": "Transit Swap",
+      "status": "active",
+      "official_url": "https://www.transit.finance/",
+      "official_domain": "transit.finance",
+      "first": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.transit.finance/",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.transit.finance/",
+        "error": null
+      },
+      "classification": "healthy",
+      "final_host_consistent": true,
+      "observed_final_host": "transit.finance"
+    },
+    {
+      "bridge_id": "bir_bridge_000028",
+      "canonical_name": "Magpie Protocol",
+      "status": "active",
+      "official_url": "https://www.fly.trade/",
+      "official_domain": "fly.trade",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://www.fly.trade/",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://www.fly.trade/",
+        "error": null
+      },
+      "classification": "healthy",
+      "final_host_consistent": true,
+      "observed_final_host": "fly.trade"
+    },
+    {
+      "bridge_id": "bir_bridge_000029",
+      "canonical_name": "Rubic",
+      "status": "active",
+      "official_url": "https://rubic.exchange/",
+      "official_domain": "rubic.exchange",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://rubic.exchange/",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://rubic.exchange/",
+        "error": null
+      },
+      "classification": "healthy",
+      "final_host_consistent": true,
+      "observed_final_host": "rubic.exchange"
+    },
+    {
+      "bridge_id": "bir_bridge_000030",
+      "canonical_name": "Unizen",
+      "status": "active",
+      "official_url": "https://unizen.io/",
+      "official_domain": "unizen.io",
+      "first": {
+        "ok": false,
+        "status": 0,
+        "final_url": "https://unizen.io/",
+        "error": "fetch failed"
+      },
+      "second": {
+        "ok": false,
+        "status": 0,
+        "final_url": "https://unizen.io/",
+        "error": "fetch failed"
+      },
+      "classification": "soft_failure",
+      "final_host_consistent": true,
+      "observed_final_host": "unizen.io"
+    },
+    {
+      "bridge_id": "bir_bridge_000031",
+      "canonical_name": "Taiko Bridge",
+      "status": "active",
+      "official_url": "https://taiko.xyz/",
+      "official_domain": "taiko.xyz",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://taiko.xyz/",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://taiko.xyz/",
+        "error": null
+      },
+      "classification": "healthy",
+      "final_host_consistent": true,
+      "observed_final_host": "taiko.xyz"
+    },
+    {
+      "bridge_id": "bir_bridge_000034",
+      "canonical_name": "Syscoin UTXO–NEVM Bridge",
+      "status": "paused",
+      "official_url": "https://bridge.syscoin.org/",
+      "official_domain": "bridge.syscoin.org",
+      "first": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://bridge.syscoin.org/",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://bridge.syscoin.org/",
+        "error": null
+      },
+      "classification": "healthy",
+      "final_host_consistent": true,
+      "observed_final_host": "bridge.syscoin.org"
+    },
+    {
+      "bridge_id": "bir_bridge_000035",
+      "canonical_name": "TAC Inner Bridge",
+      "status": "paused",
+      "official_url": "https://tac.build/",
+      "official_domain": "tac.build",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://tac.build/",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://tac.build/",
+        "error": null
+      },
+      "classification": "healthy",
+      "final_host_consistent": true,
+      "observed_final_host": "tac.build"
+    }
+  ],
+  "eligible_count": 25,
+  "selected_count": 8,
+  "baseline_seeded_count": 0,
+  "state_changed": false
+}
