@@ -10,8 +10,8 @@ GitHub state and canonical JSON are authoritative.
 ```text
 Bridges     36
 Incidents   38
-Events      188
-Evidence    297
+Events      190
+Evidence    299
 ```
 
 Latest production-verified canonical maintenance:

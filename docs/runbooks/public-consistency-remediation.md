@@ -8,8 +8,8 @@ Updated: 2026-08-03
 ```text
 Bridges            36
 Incidents          38
-Events            188
-Evidence          297
+Events            190
+Evidence          299
 Archived evidence 130
 HTML routes        72
 Redirects          74
