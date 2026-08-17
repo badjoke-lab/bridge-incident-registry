@@ -24,7 +24,13 @@ const numericLossIncidents = incidents.filter((incident) => typeof incident.repo
 const recordedLossTotal = numericLossIncidents.reduce((sum, incident) => sum + (incident.reported_loss_usd ?? 0), 0);
 const majorIncidents = incidents.filter((incident) => incident.is_major_incident === true).length;
 const unresolvedIncidents = incidents.filter((incident) => incident.is_unresolved === true).length;
-const reimbursementHistory = incidents.filter((incident) => incident.reimbursement_status && incident.reimbursement_status !== "unknown" && incident.reimbursement_status !== "none").length;
+const reimbursementHistory = incidents.filter((incident) =>
+  incident.reimbursement_status === "announced"
+  || incident.reimbursement_status === "in_progress"
+  || incident.reimbursement_status === "completed"
+  || incident.reimbursement_status === "partial"
+  || incident.reimbursement_status === "denied"
+).length;
 
 const recoveryBreakdown = countBy(incidents, (incident) => incident.recovery_status);
 const reimbursementBreakdown = countBy(incidents, (incident) => incident.reimbursement_status);
@@ -117,7 +123,7 @@ const breakdowns: Breakdown[] = [
       <div class="kicker">Outcome coverage</div>
       <h2>Reimbursement history</h2>
       <p class="stat-value">{reimbursementHistory}</p>
-      <p>Incidents with an explicit non-unknown, non-none reimbursement status in the canonical incident record.</p>
+      <p>Incidents with an explicit reimbursement status of announced, in progress, completed, partial, or denied in the canonical incident record.</p>
     </article>
   </section>
 
