@@ -3,7 +3,7 @@ import path from "node:path";
 import { loadCanonicalData } from "./canonical-data.mjs";
 import { buildLegacyRedirects, formatCloudflareRedirects } from "./legacy-redirects.mjs";
 
-const STATIC_ROUTES = ["/", "/bridges/", "/incidents/", "/compare/", "/methodology/", "/about/", "/support/"];
+const STATIC_ROUTES = ["/", "/bridges/", "/incidents/", "/compare/", "/stats/", "/methodology/", "/about/", "/support/"];
 const DOCUMENT_COUNT_FILES = [
   "README.md",
   "docs/runbooks/current-status.md",
