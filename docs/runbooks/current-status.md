@@ -6,10 +6,10 @@ Updated: 2026-08-18
 ## Canonical and production state
 
 ```text
-Bridges     36
-Incidents   38
-Events      190
-Evidence    299
+Bridges     37
+Incidents   39
+Events      191
+Evidence    303
 ```
 
 Latest completed horizontal milestone is Ledger Series Phase 2 Stage 8 and its production closeout.
