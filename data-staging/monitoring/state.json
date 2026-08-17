@@ -815,6 +815,81 @@
       "fingerprint": "40f04a7f51de1377a0e704f65da6b1790c67a1972531598519fcd512793c1a0f",
       "first_seen_at": "2026-08-11T04:52:40Z",
       "last_changed_at": "2026-08-11T04:52:40Z"
+    },
+    "bridge-domain:bir_bridge_000025": {
+      "fingerprint": "healthy:core.app->core.app",
+      "first_seen_at": "2026-08-17T04:02:15Z",
+      "last_changed_at": "2026-08-17T04:02:15Z"
+    },
+    "bridge-domain:bir_bridge_000027": {
+      "fingerprint": "healthy:transit.finance->transit.finance",
+      "first_seen_at": "2026-08-17T04:02:15Z",
+      "last_changed_at": "2026-08-17T04:02:15Z"
+    },
+    "bridge-domain:bir_bridge_000028": {
+      "fingerprint": "healthy:fly.trade->fly.trade",
+      "first_seen_at": "2026-08-17T04:02:15Z",
+      "last_changed_at": "2026-08-17T04:02:15Z"
+    },
+    "bridge-domain:bir_bridge_000029": {
+      "fingerprint": "healthy:rubic.exchange->rubic.exchange",
+      "first_seen_at": "2026-08-17T04:02:15Z",
+      "last_changed_at": "2026-08-17T04:02:15Z"
+    },
+    "bridge-domain:bir_bridge_000031": {
+      "fingerprint": "healthy:taiko.xyz->taiko.xyz",
+      "first_seen_at": "2026-08-17T04:02:15Z",
+      "last_changed_at": "2026-08-17T04:02:15Z"
+    },
+    "bridge-domain:bir_bridge_000034": {
+      "fingerprint": "healthy:bridge.syscoin.org->bridge.syscoin.org",
+      "first_seen_at": "2026-08-17T04:02:15Z",
+      "last_changed_at": "2026-08-17T04:02:15Z"
+    },
+    "bridge-domain:bir_bridge_000035": {
+      "fingerprint": "healthy:tac.build->tac.build",
+      "first_seen_at": "2026-08-17T04:02:15Z",
+      "last_changed_at": "2026-08-17T04:02:15Z"
+    },
+    "incident-feed:defillama-hacks-discovery:row:6b37c036e8bb0ecc3c79c2d77e526be8140f126cd945de9040a59a8035aaae0f": {
+      "fingerprint": "8c21be1bf5f3c41ff67ccd453bdb9c29ca024b8efa9f88f7a927b1f96136769c",
+      "first_seen_at": "2026-08-17T04:02:15Z",
+      "last_changed_at": "2026-08-17T04:02:15Z"
+    },
+    "incident-feed:defillama-hacks-discovery:row:0e05077b02ed31bed6eae60f890c0a3232668f9dbf451862f2c89bc5e7756baf": {
+      "fingerprint": "56bccc17a9474fe214bd5c7561c26f5a681ef53f821d556cc63ae282fbfd890b",
+      "first_seen_at": "2026-08-17T04:02:15Z",
+      "last_changed_at": "2026-08-17T04:02:15Z"
+    },
+    "incident-feed:defillama-hacks-discovery:row:3594020d0799c76885e4232e2d0256ff043f08eb89e4a8e63abcec864a1ec206": {
+      "fingerprint": "80081e60526d389d81918c907bf3bbfd0b0b3913376f1a4474d8e792829302e9",
+      "first_seen_at": "2026-08-17T04:02:15Z",
+      "last_changed_at": "2026-08-17T04:02:15Z"
+    },
+    "incident-feed:defillama-hacks-discovery:row:35269ca532b2c947a75361546f66c437142efdf15a12e0c96f99e498db4a2d96": {
+      "fingerprint": "0707654b594408ab81eb9882426c68a8c07cd5c81fe360313d25531d771522ca",
+      "first_seen_at": "2026-08-17T04:02:15Z",
+      "last_changed_at": "2026-08-17T04:02:15Z"
+    },
+    "incident-feed:defillama-hacks-discovery:row:1f41f59f55ba3d46a2d818bec56a9d94f219f1c56e76adc301a80043c38b3d9e": {
+      "fingerprint": "d354bba3476e9d77aa3c1be5ff72ddb0b17bc929dc8734a6783cbd7fa985d4c8",
+      "first_seen_at": "2026-08-17T04:02:15Z",
+      "last_changed_at": "2026-08-17T04:02:15Z"
+    },
+    "incident-feed:defillama-hacks-discovery:row:5af1fcbdd52bfc461e1bb3b647dbae43ed996887db3c4c614dfd3f6882820a56": {
+      "fingerprint": "bee2731248578f792efd1e3f9b8a501d7b4b3eeaebdf2fe631f6aa663e3c7750",
+      "first_seen_at": "2026-08-17T04:02:15Z",
+      "last_changed_at": "2026-08-17T04:02:15Z"
+    },
+    "incident-feed:defillama-hacks-discovery:row:094c8fe29bcc7efcd946b8e34f55aba0ae4e418d93d6610ccf75e001f763cde4": {
+      "fingerprint": "f0634f8695e8ea8c6784b8517c0d72dc0f5bf9ccc4a475ba1c6b70d41ea77a05",
+      "first_seen_at": "2026-08-17T04:02:15Z",
+      "last_changed_at": "2026-08-17T04:02:15Z"
+    },
+    "incident-feed:defillama-hacks-discovery:row:eff31e49179a421137038482f39c038cc3bb49e8ef2c60e2c6b3449aced43026": {
+      "fingerprint": "553a88c7c22295aefae4f74ebdbc0bf2a36ec6a3b3fce7a1fa5106b29e7dfbf7",
+      "first_seen_at": "2026-08-17T04:02:15Z",
+      "last_changed_at": "2026-08-17T04:02:15Z"
     }
   }
 }
