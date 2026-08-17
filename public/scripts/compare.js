@@ -9,7 +9,7 @@ const incidentRightWrap = document.querySelector("#compare-incident-right");
 const bridgeLeftWrap = document.querySelector("#compare-bridge-controls");
 const bridgeRightWrap = document.querySelector("#compare-bridge-right");
 const swapButton = document.querySelector("#compare-swap");
-const status = document.querySelector("#compare-status");
+const statusEl = document.querySelector("#compare-result-count");
 const results = document.querySelector("#compare-results");
 const errorBox = document.querySelector("#compare-error");
 const body = document.querySelector("#compare-body");
@@ -134,7 +134,7 @@ function showError(message) {
     errorBox.hidden = false;
   }
   if (results) results.hidden = true;
-  if (status) status.textContent = message;
+  if (statusEl) statusEl.textContent = message;
 }
 
 function clearError() {
@@ -185,7 +185,7 @@ function renderComparison(kind, left, right) {
   if (leftData) leftData.href = left.self_url;
   if (rightData) rightData.href = right.self_url;
   if (results) results.hidden = false;
-  if (status) status.textContent = `Comparing ${leftName} and ${rightName}.`;
+  if (statusEl) statusEl.textContent = `Comparing ${leftName} and ${rightName}.`;
 }
 
 function writeUrl(kind, left, right) {
@@ -209,7 +209,7 @@ async function compareSelected({ writeState = true } = {}) {
     return;
   }
 
-  if (status) status.textContent = "Loading canonical record dossiers…";
+  if (statusEl) statusEl.textContent = "Loading canonical record dossiers…";
   if (results) results.hidden = true;
   try {
     const [left, right] = await Promise.all([
@@ -243,7 +243,7 @@ kindSelect?.addEventListener("change", () => {
   setKindVisibility(kind);
   clearError();
   if (results) results.hidden = true;
-  if (status) status.textContent = `Select two different ${kind} records.`;
+  if (statusEl) statusEl.textContent = `Select two different ${kind} records.`;
   history.replaceState(null, "", `${location.pathname}?kind=${kind}`);
 });
 
