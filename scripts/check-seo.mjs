@@ -41,9 +41,11 @@ const sitemap = fs.readFileSync("dist/sitemap.xml", "utf8");
 const robots = fs.readFileSync("dist/robots.txt", "utf8");
 assert(!sitemap.includes("pages.dev"), "pages.dev origin in sitemap");
 assert(sitemap.includes(`${origin}/`), "production origin missing from sitemap");
+assert(sitemap.includes(`<loc>${origin}/compare/</loc>`), "compare route missing from sitemap");
 assert(sitemap.includes(`<loc>${origin}/support/</loc>`), "support route missing from sitemap");
 assert(robots.includes(`Sitemap: ${origin}/sitemap.xml`), "robots sitemap URL mismatch");
+assert(fs.existsSync("dist/compare/index.html"), "compare page missing from dist");
 assert(fs.existsSync("dist/support/index.html"), "support page missing from dist");
 assert(fs.existsSync("dist/og/bir-og.svg"), "social image missing from dist");
 
-console.log(JSON.stringify({ html_pages: htmlFiles.length, ga_measurement_id: gaMeasurementId, support_in_sitemap: true, ok: true }));
+console.log(JSON.stringify({ html_pages: htmlFiles.length, ga_measurement_id: gaMeasurementId, compare_in_sitemap: true, support_in_sitemap: true, ok: true }));
