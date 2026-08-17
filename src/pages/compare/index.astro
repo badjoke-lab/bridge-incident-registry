@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { registryData } from "../../lib/data";
+import compareScript from "../../scripts/compare.js?raw";
 import "../../styles/registry.css";
 
 const incidents = [...registryData.incidents].sort((a, b) => b.incident_date.localeCompare(a.incident_date) || a.title.localeCompare(b.title));
@@ -94,5 +95,5 @@ const latestVerifiedAt = [...registryData.bridges, ...registryData.incidents]
 
   <div class="registry-zero-state" id="compare-error" hidden role="alert"></div>
 
-  <script is:inline src="/scripts/compare.js"></script>
+  <script is:inline set:html={compareScript}></script>
 </BaseLayout>
