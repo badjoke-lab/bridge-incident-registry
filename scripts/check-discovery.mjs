@@ -21,7 +21,7 @@ const sitemap = read("sitemap.xml");
 const robots = read("robots.txt");
 const headers = read("_headers");
 const paths = [
-  "/", "/bridges/", "/incidents/", "/methodology/", "/about/", "/support/",
+  "/", "/bridges/", "/incidents/", "/compare/", "/methodology/", "/about/", "/support/",
   ...canonical.data.bridges.map((record) => `/bridge/${record.slug}/`),
   ...canonical.data.incidents.map((record) => `/incident/${record.slug}/`)
 ];
