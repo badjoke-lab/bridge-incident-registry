@@ -48,6 +48,28 @@ async function checkRegistryInteractions(page, kind) {
   assert(new URL(page.url()).searchParams.has("page") === false, `${kind}: filtering did not reset page state`);
 }
 
+async function checkIncidentFacet(page, selector, parameter, dataAttribute, listValue = false) {
+  await open(page, "/incidents/");
+  const values = await page.locator(`${selector} option`).evaluateAll((options) => options.map((option) => option.value).filter(Boolean));
+  assert(values.length > 0, `${selector}: expected at least one explicit facet option`);
+  const value = values[0];
+
+  await page.locator(selector).selectOption(value);
+  await page.waitForFunction(
+    ({ parameter: key, value: expected }) => new URL(window.location.href).searchParams.get(key) === expected,
+    { parameter, value },
+  );
+
+  const visibleRows = page.locator("#incident-table-body .registry-row:not([hidden])");
+  const visibleCount = await visibleRows.count();
+  assert(visibleCount > 0, `${selector}: facet produced no visible incident rows for ${value}`);
+  const attributes = await visibleRows.evaluateAll((rows, attribute) => rows.map((row) => row.getAttribute(attribute) || ""), dataAttribute);
+  const matches = attributes.every((attributeValue) => listValue
+    ? attributeValue.split(" ").filter(Boolean).includes(value)
+    : attributeValue === value);
+  assert(matches, `${selector}: visible rows do not all match selected value ${value}`);
+}
+
 async function checkBrowser(name, browserType) {
   const browser = await browserType.launch({ headless: true });
   const context = await browser.newContext({ viewport: { width: 1365, height: 900 } });
@@ -73,6 +95,8 @@ async function checkBrowser(name, browserType) {
 
     await checkRegistryInteractions(page, "bridge");
     await checkRegistryInteractions(page, "incident");
+    await checkIncidentFacet(page, "#incident-chain", "chain", "data-chains", true);
+    await checkIncidentFacet(page, "#incident-bridge-type", "bridge_type", "data-bridge-type");
 
     await open(page, "/support/");
     const copyButtons = page.locator("button[data-copy-address]");

@@ -21,6 +21,8 @@ function matches(row, state) {
   const lossMatch = !state.loss || (state.loss === "known" ? row.dataset.lossKnown === "true" : loss >= Number(state.loss));
   return (!search || (row.dataset.search || "").includes(search))
     && (!state.type || row.dataset.type === state.type)
+    && (!state.chain || (row.dataset.chains || "").split(" ").includes(state.chain))
+    && (!state.bridge_type || row.dataset.bridgeType === state.bridge_type)
     && (!state.attack || row.dataset.attack === state.attack)
     && (!state.recovery || row.dataset.recovery === state.recovery)
     && (!state.reimbursement || row.dataset.reimbursement === state.reimbursement)
