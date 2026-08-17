@@ -20,7 +20,7 @@ The last canonical additions before Ledger Series Phase 2 were TAC Inner Bridge 
 
 ## Current quality boundary
 
-The exact repository checks on the Ledger Series Stage 4 branch report:
+The exact repository checks on the Stage 4 implementation and verifier-fix lineage report:
 
 ```text
 Primary evidence                       213 / 297
@@ -63,13 +63,17 @@ Ledger Series Phase 2 is separate from BIR's older internal phase numbering.
 ```text
 Baseline audit / schedule sync         complete — PR #284
 Lifecycle schema expansion             not required at audited boundary
-Per-record bridge/incident JSON        implementation active — PR #285
-Structured incident filters            strong existing base; delta pending
-Compare                                pending
-Stats                                  pending
-Bounded aftermath follow-up            pending near phase closeout
+Per-record bridge/incident JSON        complete — PR #285
+Stage 4 production verifier fix        complete — PR #286
+Stage 4 production equality            passed on main Release Readiness
+Structured filter delta                NEXT — Stage 5
+Compare                                pending — Stage 6
+Stats                                  pending — Stage 7
+Bounded aftermath follow-up            pending — Stage 8
 Natural-language layer                 deferred to Ledger Series Phase 10
 ```
+
+PR #286 preserved strict sitemap URL-set equality and corrected the verifier to include `/support/`, bringing its expected canonical HTML route set from 79 to the actual 80. The main-branch Release Readiness run then passed the production equality step, including the Stage 4 machine-readable record surface.
 
 The horizontal phase takes priority over routine one-by-one record growth. Maintenance continues in parallel only for monitoring, evidence health, high-severity corrections and properly reviewed new incidents.
 
@@ -92,9 +96,9 @@ Current budgets remain 16 KiB gzip max HTML, 5 KiB CSS total/max file, and 4 KiB
 
 ## Next bounded work
 
-1. complete PR #285 deterministic per-record JSON and all repository gates;
-2. production-verify the new machine-readable endpoints after merge;
-3. audit and implement only the remaining useful structured-filter facets;
+1. audit the current list/filter implementation against the Stage 5 requirement;
+2. add only missing structured facets, beginning with chain and bridge/type if confirmed absent;
+3. production-verify those public controls after merge;
 4. implement Compare;
 5. implement Stats;
 6. run one bounded reviewed post-incident follow-up pass near Ledger Series Phase 2 closeout;
