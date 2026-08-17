@@ -130,27 +130,32 @@ const breakdowns: Breakdown[] = [
   <section aria-labelledby="breakdown-heading">
     <h2 id="breakdown-heading">Outcome, vector, and chain breakdowns</h2>
     <div class="detail-two-column">
-      {breakdowns.map((group) => (
-        <article class="detail-panel">
-          <h3>{group.title}</h3>
-          <div class="registry-table-wrap">
-            <table class="registry-table">
-              <thead><tr><th scope="col">Value</th><th scope="col">Incidents</th><th scope="col">Share</th></tr></thead>
-              <tbody>{group.rows.map(([label, value]) => <tr><th scope="row">{label}</th><td>{value}</td><td>{pct(value, incidents.length)}</td></tr>)}</tbody>
-            </table>
-          </div>
-          <p class="muted">{group.note}</p>
-        </article>
-      ))}
+      {breakdowns.map((group, index) => {
+        const descriptionId = `stats-breakdown-${index + 1}-result-count`;
+        return (
+          <article class="detail-panel">
+            <h3>{group.title}</h3>
+            <p class="muted" id={descriptionId}>{group.note} {incidents.length} canonical incidents are used as the share denominator.</p>
+            <div class="registry-table-wrap">
+              <table class="registry-table" aria-describedby={descriptionId}>
+                <caption class="sr-only">{group.title} incident distribution</caption>
+                <thead><tr><th scope="col">Value</th><th scope="col">Incidents</th><th scope="col">Share</th></tr></thead>
+                <tbody>{group.rows.map(([label, value]) => <tr><th scope="row">{label}</th><td>{value}</td><td>{pct(value, incidents.length)}</td></tr>)}</tbody>
+              </table>
+            </div>
+          </article>
+        );
+      })}
     </div>
   </section>
 
   <section class="detail-panel" aria-labelledby="timeline-heading">
     <div class="kicker">Recorded lifecycle chronology</div>
     <h2 id="timeline-heading">First later recorded lifecycle event</h2>
-    <p>Days from the incident date to the earliest linked canonical event on a later date. Same-day events are excluded; this is a record-timeline measure, not a claim about the operator's first real-world response.</p>
+    <p id="stats-timeline-result-count">Days from the incident date to the earliest linked canonical event on a later date. Same-day events are excluded; this is a record-timeline measure, not a claim about the operator's first real-world response. {incidents.length} canonical incidents are used as the share denominator.</p>
     <div class="registry-table-wrap">
-      <table class="registry-table">
+      <table class="registry-table" aria-describedby="stats-timeline-result-count">
+        <caption class="sr-only">First later recorded lifecycle event timing distribution</caption>
         <thead><tr><th scope="col">Timing</th><th scope="col">Incidents</th><th scope="col">Share</th></tr></thead>
         <tbody>{[...timelineBuckets.entries()].map(([label, value]) => <tr><th scope="row">{label}</th><td>{value}</td><td>{pct(value, incidents.length)}</td></tr>)}</tbody>
       </table>
