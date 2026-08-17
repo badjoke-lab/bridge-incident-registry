@@ -9,14 +9,14 @@ const latestVerifiedAt = [...bridges, ...incidents].map((record) => record.last_
 const humanize = (value: string | null | undefined) => value
   ? value.replaceAll("_", " ").replaceAll("-", " ").replace(/\b\w/g, (character) => character.toUpperCase())
   : "Unknown";
-const countBy = <T>(values: T[], key: (value: T) => string | null | undefined) => {
+function countBy<T>(values: T[], key: (value: T) => string | null | undefined): [string, number][] {
   const counts = new Map<string, number>();
   for (const value of values) {
     const label = key(value) || "unknown";
     counts.set(label, (counts.get(label) ?? 0) + 1);
   }
   return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
-};
+}
 const pct = (part: number, total: number) => total ? `${((part / total) * 100).toFixed(1)}%` : "0.0%";
 const money = (value: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value);
 
@@ -46,7 +46,7 @@ for (const event of events) {
   eventDatesByIncident.set(event.incident_id, dates);
 }
 const dayMs = 86_400_000;
-const timelineBuckets = new Map([
+const timelineBuckets = new Map<string, number>([
   ["1 day", 0], ["2–7 days", 0], ["8–30 days", 0], ["31–90 days", 0], ["91+ days", 0], ["No later recorded event", 0]
 ]);
 for (const incident of incidents) {
@@ -72,8 +72,9 @@ const incidentsWithoutPrimary = incidents.filter((incident) => !incidentPrimaryI
 const incidentsWithUnknowns = incidents.filter((incident) => (incident.known_unknowns?.length ?? 0) > 0).length;
 const incidentsWithConflicts = incidents.filter((incident) => (incident.conflicting_claims?.length ?? 0) > 0).length;
 
-const table = (title: string, rows: [string, number][], note: string) => ({ title, rows, note });
-const breakdowns = [
+type Breakdown = { title: string; rows: [string, number][]; note: string };
+const table = (title: string, rows: [string, number][], note: string): Breakdown => ({ title, rows, note });
+const breakdowns: Breakdown[] = [
   table("Recovery status", recoveryBreakdown.map(([name, value]) => [humanize(name), value]), "Canonical incident recovery_status values."),
   table("Reimbursement status", reimbursementBreakdown.map(([name, value]) => [humanize(name), value]), "Canonical incident reimbursement_status values."),
   table("Attack vectors", attackBreakdown.map(([name, value]) => [humanize(name), value]), "Canonical attack_vector_category values."),
