@@ -50,8 +50,8 @@ Current canonical counts:
 ```text
 Bridges     36
 Incidents   38
-Events      188
-Evidence    297
+Events      190
+Evidence    299
 ```
 
 Current hard states:
