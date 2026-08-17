@@ -537,9 +537,9 @@
       "last_changed_at": "2026-08-09T09:08:15Z"
     },
     "incident-feed:defillama-hacks-discovery:row:849988caacdb98243f10fd7a7d2107c6c8e9b1638c1a73b6b204e087b0d86321": {
-      "fingerprint": "9329fe9e5b838d33ab0b8ad76e5d9189efe681cffe516b0136765302b1858432",
+      "fingerprint": "6f59cbffd1f1b18b7ca24a7d3408dde31fcb44e2a61853ee6fb79f3765669364",
       "first_seen_at": "2026-08-09T09:08:15Z",
-      "last_changed_at": "2026-08-09T09:08:15Z"
+      "last_changed_at": "2026-08-17T17:11:16Z"
     },
     "incident-feed:defillama-hacks-discovery:row:8a2615410127c2e77e837da32cea9574d26165dbe16237f04fb580c2fd0ef312": {
       "fingerprint": "0d8cd60a6acc355595da490b72e8e02ce8e2148dab846718491bf4f97e115946",
@@ -945,6 +945,41 @@
       "fingerprint": "4728fe7fc155133c2613a9031295e61b11362befa404e0cdb683e08aeacc00ae",
       "first_seen_at": "2026-08-17T16:35:23Z",
       "last_changed_at": "2026-08-17T16:35:23Z"
+    },
+    "incident-feed:defillama-hacks-discovery:row:2f537a3311d4bda1c78ddb2d145b2d77668b178679b0f91a469f10e88477b6c0": {
+      "fingerprint": "d568d8708abb4345bb808e3ff04f4f7892a915e9f4d739750c6aa175202187b5",
+      "first_seen_at": "2026-08-17T17:11:16Z",
+      "last_changed_at": "2026-08-17T17:11:16Z"
+    },
+    "incident-feed:defillama-hacks-discovery:row:0849a6c9be768a78593e4e8f7f6c3f1f03e44af122b0aad73fce75a4c3f3a518": {
+      "fingerprint": "882fef280f3f2369b50275409c79b8000180953c07ee8cf7469f7642260e422b",
+      "first_seen_at": "2026-08-17T17:11:16Z",
+      "last_changed_at": "2026-08-17T17:11:16Z"
+    },
+    "incident-feed:defillama-hacks-discovery:row:bb289334ba4a49b2dc97fbb8cd58354902d4f7cd1f490560c6fb8174c5f5ed35": {
+      "fingerprint": "6bd2c50d58f9c9f3dc640ade0bd7ea100533b85c78d98f6b0daec400a64d1c7c",
+      "first_seen_at": "2026-08-17T17:11:16Z",
+      "last_changed_at": "2026-08-17T17:11:16Z"
+    },
+    "incident-feed:defillama-hacks-discovery:row:b4ed02d2d6a569c8740c0736c906f6f16008ef4e0a34471201c00a78345f5d84": {
+      "fingerprint": "71cfe6f52489283b294dfb41712bf438fea54f2506a7be1d0b774b33388ca107",
+      "first_seen_at": "2026-08-17T17:11:16Z",
+      "last_changed_at": "2026-08-17T17:11:16Z"
+    },
+    "incident-feed:defillama-hacks-discovery:row:21d71e930a28f543288ca26ef968e5e4a40d8b471c9ab0b1b3284f9111f384f6": {
+      "fingerprint": "600d26d29fd1193bda130838a346f35a6ac60e7cc23f43600dac3100fdf5577e",
+      "first_seen_at": "2026-08-17T17:11:16Z",
+      "last_changed_at": "2026-08-17T17:11:16Z"
+    },
+    "incident-feed:defillama-hacks-discovery:row:3ba3006c6c1cc9bb7eccc57592f24351cecbc363230af85cc747e80db51e4c33": {
+      "fingerprint": "f735241cf5125760f805e1588d817d961dce3da9b9feb75cfcfcf860065fd38b",
+      "first_seen_at": "2026-08-17T17:11:16Z",
+      "last_changed_at": "2026-08-17T17:11:16Z"
+    },
+    "incident-feed:defillama-hacks-discovery:row:805e11858376afa51a45bebf06ede22a08ce1fa1ef7f74dc393917c27b326c4f": {
+      "fingerprint": "d8d50bf620ce983b2b73bb95198b40e041d83a5fde6a023038cf8137aec7466c",
+      "first_seen_at": "2026-08-17T17:11:16Z",
+      "last_changed_at": "2026-08-17T17:11:16Z"
     }
   }
 }
