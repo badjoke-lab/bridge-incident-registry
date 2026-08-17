@@ -1,0 +1,99 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { registryData } from "../../lib/data";
+import compareScript from "../../scripts/compare.js?raw";
+import "../../styles/registry.css";
+
+const incidents = [...registryData.incidents].sort((a, b) => b.incident_date.localeCompare(a.incident_date) || a.title.localeCompare(b.title));
+const bridges = [...registryData.bridges].sort((a, b) => a.canonical_name.localeCompare(b.canonical_name));
+const latestVerifiedAt = [...registryData.bridges, ...registryData.incidents]
+  .map((record) => record.last_verified_at)
+  .filter(Boolean)
+  .sort()
+  .at(-1);
+---
+<BaseLayout
+  title="Compare - Bridge Incident Registry"
+  description="Compare two bridge incidents or two bridge entities using canonical lifecycle, recovery, reimbursement, restart, outcome, and evidence fields."
+  pageType="WebPage"
+  dateModified={latestVerifiedAt}
+>
+  <section class="hero">
+    <div class="kicker">Canonical comparison</div>
+    <h1>Compare</h1>
+    <p class="lede">Compare two reviewed records side by side. Values come from BIR canonical data and record dossiers; unknown values remain unknown.</p>
+  </section>
+
+  <form class="registry-toolbar" id="compare-controls" aria-label="Record comparison controls">
+    <div class="registry-field">
+      <label for="compare-kind">Record type</label>
+      <select id="compare-kind" name="kind">
+        <option value="incident">Incidents</option>
+        <option value="bridge">Bridges</option>
+      </select>
+    </div>
+
+    <div id="compare-incident-controls" class="registry-field">
+      <label for="compare-incident-left">Left incident</label>
+      <select id="compare-incident-left">
+        <option value="">Select an incident</option>
+        {incidents.map((incident) => <option value={incident.slug}>{incident.incident_date} — {incident.title}</option>)}
+      </select>
+    </div>
+    <div id="compare-incident-right" class="registry-field">
+      <label for="compare-incident-right-select">Right incident</label>
+      <select id="compare-incident-right-select">
+        <option value="">Select an incident</option>
+        {incidents.map((incident) => <option value={incident.slug}>{incident.incident_date} — {incident.title}</option>)}
+      </select>
+    </div>
+
+    <div id="compare-bridge-controls" class="registry-field" hidden>
+      <label for="compare-bridge-left">Left bridge</label>
+      <select id="compare-bridge-left">
+        <option value="">Select a bridge</option>
+        {bridges.map((bridge) => <option value={bridge.slug}>{bridge.canonical_name}</option>)}
+      </select>
+    </div>
+    <div id="compare-bridge-right" class="registry-field" hidden>
+      <label for="compare-bridge-right-select">Right bridge</label>
+      <select id="compare-bridge-right-select">
+        <option value="">Select a bridge</option>
+        {bridges.map((bridge) => <option value={bridge.slug}>{bridge.canonical_name}</option>)}
+      </select>
+    </div>
+
+    <button type="submit">Compare</button>
+    <button class="registry-reset" id="compare-swap" type="button">Swap</button>
+  </form>
+
+  <div class="registry-meta" aria-live="polite">
+    <span id="compare-result-count">Select two different records.</span>
+    <span>Canonical data only · no generated ranking or safety score</span>
+  </div>
+
+  <section id="compare-results" hidden aria-labelledby="compare-results-title">
+    <h2 id="compare-results-title">Comparison</h2>
+    <div class="registry-table-wrap">
+      <table class="registry-table" aria-describedby="compare-result-count">
+        <caption class="sr-only">Side-by-side canonical record comparison</caption>
+        <thead>
+          <tr>
+            <th scope="col">Field</th>
+            <th scope="col" id="compare-left-heading">Left</th>
+            <th scope="col" id="compare-right-heading">Right</th>
+          </tr>
+        </thead>
+        <tbody id="compare-body"></tbody>
+      </table>
+    </div>
+    <div class="registry-meta">
+      <span><a id="compare-left-page" href="#">Open left record</a> · <a id="compare-left-data" href="#">Left JSON</a></span>
+      <span><a id="compare-right-page" href="#">Open right record</a> · <a id="compare-right-data" href="#">Right JSON</a></span>
+    </div>
+  </section>
+
+  <div class="registry-zero-state" id="compare-error" hidden role="alert"></div>
+
+  <script is:inline set:html={compareScript}></script>
+</BaseLayout>

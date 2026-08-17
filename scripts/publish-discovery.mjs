@@ -26,7 +26,7 @@ function absolute(pathname) {
   return new URL(pathname.replace(/^\//, ""), `${origin}/`).toString();
 }
 
-const staticPaths = ["/", "/bridges/", "/incidents/", "/methodology/", "/about/", "/support/"];
+const staticPaths = ["/", "/bridges/", "/incidents/", "/compare/", "/methodology/", "/about/", "/support/"];
 const urls = [
   ...staticPaths.map((pathname) => ({ pathname, lastmod: canonical.latestVerifiedAt })),
   ...canonical.data.bridges.map((record) => ({ pathname: `/bridge/${record.slug}/`, lastmod: record.last_verified_at })),
