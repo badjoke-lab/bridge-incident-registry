@@ -1,7 +1,7 @@
 # BIR Live Recovery Checkpoint
 
-Status: active maintenance  
-Updated: 2026-08-11
+Status: active maintenance — Ledger Series Phase 2 complete  
+Updated: 2026-08-18
 
 GitHub state and canonical JSON are authoritative. Completed merge SHAs and run IDs below are checkpoints, not live branch pointers.
 
@@ -12,100 +12,73 @@ Bridges     36
 Incidents   38
 Events      190
 Evidence    299
+Canonical HTML routes   82
 ```
 
 ## Immediate recovery point
 
-The latest completed canonical maintenance item is the June 2026 Syscoin UTXO–NEVM Bridge exploit.
+Resume from current `main` after the Ledger Series Phase 2 closeout. The last production-proven implementation revision before the docs-only closeout is:
 
 ```text
-Review PR                         #265
-Canonical PR                      #266
-Canonical merge                   679f40c55677ad9d89f508200e47004f40464922
-V1 Release Readiness main run     31458996854
-Release-readiness job             93678566693
-Production equality               success
-Built HTML pages                  76
-Canonical HTML routes             75
-Legacy redirects                  74
+Stage 8 canonical PR                 #294
+Publication checkpoint               #295
+Production retrigger PR              #296
+Verified main revision               6fe188ea4979d38c32a3a9a4558537c87b733610
+V1 Release Readiness main run        32041737878
+Release-readiness job                95422149652
+Production equality                  success
+Bridge dossiers verified             36
+Incident dossiers verified           38
 ```
 
-Resume from current `main` after that merge. Do not use historical branch heads or the temporary application machinery from PR #266; the temporary generator and write-enabled workflow were removed before final review.
+Do not restart from the historical Syscoin, Allbridge, XRPL-TX, or pre-Stage-8 branch heads/counts. Their merge SHAs remain useful history only.
 
-## Latest completed checkpoints
+## Ledger Series Phase 2 checkpoint
 
 ```text
-PR #100      Source-quality baseline and no-regression gate
-PR #103–107  LI.FI and Holograph source-quality remediation
-PR #108–116  Event Tier 1 remediation and production verification
-PR #118–198  Archive Capture Batches 1–18 and production checkpoints
-PR #199–204  Deferred Archive Retries 01–02 and production checkpoints
-PR #205–206  Deferred Archive Retries 03–04 review, no approvals
-PR #207–214  Event Primary Remediation 01–02 and production verification
-PR #217–250  Phase 5 monitoring/candidate/public-site stack
-PR #251–258  v1 hardening and technical release closure
-PR #260      Remove stale Boltz canonical mutation helper
-PR #261–262  Review/apply Allbridge Core July 2026 incident
-PR #263–264  Allbridge production checkpoint and healthy site baseline
-PR #265      Review Syscoin UTXO–NEVM Bridge June 2026 exploit
-PR #266      Apply and production-verify Syscoin 2026 incident
+PR #284      Baseline audit and schedule synchronization
+PR #285–286  Per-record JSON plus strict production verifier repair
+PR #288      Bounded filter delta
+PR #290      Canonical Compare
+PR #292      Canonical-derived Stats
+PR #294      Stage 8 bounded lifecycle fixes
+PR #295      Production-publication blocker checkpoint
+PR #296      Git-integrated production retrigger and readiness sync
 ```
+
+Completion evidence: `docs/audits/ledger-series-phase2-completion-2026-08-18.md`.
+
+BIR Ledger Series Phase 2 is complete. There is no Ledger Series Stage 9. The horizontal roadmap now leaves BIR in steady-state maintenance; `docs/ai-era-registry-spec.md` names SOG as the next cross-series series.
 
 ## Current quality boundary
 
 ```text
-Incident source-count mismatches      0
-Event source-count mismatches         0
-Primary evidence                    210 / 293
-Tier 1 evidence                     227 / 293
-Official-domain evidence            132 / 293
-Incidents without primary             1 / 36
-Incidents without Tier 1              1 / 36
-Events without primary               11 / 185
-Events without Tier 1                 6 / 185
-Evidence with archived_url          130 / 293
-Terminal unarchived unique URLs      15
-Risky-host unarchived unique URLs    16
-Unknown URL status                    0
-High-severity npm audit findings      0
+Incident source-count mismatches       0
+Event source-count mismatches          0
+Primary evidence                     215 / 299
+Tier 1 evidence                      232 / 299
+Evidence with archived_url           130 / 299
+Incidents without primary              1 / 38
+Incidents without Tier 1               1 / 38
+Events without primary                11 / 190
+Events without Tier 1                  6 / 190
+Terminal unarchived unique URLs       15
+Risky-host unarchived unique URLs     16
+Unknown URL status                     0
+Full-corpus blocking errors            0
+Full-corpus warning categories        {}
+High-severity npm audit findings       0
 ```
 
-The Syscoin application did not increase an accepted primary/Tier 1 gap or risky-host ceiling. It added one first-party Tier 1 postmortem and one Tier 2 security-firm report.
+Stage 8 did not widen an accepted primary/Tier 1 gap or archive-risk ceiling. The two targeted lifecycle warnings are resolved using reviewed first-party evidence.
 
-## Syscoin 2026 canonical boundary
+## Monitoring recovery point
 
-```text
-Bridge                       bir_bridge_000034
-Incident                     bir_inc_000036
-Event                        bir_ev_000185
-Evidence                     bir_src_000292–bir_src_000293
-Date                         2026-06-07
-Unauthorized release         5 billion SYS
-Secondary valuation          about $10 million
-Recovery                     full_recovery
-Reimbursement                not_applicable
-Restart                      paused
-Outcome                      paused_long_term
-Attack category              message_verification_failure
-```
+Monitoring remains review-only. It fingerprints canonical files, rejects canonical mutation/unknown URL status/broken references, writes only to approved staging paths, and suppresses unchanged signals.
 
-The first-party root-cause authority is Syscoin's technical postmortem. The 5 billion SYS quantity is first-party; the approximately $10 million figure is a secondary contemporaneous valuation from Halborn. The full 5 billion SYS was returned and burned. Do not infer bridge reopening from financial recovery: the latest explicit reviewed first-party operational state remains paused.
+Persisted monitoring-state baselines can predate the latest canonical additions. They are historical operational checkpoints and must never override current canonical/public truth `36 / 38 / 190 / 299` or the successful main production verifier above.
 
-Normalization keys `syscoin-utxo`, `syscoin-nevm`, and `sys` were added only to support the approved canonical values.
-
-## Allbridge and Boltz boundaries
-
-Allbridge remains `bir_inc_000035` under `bir_bridge_000012`, production-verified in PR #262. Its final attacker-fund recovery and LP compensation remain unknown.
-
-Boltz Issue #171 remains `monitoring signal / needs evidence`. PR #260 removed the obsolete canonical apply helper. Do not recreate that proposal unless new evidence establishes a discrete supported incident.
-
-## Phase 5 monitoring recovery point
-
-Monitoring is review-only. It fingerprints canonical files, rejects canonical mutation/unknown URL status/broken references, writes only to approved staging paths, and suppresses unchanged signals.
-
-The persisted monitoring state includes historical baselines established before later canonical additions. The Allbridge-era Public Site Health change was accepted by PR #264 and then proved silent on repeat. Current canonical/public truth is `34 / 36 / 185 / 293`, proven independently by main release-readiness run `31458996854`.
-
-Repository Actions settings still disallow `GITHUB_TOKEN` PR creation. On that exact platform error the monitoring workflow may retain an already-validated review branch; all other PR-creation failures remain fatal. Connected GitHub access can open the review PR when needed.
+Repository Actions settings may still constrain `GITHUB_TOKEN` PR creation. When a monitoring workflow retains an already-validated review branch because of that exact platform limitation, use connected GitHub access to open the review PR; all canonical changes remain human-reviewed and fail-closed.
 
 ## Permanent guards
 
@@ -129,24 +102,14 @@ post-merge production equality
 
 Current performance ceilings remain 16 KiB gzip max HTML, 5 KiB CSS total/max file, 4 KiB JS total, and 2 KiB max JS file. Astro remains `^7.2.0`.
 
-## Release proof history
-
-Original v1 technical closure: PR #258, merge `d9f545803104bffd829d93270965f53d9f3d1a45`, run `31367052981`, job `93387599332`.
-
-Allbridge post-closure proof: merge `d7cf47f2373c9c0b94b78b93807fc6d0239c2d98`, run `31393382470`, job `93470262367`.
-
-Current Syscoin post-closure proof: merge `679f40c55677ad9d89f508200e47004f40464922`, run `31458996854`, job `93678566693`, production equality success on the first availability attempt.
-
-No checkpoint creates or implies a semantic-version tag or GitHub Release.
-
 ## Cloudflare Pages boundary
 
-Production branch is `main`, production deployments are enabled, and preview deployment remains `none`. Canonical/public output changes require post-merge production equality; monitoring-only state changes do not.
+Production branch is `main`. Canonical/public output changes require post-merge production equality. The Stage 8 publication blocker was resolved by PR #296; the successful verifier observed the 190/299 publication on attempt 1. Do not weaken production equality to work around future deployment lag.
 
 ## Restart actions
 
-1. rerun BIR Monitoring and Public Site Health after the Syscoin canonical addition;
-2. inspect any review-only state change and merge only healthy bounded monitoring data;
-3. prove silent repeat after any accepted monitoring-state seed;
-4. continue first-party-backed canonical expansion with a fresh branch per approved batch;
-5. preserve source-quality ceilings and all release gates; do not weaken semantics to improve counts.
+1. read current `main`, `docs/operations/current-position.md`, `docs/operations/current-schedule.md`, and the AI-era authority before making changes;
+2. continue BIR only as reviewed steady-state maintenance unless a newer authority explicitly opens a new bounded phase;
+3. inspect monitoring/candidate changes as review-only and preserve silent-repeat behavior;
+4. preserve source-quality ceilings, canonical semantics, and every permanent release gate;
+5. for cross-series continuation, audit SOG's own live repository/status/authority before implementation rather than transplanting BIR assumptions.

@@ -1,50 +1,42 @@
 # Current position
 
-Status: active maintenance + Ledger Series Phase 2 horizontal strengthening  
-Updated: 2026-08-17
+Status: active maintenance — Ledger Series Phase 2 complete  
+Updated: 2026-08-18
 
 This file is the compact restart pointer. Current `main`, canonical JSON, GitHub Actions, `docs/runbooks/recovery-checkpoint.md`, `docs/runbooks/current-status.md`, `docs/runbooks/development-roadmap.md`, and the AI-era authority documents are authoritative.
 
 ## Canonical and production baseline
 
-The current canonical baseline is:
-
 ```text
 Bridges     36
 Incidents   38
-Events      188
-Evidence    297
+Events      190
+Evidence    299
 ```
 
-The last canonical additions before Ledger Series Phase 2 were TAC Inner Bridge and XRPL-TX Bridge. XRPL-TX was applied in PR #275 and production-verified in PR #276. The older `34 / 36 / 185 / 293` Syscoin checkpoint is historical and must not be treated as current truth.
+Main V1 Release Readiness run `32041737878` at revision `6fe188ea4979d38c32a3a9a4558537c87b733610` passed production registry equality for 82 canonical HTML routes and verified all 36 bridge plus 38 incident canonical-derived dossiers. Production canonical content was available on verifier attempt 1.
 
 ## Current quality boundary
 
-The exact repository checks on the current Stage 7 lineage report:
-
 ```text
-Primary evidence                       213 / 297
-Tier 1 evidence                        230 / 297
-Archived evidence                      130 / 297
+Primary evidence                       215 / 299
+Tier 1 evidence                        232 / 299
+Archived evidence                      130 / 299
 Incidents without primary                1 / 38
 Incidents without Tier 1                 1 / 38
-Events without primary                  11 / 188
-Events without Tier 1                     6 / 188
+Events without primary                  11 / 190
+Events without Tier 1                     6 / 190
 Terminal unarchived unique URLs          15
 Risky-host unarchived unique URLs        16
 Unknown URL status                        0
-Source-count mismatches                   0
-High-severity npm audit findings          0
+Incident source-count mismatches          0
+Event source-count mismatches              0
+Full-corpus blocking errors                0
+Full-corpus warning categories            {}
+High-severity npm audit findings           0
 ```
 
-Current full-corpus warnings are explicit and have now been reviewed for Stage 8:
-
-```text
-bir_inc_000015  completed reimbursement state without reimbursement_completed event
-bir_inc_000035  reopened state without bridge_reopened event
-```
-
-The Stage 8 audit found that both are supportable from already-canonical first-party evidence. They are therefore bounded canonical-fix targets rather than unresolved research signals.
+The former Stage 8 warnings for `bir_inc_000015` and `bir_inc_000035` are no longer present. Their discrete lifecycle events were added in PR #294 using reviewed first-party support without widening source-quality limits.
 
 ## Existing BIR roadmap state
 
@@ -53,28 +45,26 @@ The Stage 8 audit found that both are supportable from already-canonical first-p
 - Internal Phase 5 — monitoring and candidate collection: steady-state live
 - v1 hardening and technical release closure: complete
 - ordinary reviewed registry/candidate expansion: active maintenance
+- Ledger Series Phase 2 horizontal strengthening: **complete**
 
 Monitoring remains review-only and must never auto-write canonical records.
 
 ## Ledger Series horizontal state
 
-Ledger Series Phase 2 is separate from BIR's older internal phase numbering.
-
 ```text
 Baseline audit / schedule sync         complete — PR #284
 Lifecycle schema expansion             not required at audited boundary
-Per-record bridge/incident JSON        complete — PR #285
-Stage 4 verifier + production          complete — PR #286 + main green
-Structured filter delta                complete — PR #288 + main production green
-Compare                                complete — PR #290 + main production green
-Stats                                  complete — PR #292 + main production green
-Bounded aftermath follow-up            ACTIVE — Stage 8 review complete, canonical fix next
+Per-record bridge/incident JSON        complete — PRs #285–#286
+Structured filter delta                complete — PR #288
+Compare                                complete — PR #290
+Stats                                  complete — PR #292
+Bounded aftermath follow-up            complete — PR #294
+Production publication recovery        complete — PRs #295–#296 + main run 32041737878
+Phase 2 completion audit               complete — docs closeout
 Natural-language layer                 deferred to Ledger Series Phase 10
 ```
 
-Stage 7 added deterministic `/stats/` from canonical data and passed the permanent release gates plus post-merge production equality for 82 canonical HTML routes. Stage 8 is intentionally limited to two lifecycle-event repairs already surfaced by the full-corpus audit; unrelated incident growth is out of scope for this horizontal closeout batch.
-
-The horizontal phase takes priority over routine one-by-one record growth. Maintenance continues in parallel only for monitoring, evidence health, high-severity corrections and properly reviewed new incidents.
+Completion evidence is `docs/audits/ledger-series-phase2-completion-2026-08-18.md`.
 
 ## Permanent release gates
 
@@ -93,11 +83,8 @@ production registry equality after main merge
 
 Current budgets remain 16 KiB gzip max HTML, 5 KiB CSS total/max file, and 4 KiB JS total / 2 KiB max JS file. Astro remains `^7.2.0`.
 
-## Next bounded work
+## Current bounded work
 
-1. add one discrete `reimbursement_completed` event for `bir_inc_000015`, backed by the existing LI.FI first-party postmortem evidence;
-2. add one discrete `bridge_reopened` event for `bir_inc_000035`, backed by the existing Allbridge first-party relaunch statement;
-3. add only the minimum event-scoped evidence records required to preserve exact event source-count semantics;
-4. run all permanent release gates and confirm both lifecycle warnings are gone without widening source-quality or archive-risk ceilings;
-5. merge and production-verify the canonical/public result;
-6. synchronize the Ledger Series Phase 2 completion audit and close the BIR horizontal phase before moving the Series roadmap to SOG.
+BIR is now steady-state maintenance only: reviewed incident/evidence additions, monitoring, evidence health, and high-severity corrections under the permanent gates above. Do not invent a Ledger Series Stage 9.
+
+For the cross-series roadmap, `docs/ai-era-registry-spec.md` names **SOG** as the next series after the completed BIR pilot. Before any SOG implementation, read that repository's live main/open PR/Actions/current authority and establish its own bounded baseline rather than carrying BIR assumptions forward.
