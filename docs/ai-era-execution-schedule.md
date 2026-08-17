@@ -10,16 +10,16 @@ Status: Ledger Series Phase 2 active
 3. **No schema expansion currently required** — Existing incident/event/evidence fields can represent the reviewed lifecycle facts needed for this phase. Add schema only if a later reviewed fact cannot be represented safely.
 4. **Complete — Stage 4** — Deterministic per-record JSON is integrated with the existing machine-readable public layer. PR #285 added canonical-derived `/data/bridge/{slug}.json` and `/data/incident/{slug}.json` dossiers plus discovery/manifest integration. PR #286 fixed the production verifier's missing `/support/` sitemap expectation without relaxing strict equality. Main Release Readiness then passed production equality for the 80 canonical HTML routes and the record-level JSON surface.
 5. **Complete — Stage 5** — PR #288 audited the existing list controls and added only the two confirmed incident-filter gaps: explicit Affected chain and Bridge type. Bridge list Type/Primary chain and all existing incident type/attack/recovery/reimbursement/restart/outcome/resolution/date/loss controls were retained without duplication. Chromium, Firefox and WebKit exercised the new facets, and the post-merge main Release Readiness production equality step passed.
-6. **NEXT — Stage 6** — Implement incident/bridge Compare focused on aftermath and outcomes. Comparisons must be deterministic and canonical-derived, preserve unknown values, keep recovery/reimbursement/restart distinct, and expose evidence-backed differences rather than generated conclusions.
-7. **Unimplemented — Stage 7** — Implement Stats for loss/recovery/reimbursement, attack vectors, chain distribution, response timelines and data quality.
-8. **Later in Phase 2 — Stage 8** — Execute a bounded reviewed post-incident follow-up batch after deterministic query/Compare/Stats surfaces exist. Earlier aftermath enrichment remains valid historical work; routine maintenance is not a blocker for Stages 6–7.
+6. **Complete — Stage 6** — PR #290 added deterministic canonical-derived `/compare/` modes for incident-vs-incident and bridge-vs-bridge comparison. Compare preserves unknown values and recovery/reimbursement/restart/outcome boundaries, uses reproducible URL state, verifies canonical dossier identity, and adds no generated ranking or safety conclusion. Exact-head performance, accessibility, dist consistency, Chromium/Firefox/WebKit checks and the post-merge main production registry equality gate passed for the 81 canonical HTML routes.
+7. **NEXT — Stage 7** — Implement deterministic Stats for loss/recovery/reimbursement, attack vectors, chain distribution, response timelines and data quality from canonical records without generated rankings or unsupported inference.
+8. **Later in Phase 2 — Stage 8** — Execute a bounded reviewed post-incident follow-up batch after deterministic query/Compare/Stats surfaces exist. Earlier aftermath enrichment remains valid historical work; routine maintenance is not a blocker for Stage 7.
 9. **Deferred to Ledger Series Phase 10** — Natural-language-to-filter translation is not a BIR Phase 2 closure requirement and may never bypass canonical filters or evidence.
 
 ## Gate
 Spec -> implementation PR -> validation/CI green -> merge -> production verification where applicable -> docs/status sync.
 
 ## Phase completion boundary
-BIR Ledger Series Phase 2 is complete only when Stages 6–8 are completed or explicitly closed by an audited no-op decision, production verification has passed for public changes, and this schedule plus a completion audit are synchronized on `main`.
+BIR Ledger Series Phase 2 is complete only when Stages 7–8 are completed or explicitly closed by an audited no-op decision, production verification has passed for public changes, and this schedule plus a completion audit are synchronized on `main`.
 
 ## Mandatory continuation rule
 Future BIR work must read this schedule and `ai-era-registry-spec.md` together with the relevant existing canonical, operations and machine-readable specifications. Routine monitoring/candidate work remains the vertical maintenance track and must not silently replace the horizontal Ledger Series phase.

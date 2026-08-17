@@ -20,7 +20,7 @@ The last canonical additions before Ledger Series Phase 2 were TAC Inner Bridge 
 
 ## Current quality boundary
 
-The exact repository checks on the current Stage 5 lineage report:
+The exact repository checks on the current Stage 6 lineage report:
 
 ```text
 Primary evidence                       213 / 297
@@ -66,13 +66,13 @@ Lifecycle schema expansion             not required at audited boundary
 Per-record bridge/incident JSON        complete — PR #285
 Stage 4 verifier + production          complete — PR #286 + main green
 Structured filter delta                complete — PR #288 + main production green
-Compare                                NEXT — Stage 6
-Stats                                  pending — Stage 7
+Compare                                complete — PR #290 + main production green
+Stats                                  NEXT — Stage 7
 Bounded aftermath follow-up            pending — Stage 8
 Natural-language layer                 deferred to Ledger Series Phase 10
 ```
 
-Stage 5 retained all pre-existing explicit controls and added only the two audited incident gaps: Affected chain and Bridge type. The new facets use canonical normalized values, preserve URL query state, passed exact-head Chromium/Firefox/WebKit interaction tests, and passed the post-merge main production equality gate.
+Stage 6 added a canonical `/compare/` surface for deterministic incident-vs-incident and bridge-vs-bridge comparison. It preserves unknown values, keeps recovery/reimbursement/restart/current-outcome semantics distinct, uses reproducible URL state, validates canonical dossier identity, and passed exact-head performance/accessibility/dist checks plus Chromium/Firefox/WebKit interaction coverage. The first post-merge production check raced the Git-integrated deployment and saw `/compare/` as 404; the rerun passed production registry equality once the deployment was live.
 
 The horizontal phase takes priority over routine one-by-one record growth. Maintenance continues in parallel only for monitoring, evidence health, high-severity corrections and properly reviewed new incidents.
 
@@ -95,9 +95,9 @@ Current budgets remain 16 KiB gzip max HTML, 5 KiB CSS total/max file, and 4 KiB
 
 ## Next bounded work
 
-1. implement deterministic incident/bridge Compare focused on aftermath and outcomes;
-2. make Compare state shareable/reproducible in the URL and preserve unknown values rather than inferring answers;
-3. validate Compare interactions across Chromium/Firefox/WebKit and production-verify after merge;
-4. implement Stats;
+1. audit the existing canonical fields and public surfaces against the Stage 7 Stats requirement;
+2. implement deterministic Stats for loss/recovery/reimbursement, attack vectors, chain distribution, response timelines and data quality without inferred rankings or unsupported totals;
+3. integrate Stats into navigation, sitemap/discovery, SEO, dist consistency, accessibility, performance and production verification route sets;
+4. validate the Stats surface across the release gates and production-verify after merge;
 5. run one bounded reviewed post-incident follow-up pass near Ledger Series Phase 2 closeout;
 6. synchronize the AI-era schedule and completion audit before moving the Series roadmap to SOG.
