@@ -1,13 +1,19 @@
 ---
 import { attackVectorCategories, currentOutcomes, incidentTypes, recoveryStatuses, reimbursementStatuses, restartStatuses } from "../lib/enums";
 import { formatLabel } from "../lib/format";
+import { registryData } from "../lib/data";
+import { getChainLabel } from "../lib/reference";
 
 interface Props { disabled?: boolean; }
 const { disabled = false } = Astro.props;
+const chainOptions = Array.from(new Set(registryData.incidents.flatMap((incident) => incident.affected_chains ?? []))).sort();
+const bridgeTypeOptions = Array.from(new Set(registryData.bridges.map((bridge) => bridge.type))).sort();
 ---
 <form class="registry-toolbar" id="incident-filters" aria-label="Incident registry filters">
   <div class="registry-field registry-search-field"><label for="incident-search">Search</label><input id="incident-search" name="search" type="search" placeholder="Incident, bridge, chain, asset, or attack category" autocomplete="off" disabled={disabled} /></div>
   <div class="registry-field"><label for="incident-type">Type</label><select id="incident-type" name="type" disabled={disabled}><option value="">All types</option>{incidentTypes.map((type) => <option value={type}>{formatLabel(type)}</option>)}</select></div>
+  <div class="registry-field"><label for="incident-chain">Affected chain</label><select id="incident-chain" name="chain" disabled={disabled}><option value="">All chains</option>{chainOptions.map((chain) => <option value={chain}>{getChainLabel(chain)}</option>)}</select></div>
+  <div class="registry-field"><label for="incident-bridge-type">Bridge type</label><select id="incident-bridge-type" name="bridge_type" disabled={disabled}><option value="">All bridge types</option>{bridgeTypeOptions.map((type) => <option value={type}>{formatLabel(type)}</option>)}</select></div>
   <div class="registry-field"><label for="incident-attack">Attack category</label><select id="incident-attack" name="attack" disabled={disabled}><option value="">All attack categories</option>{attackVectorCategories.map((category) => <option value={category}>{formatLabel(category)}</option>)}</select></div>
   <div class="registry-field"><label for="incident-recovery">Recovery</label><select id="incident-recovery" name="recovery" disabled={disabled}><option value="">All recovery states</option>{recoveryStatuses.map((status) => <option value={status}>{formatLabel(status)}</option>)}</select></div>
   <div class="registry-field"><label for="incident-reimbursement">Reimbursement</label><select id="incident-reimbursement" name="reimbursement" disabled={disabled}><option value="">All reimbursement states</option>{reimbursementStatuses.map((status) => <option value={status}>{formatLabel(status)}</option>)}</select></div>
