@@ -1,0 +1,165 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { registryData } from "../../lib/data";
+import "../../styles/registry.css";
+
+const { bridges, incidents, events, evidence } = registryData;
+const latestVerifiedAt = [...bridges, ...incidents].map((record) => record.last_verified_at).filter(Boolean).sort().at(-1);
+
+const humanize = (value: string | null | undefined) => value
+  ? value.replaceAll("_", " ").replaceAll("-", " ").replace(/\b\w/g, (character) => character.toUpperCase())
+  : "Unknown";
+const countBy = <T>(values: T[], key: (value: T) => string | null | undefined) => {
+  const counts = new Map<string, number>();
+  for (const value of values) {
+    const label = key(value) || "unknown";
+    counts.set(label, (counts.get(label) ?? 0) + 1);
+  }
+  return [...counts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+};
+const pct = (part: number, total: number) => total ? `${((part / total) * 100).toFixed(1)}%` : "0.0%";
+const money = (value: number) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value);
+
+const numericLossIncidents = incidents.filter((incident) => typeof incident.reported_loss_usd === "number" && Number.isFinite(incident.reported_loss_usd));
+const recordedLossTotal = numericLossIncidents.reduce((sum, incident) => sum + (incident.reported_loss_usd ?? 0), 0);
+const majorIncidents = incidents.filter((incident) => incident.is_major_incident === true).length;
+const unresolvedIncidents = incidents.filter((incident) => incident.is_unresolved === true).length;
+const reimbursementHistory = incidents.filter((incident) => incident.reimbursement_status && incident.reimbursement_status !== "unknown" && incident.reimbursement_status !== "none").length;
+
+const recoveryBreakdown = countBy(incidents, (incident) => incident.recovery_status);
+const reimbursementBreakdown = countBy(incidents, (incident) => incident.reimbursement_status);
+const attackBreakdown = countBy(incidents, (incident) => incident.attack_vector_category);
+
+const chainCounts = new Map<string, number>();
+for (const incident of incidents) {
+  const chains = [...new Set(incident.affected_chains ?? [])];
+  if (chains.length === 0) chainCounts.set("unknown", (chainCounts.get("unknown") ?? 0) + 1);
+  for (const chain of chains) chainCounts.set(chain, (chainCounts.get(chain) ?? 0) + 1);
+}
+const chainBreakdown = [...chainCounts.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+
+const eventDatesByIncident = new Map<string, string[]>();
+for (const event of events) {
+  if (!event.incident_id) continue;
+  const dates = eventDatesByIncident.get(event.incident_id) ?? [];
+  dates.push(event.event_date);
+  eventDatesByIncident.set(event.incident_id, dates);
+}
+const dayMs = 86_400_000;
+const timelineBuckets = new Map([
+  ["1 day", 0], ["2–7 days", 0], ["8–30 days", 0], ["31–90 days", 0], ["91+ days", 0], ["No later recorded event", 0]
+]);
+for (const incident of incidents) {
+  const incidentTime = Date.parse(`${incident.incident_date}T00:00:00Z`);
+  const later = (eventDatesByIncident.get(incident.id) ?? [])
+    .map((date) => Date.parse(`${date}T00:00:00Z`))
+    .filter((time) => Number.isFinite(time) && time > incidentTime)
+    .sort((a, b) => a - b);
+  if (!later.length) {
+    timelineBuckets.set("No later recorded event", (timelineBuckets.get("No later recorded event") ?? 0) + 1);
+    continue;
+  }
+  const days = Math.max(1, Math.round((later[0] - incidentTime) / dayMs));
+  const bucket = days === 1 ? "1 day" : days <= 7 ? "2–7 days" : days <= 30 ? "8–30 days" : days <= 90 ? "31–90 days" : "91+ days";
+  timelineBuckets.set(bucket, (timelineBuckets.get(bucket) ?? 0) + 1);
+}
+
+const primaryEvidence = evidence.filter((source) => source.is_primary === true).length;
+const tier1Evidence = evidence.filter((source) => source.source_tier === "tier_1").length;
+const archivedEvidence = evidence.filter((source) => Boolean(source.archived_url)).length;
+const incidentPrimaryIds = new Set(evidence.filter((source) => source.incident_id && source.is_primary === true).map((source) => source.incident_id));
+const incidentsWithoutPrimary = incidents.filter((incident) => !incidentPrimaryIds.has(incident.id)).length;
+const incidentsWithUnknowns = incidents.filter((incident) => (incident.known_unknowns?.length ?? 0) > 0).length;
+const incidentsWithConflicts = incidents.filter((incident) => (incident.conflicting_claims?.length ?? 0) > 0).length;
+
+const table = (title: string, rows: [string, number][], note: string) => ({ title, rows, note });
+const breakdowns = [
+  table("Recovery status", recoveryBreakdown.map(([name, value]) => [humanize(name), value]), "Canonical incident recovery_status values."),
+  table("Reimbursement status", reimbursementBreakdown.map(([name, value]) => [humanize(name), value]), "Canonical incident reimbursement_status values."),
+  table("Attack vectors", attackBreakdown.map(([name, value]) => [humanize(name), value]), "Canonical attack_vector_category values."),
+  table("Affected chains", chainBreakdown.map(([name, value]) => [humanize(name), value]), "Incident appearances by affected chain; one incident may count toward multiple chains.")
+];
+---
+<BaseLayout
+  title="Stats - Bridge Incident Registry"
+  description="Deterministic statistics from Bridge Incident Registry canonical incident, lifecycle, recovery, reimbursement, chain, and evidence records."
+  pageType="CollectionPage"
+  dateModified={latestVerifiedAt}
+>
+  <section class="hero">
+    <div class="kicker">Canonical registry statistics</div>
+    <h1>Stats</h1>
+    <p class="lede">A deterministic snapshot of BIR canonical records. These figures describe the registry and its evidence coverage; they are not bridge safety rankings or market-wide estimates.</p>
+  </section>
+
+  <section aria-labelledby="snapshot-heading">
+    <h2 id="snapshot-heading">Registry snapshot</h2>
+    <div class="stat-grid">
+      <div class="stat"><div class="stat-value">{bridges.length}</div><div class="stat-label">Bridge records</div></div>
+      <div class="stat"><div class="stat-value">{incidents.length}</div><div class="stat-label">Incident cases</div></div>
+      <div class="stat"><div class="stat-value">{events.length}</div><div class="stat-label">Timeline events</div></div>
+      <div class="stat"><div class="stat-value">{evidence.length}</div><div class="stat-label">Evidence records</div></div>
+      <div class="stat"><div class="stat-value">{majorIncidents}</div><div class="stat-label">Major incidents</div></div>
+      <div class="stat"><div class="stat-value">{unresolvedIncidents}</div><div class="stat-label">Unresolved incidents</div></div>
+    </div>
+  </section>
+
+  <section class="detail-two-column" aria-labelledby="loss-heading">
+    <article class="detail-panel">
+      <div class="kicker">Recorded canonical amounts</div>
+      <h2 id="loss-heading">Loss coverage</h2>
+      <p class="stat-value">{money(recordedLossTotal)}</p>
+      <p>Sum of canonical numeric <code>reported_loss_usd</code> values for {numericLossIncidents.length} of {incidents.length} incidents ({pct(numericLossIncidents.length, incidents.length)} coverage).</p>
+      <p class="muted">This total does not infer missing values, resolve conflicting claims, or claim to represent every bridge loss.</p>
+    </article>
+    <article class="detail-panel">
+      <div class="kicker">Outcome coverage</div>
+      <h2>Reimbursement history</h2>
+      <p class="stat-value">{reimbursementHistory}</p>
+      <p>Incidents with an explicit non-unknown, non-none reimbursement status in the canonical incident record.</p>
+    </article>
+  </section>
+
+  <section aria-labelledby="breakdown-heading">
+    <h2 id="breakdown-heading">Outcome, vector, and chain breakdowns</h2>
+    <div class="detail-two-column">
+      {breakdowns.map((group) => (
+        <article class="detail-panel">
+          <h3>{group.title}</h3>
+          <div class="registry-table-wrap">
+            <table class="registry-table">
+              <thead><tr><th scope="col">Value</th><th scope="col">Incidents</th><th scope="col">Share</th></tr></thead>
+              <tbody>{group.rows.map(([label, value]) => <tr><th scope="row">{label}</th><td>{value}</td><td>{pct(value, incidents.length)}</td></tr>)}</tbody>
+            </table>
+          </div>
+          <p class="muted">{group.note}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="detail-panel" aria-labelledby="timeline-heading">
+    <div class="kicker">Recorded lifecycle chronology</div>
+    <h2 id="timeline-heading">First later recorded lifecycle event</h2>
+    <p>Days from the incident date to the earliest linked canonical event on a later date. Same-day events are excluded; this is a record-timeline measure, not a claim about the operator's first real-world response.</p>
+    <div class="registry-table-wrap">
+      <table class="registry-table">
+        <thead><tr><th scope="col">Timing</th><th scope="col">Incidents</th><th scope="col">Share</th></tr></thead>
+        <tbody>{[...timelineBuckets.entries()].map(([label, value]) => <tr><th scope="row">{label}</th><td>{value}</td><td>{pct(value, incidents.length)}</td></tr>)}</tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="quality-heading">
+    <h2 id="quality-heading">Data quality</h2>
+    <div class="stat-grid">
+      <div class="stat"><div class="stat-value">{pct(primaryEvidence, evidence.length)}</div><div class="stat-label">Primary evidence · {primaryEvidence}/{evidence.length}</div></div>
+      <div class="stat"><div class="stat-value">{pct(tier1Evidence, evidence.length)}</div><div class="stat-label">Tier 1 evidence · {tier1Evidence}/{evidence.length}</div></div>
+      <div class="stat"><div class="stat-value">{pct(archivedEvidence, evidence.length)}</div><div class="stat-label">Archived evidence · {archivedEvidence}/{evidence.length}</div></div>
+      <div class="stat"><div class="stat-value">{incidentsWithoutPrimary}</div><div class="stat-label">Incidents without primary evidence</div></div>
+      <div class="stat"><div class="stat-value">{incidentsWithUnknowns}</div><div class="stat-label">Incidents with known unknowns</div></div>
+      <div class="stat"><div class="stat-value">{incidentsWithConflicts}</div><div class="stat-label">Incidents with conflicting claims</div></div>
+    </div>
+    <p class="muted">Latest canonical verification date: {latestVerifiedAt ?? "Unknown"}. Definitions and evidence rules are documented in <a href="/methodology/">Methodology</a>.</p>
+  </section>
+</BaseLayout>
