@@ -36,8 +36,8 @@ TAC Inner Bridge was added before the XRPL-TX Bridge August 2026 incident. XRPL-
 1. **Complete** — baseline audit and schedule synchronization, PR #284.
 2. **Complete decision** — no lifecycle schema expansion required at the audited boundary; existing recovery/reimbursement/restart/outcome/evidence fields are sufficient.
 3. **Complete — Stage 4** — deterministic per-record bridge and incident JSON, PR #285. PR #286 repaired the production verifier's stale 79-route expectation by adding `/support/`; strict sitemap equality remained intact. Main Release Readiness subsequently passed production equality for the 80 canonical HTML routes and the record-level JSON endpoints.
-4. **Active next — Stage 5** — audit and implement only the remaining structured-filter delta. Existing incident type, attack, recovery, reimbursement, restart, outcome, unresolved, date and loss filters must not be duplicated. Explicit chain and bridge/type facets are the first gaps to verify against the current UI/data model.
-5. **Pending — Stage 6** — Compare focused on aftermath/outcome differences.
+4. **Complete — Stage 5** — PR #288 audited the existing filters and added only explicit incident Affected chain and Bridge type facets. Bridge Type/Primary chain and existing incident type/attack/recovery/reimbursement/restart/outcome/resolution/date/loss controls were already implemented and were not duplicated. PR exact-head checks, Chromium/Firefox/WebKit interaction tests, screenshots, and post-merge production equality passed.
+5. **Active next — Stage 6** — implement deterministic incident/bridge Compare focused on aftermath and outcome differences while preserving unknown values and the recovery/reimbursement/restart semantic boundaries.
 6. **Pending — Stage 7** — Stats for loss/recovery/reimbursement, attack vectors, chain distribution, response timelines and data quality.
 7. **Pending near closeout — Stage 8** — one bounded reviewed post-incident follow-up pass.
 8. **Deferred** — natural-language-to-filter translation belongs to Ledger Series Phase 10.
@@ -76,10 +76,9 @@ Two current full-corpus warnings are non-blocking review signals: `bir_inc_00001
 
 ## Immediate execution order
 
-1. audit the current incident and bridge list controls against the AI-era Stage 5 requirement;
-2. implement only missing structured facets, starting with chain and bridge/type if the audit confirms they are absent;
-3. production-verify the public filter changes after merge;
-4. implement Compare;
-5. implement Stats;
-6. run the bounded aftermath follow-up and close Ledger Series Phase 2;
-7. keep routine monitoring/candidate work parallel and review-only, without allowing it to displace the horizontal phase unless a high-severity correction requires intervention.
+1. implement deterministic incident/bridge Compare from canonical data, emphasizing aftermath/outcome fields rather than generic side-by-side metadata;
+2. validate Compare selection/URL state and unknown-value behavior across Chromium/Firefox/WebKit;
+3. production-verify the public Compare surface after merge;
+4. implement Stats;
+5. run the bounded aftermath follow-up and close Ledger Series Phase 2;
+6. keep routine monitoring/candidate work parallel and review-only, without allowing it to displace the horizontal phase unless a high-severity correction requires intervention.
