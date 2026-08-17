@@ -252,7 +252,7 @@ if (!publicationReady) {
   process.exit(1);
 }
 
-const staticRoutes = ["/", "/bridges/", "/incidents/", "/methodology/", "/about/"];
+const staticRoutes = ["/", "/bridges/", "/incidents/", "/methodology/", "/about/", "/support/"];
 for (const route of staticRoutes) await verifyHtml(route);
 for (const bridge of canonical.data.bridges) await verifyHtml(`/bridge/${bridge.slug}/`, bridge.id);
 for (const incident of canonical.data.incidents) await verifyHtml(`/incident/${incident.slug}/`, incident.id);
