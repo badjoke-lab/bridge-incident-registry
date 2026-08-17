@@ -1,0 +1,211 @@
+{
+  "findings": [],
+  "probes": [
+    {
+      "evidence_id": "bir_src_000049",
+      "url": "https://medium.com/meter-io/the-meter-monthly-february-2022-7172b75f40a5",
+      "first": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://medium.com/meter-io/the-meter-monthly-february-2022-7172b75f40a5",
+        "error": null
+      },
+      "second": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://medium.com/meter-io/the-meter-monthly-february-2022-7172b75f40a5",
+        "error": null
+      },
+      "classification": "blocked"
+    },
+    {
+      "evidence_id": "bir_src_000050",
+      "url": "https://www.halborn.com/blog/post/explained-the-meter-io-hack-february-2022",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://www.halborn.com/blog/post/explained-the-meter-io-hack-february-2022",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://www.halborn.com/blog/post/explained-the-meter-io-hack-february-2022",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000051",
+      "url": "https://medium.com/meter-io/meter-passport-v1-5-completes-a-rigorous-audit-by-haechi-760cbda5959",
+      "first": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://medium.com/meter-io/meter-passport-v1-5-completes-a-rigorous-audit-by-haechi-760cbda5959",
+        "error": null
+      },
+      "second": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://medium.com/meter-io/meter-passport-v1-5-completes-a-rigorous-audit-by-haechi-760cbda5959",
+        "error": null
+      },
+      "classification": "blocked"
+    },
+    {
+      "evidence_id": "bir_src_000052",
+      "url": "https://docs.meter.io/passport/meter-passport-architecture",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://docs.meter.io/passport/meter-passport-architecture",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://docs.meter.io/passport/meter-passport-architecture",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000053",
+      "url": "https://allbridge.medium.com/allbridge-core-updates-following-the-relaunch-9f7716eeb5da",
+      "first": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://allbridge.medium.com/allbridge-core-updates-following-the-relaunch-9f7716eeb5da",
+        "error": null
+      },
+      "second": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://allbridge.medium.com/allbridge-core-updates-following-the-relaunch-9f7716eeb5da",
+        "error": null
+      },
+      "classification": "blocked"
+    },
+    {
+      "evidence_id": "bir_src_000054",
+      "url": "https://allbridge.medium.com/compensation-plan-announcement-3c0593987763",
+      "first": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://allbridge.medium.com/compensation-plan-announcement-3c0593987763",
+        "error": null
+      },
+      "second": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://allbridge.medium.com/compensation-plan-announcement-3c0593987763",
+        "error": null
+      },
+      "classification": "blocked"
+    },
+    {
+      "evidence_id": "bir_src_000055",
+      "url": "https://cointelegraph.com/news/allbridge-exploiter-returns-most-of-the-573k-stolen-in-attack",
+      "first": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://cointelegraph.com/news/allbridge-exploiter-returns-most-of-the-573k-stolen-in-attack",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://cointelegraph.com/news/allbridge-exploiter-returns-most-of-the-573k-stolen-in-attack",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000056",
+      "url": "https://allbridge.io/",
+      "first": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://allbridge.io/",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://allbridge.io/",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000057",
+      "url": "https://medium.com/@Knownsec_Blockchain_Lab/knownsec-blockchain-lab-li-finance-attack-incident-6304c6c728c9",
+      "first": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://medium.com/@Knownsec_Blockchain_Lab/knownsec-blockchain-lab-li-finance-attack-incident-6304c6c728c9",
+        "error": null
+      },
+      "second": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://medium.com/@Knownsec_Blockchain_Lab/knownsec-blockchain-lab-li-finance-attack-incident-6304c6c728c9",
+        "error": null
+      },
+      "classification": "blocked"
+    },
+    {
+      "evidence_id": "bir_src_000058",
+      "url": "https://cointelegraph.com/news/li-finance-protocol-loses-600-000-in-latest-defi-exploit",
+      "first": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://cointelegraph.com/news/li-finance-protocol-loses-600-000-in-latest-defi-exploit",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://cointelegraph.com/news/li-finance-protocol-loses-600-000-in-latest-defi-exploit",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000059",
+      "url": "https://blocksecteam.medium.com/li-fi-attack-a-cross-chain-bridge-vulnerability-no-its-due-to-unchecked-external-call-c31e7dadf60f",
+      "first": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://blocksecteam.medium.com/li-fi-attack-a-cross-chain-bridge-vulnerability-no-its-due-to-unchecked-external-call-c31e7dadf60f",
+        "error": null
+      },
+      "second": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://blocksecteam.medium.com/li-fi-attack-a-cross-chain-bridge-vulnerability-no-its-due-to-unchecked-external-call-c31e7dadf60f",
+        "error": null
+      },
+      "classification": "blocked"
+    },
+    {
+      "evidence_id": "bir_src_000060",
+      "url": "https://li.fi/knowledge-hub/incident-report-16th-july/",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://li.fi/knowledge-hub/incident-report-16th-july",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://li.fi/knowledge-hub/incident-report-16th-july",
+        "error": null
+      },
+      "classification": "healthy"
+    }
+  ],
+  "selected_count": 12,
+  "live_evidence_count": 297
+}
