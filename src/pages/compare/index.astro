@@ -67,14 +67,14 @@ const latestVerifiedAt = [...registryData.bridges, ...registryData.incidents]
   </form>
 
   <div class="registry-meta" aria-live="polite">
-    <span id="compare-status">Select two different records.</span>
+    <span id="compare-result-count">Select two different records.</span>
     <span>Canonical data only · no generated ranking or safety score</span>
   </div>
 
   <section id="compare-results" hidden aria-labelledby="compare-results-title">
     <h2 id="compare-results-title">Comparison</h2>
     <div class="registry-table-wrap">
-      <table class="registry-table">
+      <table class="registry-table" aria-describedby="compare-result-count">
         <caption class="sr-only">Side-by-side canonical record comparison</caption>
         <thead>
           <tr>
