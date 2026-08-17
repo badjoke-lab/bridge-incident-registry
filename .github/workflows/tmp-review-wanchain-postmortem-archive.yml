@@ -1,0 +1,103 @@
+name: Temporary Review Wanchain Postmortem Archive
+
+on:
+  push:
+    branches:
+      - canonical/wanchain-cardano-2026
+    paths:
+      - .github/workflows/tmp-review-wanchain-postmortem-archive.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: macos-latest
+    timeout-minutes: 20
+    steps:
+      - name: Review exact Wanchain postmortem archive twice
+        env:
+          SOURCE_URL: https://medium.com/@wanchain_org/cardano-bnb-chain-bridge-incident-post-mortem-353e465276e7
+          PUBLISHED_AT: '2026-07-28'
+        run: |
+          cat > /tmp/review.mjs <<'NODE'
+          const sourceUrl = process.env.SOURCE_URL;
+          const publishedAt = process.env.PUBLISHED_AT;
+          const minimumBytes = 65536;
+          const timeoutMs = 12000;
+
+          const fetchWithTimeout = async (url) => {
+            const controller = new AbortController();
+            const timer = setTimeout(() => controller.abort(), timeoutMs);
+            try {
+              return await fetch(url, {
+                redirect: 'follow',
+                signal: controller.signal,
+                headers: { 'user-agent': 'BIR archive review/1.0' }
+              });
+            } finally {
+              clearTimeout(timer);
+            }
+          };
+
+          const discover = async () => {
+            const endpoint = new URL('https://web.archive.org/cdx/search/cdx');
+            endpoint.searchParams.set('url', sourceUrl);
+            endpoint.searchParams.set('matchType', 'exact');
+            endpoint.searchParams.set('output', 'json');
+            endpoint.searchParams.set('fl', 'timestamp,original,statuscode,mimetype,digest');
+            endpoint.searchParams.append('filter', 'statuscode:200');
+            endpoint.searchParams.set('collapse', 'digest');
+            const response = await fetchWithTimeout(endpoint);
+            if (!response.ok) throw new Error(`CDX ${response.status}`);
+            const rows = await response.json();
+            if (!Array.isArray(rows) || rows.length < 2) return [];
+            const [header, ...records] = rows;
+            return records
+              .map((row) => Object.fromEntries(header.map((key, index) => [key, row[index]])))
+              .filter((capture) => /^\d{14}$/.test(capture.timestamp ?? ''))
+              .filter((capture) => `${capture.timestamp.slice(0,4)}-${capture.timestamp.slice(4,6)}-${capture.timestamp.slice(6,8)}` >= publishedAt)
+              .sort((a,b) => a.timestamp.localeCompare(b.timestamp));
+          };
+
+          const run = async () => {
+            const captures = await discover();
+            const attempts = [];
+            for (const capture of captures.slice(0, 12)) {
+              const archiveUrl = `https://web.archive.org/web/${capture.timestamp}/${capture.original}`;
+              try {
+                const response = await fetchWithTimeout(archiveUrl);
+                const contentType = response.headers.get('content-type') ?? '';
+                const body = await response.arrayBuffer();
+                const result = {
+                  archive_url: archiveUrl,
+                  status: response.status,
+                  content_type: contentType,
+                  bytes: body.byteLength,
+                  accepted: response.status === 200 && contentType.toLowerCase().includes('text/html') && body.byteLength >= minimumBytes
+                };
+                attempts.push(result);
+                if (result.accepted) return { captures: captures.length, approved: result, attempts };
+              } catch (error) {
+                attempts.push({ archive_url: archiveUrl, status: null, content_type: null, bytes: 0, accepted: false, error: String(error) });
+              }
+            }
+            return { captures: captures.length, approved: null, attempts };
+          };
+
+          const first = await run();
+          await new Promise((resolve) => setTimeout(resolve, 5000));
+          const second = await run();
+          const reproducible = Boolean(
+            first.approved && second.approved &&
+            first.approved.archive_url === second.approved.archive_url &&
+            first.approved.status === 200 && second.approved.status === 200 &&
+            first.approved.bytes >= minimumBytes && second.approved.bytes >= minimumBytes
+          );
+          const report = { source_url: sourceUrl, published_at: publishedAt, minimum_bytes: minimumBytes, first, second, reproducible_approved: reproducible ? first.approved : null };
+          console.log('WANCHAIN_ARCHIVE_REVIEW_START');
+          console.log(JSON.stringify(report, null, 2));
+          console.log('WANCHAIN_ARCHIVE_REVIEW_END');
+          NODE
+          node /tmp/review.mjs
