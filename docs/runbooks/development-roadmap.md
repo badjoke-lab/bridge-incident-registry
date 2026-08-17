@@ -1,9 +1,9 @@
 # Bridge Incident Registry — Development Roadmap to v1
 
 Status: active maintenance  
-Updated: 2026-08-11
+Updated: 2026-08-18
 
-GitHub state and canonical JSON are authoritative.
+GitHub state and canonical JSON are authoritative. Ledger Series Phase 2 horizontal strengthening is complete; this document now describes BIR's continuing maintenance, Phase 3 quality, and Phase 5 monitoring work.
 
 ## Canonical and production baseline
 
@@ -17,31 +17,31 @@ Evidence    299
 Latest production-verified canonical maintenance:
 
 ```text
-Review PR                         #265
-Canonical PR                      #266
-Canonical merge                   679f40c55677ad9d89f508200e47004f40464922
-V1 Release Readiness main run     31458996854
-Release-readiness job             93678566693
-Production equality               success
-Built pages                        76
-Canonical routes                   75
-Legacy redirects                   74
+Stage 8 canonical PR                 #294
+Phase 2 closeout PR                  #297 (docs only)
+V1 Release Readiness main run        32041737878
+Production equality                  success
+Canonical HTML routes                82
+Bridge dossiers verified             36 / 36
+Incident dossiers verified           38 / 38
 ```
+
+The Stage 8 canonical batch added only the two reviewed discrete lifecycle events and their minimum event-scoped first-party evidence. No schema expansion, ranking, generated safety conclusion, or unrelated incident growth was included.
 
 ## Current position
 
 ```text
 Phase 0  Specification and foundation              complete
 Phase 1  Canonical model, UI, validation, seeds    complete
-Phase 2  Record expansion                          complete through Batch 7
+Phase 2  Record expansion                          complete through established batches
 Phase 3  Full-corpus quality strengthening         active research-triggered maintenance
          Source-count/source-quality work          complete to reviewed boundary
-         Event Tier 1 / Primary Remediation        production-verified
+         Event Tier 1 / Primary Remediation        production-verified to reviewed boundary
          Archive Capture Batches 1–18              production-verified
          Deferred Archive Retries 01–04            complete to reviewed boundary
-         Cross-record bridge integrity             blocking
+         Cross-record bridge integrity             permanent blocking gate
          Unknown URL-status hard ceiling           active at 0
-         Full production-content equality          active
+         Full production-content equality          permanent gate
 Phase 4  Public contract stabilization             complete
 Phase 5  Monitoring and candidate collection       steady-state live
          Review-gated foundation                   complete — PR #217
@@ -49,11 +49,11 @@ Phase 5  Monitoring and candidate collection       steady-state live
          Monitoring state resolution health        live — PR #248
          Public site / SEO health watch            live — PRs #249–#250
 Release  v1 technical hardening / closure          complete — PRs #251–#258
+Ledger   Series Phase 2 horizontal strengthening   complete — PRs #284–#297
 Maintain Reviewed canonical/candidate expansion    active
-         Boltz stale apply helper removed          PR #260
-         Allbridge review/canonical addition       PRs #261–#262
-         Allbridge checkpoint/site baseline        PRs #263–#264
-         Syscoin review/canonical addition         PRs #265–#266
+         XRPL-TX source/on-chain enrichment        Issue #279 — active research target
+         Oraichain 2026 signal                     Issue #270 — evidence-gated hold
+         Boltz 2026 shutdown signal                Issue #171 — evidence-gated hold
 ```
 
 ## Current quality state
@@ -61,56 +61,55 @@ Maintain Reviewed canonical/candidate expansion    active
 ```text
 Incident source-count mismatches       0
 Event source-count mismatches          0
-Primary evidence                     210 / 293
-Tier 1 evidence                      227 / 293
-Official-domain evidence             132 / 293
-Incidents without primary              1 / 36
-Incidents without Tier 1               1 / 36
-Events without primary                11 / 185
-Events without Tier 1                  6 / 185
-Evidence with archived_url           130 / 293
+Primary evidence                     215 / 299
+Tier 1 evidence                      232 / 299
+Evidence with archived_url           130 / 299
+Incidents without primary              1 / 38
+Incidents without Tier 1               1 / 38
+Events without primary                11 / 190
+Events without Tier 1                  6 / 190
 Terminal unarchived unique URLs       15
 Risky-host unarchived unique URLs     16
 Unknown URL status                     0
+Full-corpus blocking errors            0
+Full-corpus warning categories        {}
 High-severity npm audit findings       0
 ```
 
 Further primary/archive remediation remains research-triggered rather than metric-driven. Source hierarchy and accepted gap ceilings must not be weakened to improve coverage numbers.
 
-## Latest maintenance result — Syscoin UTXO–NEVM Bridge June 2026
+## Latest maintenance result — bounded Stage 8 lifecycle repair
 
-PR #265 approved a new Syscoin bridge and discrete June 7, 2026 incident; PR #266 applied it and passed the complete production contract.
+PR #294 repaired the two explicit lifecycle warnings already identified by the full-corpus audit:
 
 ```text
-New bridge                    bir_bridge_000034
-New incident                  bir_inc_000036
-New event                     bir_ev_000185
-New evidence                  bir_src_000292–bir_src_000293
-Incident date                 2026-06-07
-Unauthorized release          5 billion SYS
-Secondary valuation           about $10 million
-Recovery                      full_recovery
-Reimbursement                 not_applicable
-Restart                       paused
-Current outcome               paused_long_term
-Attack category               message_verification_failure
+bir_inc_000015   added discrete reimbursement_completed event
+bir_inc_000035   added discrete bridge_reopened event
 ```
 
-Syscoin's first-party technical postmortem is authoritative for the root cause, 5 billion SYS quantity, full return/burn, and continued pause. Halborn is Tier 2 corroboration and the source for the approximately $10 million contemporaneous USD valuation. Financial recovery does not imply bridge reopening.
+Both additions use already-reviewed first-party evidence and the minimum event-scoped evidence required by exact source-count semantics. After external publication caught up, main V1 Release Readiness run `32041737878` verified the resulting `36 / 38 / 190 / 299` public/canonical state and all record-level dossiers. The full-corpus warning set is now empty.
 
-The application also added normalization reference keys `syscoin-utxo`, `syscoin-nevm`, and `sys`. These support the approved canonical values and do not broaden incident semantics.
+## Active maintenance research boundaries
 
-## Prior maintenance boundaries
+### XRPL-TX Bridge — Issue #279
 
-Allbridge remains `bir_inc_000035` under existing `bir_bridge_000012`, with unknown final attacker-fund recovery/LP compensation despite later pool-less relaunch.
+`bir_inc_000038` is canonical and valid but intentionally incomplete. The active research target is first-party or reproducible on-chain evidence for the 2026-08-09 incident's transfer sequence, incident-specific root cause, recovery, reimbursement, remediation, and restart/current outcome.
 
-Boltz remains Issue #171 (`monitoring signal / needs evidence`). PR #260 removed a superseded canonical-apply helper. No Boltz canonical record should be added without a discrete supported incident boundary under normal review-first procedure.
+A 2026-08-18 recheck confirmed current first-party TX bridge architecture documentation but did not locate incident-specific first-party aftermath material or a stable investigation package sufficient to change canonical state. Generic bridge documentation or a reachable interface is not proof that the affected route reopened. Keep `attack_vector_category` and unresolved aftermath fields at their reviewed unknown boundary unless stronger evidence appears.
+
+### Oraichain — Issue #270
+
+The 2026-08-08 signal remains monitoring/review material only. The DefiLlama discovery row is secondary evidence, the exact affected bridge/component remains unresolved, and no canonical incident may be created until a primary source or equivalent reproducible evidence establishes the event boundary and lifecycle facts.
+
+### Boltz — Issue #171
+
+Boltz remains review-only. Current first-party material establishes a security-driven swap shutdown but not one discrete bridge exploit with a sufficiently bounded incident record. Do not collapse multiple contained exploits or a broader operational decision into one canonical incident without new evidence.
 
 ## Phase 5 steady state
 
-Persisted monitoring baselines are historical state checkpoints and may predate later canonical additions. The Allbridge-era Public Site Health change was accepted in PR #264 and then proved silent on repeat. The current canonical/public truth is `34 / 36 / 185 / 293` and is independently production-verified by main run `31458996854`.
+BIR Monitoring and BIR Public Site Health remain active review-only workflows. Their most recent scheduled runs before this roadmap sync completed successfully. Both workflows assert canonical data unchanged and may write only bounded monitoring/watchlist state; any canonical investigation or record change requires a separate reviewed branch and PR.
 
-Monitoring output is review material only. Secondary database/news rows are not canonical evidence. Unchanged signals remain silent. Hard-failure signals require bounded reproducible conditions; 401/403/405/429, timeout, 5xx, or mixed probes are not terminal proof.
+The current production truth is `36 / 38 / 190 / 299`, independently verified by the Phase 2 Stage 8 production gate. Persisted monitoring state may be an older checkpoint and must never override canonical JSON or production-equality evidence.
 
 ## Permanent release contract
 
@@ -126,22 +125,18 @@ The v1 technical contract established by PRs #251–#258 remains permanent after
 - Chromium / Firefox / WebKit compatibility;
 - exhaustive production registry equality after main merge.
 
-Original v1 closure: PR #258, merge `d9f545803104bffd829d93270965f53d9f3d1a45`, run `31367052981`, job `93387599332`.
-
-Allbridge post-closure proof: merge `d7cf47f2373c9c0b94b78b93807fc6d0239c2d98`, run `31393382470`, job `93470262367`.
-
-Latest Syscoin post-closure proof: merge `679f40c55677ad9d89f508200e47004f40464922`, run `31458996854`, job `93678566693`, production equality success.
+Current performance ceilings remain 16 KiB gzip max HTML, 5 KiB CSS total/max file, 4 KiB JS total, and 2 KiB max JS file.
 
 Technical closure does not create or imply a semantic-version tag or GitHub Release.
 
-## Ongoing roadmap
+## Ongoing BIR roadmap
 
-1. rerun Phase 5 Monitoring and Public Site Health after the Syscoin canonical count change;
-2. accept only bounded healthy review-state changes and prove silent repeat afterward;
-3. continue reviewed first-party-backed incident/corpus expansion;
-4. use Phase 3 quality/archive work only when stronger source material changes an accepted boundary;
-5. keep Boltz Issue #171 review-only until a discrete incident becomes supportable;
-6. preserve release, source-quality, and production-equality gates while expanding the registry.
+1. **Issue #279 first** — continue first-party and reproducible on-chain enrichment for `bir_inc_000038`; change canonical data only if evidence materially changes a displayed incident claim or aftermath state.
+2. **Refresh review-only monitoring after canonical changes** — inspect BIR Monitoring and Public Site Health output; accept only bounded healthy state changes and prove a silent repeat when a baseline changes.
+3. **Issue #270 on evidence arrival** — resolve the Oraichain component/event boundary and canonicalize only after primary or equivalent reproducible evidence exists.
+4. **Issue #171 on evidence arrival** — keep Boltz review-only until a discrete incident, restart, migration, permanent shutdown, or final-outcome boundary becomes supportable.
+5. **Phase 3 quality work remains research-triggered** — improve primary/Tier 1/archive coverage when stronger sources appear; never widen accepted quality ceilings merely to improve counts.
+6. **Continue reviewed incident/corpus expansion** — use one bounded review-first branch/PR per approved canonical task and retain exhaustive production equality after merge.
 
 ## Permanent rules
 
