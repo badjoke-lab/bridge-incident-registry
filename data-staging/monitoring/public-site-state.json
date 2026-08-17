@@ -12,9 +12,9 @@
       "last_changed_at": "2026-08-09T12:53:25Z"
     },
     "public-site-health:sitemap": {
-      "fingerprint": "healthy:v1",
+      "fingerprint": "content-failure:sitemap_count_mismatch",
       "first_seen_at": "2026-08-09T12:53:25Z",
-      "last_changed_at": "2026-08-09T12:53:25Z"
+      "last_changed_at": "2026-08-16T16:47:56Z"
     },
     "public-site-health:version": {
       "fingerprint": "healthy:v1",
@@ -45,6 +45,16 @@
       "fingerprint": "healthy:v1",
       "first_seen_at": "2026-08-11T04:48:09Z",
       "last_changed_at": "2026-08-11T04:48:09Z"
+    },
+    "public-site-health:bridge:bir_bridge_000003": {
+      "fingerprint": "healthy:v1",
+      "first_seen_at": "2026-08-16T16:47:56Z",
+      "last_changed_at": "2026-08-16T16:47:56Z"
+    },
+    "public-site-health:incident:bir_inc_000029": {
+      "fingerprint": "healthy:v1",
+      "first_seen_at": "2026-08-16T16:47:56Z",
+      "last_changed_at": "2026-08-16T16:47:56Z"
     }
   }
 }
