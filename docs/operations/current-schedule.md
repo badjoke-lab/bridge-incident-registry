@@ -38,10 +38,10 @@ TAC Inner Bridge was added before the XRPL-TX Bridge August 2026 incident. XRPL-
 3. **Complete — Stage 4** — deterministic per-record bridge and incident JSON, PR #285. PR #286 repaired the production verifier's stale 79-route expectation by adding `/support/`; strict sitemap equality remained intact. Main Release Readiness subsequently passed production equality for the 80 canonical HTML routes and the record-level JSON endpoints.
 4. **Complete — Stage 5** — PR #288 audited the existing filters and added only explicit incident Affected chain and Bridge type facets. Bridge Type/Primary chain and existing incident type/attack/recovery/reimbursement/restart/outcome/resolution/date/loss controls were already implemented and were not duplicated. PR exact-head checks, Chromium/Firefox/WebKit interaction tests, screenshots, and post-merge production equality passed.
 5. **Complete — Stage 6** — PR #290 implemented canonical `/compare/` modes for incident-vs-incident and bridge-vs-bridge comparisons using Stage 4 dossiers. Compare preserves unknown values and recovery/reimbursement/restart/current-outcome boundaries, uses reproducible URL state, validates canonical dossier identity, and passed exact-head performance/accessibility/dist/Chromium/Firefox/WebKit checks. The post-merge Release Readiness rerun passed production registry equality for 81 canonical HTML routes after the Git-integrated deployment became live.
-6. **Active next — Stage 7** — implement deterministic Stats for loss/recovery/reimbursement, attack vectors, chain distribution, response timelines and data quality without generated ranking or unsupported inference.
-7. **Pending near closeout — Stage 8** — one bounded reviewed post-incident follow-up pass.
+6. **Complete — Stage 7** — PR #292 implemented deterministic canonical-derived `/stats/` for loss/recovery/reimbursement, attack-vector, chain-distribution, response-timeline and data-quality analysis without generated ranking or unsupported inference. Navigation, sitemap/discovery, SEO, accessibility, performance, dist consistency and Chromium/Firefox/WebKit checks passed. Main Release Readiness then passed production registry equality for 82 canonical HTML routes.
+7. **Active — Stage 8** — one bounded reviewed post-incident follow-up pass. The bounded audit identified two existing full-corpus warnings that are supportable from already-canonical first-party evidence: `bir_inc_000015` needs a discrete `reimbursement_completed` event and `bir_inc_000035` needs a discrete `bridge_reopened` event. No additional incident expansion is part of this Stage 8 batch.
 8. **Deferred** — natural-language-to-filter translation belongs to Ledger Series Phase 10.
-9. **Closeout** — production verification plus schedule/completion-audit synchronization, then move the cross-series roadmap to SOG.
+9. **Closeout** — apply and validate the bounded Stage 8 canonical event fixes, production-verify, synchronize the completion audit, then move the cross-series roadmap to SOG.
 
 ## Current quality checkpoint
 
@@ -60,7 +60,7 @@ Source-count mismatches              0
 High-severity npm audit              0
 ```
 
-Two current full-corpus warnings are non-blocking review signals: `bir_inc_000015` lacks a discrete reimbursement-completed event for its completed state, and `bir_inc_000035` lacks a discrete bridge-reopened event for its reopened state. They must not be auto-filled without evidence.
+Two current full-corpus warnings are non-blocking review signals but are now reviewed Stage 8 targets: `bir_inc_000015` lacks a discrete reimbursement-completed event for its completed state, and `bir_inc_000035` lacks a discrete bridge-reopened event for its reopened state. Existing canonical first-party evidence supports both missing lifecycle events; the Stage 8 canonical batch must add only those discrete events and the minimum event-scoped evidence needed to preserve exact source-count semantics.
 
 ## Permanent release boundary
 
@@ -76,9 +76,10 @@ Two current full-corpus warnings are non-blocking review signals: `bir_inc_00001
 
 ## Immediate execution order
 
-1. audit canonical fields and existing public surfaces against the Stage 7 Stats requirement;
-2. implement deterministic Stats for loss/recovery/reimbursement, attack vectors, chain distribution, response timelines and data quality;
-3. integrate Stats with navigation, sitemap/discovery, SEO, dist consistency, performance, accessibility and production verification;
-4. validate and production-verify Stats after merge;
-5. run the bounded aftermath follow-up and close Ledger Series Phase 2;
-6. keep routine monitoring/candidate work parallel and review-only, without allowing it to displace the horizontal phase unless a high-severity correction requires intervention.
+1. apply the bounded Stage 8 lifecycle-event batch for `bir_inc_000015` and `bir_inc_000035` only;
+2. preserve recovery/reimbursement/restart distinctions and exact event/evidence source-count semantics;
+3. run canonical/schema/full-corpus/source-quality/build/accessibility/performance/browser gates;
+4. merge only if the two lifecycle warnings are resolved without widening any quality ceiling;
+5. production-verify the resulting canonical/public output;
+6. synchronize the Ledger Series Phase 2 completion audit and close the BIR horizontal phase;
+7. keep routine monitoring/candidate work parallel and review-only, without allowing it to displace closeout unless a high-severity correction requires intervention.
