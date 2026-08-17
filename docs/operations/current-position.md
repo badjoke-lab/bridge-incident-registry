@@ -20,7 +20,7 @@ The last canonical additions before Ledger Series Phase 2 were TAC Inner Bridge 
 
 ## Current quality boundary
 
-The exact repository checks on the current Stage 6 lineage report:
+The exact repository checks on the current Stage 7 lineage report:
 
 ```text
 Primary evidence                       213 / 297
@@ -37,14 +37,14 @@ Source-count mismatches                   0
 High-severity npm audit findings          0
 ```
 
-Current full-corpus warnings remain non-blocking and explicit:
+Current full-corpus warnings are explicit and have now been reviewed for Stage 8:
 
 ```text
 bir_inc_000015  completed reimbursement state without reimbursement_completed event
 bir_inc_000035  reopened state without bridge_reopened event
 ```
 
-They are review signals, not permission to fabricate missing events.
+The Stage 8 audit found that both are supportable from already-canonical first-party evidence. They are therefore bounded canonical-fix targets rather than unresolved research signals.
 
 ## Existing BIR roadmap state
 
@@ -67,12 +67,12 @@ Per-record bridge/incident JSON        complete — PR #285
 Stage 4 verifier + production          complete — PR #286 + main green
 Structured filter delta                complete — PR #288 + main production green
 Compare                                complete — PR #290 + main production green
-Stats                                  NEXT — Stage 7
-Bounded aftermath follow-up            pending — Stage 8
+Stats                                  complete — PR #292 + main production green
+Bounded aftermath follow-up            ACTIVE — Stage 8 review complete, canonical fix next
 Natural-language layer                 deferred to Ledger Series Phase 10
 ```
 
-Stage 6 added a canonical `/compare/` surface for deterministic incident-vs-incident and bridge-vs-bridge comparison. It preserves unknown values, keeps recovery/reimbursement/restart/current-outcome semantics distinct, uses reproducible URL state, validates canonical dossier identity, and passed exact-head performance/accessibility/dist checks plus Chromium/Firefox/WebKit interaction coverage. The first post-merge production check raced the Git-integrated deployment and saw `/compare/` as 404; the rerun passed production registry equality once the deployment was live.
+Stage 7 added deterministic `/stats/` from canonical data and passed the permanent release gates plus post-merge production equality for 82 canonical HTML routes. Stage 8 is intentionally limited to two lifecycle-event repairs already surfaced by the full-corpus audit; unrelated incident growth is out of scope for this horizontal closeout batch.
 
 The horizontal phase takes priority over routine one-by-one record growth. Maintenance continues in parallel only for monitoring, evidence health, high-severity corrections and properly reviewed new incidents.
 
@@ -95,9 +95,9 @@ Current budgets remain 16 KiB gzip max HTML, 5 KiB CSS total/max file, and 4 KiB
 
 ## Next bounded work
 
-1. audit the existing canonical fields and public surfaces against the Stage 7 Stats requirement;
-2. implement deterministic Stats for loss/recovery/reimbursement, attack vectors, chain distribution, response timelines and data quality without inferred rankings or unsupported totals;
-3. integrate Stats into navigation, sitemap/discovery, SEO, dist consistency, accessibility, performance and production verification route sets;
-4. validate the Stats surface across the release gates and production-verify after merge;
-5. run one bounded reviewed post-incident follow-up pass near Ledger Series Phase 2 closeout;
-6. synchronize the AI-era schedule and completion audit before moving the Series roadmap to SOG.
+1. add one discrete `reimbursement_completed` event for `bir_inc_000015`, backed by the existing LI.FI first-party postmortem evidence;
+2. add one discrete `bridge_reopened` event for `bir_inc_000035`, backed by the existing Allbridge first-party relaunch statement;
+3. add only the minimum event-scoped evidence records required to preserve exact event source-count semantics;
+4. run all permanent release gates and confirm both lifecycle warnings are gone without widening source-quality or archive-risk ceilings;
+5. merge and production-verify the canonical/public result;
+6. synchronize the Ledger Series Phase 2 completion audit and close the BIR horizontal phase before moving the Series roadmap to SOG.
