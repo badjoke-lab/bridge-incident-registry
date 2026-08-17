@@ -204,5 +204,12 @@
       "Coreum",
       "Coreum Network"
     ]
+  },
+  "cardano": {
+    "display_name": "Cardano",
+    "aliases": [
+      "Cardano mainnet",
+      "ADA network"
+    ]
   }
 }

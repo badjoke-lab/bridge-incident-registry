@@ -175,5 +175,12 @@
     "aliases": [
       "XRP Ledger native asset"
     ]
+  },
+  "night": {
+    "display_name": "NIGHT",
+    "aliases": [
+      "Midnight NIGHT",
+      "NIGHT token"
+    ]
   }
 }
