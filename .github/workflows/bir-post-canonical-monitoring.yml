@@ -1,0 +1,36 @@
+name: BIR Post-Canonical Monitoring
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - data/bridges.json
+      - data/incidents.json
+      - data/events.json
+      - data/evidence.json
+      - .github/workflows/bir-post-canonical-monitoring.yml
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  dispatch-review-only-monitors:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch BIR Monitoring
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run bir-monitoring.yml --ref main
+
+      - name: Dispatch BIR Public Site Health
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run bir-public-site-health.yml --ref main
+
+      - name: Record boundary
+        run: |
+          echo 'Dispatched review-only BIR monitoring workflows after a canonical-data change.'
+          echo 'The dispatched workflows retain their existing canonical-unchanged assertions and review-only output boundaries.'
