@@ -1,0 +1,159 @@
+{
+  "findings": [
+    {
+      "finding_id": "site_version_public_machine_contract_regression",
+      "monitor": "public-site-health-watch",
+      "severity": "high",
+      "category": "public_machine_contract_regression",
+      "title": "/version.json failed repeated public contract checks",
+      "summary": "Two independent healthy HTTP responses produced the same validation failures: version_count_mismatch:bridges|version_count_mismatch:events|version_count_mismatch:evidence|version_count_mismatch:incidents. Review production output before changing canonical data.",
+      "affected_route": {
+        "route": "/version.json",
+        "kind": "version",
+        "record_id": null
+      },
+      "source_urls": [
+        "https://bir.badjoke-lab.com/version.json"
+      ],
+      "confidence": "high",
+      "recommended_action": "review_production_public_contract",
+      "dedupe_key": "public-site-health:version"
+    }
+  ],
+  "probes": [
+    {
+      "target_id": "home",
+      "route": "/",
+      "kind": "html",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/",
+        "error": null,
+        "validation_errors": []
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/",
+        "error": null,
+        "validation_errors": []
+      }
+    },
+    {
+      "target_id": "robots",
+      "route": "/robots.txt",
+      "kind": "robots",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/robots.txt",
+        "error": null,
+        "validation_errors": []
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/robots.txt",
+        "error": null,
+        "validation_errors": []
+      }
+    },
+    {
+      "target_id": "sitemap",
+      "route": "/sitemap.xml",
+      "kind": "sitemap",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/sitemap.xml",
+        "error": null,
+        "validation_errors": [
+          "sitemap_count_mismatch"
+        ]
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/sitemap.xml",
+        "error": null,
+        "validation_errors": [
+          "sitemap_count_mismatch"
+        ]
+      }
+    },
+    {
+      "target_id": "version",
+      "route": "/version.json",
+      "kind": "version",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/version.json",
+        "error": null,
+        "validation_errors": [
+          "version_count_mismatch:bridges",
+          "version_count_mismatch:incidents",
+          "version_count_mismatch:events",
+          "version_count_mismatch:evidence"
+        ]
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/version.json",
+        "error": null,
+        "validation_errors": [
+          "version_count_mismatch:bridges",
+          "version_count_mismatch:incidents",
+          "version_count_mismatch:events",
+          "version_count_mismatch:evidence"
+        ]
+      }
+    },
+    {
+      "target_id": "bridge:bir_bridge_000029",
+      "route": "/bridge/rubic/",
+      "kind": "html",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/bridge/rubic/",
+        "error": null,
+        "validation_errors": []
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/bridge/rubic/",
+        "error": null,
+        "validation_errors": []
+      }
+    },
+    {
+      "target_id": "incident:bir_inc_000035",
+      "route": "/incident/allbridge-core-2026-solana-pool-exploit/",
+      "kind": "html",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/incident/allbridge-core-2026-solana-pool-exploit/",
+        "error": null,
+        "validation_errors": []
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/incident/allbridge-core-2026-solana-pool-exploit/",
+        "error": null,
+        "validation_errors": []
+      }
+    }
+  ],
+  "origin": "https://bir.badjoke-lab.com",
+  "target_count": 6,
+  "sampled_bridge_id": "bir_bridge_000029",
+  "sampled_incident_id": "bir_inc_000035",
+  "baseline_seeded_count": 2,
+  "state_changed": true
+}
