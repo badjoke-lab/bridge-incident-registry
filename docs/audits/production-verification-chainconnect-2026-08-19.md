@@ -5,7 +5,7 @@ Verified: 2026-08-19
 Canonical merge: `aa11872fe237c295dae5d5a0a41d283fcde21aab`  
 Canonical application PR: #314  
 Review authority PR: #313  
-Production verification PR: #316  
+Production verification PR: #318  
 Production Verification run: `32167991271`  
 Production Verification job: `95812037176`
 
