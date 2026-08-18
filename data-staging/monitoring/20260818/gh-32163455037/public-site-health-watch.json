@@ -1,0 +1,129 @@
+{
+  "findings": [],
+  "probes": [
+    {
+      "target_id": "home",
+      "route": "/",
+      "kind": "html",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/",
+        "error": null,
+        "validation_errors": []
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/",
+        "error": null,
+        "validation_errors": []
+      }
+    },
+    {
+      "target_id": "robots",
+      "route": "/robots.txt",
+      "kind": "robots",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/robots.txt",
+        "error": null,
+        "validation_errors": []
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/robots.txt",
+        "error": null,
+        "validation_errors": []
+      }
+    },
+    {
+      "target_id": "sitemap",
+      "route": "/sitemap.xml",
+      "kind": "sitemap",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/sitemap.xml",
+        "error": null,
+        "validation_errors": [
+          "sitemap_count_mismatch"
+        ]
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/sitemap.xml",
+        "error": null,
+        "validation_errors": [
+          "sitemap_count_mismatch"
+        ]
+      }
+    },
+    {
+      "target_id": "version",
+      "route": "/version.json",
+      "kind": "version",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/version.json",
+        "error": null,
+        "validation_errors": []
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/version.json",
+        "error": null,
+        "validation_errors": []
+      }
+    },
+    {
+      "target_id": "bridge:bir_bridge_000032",
+      "route": "/bridge/everclear/",
+      "kind": "html",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/bridge/everclear/",
+        "error": null,
+        "validation_errors": []
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/bridge/everclear/",
+        "error": null,
+        "validation_errors": []
+      }
+    },
+    {
+      "target_id": "incident:bir_inc_000030",
+      "route": "/incident/rubic-2022-rbc-brbc-bridge-wallet-compromise/",
+      "kind": "html",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/incident/rubic-2022-rbc-brbc-bridge-wallet-compromise/",
+        "error": null,
+        "validation_errors": []
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://bir.badjoke-lab.com/incident/rubic-2022-rbc-brbc-bridge-wallet-compromise/",
+        "error": null,
+        "validation_errors": []
+      }
+    }
+  ],
+  "origin": "https://bir.badjoke-lab.com",
+  "target_count": 6,
+  "sampled_bridge_id": "bir_bridge_000032",
+  "sampled_incident_id": "bir_inc_000030",
+  "baseline_seeded_count": 1,
+  "state_changed": true
+}
