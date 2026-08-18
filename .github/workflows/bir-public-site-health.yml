@@ -46,8 +46,24 @@ jobs:
         shell: bash
         run: |
           force="${{ inputs.force || false }}"
-          monitoring_prs="$(gh pr list --state open --search 'in:title "Auto monitoring report:"' --json number --jq 'length')"
-          site_prs="$(gh pr list --state open --search 'in:title "Auto site health report:"' --json number --jq 'length')"
+          count_open_prs() {
+            local search="$1"
+            local attempt output
+            for attempt in 1 2 3; do
+              if output="$(gh pr list --state open --search "$search" --json number --jq 'length' 2>&1)"; then
+                printf '%s' "$output"
+                return 0
+              fi
+              if [ "$attempt" -lt 3 ]; then
+                echo "::warning::gh pr list failed on attempt ${attempt}/3; retrying duplicate guard" >&2
+                sleep $((attempt * 2))
+              fi
+            done
+            printf '%s\n' "$output" >&2
+            return 1
+          }
+          monitoring_prs="$(count_open_prs 'in:title "Auto monitoring report:"')"
+          site_prs="$(count_open_prs 'in:title "Auto site health report:"')"
           git fetch --prune origin \
             '+refs/heads/auto/monitoring/*:refs/remotes/origin/auto/monitoring/*' \
             '+refs/heads/auto/site-health/*:refs/remotes/origin/auto/site-health/*' || true
