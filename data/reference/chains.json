@@ -211,5 +211,12 @@
       "Cardano mainnet",
       "ADA network"
     ]
+  },
+  "venom": {
+    "display_name": "Venom",
+    "aliases": [
+      "Venom Network",
+      "Venom 2.0"
+    ]
   }
 }

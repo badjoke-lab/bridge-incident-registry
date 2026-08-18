@@ -43,11 +43,12 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install project and Playwright dependencies
+      - name: Prepare project and pinned Playwright runtime
+        timeout-minutes: 10
         run: |
           npm install --no-audit --no-fund
           npm install --no-save --ignore-scripts playwright@1.60.0
-          npx playwright install --with-deps chromium
+          docker pull mcr.microsoft.com/playwright:v1.60.0-noble
 
       - name: Build static site
         run: npm run build
@@ -64,9 +65,14 @@ jobs:
           exit 1
 
       - name: Capture desktop and mobile representative pages
-        env:
-          CAPTURE_BASE_URL: http://127.0.0.1:4173
-        run: node scripts/capture-representative-pages.mjs
+        run: |
+          docker run --rm --ipc=host --network host \
+            -v "$PWD:/work" \
+            -w /work \
+            -e CAPTURE_BASE_URL=http://127.0.0.1:4173 \
+            -e PLAYWRIGHT_BROWSERS_PATH=/ms-playwright \
+            mcr.microsoft.com/playwright:v1.60.0-noble \
+            node scripts/capture-representative-pages.mjs
 
       - name: Write visual review summary
         if: always()
