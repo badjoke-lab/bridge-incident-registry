@@ -1,23 +1,18 @@
 name: Verify Wanchain Production Redirect
 
 on:
-  push:
-    branches:
-      - fix/release-readiness-current-baseline
+  pull_request:
+    branches: [main]
     paths:
-      - .github/workflows/verify-wanchain-production-redirect.yml
+      - '.github/workflows/verify-wanchain-production-redirect.yml'
 
 permissions:
   contents: read
-  issues: write
-  pull-requests: write
 
 jobs:
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 8
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Verify both legacy URL forms with bounded publication retries
         shell: bash
@@ -27,7 +22,7 @@ jobs:
           last_attempt=0
           for attempt in $(seq 1 30); do
             last_attempt="$attempt"
-            ATTEMPT="$attempt" node <<'NODE' > /tmp/wanchain-redirect-result.json
+            ATTEMPT="$attempt" node <<'NODE' | tee /tmp/wanchain-redirect-result.json
           const origin = 'https://bir.badjoke-lab.com';
           const target = '/bridge/wanbridge/';
           const paths = ['/bridge/wanchain-bridge', '/bridge/wanchain-bridge/'];
@@ -48,7 +43,7 @@ jobs:
           console.log(JSON.stringify({ attempt: Number(process.env.ATTEMPT), ok, target, observations }, null, 2));
           process.exit(ok ? 0 : 1);
           NODE
-            rc=$?
+            rc=${PIPESTATUS[0]}
             if [ "$rc" -eq 0 ]; then
               success=true
               break
@@ -56,24 +51,6 @@ jobs:
             sleep 5
           done
           set -e
-
-          body_file="$(mktemp)"
-          {
-            echo '## Post-merge production redirect verification'
-            echo
-            if [ "$success" = true ]; then
-              echo '**PASS** — both Wanchain legacy URL forms return HTTP 301 to `/bridge/wanbridge/`.'
-            else
-              echo '**FAIL** — production still does not satisfy the reviewed Wanchain legacy redirect contract.'
-            fi
-            echo
-            echo "Attempts: $last_attempt / 30"
-            echo
-            echo '```json'
-            cat /tmp/wanchain-redirect-result.json
-            echo '```'
-            echo
-            echo 'Read-only production verification; no canonical or production mutation was performed by this job.'
-          } > "$body_file"
-          gh pr comment 310 --body-file "$body_file"
+          echo "Final result after ${last_attempt} attempt(s):"
+          cat /tmp/wanchain-redirect-result.json
           [ "$success" = true ]
