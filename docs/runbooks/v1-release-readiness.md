@@ -8,10 +8,10 @@ This runbook defines the final technical gate for Bridge Incident Registry v1. I
 ## Canonical release baseline
 
 ```text
-Bridges     37
-Incidents   39
-Events      191
-Evidence    303
+Bridges     38
+Incidents   40
+Events      193
+Evidence    311
 ```
 
 A release-readiness run must not mutate canonical data.
@@ -42,7 +42,7 @@ The release is blocked if any high-severity npm audit finding remains, if any so
 
 ## Accessibility contract
 
-The built-output accessibility gate must pass all generated HTML. At the current reviewed baseline it covers 84 generated HTML pages.
+The built-output accessibility gate must pass all generated HTML. At the current reviewed baseline it covers 86 generated HTML pages.
 
 The contract includes:
 
