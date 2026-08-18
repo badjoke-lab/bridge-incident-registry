@@ -1,0 +1,318 @@
+name: Stage ChainConnect Canonical Application
+
+on:
+  push:
+    branches:
+      - chainconnect-2026-application
+    paths:
+      - .github/workflows/chainconnect-application.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout application branch
+        uses: actions/checkout@v7
+        with:
+          ref: chainconnect-2026-application
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Apply bounded reviewed records
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+
+          const read = (p) => JSON.parse(fs.readFileSync(p, 'utf8'));
+          const appendRecord = (p, record) => {
+            const text = fs.readFileSync(p, 'utf8');
+            const marker = '\n]';
+            const idx = text.lastIndexOf(marker);
+            if (idx < 0) throw new Error(`array terminator not found in ${p}`);
+            const prefix = text.slice(0, idx).trimEnd();
+            const comma = prefix.endsWith('[') ? '' : ',';
+            fs.writeFileSync(p, `${prefix}${comma}\n  ${JSON.stringify(record)}\n]\n`);
+          };
+
+          const bridges = read('data/bridges.json');
+          const incidents = read('data/incidents.json');
+          const events = read('data/events.json');
+          const evidence = read('data/evidence.json');
+          if (bridges.length !== 37 || incidents.length !== 39 || events.length !== 191 || evidence.length !== 303) {
+            throw new Error(`unexpected baseline ${bridges.length}/${incidents.length}/${events.length}/${evidence.length}`);
+          }
+          if (bridges.some((r) => r.id === 'bir_bridge_000038' || r.slug === 'chainconnect')) throw new Error('ChainConnect bridge already exists');
+          if (incidents.some((r) => r.id === 'bir_inc_000040' || r.slug === 'chainconnect-2026-alien-proxy-callback-exploit')) throw new Error('ChainConnect incident already exists');
+
+          const chainsPath = 'data/reference/chains.json';
+          const chains = read(chainsPath);
+          if (chains.venom && JSON.stringify(chains.venom) !== JSON.stringify({ display_name: 'Venom', aliases: ['Venom Network', 'Venom 2.0'] })) {
+            throw new Error('existing venom chain normalization conflicts with reviewed value');
+          }
+          if (!chains.venom) chains.venom = { display_name: 'Venom', aliases: ['Venom Network', 'Venom 2.0'] };
+          fs.writeFileSync(chainsPath, `${JSON.stringify(chains, null, 2)}\n`);
+
+          appendRecord('data/bridges.json', {
+            id: 'bir_bridge_000038',
+            slug: 'chainconnect',
+            previous_slugs: [],
+            redirect_from: [],
+            canonical_name: 'ChainConnect',
+            type: 'asset_bridge',
+            status: 'paused',
+            summary: 'ChainConnect is a multi-chain EVM↔TVM asset bridge. A July 2026 incident exploited missing sender verification in an Alien Proxy callback, enabling unbacked Alien TIP-3 minting and transfer through the bridge flow to Ethereum. ChainConnect paused bridge operations and patched affected deployments; a dated post-incident reopening has not been established in the reviewed first-party record.',
+            confidence: 'high',
+            record_maturity: 'reviewed',
+            update_status: 'current',
+            last_reviewed_at: '2026-08-19',
+            last_verified_at: '2026-08-19',
+            aliases: ['Chain Connect'],
+            launch_date: null,
+            launch_date_precision: 'unknown',
+            end_date: null,
+            end_date_precision: 'unknown',
+            terminal_reason: null,
+            official_url: 'https://app.chainconnect.com/',
+            official_domain: 'app.chainconnect.com',
+            official_url_status: 'live_verified',
+            archived_url: null,
+            primary_chains: ['venom', 'ethereum'],
+            primary_assets: ['unknown'],
+            operator_name: 'ChainConnect',
+            operator_type: 'protocol_team',
+            ecosystem_name: 'Venom',
+            related_protocols: ['TVM', 'MultiVault'],
+            brand_history_notes: 'BIR treats ChainConnect as the bridge product identified by its official application, documentation, and announcement channel. Reachability of the application after the incident is not treated as proof that incident-affected bridge routes reopened.',
+            major_incident_count: 1,
+            has_unresolved_incident: true,
+            has_reimbursement_history: false,
+            successor_id: null,
+            predecessor_id: null,
+            replacement_bridge_id: null,
+            duplicate_of: null,
+            merged_into: null,
+            notes: 'The latest explicit reviewed incident-era operational statement records a bridge pause. A later patch and partial attacker-fund return do not by themselves establish bridge reopening or user reimbursement.'
+          });
+
+          appendRecord('data/incidents.json', {
+            id: 'bir_inc_000040',
+            bridge_id: 'bir_bridge_000038',
+            slug: 'chainconnect-2026-alien-proxy-callback-exploit',
+            previous_slugs: [],
+            redirect_from: [],
+            title: 'ChainConnect 2026 Alien Proxy callback exploit',
+            incident_date: '2026-07-26',
+            incident_date_precision: 'day',
+            incident_type: 'exploit',
+            summary: 'On July 26, 2026, an unauthorized caller exploited missing sender verification in a ChainConnect Alien Proxy callback on Venom 2.0, enabling unbacked Alien TIP-3 minting and transfer through the bridge flow to Ethereum. ChainConnect paused bridge operations and patched affected deployments. Venom later reported that 82.9% of affected funds, approximately USD 615,000, had been returned while 17.1% was retained as a whitehat bounty. A dated post-incident bridge reopening has not been established.',
+            confidence: 'high',
+            record_maturity: 'reviewed',
+            update_status: 'current',
+            source_count: 7,
+            last_reviewed_at: '2026-08-19',
+            last_verified_at: '2026-08-19',
+            is_major_incident: true,
+            reported_loss_usd_display: null,
+            reported_loss_usd: null,
+            reported_loss_usd_min: null,
+            reported_loss_usd_max: null,
+            reported_loss_text: 'SlowMist records an approximately USD 650,000 incident estimate. BIR does not promote that figure to a canonical numeric loss because Venom separately reports approximately USD 615,000 as the value of the 82.9% returned portion, and the reviewed sources do not establish identical valuation scope or timing.',
+            reported_loss_assets: ['unknown'],
+            usd_valuation_date: null,
+            loss_amount_basis: 'reported_by_security_firm',
+            amount_confidence: 'disputed',
+            amount_note: 'Keep the secondary approximately-USD-650k gross estimate separate from the first-party approximately-USD-615k returned valuation and 17.1% bounty. They are different claim scopes and are not arithmetically reconciled.',
+            amount_claims: [{
+              amount_text: 'approximately USD 650,000 incident estimate',
+              amount_usd_text: 'approximately USD 650,000',
+              source_id: 'bir_src_000311',
+              basis: 'reported_by_security_firm',
+              notes: 'Secondary security-database estimate retained as a claim, not promoted to reported_loss_usd.'
+            }],
+            recovery_status: 'partial_recovery',
+            reimbursement_status: 'unknown',
+            restart_status: 'paused',
+            current_outcome: 'unknown',
+            is_unresolved: true,
+            unresolved_reason: [
+              'A single first-party gross USD loss figure has not been established.',
+              'The approximately USD 650,000 secondary gross estimate and approximately USD 615,000 first-party returned valuation use different claim scopes and are not silently reconciled.',
+              'Affected-user or bridge-liability reimbursement is not established by the reviewed return and bounty evidence.',
+              'A dated post-incident bridge reopening or later terminal outcome has not been established.'
+            ],
+            affected_chains: ['venom', 'ethereum'],
+            affected_assets: ['unknown'],
+            attack_vector_category: 'smart_contract_bug',
+            postmortem_available: 'available',
+            known_unknowns: [
+              'The exact gross loss and valuation basis remain unresolved.',
+              'The exact composition of drained EVM-side assets is not promoted from the reviewed evidence into a normalized asset list.',
+              'The July 16 maintenance-complete statement predates the July 26 incident and is not post-incident reopen evidence.',
+              'Final reimbursement and current incident-affected route status remain unverified.'
+            ],
+            conflicting_claims: [],
+            duplicate_of: null,
+            merged_into: null,
+            split_from: null,
+            split_reason: null
+          });
+
+          appendRecord('data/events.json', {
+            id: 'bir_ev_000192',
+            bridge_id: 'bir_bridge_000038',
+            incident_id: 'bir_inc_000040',
+            event_type: 'exploit_occurred',
+            event_date: '2026-07-26',
+            event_date_precision: 'day',
+            title: 'ChainConnect callback flaw exploited and bridge operations paused',
+            description: 'Venom and ChainConnect reported an application-level ChainConnect incident involving missing sender verification in an Alien Proxy callback. The incident enabled unauthorized unbacked token minting and movement through the standard bridge flow; ChainConnect paused bridge operations while investigating. BIR does not classify this as a Venom network, relay, validator-key, or privileged-key compromise.',
+            confidence: 'high',
+            record_maturity: 'reviewed',
+            update_status: 'current',
+            impact_level: 'critical',
+            status_effect: 'bridge operations paused',
+            source_count: 2,
+            sort_order: 10,
+            amount_text: null,
+            recovered_amount_text: null,
+            reimbursement_status: 'unknown',
+            restart_status: 'paused',
+            affected_chains: ['venom', 'ethereum'],
+            affected_assets: ['unknown'],
+            notes: 'Safe high-level description only; no exploit reproduction detail is included.',
+            duplicate_of: null,
+            merged_into: null
+          });
+
+          appendRecord('data/events.json', {
+            id: 'bir_ev_000193',
+            bridge_id: 'bir_bridge_000038',
+            incident_id: 'bir_inc_000040',
+            event_type: 'funds_returned',
+            event_date: '2026-07-31',
+            event_date_precision: 'day',
+            title: 'ChainConnect records partial fund return and whitehat bounty settlement',
+            description: 'ChainConnect-authored recovery messaging recorded a 280 ETH return transaction on July 31. Venom later summarized the recovery as 82.9% of affected funds, approximately USD 615,000, returned with 17.1% retained as a whitehat bounty. This is attacker-fund recovery and bounty evidence, not proof of completed user reimbursement or bridge reopening.',
+            confidence: 'high',
+            record_maturity: 'reviewed',
+            update_status: 'current',
+            impact_level: 'high',
+            status_effect: 'partial fund recovery; post-incident reopening unverified',
+            source_count: 4,
+            sort_order: 20,
+            amount_text: null,
+            recovered_amount_text: '82.9% of affected funds (~USD 615,000) reported returned; 17.1% retained as bounty; recovery messaging identifies a 280 ETH return transaction',
+            reimbursement_status: 'unknown',
+            restart_status: 'paused',
+            affected_chains: ['venom', 'ethereum'],
+            affected_assets: ['unknown'],
+            notes: 'The return valuation, return ratio, bounty share, and 280 ETH transaction are retained as separate supported observations rather than collapsed into one inferred gross-loss calculation.',
+            duplicate_of: null,
+            merged_into: null
+          });
+
+          const common = {
+            bridge_id: 'bir_bridge_000038',
+            reliability: 'high',
+            url_status: 'live',
+            archived_url: null,
+            accessed_at: '2026-08-19',
+            language: 'en',
+            quote_excerpt: null,
+            is_paywalled: false,
+            supports_migration: false
+          };
+
+          const sources = [
+            {
+              id: 'bir_src_000304', ...common, incident_id: 'bir_inc_000040', event_id: 'bir_ev_000192',
+              source_type: 'official_social', title: 'ChainConnect Security Incident', url: 'https://t.me/chainconnect_news/6', publisher: 'ChainConnect', published_at: '2026-07', published_at_precision: 'month', source_tier: 'tier_1', claim_scope: 'incident_case', author: 'ChainConnect', is_primary: true, is_official_domain: false,
+              supports_amount: false, supports_recovery: false, supports_reimbursement: false, supports_reopen: false, supports_shutdown: true,
+              notes: 'First-party ChainConnect incident notice supporting the EVM integration breach, bridge-contract liquidity drain, bridge pause, and statement that connected wallets/accounts were not compromised.'
+            },
+            {
+              id: 'bir_src_000305', ...common, incident_id: 'bir_inc_000040', event_id: 'bir_ev_000192',
+              source_type: 'official_social', title: 'ChainConnect security incident update', url: 'https://t.me/VenomFoundationOfficial/408', publisher: 'Venom Foundation', published_at: '2026-07-28', published_at_precision: 'day', source_tier: 'tier_1', claim_scope: 'incident_case', author: 'Venom Foundation', is_primary: true, is_official_domain: false,
+              supports_amount: false, supports_recovery: false, supports_reimbursement: false, supports_reopen: false, supports_shutdown: true,
+              notes: 'Affected-ecosystem first-party update supporting temporary suspension of ChainConnect bridge operations and separating the incident from compromise of the Venom network.'
+            },
+            {
+              id: 'bir_src_000306', ...common, incident_id: 'bir_inc_000040', event_id: 'bir_ev_000193',
+              source_type: 'official_social', title: 'Post-mortem: ChainConnect security incident', url: 'https://t.me/VenomFoundationOfficial/410', publisher: 'Venom Foundation', published_at: '2026-08-01', published_at_precision: 'day', source_tier: 'tier_1', claim_scope: 'recovery', author: 'Venom Foundation', is_primary: true, is_official_domain: false,
+              supports_amount: true, supports_recovery: true, supports_reimbursement: false, supports_reopen: false, supports_shutdown: false,
+              notes: 'First-party ecosystem post-mortem summary supporting the July 26 incident date, missing sender verification in the Alien Proxy callback, scope exclusions, patch, 82.9% (~USD 615k) return, and 17.1% bounty.'
+            },
+            {
+              id: 'bir_src_000307', ...common, incident_id: 'bir_inc_000040', event_id: 'bir_ev_000193',
+              source_type: 'postmortem', title: 'ChainConnect incident post-mortem', url: 'https://t.me/chainconnect_news/9', publisher: 'ChainConnect', published_at: '2026-08', published_at_precision: 'month', source_tier: 'tier_1', claim_scope: 'event', author: 'ChainConnect', is_primary: true, is_official_domain: false,
+              supports_amount: true, supports_recovery: true, supports_reimbursement: false, supports_reopen: false, supports_shutdown: false,
+              notes: 'Direct first-party ChainConnect post-mortem URL referenced by Venom. Publication precision remains conservative because the reviewed public rendering did not independently expose a stable exact day.'
+            },
+            {
+              id: 'bir_src_000308', ...common, incident_id: null, event_id: null,
+              source_type: 'other', title: 'ChainConnect bridge architecture', url: 'https://docs.chainconnect.com/en/relay-based/reference/architecture.html', publisher: 'ChainConnect', published_at: '2026-08-19', published_at_precision: 'approximate', source_tier: 'tier_1', claim_scope: 'bridge_entity', author: 'ChainConnect', is_primary: true, is_official_domain: true,
+              supports_amount: false, supports_recovery: false, supports_reimbursement: false, supports_reopen: false, supports_shutdown: false,
+              notes: 'Current first-party architecture documentation supporting the EVM↔TVM bridge identity and Proxy/MultiVault/relay architecture. It is not post-incident reopen evidence.'
+            },
+            {
+              id: 'bir_src_000309', ...common, incident_id: 'bir_inc_000040', event_id: 'bir_ev_000193',
+              source_type: 'blockchain_analytics_report', title: 'ChainConnect recovery messages and return tracking', url: 'https://t.me/s/defimon_alerts', publisher: 'Defimon', published_at: '2026-07-31', published_at_precision: 'day', source_tier: 'tier_2', claim_scope: 'recovery', author: 'Defimon', is_primary: false, is_official_domain: false,
+              supports_amount: true, supports_recovery: true, supports_reimbursement: false, supports_reopen: false, supports_shutdown: false,
+              notes: 'Independent on-chain monitoring preserving ChainConnect-authored whitehat negotiation and return messages, including identification of the July 31 return transaction.'
+            },
+            {
+              id: 'bir_src_000310', ...common, incident_id: 'bir_inc_000040', event_id: 'bir_ev_000193',
+              source_type: 'other', title: 'ChainConnect 280 ETH return transaction', url: 'https://etherscan.io/tx/0xe78bfae09b6b8fab1057f472f605044dea8d066b73e5012837050a5bc6d6eb00', publisher: 'Etherscan', published_at: '2026-07-31', published_at_precision: 'day', source_tier: 'tier_2', claim_scope: 'recovery', author: null, is_primary: false, is_official_domain: false,
+              supports_amount: true, supports_recovery: true, supports_reimbursement: false, supports_reopen: false, supports_shutdown: false,
+              notes: 'Transaction reference identified by ChainConnect-authored recovery messaging as the 280 ETH return. BIR does not infer a full gross-loss amount from this transaction.'
+            },
+            {
+              id: 'bir_src_000311', ...common, incident_id: 'bir_inc_000040', event_id: null,
+              source_type: 'security_firm_report', title: 'ChainConnect bridge incident entry', url: 'https://hacked.slowmist.io/?c=Bridge&page=1', publisher: 'SlowMist', published_at: '2026-07', published_at_precision: 'month', source_tier: 'tier_2', claim_scope: 'amount', author: 'SlowMist', is_primary: false, is_official_domain: false,
+              supports_amount: true, supports_recovery: false, supports_reimbursement: false, supports_reopen: false, supports_shutdown: false,
+              notes: 'Secondary security-database entry supporting an approximately USD 650k incident estimate. The figure remains a claim and is not promoted to canonical reported_loss_usd because first-party recovery valuation uses a different scope.'
+            }
+          ];
+          for (const source of sources) appendRecord('data/evidence.json', source);
+
+          const next = {
+            bridges: read('data/bridges.json').length,
+            incidents: read('data/incidents.json').length,
+            events: read('data/events.json').length,
+            evidence: read('data/evidence.json').length
+          };
+          if (next.bridges !== 38 || next.incidents !== 40 || next.events !== 193 || next.evidence !== 311) {
+            throw new Error(`unexpected post-application counts ${next.bridges}/${next.incidents}/${next.events}/${next.evidence}`);
+          }
+          console.log(`Staged ChainConnect application: ${next.bridges}/${next.incidents}/${next.events}/${next.evidence}`);
+          NODE
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Validate bounded application
+        run: |
+          npm run validate:data
+          npm run validate:enums
+          npm run audit:full-corpus
+          npm run audit:source-count
+          npm run audit:source-quality
+          git diff --check
+
+      - name: Commit reviewed application to branch only
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/bridges.json data/incidents.json data/events.json data/evidence.json data/reference/chains.json
+          git commit -m "data: stage reviewed ChainConnect 2026 incident"
+          git push origin HEAD:chainconnect-2026-application
