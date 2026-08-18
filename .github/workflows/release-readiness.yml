@@ -99,6 +99,7 @@ jobs:
         run: git diff --exit-code -- data/bridges.json data/incidents.json data/events.json data/evidence.json
 
       - name: Install browser engines for compatibility smoke
+        timeout-minutes: 10
         run: |
           npm install --no-save --ignore-scripts playwright@1.60.0
           npx playwright install --with-deps chromium firefox webkit
