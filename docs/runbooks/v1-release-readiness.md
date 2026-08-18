@@ -1,17 +1,17 @@
 # BIR v1 Release Readiness
 
 Status: active release contract  
-Updated: 2026-08-10
+Updated: 2026-08-19
 
 This runbook defines the final technical gate for Bridge Incident Registry v1. It consolidates the already-reviewed canonical, quality, accessibility, performance, browser-compatibility, dependency-security, and publication checks. It does not weaken or replace any underlying gate.
 
 ## Canonical release baseline
 
 ```text
-Bridges     33
-Incidents   34
-Events      183
-Evidence    287
+Bridges     37
+Incidents   39
+Events      191
+Evidence    303
 ```
 
 A release-readiness run must not mutate canonical data.
@@ -42,7 +42,7 @@ The release is blocked if any high-severity npm audit finding remains, if any so
 
 ## Accessibility contract
 
-The built-output accessibility gate must pass all generated HTML. At the current v1 baseline it covers 73 generated HTML pages.
+The built-output accessibility gate must pass all generated HTML. At the current reviewed baseline it covers 84 generated HTML pages.
 
 The contract includes:
 
@@ -91,7 +91,7 @@ On the merge-to-main run of the release-readiness workflow, BIR additionally exe
 https://bir.badjoke-lab.com
 ```
 
-For this v1 closure change, the release workflow and runbook do not alter public output, so production is expected to remain exactly equal to the canonical build contract.
+For changes that do not alter canonical public content, production is still required to remain exactly equal to the canonical build contract. Legacy redirects are part of that publication contract and both slashless and trailing-slash legacy forms must resolve to the canonical route.
 
 For future changes that alter public output, deployment completion must precede the authoritative production-equality proof. The existing dedicated Production Verification workflow remains the final publication verifier when deployment timing requires a later verification run.
 
@@ -102,7 +102,7 @@ Phase 5 monitoring remains review-only and is not promoted into canonical truth 
 - monitoring never writes canonical records automatically;
 - secondary discovery feeds create hold/review material only;
 - unchanged monitoring state remains silent;
-- Issue #171 or another open review signal does not itself constitute a canonical failure;
+- an open review signal does not itself constitute a canonical failure;
 - public-site health monitoring complements, but does not replace, exhaustive production-content equality verification.
 
 ## Cloudflare boundary
@@ -119,9 +119,9 @@ The release contract does not enable preview deployment.
 BIR v1 technical release closure is complete when:
 
 1. the release-readiness PR passes the consolidated local/static workflow;
-2. the PR is merged to `main` without canonical changes;
+2. the PR is merged to `main` without unintended canonical changes;
 3. the merge-to-main release-readiness run passes all consolidated gates;
-4. production verification reports canonical/public content equality;
+4. production verification reports canonical/public content and redirect equality;
 5. restart/status documents record the accepted release checkpoint.
 
 Any future corpus expansion, monitoring candidate investigation, or research-triggered evidence remediation continues after v1 as normal registry maintenance and does not reopen this technical hardening phase unless a release gate regresses.

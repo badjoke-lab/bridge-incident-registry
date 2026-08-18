@@ -98,10 +98,11 @@ jobs:
       - name: Assert canonical data unchanged
         run: git diff --exit-code -- data/bridges.json data/incidents.json data/events.json data/evidence.json
 
-      - name: Install browser engines for compatibility smoke
+      - name: Prepare pinned Playwright browser runtime
+        timeout-minutes: 10
         run: |
           npm install --no-save --ignore-scripts playwright@1.60.0
-          npx playwright install --with-deps chromium firefox webkit
+          docker pull mcr.microsoft.com/playwright:v1.60.0-noble
 
       - name: Start local static server
         run: |
@@ -115,9 +116,14 @@ jobs:
           exit 1
 
       - name: Run Chromium Firefox WebKit compatibility smoke
-        env:
-          BIR_COMPAT_BASE_URL: http://127.0.0.1:4173
-        run: node scripts/check-browser-compatibility.mjs
+        run: |
+          docker run --rm --ipc=host --network host \
+            -v "$PWD:/work" \
+            -w /work \
+            -e BIR_COMPAT_BASE_URL=http://127.0.0.1:4173 \
+            -e PLAYWRIGHT_BROWSERS_PATH=/ms-playwright \
+            mcr.microsoft.com/playwright:v1.60.0-noble \
+            node scripts/check-browser-compatibility.mjs
 
       - name: Stop local static server
         if: always()
@@ -142,7 +148,7 @@ jobs:
             echo
             echo "- Revision: \`${GITHUB_SHA}\`"
             echo "- Event: \`${GITHUB_EVENT_NAME}\`"
-            echo '- Canonical baseline: `36 bridges / 38 incidents / 190 events / 299 evidence`'
+            echo '- Canonical baseline: `37 bridges / 39 incidents / 191 events / 303 evidence`'
             echo '- Required local gates: dependency security, schema/data, corpus quality, monitoring tests, build, accessibility, performance, dist consistency, Chromium/Firefox/WebKit'
             if [ "${GITHUB_EVENT_NAME}" = 'push' ]; then
               echo '- Production equality: aggregate registry plus every canonical-derived bridge/incident dossier executed in this main-branch run'

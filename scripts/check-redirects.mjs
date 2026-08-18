@@ -43,6 +43,24 @@ const canonicalTargets = new Set([
   ...canonical.data.bridges.map((record) => `/bridge/${record.slug}/`),
   ...canonical.data.incidents.map((record) => `/incident/${record.slug}/`)
 ]);
+
+for (const [records, prefix, label] of [
+  [canonical.data.bridges, "/bridge/", "bridge"],
+  [canonical.data.incidents, "/incident/", "incident"]
+]) {
+  for (const record of records) {
+    const legacySlugs = new Set([...(record.previous_slugs ?? []), ...(record.redirect_from ?? [])]);
+    const destination = `${prefix}${record.slug}/`;
+    for (const slug of legacySlugs) {
+      for (const source of [`${prefix}${slug}`, `${prefix}${slug}/`]) {
+        if (parsed.get(source) !== destination) {
+          errors.push(`${label} ${record.id}: missing exact legacy redirect ${source} -> ${destination}`);
+        }
+      }
+    }
+  }
+}
+
 for (const [source, destination] of parsed) {
   if (source === destination) errors.push(`public/_redirects: self redirect ${source}`);
   if (!canonicalTargets.has(destination)) errors.push(`public/_redirects: missing canonical target ${destination}`);
