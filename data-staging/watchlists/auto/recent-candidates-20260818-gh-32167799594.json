@@ -1,0 +1,387 @@
+{
+  "run_id": "gh-32167799594",
+  "observed_at": "2026-08-18T17:51:16Z",
+  "candidates": [
+    {
+      "candidate_id": "defillama_bridge_75",
+      "canonical_name": "Layerswap",
+      "aliases": [],
+      "candidate_class": "C",
+      "likely_type": "bridge_or_interoperability_protocol",
+      "likely_status": "unknown",
+      "likely_incident_type": "unknown",
+      "record_shape": "hold",
+      "headline": "Layerswap is new or materially changed in the external DefiLlama bridge registry",
+      "bir_relevance": "External bridge-registry change is a discovery signal only. It does not establish a BIR incident, loss, shutdown, recovery, or canonical inclusion boundary.",
+      "duplicate_check": {
+        "matched_existing_record": false,
+        "method": "exact canonical name/alias/slug and official-domain check"
+      },
+      "external_source": {
+        "provider": "DefiLlama",
+        "source_id": "defillama-bridges-server",
+        "external_bridge_id": 75,
+        "bridge_db_name": "layerswap",
+        "slug": null,
+        "chains": [
+          "Ethereum",
+          "Arbitrum",
+          "Arbitrum Nova",
+          "Optimism",
+          "Base",
+          "Linea",
+          "Blast",
+          "Scroll",
+          "BSC",
+          "X Layer",
+          "Taiko",
+          "ZKsync Era",
+          "Mode",
+          "Manta",
+          "Polygon zkEVM",
+          "Polygon",
+          "Avalanche",
+          "opBNB",
+          "Gravity",
+          "BOB",
+          "Mantle",
+          "Zora",
+          "Fraxtal",
+          "Fuse",
+          "Gnosis",
+          "Ancient8",
+          "Celo",
+          "Immutable zkEVM",
+          "Kaia",
+          "Lisk",
+          "Rari",
+          "Shape",
+          "Superseed",
+          "World Chain",
+          "Xai",
+          "Zircuit",
+          "Sei",
+          "0G",
+          "Abstract",
+          "Berachain",
+          "Flare",
+          "Hyperliquid",
+          "Ink",
+          "Katana",
+          "LightLink",
+          "MegaETH",
+          "Monad",
+          "Morph",
+          "Plasma",
+          "Robinhood",
+          "Ronin",
+          "Rootstock",
+          "Soneium",
+          "Sonic",
+          "Sophon",
+          "Superposition",
+          "Stable",
+          "Telos",
+          "Tempo",
+          "Unichain",
+          "Bitcoin",
+          "Solana",
+          "Eclipse",
+          "Starknet",
+          "Paradex",
+          "TON",
+          "Tron",
+          "Fuel"
+        ]
+      },
+      "source_urls": [
+        "https://raw.githubusercontent.com/DefiLlama/bridges-server/master/src/data/bridgeNetworkData.ts",
+        "https://layerswap.io/app"
+      ],
+      "source_quality": "secondary_registry",
+      "next_action": "correlate_with_incident_or_status_signal_before_research"
+    },
+    {
+      "candidate_id": "defillama_hack_26f57f2e346050f6",
+      "canonical_name": "TAC Protocol",
+      "aliases": [],
+      "candidate_class": "C",
+      "likely_type": "unresolved_bridge_security_incident_signal",
+      "likely_status": "unknown",
+      "likely_incident_type": "exploit",
+      "record_shape": "hold",
+      "headline": "TAC Protocol appears as a new or materially changed bridge hack record",
+      "bir_relevance": "The DefiLlama hacks discovery input marks this row as bridgeHack=true, but no exact canonical BIR bridge identity was resolved. The incident and bridge identity must be reviewed before canonical work.",
+      "duplicate_check": {
+        "matched_existing_record": false,
+        "method": "bridgeHack=true without exact canonical hack-name identity"
+      },
+      "incident_feed": {
+        "provider": "DefiLlama",
+        "source_id": "defillama-hacks-discovery",
+        "date": "2026-05-11",
+        "amount_usd": 2854486,
+        "chains": [
+          "TAC",
+          "TON"
+        ],
+        "classification": "Bridge & Cross-Chain",
+        "technique": "Proof Verifier Bug",
+        "target": "DeFi Protocol",
+        "bridge_flag": true
+      },
+      "source_urls": [
+        "https://api.llama.fi/hacks"
+      ],
+      "source_quality": "secondary_incident_database",
+      "next_action": "resolve_bridge_identity_and_locate_primary_source"
+    },
+    {
+      "candidate_id": "defillama_hack_b6108b100cd604c2",
+      "canonical_name": "Syndicate",
+      "aliases": [],
+      "candidate_class": "C",
+      "likely_type": "unresolved_bridge_security_incident_signal",
+      "likely_status": "unknown",
+      "likely_incident_type": "exploit",
+      "record_shape": "hold",
+      "headline": "Syndicate appears as a new or materially changed bridge hack record",
+      "bir_relevance": "The DefiLlama hacks discovery input marks this row as bridgeHack=true, but no exact canonical BIR bridge identity was resolved. The incident and bridge identity must be reviewed before canonical work.",
+      "duplicate_check": {
+        "matched_existing_record": false,
+        "method": "bridgeHack=true without exact canonical hack-name identity"
+      },
+      "incident_feed": {
+        "provider": "DefiLlama",
+        "source_id": "defillama-hacks-discovery",
+        "date": "2026-04-29",
+        "amount_usd": 380000,
+        "chains": [
+          "Base"
+        ],
+        "classification": "Bridge & Cross-Chain",
+        "technique": "Bridge Logic Flaw",
+        "target": "DeFi Protocol",
+        "bridge_flag": true
+      },
+      "source_urls": [
+        "https://api.llama.fi/hacks"
+      ],
+      "source_quality": "secondary_incident_database",
+      "next_action": "resolve_bridge_identity_and_locate_primary_source"
+    },
+    {
+      "candidate_id": "defillama_hack_a5e67688a8298e76",
+      "canonical_name": "ZetaChain",
+      "aliases": [],
+      "candidate_class": "C",
+      "likely_type": "unresolved_bridge_security_incident_signal",
+      "likely_status": "unknown",
+      "likely_incident_type": "exploit",
+      "record_shape": "hold",
+      "headline": "ZetaChain appears as a new or materially changed bridge hack record",
+      "bir_relevance": "The DefiLlama hacks discovery input marks this row as bridgeHack=true, but no exact canonical BIR bridge identity was resolved. The incident and bridge identity must be reviewed before canonical work.",
+      "duplicate_check": {
+        "matched_existing_record": false,
+        "method": "bridgeHack=true without exact canonical hack-name identity"
+      },
+      "incident_feed": {
+        "provider": "DefiLlama",
+        "source_id": "defillama-hacks-discovery",
+        "date": "2026-04-27",
+        "amount_usd": 333868,
+        "chains": [
+          "Arbitrum",
+          "Avalanche",
+          "BSC",
+          "Base",
+          "Ethereum",
+          "Polygon"
+        ],
+        "classification": "Access Control",
+        "technique": "Token Approval Abuse",
+        "target": "Chain",
+        "bridge_flag": true
+      },
+      "source_urls": [
+        "https://api.llama.fi/hacks"
+      ],
+      "source_quality": "secondary_incident_database",
+      "next_action": "resolve_bridge_identity_and_locate_primary_source"
+    },
+    {
+      "candidate_id": "defillama_hack_ce84d9712ae62315",
+      "canonical_name": "Kelp",
+      "aliases": [],
+      "candidate_class": "C",
+      "likely_type": "unresolved_bridge_security_incident_signal",
+      "likely_status": "unknown",
+      "likely_incident_type": "exploit",
+      "record_shape": "hold",
+      "headline": "Kelp appears as a new or materially changed bridge hack record",
+      "bir_relevance": "The DefiLlama hacks discovery input marks this row as bridgeHack=true, but no exact canonical BIR bridge identity was resolved. The incident and bridge identity must be reviewed before canonical work.",
+      "duplicate_check": {
+        "matched_existing_record": false,
+        "method": "bridgeHack=true without exact canonical hack-name identity"
+      },
+      "incident_feed": {
+        "provider": "DefiLlama",
+        "source_id": "defillama-hacks-discovery",
+        "date": "2026-04-18",
+        "amount_usd": 293000000,
+        "chains": [
+          "Arbitrum",
+          "Ethereum"
+        ],
+        "classification": "Bridge & Cross-Chain",
+        "technique": "Cross-Chain Message Spoofing",
+        "target": "DeFi Protocol",
+        "bridge_flag": true
+      },
+      "source_urls": [
+        "https://api.llama.fi/hacks"
+      ],
+      "source_quality": "secondary_incident_database",
+      "next_action": "resolve_bridge_identity_and_locate_primary_source"
+    },
+    {
+      "candidate_id": "defillama_hack_b32601ae26b06693",
+      "canonical_name": "Hyperbridge",
+      "aliases": [],
+      "candidate_class": "C",
+      "likely_type": "unresolved_bridge_security_incident_signal",
+      "likely_status": "unknown",
+      "likely_incident_type": "exploit",
+      "record_shape": "hold",
+      "headline": "Hyperbridge appears as a new or materially changed bridge hack record",
+      "bir_relevance": "The DefiLlama hacks discovery input marks this row as bridgeHack=true, but no exact canonical BIR bridge identity was resolved. The incident and bridge identity must be reviewed before canonical work.",
+      "duplicate_check": {
+        "matched_existing_record": false,
+        "method": "bridgeHack=true without exact canonical hack-name identity"
+      },
+      "incident_feed": {
+        "provider": "DefiLlama",
+        "source_id": "defillama-hacks-discovery",
+        "date": "2026-04-12",
+        "amount_usd": 2500000,
+        "chains": [
+          "Arbitrum",
+          "BSC",
+          "Base",
+          "Ethereum"
+        ],
+        "classification": "Bridge & Cross-Chain",
+        "technique": "Forged Proof",
+        "target": "DeFi Protocol",
+        "bridge_flag": true
+      },
+      "source_urls": [
+        "https://api.llama.fi/hacks"
+      ],
+      "source_quality": "secondary_incident_database",
+      "next_action": "resolve_bridge_identity_and_locate_primary_source"
+    },
+    {
+      "candidate_id": "defillama_hack_318d4975a91f3b23",
+      "canonical_name": "Aethir",
+      "aliases": [],
+      "candidate_class": "C",
+      "likely_type": "unresolved_bridge_security_incident_signal",
+      "likely_status": "unknown",
+      "likely_incident_type": "exploit",
+      "record_shape": "hold",
+      "headline": "Aethir appears as a new or materially changed bridge hack record",
+      "bir_relevance": "The DefiLlama hacks discovery input marks this row as bridgeHack=true, but no exact canonical BIR bridge identity was resolved. The incident and bridge identity must be reviewed before canonical work.",
+      "duplicate_check": {
+        "matched_existing_record": false,
+        "method": "bridgeHack=true without exact canonical hack-name identity"
+      },
+      "incident_feed": {
+        "provider": "DefiLlama",
+        "source_id": "defillama-hacks-discovery",
+        "date": "2026-04-09",
+        "amount_usd": 400000,
+        "chains": [
+          "BSC"
+        ],
+        "classification": "Access Control",
+        "technique": "Improper Access Control",
+        "target": "DeFi Protocol",
+        "bridge_flag": true
+      },
+      "source_urls": [
+        "https://api.llama.fi/hacks"
+      ],
+      "source_quality": "secondary_incident_database",
+      "next_action": "resolve_bridge_identity_and_locate_primary_source"
+    },
+    {
+      "candidate_id": "defillama_hack_153d38924d6b38bc",
+      "canonical_name": "DGLD",
+      "aliases": [],
+      "candidate_class": "C",
+      "likely_type": "unresolved_bridge_security_incident_signal",
+      "likely_status": "unknown",
+      "likely_incident_type": "exploit",
+      "record_shape": "hold",
+      "headline": "DGLD appears as a new or materially changed bridge hack record",
+      "bir_relevance": "The DefiLlama hacks discovery input marks this row as bridgeHack=true, but no exact canonical BIR bridge identity was resolved. The incident and bridge identity must be reviewed before canonical work.",
+      "duplicate_check": {
+        "matched_existing_record": false,
+        "method": "bridgeHack=true without exact canonical hack-name identity"
+      },
+      "incident_feed": {
+        "provider": "DefiLlama",
+        "source_id": "defillama-hacks-discovery",
+        "date": "2026-02-23",
+        "amount_usd": 250000,
+        "chains": [
+          "Base"
+        ],
+        "classification": "Token & Share Accounting",
+        "technique": "Infinite Mint",
+        "target": "DeFi Protocol",
+        "bridge_flag": true
+      },
+      "source_urls": [
+        "https://api.llama.fi/hacks"
+      ],
+      "source_quality": "secondary_incident_database",
+      "next_action": "resolve_bridge_identity_and_locate_primary_source"
+    },
+    {
+      "candidate_id": "defillama_hack_e7d1047a33dc309d",
+      "canonical_name": "IoTeX",
+      "aliases": [],
+      "candidate_class": "C",
+      "likely_type": "unresolved_bridge_security_incident_signal",
+      "likely_status": "unknown",
+      "likely_incident_type": "exploit",
+      "record_shape": "hold",
+      "headline": "IoTeX appears as a new or materially changed bridge hack record",
+      "bir_relevance": "The DefiLlama hacks discovery input marks this row as bridgeHack=true, but no exact canonical BIR bridge identity was resolved. The incident and bridge identity must be reviewed before canonical work.",
+      "duplicate_check": {
+        "matched_existing_record": false,
+        "method": "bridgeHack=true without exact canonical hack-name identity"
+      },
+      "incident_feed": {
+        "provider": "DefiLlama",
+        "source_id": "defillama-hacks-discovery",
+        "date": "2026-02-21",
+        "amount_usd": 4400000,
+        "chains": [
+          "Ethereum"
+        ],
+        "classification": "Key Compromise",
+        "technique": "Validator Key Compromised",
+        "target": "DeFi Protocol",
+        "bridge_flag": true
+      },
+      "source_urls": [
+        "https://api.llama.fi/hacks"
+      ],
+      "source_quality": "secondary_incident_database",
+      "next_action": "resolve_bridge_identity_and_locate_primary_source"
+    }
+  ]
+}

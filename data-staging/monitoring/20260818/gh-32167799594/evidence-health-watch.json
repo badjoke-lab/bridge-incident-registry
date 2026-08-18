@@ -1,0 +1,211 @@
+{
+  "findings": [],
+  "probes": [
+    {
+      "evidence_id": "bir_src_000193",
+      "url": "https://twitter.com/syndicateio/status/2049352309784904187",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://x.com/syndicateio/status/2049352309784904187",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://x.com/syndicateio/status/2049352309784904187",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000194",
+      "url": "https://x.com/syndicateio/status/2057291537860706672",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://x.com/syndicateio/status/2057291537860706672",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://x.com/syndicateio/status/2057291537860706672",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000195",
+      "url": "https://commons.syndicate.io/",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://commons.syndicate.io/",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://commons.syndicate.io/",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000196",
+      "url": "https://docs.syndicate.io/en/docs/synd/bridging",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://docs.syndicate.io/en/docs/synd/bridging",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://docs.syndicate.io/en/docs/synd/bridging",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000197",
+      "url": "https://www.theblock.co/post/399318/syndicate-exploit",
+      "first": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://www.theblock.co/post/399318/syndicate-exploit",
+        "error": null
+      },
+      "second": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://www.theblock.co/post/399318/syndicate-exploit",
+        "error": null
+      },
+      "classification": "blocked"
+    },
+    {
+      "evidence_id": "bir_src_000198",
+      "url": "https://www.darknavy.org/web3/exploits/syndicate-commons-bridge-upgrade-compromise/",
+      "first": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.darknavy.org/web3/exploits/syndicate-commons-bridge-upgrade-compromise/",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 206,
+        "final_url": "https://www.darknavy.org/web3/exploits/syndicate-commons-bridge-upgrade-compromise/",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000199",
+      "url": "https://www.theblock.co/post/402130/syndicate-labs-wind-down",
+      "first": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://www.theblock.co/post/402130/syndicate-labs-wind-down",
+        "error": null
+      },
+      "second": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://www.theblock.co/post/402130/syndicate-labs-wind-down",
+        "error": null
+      },
+      "classification": "blocked"
+    },
+    {
+      "evidence_id": "bir_src_000200",
+      "url": "https://blog.roninchain.com/p/the-ronin-bridge-is-open-",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://blog.roninchain.com/p/the-ronin-bridge-is-open-",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://blog.roninchain.com/p/the-ronin-bridge-is-open-",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000201",
+      "url": "https://blog.roninchain.com/p/the-ronin-bridge-is-open-",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://blog.roninchain.com/p/the-ronin-bridge-is-open-",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://blog.roninchain.com/p/the-ronin-bridge-is-open-",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000202",
+      "url": "https://x.com/wormhole/status/1489232008521859079",
+      "first": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://x.com/wormhole/status/1489232008521859079",
+        "error": null
+      },
+      "second": {
+        "ok": true,
+        "status": 200,
+        "final_url": "https://x.com/wormhole/status/1489232008521859079",
+        "error": null
+      },
+      "classification": "healthy"
+    },
+    {
+      "evidence_id": "bir_src_000203",
+      "url": "https://medium.com/poly-network/poly-network-mainnet-upgrade-goes-live-d708f4fa2cf1",
+      "first": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://medium.com/poly-network/poly-network-mainnet-upgrade-goes-live-d708f4fa2cf1",
+        "error": null
+      },
+      "second": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://medium.com/poly-network/poly-network-mainnet-upgrade-goes-live-d708f4fa2cf1",
+        "error": null
+      },
+      "classification": "blocked"
+    },
+    {
+      "evidence_id": "bir_src_000204",
+      "url": "https://medium.com/poly-network/poly-network-monthly-report-sep-a4cdd9f3fb7a",
+      "first": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://medium.com/poly-network/poly-network-monthly-report-sep-a4cdd9f3fb7a",
+        "error": null
+      },
+      "second": {
+        "ok": false,
+        "status": 403,
+        "final_url": "https://medium.com/poly-network/poly-network-monthly-report-sep-a4cdd9f3fb7a",
+        "error": null
+      },
+      "classification": "blocked"
+    }
+  ],
+  "selected_count": 12,
+  "live_evidence_count": 311
+}
