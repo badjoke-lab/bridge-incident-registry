@@ -1,0 +1,97 @@
+name: AFX Medium Archive Review
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/afx-medium-archive-review.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Review exact AFX first-party URLs against Wayback
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          urls=(
+            'https://medium.com/@AFXTrade/a-detailed-post-mortem-on-the-afx-security-incident-57d564ef812f'
+            'https://medium.com/@AFXTrade/afx-bridge-incident-what-happened-what-we-learned-and-what-comes-next-d97387746012'
+          )
+          published=(
+            '20260731'
+            '20260725'
+          )
+
+          accepted_total=0
+          checked_total=0
+
+          query_cdx() {
+            local url="$1"
+            local encoded
+            encoded="$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$url")"
+            curl --fail-with-body --silent --show-error --location \
+              --retry 3 --retry-delay 2 --connect-timeout 15 --max-time 90 \
+              "https://web.archive.org/cdx/search/cdx?url=${encoded}&output=json&fl=timestamp,original,statuscode,mimetype,digest,length&filter=statuscode:200&filter=mimetype:text/html&from=2026&to=2026&collapse=digest"
+          }
+
+          for pass in 1 2; do
+            echo "=== DISCOVERY / REPLAY PASS ${pass} ==="
+            for i in "${!urls[@]}"; do
+              url="${urls[$i]}"
+              pub="${published[$i]}"
+              echo "SOURCE=$url"
+              echo "PUBLISHED_NOT_BEFORE=$pub"
+
+              cdx="$(query_cdx "$url")"
+              echo "$cdx" | jq -e 'type == "array"' >/dev/null
+              rows="$(echo "$cdx" | jq 'if length > 1 then .[1:] else [] end')"
+              count="$(echo "$rows" | jq 'length')"
+              echo "CDX_ROWS=$count"
+
+              accepted_this_source=0
+              while IFS=$'\t' read -r ts original status mime digest archived_length; do
+                test -n "${ts:-}" || continue
+                checked_total=$((checked_total + 1))
+
+                if [[ "$original" != "$url" ]]; then
+                  echo "REJECT timestamp=$ts reason=original_url_mismatch original=$original"
+                  continue
+                fi
+                if [[ "${ts:0:8}" < "$pub" ]]; then
+                  echo "REJECT timestamp=$ts reason=predates_publication"
+                  continue
+                fi
+
+                tmpdir="$(mktemp -d)"
+                replay="https://web.archive.org/web/${ts}id_/${original}"
+                http="$(curl --silent --show-error --location \
+                  --retry 2 --retry-delay 2 --connect-timeout 15 --max-time 90 \
+                  --dump-header "$tmpdir/headers" --output "$tmpdir/body" \
+                  --write-out '%{http_code}' "$replay" || true)"
+                bytes="$(wc -c < "$tmpdir/body" 2>/dev/null || echo 0)"
+                ctype="$(awk 'BEGIN{IGNORECASE=1} /^content-type:/ {gsub("\r",""); v=$0} END{sub(/^[^:]+:[[:space:]]*/,"",v); print v}' "$tmpdir/headers" 2>/dev/null || true)"
+
+                if [[ "$http" == "200" && "$ctype" == *"text/html"* && "$bytes" -ge 65536 ]]; then
+                  echo "ACCEPT timestamp=$ts http=$http content_type=$ctype bytes=$bytes digest=$digest archived_length=$archived_length replay=$replay"
+                  accepted_this_source=$((accepted_this_source + 1))
+                  accepted_total=$((accepted_total + 1))
+                else
+                  echo "REJECT timestamp=$ts http=$http content_type=$ctype bytes=$bytes reason=replay_contract_failed replay=$replay"
+                fi
+                rm -rf "$tmpdir"
+              done < <(echo "$rows" | jq -r '.[] | @tsv')
+
+              echo "ACCEPTED_THIS_SOURCE_PASS=$accepted_this_source"
+            done
+          done
+
+          echo "=== FINAL ==="
+          echo "CHECKED_REPLAYS=$checked_total"
+          echo "ACCEPTED_ACROSS_TWO_PASSES=$accepted_total"
+          echo 'Review execution completed. Zero accepted captures is a valid evidence-blocked result; transport/query failures are not.'
