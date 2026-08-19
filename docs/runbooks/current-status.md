@@ -1,7 +1,7 @@
 # Current Status — Bridge Incident Registry
 
 Status: active maintenance — Ledger Series Phase 2 complete  
-Updated: 2026-08-18
+Updated: 2026-08-20
 
 ## Canonical and production state
 
@@ -12,46 +12,44 @@ Events      193
 Evidence    311
 ```
 
-Latest completed horizontal milestone is Ledger Series Phase 2 Stage 8 and its production closeout.
+Ledger Series Phase 2 remains closed. Later reviewed maintenance added WanBridge and ChainConnect without reopening Phase 2.
 
 ```text
-Stage 8 canonical PR                 #294
-Publication checkpoint               #295
-Production retrigger PR              #296
-Verified main revision               6fe188ea4979d38c32a3a9a4558537c87b733610
-V1 Release Readiness main run        32041737878
-Release-readiness job                95422149652
-Production registry equality         success
-Canonical HTML routes                82
-Bridge dossiers verified             36
-Incident dossiers verified           38
+Canonical data PR                   #314
+Canonical merge                     aa11872fe237c295dae5d5a0a41d283fcde21aab
+Production verification audit PR    #318
+Production Verification run         32167991271
+Production Verification job         95812037176
+Publication attempt                 1
+Generated at                        2026-08-18T17:51:37.950Z
+Production equality                 success
+Canonical HTML routes               86
+Legacy redirects                    80
+Bridge dossiers verified            38 / 38
+Incident dossiers verified          40 / 40
 ```
 
-The successful production verifier observed canonical production content on attempt 1 at `36 / 38 / 190 / 299`, then passed aggregate registry and record-level dossier equality.
+The successful production verifier observed exact canonical-derived content on attempt 1 and passed aggregate registry, all 38 bridge dossiers, all 40 incident dossiers, 86 canonical HTML routes, and 80 redirects. Both legacy Wanchain URL forms correctly redirect to `/bridge/wanbridge/`.
 
 ## Current quality boundary
 
 ```text
-Primary evidence                         215 / 299
-Tier 1 evidence                          232 / 299
-Evidence with archived_url               130 / 299
-Incidents without primary                  1 / 38
-Incidents without Tier 1                   1 / 38
-Events without primary                    11 / 190
-Events without Tier 1                       6 / 190
-Terminal unarchived unique URLs           15
-Risky-host unarchived unique URLs         16
-Unknown URL status                         0
-Incident source-count mismatches           0
-Event source-count mismatches              0
-Full-corpus blocking errors                0
-Full-corpus warning categories            {}
-High-severity npm audit findings           0
+Incident source-count mismatches       0
+Event source-count mismatches          0
+Primary evidence                     222 / 311
+Tier 1 evidence                      239 / 311
+Evidence with archived_url           130 / 311
+Incidents without primary              1 / 40
+Incidents without Tier 1               1 / 40
+Events without primary                11 / 193
+Events without Tier 1                  6 / 193
+Terminal unarchived unique URLs       15
+Risky-host unarchived unique URLs     16
+Unknown URL status                     0
+Full-corpus blocking errors            0
+Full-corpus warning categories        {}
+High-severity npm audit findings       0
 ```
-
-The two Stage 8 lifecycle warnings are resolved. `bir_inc_000015` now has the reviewed discrete reimbursement-completed event; `bir_inc_000035` now has the reviewed discrete bridge-reopened event. No unrelated canonical expansion or schema change was included in that batch.
-
-Known quality gaps that are not Stage 8 warnings remain governed by the source-quality no-regression baseline. They must not be filled by inference or by weakening evidence requirements.
 
 ## Ledger Series Phase 2 status
 
@@ -97,7 +95,8 @@ Current performance ceilings remain 16 KiB gzip max HTML, 5 KiB CSS total/max fi
 ## Ongoing work
 
 1. continue reviewed first-party-backed incident and evidence maintenance;
-2. keep monitoring/candidate work review-only and fail-closed;
-3. preserve canonical unknowns and recovery/reimbursement/restart/outcome distinctions;
-4. preserve all source-quality, accessibility, performance, browser, machine-readable and production-equality guards;
-5. use `docs/operations/current-position.md` and `docs/runbooks/recovery-checkpoint.md` as restart pointers; do not resume from historical Syscoin-era counts or run IDs.
+2. current evidence-gated targets are #303 AFX, #279 XRPL-TX, #299 Nerve, #171 Boltz, and #270 Oraichain under their latest review audits/comments;
+3. keep monitoring/candidate work review-only and fail-closed;
+4. preserve canonical unknowns and recovery/reimbursement/restart/outcome distinctions;
+5. preserve all source-quality, accessibility, performance, browser, machine-readable and production-equality guards;
+6. use `docs/operations/current-position.md` and `docs/runbooks/recovery-checkpoint.md` as restart pointers; do not resume from historical Stage 8 or earlier counts/run IDs.

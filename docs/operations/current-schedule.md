@@ -1,7 +1,7 @@
 # BIR implementation schedule
 
 Status: active maintenance — Ledger Series Phase 2 complete  
-Updated: 2026-08-18
+Updated: 2026-08-20
 
 The authoritative BIR maintenance roadmap is `docs/runbooks/development-roadmap.md`; the restart point is `docs/runbooks/recovery-checkpoint.md`. The Ledger Series horizontal roadmap is governed by `docs/ai-era-execution-schedule.md` and `docs/ai-era-registry-spec.md`.
 
@@ -24,13 +24,13 @@ BIR's historical internal Phase 0–5 numbering and the cross-series **Ledger Se
 ## Current canonical baseline
 
 ```text
-Bridges     36
-Incidents   38
-Events      190
-Evidence    299
+Bridges     38
+Incidents   40
+Events      193
+Evidence    311
 ```
 
-This is the production-verified Stage 8 baseline. Historical `34 / 36 / 185 / 293` and `36 / 38 / 188 / 297` restart text is not current canonical truth.
+This is current canonical and production-verified truth. The latest canonical maintenance additions are WanBridge and ChainConnect; the ChainConnect publication audit in PR #318 proved full production equality at this baseline. Historical Stage 8 `36 / 38 / 190 / 299` and earlier restart counts remain history only.
 
 ## Ledger Series Phase 2 execution
 
@@ -48,23 +48,22 @@ This is the production-verified Stage 8 baseline. Historical `34 / 36 / 185 / 29
 ## Current quality checkpoint
 
 ```text
-Primary evidence                  215 / 299
-Tier 1 evidence                   232 / 299
-Archived evidence                 130 / 299
-Incidents without primary           1 / 38
-Incidents without Tier 1            1 / 38
-Events without primary             11 / 190
-Events without Tier 1                6 / 190
-Terminal unarchived URLs           15
-Risky-host unarchived URLs         16
-Unknown URL status                  0
-Source-count mismatches              0
-Full-corpus blocking errors          0
-Full-corpus warning categories      {}
-High-severity npm audit              0
+Incident source-count mismatches       0
+Event source-count mismatches          0
+Primary evidence                     222 / 311
+Tier 1 evidence                      239 / 311
+Evidence with archived_url           130 / 311
+Incidents without primary              1 / 40
+Incidents without Tier 1               1 / 40
+Events without primary                11 / 193
+Events without Tier 1                  6 / 193
+Terminal unarchived unique URLs       15
+Risky-host unarchived unique URLs     16
+Unknown URL status                     0
+Full-corpus blocking errors            0
+Full-corpus warning categories        {}
+High-severity npm audit findings       0
 ```
-
-Source-quality no-regression limits were not widened for Stage 8.
 
 ## Permanent release boundary
 
@@ -83,6 +82,8 @@ Current performance ceilings remain 16 KiB gzip max HTML, 5 KiB CSS total/max fi
 ## Immediate execution order
 
 1. keep BIR in steady-state reviewed maintenance: monitoring, evidence health, high-severity corrections, and properly reviewed new incidents;
-2. preserve canonical/schema semantics and every permanent release/source-quality guard;
-3. do **not** invent a Ledger Series Stage 9;
-4. for the cross-series roadmap, read the latest authority in the target repository before starting work. `docs/ai-era-registry-spec.md` names **SOG** as the next series after the completed BIR pilot.
+2. current evidence-gated maintenance targets are Issue #303 AFX Trade, #279 XRPL-TX follow-up, #299 Nerve first-party enrichment, #171 Boltz shutdown signal, and #270 Oraichain cross-chain signal;
+3. PRs #319–#322 are review-only authority/audit work and do not change the `38 / 40 / 193 / 311` canonical/public baseline;
+4. preserve canonical/schema semantics and every permanent release/source-quality guard;
+5. do **not** invent a Ledger Series Stage 9;
+6. for the cross-series roadmap, read the latest authority in the target repository before starting work. `docs/ai-era-registry-spec.md` names **SOG** as the next series after the completed BIR pilot.
