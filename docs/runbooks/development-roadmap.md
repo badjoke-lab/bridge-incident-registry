@@ -1,7 +1,7 @@
 # Bridge Incident Registry — Development Roadmap to v1
 
 Status: active maintenance  
-Updated: 2026-08-18
+Updated: 2026-08-20
 
 GitHub state and canonical JSON are authoritative. Ledger Series Phase 2 horizontal strengthening is complete; this document now describes BIR's continuing maintenance, Phase 3 quality, and Phase 5 monitoring work.
 
@@ -17,16 +17,21 @@ Evidence    311
 Latest production-verified canonical maintenance:
 
 ```text
-Stage 8 canonical PR                 #294
-Phase 2 closeout PR                  #297 (docs only)
-V1 Release Readiness main run        32041737878
-Production equality                  success
-Canonical HTML routes                82
-Bridge dossiers verified             36 / 36
-Incident dossiers verified           38 / 38
+Canonical data PR                   #314
+Canonical merge                     aa11872fe237c295dae5d5a0a41d283fcde21aab
+Production verification audit PR    #318
+Production Verification run         32167991271
+Production Verification job         95812037176
+Publication attempt                 1
+Generated at                        2026-08-18T17:51:37.950Z
+Production equality                 success
+Canonical HTML routes               86
+Legacy redirects                    80
+Bridge dossiers verified            38 / 38
+Incident dossiers verified          40 / 40
 ```
 
-The Stage 8 canonical batch added only the two reviewed discrete lifecycle events and their minimum event-scoped first-party evidence. No schema expansion, ranking, generated safety conclusion, or unrelated incident growth was included.
+The completed Ledger Series Phase 2 baseline was later extended through reviewed maintenance: WanBridge (PR #308) and ChainConnect (review #313, canonical #314, production verification #318). These additions do not create or reopen a Ledger Series Stage 9.
 
 ## Current position
 
@@ -61,13 +66,13 @@ Maintain Reviewed canonical/candidate expansion    active
 ```text
 Incident source-count mismatches       0
 Event source-count mismatches          0
-Primary evidence                     215 / 299
-Tier 1 evidence                      232 / 299
-Evidence with archived_url           130 / 299
-Incidents without primary              1 / 38
-Incidents without Tier 1               1 / 38
-Events without primary                11 / 190
-Events without Tier 1                  6 / 190
+Primary evidence                     222 / 311
+Tier 1 evidence                      239 / 311
+Evidence with archived_url           130 / 311
+Incidents without primary              1 / 40
+Incidents without Tier 1               1 / 40
+Events without primary                11 / 193
+Events without Tier 1                  6 / 193
 Terminal unarchived unique URLs       15
 Risky-host unarchived unique URLs     16
 Unknown URL status                     0
@@ -91,25 +96,31 @@ Both additions use already-reviewed first-party evidence and the minimum event-s
 
 ## Active maintenance research boundaries
 
+### AFX Trade — Issue #303
+
+The July 22 custody-bridge incident shape is reviewed, including the supply-chain/infrastructure-to-validator compromise boundary and the 24,150,000 USDC transaction. Both located first-party AFX Medium sources fail the unchanged risky-host archive-admission boundary, so canonical application remains evidence-blocked.
+
 ### XRPL-TX Bridge — Issue #279
 
-`bir_inc_000038` is canonical and valid but intentionally incomplete. The active research target is first-party or reproducible on-chain evidence for the 2026-08-09 incident's transfer sequence, incident-specific root cause, recovery, reimbursement, remediation, and restart/current outcome.
+`bir_inc_000038` is canonical. Later tx statements materially improve the root-cause boundary toward `message_verification_failure` and announce Foundation-funded reserve replenishment / affected-user make-whole intent, but stable direct first-party locators/preservation and the 199,916.3 versus 198,715.88 XRP discrepancy still block canonical follow-up. Do not equate reserve backfill with attacker-fund recovery.
 
-A 2026-08-18 recheck confirmed current first-party TX bridge architecture documentation but did not locate incident-specific first-party aftermath material or a stable investigation package sufficient to change canonical state. Generic bridge documentation or a reachable interface is not proof that the affected route reopened. Keep `attack_vector_category` and unresolved aftermath fields at their reviewed unknown boundary unless stronger evidence appears.
+### Nerve Bridge — Issue #299
 
-### Oraichain — Issue #270
-
-The 2026-08-08 signal remains monitoring/review material only. The DefiLlama discovery row is secondary evidence, the exact affected bridge/component remains unresolved, and no canonical incident may be created until a primary source or equivalent reproducible evidence establishes the event boundary and lifecycle facts.
+The November 2021 incident remains the sole incident-level primary/Tier 1 gap. Rechecks still locate BlockSec/Halborn technical analyses and generic Nerve documentation, but no incident-specific first-party postmortem/advisory. Do not weaken source semantics to close the metric.
 
 ### Boltz — Issue #171
 
-Boltz remains review-only. Current first-party material establishes a security-driven swap shutdown but not one discrete bridge exploit with a sufficiently bounded incident record. Do not collapse multiple contained exploits or a broader operational decision into one canonical incident without new evidence.
+Boltz's first-party shutdown statement is stronger evidence for a long-term security-driven service pause, but explicitly says the shutdown is not a response to a single incident and refers to several contained exploits. Keep review-only until a discrete incident or separately supportable terminal lifecycle boundary exists.
+
+### Oraichain — Issue #270
+
+Oraichain official X status `2086274046124335398` directly confirms abnormal mainnet activity and a transaction halt on August 9. Multiple contemporaneous reports consistently describe an EVM cross-chain path vulnerability and unauthorized ORAI minting, but the exact incident-specific first-party technical locator and affected bridge/component identity remain unresolved. OBridge documentation is architecture context only, not incident identity proof.
 
 ## Phase 5 steady state
 
-BIR Monitoring and BIR Public Site Health remain active review-only workflows. Their most recent scheduled runs before this roadmap sync completed successfully. Both workflows assert canonical data unchanged and may write only bounded monitoring/watchlist state; any canonical investigation or record change requires a separate reviewed branch and PR.
+BIR Monitoring and BIR Public Site Health remain active review-only workflows. Both assert canonical data unchanged and may write only bounded monitoring/watchlist state; any canonical investigation or record change requires a separate reviewed branch and PR.
 
-The current production truth is `36 / 38 / 190 / 299`, independently verified by the Phase 2 Stage 8 production gate. Persisted monitoring state may be an older checkpoint and must never override canonical JSON or production-equality evidence.
+Current canonical/public truth is `38 / 40 / 193 / 311`, production-verified through PR #318. Persisted monitoring state may be an older checkpoint and must never override canonical JSON or production-equality evidence.
 
 ## Permanent release contract
 
@@ -131,12 +142,11 @@ Technical closure does not create or imply a semantic-version tag or GitHub Rele
 
 ## Ongoing BIR roadmap
 
-1. **Issue #279 first** — continue first-party and reproducible on-chain enrichment for `bir_inc_000038`; change canonical data only if evidence materially changes a displayed incident claim or aftermath state.
+1. **Evidence-gated incident maintenance** — continue #303, #279, #299, #171 and #270 only when their missing first-party/preservation/entity boundaries materially advance.
 2. **Refresh review-only monitoring after canonical changes** — inspect BIR Monitoring and Public Site Health output; accept only bounded healthy state changes and prove a silent repeat when a baseline changes.
-3. **Issue #270 on evidence arrival** — resolve the Oraichain component/event boundary and canonicalize only after primary or equivalent reproducible evidence exists.
-4. **Issue #171 on evidence arrival** — keep Boltz review-only until a discrete incident, restart, migration, permanent shutdown, or final-outcome boundary becomes supportable.
-5. **Phase 3 quality work remains research-triggered** — improve primary/Tier 1/archive coverage when stronger sources appear; never widen accepted quality ceilings merely to improve counts.
-6. **Continue reviewed incident/corpus expansion** — use one bounded review-first branch/PR per approved canonical task and retain exhaustive production equality after merge.
+3. **Phase 3 quality remains research-triggered** — improve primary/Tier 1/archive coverage when stronger sources appear; never widen accepted quality ceilings merely to improve counts.
+4. **Continue reviewed incident/corpus expansion** — use one bounded review-first branch/PR per approved canonical task and retain exhaustive production equality after merge.
+5. **Do not invent Stage 9** — Ledger Series Phase 2 remains closed; the cross-series authority names SOG as the next series, which must be audited in its own repository before work begins.
 
 ## Permanent rules
 

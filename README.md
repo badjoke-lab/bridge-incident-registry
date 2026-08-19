@@ -33,7 +33,7 @@ The static registry application, four-record canonical model, validation pipelin
 
 Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Event Tier 1 remediation, the Nerve source review boundary, Archive Capture Batches 1 through 18, and Deferred Archive Retries 01 and 02 are complete and production-verified. Deferred Retries 03–04 exhausted the fresh retry pool without new approvals. Event Primary Remediations 01 and 02 are production-verified. Remediation 02 added three reviewed event-scoped first-party evidence records without introducing new unique source URLs.
 
-Canonical evidence is now 287. Event primary gaps are 11, event Tier 1 gaps remain six, and all remaining Tier 1 gaps are reviewed and intentionally secondary. Primary evidence is 206 / 287, Tier 1 evidence is 223 / 287, and 130 evidence records include verified archive URLs. The three new archive fields reuse already-canonical snapshots, so unique archive-risk queues do not increase.
+Canonical evidence is now 311. Event primary gaps remain 11 and event Tier 1 gaps remain six; the sole incident-level primary/Tier 1 gap remains evidence-blocked rather than being filled by weaker sources. Primary evidence is 222 / 311, Tier 1 evidence is 239 / 311, and 130 evidence records include verified archive URLs. Unique archive-risk queues remain capped at 15 terminal and 16 risky-host URLs.
 
 Archive-risk metrics count normalized unique source URLs with exact-or-subdomain host matching. Duplicate evidence records sharing one source URL do not create duplicate preservation obligations. Current unresolved unarchived queues are 15 terminal unique URLs and 16 risky-host unique URLs.
 
@@ -72,25 +72,17 @@ Canonical public content match    true
 Latest verified production checkpoint:
 
 ```text
-Review PR              #211
-Canonical data PR      #213
-Canonical merge        f2874a2d0ffe6877eadf6619cd6100a9b9b3991b
-Production audit PR    #214
-Production verify      31300484236 / 93212360938
-Generated at           2026-08-09T07:08:45.362Z
-Publication attempt    3 / 20
-HTML routes            72
-Redirects              74
-Build-input refresh    not required
-```
-
-The canonical datasets are the only source of truth:
-
-```text
-data/bridges.json
-data/incidents.json
-data/events.json
-data/evidence.json
+Canonical data PR       #314
+Canonical merge         aa11872fe237c295dae5d5a0a41d283fcde21aab
+Production audit PR     #318
+Production verify       32167991271 / 95812037176
+Generated at            2026-08-18T17:51:37.950Z
+Publication attempt     1
+HTML routes             86
+Redirects               80
+Bridge dossiers         38 / 38
+Incident dossiers       40 / 40
+Build-input refresh     not required
 ```
 
 ## Machine-readable public layer
