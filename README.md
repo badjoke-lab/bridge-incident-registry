@@ -85,6 +85,15 @@ Incident dossiers       40 / 40
 Build-input refresh     not required
 ```
 
+The canonical datasets are the only source of truth:
+
+```text
+data/bridges.json
+data/incidents.json
+data/events.json
+data/evidence.json
+```
+
 ## Machine-readable public layer
 
 Each build generates:
