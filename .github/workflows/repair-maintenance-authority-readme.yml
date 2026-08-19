@@ -1,0 +1,65 @@
+name: Repair Maintenance Authority README
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/repair-maintenance-authority-readme.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Restore canonical source-of-truth block and assert current authority
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          p = Path('README.md')
+          text = p.read_text()
+          marker = '## Machine-readable public layer'
+          block = '''The canonical datasets are the only source of truth:\n\n```text\ndata/bridges.json\ndata/incidents.json\ndata/events.json\ndata/evidence.json\n```\n\n'''
+          if block not in text:
+              if marker not in text:
+                  raise SystemExit('README machine-readable marker missing')
+              text = text.replace(marker, block + marker, 1)
+              p.write_text(text)
+
+          checks = {
+            'docs/operations/current-schedule.md': ['Bridges     38', 'Incidents   40', 'Events      193', 'Evidence    311', 'Primary evidence                     222 / 311'],
+            'docs/operations/current-position.md': ['38 / 40 / 193 / 311', '86 canonical HTML routes', '80 redirects', 'Primary evidence                     222 / 311'],
+            'docs/runbooks/current-status.md': ['Bridges     38', 'Incidents   40', 'Events      193', 'Evidence    311', 'Production Verification run         32167991271'],
+            'docs/runbooks/recovery-checkpoint.md': ['Canonical HTML routes    86', 'Legacy redirects         80', '38 / 40 / 193 / 311'],
+            'docs/runbooks/development-roadmap.md': ['Bridges     38', 'Incidents   40', 'Events      193', 'Evidence    311', 'Issue #303', 'Issue #270'],
+            'README.md': ['Evidence    311', 'Production audit PR     #318', 'data/bridges.json', 'data/evidence.json'],
+          }
+          for path, needles in checks.items():
+              body = Path(path).read_text()
+              for needle in needles:
+                  if needle not in body:
+                      raise SystemExit(f'{path}: missing {needle!r}')
+
+          print('README repair and authority assertions passed')
+          PY
+
+      - name: Commit README repair
+        shell: bash
+        run: |
+          git config user.name 'badjoke-lab'
+          git config user.email 'badjoke.lab@gmail.com'
+          git add README.md
+          if git diff --cached --quiet; then
+            echo 'No README repair required.'
+            exit 0
+          fi
+          git commit -m 'Restore canonical dataset authority in README'
+          git push origin HEAD:${{ github.head_ref }}
