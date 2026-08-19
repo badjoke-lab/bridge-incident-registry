@@ -1,0 +1,267 @@
+name: Sync Maintenance Authority
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - '.github/workflows/sync-maintenance-authority.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Synchronize current authority documents
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          def replace_section(path, heading, body):
+              p = Path(path)
+              text = p.read_text()
+              pattern = re.compile(rf"({re.escape(heading)}\n).*?(?=\n## |\Z)", re.S)
+              if not pattern.search(text):
+                  raise SystemExit(f"section not found: {path}: {heading}")
+              text = pattern.sub(heading + "\n\n" + body.rstrip() + "\n", text, count=1)
+              p.write_text(text)
+
+          def replace_required(path, old, new):
+              p = Path(path)
+              text = p.read_text()
+              if old not in text:
+                  raise SystemExit(f"required text not found: {path}: {old[:80]!r}")
+              p.write_text(text.replace(old, new))
+
+          current_proof = '''```text
+          Canonical data PR                   #314
+          Canonical merge                     aa11872fe237c295dae5d5a0a41d283fcde21aab
+          Production verification audit PR    #318
+          Production Verification run         32167991271
+          Production Verification job         95812037176
+          Publication attempt                 1
+          Generated at                        2026-08-18T17:51:37.950Z
+          Production equality                 success
+          Canonical HTML routes               86
+          Legacy redirects                    80
+          Bridge dossiers verified            38 / 38
+          Incident dossiers verified          40 / 40
+          ```'''
+
+          quality = '''```text
+          Incident source-count mismatches       0
+          Event source-count mismatches          0
+          Primary evidence                     222 / 311
+          Tier 1 evidence                      239 / 311
+          Evidence with archived_url           130 / 311
+          Incidents without primary              1 / 40
+          Incidents without Tier 1               1 / 40
+          Events without primary                11 / 193
+          Events without Tier 1                  6 / 193
+          Terminal unarchived unique URLs       15
+          Risky-host unarchived unique URLs     16
+          Unknown URL status                     0
+          Full-corpus blocking errors            0
+          Full-corpus warning categories        {}
+          High-severity npm audit findings       0
+          ```'''
+
+          # current-schedule.md
+          p = 'docs/operations/current-schedule.md'
+          replace_required(p, 'Updated: 2026-08-18', 'Updated: 2026-08-20')
+          replace_section(p, '## Current canonical baseline', '''```text
+          Bridges     38
+          Incidents   40
+          Events      193
+          Evidence    311
+          ```
+
+          This is current canonical and production-verified truth. The latest canonical maintenance additions are WanBridge and ChainConnect; the ChainConnect publication audit in PR #318 proved full production equality at this baseline. Historical Stage 8 `36 / 38 / 190 / 299` and earlier restart counts remain history only.''')
+          replace_section(p, '## Current quality checkpoint', quality)
+          replace_section(p, '## Immediate execution order', '''1. keep BIR in steady-state reviewed maintenance: monitoring, evidence health, high-severity corrections, and properly reviewed new incidents;
+          2. current evidence-gated maintenance targets are Issue #303 AFX Trade, #279 XRPL-TX follow-up, #299 Nerve first-party enrichment, #171 Boltz shutdown signal, and #270 Oraichain cross-chain signal;
+          3. PRs #319–#322 are review-only authority/audit work and do not change the `38 / 40 / 193 / 311` canonical/public baseline;
+          4. preserve canonical/schema semantics and every permanent release/source-quality guard;
+          5. do **not** invent a Ledger Series Stage 9;
+          6. for the cross-series roadmap, read the latest authority in the target repository before starting work. `docs/ai-era-registry-spec.md` names **SOG** as the next series after the completed BIR pilot.''')
+
+          # current-position.md
+          p = 'docs/operations/current-position.md'
+          replace_required(p, 'Updated: 2026-08-18', 'Updated: 2026-08-20')
+          replace_section(p, '## Canonical and production baseline', '''```text
+          Bridges     38
+          Incidents   40
+          Events      193
+          Evidence    311
+          ```
+
+          The latest production-proven canonical maintenance is ChainConnect: canonical PR #314 / merge `aa11872fe237c295dae5d5a0a41d283fcde21aab`, followed by production audit PR #318. Unchanged Production Verification run `32167991271` / job `95812037176` passed on attempt 1 at `38 / 40 / 193 / 311`, with 86 canonical HTML routes, 80 redirects, and record-level equality for all 38 bridge and 40 incident dossiers. Generated production metadata was `2026-08-18T17:51:37.950Z`.
+
+          Subsequent PRs #319–#322 are review-only maintenance audits and do not mutate canonical/public output.''')
+          replace_section(p, '## Current quality boundary', quality)
+          replace_section(p, '## Current bounded work', '''BIR is in steady-state maintenance only: reviewed incident/evidence additions, monitoring, evidence health, and high-severity corrections under the permanent gates above. Do not invent a Ledger Series Stage 9.
+
+          Current evidence-gated review targets:
+
+          - **#303 AFX Trade** — incident shape reviewed; canonical application blocked because both first-party Medium sources fail the unchanged archive-admission boundary.
+          - **#279 XRPL-TX Bridge** — later tx statements materially improve root-cause and make-whole/replenishment understanding; canonical follow-up remains blocked on stable direct first-party locators/preservation and amount reconciliation.
+          - **#299 Nerve Bridge** — incident-specific first-party source still not located; do not relabel Tier 2 sources to close the metric.
+          - **#171 Boltz** — first-party shutdown is real but explicitly aggregates several contained exploits rather than one bounded incident.
+          - **#270 Oraichain** — direct first-party August 9 halt statement resolved; detailed unauthorized-mint mechanism and exact affected component remain blocked on incident-specific technical primary authority.
+
+          For the cross-series roadmap, `docs/ai-era-registry-spec.md` names **SOG** as the next series after the completed BIR pilot. Before any SOG implementation, read that repository's live main/open PR/Actions/current authority and establish its own bounded baseline rather than carrying BIR assumptions forward.''')
+
+          # current-status.md
+          p = 'docs/runbooks/current-status.md'
+          replace_required(p, 'Updated: 2026-08-18', 'Updated: 2026-08-20')
+          replace_section(p, '## Canonical and production state', '''```text
+          Bridges     38
+          Incidents   40
+          Events      193
+          Evidence    311
+          ```
+
+          Ledger Series Phase 2 remains closed. Later reviewed maintenance added WanBridge and ChainConnect without reopening Phase 2.
+
+          ''' + current_proof + '''
+
+          The successful production verifier observed exact canonical-derived content on attempt 1 and passed aggregate registry, all 38 bridge dossiers, all 40 incident dossiers, 86 canonical HTML routes, and 80 redirects. Both legacy Wanchain URL forms correctly redirect to `/bridge/wanbridge/`.''')
+          replace_section(p, '## Current quality boundary', quality)
+          replace_section(p, '## Ongoing work', '''1. continue reviewed first-party-backed incident and evidence maintenance;
+          2. current evidence-gated targets are #303 AFX, #279 XRPL-TX, #299 Nerve, #171 Boltz, and #270 Oraichain under their latest review audits/comments;
+          3. keep monitoring/candidate work review-only and fail-closed;
+          4. preserve canonical unknowns and recovery/reimbursement/restart/outcome distinctions;
+          5. preserve all source-quality, accessibility, performance, browser, machine-readable and production-equality guards;
+          6. use `docs/operations/current-position.md` and `docs/runbooks/recovery-checkpoint.md` as restart pointers; do not resume from historical Stage 8 or earlier counts/run IDs.''')
+
+          # recovery-checkpoint.md
+          p = 'docs/runbooks/recovery-checkpoint.md'
+          replace_required(p, 'Updated: 2026-08-18', 'Updated: 2026-08-20')
+          replace_section(p, '## Canonical and production counts', '''```text
+          Bridges                  38
+          Incidents                40
+          Events                   193
+          Evidence                 311
+          Canonical HTML routes    86
+          Legacy redirects         80
+          ```''')
+          replace_section(p, '## Immediate recovery point', '''Resume from current `main`. Ledger Series Phase 2 is closed; BIR is in reviewed steady-state maintenance.
+
+          Latest production-proven canonical maintenance:
+
+          ''' + current_proof + '''
+
+          Review-only PRs #319–#322 follow that production checkpoint and do not mutate canonical/public output. Do not restart from Stage 8 (`36 / 38 / 190 / 299`) or earlier Syscoin/Allbridge/XRPL-TX branch heads; those remain historical checkpoints only.''')
+          replace_section(p, '## Current quality boundary', quality + '''
+
+          These values are from the permanent Check gate at the `38 / 40 / 193 / 311` baseline. Accepted primary/Tier 1/archive-risk ceilings remain unchanged.''')
+          replace_section(p, '## Monitoring recovery point', '''Monitoring remains review-only. It fingerprints canonical files, rejects canonical mutation/unknown URL status/broken references, writes only to approved staging paths, and suppresses unchanged signals.
+
+          Persisted monitoring-state baselines can predate the latest canonical additions. They are historical operational checkpoints and must never override current canonical/public truth `38 / 40 / 193 / 311` or the successful production verifier above.
+
+          Repository Actions settings may still constrain `GITHUB_TOKEN` PR creation. When a monitoring workflow retains an already-validated review branch because of that exact platform limitation, use connected GitHub access to open the review PR; all canonical changes remain human-reviewed and fail-closed.''')
+          replace_section(p, '## Cloudflare Pages boundary', '''Production branch is `main`. Canonical/public output changes require post-merge production equality. The current production checkpoint is the ChainConnect verification recorded in PR #318 at `38 / 40 / 193 / 311`, 86 canonical HTML routes and 80 redirects. Do not weaken production equality to work around future deployment lag.''')
+
+          # development-roadmap.md
+          p = 'docs/runbooks/development-roadmap.md'
+          replace_required(p, 'Updated: 2026-08-18', 'Updated: 2026-08-20')
+          replace_section(p, '## Canonical and production baseline', '''```text
+          Bridges     38
+          Incidents   40
+          Events      193
+          Evidence    311
+          ```
+
+          Latest production-verified canonical maintenance:
+
+          ''' + current_proof + '''
+
+          The completed Ledger Series Phase 2 baseline was later extended through reviewed maintenance: WanBridge (PR #308) and ChainConnect (review #313, canonical #314, production verification #318). These additions do not create or reopen a Ledger Series Stage 9.''')
+          replace_section(p, '## Current quality state', quality + '''
+
+          Further primary/archive remediation remains research-triggered rather than metric-driven. Source hierarchy and accepted gap ceilings must not be weakened to improve coverage numbers.''')
+          replace_section(p, '## Active maintenance research boundaries', '''### AFX Trade — Issue #303
+
+          The July 22 custody-bridge incident shape is reviewed, including the supply-chain/infrastructure-to-validator compromise boundary and the 24,150,000 USDC transaction. Both located first-party AFX Medium sources fail the unchanged risky-host archive-admission boundary, so canonical application remains evidence-blocked.
+
+          ### XRPL-TX Bridge — Issue #279
+
+          `bir_inc_000038` is canonical. Later tx statements materially improve the root-cause boundary toward `message_verification_failure` and announce Foundation-funded reserve replenishment / affected-user make-whole intent, but stable direct first-party locators/preservation and the 199,916.3 versus 198,715.88 XRP discrepancy still block canonical follow-up. Do not equate reserve backfill with attacker-fund recovery.
+
+          ### Nerve Bridge — Issue #299
+
+          The November 2021 incident remains the sole incident-level primary/Tier 1 gap. Rechecks still locate BlockSec/Halborn technical analyses and generic Nerve documentation, but no incident-specific first-party postmortem/advisory. Do not weaken source semantics to close the metric.
+
+          ### Boltz — Issue #171
+
+          Boltz's first-party shutdown statement is stronger evidence for a long-term security-driven service pause, but explicitly says the shutdown is not a response to a single incident and refers to several contained exploits. Keep review-only until a discrete incident or separately supportable terminal lifecycle boundary exists.
+
+          ### Oraichain — Issue #270
+
+          Oraichain official X status `2086274046124335398` directly confirms abnormal mainnet activity and a transaction halt on August 9. Multiple contemporaneous reports consistently describe an EVM cross-chain path vulnerability and unauthorized ORAI minting, but the exact incident-specific first-party technical locator and affected bridge/component identity remain unresolved. OBridge documentation is architecture context only, not incident identity proof.''')
+          replace_section(p, '## Phase 5 steady state', '''BIR Monitoring and BIR Public Site Health remain active review-only workflows. Both assert canonical data unchanged and may write only bounded monitoring/watchlist state; any canonical investigation or record change requires a separate reviewed branch and PR.
+
+          Current canonical/public truth is `38 / 40 / 193 / 311`, production-verified through PR #318. Persisted monitoring state may be an older checkpoint and must never override canonical JSON or production-equality evidence.''')
+          replace_section(p, '## Ongoing BIR roadmap', '''1. **Evidence-gated incident maintenance** — continue #303, #279, #299, #171 and #270 only when their missing first-party/preservation/entity boundaries materially advance.
+          2. **Refresh review-only monitoring after canonical changes** — inspect BIR Monitoring and Public Site Health output; accept only bounded healthy state changes and prove a silent repeat when a baseline changes.
+          3. **Phase 3 quality remains research-triggered** — improve primary/Tier 1/archive coverage when stronger sources appear; never widen accepted quality ceilings merely to improve counts.
+          4. **Continue reviewed incident/corpus expansion** — use one bounded review-first branch/PR per approved canonical task and retain exhaustive production equality after merge.
+          5. **Do not invent Stage 9** — Ledger Series Phase 2 remains closed; the cross-series authority names SOG as the next series, which must be audited in its own repository before work begins.''')
+
+          # README current public checkpoint only; preserve historical narrative elsewhere.
+          p = 'README.md'
+          replace_required(p,
+          '''Canonical evidence is now 287. Event primary gaps are 11, event Tier 1 gaps remain six, and all remaining Tier 1 gaps are reviewed and intentionally secondary. Primary evidence is 206 / 287, Tier 1 evidence is 223 / 287, and 130 evidence records include verified archive URLs. The three new archive fields reuse already-canonical snapshots, so unique archive-risk queues do not increase.''',
+          '''Canonical evidence is now 311. Event primary gaps remain 11 and event Tier 1 gaps remain six; the sole incident-level primary/Tier 1 gap remains evidence-blocked rather than being filled by weaker sources. Primary evidence is 222 / 311, Tier 1 evidence is 239 / 311, and 130 evidence records include verified archive URLs. Unique archive-risk queues remain capped at 15 terminal and 16 risky-host URLs.''')
+          replace_section(p, 'Latest verified production checkpoint:', '''```text
+          Canonical data PR       #314
+          Canonical merge         aa11872fe237c295dae5d5a0a41d283fcde21aab
+          Production audit PR     #318
+          Production verify       32167991271 / 95812037176
+          Generated at            2026-08-18T17:51:37.950Z
+          Publication attempt     1
+          HTML routes             86
+          Redirects               80
+          Bridge dossiers         38 / 38
+          Incident dossiers       40 / 40
+          Build-input refresh     not required
+          ```''')
+
+          print('authority synchronization complete')
+          PY
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Validate unchanged canonical and current build
+        shell: bash
+        run: |
+          npm run validate:data
+          npm run validate:enums
+          npm run audit:full-corpus
+          npm run audit:source-count
+          npm run audit:source-quality
+          npm run build
+          npm run accessibility:check
+          npm run performance:check
+          npm run dist:check
+          git diff --exit-code -- data/bridges.json data/incidents.json data/events.json data/evidence.json
+
+      - name: Commit synchronized authority docs
+        shell: bash
+        run: |
+          git config user.name 'badjoke-lab'
+          git config user.email 'badjoke.lab@gmail.com'
+          git add README.md docs/operations/current-schedule.md docs/operations/current-position.md docs/runbooks/current-status.md docs/runbooks/recovery-checkpoint.md docs/runbooks/development-roadmap.md
+          git diff --cached --quiet && exit 1
+          git commit -m 'Synchronize BIR maintenance authority'
+          git push origin HEAD:${{ github.head_ref }}
