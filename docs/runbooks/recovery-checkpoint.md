@@ -9,9 +9,9 @@ GitHub state and canonical JSON are authoritative. Completed merge SHAs and run 
 
 ```text
 Bridges                  39
-Incidents                41
-Events                   194
-Evidence                 316
+Incidents                42
+Events                   199
+Evidence                 325
 Canonical HTML routes    88
 Legacy redirects         80
 Series records           80
