@@ -1,0 +1,129 @@
+name: Apply Taiko June 2026 canonical package
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - scripts/apply-taiko-june-2026.mjs
+      - scripts/sync-taiko-june-count-docs.mjs
+      - .github/workflows/apply-taiko-june-2026.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: apply-taiko-june-2026-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  apply-and-validate:
+    if: github.head_ref == 'canonical/taiko-june-2026'
+    runs-on: ubuntu-22.04
+    timeout-minutes: 60
+    steps:
+      - name: Checkout exact application branch
+        uses: actions/checkout@v7
+        with:
+          ref: canonical/taiko-june-2026
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Apply bounded Taiko package
+        run: node scripts/apply-taiko-june-2026.mjs
+
+      - name: Sync canonical count authority docs
+        run: node scripts/sync-taiko-june-count-docs.mjs
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Audit high-severity dependencies
+        run: npm audit --audit-level=high
+
+      - name: Type and Astro check
+        run: npm run check
+
+      - name: Validate canonical data
+        run: npm run validate:data
+
+      - name: Validate schema enums
+        run: npm run validate:enums
+
+      - name: Audit full canonical corpus
+        run: npm run audit:full-corpus
+
+      - name: Audit exact source counts
+        run: npm run audit:source-count
+
+      - name: Audit source quality baseline
+        run: npm run audit:source-quality
+
+      - name: Test full-corpus audit failures
+        run: npm run audit:full-corpus:test
+
+      - name: Test source-count equality failures
+        run: npm run audit:source-count:test
+
+      - name: Test source quality regressions
+        run: npm run audit:source-quality:test
+
+      - name: Test monitoring foundation
+        run: npm run monitoring:test
+
+      - name: Test production content equality
+        run: npm run production:content:test
+
+      - name: Test performance budget failures
+        run: npm run performance:test
+
+      - name: Build native and Series public output
+        run: npm run build
+
+      - name: Check accessibility contract
+        run: npm run accessibility:check
+
+      - name: Enforce unchanged performance budget
+        run: npm run performance:check
+
+      - name: Check generated distribution consistency
+        run: npm run dist:check
+
+      - name: Test controlled consistency failures
+        run: npm run dist:test
+
+      - name: Check patch whitespace
+        run: git diff --check
+
+      - name: Remove one-shot application files
+        run: |
+          git rm scripts/apply-taiko-june-2026.mjs
+          git rm scripts/sync-taiko-june-count-docs.mjs
+          git rm .github/workflows/apply-taiko-june-2026.yml
+
+      - name: Restore dependency metadata if install touched it
+        run: |
+          git restore package.json 2>/dev/null || true
+          git restore package-lock.json 2>/dev/null || true
+
+      - name: Commit validated canonical package
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            data/bridges.json \
+            data/incidents.json \
+            data/events.json \
+            data/evidence.json \
+            data/reference/assets.json \
+            README.md \
+            docs/runbooks/current-status.md \
+            docs/runbooks/recovery-checkpoint.md \
+            docs/runbooks/development-roadmap.md \
+            docs/runbooks/public-consistency-remediation.md
+          git status --short
+          git commit -m "Add reviewed Taiko June 2026 bridge incident"
+          git push origin HEAD:canonical/taiko-june-2026
