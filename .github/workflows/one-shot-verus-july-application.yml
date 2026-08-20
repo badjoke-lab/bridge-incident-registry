@@ -1,0 +1,359 @@
+name: One-shot Verus July canonical application
+
+on:
+  push:
+    branches:
+      - canonical/verus-july-2026
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: contains(github.event.head_commit.message, 'Stage Verus canonical application workflow')
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: canonical/verus-july-2026
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Apply bounded reviewed Verus records
+        run: |
+          node <<'NODE'
+          const fs = require('node:fs');
+
+          const readJson = (p) => JSON.parse(fs.readFileSync(p, 'utf8'));
+          const appendArrayRecord = (p, obj) => {
+            const raw = fs.readFileSync(p, 'utf8').trimEnd();
+            if (!raw.endsWith('\n]')) throw new Error(`${p}: unexpected array formatting`);
+            if (raw.includes(`\"id\":\"${obj.id}\"`)) throw new Error(`${p}: ${obj.id} already exists`);
+            const next = raw.slice(0, -2) + ',\n  ' + JSON.stringify(obj) + '\n]\n';
+            fs.writeFileSync(p, next);
+          };
+
+          const bridges = readJson('data/bridges.json');
+          const incidents = readJson('data/incidents.json');
+          const events = readJson('data/events.json');
+          const evidence = readJson('data/evidence.json');
+          if (bridges.length !== 38 || incidents.length !== 40 || events.length !== 193 || evidence.length !== 311) {
+            throw new Error(`baseline drift: ${bridges.length}/${incidents.length}/${events.length}/${evidence.length}`);
+          }
+          if (bridges.some((r) => r.slug === 'verus-ethereum-bridge') || incidents.some((r) => r.slug.includes('verus-ethereum-bridge-2026-july'))) {
+            throw new Error('Verus July canonical record already exists');
+          }
+
+          const chains = readJson('data/reference/chains.json');
+          if (chains.verus) throw new Error('verus chain key already exists');
+          chains.verus = { display_name: 'Verus', aliases: ['Verus blockchain', 'Verus Protocol'] };
+          fs.writeFileSync('data/reference/chains.json', JSON.stringify(chains, null, 2) + '\n');
+
+          const assets = readJson('data/reference/assets.json');
+          for (const key of ['tbtc', 'mkr', 'scrvusd', 'eurc']) {
+            if (assets[key]) throw new Error(`${key} asset key already exists`);
+          }
+          assets.tbtc = { display_name: 'tBTC', aliases: ['Threshold tBTC'] };
+          assets.mkr = { display_name: 'MKR', aliases: ['Maker'] };
+          assets.scrvusd = { display_name: 'scrvUSD', aliases: ['Savings crvUSD'] };
+          assets.eurc = { display_name: 'EURC', aliases: ['Euro Coin'] };
+          fs.writeFileSync('data/reference/assets.json', JSON.stringify(assets, null, 2) + '\n');
+
+          appendArrayRecord('data/bridges.json', {
+            id: 'bir_bridge_000039',
+            slug: 'verus-ethereum-bridge',
+            previous_slugs: [],
+            redirect_from: [],
+            canonical_name: 'Verus-Ethereum Bridge',
+            type: 'asset_bridge',
+            status: 'paused',
+            summary: 'Verus-Ethereum Bridge is the non-custodial bridge between Verus and Ethereum. It is included because a second 2026 bridge exploit on July 23 drained multiple Ethereum-side assets worth about $7.54 million. Verus later described the latest Ethereum bridge hack and continued contract hardening; a dated post-July reopening has not been established.',
+            confidence: 'high',
+            record_maturity: 'reviewed',
+            update_status: 'current',
+            last_reviewed_at: '2026-08-20',
+            last_verified_at: '2026-08-20',
+            aliases: ['Verus Ethereum Bridge', 'Verus ETH Bridge'],
+            launch_date: null,
+            launch_date_precision: 'unknown',
+            end_date: null,
+            end_date_precision: 'unknown',
+            terminal_reason: null,
+            official_url: 'https://docs.verus.io/eth-bridge/',
+            official_domain: 'docs.verus.io',
+            official_url_status: 'live_verified',
+            archived_url: null,
+            primary_chains: ['verus', 'ethereum'],
+            primary_assets: ['eth', 'tbtc', 'usdc', 'usdt', 'mkr', 'scrvusd', 'eurc'],
+            operator_name: 'Verus protocol contributors and community',
+            operator_type: 'protocol_team',
+            ecosystem_name: 'Verus',
+            related_protocols: ['PBaaS', 'Verus Protocol'],
+            brand_history_notes: 'This record covers the Verus-Ethereum Bridge. The separate May 2026 exploit remains a distinct review target and is not collapsed into the July incident.',
+            major_incident_count: 1,
+            has_unresolved_incident: true,
+            has_reimbursement_history: false,
+            successor_id: null,
+            predecessor_id: null,
+            replacement_bridge_id: null,
+            duplicate_of: null,
+            merged_into: null,
+            notes: 'Latest reviewed first-party release material says the Ethereum contracts were not yet ready for upgrade after the latest bridge hack. BIR therefore keeps the bridge paused until a dated post-July reopen statement is established.'
+          });
+
+          appendArrayRecord('data/incidents.json', {
+            id: 'bir_inc_000041',
+            bridge_id: 'bir_bridge_000039',
+            slug: 'verus-ethereum-bridge-2026-july-proofroot-deserialization-exploit',
+            previous_slugs: [],
+            redirect_from: [],
+            title: 'Verus-Ethereum Bridge July 2026 proof-root deserialization exploit',
+            incident_date: '2026-07-23',
+            incident_date_precision: 'day',
+            incident_type: 'exploit',
+            summary: 'On July 23, 2026, the Verus-Ethereum Bridge suffered a second 2026 exploit. The reviewed technical record supports a cross-system message-verification failure in which Verus/PBaaS and Solidity interpreted bridge proof-root data differently. The Ethereum transaction package shows ETH and multiple ERC-20 outflows, while mixed reporting places the total near $7.54 million. July-specific recovery, reimbursement, and reopening remain unresolved.',
+            confidence: 'high',
+            record_maturity: 'reviewed',
+            update_status: 'current',
+            source_count: 4,
+            last_reviewed_at: '2026-08-20',
+            last_verified_at: '2026-08-20',
+            is_major_incident: true,
+            reported_loss_usd_display: 'about $7.54 million',
+            reported_loss_usd: 7540000,
+            reported_loss_usd_min: null,
+            reported_loss_usd_max: null,
+            reported_loss_text: 'Contemporaneous reporting and reproducible Ethereum-side analysis place the second July drain at approximately $7.53–$7.54 million across ETH, tBTC, USDC, USDT, MKR, scrvUSD, and EURC.',
+            reported_loss_assets: ['eth', 'tbtc', 'usdc', 'usdt', 'mkr', 'scrvusd', 'eurc'],
+            usd_valuation_date: '2026-07-23',
+            loss_amount_basis: 'mixed_sources',
+            amount_confidence: 'medium',
+            amount_note: 'The approximately $7.54 million total is not a first-party exact valuation. BIR preserves it as a mixed-source contemporaneous estimate and does not invent per-asset USD values.',
+            amount_claims: [
+              { amount_text: 'Ethereum-side outflows including 1,137.45281584 ETH and seven ERC-20 transfers', amount_usd_text: 'approximately $7.54 million total impact', source_id: 'bir_src_000315', basis: 'estimated_by_analytics', usd_valuation_date: '2026-07-23', notes: 'SIRENBOW separates directly verified transaction/address/outflow observations from reported or inferred valuation claims.' },
+              { amount_text: 'second Verus-Ethereum Bridge drain', amount_usd_text: 'approximately $7.54 million', source_id: 'bir_src_000316', basis: 'reported_by_news', usd_valuation_date: '2026-07-23', notes: 'Contemporaneous media corroboration; not treated as a first-party exact amount.' }
+            ],
+            recovery_status: 'unknown',
+            reimbursement_status: 'unknown',
+            restart_status: 'paused',
+            current_outcome: 'paused_long_term',
+            is_unresolved: true,
+            unresolved_reason: [
+              'No July-specific attacker-fund recovery amount has been established by the admitted evidence package.',
+              'The separate May 2026 recovery and restitution figures are not reused as July recovery or reimbursement evidence.',
+              'A dated post-July reopening of the affected Verus-Ethereum bridge has not been established.'
+            ],
+            affected_chains: ['verus', 'ethereum'],
+            affected_assets: ['eth', 'tbtc', 'usdc', 'usdt', 'mkr', 'scrvusd', 'eurc'],
+            attack_vector_category: 'message_verification_failure',
+            postmortem_available: 'available',
+            known_unknowns: [
+              'The first-party long-form Google Doc remains review authority only because the bounded preservation review found no admissible archive capture; it is not admitted as canonical evidence.',
+              'The exact July-specific recovery, reserve-restoration, reimbursement, and contract-upgrade completion status remain unverified.',
+              'The separate May 2026 exploit requires its own incident review and must not be folded into this case.'
+            ],
+            conflicting_claims: [],
+            duplicate_of: null,
+            merged_into: null,
+            split_from: null,
+            split_reason: null
+          });
+
+          appendArrayRecord('data/events.json', {
+            id: 'bir_ev_000194',
+            bridge_id: 'bir_bridge_000039',
+            incident_id: 'bir_inc_000041',
+            event_type: 'exploit_occurred',
+            event_date: '2026-07-23',
+            event_date_precision: 'day',
+            title: 'Second Verus-Ethereum Bridge exploit drains Ethereum-side assets',
+            description: 'The attack transaction interacted with the published Verus Ethereum bridge contract on July 23, 2026 and produced ETH plus multiple ERC-20 outflows. Verus later referred to the latest Ethereum bridge hack in its v1.2.17-3 security upgrade. BIR records the high-level message-verification failure without exploit reproduction instructions.',
+            confidence: 'high',
+            record_maturity: 'reviewed',
+            update_status: 'current',
+            impact_level: 'critical',
+            status_effect: 'paused',
+            source_count: 4,
+            sort_order: 10,
+            amount_text: 'approximately $7.54 million total impact',
+            recovered_amount_text: null,
+            reimbursement_status: 'unknown',
+            restart_status: 'paused',
+            affected_chains: ['verus', 'ethereum'],
+            affected_assets: ['eth', 'tbtc', 'usdc', 'usdt', 'mkr', 'scrvusd', 'eurc'],
+            notes: 'The July event is distinct from the May 2026 exploit and does not inherit May recovery, restitution, or reopen milestones.',
+            duplicate_of: null,
+            merged_into: null
+          });
+
+          const shared = {
+            bridge_id: 'bir_bridge_000039',
+            reliability: 'high',
+            url_status: 'live',
+            archived_url: null,
+            accessed_at: '2026-08-20',
+            language: 'en',
+            quote_excerpt: null,
+            is_paywalled: false,
+            supports_migration: false
+          };
+
+          appendArrayRecord('data/evidence.json', {
+            ...shared,
+            id: 'bir_src_000312',
+            incident_id: null,
+            event_id: null,
+            source_type: 'official_statement',
+            title: 'Verus-Ethereum Bridge',
+            url: 'https://docs.verus.io/eth-bridge/',
+            publisher: 'Verus',
+            published_at: '2026-08-20',
+            published_at_precision: 'approximate',
+            source_tier: 'tier_1',
+            claim_scope: 'bridge_entity',
+            author: 'Verus',
+            is_primary: true,
+            is_official_domain: true,
+            supports_amount: false,
+            supports_recovery: false,
+            supports_reimbursement: false,
+            supports_reopen: false,
+            supports_shutdown: false,
+            notes: 'Stable first-party bridge documentation supporting the non-custodial Verus↔Ethereum bridge identity and published Ethereum mainnet bridge contract. The approximate publication date records the current reviewed documentation state rather than an asserted original publication day.'
+          });
+
+          appendArrayRecord('data/evidence.json', {
+            ...shared,
+            id: 'bir_src_000313',
+            incident_id: 'bir_inc_000041',
+            event_id: 'bir_ev_000194',
+            source_type: 'official_statement',
+            title: 'v1.2.17-3 — CRITICAL SECURITY UPGRADE',
+            url: 'https://github.com/VerusCoin/VerusCoin/releases/tag/v1.2.17-3',
+            publisher: 'VerusCoin',
+            published_at: '2026-08-01',
+            published_at_precision: 'day',
+            source_tier: 'tier_1',
+            claim_scope: 'incident_case',
+            author: 'VerusCoin',
+            is_primary: true,
+            is_official_domain: false,
+            supports_amount: false,
+            supports_recovery: false,
+            supports_reimbursement: false,
+            supports_reopen: false,
+            supports_shutdown: true,
+            notes: 'Stable first-party release explicitly referring to the latest Ethereum bridge hack and continued hardening, while stating that Ethereum contracts were not yet ready for upgrade. It is the admitted primary incident authority; the linked Google Doc remains review-only because it failed the existing preservation gate.'
+          });
+
+          appendArrayRecord('data/evidence.json', {
+            ...shared,
+            id: 'bir_src_000314',
+            incident_id: 'bir_inc_000041',
+            event_id: 'bir_ev_000194',
+            source_type: 'other',
+            title: 'Verus-Ethereum Bridge July 23 attack transaction',
+            url: 'https://etherscan.io/tx/0xa1f1e65c1cea4dba4ae439cd4dcdba6cc2dbda0ed1228e61f29ae9c9324eb099',
+            publisher: 'Etherscan',
+            published_at: '2026-07-23',
+            published_at_precision: 'day',
+            source_tier: 'tier_2',
+            claim_scope: 'event',
+            author: null,
+            is_primary: false,
+            is_official_domain: false,
+            supports_amount: true,
+            supports_recovery: false,
+            supports_reimbursement: false,
+            supports_reopen: false,
+            supports_shutdown: false,
+            notes: 'Direct transaction reference establishing the July 23, 2026 Ethereum-side event boundary and interaction with the published Verus bridge contract. BIR uses it for reproducible transaction/date evidence, not as a first-party narrative authority.'
+          });
+
+          appendArrayRecord('data/evidence.json', {
+            ...shared,
+            id: 'bir_src_000315',
+            incident_id: 'bir_inc_000041',
+            event_id: 'bir_ev_000194',
+            source_type: 'blockchain_analytics_report',
+            title: 'Verus missing-check full-chain analysis',
+            url: 'https://sirenbow.com/research/verus-missing-check/',
+            publisher: 'SIRENBOW',
+            published_at: '2026-07-23',
+            published_at_precision: 'approximate',
+            source_tier: 'tier_2',
+            claim_scope: 'amount',
+            author: 'SIRENBOW',
+            is_primary: false,
+            is_official_domain: false,
+            supports_amount: true,
+            supports_recovery: false,
+            supports_reimbursement: false,
+            supports_reopen: false,
+            supports_shutdown: false,
+            notes: 'Independent full-chain analysis reproducing the attack transaction, bridge/implementation addresses, ETH/ERC-20 outflows, and an approximately $7.54 million total. BIR retains its high-level verification-failure framing and does not publish exploit reproduction steps.'
+          });
+
+          appendArrayRecord('data/evidence.json', {
+            ...shared,
+            id: 'bir_src_000316',
+            incident_id: 'bir_inc_000041',
+            event_id: 'bir_ev_000194',
+            source_type: 'news_article',
+            title: 'Bitcoin, Ethereum-Linked Protocols Lose $35 Million in Multiple Attacks Hours Apart',
+            url: 'https://www.coindesk.com/tech/2026/07/23/bitcoin-ethereum-linked-protocols-lose-usd35-million-in-multiple-attacks-hours-apart',
+            publisher: 'CoinDesk',
+            published_at: '2026-07-23',
+            published_at_precision: 'day',
+            source_tier: 'tier_2',
+            claim_scope: 'incident_case',
+            author: null,
+            is_primary: false,
+            is_official_domain: false,
+            supports_amount: true,
+            supports_recovery: false,
+            supports_reimbursement: false,
+            supports_reopen: false,
+            supports_shutdown: false,
+            notes: 'Contemporaneous media corroboration supporting the second Verus-Ethereum Bridge incident and approximately $7.54 million reported impact. It is not used as first-party root-cause authority.'
+          });
+
+          const after = [
+            readJson('data/bridges.json').length,
+            readJson('data/incidents.json').length,
+            readJson('data/events.json').length,
+            readJson('data/evidence.json').length
+          ];
+          if (after.join('/') !== '39/41/194/316') throw new Error(`unexpected post-apply counts: ${after.join('/')}`);
+          NODE
+
+      - name: Validate canonical data and quality
+        run: |
+          npm run validate:data
+          npm run validate:enums
+          npm run audit:full-corpus
+          npm run audit:source-count
+          npm run audit:source-quality
+
+      - name: Build and static quality gates
+        run: |
+          npm run build
+          npm run accessibility:check
+          npm run performance:check
+          git diff --check
+
+      - name: Commit validated canonical application
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/bridges.json data/incidents.json data/events.json data/evidence.json data/reference/chains.json data/reference/assets.json
+          git diff --cached --quiet && { echo 'No staged changes'; exit 1; }
+          git commit -m 'Apply reviewed Verus July 2026 incident'
+          git push origin HEAD:canonical/verus-july-2026
