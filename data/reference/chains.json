@@ -225,5 +225,18 @@
       "Verus Network",
       "VRSC network"
     ]
+  },
+  "secret-network": {
+    "display_name": "Secret Network",
+    "aliases": [
+      "Secret",
+      "SCRT Network"
+    ]
+  },
+  "axelar": {
+    "display_name": "Axelar",
+    "aliases": [
+      "Axelar Network"
+    ]
   }
 }

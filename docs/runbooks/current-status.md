@@ -6,10 +6,10 @@ Updated: 2026-08-20
 ## Canonical and production state
 
 ```text
-Bridges     39
-Incidents   42
-Events      199
-Evidence    327
+Bridges     40
+Incidents   43
+Events      203
+Evidence    335
 ```
 
 Ledger Series Phase 2 remains closed. Later reviewed maintenance added WanBridge, ChainConnect and separate May and July 2026 Verus-Ethereum Bridge incidents without reopening Phase 2.
@@ -43,13 +43,13 @@ The Verus bridge, the separate May and July incident routes, `/incidents/`, `/co
 ```text
 Incident source-count mismatches       0
 Event source-count mismatches          0
-Primary evidence                     231 / 327
-Tier 1 evidence                      248 / 327
-Evidence with archived_url           130 / 327
-Incidents without primary              1 / 42
-Incidents without Tier 1               1 / 42
-Events without primary                11 / 199
-Events without Tier 1                  6 / 199
+Primary evidence                     237 / 335
+Tier 1 evidence                      254 / 335
+Evidence with archived_url           130 / 335
+Incidents without primary              1 / 43
+Incidents without Tier 1               1 / 43
+Events without primary                11 / 203
+Events without Tier 1                  6 / 203
 Terminal unarchived unique URLs       15
 Risky-host unarchived unique URLs     16
 Unknown URL status                     0

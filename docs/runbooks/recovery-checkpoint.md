@@ -8,10 +8,10 @@ GitHub state and canonical JSON are authoritative. Completed merge SHAs and run 
 ## Canonical and production counts
 
 ```text
-Bridges                  39
-Incidents                42
-Events                   199
-Evidence                 327
+Bridges                  40
+Incidents                43
+Events                   203
+Evidence                 335
 Canonical HTML routes    89
 Legacy redirects         80
 Series records           81
