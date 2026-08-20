@@ -7,6 +7,12 @@ on:
     paths:
       - scripts/apply-verus-july-2026.mjs
       - .github/workflows/apply-verus-july-2026.yml
+  pull_request:
+    branches:
+      - main
+    paths:
+      - scripts/apply-verus-july-2026.mjs
+      - .github/workflows/apply-verus-july-2026.yml
 
 permissions:
   contents: write
@@ -17,6 +23,7 @@ concurrency:
 
 jobs:
   apply-and-validate:
+    if: github.event_name == 'push' || github.head_ref == 'canonical/verus-ethereum-july-2026'
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
