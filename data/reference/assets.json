@@ -206,5 +206,35 @@
     "aliases": [
       "Euro Coin"
     ]
+  },
+  "crvusd": {
+    "display_name": "crvUSD",
+    "aliases": [
+      "Curve USD"
+    ]
+  },
+  "crv": {
+    "display_name": "CRV",
+    "aliases": [
+      "Curve DAO Token"
+    ]
+  },
+  "izi": {
+    "display_name": "iZi",
+    "aliases": [
+      "iZUMi Finance token"
+    ]
+  },
+  "weeth": {
+    "display_name": "weETH",
+    "aliases": [
+      "Wrapped eETH"
+    ]
+  },
+  "taiko": {
+    "display_name": "TAIKO",
+    "aliases": [
+      "Taiko token"
+    ]
   }
 }
