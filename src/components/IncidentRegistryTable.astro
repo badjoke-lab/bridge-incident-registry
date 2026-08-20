@@ -10,6 +10,10 @@ interface Props { incidents: IncidentCase[]; }
 const { incidents } = Astro.props;
 const bridgesById = new Map(registryData.bridges.map((bridge) => [bridge.id, bridge]));
 const PAGE_SIZE = 25;
+const SUMMARY_PREVIEW_LIMIT = 180;
+const summaryPreview = (value: string) => value.length <= SUMMARY_PREVIEW_LIMIT
+  ? value
+  : `${value.slice(0, SUMMARY_PREVIEW_LIMIT - 1).trimEnd()}…`;
 ---
 <div class="registry-table-wrap">
   <table class="registry-table" aria-describedby="incident-result-count">
@@ -43,7 +47,7 @@ const PAGE_SIZE = 25;
             data-loss-known={String(incident.reported_loss_usd != null)}
             data-reviewed={incident.last_verified_at ?? ""}
           >
-            <td data-label="Incident"><div class="registry-name"><a href={`/incident/${incident.slug}/`}>{incident.title}</a><span class="registry-summary">{incident.summary}</span></div></td>
+            <td data-label="Incident"><div class="registry-name"><a href={`/incident/${incident.slug}/`}>{incident.title}</a><span class="registry-summary">{summaryPreview(incident.summary)}</span></div></td>
             <td data-label="Date"><span class="registry-small">{formatDateWithPrecision(incident.incident_date, incident.incident_date_precision)}</span></td>
             <td data-label="Bridge"><span class="registry-small">{bridgeName}</span></td>
             <td data-label="Type"><span class="registry-small">{formatLabel(incident.incident_type)}</span></td>
