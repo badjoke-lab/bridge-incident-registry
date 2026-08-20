@@ -19,7 +19,9 @@ const STATIC_ALLOWED_JSON_FILES = new Set([
   "data/events.json",
   "data/evidence.json",
   "data/reference/chains.json",
-  "data/reference/assets.json"
+  "data/reference/assets.json",
+  "data/series/registry.json",
+  "data/series/index.json"
 ]);
 const FORBIDDEN_PREFIXES = [
   ".generated/",
@@ -168,7 +170,9 @@ function buildAllowedJsonFiles(canonical) {
   return new Set([
     ...STATIC_ALLOWED_JSON_FILES,
     ...canonical.data.bridges.map((record) => `data/bridge/${record.slug}.json`),
-    ...canonical.data.incidents.map((record) => `data/incident/${record.slug}.json`)
+    ...canonical.data.incidents.map((record) => `data/incident/${record.slug}.json`),
+    ...canonical.data.bridges.map((record) => `data/series/records/bridge--${record.slug}.json`),
+    ...canonical.data.incidents.map((record) => `data/series/records/incident--${record.slug}.json`)
   ]);
 }
 
