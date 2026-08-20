@@ -2,7 +2,7 @@ name: One-shot Verus canonical application on PR open
 
 on:
   pull_request:
-    types: [opened]
+    types: [opened, synchronize]
     branches: [main]
 
 permissions:
@@ -26,15 +26,50 @@ jobs:
       - name: Install dependencies
         run: npm install --no-audit --no-fund
 
-      - name: Extract and execute reviewed application body
+      - name: Apply reviewed records when still at the authorized baseline
         run: |
-          awk '
-            /node <<'\''NODE'\''/ { capture=1; next }
-            capture && /^[[:space:]]+NODE$/ { exit }
-            capture { sub(/^          /, ""); print }
-          ' .github/workflows/one-shot-verus-july-application.yml > /tmp/verus-apply.js
-          test -s /tmp/verus-apply.js
-          node /tmp/verus-apply.js
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const counts = ['bridges','incidents','events','evidence'].map((name) => JSON.parse(fs.readFileSync(`data/${name}.json`, 'utf8')).length);
+          const key = counts.join('/');
+          if (key === '39/41/194/316') {
+            console.log('Reviewed Verus target already applied; validating exact branch state.');
+            process.exit(0);
+          }
+          if (key !== '38/40/193/311') throw new Error(`unexpected canonical baseline ${key}`);
+          const { execFileSync } = require('node:child_process');
+          execFileSync('awk', [
+            '/node <<\x27NODE\x27/ { capture=1; next } capture && /^[[:space:]]+NODE$/ { exit } capture { sub(/^          /, ""); print }',
+            '.github/workflows/one-shot-verus-july-application.yml'
+          ], { stdio: ['ignore', fs.openSync('/tmp/verus-apply.js', 'w'), 'inherit'] });
+          execFileSync(process.execPath, ['/tmp/verus-apply.js'], { stdio: 'inherit' });
+          NODE
+
+      - name: Keep registry-list HTML inside the existing 16 KiB ceiling
+        run: |
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const path = 'data/incidents.json';
+          const rows = JSON.parse(fs.readFileSync(path, 'utf8'));
+          const incident = rows.find((row) => row.id === 'bir_inc_000041');
+          if (!incident) throw new Error('bir_inc_000041 missing after application');
+          incident.summary = 'On July 23, 2026, the Verus-Ethereum Bridge suffered a second 2026 exploit. Reviewed evidence supports a cross-system message-verification failure, and Ethereum-side outflows were reported near $7.54 million. July-specific recovery, reimbursement, and reopening remain unresolved.';
+          incident.reported_loss_text = 'Ethereum-side analysis and contemporaneous reporting place the July drain near $7.54 million across ETH, tBTC, USDC, USDT, MKR, scrvUSD, and EURC.';
+          incident.amount_note = 'About $7.54 million is a mixed-source contemporaneous estimate, not a first-party exact valuation.';
+          incident.amount_claims[0].notes = 'Verified transaction/outflow observations are kept separate from the estimated total valuation.';
+          incident.amount_claims[1].notes = 'Contemporaneous media corroboration, not a first-party exact amount.';
+          incident.unresolved_reason = [
+            'July-specific attacker-fund recovery is not established.',
+            'May 2026 recovery and restitution figures are not reused for July.',
+            'No dated post-July bridge reopening is established.'
+          ];
+          incident.known_unknowns = [
+            'The unarchived first-party Google Doc remains review authority only and is not canonical evidence.',
+            'July-specific recovery, reimbursement, upgrade completion, and reopening remain unverified.',
+            'The separate May 2026 exploit requires its own incident review.'
+          ];
+          fs.writeFileSync(path, JSON.stringify(rows, null, 2) + '\n');
+          NODE
 
       - name: Validate canonical data and quality
         run: |
@@ -56,6 +91,9 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add data/bridges.json data/incidents.json data/events.json data/evidence.json data/reference/chains.json data/reference/assets.json
-          git diff --cached --quiet && { echo 'No staged changes'; exit 1; }
+          if git diff --cached --quiet; then
+            echo 'No canonical changes to commit; exact target already present.'
+            exit 0
+          fi
           git commit -m 'Apply reviewed Verus July 2026 incident'
           git push origin HEAD:canonical/verus-july-2026
