@@ -15,11 +15,18 @@ function readState() {
   return Object.fromEntries([...data.entries()].map(([key, value]) => [key, String(value || "").trim()]));
 }
 
+function rowSearchText(row) {
+  const title = row.querySelector('[data-label="Incident"] a')?.textContent || "";
+  const bridge = row.querySelector('[data-label="Bridge"]')?.textContent || "";
+  const type = row.querySelector('[data-label="Type"]')?.textContent || "";
+  return `${title} ${bridge} ${type} ${row.dataset.search || ""}`.toLowerCase();
+}
+
 function matches(row, state) {
   const search = state.search.toLowerCase();
   const loss = Number(row.dataset.loss || 0);
   const lossMatch = !state.loss || (state.loss === "known" ? row.dataset.lossKnown === "true" : loss >= Number(state.loss));
-  return (!search || (row.dataset.search || "").includes(search))
+  return (!search || rowSearchText(row).includes(search))
     && (!state.type || row.dataset.type === state.type)
     && (!state.chain || (row.dataset.chains || "").split(" ").includes(state.chain))
     && (!state.bridge_type || row.dataset.bridgeType === state.bridge_type)
