@@ -7,12 +7,12 @@ Updated: 2026-08-20
 
 ```text
 Bridges     39
-Incidents   41
-Events      194
-Evidence    316
+Incidents   42
+Events      199
+Evidence    325
 ```
 
-Ledger Series Phase 2 remains closed. Later reviewed maintenance added WanBridge, ChainConnect and the Verus-Ethereum Bridge July 2026 incident without reopening Phase 2.
+Ledger Series Phase 2 remains closed. Later reviewed maintenance added WanBridge, ChainConnect and separate May and July 2026 Verus-Ethereum Bridge incidents without reopening Phase 2.
 
 ```text
 Canonical data PR                   #330
@@ -39,13 +39,13 @@ The successful verifier observed exact canonical-derived native content on attem
 ```text
 Incident source-count mismatches       0
 Event source-count mismatches          0
-Primary evidence                     224 / 316
-Tier 1 evidence                      241 / 316
-Evidence with archived_url           130 / 316
-Incidents without primary              1 / 41
-Incidents without Tier 1               1 / 41
-Events without primary                11 / 194
-Events without Tier 1                  6 / 194
+Primary evidence                     229 / 325
+Tier 1 evidence                      246 / 325
+Evidence with archived_url           130 / 325
+Incidents without primary              1 / 42
+Incidents without Tier 1               1 / 42
+Events without primary                11 / 199
+Events without Tier 1                  6 / 199
 Terminal unarchived unique URLs       15
 Risky-host unarchived unique URLs     16
 Unknown URL status                     0
@@ -99,7 +99,7 @@ Current performance ceilings remain 16 KiB gzip max HTML, 5 KiB CSS total/max fi
 ## Ongoing work
 
 1. continue reviewed first-party-backed incident and evidence maintenance;
-2. current evidence-gated targets are #331 Verus May, #303 AFX, #279 XRPL-TX, #299 Nerve, #171 Boltz, and #270 Oraichain under their latest review audits/comments;
+2. current evidence-gated targets are #303 AFX, #279 XRPL-TX, #299 Nerve, #171 Boltz, and #270 Oraichain under their latest review audits/comments;
 3. keep the May and July Verus incidents separate; May recovery/restitution/reopen evidence must not be copied into the July case;
 4. keep monitoring/candidate work review-only and fail-closed;
 5. preserve canonical unknowns and recovery/reimbursement/restart/outcome distinctions;
