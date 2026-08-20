@@ -6,27 +6,17 @@ on:
     branches:
       - main
 
-permissions:
-  contents: write
-
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-        with:
-          ref: canonical/verus-ethereum-july-2026
-          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
           node-version: 22
-
-      - name: Apply bounded Verus July 2026 package
-        if: github.event_name == 'pull_request' && github.head_ref == 'canonical/verus-ethereum-july-2026'
-        run: node scripts/apply-verus-july-2026.mjs
 
       - name: Install dependencies
         run: npm install
@@ -87,33 +77,3 @@ jobs:
 
       - name: Test controlled consistency failures
         run: npm run dist:test
-
-      - name: Check patch whitespace
-        run: git diff --check
-
-      - name: Commit validated canonical package
-        if: github.event_name == 'pull_request' && github.head_ref == 'canonical/verus-ethereum-july-2026'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git show origin/main:.github/workflows/check.yml > .github/workflows/check.yml
-          git rm scripts/apply-verus-july-2026.mjs
-          git rm .github/workflows/apply-verus-july-2026.yml
-          git restore package.json 2>/dev/null || true
-          git restore package-lock.json 2>/dev/null || true
-          git add -- \
-            .github/workflows/check.yml \
-            data/bridges.json \
-            data/incidents.json \
-            data/events.json \
-            data/evidence.json \
-            data/reference/chains.json \
-            data/reference/assets.json \
-            README.md \
-            docs/runbooks/current-status.md \
-            docs/runbooks/development-roadmap.md \
-            docs/runbooks/public-consistency-remediation.md \
-            docs/runbooks/recovery-checkpoint.md
-          git status --short
-          git commit -m "Add reviewed Verus July 2026 bridge incident"
-          git push origin HEAD:canonical/verus-ethereum-july-2026
