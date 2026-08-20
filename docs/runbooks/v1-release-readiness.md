@@ -9,12 +9,14 @@ This runbook defines the permanent technical gate for Bridge Incident Registry v
 
 ```text
 Bridges     39
-Incidents   41
-Events      194
-Evidence    316
+Incidents   42
+Events      199
+Evidence    325
 ```
 
-The current production-proven baseline is canonical PR #330 / merge `4ca9065af8072db00408efb5663c797f80972945`, verified read-only in PR #332 / run `32334410535` / job `96321019010` on attempt 1. The same run proved 88 canonical HTML routes, 80 redirects, all 39 bridge and 41 incident dossiers, and the Ledger Series adapter at 80 records / 82 JSON files / 80 unique global keys.
+The current canonical baseline includes the separate May and July 2026 Verus-Ethereum Bridge incidents after canonical PR #338 / merge `66b3b1b613e0e757d45313af59b02f1bebfa398c`.
+
+The latest fully production-proven checkpoint remains the pre-May canonical state from PR #330, verified read-only in PR #332 / run `32334410535` / job `96321019010` on attempt 1: 39 bridges / 41 incidents / 194 events / 316 evidence, 88 canonical HTML routes, 80 redirects, all 39 bridge and 41 incident dossiers, and the Ledger Series adapter at 80 records / 82 JSON files / 80 unique global keys. Do not promote the May baseline to production-proven until a fresh post-merge verifier succeeds.
 
 A release-readiness run must not mutate canonical data.
 
@@ -46,7 +48,7 @@ The release is blocked if any high-severity npm audit finding remains, if any so
 
 ## Accessibility contract
 
-The built-output accessibility gate must pass all generated HTML. At the current reviewed baseline it covers 88 generated HTML pages.
+The built-output accessibility gate must pass all generated HTML. At the current reviewed canonical build baseline it covers 89 generated HTML pages.
 
 The contract includes:
 
@@ -71,7 +73,7 @@ JS total         4 KiB
 max JS file      2 KiB
 ```
 
-Machine-readable registry and Series JSON are intentionally outside these UI budgets because canonical corpus growth is expected. PR #330 passed the unchanged ceiling with `incidents/index.html` at 15.5 KiB gzip.
+Machine-readable registry and Series JSON are intentionally outside these UI budgets because canonical corpus growth is expected. The exact-tree PR #338 validation passed the unchanged ceiling with `incidents/index.html` at 15.8 KiB gzip.
 
 ## Browser compatibility contract
 
