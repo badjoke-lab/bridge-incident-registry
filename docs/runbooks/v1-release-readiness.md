@@ -1,17 +1,17 @@
 # BIR v1 Release Readiness
 
 Status: active release contract  
-Updated: 2026-08-19
+Updated: 2026-08-20
 
 This runbook defines the final technical gate for Bridge Incident Registry v1. It consolidates the already-reviewed canonical, quality, accessibility, performance, browser-compatibility, dependency-security, and publication checks. It does not weaken or replace any underlying gate.
 
 ## Canonical release baseline
 
 ```text
-Bridges     38
-Incidents   40
-Events      193
-Evidence    311
+Bridges     39
+Incidents   41
+Events      194
+Evidence    316
 ```
 
 A release-readiness run must not mutate canonical data.
@@ -42,7 +42,7 @@ The release is blocked if any high-severity npm audit finding remains, if any so
 
 ## Accessibility contract
 
-The built-output accessibility gate must pass all generated HTML. At the current reviewed baseline it covers 86 generated HTML pages.
+The built-output accessibility gate must pass all generated HTML. At the current reviewed baseline it covers 88 generated HTML pages.
 
 The contract includes:
 
