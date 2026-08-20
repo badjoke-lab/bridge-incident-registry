@@ -1,0 +1,61 @@
+name: One-shot Verus canonical application on PR open
+
+on:
+  pull_request:
+    types: [opened]
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.head_ref == 'canonical/verus-july-2026'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: canonical/verus-july-2026
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Extract and execute reviewed application body
+        run: |
+          awk '
+            /node <<'\''NODE'\''/ { capture=1; next }
+            capture && /^[[:space:]]+NODE$/ { exit }
+            capture { sub(/^          /, ""); print }
+          ' .github/workflows/one-shot-verus-july-application.yml > /tmp/verus-apply.js
+          test -s /tmp/verus-apply.js
+          node /tmp/verus-apply.js
+
+      - name: Validate canonical data and quality
+        run: |
+          npm run validate:data
+          npm run validate:enums
+          npm run audit:full-corpus
+          npm run audit:source-count
+          npm run audit:source-quality
+
+      - name: Build and static quality gates
+        run: |
+          npm run build
+          npm run accessibility:check
+          npm run performance:check
+          git diff --check
+
+      - name: Commit validated canonical application
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/bridges.json data/incidents.json data/events.json data/evidence.json data/reference/chains.json data/reference/assets.json
+          git diff --cached --quiet && { echo 'No staged changes'; exit 1; }
+          git commit -m 'Apply reviewed Verus July 2026 incident'
+          git push origin HEAD:canonical/verus-july-2026
