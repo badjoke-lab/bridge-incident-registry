@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - scripts/apply-verus-may-2026.mjs
+      - scripts/sync-verus-may-count-docs.mjs
       - .github/workflows/apply-verus-may-2026.yml
 
 permissions:
@@ -34,6 +35,9 @@ jobs:
 
       - name: Apply bounded May package
         run: node scripts/apply-verus-may-2026.mjs
+
+      - name: Sync canonical count authority docs
+        run: node scripts/sync-verus-may-count-docs.mjs
 
       - name: Install dependencies
         run: npm install --no-audit --no-fund
@@ -98,6 +102,7 @@ jobs:
       - name: Remove one-shot application files
         run: |
           git rm scripts/apply-verus-may-2026.mjs
+          git rm scripts/sync-verus-may-count-docs.mjs
           git rm .github/workflows/apply-verus-may-2026.yml
 
       - name: Restore dependency metadata if install touched it
@@ -109,7 +114,16 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/bridges.json data/incidents.json data/events.json data/evidence.json
+          git add \
+            data/bridges.json \
+            data/incidents.json \
+            data/events.json \
+            data/evidence.json \
+            README.md \
+            docs/runbooks/current-status.md \
+            docs/runbooks/recovery-checkpoint.md \
+            docs/runbooks/development-roadmap.md \
+            docs/runbooks/public-consistency-remediation.md
           git status --short
           git commit -m "Add reviewed Verus May 2026 bridge incident"
           git push origin HEAD:canonical/verus-may-2026
