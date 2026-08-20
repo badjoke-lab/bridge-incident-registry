@@ -33,7 +33,7 @@ The static registry application, four-record canonical model, validation pipelin
 
 Phase 2 record expansion is complete through Batch 7. Source-count remediation is complete with permanent exact-equality CI. A source-quality no-regression baseline is active. Event Tier 1 remediation, the Nerve source review boundary, Archive Capture Batches 1 through 18, and Deferred Archive Retries 01 and 02 are complete and production-verified. Deferred Retries 03–04 exhausted the fresh retry pool without new approvals. Event Primary Remediations 01 and 02 are production-verified. Remediation 02 added three reviewed event-scoped first-party evidence records without introducing new unique source URLs.
 
-Canonical evidence is now 311. Event primary gaps remain 11 and event Tier 1 gaps remain six; the sole incident-level primary/Tier 1 gap remains evidence-blocked rather than being filled by weaker sources. Primary evidence is 222 / 311, Tier 1 evidence is 239 / 311, and 130 evidence records include verified archive URLs. Unique archive-risk queues remain capped at 15 terminal and 16 risky-host URLs.
+Canonical evidence is now 316. Event primary gaps remain 11 and event Tier 1 gaps remain six; the sole incident-level primary/Tier 1 gap remains evidence-blocked rather than being filled by weaker sources. Primary evidence is 224 / 316, Tier 1 evidence is 241 / 316, and 130 evidence records include verified archive URLs. Unique archive-risk queues remain capped at 15 terminal and 16 risky-host URLs.
 
 Archive-risk metrics count normalized unique source URLs with exact-or-subdomain host matching. Duplicate evidence records sharing one source URL do not create duplicate preservation obligations. Current unresolved unarchived queues are 15 terminal unique URLs and 16 risky-host unique URLs.
 
@@ -48,10 +48,10 @@ The public UI/support layer is current through PR #187, including expanded incid
 Current canonical counts:
 
 ```text
-Bridges     38
-Incidents   40
-Events      193
-Evidence    311
+Bridges     39
+Incidents   41
+Events      194
+Evidence    316
 ```
 
 Current hard states:

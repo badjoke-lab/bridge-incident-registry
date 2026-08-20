@@ -6,10 +6,10 @@ Updated: 2026-08-20
 ## Canonical and production state
 
 ```text
-Bridges     38
-Incidents   40
-Events      193
-Evidence    311
+Bridges     39
+Incidents   41
+Events      194
+Evidence    316
 ```
 
 Ledger Series Phase 2 remains closed. Later reviewed maintenance added WanBridge and ChainConnect without reopening Phase 2.

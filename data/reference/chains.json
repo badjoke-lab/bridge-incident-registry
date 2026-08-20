@@ -218,5 +218,12 @@
       "Venom Network",
       "Venom 2.0"
     ]
+  },
+  "verus": {
+    "display_name": "Verus",
+    "aliases": [
+      "Verus Network",
+      "VRSC network"
+    ]
   }
 }
