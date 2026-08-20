@@ -1,4 +1,4 @@
-name: Apply Taiko June 2026 canonical package
+name: Apply Taiko June 2026 canonical enrichment
 
 on:
   pull_request:
@@ -6,6 +6,7 @@ on:
     paths:
       - scripts/apply-taiko-june-2026.mjs
       - scripts/sync-taiko-june-count-docs.mjs
+      - docs/audits/taiko-june-2026-bridge-incident-review-2026-08-20.md
       - .github/workflows/apply-taiko-june-2026.yml
 
 permissions:
@@ -21,7 +22,7 @@ jobs:
     runs-on: ubuntu-22.04
     timeout-minutes: 60
     steps:
-      - name: Checkout exact application branch
+      - name: Checkout exact enrichment branch
         uses: actions/checkout@v7
         with:
           ref: canonical/taiko-june-2026
@@ -32,10 +33,10 @@ jobs:
         with:
           node-version: 22
 
-      - name: Apply bounded Taiko package
+      - name: Apply bounded Taiko enrichment
         run: node scripts/apply-taiko-june-2026.mjs
 
-      - name: Sync canonical count authority docs
+      - name: Sync evidence-count authority docs
         run: node scripts/sync-taiko-june-count-docs.mjs
 
       - name: Install dependencies
@@ -98,7 +99,7 @@ jobs:
       - name: Check patch whitespace
         run: git diff --check
 
-      - name: Remove one-shot application files
+      - name: Remove one-shot enrichment files
         run: |
           git rm scripts/apply-taiko-june-2026.mjs
           git rm scripts/sync-taiko-june-count-docs.mjs
@@ -109,7 +110,7 @@ jobs:
           git restore package.json 2>/dev/null || true
           git restore package-lock.json 2>/dev/null || true
 
-      - name: Commit validated canonical package
+      - name: Commit validated canonical enrichment
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -120,10 +121,11 @@ jobs:
             data/evidence.json \
             data/reference/assets.json \
             README.md \
+            docs/audits/taiko-june-2026-bridge-incident-review-2026-08-20.md \
             docs/runbooks/current-status.md \
             docs/runbooks/recovery-checkpoint.md \
             docs/runbooks/development-roadmap.md \
             docs/runbooks/public-consistency-remediation.md
           git status --short
-          git commit -m "Add reviewed Taiko June 2026 bridge incident"
+          git commit -m "Enrich reviewed Taiko June 2026 bridge incident"
           git push origin HEAD:canonical/taiko-june-2026
