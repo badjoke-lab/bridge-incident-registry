@@ -11,7 +11,7 @@ GitHub state and canonical JSON are authoritative. Ledger Series Phase 2 horizon
 Bridges     39
 Incidents   42
 Events      199
-Evidence    325
+Evidence    327
 ```
 
 Latest production-verified canonical maintenance:

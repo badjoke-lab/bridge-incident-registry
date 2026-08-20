@@ -9,7 +9,7 @@ Updated: 2026-08-20
 Bridges     39
 Incidents   42
 Events      199
-Evidence    325
+Evidence    327
 ```
 
 Ledger Series Phase 2 remains closed. Later reviewed maintenance added WanBridge, ChainConnect and separate May and July 2026 Verus-Ethereum Bridge incidents without reopening Phase 2.
@@ -43,9 +43,9 @@ The Verus bridge, the separate May and July incident routes, `/incidents/`, `/co
 ```text
 Incident source-count mismatches       0
 Event source-count mismatches          0
-Primary evidence                     229 / 325
-Tier 1 evidence                      246 / 325
-Evidence with archived_url           130 / 325
+Primary evidence                     231 / 327
+Tier 1 evidence                      248 / 327
+Evidence with archived_url           130 / 327
 Incidents without primary              1 / 42
 Incidents without Tier 1               1 / 42
 Events without primary                11 / 199
