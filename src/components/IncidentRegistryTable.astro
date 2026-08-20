@@ -22,14 +22,13 @@ const PAGE_SIZE = 25;
         const bridgeType = bridge?.type ?? "";
         const chains = getChainLabels(incident.affected_chains);
         const assets = getAssetLabels(incident.affected_assets);
-        const searchText = [incident.title, bridgeName, ...chains, ...assets, incident.attack_vector_category ?? "", incident.incident_type].join(" ").toLowerCase();
+        const searchText = [...chains, ...assets, incident.attack_vector_category ?? ""].join(" ").toLowerCase();
         const unresolvedValue = String(Boolean(incident.is_unresolved));
         return (
           <tr
             hidden={index >= PAGE_SIZE}
             class="registry-row"
             data-search={searchText}
-            data-name={incident.title}
             data-type={incident.incident_type}
             data-chains={(incident.affected_chains ?? []).join(" ")}
             data-bridge-type={bridgeType}

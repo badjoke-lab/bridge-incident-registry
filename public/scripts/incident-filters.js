@@ -15,11 +15,16 @@ function readState() {
   return Object.fromEntries([...data.entries()].map(([key, value]) => [key, String(value || "").trim()]));
 }
 
+function rowName(row) {
+  return row.querySelector(".registry-name a")?.textContent?.trim() || "";
+}
+
 function matches(row, state) {
   const search = state.search.toLowerCase();
+  const searchable = `${row.textContent || ""} ${row.dataset.search || ""}`.toLowerCase();
   const loss = Number(row.dataset.loss || 0);
   const lossMatch = !state.loss || (state.loss === "known" ? row.dataset.lossKnown === "true" : loss >= Number(state.loss));
-  return (!search || (row.dataset.search || "").includes(search))
+  return (!search || searchable.includes(search))
     && (!state.type || row.dataset.type === state.type)
     && (!state.chain || (row.dataset.chains || "").split(" ").includes(state.chain))
     && (!state.bridge_type || row.dataset.bridgeType === state.bridge_type)
@@ -37,8 +42,8 @@ function matches(row, state) {
 function compareRows(a, b, sort) {
   if (sort === "loss-desc") return Number(b.dataset.loss) - Number(a.dataset.loss) || String(b.dataset.date).localeCompare(String(a.dataset.date));
   if (sort === "reviewed-desc") return String(b.dataset.reviewed).localeCompare(String(a.dataset.reviewed)) || String(b.dataset.date).localeCompare(String(a.dataset.date));
-  if (sort === "name-asc") return a.dataset.name.localeCompare(b.dataset.name);
-  return String(b.dataset.date).localeCompare(String(a.dataset.date)) || a.dataset.name.localeCompare(b.dataset.name);
+  if (sort === "name-asc") return rowName(a).localeCompare(rowName(b));
+  return String(b.dataset.date).localeCompare(String(a.dataset.date)) || rowName(a).localeCompare(rowName(b));
 }
 
 function writeUrl(state) {
