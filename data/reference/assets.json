@@ -182,5 +182,29 @@
       "Midnight NIGHT",
       "NIGHT token"
     ]
+  },
+  "tbtc": {
+    "display_name": "tBTC",
+    "aliases": [
+      "Threshold tBTC"
+    ]
+  },
+  "mkr": {
+    "display_name": "MKR",
+    "aliases": [
+      "Maker"
+    ]
+  },
+  "scrvusd": {
+    "display_name": "scrvUSD",
+    "aliases": [
+      "Savings crvUSD"
+    ]
+  },
+  "eurc": {
+    "display_name": "EURC",
+    "aliases": [
+      "Euro Coin"
+    ]
   }
 }
