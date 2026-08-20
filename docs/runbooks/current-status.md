@@ -12,37 +12,37 @@ Events      194
 Evidence    316
 ```
 
-Ledger Series Phase 2 remains closed. Later reviewed maintenance added WanBridge and ChainConnect without reopening Phase 2.
+Ledger Series Phase 2 remains closed. Later reviewed maintenance added WanBridge, ChainConnect, and the Verus-Ethereum Bridge without reopening Phase 2.
 
 ```text
-Canonical data PR                   #314
-Canonical merge                     aa11872fe237c295dae5d5a0a41d283fcde21aab
-Production verification audit PR    #318
-Production Verification run         32167991271
-Production Verification job         95812037176
-Publication attempt                 1
-Generated at                        2026-08-18T17:51:37.950Z
-Production equality                 success
-Canonical HTML routes               86
+Canonical data PR                   #330
+Canonical merge                     4ca9065af8072db00408efb5663c797f80972945
+Production verification audit PR    pending
+Production Verification run         pending
+Production Verification job         pending
+Publication attempt                 pending
+Generated at                        pending
+Production equality                 pending
+Canonical HTML routes               88 expected from canonical build
 Legacy redirects                    80
-Bridge dossiers verified            38 / 38
-Incident dossiers verified          40 / 40
+Bridge dossiers verified            pending production verification
+Incident dossiers verified          pending production verification
 ```
 
-The successful production verifier observed exact canonical-derived content on attempt 1 and passed aggregate registry, all 38 bridge dossiers, all 40 incident dossiers, 86 canonical HTML routes, and 80 redirects. Both legacy Wanchain URL forms correctly redirect to `/bridge/wanbridge/`.
+The previous successful production checkpoint remains ChainConnect at 38 bridges / 40 incidents / 193 events / 311 evidence. The Verus-Ethereum Bridge canonical application is merged, but production equality must not be claimed until the unchanged production verifier observes the 39 / 41 / 194 / 316 public baseline.
 
 ## Current quality boundary
 
 ```text
 Incident source-count mismatches       0
 Event source-count mismatches          0
-Primary evidence                     222 / 311
-Tier 1 evidence                      239 / 311
-Evidence with archived_url           130 / 311
-Incidents without primary              1 / 40
-Incidents without Tier 1               1 / 40
-Events without primary                11 / 193
-Events without Tier 1                  6 / 193
+Primary evidence                     224 / 316
+Tier 1 evidence                      241 / 316
+Evidence with archived_url           130 / 316
+Incidents without primary              1 / 41
+Incidents without Tier 1               1 / 41
+Events without primary                11 / 194
+Events without Tier 1                  6 / 194
 Terminal unarchived unique URLs       15
 Risky-host unarchived unique URLs     16
 Unknown URL status                     0
@@ -94,9 +94,11 @@ Current performance ceilings remain 16 KiB gzip max HTML, 5 KiB CSS total/max fi
 
 ## Ongoing work
 
-1. continue reviewed first-party-backed incident and evidence maintenance;
-2. current evidence-gated targets are #303 AFX, #279 XRPL-TX, #299 Nerve, #171 Boltz, and #270 Oraichain under their latest review audits/comments;
-3. keep monitoring/candidate work review-only and fail-closed;
-4. preserve canonical unknowns and recovery/reimbursement/restart/outcome distinctions;
-5. preserve all source-quality, accessibility, performance, browser, machine-readable and production-equality guards;
-6. use `docs/operations/current-position.md` and `docs/runbooks/recovery-checkpoint.md` as restart pointers; do not resume from historical Stage 8 or earlier counts/run IDs.
+1. complete the Verus post-merge publication/equality checkpoint without relaxing the verifier or mutating canonical data;
+2. continue reviewed first-party-backed incident and evidence maintenance;
+3. current evidence-gated targets are #303 AFX, #279 XRPL-TX, #299 Nerve, #171 Boltz, and #270 Oraichain under their latest review audits/comments;
+4. separately review the May 2026 Verus exploit if its evidence package meets BIR scope; do not collapse it into the July incident;
+5. keep monitoring/candidate work review-only and fail-closed;
+6. preserve canonical unknowns and recovery/reimbursement/restart/outcome distinctions;
+7. preserve all source-quality, accessibility, performance, browser, machine-readable and production-equality guards;
+8. use `docs/operations/current-position.md` and `docs/runbooks/recovery-checkpoint.md` as restart pointers; do not resume from historical Stage 8 or earlier counts/run IDs.
