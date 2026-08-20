@@ -22,7 +22,10 @@ const PAGE_SIZE = 25;
         const bridgeType = bridge?.type ?? "";
         const chains = getChainLabels(incident.affected_chains);
         const assets = getAssetLabels(incident.affected_assets);
-        const searchText = [incident.title, bridgeName, ...chains, ...assets, incident.attack_vector_category ?? "", incident.incident_type].join(" ").toLowerCase();
+        // Title, bridge name, and incident type are already rendered in cells and
+        // are read from those cells by incident-filters.js. Keep data-search only
+        // for searchable canonical values that are not otherwise visible here.
+        const searchText = [...chains, ...assets, incident.attack_vector_category ?? ""].join(" ").toLowerCase();
         const unresolvedValue = String(Boolean(incident.is_unresolved));
         return (
           <tr
