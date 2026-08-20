@@ -1,0 +1,121 @@
+name: Verify Verus Native and Series Production
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  verify-production:
+    if: github.head_ref == 'agent/phase9-series-production-verification'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: main
+
+      - name: Pin exact merged main
+        run: test "$(git rev-parse HEAD)" = "4ca9065af8072db00408efb5663c797f80972945"
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Build and validate exact-main native plus Series output
+        run: |
+          set -euo pipefail
+          npm run build
+          node scripts/check-series-adapter.mjs
+          node scripts/check-dist-consistency.mjs
+          jq -e '.record_counts.primary_records == 39 and .record_counts.series_records == 80 and .routes.search == "/incidents/" and .routes.compare == "/compare/" and .routes.stats == "/stats/"' public/data/series/registry.json >/dev/null
+          jq -e '.record_count == 80 and .record_counts.bridges == 39 and .record_counts.incidents == 41' public/data/series/index.json >/dev/null
+
+      - name: Verify native production equality
+        env:
+          PUBLIC_SITE_ORIGIN: https://bir.badjoke-lab.com
+          BIR_PRODUCTION_TIMEOUT_MS: "30000"
+        run: npm run production:verify
+
+      - name: Verify complete Series adapter on production
+        env:
+          SERIES_ORIGIN: https://bir.badjoke-lab.com
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import path from 'node:path';
+
+          const root = path.resolve('public/data/series');
+          const origin = process.env.SERIES_ORIGIN;
+          const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+          function listJson(dir, base = dir) {
+            const out = [];
+            for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+              const target = path.join(dir, entry.name);
+              if (entry.isDirectory()) out.push(...listJson(target, base));
+              else if (entry.isFile() && entry.name.endsWith('.json')) out.push(path.relative(base, target).split(path.sep).join('/'));
+            }
+            return out.sort();
+          }
+
+          function normalize(value) {
+            if (Array.isArray(value)) return value.map(normalize);
+            if (value && typeof value === 'object') {
+              return Object.fromEntries(Object.keys(value).sort().filter((key) => key !== 'generated_at').map((key) => [key, normalize(value[key])]));
+            }
+            return value;
+          }
+
+          const files = listJson(root);
+          if (files.length !== 82) throw new Error(`expected 82 Series JSON files, found ${files.length}`);
+          const local = new Map(files.map((file) => [file, normalize(JSON.parse(fs.readFileSync(path.join(root, file), 'utf8')))]));
+
+          let lastError;
+          for (let attempt = 1; attempt <= 60; attempt++) {
+            try {
+              for (const file of files) {
+                const url = `${origin}/data/series/${file}?verify=4ca9065a-${attempt}-${Date.now()}`;
+                const response = await fetch(url, { headers: { accept: 'application/json' } });
+                if (!response.ok) throw new Error(`${file}: HTTP ${response.status}`);
+                const remote = normalize(await response.json());
+                if (JSON.stringify(remote) !== JSON.stringify(local.get(file))) throw new Error(`${file}: semantic mismatch`);
+              }
+              const indexResponse = await fetch(`${origin}/data/series/index.json?verify=keys-${Date.now()}`);
+              if (!indexResponse.ok) throw new Error(`index.json: HTTP ${indexResponse.status}`);
+              const index = await indexResponse.json();
+              const keys = index.records.map((record) => record.global_record_key);
+              if (keys.length !== 80 || new Set(keys).size !== 80) throw new Error('global-key uniqueness/count mismatch');
+              console.log(`BIR Series production equality PASS attempt=${attempt} files=${files.length} records=${keys.length}`);
+              lastError = null;
+              break;
+            } catch (error) {
+              lastError = error;
+              console.log(`Attempt ${attempt}/60 failed: ${error.message}`);
+              await sleep(10000);
+            }
+          }
+          if (lastError) throw lastError;
+          NODE
+
+      - name: Verify Verus and representative human routes
+        run: |
+          set -euo pipefail
+          for url in \
+            https://bir.badjoke-lab.com/bridge/verus-ethereum-bridge/ \
+            https://bir.badjoke-lab.com/incident/verus-ethereum-bridge-2026-july-import-verification-exploit/ \
+            https://bir.badjoke-lab.com/bridge/ronin-bridge/ \
+            https://bir.badjoke-lab.com/incident/ronin-bridge-2022-validator-key-compromise/ \
+            https://bir.badjoke-lab.com/incidents/ \
+            https://bir.badjoke-lab.com/compare/ \
+            https://bir.badjoke-lab.com/stats/; do
+            code="$(curl -sS -o /dev/null -w '%{http_code}' "${url}?verify=4ca9065a-$(date +%s)")"
+            test "$code" -ge 200 && test "$code" -lt 400
+            echo "$url -> $code"
+          done
