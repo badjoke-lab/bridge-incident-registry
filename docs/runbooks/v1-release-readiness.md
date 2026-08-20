@@ -16,7 +16,7 @@ Evidence    325
 
 The current canonical baseline includes the separate May and July 2026 Verus-Ethereum Bridge incidents after canonical PR #338 / merge `66b3b1b613e0e757d45313af59b02f1bebfa398c`.
 
-The latest fully production-proven checkpoint remains the pre-May canonical state from PR #330, verified read-only in PR #332 / run `32334410535` / job `96321019010` on attempt 1: 39 bridges / 41 incidents / 194 events / 316 evidence, 88 canonical HTML routes, 80 redirects, all 39 bridge and 41 incident dossiers, and the Ledger Series adapter at 80 records / 82 JSON files / 80 unique global keys. Do not promote the May baseline to production-proven until a fresh post-merge verifier succeeds.
+This baseline is fully production-proven from exact main `b72aa190f07a11f45baa2cfcf57ae9295343b374` by read-only verifier PR #340 / run `32337814734` / job `96330647951`. Native equality passed on attempt 1 at 39 / 42 / 199 / 325 with 89 canonical HTML routes, 80 redirects, all 39 bridge and 42 incident dossiers, and production `generated_at` `2026-08-20T06:00:17.226Z`. The same job independently passed Ledger Series equality on attempt 1 across 81 records, 83 JSON files and 81 unique global keys.
 
 A release-readiness run must not mutate canonical data.
 
@@ -48,7 +48,7 @@ The release is blocked if any high-severity npm audit finding remains, if any so
 
 ## Accessibility contract
 
-The built-output accessibility gate must pass all generated HTML. At the current reviewed canonical build baseline it covers 89 generated HTML pages.
+The built-output accessibility gate must pass all generated HTML. At the current reviewed and production-proven baseline it covers 89 generated HTML pages.
 
 The contract includes:
 
@@ -133,4 +133,4 @@ BIR v1 technical release closure remains complete. Each later canonical/public m
 5. Series production equality is also proven when Series output changes;
 6. restart/status documents record the accepted checkpoint.
 
-Future corpus expansion, monitoring candidate investigation, or research-triggered evidence remediation continues as normal registry maintenance and does not reopen the technical hardening phase unless a permanent release gate regresses.
+The current May-expanded Verus maintenance change satisfies all six conditions through PRs #338–#340 and this checkpoint update. Future corpus expansion, monitoring candidate investigation, or research-triggered evidence remediation continues as normal registry maintenance and does not reopen the technical hardening phase unless a permanent release gate regresses.
