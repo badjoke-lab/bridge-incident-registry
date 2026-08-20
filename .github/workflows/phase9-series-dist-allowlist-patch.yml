@@ -1,0 +1,40 @@
+name: Phase 9 Series Dist Allowlist Patch
+
+on:
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: github.head_ref == 'agent/phase9-series-adapter'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Add exact Series JSON paths to dist contract
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('scripts/lib/dist-consistency.mjs')
+          text = p.read_text()
+          old_static = '''  "data/reference/chains.json",\n  "data/reference/assets.json"\n]);'''
+          new_static = '''  "data/reference/chains.json",\n  "data/reference/assets.json",\n  "data/series/registry.json",\n  "data/series/index.json"\n]);'''
+          old_dynamic = '''    ...STATIC_ALLOWED_JSON_FILES,\n    ...canonical.data.bridges.map((record) => `data/bridge/${record.slug}.json`),\n    ...canonical.data.incidents.map((record) => `data/incident/${record.slug}.json`)\n  ]);'''
+          new_dynamic = '''    ...STATIC_ALLOWED_JSON_FILES,\n    ...canonical.data.bridges.map((record) => `data/bridge/${record.slug}.json`),\n    ...canonical.data.incidents.map((record) => `data/incident/${record.slug}.json`),\n    ...canonical.data.bridges.map((record) => `data/series/records/bridge--${record.slug}.json`),\n    ...canonical.data.incidents.map((record) => `data/series/records/incident--${record.slug}.json`)\n  ]);'''
+          if old_static not in text or old_dynamic not in text:
+              raise SystemExit('expected dist-consistency anchors not found')
+          text = text.replace(old_static, new_static, 1).replace(old_dynamic, new_dynamic, 1)
+          p.write_text(text)
+          PY
+      - name: Commit bounded dist contract patch
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- scripts/lib/dist-consistency.mjs
+          git diff --cached --check
+          git commit -m "Allow exact Ledger Series JSON in BIR dist contract"
+          git push origin HEAD:${GITHUB_HEAD_REF}
