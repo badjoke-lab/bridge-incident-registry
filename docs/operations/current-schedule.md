@@ -7,7 +7,7 @@ The authoritative BIR maintenance roadmap is `docs/runbooks/development-roadmap.
 
 ## Naming boundary
 
-BIR's historical internal Phase 0–5 numbering and the cross-series **Ledger Series Phase 2** are separate. Ledger Series Phase 2 means BIR's completed AI-era horizontal strengthening; it does not rename or reopen the completed internal BIR phases.
+BIR's historical internal Phase 0–5 numbering, the completed BIR **Ledger Series Phase 2** horizontal work, and the cross-series **Ledger Series Phase 9 adapter** are separate. Phase 9 does not create or rename a BIR “Stage 9”.
 
 ## Existing BIR schedule
 
@@ -20,17 +20,20 @@ BIR's historical internal Phase 0–5 numbering and the cross-series **Ledger Se
 - Release — v1 hardening/technical closure: complete
 - Maintenance — reviewed canonical/candidate expansion: active
 - Ledger Series Phase 2 — horizontal strengthening: **complete**
+- Ledger Series Phase 9 — BIR adapter/public-contract integration: **complete and production-verified**
 
 ## Current canonical baseline
 
 ```text
-Bridges     38
-Incidents   40
-Events      193
-Evidence    311
+Bridges     39
+Incidents   41
+Events      194
+Evidence    316
 ```
 
-This is current canonical and production-verified truth. The latest canonical maintenance additions are WanBridge and ChainConnect; the ChainConnect publication audit in PR #318 proved full production equality at this baseline. Historical Stage 8 `36 / 38 / 190 / 299` and earlier restart counts remain history only.
+This is current canonical and production-verified truth. The latest canonical maintenance addition is the Verus-Ethereum Bridge July 2026 incident in PR #330. Read-only production verification PR #332 / run `32334410535` / job `96321019010` passed native and Series equality on attempt 1 at this baseline: 88 canonical HTML routes, 80 redirects, 39/39 bridge dossiers, 41/41 incident dossiers, 80 Series records, 82 Series JSON files, and 80 unique global keys. Production `generated_at` was `2026-08-20T05:06:43.792Z`.
+
+Historical Stage 8 `36 / 38 / 190 / 299`, ChainConnect `38 / 40 / 193 / 311`, and earlier restart counts remain history only.
 
 ## Ledger Series Phase 2 execution
 
@@ -40,23 +43,29 @@ This is current canonical and production-verified truth. The latest canonical ma
 4. **Complete — Stage 5** — bounded incident-filter delta, PR #288.
 5. **Complete — Stage 6** — canonical `/compare/`, PR #290.
 6. **Complete — Stage 7** — canonical-derived `/stats/`, PR #292.
-7. **Complete — Stage 8** — PR #294 added only the reviewed discrete `reimbursement_completed` event for `bir_inc_000015` and `bridge_reopened` event for `bir_inc_000035`, plus the minimum supporting event-scoped evidence. The two full-corpus warnings are now absent.
-8. **Resolved publication checkpoint** — PRs #295–#296 preserved the approved canonical delta while the external Git-integrated deployment was retriggered. Main V1 Release Readiness run `32041737878` passed production equality at `36 / 38 / 190 / 299` for 82 canonical HTML routes plus all 36 bridge and 38 incident dossiers.
-9. **Complete — closeout** — completion evidence is `docs/audits/ledger-series-phase2-completion-2026-08-18.md` and the current operator/restart documents are synchronized by the closeout PR.
-10. **Deferred** — natural-language-to-filter translation remains a Ledger Series Phase 10 concern and is not a BIR Phase 2 requirement.
+7. **Complete — Stage 8** — PR #294 added only the reviewed discrete `reimbursement_completed` event for `bir_inc_000015` and `bridge_reopened` event for `bir_inc_000035`, plus the minimum supporting event-scoped evidence.
+8. **Resolved publication checkpoint** — PRs #295–#296 preserved the approved canonical delta while external Git-integrated deployment caught up; main V1 Release Readiness run `32041737878` passed the then-current production equality.
+9. **Complete — closeout** — completion evidence is `docs/audits/ledger-series-phase2-completion-2026-08-18.md`.
+10. **Deferred** — natural-language-to-filter translation remains a Ledger Series Phase 10 concern.
+
+## Ledger Series Phase 9 adapter checkpoint
+
+- **Implementation complete** — PR #327 publishes deterministic Series descriptor, index and bridge/incident envelopes without replacing native BIR routes.
+- **Production proof complete** — PR #332 / run `32334410535` verified the exact post-Verus main at 80 Series records across 82 JSON files and 80 unique global keys, alongside the unchanged native production verifier.
+- **Boundary unchanged** — native canonical JSON remains authoritative; Series is a derived public adapter and does not auto-promote monitoring/research material.
 
 ## Current quality checkpoint
 
 ```text
 Incident source-count mismatches       0
 Event source-count mismatches          0
-Primary evidence                     222 / 311
-Tier 1 evidence                      239 / 311
-Evidence with archived_url           130 / 311
-Incidents without primary              1 / 40
-Incidents without Tier 1               1 / 40
-Events without primary                11 / 193
-Events without Tier 1                  6 / 193
+Primary evidence                     224 / 316
+Tier 1 evidence                      241 / 316
+Evidence with archived_url           130 / 316
+Incidents without primary              1 / 41
+Incidents without Tier 1               1 / 41
+Events without primary                11 / 194
+Events without Tier 1                  6 / 194
 Terminal unarchived unique URLs       15
 Risky-host unarchived unique URLs     16
 Unknown URL status                     0
@@ -73,7 +82,7 @@ High-severity npm audit findings       0
 - unknown URL status and broken canonical references are blocking;
 - source-quality gap ceilings may decrease but must not increase without review;
 - high-severity npm audit findings are blocking;
-- accessibility, performance, Chromium/Firefox/WebKit, and dist consistency remain release gates;
+- accessibility, performance, Chromium/Firefox/WebKit, dist consistency and Series adapter consistency remain release gates where applicable;
 - production verification is required for canonical/public output changes;
 - technical closure does not create or imply a GitHub Release or semantic-version tag.
 
@@ -82,8 +91,8 @@ Current performance ceilings remain 16 KiB gzip max HTML, 5 KiB CSS total/max fi
 ## Immediate execution order
 
 1. keep BIR in steady-state reviewed maintenance: monitoring, evidence health, high-severity corrections, and properly reviewed new incidents;
-2. current evidence-gated maintenance targets are Issue #303 AFX Trade, #279 XRPL-TX follow-up, #299 Nerve first-party enrichment, #171 Boltz shutdown signal, and #270 Oraichain cross-chain signal;
-3. PRs #319–#322 are review-only authority/audit work and do not change the `38 / 40 / 193 / 311` canonical/public baseline;
+2. current evidence-gated maintenance targets are Issue #331 Verus May, #303 AFX Trade, #279 XRPL-TX follow-up, #299 Nerve first-party enrichment, #171 Boltz shutdown signal, and #270 Oraichain cross-chain signal;
+3. preserve the strict separation between the canonical July Verus case and the separate May review target;
 4. preserve canonical/schema semantics and every permanent release/source-quality guard;
-5. do **not** invent a Ledger Series Stage 9;
+5. do **not** invent a BIR/Ledger Series Stage 9; Phase 9 here is the already-implemented cross-series adapter;
 6. for the cross-series roadmap, read the latest authority in the target repository before starting work. `docs/ai-era-registry-spec.md` names **SOG** as the next series after the completed BIR pilot.

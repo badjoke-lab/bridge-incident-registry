@@ -41,9 +41,9 @@ Archive Batch 18 reviewed all nine remaining previously-unreviewed terminal/risk
 
 There is no untouched archive-review Batch 19. Deferred Retries 01–02 recovered three reviewed URLs; Retries 03–04 then exhausted all 12 not-recently-retried fresh URLs without another accepted mapping. The remaining reviewed-unarchived pool has already been explicitly retried under the current boundary and should not be immediately recycled.
 
-Production verification compares every transformed field in all four public datasets with the generated public contract. Counts and IDs alone cannot prove publication. Event Primary Remediation 02 again demonstrated the boundary: attempts 1–2 still exposed 284 evidence and were rejected; attempt 3 exposed 287 evidence and passed complete four-dataset field-level equality at `generated_at 2026-08-09T07:08:45.362Z`. No build-input refresh was required. Cloudflare Pages preview deployment remains restricted to `none`.
+Production verification compares every transformed field in all four public datasets with the generated public contract. Counts and IDs alone cannot prove publication. The latest post-Verus read-only verifier again passed complete native field-level equality on its first attempt and also proved the derived Ledger Series adapter across all 82 JSON files. Cloudflare Pages preview deployment remains restricted to `none`.
 
-The public UI/support layer is current through PR #187, including expanded incident and bridge discovery, filters, pagination, detail-page TOCs, Support, project navigation, representative desktop/mobile screenshot auditing, and the shared BadJoke-Lab support-wallet presentation.
+The public UI/support layer includes expanded incident and bridge discovery, filters, pagination, detail-page TOCs, Support, project navigation, representative desktop/mobile screenshot auditing, Compare, Stats, the shared BadJoke-Lab support-wallet presentation, and the machine-readable Ledger Series adapter.
 
 Current canonical counts:
 
@@ -72,16 +72,19 @@ Canonical public content match    true
 Latest verified production checkpoint:
 
 ```text
-Canonical data PR       #314
-Canonical merge         aa11872fe237c295dae5d5a0a41d283fcde21aab
-Production audit PR     #318
-Production verify       32167991271 / 95812037176
-Generated at            2026-08-18T17:51:37.950Z
+Canonical data PR       #330
+Canonical merge         4ca9065af8072db00408efb5663c797f80972945
+Production verify PR    #332 — closed without merge
+Production verify       32334410535 / 96321019010
+Generated at            2026-08-20T05:06:43.792Z
 Publication attempt     1
-HTML routes             86
+HTML routes             88
 Redirects               80
-Bridge dossiers         38 / 38
-Incident dossiers       40 / 40
+Bridge dossiers         39 / 39
+Incident dossiers       41 / 41
+Series records          80 / 80
+Series JSON files       82 / 82
+Series unique keys      80 / 80
 Build-input refresh     not required
 ```
 
@@ -96,7 +99,7 @@ data/evidence.json
 
 ## Machine-readable public layer
 
-Each build generates:
+Each build generates the native public contract plus the derived Ledger Series adapter, including:
 
 ```text
 /version.json
@@ -107,15 +110,19 @@ Each build generates:
 /data/evidence.json
 /data/reference/chains.json
 /data/reference/assets.json
+/data/series/registry.json
+/data/series/index.json
+/data/series/bridges/*.json
+/data/series/incidents/*.json
 /llms.txt
 /ai.txt
 ```
 
-The generated files derive from canonical JSON, include current record counts and generation metadata, and are checked before the Astro build completes, in the final `dist` tree, and against the live production output.
+The generated files derive from canonical JSON, include current record counts and generation metadata, and are checked before the Astro build completes, in the final `dist` tree, and against the live production output. The Series adapter is derived output; it does not replace the canonical four datasets.
 
-The live production check requires complete generated-record equality and includes controlled same-count field-drift tests in normal CI.
+The live production check requires complete generated-record equality and includes controlled same-count field-drift tests in normal CI. When Series output changes, a bounded post-merge verification additionally compares the descriptor, index and every record envelope with exact-main expected output.
 
-See `docs/machine-readable-public-layer.md` for the current contract and limits.
+See `docs/machine-readable-public-layer.md` for the native contract and `docs/tasks/ledger-series-phase9-adapter.md` for the Series adapter boundary.
 
 ## Project documentation
 
@@ -127,6 +134,7 @@ See `docs/machine-readable-public-layer.md` for the current contract and limits.
 - `docs/runbooks/recovery-checkpoint.md` — short restart point
 - `docs/runbooks/development-roadmap.md` — roadmap to v1
 - `docs/runbooks/public-consistency-remediation.md` — completed remediation sequence
+- `docs/audits/production-verification-verus-july-series-2026-08-20.md` — current native + Series production checkpoint
 - `docs/audits/phase3-source-quality-baseline-2026-07-29.md` — source-quality baseline and ceilings
 - `docs/audits/phase3-event-tier1-review-final-2026-07-30.md` — final event Tier 1 review boundary
 - `docs/audits/phase3-event-tier1-canonical-final-2026-07-30.md` — final event Tier 1 canonical migration
@@ -212,7 +220,7 @@ GitHub pull-request workflow
 client-side search and filters
 ```
 
-Canonical data and generated machine-readable output are validated during the build. Production verification checks complete JSON content, live HTML, metadata, sitemap, robots, redirects, content types, and observable cache behavior. The current version requires no database, authentication, wallet connection, paid API, or server runtime.
+Canonical data and generated machine-readable output are validated during the build. Production verification checks complete JSON content, live HTML, metadata, sitemap, robots, redirects, content types, observable cache behavior, and applicable Series adapter equality. The current version requires no database, authentication, wallet connection, paid API, or server runtime.
 
 ## Development rule
 
