@@ -15,24 +15,28 @@ Evidence    325
 Ledger Series Phase 2 remains closed. Later reviewed maintenance added WanBridge, ChainConnect and separate May and July 2026 Verus-Ethereum Bridge incidents without reopening Phase 2.
 
 ```text
-Canonical data PR                   #330
-Canonical merge                     4ca9065af8072db00408efb5663c797f80972945
-Read-only production verifier PR    #332 — closed without merge
-Verification run                    32334410535
-Verification job                    96321019010
+Canonical data PR                   #338
+Canonical merge                     66b3b1b613e0e757d45313af59b02f1bebfa398c
+Release-baseline sync PR            #339
+Production-proven main              b72aa190f07a11f45baa2cfcf57ae9295343b374
+Read-only production verifier PR    #340 — closed without merge
+Verification run                    32337814734
+Verification job                    96330647951
 Publication attempt                 1
-Generated at                        2026-08-20T05:06:43.792Z
+Generated at                        2026-08-20T06:00:17.226Z
 Production equality                 success
-Canonical HTML routes               88
+Canonical HTML routes               89
 Legacy redirects                    80
 Bridge dossiers verified            39 / 39
-Incident dossiers verified          41 / 41
-Series records verified             80 / 80
-Series JSON files verified          82 / 82
-Unique Series global keys           80 / 80
+Incident dossiers verified          42 / 42
+Series records verified             81 / 81
+Series JSON files verified          83 / 83
+Unique Series global keys           81 / 81
 ```
 
-The successful verifier observed exact canonical-derived native content on attempt 1 and passed every bridge/incident dossier. The same exact-main run independently proved the Ledger Series adapter in production with semantic equality across all 82 Series JSON files, excluding only environment-specific `generated_at`.
+The read-only verifier checked out exact merged main `b72aa190f07a11f45baa2cfcf57ae9295343b374` and observed canonical-derived native production content on attempt 1 with zero dataset mismatches. It also passed record-level JSON equality for every bridge and incident dossier. The same run independently proved the complete Ledger Series adapter in production with semantic equality across all 83 Series JSON files, excluding only environment-specific `generated_at`, and 81 unique global record keys.
+
+The Verus bridge, the separate May and July incident routes, `/incidents/`, `/compare/` and `/stats/` all returned HTTP 200 in the same production-verification job. May recovery/restitution/reopen evidence remains scoped only to the May incident; the later July incident keeps its own unresolved recovery, reimbursement and post-incident restart boundary.
 
 ## Current quality boundary
 
@@ -65,7 +69,7 @@ Phase 2 Stats                            complete — PR #292
 Phase 2 bounded Stage 8 follow-up        complete — PR #294
 Phase 2 completion audit                 docs/audits/ledger-series-phase2-completion-2026-08-18.md
 Phase 9 BIR adapter                      complete — PR #327
-Phase 9 production proof                 complete — PR #332 / run 32334410535
+Phase 9 post-May production proof        complete — PR #340 / run 32337814734
 ```
 
 Do not invent a BIR/Ledger Series Stage 9. The implemented Phase 9 adapter is a separate cross-series machine-readable contract. The next named cross-series target in `docs/ai-era-registry-spec.md` is SOG; BIR itself remains in steady-state maintenance.
@@ -94,7 +98,7 @@ Chromium / Firefox / WebKit compatibility
 production registry equality after main merge
 ```
 
-Current performance ceilings remain 16 KiB gzip max HTML, 5 KiB CSS total/max file, 4 KiB JS total, and 2 KiB max JS file. Astro remains `^7.2.0`. No technical closeout creates or implies a GitHub Release or semantic-version tag.
+Current performance ceilings remain 16 KiB gzip max HTML, 5 KiB CSS total/max file, 4 KiB JS total, and 2 KiB max JS file. The exact-tree May validation kept `incidents/index.html` at 15.8 KiB gzip under the unchanged ceiling. Astro remains `^7.2.0`. No technical closeout creates or implies a GitHub Release or semantic-version tag.
 
 ## Ongoing work
 
@@ -104,4 +108,4 @@ Current performance ceilings remain 16 KiB gzip max HTML, 5 KiB CSS total/max fi
 4. keep monitoring/candidate work review-only and fail-closed;
 5. preserve canonical unknowns and recovery/reimbursement/restart/outcome distinctions;
 6. preserve all source-quality, accessibility, performance, browser, native/Series machine-readable and production-equality guards;
-7. use `docs/operations/current-position.md` and `docs/runbooks/recovery-checkpoint.md` as restart pointers; do not resume from historical ChainConnect, Stage 8 or earlier counts/run IDs.
+7. use `docs/operations/current-position.md` and `docs/runbooks/recovery-checkpoint.md` as restart pointers; do not resume from historical ChainConnect, July-only Verus, Stage 8 or earlier counts/run IDs.
