@@ -1,0 +1,145 @@
+name: Temporary Apply Risky Host Headroom Cleanup
+
+on:
+  pull_request:
+    types: [synchronize]
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.event.pull_request.head.ref == 'review/risky-host-headroom-for-afx'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact PR head branch
+        uses: actions/checkout@v7
+        with:
+          ref: review/risky-host-headroom-for-afx
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Apply bounded cleanup
+        run: node scripts/apply-risky-host-headroom-cleanup.mjs
+
+      - name: Assert exact bounded diff before gates
+        shell: bash
+        run: |
+          set -euo pipefail
+          changed="$(git status --porcelain | sed -E 's/^.. //' | sort)"
+          expected="$(printf '%s\n' data/evidence.json data/events.json data/incidents.json | sort)"
+          test "$changed" = "$expected"
+          node - <<'NODE'
+          const fs = require('fs');
+          const read = p => JSON.parse(fs.readFileSync(p, 'utf8'));
+          const evidence = read('data/evidence.json');
+          const events = read('data/events.json');
+          const incidents = read('data/incidents.json');
+          if (evidence.length !== 334) throw new Error(`evidence=${evidence.length}`);
+          if (events.length !== 203) throw new Error(`events=${events.length}`);
+          if (incidents.length !== 43) throw new Error(`incidents=${incidents.length}`);
+          if (evidence.some(x => x.id === 'bir_src_000164')) throw new Error('bir_src_000164 still present');
+          const h = evidence.find(x => x.id === 'bir_src_000277');
+          if (!h || h.url !== 'https://x.com/holographxyz/status/1807946057235718349') throw new Error('bir_src_000277 not restored');
+          const e = events.find(x => x.id === 'bir_ev_000136');
+          if (!e || e.source_count !== 1) throw new Error('bir_ev_000136 source_count mismatch');
+          const i = incidents.find(x => x.id === 'bir_inc_000030');
+          if (!i || i.source_count !== 4) throw new Error('bir_inc_000030 source_count mismatch');
+          NODE
+
+      - name: Audit high-severity dependencies
+        run: npm audit --audit-level=high
+
+      - name: Type and Astro check
+        run: npm run check
+
+      - name: Validate canonical data
+        run: npm run validate:data
+
+      - name: Validate schema enums
+        run: npm run validate:enums
+
+      - name: Audit first ten seeds
+        run: npm run audit:first-ten
+
+      - name: Audit full canonical corpus
+        run: npm run audit:full-corpus
+
+      - name: Audit exact source counts
+        run: npm run audit:source-count
+
+      - name: Audit source quality baseline
+        run: npm run audit:source-quality
+
+      - name: Assert headroom result
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="$(npm run audit:source-quality 2>&1)"
+          printf '%s\n' "$output"
+          printf '%s\n' "$output" | grep -q '"risky_host_unarchived": 15'
+          printf '%s\n' "$output" | grep -q '"evidence": 334'
+          printf '%s\n' "$output" | grep -q '"primary_evidence": 237'
+          printf '%s\n' "$output" | grep -q '"tier_1_evidence": 254'
+
+      - name: Test full-corpus audit failures
+        run: npm run audit:full-corpus:test
+
+      - name: Test source-count equality failures
+        run: npm run audit:source-count:test
+
+      - name: Test source quality regressions
+        run: npm run audit:source-quality:test
+
+      - name: Test monitoring foundation
+        run: npm run monitoring:test
+
+      - name: Test production content equality
+        run: npm run production:content:test
+
+      - name: Test performance budget failures
+        run: npm run performance:test
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Check accessibility contract
+        run: npm run accessibility:check
+
+      - name: Enforce built-output performance budget
+        run: npm run performance:check
+
+      - name: Check built output consistency
+        run: npm run dist:check
+
+      - name: Test controlled consistency failures
+        run: npm run dist:test
+
+      - name: Remove temporary applicator artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm scripts/apply-risky-host-headroom-cleanup.mjs
+          rm .github/workflows/temporary-apply-risky-host-headroom.yml
+          changed="$(git status --porcelain | sed -E 's/^.. //' | sort)"
+          expected="$(printf '%s\n' .github/workflows/temporary-apply-risky-host-headroom.yml data/evidence.json data/events.json data/incidents.json scripts/apply-risky-host-headroom-cleanup.mjs | sort)"
+          test "$changed" = "$expected"
+
+      - name: Commit final bounded tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'badjoke-lab'
+          git config user.email 'badjoke.lab@gmail.com'
+          git add -- data/evidence.json data/events.json data/incidents.json
+          git rm -- scripts/apply-risky-host-headroom-cleanup.mjs .github/workflows/temporary-apply-risky-host-headroom.yml
+          git diff --cached --check
+          git commit -m 'Reduce redundant risky-host evidence without weakening coverage'
+          git push origin HEAD:review/risky-host-headroom-for-afx
