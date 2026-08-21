@@ -6,27 +6,17 @@ on:
     branches:
       - main
 
-permissions:
-  contents: write
-
 jobs:
   check:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v7
-        with:
-          ref: review/risky-host-headroom-for-afx
-          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v7
         with:
           node-version: 22
-
-      - name: Apply bounded Holograph postmortem source replacement
-        if: github.event_name == 'pull_request' && github.head_ref == 'review/risky-host-headroom-for-afx'
-        run: node scripts/apply-holograph-postmortem-source.mjs
 
       - name: Install dependencies
         run: npm install
@@ -87,22 +77,3 @@ jobs:
 
       - name: Test controlled consistency failures
         run: npm run dist:test
-
-      - name: Check patch whitespace
-        run: git diff --check
-
-      - name: Commit validated Holograph source replacement
-        if: github.event_name == 'pull_request' && github.head_ref == 'review/risky-host-headroom-for-afx'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git show origin/main:.github/workflows/check.yml > .github/workflows/check.yml
-          git rm scripts/apply-holograph-postmortem-source.mjs
-          git rm .github/workflows/risky-host-headroom-review.yml
-          git rm .github/workflows/wormhole-source-consolidation-review.yml
-          git restore package.json 2>/dev/null || true
-          git restore package-lock.json 2>/dev/null || true
-          git add -- .github/workflows/check.yml data/evidence.json docs/audits/holograph-postmortem-source-consolidation-2026-08-21.md
-          git status --short
-          git commit -m "Replace Holograph risky-host source with postmortem"
-          git push origin HEAD:review/risky-host-headroom-for-afx
