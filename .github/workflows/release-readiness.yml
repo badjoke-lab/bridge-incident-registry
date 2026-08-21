@@ -148,7 +148,7 @@ jobs:
             echo
             echo "- Revision: \`${GITHUB_SHA}\`"
             echo "- Event: \`${GITHUB_EVENT_NAME}\`"
-            echo '- Canonical baseline: `39 bridges / 42 incidents / 199 events / 325 evidence`'
+            echo '- Canonical baseline: `40 bridges / 43 incidents / 203 events / 335 evidence`'
             echo '- Required local gates: dependency security, schema/data, corpus quality, monitoring tests, build, accessibility, performance, dist consistency, Chromium/Firefox/WebKit'
             if [ "${GITHUB_EVENT_NAME}" = 'push' ]; then
               echo '- Production equality: aggregate registry plus every canonical-derived bridge/incident dossier executed in this main-branch run'
