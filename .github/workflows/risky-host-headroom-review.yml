@@ -19,66 +19,77 @@ jobs:
         run: |
           set -euo pipefail
 
+          # Put the smaller exact Medium/Twitter namespaces first so a usable
+          # headroom capture is not hidden behind a transient x.com CDX error.
           urls=(
+            'https://quillaudits.medium.com/november-2022-kickstart-with-32-million-in-defi-hacks-7898032cb7c0'
+            'https://twitter.com/MartinGranstrom/status/1766898480386101440'
+            'https://twitter.com/EverclearOrg/status/2057488000003477886'
+            'https://twitter.com/syndicateio/status/2049352309784904187'
             'https://x.com/wormhole/status/1489001949881978883'
             'https://x.com/wormhole/status/1489232008521859079'
             'https://x.com/SocketDotTech/status/1747363921265344812'
             'https://x.com/AlexAuroraDev/status/1520657556962000896'
             'https://x.com/AlexAuroraDev/status/1561686828367003648'
             'https://x.com/holographxyz/status/1801332482262110301'
-            'https://quillaudits.medium.com/november-2022-kickstart-with-32-million-in-defi-hacks-7898032cb7c0'
             'https://x.com/unizen_io/status/1767075963475505522'
-            'https://twitter.com/MartinGranstrom/status/1766898480386101440'
             'https://x.com/taikoxyz/status/2068858818352865626'
             'https://x.com/taikoxyz/status/2072533556224548918'
-            'https://twitter.com/EverclearOrg/status/2057488000003477886'
-            'https://twitter.com/syndicateio/status/2049352309784904187'
             'https://x.com/syndicateio/status/2057291537860706672'
             'https://x.com/holographxyz/status/1807946057235718349'
             'https://x.com/PeckShieldAlert/status/1821065531073724876'
           )
           published=(
+            '20221101'
+            '20240310'
+            '20260521'
+            '20260429'
             '20220202'
             '20220203'
             '20240117'
             '20220501'
             '20220822'
             '20240613'
-            '20221101'
             '20240311'
-            '20240310'
             '20260622'
             '20260702'
-            '20260521'
-            '20260429'
             '20260521'
             '20240702'
             '20240807'
           )
 
-          accepted_total=0
           checked_total=0
-
-          query_cdx() {
-            local url="$1"
-            local encoded
-            encoded="$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$url")"
-            curl --fail-with-body --silent --show-error --location \
-              --retry 3 --retry-delay 2 --connect-timeout 15 --max-time 90 \
-              "https://web.archive.org/cdx/search/cdx?url=${encoded}&output=json&fl=timestamp,original,statuscode,mimetype,digest,length&filter=statuscode:200&filter=mimetype:text/html&from=2022&to=2026&collapse=digest"
-          }
+          transport_failures=0
+          : > /tmp/accepted-pass-1
+          : > /tmp/accepted-pass-2
 
           for pass in 1 2; do
             echo "=== DISCOVERY / REPLAY PASS ${pass} ==="
             for i in "${!urls[@]}"; do
               url="${urls[$i]}"
               pub="${published[$i]}"
+              year="${pub:0:4}"
+              encoded="$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$url")"
               echo "SOURCE=$url"
               echo "PUBLISHED_NOT_BEFORE=$pub"
 
-              cdx="$(query_cdx "$url")"
-              echo "$cdx" | jq -e 'type == "array"' >/dev/null
-              rows="$(echo "$cdx" | jq 'if length > 1 then .[1:] else [] end')"
+              cdx_file="$(mktemp)"
+              set +e
+              curl --fail-with-body --silent --show-error --location \
+                --retry 2 --retry-delay 2 --connect-timeout 15 --max-time 45 \
+                --output "$cdx_file" \
+                "https://web.archive.org/cdx/search/cdx?url=${encoded}&matchType=exact&output=json&fl=timestamp,original,statuscode,mimetype,digest,length&filter=statuscode:200&filter=mimetype:text/html&from=${year}&to=2026&collapse=digest&limit=25"
+              cdx_rc=$?
+              set -e
+              if [[ "$cdx_rc" -ne 0 ]] || ! jq -e 'type == "array"' "$cdx_file" >/dev/null 2>&1; then
+                echo "QUERY_FAILURE source=$url pass=$pass curl_rc=$cdx_rc"
+                transport_failures=$((transport_failures + 1))
+                rm -f "$cdx_file"
+                continue
+              fi
+
+              rows="$(jq 'if length > 1 then .[1:] else [] end' "$cdx_file")"
+              rm -f "$cdx_file"
               count="$(echo "$rows" | jq 'length')"
               echo "CDX_ROWS=$count"
 
@@ -98,17 +109,27 @@ jobs:
 
                 tmpdir="$(mktemp -d)"
                 replay="https://web.archive.org/web/${ts}id_/${original}"
+                set +e
                 http="$(curl --silent --show-error --location \
-                  --retry 2 --retry-delay 2 --connect-timeout 15 --max-time 90 \
+                  --retry 2 --retry-delay 2 --connect-timeout 15 --max-time 60 \
                   --dump-header "$tmpdir/headers" --output "$tmpdir/body" \
-                  --write-out '%{http_code}' "$replay" || true)"
+                  --write-out '%{http_code}' "$replay")"
+                replay_rc=$?
+                set -e
+                if [[ "$replay_rc" -ne 0 ]]; then
+                  echo "REPLAY_FAILURE source=$url timestamp=$ts pass=$pass curl_rc=$replay_rc replay=$replay"
+                  transport_failures=$((transport_failures + 1))
+                  rm -rf "$tmpdir"
+                  continue
+                fi
+
                 bytes="$(wc -c < "$tmpdir/body" 2>/dev/null || echo 0)"
                 ctype="$(awk 'BEGIN{IGNORECASE=1} /^content-type:/ {gsub("\r",""); v=$0} END{sub(/^[^:]+:[[:space:]]*/,"",v); print v}' "$tmpdir/headers" 2>/dev/null || true)"
 
                 if [[ "$http" == "200" && "$ctype" == *"text/html"* && "$bytes" -ge 65536 ]]; then
                   echo "ACCEPT source=$url timestamp=$ts http=$http content_type=$ctype bytes=$bytes digest=$digest archived_length=$archived_length replay=$replay"
+                  printf '%s|%s|%s|%s\n' "$url" "$ts" "$bytes" "$replay" >> "/tmp/accepted-pass-${pass}"
                   accepted_this_source=$((accepted_this_source + 1))
-                  accepted_total=$((accepted_total + 1))
                 else
                   echo "REJECT source=$url timestamp=$ts http=$http content_type=$ctype bytes=$bytes reason=replay_contract_failed replay=$replay"
                 fi
@@ -119,7 +140,27 @@ jobs:
             done
           done
 
+          sort -u /tmp/accepted-pass-1 -o /tmp/accepted-pass-1
+          sort -u /tmp/accepted-pass-2 -o /tmp/accepted-pass-2
+          cut -d'|' -f1 /tmp/accepted-pass-1 | sort -u > /tmp/accepted-urls-1
+          cut -d'|' -f1 /tmp/accepted-pass-2 | sort -u > /tmp/accepted-urls-2
+          comm -12 /tmp/accepted-urls-1 /tmp/accepted-urls-2 > /tmp/accepted-common
+          common_count="$(wc -l < /tmp/accepted-common)"
+
           echo "=== FINAL ==="
           echo "CHECKED_REPLAYS=$checked_total"
-          echo "ACCEPTED_ACROSS_TWO_PASSES=$accepted_total"
-          echo 'Review execution completed. Zero accepted captures is a valid evidence-blocked result; transport/query failures are not.'
+          echo "TRANSPORT_QUERY_FAILURES=$transport_failures"
+          echo "REPRODUCIBLY_ACCEPTED_SOURCE_URLS=$common_count"
+          cat /tmp/accepted-common || true
+
+          # A failed query is never treated as a zero-capture result. But if at
+          # least one exact source independently passes both full replay checks,
+          # failures on unrelated URLs do not invalidate that accepted source.
+          if [[ "$common_count" -gt 0 ]]; then
+            exit 0
+          fi
+          if [[ "$transport_failures" -gt 0 ]]; then
+            echo 'No accepted source and one or more queries/replays failed; review is inconclusive.' >&2
+            exit 1
+          fi
+          echo 'Review completed: no admissible headroom capture found.'
