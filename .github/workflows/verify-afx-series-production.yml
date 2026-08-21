@@ -72,9 +72,15 @@ jobs:
 
           const descriptor = JSON.parse(fs.readFileSync(path.join(root, 'registry.json'), 'utf8'));
           const index = JSON.parse(fs.readFileSync(path.join(root, 'index.json'), 'utf8'));
-          if (descriptor.record_counts?.bridges !== 41) throw new Error(`descriptor bridges=${descriptor.record_counts?.bridges}`);
-          if (descriptor.record_counts?.incidents !== 44) throw new Error(`descriptor incidents=${descriptor.record_counts?.incidents}`);
+          if (descriptor.registry?.id !== 'bridge-incident-registry') throw new Error(`descriptor registry=${descriptor.registry?.id}`);
+          if (descriptor.record_counts?.primary_records !== 41) throw new Error(`descriptor primary_records=${descriptor.record_counts?.primary_records}`);
+          if (descriptor.record_counts?.series_records !== 85) throw new Error(`descriptor series_records=${descriptor.record_counts?.series_records}`);
           if (descriptor.record_counts?.relationships !== 44) throw new Error(`descriptor relationships=${descriptor.record_counts?.relationships}`);
+          if (descriptor.record_counts?.native?.bridges !== 41) throw new Error(`descriptor native bridges=${descriptor.record_counts?.native?.bridges}`);
+          if (descriptor.record_counts?.native?.incidents !== 44) throw new Error(`descriptor native incidents=${descriptor.record_counts?.native?.incidents}`);
+          if (index.record_count !== 85) throw new Error(`Series index record_count=${index.record_count}`);
+          if (index.record_counts?.bridges !== 41) throw new Error(`Series index bridges=${index.record_counts?.bridges}`);
+          if (index.record_counts?.incidents !== 44) throw new Error(`Series index incidents=${index.record_counts?.incidents}`);
           if (!Array.isArray(index.records) || index.records.length !== 85) throw new Error(`Series index records=${index.records?.length}`);
           if (new Set(index.records.map((row) => row.global_record_key)).size !== 85) throw new Error('Series global keys are not unique');
 
