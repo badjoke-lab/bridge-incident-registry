@@ -12,167 +12,77 @@ permissions:
 jobs:
   review:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 10
     steps:
-      - name: Review existing unarchived risky-host URLs against Wayback
+      - name: Verify Wormhole first-party incident report authority
         shell: bash
         run: |
           set -euo pipefail
 
-          urls=(
-            'https://quillaudits.medium.com/november-2022-kickstart-with-32-million-in-defi-hacks-7898032cb7c0'
-            'https://twitter.com/MartinGranstrom/status/1766898480386101440'
-            'https://twitter.com/EverclearOrg/status/2057488000003477886'
-            'https://twitter.com/syndicateio/status/2049352309784904187'
-            'https://x.com/wormhole/status/1489001949881978883'
-            'https://x.com/wormhole/status/1489232008521859079'
-            'https://x.com/SocketDotTech/status/1747363921265344812'
-            'https://x.com/AlexAuroraDev/status/1520657556962000896'
-            'https://x.com/AlexAuroraDev/status/1561686828367003648'
-            'https://x.com/holographxyz/status/1801332482262110301'
-            'https://x.com/unizen_io/status/1767075963475505522'
-            'https://x.com/taikoxyz/status/2068858818352865626'
-            'https://x.com/taikoxyz/status/2072533556224548918'
-            'https://x.com/syndicateio/status/2057291537860706672'
-            'https://x.com/holographxyz/status/1807946057235718349'
-            'https://x.com/PeckShieldAlert/status/1821065531073724876'
-          )
-          published=(
-            '20221101'
-            '20240310'
-            '20260521'
-            '20260429'
-            '20220202'
-            '20220203'
-            '20240117'
-            '20220501'
-            '20220822'
-            '20240613'
-            '20240311'
-            '20260622'
-            '20260702'
-            '20260521'
-            '20240702'
-            '20240807'
+          candidates=(
+            'https://wormhole.com/reports/2022-02-02-exploit-report/'
+            'https://wormholecrypto.medium.com/wormhole-incident-report-02-02-22-ad9b8f21eec6'
           )
 
-          checked_total=0
-          transport_failures=0
-          pass_accepted=0
-          accepted_record=''
-
-          review_pass() {
-            local url="$1"
-            local pub="$2"
-            local pass="$3"
-            local year="${pub:0:4}"
-            local encoded cdx_file cdx_rc rows count
-            pass_accepted=0
-            accepted_record=''
-
-            echo "=== SOURCE PASS ${pass} ==="
-            echo "SOURCE=$url"
-            echo "PUBLISHED_NOT_BEFORE=$pub"
-            encoded="$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$url")"
-            cdx_file="$(mktemp)"
-
-            set +e
-            curl --fail-with-body --silent --show-error --location \
-              --retry 2 --retry-delay 2 --connect-timeout 15 --max-time 45 \
-              --output "$cdx_file" \
-              "https://web.archive.org/cdx/search/cdx?url=${encoded}&matchType=exact&output=json&fl=timestamp,original,statuscode,mimetype,digest,length&filter=statuscode:200&filter=mimetype:text/html&from=${year}&to=2026&collapse=digest&limit=25"
-            cdx_rc=$?
-            set -e
-
-            if [[ "$cdx_rc" -ne 0 ]] || ! jq -e 'type == "array"' "$cdx_file" >/dev/null 2>&1; then
-              echo "QUERY_FAILURE source=$url pass=$pass curl_rc=$cdx_rc"
-              transport_failures=$((transport_failures + 1))
-              rm -f "$cdx_file"
-              return 0
-            fi
-
-            rows="$(jq 'if length > 1 then .[1:] else [] end' "$cdx_file")"
-            rm -f "$cdx_file"
-            count="$(echo "$rows" | jq 'length')"
-            echo "CDX_ROWS=$count"
-
-            while IFS=$'\t' read -r ts original status mime digest archived_length; do
-              test -n "${ts:-}" || continue
-              checked_total=$((checked_total + 1))
-
-              if [[ "$original" != "$url" ]]; then
-                echo "REJECT timestamp=$ts reason=original_url_mismatch original=$original"
-                continue
-              fi
-              if [[ "${ts:0:8}" < "$pub" ]]; then
-                echo "REJECT timestamp=$ts reason=predates_publication"
-                continue
-              fi
-
+          accepted=0
+          for url in "${candidates[@]}"; do
+            echo "=== PROBE $url ==="
+            for pass in 1 2; do
               tmpdir="$(mktemp -d)"
-              replay="https://web.archive.org/web/${ts}id_/${original}"
               set +e
-              http="$(curl --silent --show-error --location \
+              meta="$(curl --silent --show-error --location \
                 --retry 2 --retry-delay 2 --connect-timeout 15 --max-time 60 \
+                --user-agent 'Mozilla/5.0 BIR source verification' \
                 --dump-header "$tmpdir/headers" --output "$tmpdir/body" \
-                --write-out '%{http_code}' "$replay")"
-              replay_rc=$?
+                --write-out '%{http_code}|%{url_effective}|%{content_type}' "$url")"
+              rc=$?
               set -e
-
-              if [[ "$replay_rc" -ne 0 ]]; then
-                echo "REPLAY_FAILURE source=$url timestamp=$ts pass=$pass curl_rc=$replay_rc replay=$replay"
-                transport_failures=$((transport_failures + 1))
-                rm -rf "$tmpdir"
-                continue
-              fi
-
               bytes="$(wc -c < "$tmpdir/body" 2>/dev/null || echo 0)"
-              ctype="$(awk 'BEGIN{IGNORECASE=1} /^content-type:/ {gsub("\r",""); v=$0} END{sub(/^[^:]+:[[:space:]]*/,"",v); print v}' "$tmpdir/headers" 2>/dev/null || true)"
+              echo "PASS=$pass RC=$rc META=$meta BYTES=$bytes"
 
-              if [[ "$http" == "200" && "$ctype" == *"text/html"* && "$bytes" -ge 65536 ]]; then
-                echo "ACCEPT source=$url timestamp=$ts http=$http content_type=$ctype bytes=$bytes digest=$digest archived_length=$archived_length replay=$replay"
-                pass_accepted=1
-                accepted_record="$url|$ts|$bytes|$replay"
+              http="${meta%%|*}"
+              rest="${meta#*|}"
+              effective="${rest%%|*}"
+              ctype="${rest#*|}"
+
+              if [[ "$rc" -ne 0 || "$http" != "200" || "$ctype" != *"text/html"* ]]; then
+                echo "PROBE_REJECT pass=$pass reason=transport_or_response_contract"
                 rm -rf "$tmpdir"
                 break
               fi
 
-              echo "REJECT source=$url timestamp=$ts http=$http content_type=$ctype bytes=$bytes reason=replay_contract_failed replay=$replay"
+              python3 - "$tmpdir/body" <<'PY'
+import html, re, sys
+raw = open(sys.argv[1], 'r', encoding='utf-8', errors='ignore').read()
+text = html.unescape(re.sub(r'<[^>]+>', ' ', raw))
+text = re.sub(r'\s+', ' ', text).lower()
+markers = {
+    'incident_report': ('wormhole' in text and 'incident report' in text),
+    'amount': ('120,000' in text or '120k' in text or '120000' in text),
+    'restart': ('13:29' in text or 'back online' in text or 'brought back online' in text),
+}
+print('MARKERS=' + ','.join(f'{k}:{int(v)}' for k, v in markers.items()))
+if not all(markers.values()):
+    raise SystemExit(2)
+PY
+              marker_rc=$?
+              if [[ "$marker_rc" -ne 0 ]]; then
+                echo "PROBE_REJECT pass=$pass reason=missing_claim_markers effective=$effective"
+                rm -rf "$tmpdir"
+                break
+              fi
+
+              echo "PROBE_ACCEPT pass=$pass effective=$effective bytes=$bytes"
               rm -rf "$tmpdir"
-            done < <(echo "$rows" | jq -r '.[] | @tsv')
-
-            echo "ACCEPTED_THIS_SOURCE_PASS=$pass_accepted"
-          }
-
-          for i in "${!urls[@]}"; do
-            url="${urls[$i]}"
-            pub="${published[$i]}"
-
-            review_pass "$url" "$pub" 1
-            accepted1="$pass_accepted"
-            record1="$accepted_record"
-
-            review_pass "$url" "$pub" 2
-            accepted2="$pass_accepted"
-            record2="$accepted_record"
-
-            if [[ "$accepted1" -eq 1 && "$accepted2" -eq 1 ]]; then
-              echo '=== FINAL ==='
-              echo "REPRODUCIBLY_ACCEPTED_SOURCE=$url"
-              echo "PASS1=$record1"
-              echo "PASS2=$record2"
-              echo "CHECKED_REPLAYS=$checked_total"
-              echo "TRANSPORT_QUERY_FAILURES_ON_OTHER_CHECKS=$transport_failures"
+              if [[ "$pass" -eq 2 ]]; then
+                echo "REPRODUCIBLY_ACCEPTED_FIRST_PARTY_SOURCE=$url"
+                accepted=1
+              fi
+            done
+            if [[ "$accepted" -eq 1 ]]; then
               exit 0
             fi
           done
 
-          echo '=== FINAL ==='
-          echo 'REPRODUCIBLY_ACCEPTED_SOURCE=none'
-          echo "CHECKED_REPLAYS=$checked_total"
-          echo "TRANSPORT_QUERY_FAILURES=$transport_failures"
-          if [[ "$transport_failures" -gt 0 ]]; then
-            echo 'No accepted source and one or more queries/replays failed; review is inconclusive.' >&2
-            exit 1
-          fi
-          echo 'Review completed: no admissible headroom capture found.'
+          echo 'No candidate reproduced the required first-party incident + amount + restart claim set.' >&2
+          exit 1
