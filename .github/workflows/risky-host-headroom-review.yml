@@ -19,8 +19,6 @@ jobs:
         run: |
           set -euo pipefail
 
-          # Put the smaller exact Medium/Twitter namespaces first so a usable
-          # headroom capture is not hidden behind a transient x.com CDX error.
           urls=(
             'https://quillaudits.medium.com/november-2022-kickstart-with-32-million-in-defi-hacks-7898032cb7c0'
             'https://twitter.com/MartinGranstrom/status/1766898480386101440'
@@ -60,105 +58,119 @@ jobs:
 
           checked_total=0
           transport_failures=0
-          : > /tmp/accepted-pass-1
-          : > /tmp/accepted-pass-2
+          pass_accepted=0
+          accepted_record=''
 
-          for pass in 1 2; do
-            echo "=== DISCOVERY / REPLAY PASS ${pass} ==="
-            for i in "${!urls[@]}"; do
-              url="${urls[$i]}"
-              pub="${published[$i]}"
-              year="${pub:0:4}"
-              encoded="$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$url")"
-              echo "SOURCE=$url"
-              echo "PUBLISHED_NOT_BEFORE=$pub"
+          review_pass() {
+            local url="$1"
+            local pub="$2"
+            local pass="$3"
+            local year="${pub:0:4}"
+            local encoded cdx_file cdx_rc rows count
+            pass_accepted=0
+            accepted_record=''
 
-              cdx_file="$(mktemp)"
-              set +e
-              curl --fail-with-body --silent --show-error --location \
-                --retry 2 --retry-delay 2 --connect-timeout 15 --max-time 45 \
-                --output "$cdx_file" \
-                "https://web.archive.org/cdx/search/cdx?url=${encoded}&matchType=exact&output=json&fl=timestamp,original,statuscode,mimetype,digest,length&filter=statuscode:200&filter=mimetype:text/html&from=${year}&to=2026&collapse=digest&limit=25"
-              cdx_rc=$?
-              set -e
-              if [[ "$cdx_rc" -ne 0 ]] || ! jq -e 'type == "array"' "$cdx_file" >/dev/null 2>&1; then
-                echo "QUERY_FAILURE source=$url pass=$pass curl_rc=$cdx_rc"
-                transport_failures=$((transport_failures + 1))
-                rm -f "$cdx_file"
+            echo "=== SOURCE PASS ${pass} ==="
+            echo "SOURCE=$url"
+            echo "PUBLISHED_NOT_BEFORE=$pub"
+            encoded="$(python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$url")"
+            cdx_file="$(mktemp)"
+
+            set +e
+            curl --fail-with-body --silent --show-error --location \
+              --retry 2 --retry-delay 2 --connect-timeout 15 --max-time 45 \
+              --output "$cdx_file" \
+              "https://web.archive.org/cdx/search/cdx?url=${encoded}&matchType=exact&output=json&fl=timestamp,original,statuscode,mimetype,digest,length&filter=statuscode:200&filter=mimetype:text/html&from=${year}&to=2026&collapse=digest&limit=25"
+            cdx_rc=$?
+            set -e
+
+            if [[ "$cdx_rc" -ne 0 ]] || ! jq -e 'type == "array"' "$cdx_file" >/dev/null 2>&1; then
+              echo "QUERY_FAILURE source=$url pass=$pass curl_rc=$cdx_rc"
+              transport_failures=$((transport_failures + 1))
+              rm -f "$cdx_file"
+              return 0
+            fi
+
+            rows="$(jq 'if length > 1 then .[1:] else [] end' "$cdx_file")"
+            rm -f "$cdx_file"
+            count="$(echo "$rows" | jq 'length')"
+            echo "CDX_ROWS=$count"
+
+            while IFS=$'\t' read -r ts original status mime digest archived_length; do
+              test -n "${ts:-}" || continue
+              checked_total=$((checked_total + 1))
+
+              if [[ "$original" != "$url" ]]; then
+                echo "REJECT timestamp=$ts reason=original_url_mismatch original=$original"
+                continue
+              fi
+              if [[ "${ts:0:8}" < "$pub" ]]; then
+                echo "REJECT timestamp=$ts reason=predates_publication"
                 continue
               fi
 
-              rows="$(jq 'if length > 1 then .[1:] else [] end' "$cdx_file")"
-              rm -f "$cdx_file"
-              count="$(echo "$rows" | jq 'length')"
-              echo "CDX_ROWS=$count"
+              tmpdir="$(mktemp -d)"
+              replay="https://web.archive.org/web/${ts}id_/${original}"
+              set +e
+              http="$(curl --silent --show-error --location \
+                --retry 2 --retry-delay 2 --connect-timeout 15 --max-time 60 \
+                --dump-header "$tmpdir/headers" --output "$tmpdir/body" \
+                --write-out '%{http_code}' "$replay")"
+              replay_rc=$?
+              set -e
 
-              accepted_this_source=0
-              while IFS=$'\t' read -r ts original status mime digest archived_length; do
-                test -n "${ts:-}" || continue
-                checked_total=$((checked_total + 1))
-
-                if [[ "$original" != "$url" ]]; then
-                  echo "REJECT timestamp=$ts reason=original_url_mismatch original=$original"
-                  continue
-                fi
-                if [[ "${ts:0:8}" < "$pub" ]]; then
-                  echo "REJECT timestamp=$ts reason=predates_publication"
-                  continue
-                fi
-
-                tmpdir="$(mktemp -d)"
-                replay="https://web.archive.org/web/${ts}id_/${original}"
-                set +e
-                http="$(curl --silent --show-error --location \
-                  --retry 2 --retry-delay 2 --connect-timeout 15 --max-time 60 \
-                  --dump-header "$tmpdir/headers" --output "$tmpdir/body" \
-                  --write-out '%{http_code}' "$replay")"
-                replay_rc=$?
-                set -e
-                if [[ "$replay_rc" -ne 0 ]]; then
-                  echo "REPLAY_FAILURE source=$url timestamp=$ts pass=$pass curl_rc=$replay_rc replay=$replay"
-                  transport_failures=$((transport_failures + 1))
-                  rm -rf "$tmpdir"
-                  continue
-                fi
-
-                bytes="$(wc -c < "$tmpdir/body" 2>/dev/null || echo 0)"
-                ctype="$(awk 'BEGIN{IGNORECASE=1} /^content-type:/ {gsub("\r",""); v=$0} END{sub(/^[^:]+:[[:space:]]*/,"",v); print v}' "$tmpdir/headers" 2>/dev/null || true)"
-
-                if [[ "$http" == "200" && "$ctype" == *"text/html"* && "$bytes" -ge 65536 ]]; then
-                  echo "ACCEPT source=$url timestamp=$ts http=$http content_type=$ctype bytes=$bytes digest=$digest archived_length=$archived_length replay=$replay"
-                  printf '%s|%s|%s|%s\n' "$url" "$ts" "$bytes" "$replay" >> "/tmp/accepted-pass-${pass}"
-                  accepted_this_source=$((accepted_this_source + 1))
-                else
-                  echo "REJECT source=$url timestamp=$ts http=$http content_type=$ctype bytes=$bytes reason=replay_contract_failed replay=$replay"
-                fi
+              if [[ "$replay_rc" -ne 0 ]]; then
+                echo "REPLAY_FAILURE source=$url timestamp=$ts pass=$pass curl_rc=$replay_rc replay=$replay"
+                transport_failures=$((transport_failures + 1))
                 rm -rf "$tmpdir"
-              done < <(echo "$rows" | jq -r '.[] | @tsv')
+                continue
+              fi
 
-              echo "ACCEPTED_THIS_SOURCE_PASS=$accepted_this_source"
-            done
+              bytes="$(wc -c < "$tmpdir/body" 2>/dev/null || echo 0)"
+              ctype="$(awk 'BEGIN{IGNORECASE=1} /^content-type:/ {gsub("\r",""); v=$0} END{sub(/^[^:]+:[[:space:]]*/,"",v); print v}' "$tmpdir/headers" 2>/dev/null || true)"
+
+              if [[ "$http" == "200" && "$ctype" == *"text/html"* && "$bytes" -ge 65536 ]]; then
+                echo "ACCEPT source=$url timestamp=$ts http=$http content_type=$ctype bytes=$bytes digest=$digest archived_length=$archived_length replay=$replay"
+                pass_accepted=1
+                accepted_record="$url|$ts|$bytes|$replay"
+                rm -rf "$tmpdir"
+                break
+              fi
+
+              echo "REJECT source=$url timestamp=$ts http=$http content_type=$ctype bytes=$bytes reason=replay_contract_failed replay=$replay"
+              rm -rf "$tmpdir"
+            done < <(echo "$rows" | jq -r '.[] | @tsv')
+
+            echo "ACCEPTED_THIS_SOURCE_PASS=$pass_accepted"
+          }
+
+          for i in "${!urls[@]}"; do
+            url="${urls[$i]}"
+            pub="${published[$i]}"
+
+            review_pass "$url" "$pub" 1
+            accepted1="$pass_accepted"
+            record1="$accepted_record"
+
+            review_pass "$url" "$pub" 2
+            accepted2="$pass_accepted"
+            record2="$accepted_record"
+
+            if [[ "$accepted1" -eq 1 && "$accepted2" -eq 1 ]]; then
+              echo '=== FINAL ==='
+              echo "REPRODUCIBLY_ACCEPTED_SOURCE=$url"
+              echo "PASS1=$record1"
+              echo "PASS2=$record2"
+              echo "CHECKED_REPLAYS=$checked_total"
+              echo "TRANSPORT_QUERY_FAILURES_ON_OTHER_CHECKS=$transport_failures"
+              exit 0
+            fi
           done
 
-          sort -u /tmp/accepted-pass-1 -o /tmp/accepted-pass-1
-          sort -u /tmp/accepted-pass-2 -o /tmp/accepted-pass-2
-          cut -d'|' -f1 /tmp/accepted-pass-1 | sort -u > /tmp/accepted-urls-1
-          cut -d'|' -f1 /tmp/accepted-pass-2 | sort -u > /tmp/accepted-urls-2
-          comm -12 /tmp/accepted-urls-1 /tmp/accepted-urls-2 > /tmp/accepted-common
-          common_count="$(wc -l < /tmp/accepted-common)"
-
-          echo "=== FINAL ==="
+          echo '=== FINAL ==='
+          echo 'REPRODUCIBLY_ACCEPTED_SOURCE=none'
           echo "CHECKED_REPLAYS=$checked_total"
           echo "TRANSPORT_QUERY_FAILURES=$transport_failures"
-          echo "REPRODUCIBLY_ACCEPTED_SOURCE_URLS=$common_count"
-          cat /tmp/accepted-common || true
-
-          # A failed query is never treated as a zero-capture result. But if at
-          # least one exact source independently passes both full replay checks,
-          # failures on unrelated URLs do not invalidate that accepted source.
-          if [[ "$common_count" -gt 0 ]]; then
-            exit 0
-          fi
           if [[ "$transport_failures" -gt 0 ]]; then
             echo 'No accepted source and one or more queries/replays failed; review is inconclusive.' >&2
             exit 1
