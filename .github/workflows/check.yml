@@ -43,19 +43,7 @@ jobs:
               effective="${rest%%|*}"
               ctype="${rest#*|}"
               if [[ "$rc" -eq 0 && "$http" == "200" && "$ctype" == *"text/html"* ]]; then
-                python3 - "$tmpdir/body" <<'PY'
-import html, re, sys
-raw = open(sys.argv[1], 'r', encoding='utf-8', errors='ignore').read()
-text = html.unescape(re.sub(r'<[^>]+>', ' ', raw))
-text = re.sub(r'\s+', ' ', text).lower()
-markers = {
-    'incident_report': ('wormhole' in text and 'incident report' in text),
-    'amount': ('120,000' in text or '120k' in text or '120000' in text),
-    'restart': ('13:29' in text or 'back online' in text or 'brought back online' in text),
-}
-print('MARKERS=' + ','.join(f'{k}:{int(v)}' for k, v in markers.items()))
-raise SystemExit(0 if all(markers.values()) else 2)
-PY
+                python3 -c 'import html,re,sys; raw=open(sys.argv[1],encoding="utf-8",errors="ignore").read(); text=re.sub(r"\s+"," ",html.unescape(re.sub(r"<[^>]+>"," ",raw))).lower(); markers={"incident_report":("wormhole" in text and "incident report" in text),"amount":("120,000" in text or "120k" in text or "120000" in text),"restart":("13:29" in text or "back online" in text or "brought back online" in text)}; print("MARKERS="+",".join(f"{k}:{int(v)}" for k,v in markers.items())); raise SystemExit(0 if all(markers.values()) else 2)' "$tmpdir/body"
                 marker_rc=$?
                 if [[ "$marker_rc" -eq 0 ]]; then
                   accepted_passes=$((accepted_passes + 1))
