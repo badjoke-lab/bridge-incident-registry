@@ -236,5 +236,18 @@
     "aliases": [
       "Taiko token"
     ]
+  },
+  "wbnb": {
+    "display_name": "WBNB",
+    "aliases": [
+      "Wrapped BNB"
+    ]
+  },
+  "wsteth": {
+    "display_name": "wstETH",
+    "aliases": [
+      "Wrapped stETH",
+      "Wrapped liquid staked Ether 2.0"
+    ]
   }
 }
