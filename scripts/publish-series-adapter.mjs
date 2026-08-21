@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
@@ -7,12 +8,17 @@ const publicRoot = path.resolve(root, "public");
 const dataRoot = path.join(publicRoot, "data");
 const outputRoot = path.join(dataRoot, "series");
 const recordRoot = path.join(outputRoot, "records");
+const authorityPath = path.join(root, "config", "ledger-series-phase9-stage5-relationship-authority.json");
 const seriesSchemaVersion = "1.0.0";
 const adapterVersion = "1.0.0";
 const registryId = "bridge-incident-registry";
 
 function readJson(relativePath) {
   return JSON.parse(fs.readFileSync(path.join(publicRoot, relativePath), "utf8"));
+}
+
+function readAuthority() {
+  return JSON.parse(fs.readFileSync(authorityPath, "utf8"));
 }
 
 function stable(value) {
@@ -28,9 +34,26 @@ function writeJson(target, value) {
   fs.writeFileSync(target, `${JSON.stringify(stable(value), null, 2)}\n`, "utf8");
 }
 
+function parseGlobalKey(globalKey) {
+  const parts = String(globalKey).split(":");
+  if (parts.length !== 3 || parts.some((part) => !part)) throw new Error(`Invalid Series global record key: ${globalKey}`);
+  return {
+    registry_id: parts[0],
+    native_record_type: parts[1],
+    native_record_id: parts[2]
+  };
+}
+
+function relationshipId(relationType, sourceGlobalKey, targetGlobalKey) {
+  return `series_rel_${createHash("sha256")
+    .update(`${relationType}\n${sourceGlobalKey}\n${targetGlobalKey}`, "utf8")
+    .digest("hex")}`;
+}
+
 const manifest = readJson("data/manifest.json");
 const bridges = readJson("data/bridges.json");
 const incidents = readJson("data/incidents.json");
+const authority = readAuthority();
 
 if (manifest.project_id !== registryId) throw new Error(`Unexpected BIR project_id: ${manifest.project_id}`);
 if (manifest.canonical_only !== true || manifest.data_safety?.canonical_only !== true) {
@@ -38,6 +61,9 @@ if (manifest.canonical_only !== true || manifest.data_safety?.canonical_only !==
 }
 if (bridges.length !== manifest.record_counts?.bridges) throw new Error("Bridge count differs from native manifest");
 if (incidents.length !== manifest.record_counts?.incidents) throw new Error("Incident count differs from native manifest");
+if (authority.authority_id !== "bir-ledger-series-phase9-stage5-relationship-2026-08-21") throw new Error("Unexpected BIR Stage 5 relationship authority");
+if (authority.registry_id !== registryId || authority.accepted_count !== 44) throw new Error("BIR Stage 5 relationship authority count/registry mismatch");
+if (!Array.isArray(authority.finite_allowlist) || authority.finite_allowlist.length !== 44) throw new Error("BIR Stage 5 finite allowlist must contain exactly 44 rows");
 
 fs.rmSync(outputRoot, { recursive: true, force: true });
 fs.mkdirSync(recordRoot, { recursive: true });
@@ -103,7 +129,7 @@ for (const bridge of [...bridges].sort((a, b) => a.slug.localeCompare(b.slug))) 
       },
       native_manifest: `${origin}/data/manifest.json`,
       native_record: dossier.self_url,
-      relationship_boundary: "bridge incident/predecessor/successor/replacement/duplicate/merge lineage remains native-only during Stage 3"
+      relationship_boundary: "reviewed Stage 5 typed bridge lineage is published only as standalone relationship_record objects; native dossier lineage remains unchanged"
     }
   };
 
@@ -187,7 +213,7 @@ for (const incident of [...incidents].sort((a, b) => a.slug.localeCompare(b.slug
       },
       native_manifest: `${origin}/data/manifest.json`,
       native_record: dossier.self_url,
-      relationship_boundary: "incident parent bridge and duplicate/merge/split lineage remain native-only during Stage 3"
+      relationship_boundary: "reviewed Stage 5 incident_of mappings are published only as standalone relationship_record objects; native parent bridge facts remain unchanged"
     }
   };
 
@@ -205,6 +231,36 @@ for (const incident of [...incidents].sort((a, b) => a.slug.localeCompare(b.slug
     native_machine_url: dossier.self_url
   });
 }
+
+const availableGlobalKeys = new Set(rows.map((row) => row.global_record_key));
+const tuples = new Set();
+const ids = new Set();
+const relationshipRecords = authority.finite_allowlist.map((entry, index) => {
+  if (!Array.isArray(entry) || entry.length !== 3) throw new Error(`BIR Stage 5 relationship row ${index + 1} must contain type/source/target`);
+  const [relationType, sourceGlobalKey, targetGlobalKey] = entry;
+  if (!["incident_of", "predecessor_of", "successor_of"].includes(relationType)) throw new Error(`BIR Stage 5 unauthorized relation type: ${relationType}`);
+  if (!availableGlobalKeys.has(sourceGlobalKey) || !availableGlobalKeys.has(targetGlobalKey)) throw new Error(`BIR Stage 5 row ${index + 1} references a missing Stage 3 endpoint`);
+  if (sourceGlobalKey === targetGlobalKey) throw new Error(`BIR Stage 5 row ${index + 1} is a self-loop`);
+  const tuple = `${relationType}\n${sourceGlobalKey}\n${targetGlobalKey}`;
+  if (tuples.has(tuple)) throw new Error(`BIR Stage 5 duplicate relationship tuple at row ${index + 1}`);
+  tuples.add(tuple);
+  const id = relationshipId(relationType, sourceGlobalKey, targetGlobalKey);
+  if (ids.has(id)) throw new Error(`BIR Stage 5 relationship ID collision: ${id}`);
+  ids.add(id);
+  return {
+    series_schema_version: seriesSchemaVersion,
+    object_type: "relationship_record",
+    id,
+    relation_type: relationType,
+    source: parseGlobalKey(sourceGlobalKey),
+    target: parseGlobalKey(targetGlobalKey),
+    direction: "directed",
+    provenance: {
+      basis: "native_reviewed_relationship",
+      native_evidence_refs: []
+    }
+  };
+});
 
 const descriptor = {
   series_schema_version: seriesSchemaVersion,
@@ -227,6 +283,7 @@ const descriptor = {
   record_counts: {
     primary_records: bridges.length,
     series_records: rows.length,
+    relationships: relationshipRecords.length,
     native: manifest.record_counts
   },
   record_types: [
@@ -244,6 +301,7 @@ const descriptor = {
   routes: {
     descriptor: "/data/series/registry.json",
     index: "/data/series/index.json",
+    relationships: "/data/series/relationships.json",
     record_templates: [
       "/data/series/records/bridge--{slug}.json",
       "/data/series/records/incident--{slug}.json"
@@ -292,4 +350,5 @@ const index = {
 
 writeJson(path.join(outputRoot, "registry.json"), descriptor);
 writeJson(path.join(outputRoot, "index.json"), index);
-console.log(`Published BIR Series adapter: ${bridges.length} bridge + ${incidents.length} incident envelopes.`);
+writeJson(path.join(outputRoot, "relationships.json"), relationshipRecords);
+console.log(`Published BIR Series adapter: ${bridges.length} bridge + ${incidents.length} incident envelopes, ${relationshipRecords.length} reviewed relationships.`);
