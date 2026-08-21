@@ -1,0 +1,199 @@
+name: Temporary Apply AFX Trade July 2026
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.event.pull_request.head.ref == 'canonical/afx-trade-july-2026'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact PR head branch
+        uses: actions/checkout@v7
+        with:
+          ref: canonical/afx-trade-july-2026
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Apply bounded AFX package
+        run: node scripts/apply-afx-trade-july-2026.mjs
+
+      - name: Assert exact bounded canonical data diff
+        shell: bash
+        run: |
+          set -euo pipefail
+          changed="$(git status --porcelain | sed -E 's/^.. //' | sort)"
+          expected="$(printf '%s\n' data/bridges.json data/events.json data/evidence.json data/incidents.json | sort)"
+          test "$changed" = "$expected"
+          node - <<'NODE'
+          const fs = require('fs');
+          const read = p => JSON.parse(fs.readFileSync(p, 'utf8'));
+          const bridges = read('data/bridges.json');
+          const incidents = read('data/incidents.json');
+          const events = read('data/events.json');
+          const evidence = read('data/evidence.json');
+          if (bridges.length !== 41) throw new Error(`bridges=${bridges.length}`);
+          if (incidents.length !== 44) throw new Error(`incidents=${incidents.length}`);
+          if (events.length !== 206) throw new Error(`events=${events.length}`);
+          if (evidence.length !== 341) throw new Error(`evidence=${evidence.length}`);
+          const bridge = bridges.find(x => x.id === 'bir_bridge_000041');
+          const incident = incidents.find(x => x.id === 'bir_inc_000044');
+          if (!bridge || bridge.slug !== 'afx-bridge' || bridge.status !== 'paused') throw new Error('AFX bridge assertion failed');
+          if (!incident || incident.source_count !== 6 || incident.attack_vector_category !== 'validator_key_compromise') throw new Error('AFX incident assertion failed');
+          if (incident.reimbursement_status !== 'unknown' || incident.recovery_status !== 'unknown' || incident.restart_status !== 'paused') throw new Error('AFX aftermath boundary failed');
+          const afxEvidence = evidence.filter(x => x.bridge_id === 'bir_bridge_000041');
+          if (afxEvidence.length !== 7) throw new Error(`AFX evidence=${afxEvidence.length}`);
+          const riskyPrimaryUrls = [...new Set(afxEvidence.filter(x => x.is_primary).map(x => x.url))];
+          if (riskyPrimaryUrls.length !== 1 || riskyPrimaryUrls[0] !== 'https://medium.com/@AFXTrade/a-detailed-post-mortem-on-the-afx-security-incident-57d564ef812f') throw new Error('AFX primary URL boundary failed');
+          NODE
+
+      - name: Sync current documentation counts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          paths = [
+              Path('README.md'),
+              Path('docs/runbooks/current-status.md'),
+              Path('docs/runbooks/development-roadmap.md'),
+              Path('docs/runbooks/public-consistency-remediation.md'),
+          ]
+          for path in paths:
+              text = path.read_text()
+              for old, new in [
+                  ('Bridges     40', 'Bridges     41'),
+                  ('Incidents   43', 'Incidents   44'),
+                  ('Events      203', 'Events      206'),
+                  ('Evidence    334', 'Evidence    341'),
+              ]:
+                  if text.count(old) != 1:
+                      raise SystemExit(f'{path}: expected one current marker {old!r}, found {text.count(old)}')
+                  text = text.replace(old, new, 1)
+              path.write_text(text)
+
+          path = Path('docs/runbooks/recovery-checkpoint.md')
+          text = path.read_text()
+          for old, new in [
+              ('Bridges                  40', 'Bridges                  41'),
+              ('Incidents                43', 'Incidents                44'),
+              ('Events                   203', 'Events                   206'),
+              ('Evidence                 334', 'Evidence                 341'),
+          ]:
+              if text.count(old) != 1:
+                  raise SystemExit(f'{path}: expected one current marker {old!r}, found {text.count(old)}')
+              text = text.replace(old, new, 1)
+          path.write_text(text)
+          PY
+          changed="$(git status --porcelain | sed -E 's/^.. //' | sort)"
+          expected="$(printf '%s\n' README.md data/bridges.json data/events.json data/evidence.json data/incidents.json docs/runbooks/current-status.md docs/runbooks/development-roadmap.md docs/runbooks/public-consistency-remediation.md docs/runbooks/recovery-checkpoint.md | sort)"
+          test "$changed" = "$expected"
+
+      - name: Install dependencies with transient lockfile
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install
+          test -f package-lock.json
+
+      - name: Audit high-severity dependencies
+        run: npm audit --audit-level=high
+
+      - name: Type and Astro check
+        run: npm run check
+
+      - name: Validate canonical data
+        run: npm run validate:data
+
+      - name: Validate schema enums
+        run: npm run validate:enums
+
+      - name: Audit first ten seeds
+        run: npm run audit:first-ten
+
+      - name: Audit full canonical corpus
+        run: npm run audit:full-corpus
+
+      - name: Audit exact source counts
+        run: npm run audit:source-count
+
+      - name: Audit source quality baseline
+        run: npm run audit:source-quality
+
+      - name: Assert AFX source-quality boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="$(npm run audit:source-quality 2>&1)"
+          printf '%s\n' "$output"
+          printf '%s\n' "$output" | grep -q '"bridges": 41'
+          printf '%s\n' "$output" | grep -q '"incidents": 44'
+          printf '%s\n' "$output" | grep -q '"events": 206'
+          printf '%s\n' "$output" | grep -q '"evidence": 341'
+          printf '%s\n' "$output" | grep -q '"risky_host_unarchived": 16'
+          printf '%s\n' "$output" | grep -q '"primary_evidence": 241'
+          printf '%s\n' "$output" | grep -q '"tier_1_evidence": 258'
+
+      - name: Test full-corpus audit failures
+        run: npm run audit:full-corpus:test
+
+      - name: Test source-count equality failures
+        run: npm run audit:source-count:test
+
+      - name: Test source quality regressions
+        run: npm run audit:source-quality:test
+
+      - name: Test monitoring foundation
+        run: npm run monitoring:test
+
+      - name: Test production content equality
+        run: npm run production:content:test
+
+      - name: Test performance budget failures
+        run: npm run performance:test
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Check accessibility contract
+        run: npm run accessibility:check
+
+      - name: Enforce built-output performance budget
+        run: npm run performance:check
+
+      - name: Check built output consistency
+        run: npm run dist:check
+
+      - name: Test controlled consistency failures
+        run: npm run dist:test
+
+      - name: Remove temporary applicator artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f package-lock.json
+          rm scripts/apply-afx-trade-july-2026.mjs
+          rm .github/workflows/temporary-apply-afx-trade-july-2026.yml
+          changed="$(git status --porcelain | sed -E 's/^.. //' | sort)"
+          expected="$(printf '%s\n' .github/workflows/temporary-apply-afx-trade-july-2026.yml README.md data/bridges.json data/events.json data/evidence.json data/incidents.json docs/runbooks/current-status.md docs/runbooks/development-roadmap.md docs/runbooks/public-consistency-remediation.md docs/runbooks/recovery-checkpoint.md scripts/apply-afx-trade-july-2026.mjs | sort)"
+          test "$changed" = "$expected"
+
+      - name: Commit final bounded tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'badjoke-lab'
+          git config user.email 'badjoke.lab@gmail.com'
+          git add -- README.md data/bridges.json data/events.json data/evidence.json data/incidents.json docs/runbooks/current-status.md docs/runbooks/development-roadmap.md docs/runbooks/public-consistency-remediation.md docs/runbooks/recovery-checkpoint.md
+          git rm -- scripts/apply-afx-trade-july-2026.mjs .github/workflows/temporary-apply-afx-trade-july-2026.yml
+          git diff --cached --check
+          git commit -m 'Add reviewed AFX Trade July 2026 bridge incident'
+          git push origin HEAD:canonical/afx-trade-july-2026
