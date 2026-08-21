@@ -111,11 +111,15 @@ withFixture(
     const source = evidence.find(isRiskySource);
     if (!source) throw new Error("fixture requires unarchived risky-host evidence");
     const separator = source.url.includes("?") ? "&" : "?";
-    evidence.push({
-      ...source,
-      id: "bir_src_fixture_unique_risk_regression",
-      url: `${source.url}${separator}bir_fixture_unique=1`
-    });
+    // Deliberately add more unique risky URLs than the permanent ceiling so this
+    // regression fixture remains valid even when canonical data has headroom.
+    for (let index = 1; index <= 17; index += 1) {
+      evidence.push({
+        ...source,
+        id: `bir_src_fixture_unique_risk_regression_${index}`,
+        url: `${source.url}${separator}bir_fixture_unique=${index}`
+      });
+    }
     writeJson(fixtureRoot, "data/evidence.json", evidence);
   },
   "risky_host_unarchived"
