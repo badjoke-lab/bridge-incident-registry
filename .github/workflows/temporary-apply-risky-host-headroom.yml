@@ -26,7 +26,7 @@ jobs:
       - name: Apply bounded cleanup
         run: node scripts/apply-risky-host-headroom-cleanup.mjs
 
-      - name: Assert exact bounded diff before gates
+      - name: Assert exact bounded data diff
         shell: bash
         run: |
           set -euo pipefail
@@ -51,6 +51,30 @@ jobs:
           const i = incidents.find(x => x.id === 'bir_inc_000030');
           if (!i || i.source_count !== 4) throw new Error('bir_inc_000030 source_count mismatch');
           NODE
+
+      - name: Sync current documentation evidence counts
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+
+          replacements = {
+              Path('README.md'): ('Evidence    335', 'Evidence    334'),
+              Path('docs/runbooks/current-status.md'): ('Evidence    335', 'Evidence    334'),
+              Path('docs/runbooks/recovery-checkpoint.md'): ('Evidence                 335', 'Evidence                 334'),
+              Path('docs/runbooks/development-roadmap.md'): ('Evidence    335', 'Evidence    334'),
+              Path('docs/runbooks/public-consistency-remediation.md'): ('Evidence    335', 'Evidence    334'),
+          }
+          for path, (old, new) in replacements.items():
+              text = path.read_text()
+              if text.count(old) != 1:
+                  raise SystemExit(f'{path}: expected exactly one current count marker {old!r}, found {text.count(old)}')
+              path.write_text(text.replace(old, new, 1))
+          PY
+          changed="$(git status --porcelain | sed -E 's/^.. //' | sort)"
+          expected="$(printf '%s\n' README.md data/evidence.json data/events.json data/incidents.json docs/runbooks/current-status.md docs/runbooks/development-roadmap.md docs/runbooks/public-consistency-remediation.md docs/runbooks/recovery-checkpoint.md | sort)"
+          test "$changed" = "$expected"
 
       - name: Install dependencies with transient lockfile
         shell: bash
@@ -136,7 +160,7 @@ jobs:
           rm .github/workflows/temporary-apply-risky-host-headroom.yml
           git status --porcelain
           changed="$(git status --porcelain | sed -E 's/^.. //' | sort)"
-          expected="$(printf '%s\n' .github/workflows/temporary-apply-risky-host-headroom.yml data/evidence.json data/events.json data/incidents.json scripts/apply-risky-host-headroom-cleanup.mjs | sort)"
+          expected="$(printf '%s\n' .github/workflows/temporary-apply-risky-host-headroom.yml README.md data/evidence.json data/events.json data/incidents.json docs/runbooks/current-status.md docs/runbooks/development-roadmap.md docs/runbooks/public-consistency-remediation.md docs/runbooks/recovery-checkpoint.md scripts/apply-risky-host-headroom-cleanup.mjs | sort)"
           test "$changed" = "$expected"
 
       - name: Commit final bounded tree
@@ -145,7 +169,7 @@ jobs:
           set -euo pipefail
           git config user.name 'badjoke-lab'
           git config user.email 'badjoke.lab@gmail.com'
-          git add -- data/evidence.json data/events.json data/incidents.json
+          git add -- README.md data/evidence.json data/events.json data/incidents.json docs/runbooks/current-status.md docs/runbooks/development-roadmap.md docs/runbooks/public-consistency-remediation.md docs/runbooks/recovery-checkpoint.md
           git rm -- scripts/apply-risky-host-headroom-cleanup.mjs .github/workflows/temporary-apply-risky-host-headroom.yml
           git diff --cached --check
           git commit -m 'Reduce redundant risky-host evidence without weakening coverage'
