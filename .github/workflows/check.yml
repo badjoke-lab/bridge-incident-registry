@@ -21,48 +21,19 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Temporary Wormhole first-party source probe
+      - name: Temporary Holograph report target probe
         shell: bash
         run: |
-          set -uo pipefail
-          candidates=(
-            'https://wormhole.com/reports/2022-02-02-exploit-report/'
-            'https://wormholecrypto.medium.com/wormhole-incident-report-02-02-22-ad9b8f21eec6'
-          )
-          for url in "${candidates[@]}"; do
-            accepted_passes=0
-            echo "=== PROBE $url ==="
-            for pass in 1 2; do
-              tmpdir="$(mktemp -d)"
-              meta="$(curl --silent --show-error --location --retry 2 --retry-delay 2 --connect-timeout 15 --max-time 60 --user-agent 'Mozilla/5.0 BIR source verification' --dump-header "$tmpdir/headers" --output "$tmpdir/body" --write-out '%{http_code}|%{url_effective}|%{content_type}' "$url")"
-              rc=$?
-              bytes="$(wc -c < "$tmpdir/body" 2>/dev/null || echo 0)"
-              echo "PASS=$pass RC=$rc META=$meta BYTES=$bytes"
-              http="${meta%%|*}"
-              rest="${meta#*|}"
-              effective="${rest%%|*}"
-              ctype="${rest#*|}"
-              if [[ "$rc" -eq 0 && "$http" == "200" && "$ctype" == *"text/html"* ]]; then
-                python3 -c 'import html,re,sys; raw=open(sys.argv[1],encoding="utf-8",errors="ignore").read(); text=re.sub(r"\s+"," ",html.unescape(re.sub(r"<[^>]+>"," ",raw))).lower(); markers={"incident_report":("wormhole" in text and "incident report" in text),"amount":("120,000" in text or "120k" in text or "120000" in text),"restart":("13:29" in text or "back online" in text or "brought back online" in text)}; print("MARKERS="+",".join(f"{k}:{int(v)}" for k,v in markers.items())); raise SystemExit(0 if all(markers.values()) else 2)' "$tmpdir/body"
-                marker_rc=$?
-                if [[ "$marker_rc" -eq 0 ]]; then
-                  accepted_passes=$((accepted_passes + 1))
-                  echo "PROBE_ACCEPT pass=$pass effective=$effective bytes=$bytes"
-                else
-                  echo "PROBE_REJECT pass=$pass reason=missing_claim_markers effective=$effective"
-                fi
-              else
-                echo "PROBE_REJECT pass=$pass reason=transport_or_response_contract"
-              fi
-              rm -rf "$tmpdir"
-            done
-            if [[ "$accepted_passes" -eq 2 ]]; then
-              echo "REPRODUCIBLY_ACCEPTED_FIRST_PARTY_SOURCE=$url"
-              exit 0
-            fi
+          set -u
+          url='https://t.co/uRGZmgX01Z'
+          for pass in 1 2; do
+            tmpdir="$(mktemp -d)"
+            meta="$(curl --silent --show-error --location --retry 2 --retry-delay 2 --connect-timeout 15 --max-time 60 --user-agent 'Mozilla/5.0 BIR source verification' --dump-header "$tmpdir/headers" --output "$tmpdir/body" --write-out '%{http_code}|%{url_effective}|%{content_type}' "$url")"
+            rc=$?
+            bytes="$(wc -c < "$tmpdir/body" 2>/dev/null || echo 0)"
+            echo "HOLOGRAPH_REPORT_PASS=$pass RC=$rc META=$meta BYTES=$bytes"
+            rm -rf "$tmpdir"
           done
-          echo 'No candidate reproduced the required first-party incident + amount + restart claim set.' >&2
-          exit 1
 
       - name: Audit high-severity dependencies
         run: npm audit --audit-level=high
