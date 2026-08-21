@@ -21,17 +21,23 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Temporary Holograph report target probe
+      - name: Temporary Holograph postmortem claim probe
         shell: bash
         run: |
-          set -u
-          url='https://t.co/uRGZmgX01Z'
+          set -euo pipefail
+          url='https://garnet-tilapia-acb.notion.site/Holograph-Incident-Post-Mortem-b5f1e14da7b2456aa3c3a1bde796daa4'
           for pass in 1 2; do
             tmpdir="$(mktemp -d)"
             meta="$(curl --silent --show-error --location --retry 2 --retry-delay 2 --connect-timeout 15 --max-time 60 --user-agent 'Mozilla/5.0 BIR source verification' --dump-header "$tmpdir/headers" --output "$tmpdir/body" --write-out '%{http_code}|%{url_effective}|%{content_type}' "$url")"
             rc=$?
             bytes="$(wc -c < "$tmpdir/body" 2>/dev/null || echo 0)"
-            echo "HOLOGRAPH_REPORT_PASS=$pass RC=$rc META=$meta BYTES=$bytes"
+            echo "HOLOGRAPH_POSTMORTEM_PASS=$pass RC=$rc META=$meta BYTES=$bytes"
+            http="${meta%%|*}"
+            ctype="${meta##*|}"
+            test "$rc" -eq 0
+            test "$http" = '200'
+            [[ "$ctype" == *'text/html'* ]]
+            python3 -c 'import html,re,sys; raw=open(sys.argv[1],encoding="utf-8",errors="ignore").read(); text=re.sub(r"\s+"," ",html.unescape(re.sub(r"<[^>]+>"," ",raw))).lower(); groups={"holograph": ["holograph"], "halborn": ["halborn"], "former_contractor": ["former contractor","former-contractor","contractor"], "privileged_access": ["privileged","admin","access"], "mint": ["1 billion","one billion","1,000,000,000"], "hlg": ["hlg"]}; result={k:any(v in text for v in vals) for k,vals in groups.items()}; print("MARKERS="+",".join(f"{k}:{int(v)}" for k,v in result.items())); raise SystemExit(0 if all(result.values()) else 2)' "$tmpdir/body"
             rm -rf "$tmpdir"
           done
 
