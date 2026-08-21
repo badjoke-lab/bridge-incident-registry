@@ -23,9 +23,6 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install dependencies
-        run: npm install
-
       - name: Apply bounded cleanup
         run: node scripts/apply-risky-host-headroom-cleanup.mjs
 
@@ -33,6 +30,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          git status --porcelain
           changed="$(git status --porcelain | sed -E 's/^.. //' | sort)"
           expected="$(printf '%s\n' data/evidence.json data/events.json data/incidents.json | sort)"
           test "$changed" = "$expected"
@@ -53,6 +51,9 @@ jobs:
           const i = incidents.find(x => x.id === 'bir_inc_000030');
           if (!i || i.source_count !== 4) throw new Error('bir_inc_000030 source_count mismatch');
           NODE
+
+      - name: Install dependencies without lockfile mutation
+        run: npm ci
 
       - name: Audit high-severity dependencies
         run: npm audit --audit-level=high
@@ -128,6 +129,7 @@ jobs:
           set -euo pipefail
           rm scripts/apply-risky-host-headroom-cleanup.mjs
           rm .github/workflows/temporary-apply-risky-host-headroom.yml
+          git status --porcelain
           changed="$(git status --porcelain | sed -E 's/^.. //' | sort)"
           expected="$(printf '%s\n' .github/workflows/temporary-apply-risky-host-headroom.yml data/evidence.json data/events.json data/incidents.json scripts/apply-risky-host-headroom-cleanup.mjs | sort)"
           test "$changed" = "$expected"
