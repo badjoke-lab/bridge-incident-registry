@@ -52,8 +52,15 @@ jobs:
           if (!i || i.source_count !== 4) throw new Error('bir_inc_000030 source_count mismatch');
           NODE
 
-      - name: Install dependencies without lockfile mutation
-        run: npm ci
+      - name: Install dependencies without retained lockfile mutation
+        shell: bash
+        run: |
+          set -euo pipefail
+          npm install
+          rm -f package-lock.json
+          changed="$(git status --porcelain | sed -E 's/^.. //' | sort)"
+          expected="$(printf '%s\n' data/evidence.json data/events.json data/incidents.json | sort)"
+          test "$changed" = "$expected"
 
       - name: Audit high-severity dependencies
         run: npm audit --audit-level=high
