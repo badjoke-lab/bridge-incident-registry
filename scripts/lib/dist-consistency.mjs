@@ -21,7 +21,8 @@ const STATIC_ALLOWED_JSON_FILES = new Set([
   "data/reference/chains.json",
   "data/reference/assets.json",
   "data/series/registry.json",
-  "data/series/index.json"
+  "data/series/index.json",
+  "data/series/relationships.json"
 ]);
 const FORBIDDEN_PREFIXES = [
   ".generated/",
