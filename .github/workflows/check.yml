@@ -21,19 +21,19 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Temporary Holograph Notion exact Wayback probe
+      - name: Temporary Holograph incident X exact Wayback probe
         shell: bash
         run: |
           set -euo pipefail
-          url='https://garnet-tilapia-acb.notion.site/Holograph-Incident-Post-Mortem-b5f1e14da7b2456aa3c3a1bde796daa4'
-          published='20240702'
+          url='https://x.com/holographxyz/status/1801332482262110301'
+          published='20240613'
           encoded="$(python3 -c 'import sys,urllib.parse; print(urllib.parse.quote(sys.argv[1],safe=""))' "$url")"
           accepted_ts=''
           accepted_replay=''
           transport_failures=0
 
           for pass in 1 2; do
-            echo "=== NOTION WAYBACK PASS $pass ==="
+            echo "=== HOLOGRAPH X WAYBACK PASS $pass ==="
             cdx="$(mktemp)"
             set +e
             curl --fail-with-body --silent --show-error --location \
