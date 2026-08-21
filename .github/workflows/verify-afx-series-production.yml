@@ -1,0 +1,138 @@
+name: Verify AFX Series Production
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/verify-afx-series-production.yml"
+      - "docs/audits/production-verification-afx-trade-2026.md"
+
+permissions:
+  contents: read
+
+jobs:
+  verify-series:
+    if: github.head_ref == 'agent/production-verification'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact merged main
+        uses: actions/checkout@v7
+        with:
+          ref: fe41d1adc79d18039f41cfbcd21451c8695a7e23
+
+      - name: Assert exact main pin
+        shell: bash
+        run: test "$(git rev-parse HEAD)" = "fe41d1adc79d18039f41cfbcd21451c8695a7e23"
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build exact-main output
+        run: npm run build
+
+      - name: Verify complete Series semantic equality
+        env:
+          PUBLIC_SITE_ORIGIN: https://bir.badjoke-lab.com
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import path from 'node:path';
+
+          const root = path.resolve('dist/data/series');
+          const origin = process.env.PUBLIC_SITE_ORIGIN.replace(/\/$/, '');
+          const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+          function walk(dir) {
+            const out = [];
+            for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+              const target = path.join(dir, entry.name);
+              if (entry.isDirectory()) out.push(...walk(target));
+              else if (entry.isFile() && entry.name.endsWith('.json')) out.push(target);
+            }
+            return out.sort();
+          }
+
+          function normalize(value) {
+            if (Array.isArray(value)) return value.map(normalize);
+            if (value && typeof value === 'object') {
+              return Object.fromEntries(Object.keys(value).sort().map((key) => [
+                key,
+                key === 'generated_at' ? '__GENERATED_AT__' : normalize(value[key])
+              ]));
+            }
+            return value;
+          }
+
+          const files = walk(root);
+          if (files.length !== 88) throw new Error(`expected 88 Series JSON files, found ${files.length}`);
+
+          const descriptor = JSON.parse(fs.readFileSync(path.join(root, 'registry.json'), 'utf8'));
+          const index = JSON.parse(fs.readFileSync(path.join(root, 'index.json'), 'utf8'));
+          if (descriptor.record_counts?.bridges !== 41) throw new Error(`descriptor bridges=${descriptor.record_counts?.bridges}`);
+          if (descriptor.record_counts?.incidents !== 44) throw new Error(`descriptor incidents=${descriptor.record_counts?.incidents}`);
+          if (descriptor.record_counts?.relationships !== 44) throw new Error(`descriptor relationships=${descriptor.record_counts?.relationships}`);
+          if (!Array.isArray(index.records) || index.records.length !== 85) throw new Error(`Series index records=${index.records?.length}`);
+          if (new Set(index.records.map((row) => row.global_record_key)).size !== 85) throw new Error('Series global keys are not unique');
+
+          const expected = files.map((file) => ({
+            file,
+            route: '/' + path.relative('dist', file).split(path.sep).join('/'),
+            json: normalize(JSON.parse(fs.readFileSync(file, 'utf8')))
+          }));
+
+          async function fetchOne(item) {
+            const response = await fetch(origin + item.route, {
+              headers: {
+                accept: 'application/json',
+                'cache-control': 'no-cache',
+                'user-agent': 'BIR-AFX-Series-production-verifier/1.0'
+              },
+              signal: AbortSignal.timeout(15000)
+            });
+            if (response.status !== 200) return `${item.route}: HTTP ${response.status}`;
+            const type = response.headers.get('content-type') ?? '';
+            if (!type.includes('application/json')) return `${item.route}: content-type ${type || 'missing'}`;
+            let actual;
+            try { actual = normalize(await response.json()); }
+            catch (error) { return `${item.route}: invalid JSON: ${error.message}`; }
+            if (JSON.stringify(actual) !== JSON.stringify(item.json)) return `${item.route}: semantic mismatch`;
+            return null;
+          }
+
+          let passed = false;
+          for (let attempt = 1; attempt <= 30; attempt += 1) {
+            const errors = [];
+            for (let offset = 0; offset < expected.length; offset += 12) {
+              const results = await Promise.all(expected.slice(offset, offset + 12).map(fetchOne));
+              errors.push(...results.filter(Boolean));
+            }
+            if (errors.length === 0) {
+              console.log(`Complete production Series semantic equality PASS attempt=${attempt}`);
+              passed = true;
+              break;
+            }
+            console.log(`Attempt ${attempt}: ${errors.length} Series mismatches; first=${errors[0]}`);
+            if (attempt < 30) await sleep(10000);
+          }
+          if (!passed) throw new Error('production Series did not converge within 30 attempts');
+
+          for (const route of [
+            '/bridge/afx-bridge/',
+            '/incident/afx-bridge-2026-validator-infrastructure-compromise/',
+            '/incidents/',
+            '/compare/',
+            '/stats/'
+          ]) {
+            const response = await fetch(origin + route, {
+              headers: { 'cache-control': 'no-cache', 'user-agent': 'BIR-AFX-route-verifier/1.0' },
+              signal: AbortSignal.timeout(15000)
+            });
+            if (response.status !== 200) throw new Error(`${route}: HTTP ${response.status}`);
+          }
+
+          console.log('Verified 88 Series JSON files, 85 records, 85 unique keys, 44 relationships, and AFX human routes.');
+          NODE
