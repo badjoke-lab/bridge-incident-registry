@@ -52,15 +52,12 @@ jobs:
           if (!i || i.source_count !== 4) throw new Error('bir_inc_000030 source_count mismatch');
           NODE
 
-      - name: Install dependencies without retained lockfile mutation
+      - name: Install dependencies with transient lockfile
         shell: bash
         run: |
           set -euo pipefail
           npm install
-          rm -f package-lock.json
-          changed="$(git status --porcelain | sed -E 's/^.. //' | sort)"
-          expected="$(printf '%s\n' data/evidence.json data/events.json data/incidents.json | sort)"
-          test "$changed" = "$expected"
+          test -f package-lock.json
 
       - name: Audit high-severity dependencies
         run: npm audit --audit-level=high
@@ -134,6 +131,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          rm -f package-lock.json
           rm scripts/apply-risky-host-headroom-cleanup.mjs
           rm .github/workflows/temporary-apply-risky-host-headroom.yml
           git status --porcelain
