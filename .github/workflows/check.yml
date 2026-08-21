@@ -26,7 +26,7 @@ jobs:
         run: |
           set -euo pipefail
           endpoint='https://www.notion.so/api/v3/loadCachedPageChunk'
-          payload='{"pageId":"b5f1e14d-a7b2-456a-a3c3-a1bde796daa4","limit":100,"cursor":{"stack":[]}}'
+          payload='{"page":{"id":"b5f1e14d-a7b2-456a-a3c3-a1bde796daa4"},"chunkNumber":0,"limit":50,"cursor":{"stack":[]},"verticalColumns":false}'
           for pass in 1 2; do
             tmp="$(mktemp)"
             meta="$(curl --silent --show-error --location --retry 2 --retry-delay 2 --connect-timeout 15 --max-time 60 --header 'content-type: application/json' --data "$payload" --output "$tmp" --write-out '%{http_code}|%{content_type}' "$endpoint")"
@@ -38,7 +38,7 @@ jobs:
             test "$rc" -eq 0
             test "$http" = '200'
             [[ "$ctype" == *'application/json'* ]]
-            jq -e 'type == "object"' "$tmp" >/dev/null
+            jq -e 'type == "object" and (.recordMap|type == "object")' "$tmp" >/dev/null
             python3 -c 'import html,re,sys; raw=open(sys.argv[1],encoding="utf-8",errors="ignore").read(); text=html.unescape(raw).lower(); groups={"holograph": ["holograph"], "halborn": ["halborn"], "former_contractor": ["former contractor","former-contractor","contractor"], "privileged_access": ["privileged","admin access","administrator","access"], "mint": ["1 billion","one billion","1,000,000,000"], "hlg": ["hlg"]}; result={k:any(v in text for v in vals) for k,vals in groups.items()}; print("MARKERS="+",".join(f"{k}:{int(v)}" for k,v in result.items())); raise SystemExit(0 if all(result.values()) else 2)' "$tmp"
             rm -f "$tmp"
           done
