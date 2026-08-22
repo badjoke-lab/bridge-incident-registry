@@ -1,0 +1,126 @@
+name: Temporary Apply XRPL-TX SigIntZero 2026-08-23
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.event.pull_request.head.ref == 'canonical/xrpl-tx-sigintzero-2026-08-23'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout exact PR head branch
+        uses: actions/checkout@v7
+        with:
+          ref: canonical/xrpl-tx-sigintzero-2026-08-23
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Apply bounded XRPL-TX evidence package
+        run: node scripts/apply-xrpl-tx-sigintzero-2026-08-23.mjs
+
+      - name: Assert exact bounded diff
+        shell: bash
+        run: |
+          set -euo pipefail
+          changed="$(git status --porcelain | sed -E 's/^.. //' | sort)"
+          expected="$(printf '%s\n' README.md data/events.json data/evidence.json data/incidents.json docs/runbooks/current-status.md docs/runbooks/development-roadmap.md docs/runbooks/public-consistency-remediation.md docs/runbooks/recovery-checkpoint.md | sort)"
+          test "$changed" = "$expected"
+          node - <<'NODE'
+          const fs = require('fs');
+          const read = p => JSON.parse(fs.readFileSync(p, 'utf8'));
+          const incidents = read('data/incidents.json');
+          const events = read('data/events.json');
+          const evidence = read('data/evidence.json');
+          if (incidents.length !== 44) throw new Error(`incidents=${incidents.length}`);
+          if (events.length !== 206) throw new Error(`events=${events.length}`);
+          if (evidence.length !== 342) throw new Error(`evidence=${evidence.length}`);
+          const incident = incidents.find(x => x.id === 'bir_inc_000038');
+          const event = events.find(x => x.id === 'bir_ev_000188');
+          const source = evidence.find(x => x.id === 'bir_src_000343');
+          if (!incident || incident.source_count !== 3) throw new Error('incident source-count assertion failed');
+          if (!event || event.source_count !== 3) throw new Error('event source-count assertion failed');
+          if (!source || source.url !== 'https://sigintzero.com/blog/coreum-bridge-200k-xrp-rippling-deposit-forgery') throw new Error('SigIntZero evidence assertion failed');
+          if (source.is_primary !== false || source.source_tier !== 'tier_2') throw new Error('source authority boundary failed');
+          if (incident.attack_vector_category !== 'unknown') throw new Error('root-cause boundary regressed');
+          if (incident.recovery_status !== 'unknown') throw new Error('recovery boundary regressed');
+          if (incident.reimbursement_status !== 'unknown') throw new Error('reimbursement boundary regressed');
+          if (incident.restart_status !== 'paused') throw new Error('restart boundary regressed');
+          NODE
+
+      - name: Install dependencies with transient lockfile
+        run: npm install --no-audit --no-fund
+
+      - name: Validate canonical data
+        run: npm run validate:data
+
+      - name: Validate schema enums
+        run: npm run validate:enums
+
+      - name: Audit full canonical corpus
+        run: npm run audit:full-corpus
+
+      - name: Audit exact source counts
+        run: npm run audit:source-count
+
+      - name: Audit source quality baseline
+        shell: bash
+        run: |
+          set -euo pipefail
+          output="$(npm run audit:source-quality 2>&1)"
+          printf '%s\n' "$output"
+          printf '%s\n' "$output" | grep -q '"bridges": 41'
+          printf '%s\n' "$output" | grep -q '"incidents": 44'
+          printf '%s\n' "$output" | grep -q '"events": 206'
+          printf '%s\n' "$output" | grep -q '"evidence": 342'
+          printf '%s\n' "$output" | grep -q '"risky_host_unarchived": 16'
+          printf '%s\n' "$output" | grep -q '"primary_evidence": 241'
+          printf '%s\n' "$output" | grep -q '"tier_1_evidence": 258'
+
+      - name: Test source-count equality failures
+        run: npm run audit:source-count:test
+
+      - name: Test source quality regressions
+        run: npm run audit:source-quality:test
+
+      - name: Test production content equality
+        run: npm run production:content:test
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Check built output consistency
+        run: npm run dist:check
+
+      - name: Remove temporary applicator artifacts
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f package-lock.json
+          rm scripts/apply-xrpl-tx-sigintzero-2026-08-23.mjs
+          rm .github/workflows/temporary-apply-xrpl-tx-sigintzero-2026-08-23.yml
+
+      - name: Assert final bounded tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          changed="$(git status --porcelain | sed -E 's/^.. //' | sort)"
+          expected="$(printf '%s\n' .github/workflows/temporary-apply-xrpl-tx-sigintzero-2026-08-23.yml README.md data/events.json data/evidence.json data/incidents.json docs/runbooks/current-status.md docs/runbooks/development-roadmap.md docs/runbooks/public-consistency-remediation.md docs/runbooks/recovery-checkpoint.md scripts/apply-xrpl-tx-sigintzero-2026-08-23.mjs | sort)"
+          test "$changed" = "$expected"
+
+      - name: Commit final bounded tree
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'badjoke-lab'
+          git config user.email 'badjoke.lab@gmail.com'
+          git add -A
+          git commit -m 'Add XRPL-TX reproducible on-chain evidence'
+          git push origin HEAD:canonical/xrpl-tx-sigintzero-2026-08-23
