@@ -1,0 +1,65 @@
+name: Temporary Apply Growth Batch 01
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/apply-growth-batch-01.mjs'
+      - '.github/workflows/apply-growth-batch-01.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply-and-validate:
+    if: github.head_ref == 'canonical/growth-batch-01-poly-multichain'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: npm ci
+      - name: Apply bounded canonical delta
+        run: node scripts/apply-growth-batch-01.mjs
+      - name: Validate canonical data
+        run: |
+          npm run validate:data
+          npm run validate:enums
+          npm run audit:full-corpus
+          npm run audit:source-count
+          npm run audit:source-quality
+          npm run check
+          npm run production:content:test
+          npm run performance:test
+          npm run build
+          npm run accessibility:check
+          npm run performance:check
+          npm run dist:check
+          npm run dist:test
+      - name: Assert target counts
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const c = (p) => JSON.parse(fs.readFileSync(p,'utf8')).length;
+          const got = [c('data/bridges.json'),c('data/incidents.json'),c('data/events.json'),c('data/evidence.json')];
+          const want = [42,47,214,352];
+          if (got.some((v,i)=>v!==want[i])) throw new Error(`count mismatch ${got.join('/')}`);
+          console.log(`Batch 01 counts OK: ${got.join('/')}`);
+          NODE
+      - name: Remove temporary applicator
+        run: rm scripts/apply-growth-batch-01.mjs .github/workflows/apply-growth-batch-01.yml
+      - name: Commit validated canonical tree
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          if git diff --cached --quiet; then
+            echo 'No canonical delta to commit'
+            exit 1
+          fi
+          git commit -m 'Add record-growth Batch 01 incidents'
+          git push origin HEAD:${{ github.head_ref }}
