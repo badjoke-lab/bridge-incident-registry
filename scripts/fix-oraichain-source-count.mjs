@@ -14,7 +14,11 @@ event210.source_count=2;
 const oraichainEvidence=evidence.filter(x=>x.bridge_id==='bir_bridge_000042'&&x.incident_id==='bir_inc_000045');
 if(oraichainEvidence.length!==5) throw new Error(`oraichain evidence count=${oraichainEvidence.length}`);
 const newIds=['bir_src_000344','bir_src_000345','bir_src_000346','bir_src_000347','bir_src_000348'];
-oraichainEvidence.forEach((row,index)=>{ row.id=newIds[index]; });
+oraichainEvidence.forEach((row,index)=>{
+  row.id=newIds[index];
+  row.url='https://t.me/s/oraichain_official';
+  row.title='Oraichain official incident update';
+});
 if(Array.isArray(incident.amount_claims)&&incident.amount_claims[0]) incident.amount_claims[0].source_id='bir_src_000348';
 fs.writeFileSync(incidentPath,JSON.stringify(incidents,null,2)+'\n');
 fs.writeFileSync(eventPath,JSON.stringify(events,null,2)+'\n');
