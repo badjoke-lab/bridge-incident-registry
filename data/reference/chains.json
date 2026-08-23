@@ -238,5 +238,12 @@
     "aliases": [
       "Axelar Network"
     ]
+  },
+  "oraichain": {
+    "display_name": "Oraichain",
+    "aliases": [
+      "Oraichain Mainnet",
+      "Oraichain Network"
+    ]
   }
 }
