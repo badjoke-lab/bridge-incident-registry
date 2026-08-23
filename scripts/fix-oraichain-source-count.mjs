@@ -1,8 +1,15 @@
 import fs from 'node:fs';
-// Synchronize commit: re-trigger the bounded Oraichain applicator after a stuck runner queue.
-const p='data/incidents.json';
-const rows=JSON.parse(fs.readFileSync(p,'utf8'));
-const row=rows.find(x=>x.id==='bir_inc_000045');
-if(!row) throw new Error('bir_inc_000045 missing');
-row.source_count=5;
-fs.writeFileSync(p,JSON.stringify(rows,null,2)+'\n');
+const incidentPath='data/incidents.json';
+const evidencePath='data/evidence.json';
+const incidents=JSON.parse(fs.readFileSync(incidentPath,'utf8'));
+const evidence=JSON.parse(fs.readFileSync(evidencePath,'utf8'));
+const incident=incidents.find(x=>x.id==='bir_inc_000045');
+if(!incident) throw new Error('bir_inc_000045 missing');
+incident.source_count=5;
+const oraichainEvidence=evidence.filter(x=>x.bridge_id==='bir_bridge_000042'&&x.incident_id==='bir_inc_000045');
+if(oraichainEvidence.length!==5) throw new Error(`oraichain evidence count=${oraichainEvidence.length}`);
+const newIds=['bir_src_000344','bir_src_000345','bir_src_000346','bir_src_000347','bir_src_000348'];
+oraichainEvidence.forEach((row,index)=>{ row.id=newIds[index]; });
+if(Array.isArray(incident.amount_claims)&&incident.amount_claims[0]) incident.amount_claims[0].source_id='bir_src_000348';
+fs.writeFileSync(incidentPath,JSON.stringify(incidents,null,2)+'\n');
+fs.writeFileSync(evidencePath,JSON.stringify(evidence,null,2)+'\n');
