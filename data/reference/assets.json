@@ -249,5 +249,11 @@
       "Wrapped stETH",
       "Wrapped liquid staked Ether 2.0"
     ]
+  },
+  "orai": {
+    "display_name": "ORAI",
+    "aliases": [
+      "Oraichain Token"
+    ]
   }
 }
