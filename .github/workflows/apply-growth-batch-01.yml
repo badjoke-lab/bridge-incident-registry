@@ -25,6 +25,17 @@ jobs:
       - run: npm install
       - name: Apply bounded canonical delta
         run: node scripts/apply-growth-batch-01.mjs
+      - name: Sync bridge aggregate flags
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const p = 'data/bridges.json';
+          const bridges = JSON.parse(fs.readFileSync(p, 'utf8'));
+          const multi = bridges.find((x) => x.id === 'bir_bridge_000007');
+          if (!multi) throw new Error('Multichain bridge not found');
+          multi.has_reimbursement_history = true;
+          fs.writeFileSync(p, JSON.stringify(bridges, null, 2) + '\n');
+          NODE
       - name: Validate canonical data
         run: |
           npm run validate:data
