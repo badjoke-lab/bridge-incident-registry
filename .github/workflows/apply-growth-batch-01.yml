@@ -128,6 +128,27 @@ jobs:
 
           fs.writeFileSync(p, JSON.stringify(evidence, null, 2) + '\n');
           NODE
+      - name: Sync count-bearing documentation
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const files = [
+            'README.md',
+            'docs/runbooks/current-status.md',
+            'docs/runbooks/recovery-checkpoint.md',
+            'docs/runbooks/development-roadmap.md',
+            'docs/runbooks/public-consistency-remediation.md'
+          ];
+          const counts = { Bridges: 42, Incidents: 47, Events: 214, Evidence: 352 };
+          for (const file of files) {
+            let text = fs.readFileSync(file, 'utf8');
+            for (const [label, count] of Object.entries(counts)) {
+              const re = new RegExp(`\\b${label}\\s+\\d+\\b`, 'g');
+              text = text.replace(re, `${label}   ${count}`);
+            }
+            fs.writeFileSync(file, text);
+          }
+          NODE
       - name: Validate canonical data
         run: |
           npm run validate:data
