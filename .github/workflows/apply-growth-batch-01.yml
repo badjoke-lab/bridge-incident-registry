@@ -36,6 +36,98 @@ jobs:
           multi.has_reimbursement_history = true;
           fs.writeFileSync(p, JSON.stringify(bridges, null, 2) + '\n');
           NODE
+      - name: Promote reviewed primary evidence
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const p = 'data/evidence.json';
+          const evidence = JSON.parse(fs.readFileSync(p, 'utf8'));
+          const byId = (id) => {
+            const x = evidence.find((r) => r.id === id);
+            if (!x) throw new Error(`evidence not found: ${id}`);
+            return x;
+          };
+
+          const polyPause = byId('bir_src_000351');
+          Object.assign(polyPause, {
+            source_type: 'other',
+            title: 'Post Mortem — PolyNetwork’s Exploit',
+            url: 'https://www.metis.io/blog/post-mortem-polynetworks-exploit',
+            publisher: 'Metis',
+            published_at: '2023-07-03',
+            published_at_precision: 'day',
+            reliability: 'high',
+            source_tier: 'tier_1',
+            url_status: 'live',
+            claim_scope: 'incident_case',
+            language: 'en',
+            author: null,
+            is_primary: true,
+            is_official_domain: true,
+            supports_amount: false,
+            supports_recovery: false,
+            supports_reimbursement: false,
+            supports_reopen: false,
+            supports_shutdown: true,
+            supports_migration: false,
+            notes: 'First-party affected-ecosystem postmortem supporting containment and bridge closure during the PolyNetwork exploit.'
+          });
+
+          const multichainUrl = 'https://medium.com/multichainorg/multichain-contract-vulnerability-post-mortem-d37bfab237c8';
+          const multichainArchive = 'https://web.archive.org/web/*/https://medium.com/multichainorg/multichain-contract-vulnerability-post-mortem-d37bfab237c8';
+          const multiExploit = byId('bir_src_000352');
+          Object.assign(multiExploit, {
+            source_type: 'other',
+            title: 'Multichain Contract Vulnerability Post Mortem',
+            url: multichainUrl,
+            archived_url: multichainArchive,
+            publisher: 'Multichain',
+            published_at: '2022-02-19',
+            published_at_precision: 'day',
+            reliability: 'high',
+            source_tier: 'tier_1',
+            url_status: 'live',
+            claim_scope: 'root_cause',
+            language: 'en',
+            author: 'Multichain (Previously Anyswap)',
+            is_primary: true,
+            is_official_domain: false,
+            supports_amount: true,
+            supports_recovery: true,
+            supports_reimbursement: true,
+            supports_reopen: true,
+            supports_shutdown: true,
+            supports_migration: true,
+            notes: 'Official Multichain postmortem covering the router/liquidity-pool vulnerabilities, exploitation, mitigation timeline, rescued funds and compensation plan.'
+          });
+          const multiRecovery = byId('bir_src_000353');
+          Object.assign(multiRecovery, {
+            source_type: 'other',
+            title: 'Multichain Contract Vulnerability Post Mortem',
+            url: multichainUrl,
+            archived_url: multichainArchive,
+            publisher: 'Multichain',
+            published_at: '2022-02-19',
+            published_at_precision: 'day',
+            reliability: 'high',
+            source_tier: 'tier_1',
+            url_status: 'live',
+            claim_scope: 'recovery',
+            language: 'en',
+            author: 'Multichain (Previously Anyswap)',
+            is_primary: true,
+            is_official_domain: false,
+            supports_amount: true,
+            supports_recovery: true,
+            supports_reimbursement: true,
+            supports_reopen: true,
+            supports_shutdown: true,
+            supports_migration: true,
+            notes: 'Official Multichain postmortem documenting whitehat rescue, returned funds, V6 migration and the proposed 100% reimbursement boundary.'
+          });
+
+          fs.writeFileSync(p, JSON.stringify(evidence, null, 2) + '\n');
+          NODE
       - name: Validate canonical data
         run: |
           npm run validate:data
