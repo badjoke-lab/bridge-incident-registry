@@ -3509,7 +3509,7 @@
     "recovery_status": "partial_recovery",
     "reimbursement_status": "announced",
     "restart_status": "reopened",
-    "current_outcome": "active_after_incident",
+    "current_outcome": "limited_after_incident",
     "is_unresolved": true,
     "unresolved_reason": [
       "Final completion of the announced 100% reimbursement program is not established in this bounded package."
