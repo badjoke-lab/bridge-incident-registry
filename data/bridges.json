@@ -224,8 +224,8 @@
     "confidence": "high",
     "record_maturity": "reviewed",
     "update_status": "current",
-    "last_reviewed_at": "2026-06-12",
-    "last_verified_at": "2026-06-12",
+    "last_reviewed_at": "2026-08-23",
+    "last_verified_at": "2026-08-23",
     "aliases": [
       "Poly Network Bridge"
     ],
@@ -256,8 +256,8 @@
     "ecosystem_name": "Poly Network",
     "related_protocols": [],
     "brand_history_notes": null,
-    "major_incident_count": 1,
-    "has_unresolved_incident": false,
+    "major_incident_count": 2,
+    "has_unresolved_incident": true,
     "has_reimbursement_history": false,
     "successor_id": null,
     "predecessor_id": null,
@@ -337,8 +337,8 @@
     "confidence": "high",
     "record_maturity": "reviewed",
     "update_status": "current",
-    "last_reviewed_at": "2026-06-14",
-    "last_verified_at": "2026-06-14",
+    "last_reviewed_at": "2026-08-23",
+    "last_verified_at": "2026-08-23",
     "aliases": [
       "Anyswap",
       "Multichain Router"
@@ -375,9 +375,9 @@
       "Dogechain"
     ],
     "brand_history_notes": "Originally operated as Anyswap before rebranding to Multichain.",
-    "major_incident_count": 1,
+    "major_incident_count": 2,
     "has_unresolved_incident": true,
-    "has_reimbursement_history": false,
+    "has_reimbursement_history": true,
     "successor_id": null,
     "predecessor_id": null,
     "replacement_bridge_id": null,

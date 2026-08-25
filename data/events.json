@@ -6960,5 +6960,139 @@
     "notes": "Protocol-state restoration is kept distinct from attacker-fund recovery and reimbursement.",
     "duplicate_of": null,
     "merged_into": null
+  },
+  {
+    "id": "bir_ev_000211",
+    "bridge_id": "bir_bridge_000005",
+    "incident_id": "bir_inc_000046",
+    "event_type": "exploit_disclosed",
+    "event_date": "2023-07-02",
+    "event_date_precision": "day",
+    "title": "Poly Network 2023 exploit disclosed",
+    "description": "A second major Poly Network cross-chain exploit affected many assets and chains; analyses distinguish enormous notional token issuance from much smaller realized extraction.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "major",
+    "status_effect": "bridge incident disclosed",
+    "source_count": 2,
+    "sort_order": 10,
+    "amount_text": "notional minting and realized loss kept separate",
+    "recovered_amount_text": null,
+    "reimbursement_status": "unknown",
+    "restart_status": "unknown",
+    "affected_chains": [
+      "ethereum",
+      "bnb-chain",
+      "metis",
+      "unknown"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": "No single USD loss is asserted.",
+    "duplicate_of": null,
+    "merged_into": null
+  },
+  {
+    "id": "bir_ev_000212",
+    "bridge_id": "bir_bridge_000005",
+    "incident_id": "bir_inc_000046",
+    "event_type": "bridge_paused",
+    "event_date": "2023-07-02",
+    "event_date_precision": "day",
+    "title": "Poly Network cross-chain contracts paused",
+    "description": "Poly Network cross-chain activity was halted during containment; independent reconstruction attributes the incident boundary to compromised or misused keeper/validator keys rather than a simple target-chain contract bug.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "major",
+    "status_effect": "paused",
+    "source_count": 1,
+    "sort_order": 20,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "unknown",
+    "restart_status": "not_reopened",
+    "affected_chains": [
+      "ethereum",
+      "bnb-chain",
+      "metis",
+      "unknown"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": null,
+    "duplicate_of": null,
+    "merged_into": null
+  },
+  {
+    "id": "bir_ev_000213",
+    "bridge_id": "bir_bridge_000007",
+    "incident_id": "bir_inc_000047",
+    "event_type": "exploit_disclosed",
+    "event_date": "2022-01-18",
+    "event_date_precision": "day",
+    "title": "Multichain router vulnerability exploitation begins",
+    "description": "Attackers exploited vulnerable Multichain/Anyswap router approval paths after disclosure of critical permit-handling vulnerabilities.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "major",
+    "status_effect": "bridge incident disclosed",
+    "source_count": 1,
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "unknown",
+    "restart_status": "unknown",
+    "affected_chains": [
+      "ethereum",
+      "avalanche",
+      "unknown"
+    ],
+    "affected_assets": [
+      "weth",
+      "avax",
+      "unknown"
+    ],
+    "notes": null,
+    "duplicate_of": null,
+    "merged_into": null
+  },
+  {
+    "id": "bir_ev_000214",
+    "bridge_id": "bir_bridge_000007",
+    "incident_id": "bir_inc_000047",
+    "event_type": "partial_recovery_reported",
+    "event_date": "2022-01",
+    "event_date_precision": "month",
+    "title": "Whitehat rescue and mitigation reduce Multichain exposure",
+    "description": "Security responders carried out whitehat rescue activity while users were urged to revoke vulnerable approvals and affected contracts were migrated or upgraded.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "major",
+    "status_effect": "partial recovery and mitigation reported",
+    "source_count": 1,
+    "sort_order": 20,
+    "amount_text": null,
+    "recovered_amount_text": "partial whitehat rescue documented",
+    "reimbursement_status": "announced",
+    "restart_status": "reopened",
+    "affected_chains": [
+      "ethereum",
+      "avalanche",
+      "unknown"
+    ],
+    "affected_assets": [
+      "weth",
+      "avax",
+      "unknown"
+    ],
+    "notes": "Reimbursement completion is not asserted.",
+    "duplicate_of": null,
+    "merged_into": null
   }
 ]

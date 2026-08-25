@@ -3411,5 +3411,128 @@
     "merged_into": null,
     "split_from": null,
     "split_reason": null
+  },
+  {
+    "id": "bir_inc_000046",
+    "bridge_id": "bir_bridge_000005",
+    "slug": "poly-network-2023-validator-key-exploit",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "title": "Poly Network 2023 validator-key exploit",
+    "incident_date": "2023-07-02",
+    "incident_date_precision": "day",
+    "incident_type": "exploit",
+    "summary": "In July 2023, Poly Network suffered a second major cross-chain incident in which unauthorized cross-chain messages enabled large notional token minting across multiple chains. Independent technical analysis and affected-ecosystem reporting support a validator-key compromise boundary, while realized economic loss was far below the notional minted value.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "source_count": 3,
+    "last_reviewed_at": "2026-08-23",
+    "last_verified_at": "2026-08-23",
+    "is_major_incident": true,
+    "reported_loss_usd_display": null,
+    "reported_loss_usd": null,
+    "reported_loss_usd_min": null,
+    "reported_loss_usd_max": null,
+    "reported_loss_text": "Notional unauthorized minting was extremely large, but realized loss/profit estimates vary materially by source and liquidity; no single canonical USD loss is asserted.",
+    "reported_loss_assets": [
+      "unknown"
+    ],
+    "usd_valuation_date": null,
+    "loss_amount_basis": "notional minting and realized-loss estimates are kept separate",
+    "amount_confidence": "low",
+    "amount_note": "Metis documented affected assets in its ecosystem; security analyses describe very large notional issuance but much smaller realized extraction. BIR does not collapse those concepts.",
+    "amount_claims": [],
+    "recovery_status": "unknown",
+    "reimbursement_status": "unknown",
+    "restart_status": "partially_reopened",
+    "current_outcome": "limited_after_incident",
+    "is_unresolved": true,
+    "unresolved_reason": [
+      "A single realized USD loss figure is not reconciled across affected assets and chains.",
+      "Final project-by-project recovery and reimbursement outcomes remain incomplete."
+    ],
+    "affected_chains": [
+      "ethereum",
+      "bnb-chain",
+      "metis",
+      "unknown"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "attack_vector_category": "validator_key_compromise",
+    "postmortem_available": "full",
+    "known_unknowns": [
+      "Exact realized loss across all 58 affected assets and 11 blockchains remains unresolved.",
+      "Recovery and compensation outcomes differ by affected asset ecosystem."
+    ],
+    "conflicting_claims": [],
+    "duplicate_of": null,
+    "merged_into": null,
+    "split_from": null,
+    "split_reason": null
+  },
+  {
+    "id": "bir_inc_000047",
+    "bridge_id": "bir_bridge_000007",
+    "slug": "multichain-2022-router-approval-vulnerability",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "title": "Multichain 2022 router approval vulnerability",
+    "incident_date": "2022-01-18",
+    "incident_date_precision": "day",
+    "incident_type": "exploit",
+    "summary": "In January 2022, attackers exploited vulnerable Multichain/Anyswap router approval paths after a critical vulnerability disclosure. Independent technical reports document the flawed permit/underlying-token validation boundary and subsequent whitehat rescue activity.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "source_count": 2,
+    "last_reviewed_at": "2026-08-23",
+    "last_verified_at": "2026-08-23",
+    "is_major_incident": true,
+    "reported_loss_usd_display": null,
+    "reported_loss_usd": null,
+    "reported_loss_usd_min": null,
+    "reported_loss_usd_max": null,
+    "reported_loss_text": "Stolen, rescued, at-risk and later reimbursed amounts are distinct; this bounded record does not collapse them into a single USD loss.",
+    "reported_loss_assets": [
+      "weth",
+      "avax",
+      "unknown"
+    ],
+    "usd_valuation_date": null,
+    "loss_amount_basis": "technical incident reports; conservative amount boundary",
+    "amount_confidence": "low",
+    "amount_note": "The review authority preserves separate stolen/rescued/reimbursement figures; canonical amount remains unset until those claims are reconciled against stable preserved sources.",
+    "amount_claims": [],
+    "recovery_status": "partial_recovery",
+    "reimbursement_status": "announced",
+    "restart_status": "reopened",
+    "current_outcome": "active_after_incident",
+    "is_unresolved": true,
+    "unresolved_reason": [
+      "Final completion of the announced 100% reimbursement program is not established in this bounded package."
+    ],
+    "affected_chains": [
+      "ethereum",
+      "avalanche",
+      "unknown"
+    ],
+    "affected_assets": [
+      "weth",
+      "avax",
+      "unknown"
+    ],
+    "attack_vector_category": "unknown",
+    "postmortem_available": "full",
+    "known_unknowns": [
+      "Final reimbursed amount and completion date remain outside this bounded evidence package."
+    ],
+    "conflicting_claims": [],
+    "duplicate_of": null,
+    "merged_into": null,
+    "split_from": null,
+    "split_reason": null
   }
 ]
