@@ -24,6 +24,21 @@ jobs:
         run: npm install
       - name: Apply reviewed Batch 02
         run: node scripts/apply-record-growth-batch-02.mjs
+      - name: Normalize QAN evidence publication metadata
+        run: |
+          node <<'NODE'
+          import fs from 'node:fs';
+          const p = 'data/evidence.json';
+          const data = JSON.parse(fs.readFileSync(p, 'utf8'));
+          const claim = data.find(x => x.id === 'bir_src_000356');
+          const repo = data.find(x => x.id === 'bir_src_000357');
+          if (!claim || !repo) throw new Error('Batch 02 QAN evidence missing');
+          claim.published_at = '2022-10';
+          claim.published_at_precision = 'month';
+          repo.published_at = '2021-10-30';
+          repo.published_at_precision = 'day';
+          fs.writeFileSync(p, JSON.stringify(data, null, 2) + '\n');
+          NODE
       - name: Sync count-bearing documentation
         run: |
           node <<'NODE'
