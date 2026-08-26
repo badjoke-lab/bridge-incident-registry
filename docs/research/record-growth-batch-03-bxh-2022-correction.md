@@ -13,3 +13,5 @@ This review correction supersedes the BXH year boundary in merged review PR #377
 Cellframe 2026 authority from PR #377 is unchanged.
 
 Canonical PR #378 may proceed only with the corrected BXH 2022 boundary.
+
+Audit note: this correction changes only the BXH incident-year boundary and does not broaden the approved canonical scope.
