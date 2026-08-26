@@ -3534,5 +3534,134 @@
     "merged_into": null,
     "split_from": null,
     "split_reason": null
+  },
+  {
+    "id": "bir_inc_000048",
+    "bridge_id": "bir_bridge_000007",
+    "slug": "anyswap-v3-2021-mpc-key-exploit",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "title": "Anyswap / Multichain Router V3 2021 MPC key exploit",
+    "incident_date": "2021-07-10",
+    "incident_date_precision": "day",
+    "incident_type": "exploit",
+    "summary": "Anyswap disclosed exploitation of prototype V3 cross-chain liquidity pools after repeated ECDSA R values exposed an MPC private key. Four malicious transactions across Ethereum, BNB Smart Chain and Fantom stole 2,398,496.02 USDC and 5,509,222.73 MIM. The operator stated that its V1/V2 bridge was not affected.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "source_count": 2,
+    "last_reviewed_at": "2026-08-26",
+    "last_verified_at": "2026-08-26",
+    "is_major_incident": true,
+    "reported_loss_usd_display": null,
+    "reported_loss_usd": null,
+    "reported_loss_usd_min": null,
+    "reported_loss_usd_max": null,
+    "reported_loss_text": "2,398,496.02 USDC and 5,509,222.73 MIM reported stolen; no USD aggregate is asserted here.",
+    "reported_loss_assets": [
+      "usdc",
+      "unknown"
+    ],
+    "usd_valuation_date": null,
+    "loss_amount_basis": "official incident statement; token amounts preserved without USD conversion",
+    "amount_confidence": "high",
+    "amount_note": "The official statement provides token-denominated amounts. This record intentionally does not manufacture a USD total.",
+    "amount_claims": [
+      {
+        "amount_text": "2,398,496.02 USDC and 5,509,222.73 MIM",
+        "amount_usd_text": null,
+        "source_id": "bir_src_000354",
+        "basis": "official incident statement",
+        "usd_valuation_date": null,
+        "notes": "Exact token amounts from the operator statement."
+      }
+    ],
+    "recovery_status": "none_confirmed",
+    "reimbursement_status": "announced",
+    "restart_status": "unknown",
+    "current_outcome": "limited_after_incident",
+    "is_unresolved": true,
+    "unresolved_reason": [
+      "The operator committed to compensate user losses, but completion is not established in the reviewed canonical evidence."
+    ],
+    "affected_chains": [
+      "ethereum",
+      "bnb-chain",
+      "fantom"
+    ],
+    "affected_assets": [
+      "usdc",
+      "unknown"
+    ],
+    "attack_vector_category": "private_key_compromise",
+    "postmortem_available": "partial",
+    "known_unknowns": [
+      "Final compensation completion is not established by the reviewed evidence.",
+      "A USD conversion of the stolen token amounts is intentionally not asserted."
+    ],
+    "conflicting_claims": [],
+    "duplicate_of": null,
+    "merged_into": null,
+    "split_from": null,
+    "split_reason": null
+  },
+  {
+    "id": "bir_inc_000049",
+    "bridge_id": "bir_bridge_000043",
+    "slug": "qanplatform-qanx-bridge-2022-wallet-hack",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "title": "QANplatform QANX Bridge 2022 wallet hack",
+    "incident_date": "2022-10-11",
+    "incident_date_precision": "day",
+    "incident_type": "exploit",
+    "summary": "QANplatform states that its bridge wallet was hacked beginning on BNB Smart Chain at 08:16:39 UTC on 2022-10-11 and immediately afterward on Ethereum. The project replaced the affected QANX token contract and created a recovery and compensation process.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "source_count": 2,
+    "last_reviewed_at": "2026-08-26",
+    "last_verified_at": "2026-08-26",
+    "is_major_incident": true,
+    "reported_loss_usd_display": null,
+    "reported_loss_usd": null,
+    "reported_loss_usd_min": null,
+    "reported_loss_usd_max": null,
+    "reported_loss_text": "No reviewed canonical source supports one reconciled stolen USD amount.",
+    "reported_loss_assets": [
+      "unknown"
+    ],
+    "usd_valuation_date": null,
+    "loss_amount_basis": "first-party recovery material; amount intentionally unresolved",
+    "amount_confidence": "high",
+    "amount_note": "Token replacement and compensation rules are documented, but this record does not infer a stolen USD total.",
+    "amount_claims": [],
+    "recovery_status": "none_confirmed",
+    "reimbursement_status": "announced",
+    "restart_status": "token_replacement_planned",
+    "current_outcome": "affected_token_deprecated",
+    "is_unresolved": true,
+    "unresolved_reason": [
+      "The reviewed material establishes replacement and compensation eligibility, not final completion for all affected holders.",
+      "Current bridge operating status is not established."
+    ],
+    "affected_chains": [
+      "bnb-chain",
+      "ethereum"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "attack_vector_category": "private_key_compromise",
+    "postmortem_available": "partial",
+    "known_unknowns": [
+      "Exact stolen-value total is not asserted.",
+      "Current bridge operating status remains unknown."
+    ],
+    "conflicting_claims": [],
+    "duplicate_of": null,
+    "merged_into": null,
+    "split_from": null,
+    "split_reason": null
   }
 ]
