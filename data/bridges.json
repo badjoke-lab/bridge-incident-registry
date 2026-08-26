@@ -337,8 +337,8 @@
     "confidence": "high",
     "record_maturity": "reviewed",
     "update_status": "current",
-    "last_reviewed_at": "2026-08-23",
-    "last_verified_at": "2026-08-23",
+    "last_reviewed_at": "2026-08-26",
+    "last_verified_at": "2026-08-26",
     "aliases": [
       "Anyswap",
       "Multichain Router"
@@ -375,7 +375,7 @@
       "Dogechain"
     ],
     "brand_history_notes": "Originally operated as Anyswap before rebranding to Multichain.",
-    "major_incident_count": 2,
+    "major_incident_count": 3,
     "has_unresolved_incident": true,
     "has_reimbursement_history": true,
     "successor_id": null,
@@ -2470,5 +2470,56 @@
     "duplicate_of": null,
     "merged_into": null,
     "notes": "Network return-to-service is established, but full affected cross-chain-path reopening is not separately established; entity status remains limited."
+  },
+  {
+    "id": "bir_bridge_000043",
+    "slug": "qanplatform-qanx-bridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "QANplatform QANX Bridge",
+    "type": "asset_bridge",
+    "status": "unknown",
+    "summary": "QANplatform operated a QANX bridge between Ethereum and BNB Smart Chain. The bridge wallet was hacked on 2022-10-11, after which QANplatform replaced the affected QANX token contract and opened a recovery and compensation process.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-26",
+    "last_verified_at": "2026-08-26",
+    "aliases": [
+      "QANX Bridge",
+      "QANplatform Bridge"
+    ],
+    "launch_date": null,
+    "launch_date_precision": "unknown",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "official_url": "https://claim.qanplatform.com/",
+    "official_domain": "claim.qanplatform.com",
+    "official_url_status": "live",
+    "archived_url": null,
+    "primary_chains": [
+      "ethereum",
+      "bnb-chain"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "QANplatform",
+    "operator_type": "protocol ecosystem",
+    "ecosystem_name": "QANplatform",
+    "related_protocols": [
+      "QANX"
+    ],
+    "brand_history_notes": null,
+    "major_incident_count": 1,
+    "has_unresolved_incident": true,
+    "has_reimbursement_history": true,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "notes": "Current bridge operating status is kept unknown; the reviewed sources establish the 2022 bridge-wallet hack and token replacement/compensation process, not a later bridge restart."
   }
 ]

@@ -7094,5 +7094,133 @@
     "notes": "Reimbursement completion is not asserted.",
     "duplicate_of": null,
     "merged_into": null
+  },
+  {
+    "id": "bir_ev_000215",
+    "bridge_id": "bir_bridge_000007",
+    "incident_id": "bir_inc_000048",
+    "event_type": "exploit_disclosed",
+    "event_date": "2021-07-10",
+    "event_date_precision": "day",
+    "title": "Anyswap V3 exploit disclosed",
+    "description": "Anyswap disclosed exploitation of prototype V3 cross-chain liquidity pools after MPC private-key exposure caused by repeated ECDSA R values.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "major",
+    "status_effect": "prototype V3 pools exploited",
+    "source_count": 1,
+    "sort_order": 10,
+    "amount_text": "2,398,496.02 USDC and 5,509,222.73 MIM",
+    "recovered_amount_text": null,
+    "reimbursement_status": "unknown",
+    "restart_status": "unknown",
+    "affected_chains": [
+      "ethereum",
+      "bnb-chain",
+      "fantom"
+    ],
+    "affected_assets": [
+      "usdc",
+      "unknown"
+    ],
+    "notes": "The operator explicitly stated that its V1/V2 bridge was not affected.",
+    "duplicate_of": null,
+    "merged_into": null
+  },
+  {
+    "id": "bir_ev_000216",
+    "bridge_id": "bir_bridge_000007",
+    "incident_id": "bir_inc_000048",
+    "event_type": "compensation_commitment",
+    "event_date": "2021-07",
+    "event_date_precision": "month",
+    "title": "Anyswap commits to compensate affected users",
+    "description": "The operator committed to compensate user losses connected to the V3 exploit.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "high",
+    "status_effect": "compensation announced",
+    "source_count": 1,
+    "sort_order": 20,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "announced",
+    "restart_status": "unknown",
+    "affected_chains": [
+      "ethereum",
+      "bnb-chain",
+      "fantom"
+    ],
+    "affected_assets": [
+      "usdc",
+      "unknown"
+    ],
+    "notes": "Compensation completion is not asserted.",
+    "duplicate_of": null,
+    "merged_into": null
+  },
+  {
+    "id": "bir_ev_000217",
+    "bridge_id": "bir_bridge_000043",
+    "incident_id": "bir_inc_000049",
+    "event_type": "exploit_disclosed",
+    "event_date": "2022-10-11",
+    "event_date_precision": "day",
+    "title": "QANX bridge wallet hack begins",
+    "description": "QANplatform identifies the bridge-wallet hack as beginning on BNB Smart Chain at 08:16:39 UTC and immediately afterward on Ethereum.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "major",
+    "status_effect": "bridge wallet compromised",
+    "source_count": 1,
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "unknown",
+    "restart_status": "unknown",
+    "affected_chains": [
+      "bnb-chain",
+      "ethereum"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": null,
+    "duplicate_of": null,
+    "merged_into": null
+  },
+  {
+    "id": "bir_ev_000218",
+    "bridge_id": "bir_bridge_000043",
+    "incident_id": "bir_inc_000049",
+    "event_type": "token_replacement_and_compensation",
+    "event_date": "2022-10",
+    "event_date_precision": "month",
+    "title": "QANplatform replaces QANX token and opens compensation process",
+    "description": "QANplatform replaced the affected QANX token contract and published replacement and compensation rules, including 100% replacement eligibility for pre-hack holders.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "major",
+    "status_effect": "affected token replaced; compensation process opened",
+    "source_count": 1,
+    "sort_order": 20,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "announced",
+    "restart_status": "token_replacement_planned",
+    "affected_chains": [
+      "bnb-chain",
+      "ethereum"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": "Eligibility and process are documented; final completion for every affected holder is not asserted.",
+    "duplicate_of": null,
+    "merged_into": null
   }
 ]

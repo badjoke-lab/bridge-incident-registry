@@ -6,10 +6,10 @@ Updated: 2026-08-03
 ## Current canonical and production baseline
 
 ```text
-Bridges   42
-Incidents   47
-Events   214
-Evidence   352
+Bridges   43
+Incidents   49
+Events   218
+Evidence   356
 Archived evidence 130
 HTML routes        72
 Redirects          74
