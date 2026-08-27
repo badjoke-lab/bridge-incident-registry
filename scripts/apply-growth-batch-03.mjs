@@ -23,7 +23,7 @@ const s0 = structuredClone(evidence.at(-1));
 
 const bxhBridge = {...b0,
   id:'bir_bridge_000044', slug:'bxh-cross-chain-bridge', previous_slugs:[], redirect_from:[],
-  canonical_name:'BXH Cross-chain Bridge', type:'asset_bridge', status:'discontinued',
+  canonical_name:'BXH Cross-chain Bridge', type:'asset_bridge', status:'dead',
   summary:'BXH operated cross-chain bridge functionality within its DeFi platform. BXH states that a September 21, 2022 security incident affected user assets including cross-chain bridge positions, followed by a compensation program and an announced exit from the DeFi product.',
   confidence:'high', record_maturity:'reviewed', update_status:'current', last_reviewed_at:'2026-08-27', last_verified_at:'2026-08-27',
   aliases:['BXH Bridge','BXH Cross-chain Bridge'], launch_date:null, launch_date_precision:'unknown', end_date:'2022-09', end_date_precision:'month', terminal_reason:'BXH announced that its DeFi platform would exit and compensation work would move toward the BXH Exchange.',
