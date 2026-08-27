@@ -3663,5 +3663,122 @@
     "merged_into": null,
     "split_from": null,
     "split_reason": null
+  },
+  {
+    "id": "bir_inc_000050",
+    "bridge_id": "bir_bridge_000044",
+    "slug": "bxh-cross-chain-bridge-2022-security-incident",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "title": "BXH Cross-chain Bridge 2022 security incident",
+    "incident_date": "2022-09-21",
+    "incident_date_precision": "day",
+    "incident_type": "exploit",
+    "summary": "BXH states that its DeFi platform was hacked on September 21, 2022. Its later compensation notice explicitly includes users whose assets were lost in the cross-chain bridge, while keeping those losses distinct from LP positions and from a separate September 27 flash-loan attack.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "source_count": 1,
+    "last_reviewed_at": "2026-08-27",
+    "last_verified_at": "2026-08-27",
+    "is_major_incident": true,
+    "reported_loss_usd_display": null,
+    "reported_loss_usd": null,
+    "reported_loss_usd_min": null,
+    "reported_loss_usd_max": null,
+    "reported_loss_text": "No reviewed first-party source supports one bridge-only USD loss total.",
+    "reported_loss_assets": [
+      "unknown"
+    ],
+    "usd_valuation_date": null,
+    "loss_amount_basis": "first-party compensation material; bridge-only amount intentionally unresolved",
+    "amount_confidence": "high",
+    "amount_note": "Mixed DeFi loss figures are not assigned to the bridge record.",
+    "amount_claims": [],
+    "recovery_status": "none_confirmed",
+    "reimbursement_status": "announced",
+    "restart_status": "not_reopened",
+    "current_outcome": "limited_after_incident",
+    "is_unresolved": true,
+    "unresolved_reason": [
+      "Final bridge-user compensation completion is not established by the reviewed evidence.",
+      "A bridge-only loss total is not established."
+    ],
+    "affected_chains": [
+      "avalanche",
+      "unknown"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "attack_vector_category": "private_key_compromise",
+    "postmortem_available": "partial",
+    "known_unknowns": [
+      "Bridge-only stolen-value total is not established.",
+      "Final compensation completion for cross-chain bridge positions is not established."
+    ],
+    "conflicting_claims": [],
+    "duplicate_of": null,
+    "merged_into": null,
+    "split_from": null,
+    "split_reason": null
+  },
+  {
+    "id": "bir_inc_000051",
+    "bridge_id": "bir_bridge_000045",
+    "slug": "cellframe-bridge-2026-hack-illegal-token-issuance",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "title": "Cellframe Bridge 2026 hack and illegal token issuance",
+    "incident_date": "2026-05",
+    "incident_date_precision": "month",
+    "incident_type": "exploit",
+    "summary": "In a May 14, 2026 AMA, Cellframe said the team had announced a hack of the Cellframe bridge and illegal token issuance. The AMA cited about $2,000 for the illegal issuance in the question boundary, while explicitly stating that total damage had not yet been calculated and the internal investigation continued.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "source_count": 1,
+    "last_reviewed_at": "2026-08-27",
+    "last_verified_at": "2026-08-27",
+    "is_major_incident": true,
+    "reported_loss_usd_display": null,
+    "reported_loss_usd": null,
+    "reported_loss_usd_min": null,
+    "reported_loss_usd_max": null,
+    "reported_loss_text": "Approximately $2,000 was cited for illegal token issuance; total incident damage was explicitly not yet calculated.",
+    "reported_loss_assets": [
+      "unknown"
+    ],
+    "usd_valuation_date": null,
+    "loss_amount_basis": "first-party AMA; partial amount only",
+    "amount_confidence": "high",
+    "amount_note": "The $2,000 figure is not promoted to a total-loss estimate.",
+    "amount_claims": [],
+    "recovery_status": "partial",
+    "reimbursement_status": "unknown",
+    "restart_status": "limited",
+    "current_outcome": "limited_after_incident",
+    "is_unresolved": true,
+    "unresolved_reason": [
+      "Cellframe said the internal investigation was continuing and total damage had not been calculated."
+    ],
+    "affected_chains": [
+      "unknown"
+    ],
+    "affected_assets": [
+      "usdc",
+      "unknown"
+    ],
+    "attack_vector_category": "unknown",
+    "postmortem_available": "partial",
+    "known_unknowns": [
+      "Total damage remains unquantified in the reviewed first-party source.",
+      "The complete attack path and final recovery boundary are not established."
+    ],
+    "conflicting_claims": [],
+    "duplicate_of": null,
+    "merged_into": null,
+    "split_from": null,
+    "split_reason": null
   }
 ]

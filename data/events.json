@@ -7222,5 +7222,67 @@
     "notes": "Eligibility and process are documented; final completion for every affected holder is not asserted.",
     "duplicate_of": null,
     "merged_into": null
+  },
+  {
+    "id": "bir_ev_000219",
+    "bridge_id": "bir_bridge_000044",
+    "incident_id": "bir_inc_000050",
+    "event_type": "exploit_disclosed",
+    "event_date": "2022-09-21",
+    "event_date_precision": "day",
+    "title": "BXH September 2022 security incident affects bridge positions",
+    "description": "BXH later identified the September 21 hack and explicitly included users with assets lost in cross-chain bridge positions in its compensation program.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "major",
+    "status_effect": "bridge positions affected; compensation announced",
+    "source_count": 1,
+    "sort_order": 10,
+    "amount_text": "Bridge-only amount not established",
+    "recovered_amount_text": null,
+    "reimbursement_status": "announced",
+    "restart_status": "not_reopened",
+    "affected_chains": [
+      "avalanche",
+      "unknown"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": "Separate September 27 flash-loan losses are not merged into this bridge incident.",
+    "duplicate_of": null,
+    "merged_into": null
+  },
+  {
+    "id": "bir_ev_000220",
+    "bridge_id": "bir_bridge_000045",
+    "incident_id": "bir_inc_000051",
+    "event_type": "exploit_disclosed",
+    "event_date": "2026-05",
+    "event_date_precision": "month",
+    "title": "Cellframe discloses bridge hack and illegal token issuance",
+    "description": "Cellframe described a bridge hack and illegal token issuance, said USDC was moved off older protocols, and described hot/cold bridge hardening while investigation continued.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "major",
+    "status_effect": "bridge hardened; investigation ongoing",
+    "source_count": 1,
+    "sort_order": 10,
+    "amount_text": "approximately $2,000 cited for illegal issuance; total damage not calculated",
+    "recovered_amount_text": "some funds frozen, but full compensation not assured",
+    "reimbursement_status": "unknown",
+    "restart_status": "limited",
+    "affected_chains": [
+      "unknown"
+    ],
+    "affected_assets": [
+      "usdc",
+      "unknown"
+    ],
+    "notes": "The official AMA does not provide a complete total-loss figure.",
+    "duplicate_of": null,
+    "merged_into": null
   }
 ]
