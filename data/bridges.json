@@ -2521,5 +2521,106 @@
     "duplicate_of": null,
     "merged_into": null,
     "notes": "Current bridge operating status is kept unknown; the reviewed sources establish the 2022 bridge-wallet hack and token replacement/compensation process, not a later bridge restart."
+  },
+  {
+    "id": "bir_bridge_000044",
+    "slug": "bxh-cross-chain-bridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "BXH Cross-chain Bridge",
+    "type": "asset_bridge",
+    "status": "dead",
+    "summary": "BXH operated cross-chain bridge functionality within its DeFi platform. BXH states that a September 21, 2022 security incident affected user assets including cross-chain bridge positions, followed by a compensation program and an announced exit from the DeFi product.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-27",
+    "last_verified_at": "2026-08-27",
+    "aliases": [
+      "BXH Bridge",
+      "BXH Cross-chain Bridge"
+    ],
+    "launch_date": null,
+    "launch_date_precision": "unknown",
+    "end_date": "2022-09",
+    "end_date_precision": "month",
+    "terminal_reason": "BXH announced that its DeFi platform would exit and compensation work would move toward the BXH Exchange.",
+    "official_url": "https://bxh.gitbook.io/english/notice/bxhs-latest-announcement-on-compensation-program-30-sep-2022",
+    "official_domain": "bxh.gitbook.io",
+    "official_url_status": "live",
+    "archived_url": "https://web.archive.org/web/*/https://bxh.gitbook.io/english/notice/bxhs-latest-announcement-on-compensation-program-30-sep-2022",
+    "primary_chains": [
+      "avalanche",
+      "unknown"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "BXH",
+    "operator_type": "protocol ecosystem",
+    "ecosystem_name": "BXH",
+    "related_protocols": [
+      "BXH DeFi"
+    ],
+    "brand_history_notes": null,
+    "major_incident_count": 1,
+    "has_unresolved_incident": true,
+    "has_reimbursement_history": true,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "notes": "HECO and OEC are named in the first-party compensation material but are retained as unknown chain references here because BIR does not currently define dedicated HECO/OEC reference keys. Bridge-only USD loss is intentionally not inferred from mixed LP/bridge material."
+  },
+  {
+    "id": "bir_bridge_000045",
+    "slug": "cellframe-bridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Cellframe Bridge",
+    "type": "asset_bridge",
+    "status": "limited",
+    "summary": "Cellframe operates a bridge for assets including USDC. In a May 2026 AMA, the team said it had announced a bridge hack and illegal token issuance, then hardened the bridge by separating hot and cold components and moving USDC away from older protocols while investigation continued.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-27",
+    "last_verified_at": "2026-08-27",
+    "aliases": [
+      "Cellframe bridge"
+    ],
+    "launch_date": null,
+    "launch_date_precision": "unknown",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "official_url": "https://cellframe.net/",
+    "official_domain": "cellframe.net",
+    "official_url_status": "live",
+    "archived_url": null,
+    "primary_chains": [
+      "unknown"
+    ],
+    "primary_assets": [
+      "usdc",
+      "unknown"
+    ],
+    "operator_name": "Cellframe",
+    "operator_type": "protocol ecosystem",
+    "ecosystem_name": "Cellframe",
+    "related_protocols": [
+      "Cellframe"
+    ],
+    "brand_history_notes": null,
+    "major_incident_count": 1,
+    "has_unresolved_incident": true,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "notes": "Current operation is kept limited because the official May 2026 AMA describes ongoing investigation and hardening but does not establish a fully resolved incident boundary or total damage."
   }
 ]
