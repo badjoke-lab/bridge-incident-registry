@@ -3301,5 +3301,57 @@
     ],
     "brand_history_notes": "Squid V1, CORAL, and Squid Intents are retained as architecture/lifecycle evolution within one canonical Squid entity.",
     "notes": "The reviewed first-party sources establish January 2023, not an exact launch day. No incident is inferred from later architecture changes."
+  },
+  {
+    "id": "bir_bridge_000059",
+    "slug": "rango-exchange",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Rango Exchange",
+    "type": "interoperability_protocol",
+    "status": "active",
+    "summary": "Rango Exchange is cross-chain DEX and bridge aggregation infrastructure. First-party project material states that Rango launched in August 2021 and its roadmap places the v0.9 origin and bridge integrations in 2021 Q3.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-29",
+    "last_verified_at": "2026-08-29",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "Rango",
+      "Rango DEX",
+      "Rango Bridge Aggregator"
+    ],
+    "launch_date": "2021-08",
+    "launch_date_precision": "month",
+    "official_url": "https://rango.exchange/",
+    "official_domain": "rango.exchange",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "unknown"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "Rango Exchange",
+    "operator_type": "protocol_team",
+    "ecosystem_name": "Rango",
+    "related_protocols": [
+      "Rango Exchange",
+      "Rango Smart Routing"
+    ],
+    "brand_history_notes": "BIR treats Rango Exchange, Rango DEX, and its bridge-aggregation routing product as one protocol lineage unless future first-party evidence establishes a separate canonical product identity.",
+    "notes": "The reviewed first-party material supports August 2021 month precision, not an exact launch day. No incident or safety conclusion is inferred from the bridge aggregation architecture."
   }
 ]

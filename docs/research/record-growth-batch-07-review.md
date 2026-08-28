@@ -2,7 +2,9 @@
 
 Issue: #393
 
-This is a review-only boundary for one genuinely new cross-chain interoperability candidate plus an explicit duplicate-audit correction. It does not modify canonical JSON.
+This is a review-only boundary for one genuinely new cross-chain interoperability candidate plus an explicit duplicate-audit correction. It does not itself modify canonical JSON.
+
+Canonical application: PR #395 applies only the reviewed Rango Exchange lifecycle record. LI.FI and Rubic remain existing canonical entities and are not duplicated.
 
 ## Duplicate-audit correction
 
@@ -29,8 +31,9 @@ Reviewed primary evidence:
 - GitHub's verified Rango Exchange organization, with verified control of `rango.exchange`, describes the project as a cross-chain DEX/bridge aggregator launched in August 2021: https://github.com/rango-exchange
 - Current official site describes Rango as a cross-chain DEX and bridges aggregator with smart routing: https://rango.exchange/
 - Official roadmap places the v0.9 origin and bridge integrations in 2021 Q3: https://docs.rango.exchange/roadmap
+- Dated first-party retrospective on the official Rango updates domain independently states launch in August 2021 and is used by the canonical application because canonical evidence requires a publication date: https://updates.rango.exchange/en/rango-monthly-report-august-2025-edition-KK2suteO
 
-Review decision: month precision only unless canonicalization finds a stronger exact launch day. Lifecycle-only; no incident or safety judgment.
+Review decision: month precision only. Lifecycle-only; no incident or safety judgment.
 
 ## retained research-only
 
