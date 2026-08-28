@@ -7411,5 +7411,161 @@
     "affected_chains": [
       "unknown"
     ]
+  },
+  {
+    "id": "bir_ev_000225",
+    "bridge_id": "bir_bridge_000051",
+    "incident_id": null,
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "lifecycle",
+    "status_effect": "active",
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_applicable",
+    "restart_status": "not_applicable",
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "event_type": "launched",
+    "event_date": "2021-12-01",
+    "event_date_precision": "day",
+    "title": "Meson launches on mainnet",
+    "description": "Meson announced its mainnet launch with initial stablecoin routes across BNB Chain, Polygon, Fantom, and Avalanche.",
+    "source_count": 2,
+    "affected_chains": [
+      "bnb-chain",
+      "polygon",
+      "fantom",
+      "avalanche"
+    ]
+  },
+  {
+    "id": "bir_ev_000226",
+    "bridge_id": "bir_bridge_000052",
+    "incident_id": null,
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "lifecycle",
+    "status_effect": "active",
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_applicable",
+    "restart_status": "not_applicable",
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "event_type": "launched",
+    "event_date": "2022-03-09",
+    "event_date_precision": "day",
+    "title": "Symbiosis V1 beta mainnet launches",
+    "description": "Symbiosis first-party material announced the V1 beta-mainnet launch and made the beta product available for cross-chain use.",
+    "source_count": 2,
+    "affected_chains": [
+      "unknown"
+    ]
+  },
+  {
+    "id": "bir_ev_000227",
+    "bridge_id": "bir_bridge_000053",
+    "incident_id": null,
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "lifecycle",
+    "status_effect": "active",
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_applicable",
+    "restart_status": "not_applicable",
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "event_type": "launched",
+    "event_date": "2021",
+    "event_date_precision": "year",
+    "title": "Orbiter Alpha launches",
+    "description": "Orbiter first-party material confirms that its Alpha bridge had launched in 2021 with support for Ethereum mainnet, zkSync, and Arbitrum.",
+    "source_count": 2,
+    "affected_chains": [
+      "ethereum",
+      "arbitrum",
+      "unknown"
+    ]
+  },
+  {
+    "id": "bir_ev_000228",
+    "bridge_id": "bir_bridge_000054",
+    "incident_id": null,
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "lifecycle",
+    "status_effect": "active",
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_applicable",
+    "restart_status": "not_applicable",
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "event_type": "launched",
+    "event_date": "2022-01-27",
+    "event_date_precision": "day",
+    "title": "Router Protocol alpha mainnet launches",
+    "description": "Router Protocol announced the public launch of its alpha mainnet for cross-chain transfers, swaps, and messaging.",
+    "source_count": 2,
+    "affected_chains": [
+      "bnb-chain",
+      "polygon"
+    ]
+  },
+  {
+    "id": "bir_ev_000229",
+    "bridge_id": "bir_bridge_000055",
+    "incident_id": null,
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "lifecycle",
+    "status_effect": "active",
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_applicable",
+    "restart_status": "not_applicable",
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "event_type": "launched",
+    "event_date": "2021",
+    "event_date_precision": "year",
+    "title": "ChainPort launches",
+    "description": "First-party ChainPort history places the bridge launch in 2021; contemporaneous material confirms the permissionless bridge was already operating that year.",
+    "source_count": 2,
+    "affected_chains": [
+      "unknown"
+    ]
   }
 ]

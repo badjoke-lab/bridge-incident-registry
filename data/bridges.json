@@ -2885,5 +2885,264 @@
     ],
     "brand_history_notes": "V1 and V2 are retained as lifecycle/architecture context inside one Stargate canonical entity rather than split into separate bridge entities.",
     "notes": "Current multi-chain breadth is not flattened into an exhaustive chain list here. No exploit incident is inferred in this batch."
+  },
+  {
+    "id": "bir_bridge_000051",
+    "slug": "meson",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Meson",
+    "type": "asset_bridge",
+    "status": "active",
+    "summary": "Meson is a cross-chain asset-transfer and swap protocol. First-party material announced its mainnet launch on December 1, 2021 with initial stablecoin routes across BNB Chain, Polygon, Fantom, and Avalanche.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-28",
+    "last_verified_at": "2026-08-28",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "Meson Finance",
+      "Meson Protocol"
+    ],
+    "launch_date": "2021-12-01",
+    "launch_date_precision": "day",
+    "official_url": "https://meson.fi/",
+    "official_domain": "meson.fi",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "bnb-chain",
+      "polygon",
+      "fantom",
+      "avalanche"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "Meson",
+    "operator_type": "protocol_team",
+    "ecosystem_name": "Meson",
+    "related_protocols": [
+      "Meson Protocol"
+    ],
+    "brand_history_notes": null,
+    "notes": "The record captures Meson as a bridge/cross-chain transfer protocol. Marketing security claims are not treated as safety findings, and no incident is inferred in this batch."
+  },
+  {
+    "id": "bir_bridge_000052",
+    "slug": "symbiosis",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Symbiosis",
+    "type": "interoperability_protocol",
+    "status": "active",
+    "summary": "Symbiosis is a cross-chain liquidity and token-routing protocol supporting bridging, cross-chain swaps, and interchain operations. First-party material launched the V1 beta mainnet on March 9, 2022; current documentation describes V2 as the successor retaining the core cross-chain model.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-28",
+    "last_verified_at": "2026-08-28",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "Symbiosis Finance",
+      "Symbiosis Protocol"
+    ],
+    "launch_date": "2022-03-09",
+    "launch_date_precision": "day",
+    "official_url": "https://symbiosis.finance/",
+    "official_domain": "symbiosis.finance",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "unknown"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "Symbiosis",
+    "operator_type": "protocol_team",
+    "ecosystem_name": "Symbiosis",
+    "related_protocols": [
+      "Symbiosis V1",
+      "Symbiosis V2"
+    ],
+    "brand_history_notes": "Symbiosis V1 later reached end of life and V2 became its direct successor. No exact V1 shutdown date is inferred here.",
+    "notes": "Current documentation describes bridging as one of several cross-chain operations. No exploit, loss, recovery, or reimbursement record is inferred in this batch."
+  },
+  {
+    "id": "bir_bridge_000053",
+    "slug": "orbiter-finance",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Orbiter Finance",
+    "type": "asset_bridge",
+    "status": "active",
+    "summary": "Orbiter Finance is a decentralized cross-rollup bridge and interoperability protocol. First-party material from December 2021 states that Orbiter Alpha had launched with transfers among Ethereum mainnet, zkSync, and Arbitrum.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-28",
+    "last_verified_at": "2026-08-28",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "Orbiter",
+      "Orbiter Bridge"
+    ],
+    "launch_date": "2021",
+    "launch_date_precision": "year",
+    "official_url": "https://orbiter.finance/",
+    "official_domain": "orbiter.finance",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "ethereum",
+      "arbitrum",
+      "unknown"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "Orbiter Finance",
+    "operator_type": "protocol_team",
+    "ecosystem_name": "Orbiter Finance",
+    "related_protocols": [
+      "Orbiter Bridge",
+      "Orbiter Rollup"
+    ],
+    "brand_history_notes": "Later first-party material describes an evolution from bridge toward broader rollup/interoperability infrastructure; this record keeps the bridge lineage within one canonical entity.",
+    "notes": "zkSync is represented by the existing unknown chain reference because BIR has no dedicated zkSync reference key. The source proves Alpha was live by 2021-12-30, not that December 30 was the exact launch date."
+  },
+  {
+    "id": "bir_bridge_000054",
+    "slug": "router-protocol",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Router Protocol",
+    "type": "interoperability_protocol",
+    "status": "active",
+    "summary": "Router Protocol is a cross-chain bridge and interoperability protocol. First-party material announced its public alpha mainnet on January 27, 2022, supporting cross-chain transfers, swaps, and arbitrary messaging.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-28",
+    "last_verified_at": "2026-08-28",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "Router",
+      "Router Bridge"
+    ],
+    "launch_date": "2022-01-27",
+    "launch_date_precision": "day",
+    "official_url": "https://www.routerprotocol.com/",
+    "official_domain": "routerprotocol.com",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "bnb-chain",
+      "polygon"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "Router Protocol",
+    "operator_type": "protocol_team",
+    "ecosystem_name": "Router",
+    "related_protocols": [
+      "Router Alpha Mainnet",
+      "Router Nitro",
+      "Router Chain"
+    ],
+    "brand_history_notes": "Router later expanded toward Nitro, Router Chain, and chain-abstraction/interoperability infrastructure. Those developments are retained as lifecycle context inside the same protocol identity.",
+    "notes": "No incident or security outcome is inferred from protocol architecture or later product evolution."
+  },
+  {
+    "id": "bir_bridge_000055",
+    "slug": "chainport",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "ChainPort",
+    "type": "asset_bridge",
+    "status": "active",
+    "summary": "ChainPort is a cross-chain asset bridge. First-party material shows it operating as a permissionless blockchain bridge in 2021, and later first-party history explicitly states that ChainPort launched in 2021.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-28",
+    "last_verified_at": "2026-08-28",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "ChainPort Bridge"
+    ],
+    "launch_date": "2021",
+    "launch_date_precision": "year",
+    "official_url": "https://www.chainport.io/",
+    "official_domain": "chainport.io",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "unknown"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "ChainPort",
+    "operator_type": "protocol_team",
+    "ecosystem_name": "ChainPort",
+    "related_protocols": [
+      "ChainPort"
+    ],
+    "brand_history_notes": "Current ChainPort supports several bridging architectures within one product lineage.",
+    "notes": "Security and custody claims in first-party materials are treated only as source context, not as BIR safety ratings. No incident is inferred in this batch."
   }
 ]
