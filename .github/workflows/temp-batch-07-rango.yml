@@ -7,7 +7,7 @@ permissions:
   contents: write
 jobs:
   apply:
-    if: contains(github.event.head_commit.message, 'temporary Batch 07 applicator') || contains(github.event.head_commit.message, 'TEMP Batch 07') || contains(github.event.head_commit.message, 'run temporary Batch 07 applicator')
+    if: contains(github.event.head_commit.message, 'TEMP Batch 07')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -19,4 +19,24 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - name: Patch applicator to dated first-party evidence
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('scripts/apply-batch-07-rango.mjs')
+          s = p.read_text()
+          s = s.replace("source_count: 2,", "source_count: 1,")
+          start = s.index("evidence.push(\n")
+          end = s.index("\n);\n\nwrite('data/bridges.json'", start) + 3
+          block = """evidence.push({
+            id: 'bir_src_000385', bridge_id: 'bir_bridge_000059', event_id: 'bir_ev_000233', incident_id: null,
+            reliability: 'high', source_tier: 'tier_1', url_status: 'live', accessed_at: '2026-08-29', claim_scope: 'event', language: 'en', author: null, quote_excerpt: null,
+            is_primary: true, is_paywalled: false, is_official_domain: true,
+            supports_amount: false, supports_recovery: false, supports_reimbursement: false, supports_reopen: false, supports_shutdown: false, supports_migration: false,
+            source_type: 'official_blog', title: 'Rango Monthly Report — August 2025 Edition', url: 'https://updates.rango.exchange/en/rango-monthly-report-august-2025-edition-KK2suteO', publisher: 'Rango Exchange', published_at: '2025-09-01', published_at_precision: 'day', archived_url: null,
+            notes: 'First-party Rango retrospective explicitly states launch in Aug 2021 and describes Rango as cross-chain swap infrastructure / bridge aggregation infrastructure. The canonical record keeps month precision and does not invent a launch day.'
+          });"""
+          s = s[:start] + block + s[end:]
+          p.write_text(s)
+          PY
       - run: node scripts/apply-batch-07-rango.mjs
