@@ -1,0 +1,92 @@
+name: TEMP Apply record-growth Batch 05
+
+on:
+  push:
+    branches:
+      - canonical/growth-batch-05-five-bridges
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: startsWith(github.event.head_commit.message, 'TEMP apply Batch05')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: canonical/growth-batch-05-five-bridges
+          fetch-depth: 0
+      - name: Apply bounded canonical records
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const read = p => JSON.parse(fs.readFileSync(p, 'utf8'));
+          const write = (p, v) => fs.writeFileSync(p, JSON.stringify(v, null, 2) + '\n');
+          const bridges = read('data/bridges.json');
+          const incidents = read('data/incidents.json');
+          const events = read('data/events.json');
+          const evidence = read('data/evidence.json');
+          if (bridges.length !== 50 || incidents.length !== 51 || events.length !== 224 || evidence.length !== 367) throw new Error(`unexpected baseline ${bridges.length}/${incidents.length}/${events.length}/${evidence.length}`);
+          const slugs = new Set(bridges.map(x => x.slug));
+          for (const slug of ['meson','symbiosis','orbiter-finance','router-protocol','chainport']) if (slugs.has(slug)) throw new Error(`duplicate bridge slug ${slug}`);
+          const common = {record_maturity:'reviewed',update_status:'current',last_reviewed_at:'2026-08-28',last_verified_at:'2026-08-28',end_date:null,end_date_precision:'unknown',terminal_reason:null,archived_url:null,major_incident_count:0,has_unresolved_incident:false,has_reimbursement_history:false,successor_id:null,predecessor_id:null,replacement_bridge_id:null,duplicate_of:null,merged_into:null};
+          bridges.push(
+            {id:'bir_bridge_000051',slug:'meson',previous_slugs:[],redirect_from:[],canonical_name:'Meson',type:'asset_bridge',status:'active',summary:'Meson is a cross-chain asset-transfer and swap protocol. First-party material announced its mainnet launch on December 1, 2021 with initial stablecoin routes across BNB Chain, Polygon, Fantom, and Avalanche.',confidence:'high',...common,aliases:['Meson Finance','Meson Protocol'],launch_date:'2021-12-01',launch_date_precision:'day',official_url:'https://meson.fi/',official_domain:'meson.fi',official_url_status:'live_verified',primary_chains:['bnb-chain','polygon','fantom','avalanche'],primary_assets:['unknown'],operator_name:'Meson',operator_type:'protocol_team',ecosystem_name:'Meson',related_protocols:['Meson Protocol'],brand_history_notes:null,notes:'The record captures Meson as a bridge/cross-chain transfer protocol. Marketing security claims are not treated as safety findings, and no incident is inferred in this batch.'},
+            {id:'bir_bridge_000052',slug:'symbiosis',previous_slugs:[],redirect_from:[],canonical_name:'Symbiosis',type:'interoperability_protocol',status:'active',summary:'Symbiosis is a cross-chain liquidity and token-routing protocol supporting bridging, cross-chain swaps, and interchain operations. First-party material launched the V1 beta mainnet on March 9, 2022; current documentation describes V2 as the successor retaining the core cross-chain model.',confidence:'high',...common,aliases:['Symbiosis Finance','Symbiosis Protocol'],launch_date:'2022-03-09',launch_date_precision:'day',official_url:'https://symbiosis.finance/',official_domain:'symbiosis.finance',official_url_status:'live_verified',primary_chains:['unknown'],primary_assets:['unknown'],operator_name:'Symbiosis',operator_type:'protocol_team',ecosystem_name:'Symbiosis',related_protocols:['Symbiosis V1','Symbiosis V2'],brand_history_notes:'Symbiosis V1 later reached end of life and V2 became its direct successor. No exact V1 shutdown date is inferred here.',notes:'Current documentation describes bridging as one of several cross-chain operations. No exploit, loss, recovery, or reimbursement record is inferred in this batch.'},
+            {id:'bir_bridge_000053',slug:'orbiter-finance',previous_slugs:[],redirect_from:[],canonical_name:'Orbiter Finance',type:'asset_bridge',status:'active',summary:'Orbiter Finance is a decentralized cross-rollup bridge and interoperability protocol. First-party material from December 2021 states that Orbiter Alpha had launched with transfers among Ethereum mainnet, zkSync, and Arbitrum.',confidence:'high',...common,aliases:['Orbiter','Orbiter Bridge'],launch_date:'2021',launch_date_precision:'year',official_url:'https://orbiter.finance/',official_domain:'orbiter.finance',official_url_status:'live_verified',primary_chains:['ethereum','arbitrum','unknown'],primary_assets:['unknown'],operator_name:'Orbiter Finance',operator_type:'protocol_team',ecosystem_name:'Orbiter Finance',related_protocols:['Orbiter Bridge','Orbiter Rollup'],brand_history_notes:'Later first-party material describes an evolution from bridge toward broader rollup/interoperability infrastructure; this record keeps the bridge lineage within one canonical entity.',notes:'zkSync is represented by the existing unknown chain reference because BIR has no dedicated zkSync reference key. The source proves Alpha was live by 2021-12-30, not that December 30 was the exact launch date.'},
+            {id:'bir_bridge_000054',slug:'router-protocol',previous_slugs:[],redirect_from:[],canonical_name:'Router Protocol',type:'interoperability_protocol',status:'active',summary:'Router Protocol is a cross-chain bridge and interoperability protocol. First-party material announced its public alpha mainnet on January 27, 2022, supporting cross-chain transfers, swaps, and arbitrary messaging.',confidence:'high',...common,aliases:['Router','Router Bridge'],launch_date:'2022-01-27',launch_date_precision:'day',official_url:'https://www.routerprotocol.com/',official_domain:'routerprotocol.com',official_url_status:'live_verified',primary_chains:['bnb-chain','polygon'],primary_assets:['unknown'],operator_name:'Router Protocol',operator_type:'protocol_team',ecosystem_name:'Router',related_protocols:['Router Alpha Mainnet','Router Nitro','Router Chain'],brand_history_notes:'Router later expanded toward Nitro, Router Chain, and chain-abstraction/interoperability infrastructure. Those developments are retained as lifecycle context inside the same protocol identity.',notes:'No incident or security outcome is inferred from protocol architecture or later product evolution.'},
+            {id:'bir_bridge_000055',slug:'chainport',previous_slugs:[],redirect_from:[],canonical_name:'ChainPort',type:'asset_bridge',status:'active',summary:'ChainPort is a cross-chain asset bridge. First-party material shows it operating as a permissionless blockchain bridge in 2021, and later first-party history explicitly states that ChainPort launched in 2021.',confidence:'high',...common,aliases:['ChainPort Bridge'],launch_date:'2021',launch_date_precision:'year',official_url:'https://www.chainport.io/',official_domain:'chainport.io',official_url_status:'live_verified',primary_chains:['unknown'],primary_assets:['unknown'],operator_name:'ChainPort',operator_type:'protocol_team',ecosystem_name:'ChainPort',related_protocols:['ChainPort'],brand_history_notes:'Current ChainPort supports several bridging architectures within one product lineage.',notes:'Security and custody claims in first-party materials are treated only as source context, not as BIR safety ratings. No incident is inferred in this batch.'}
+          );
+          const evCommon={incident_id:null,confidence:'high',record_maturity:'reviewed',update_status:'current',impact_level:'lifecycle',status_effect:'active',sort_order:10,amount_text:null,recovered_amount_text:null,reimbursement_status:'not_applicable',restart_status:'not_applicable',affected_assets:['unknown'],notes:null,duplicate_of:null,merged_into:null};
+          events.push(
+            {id:'bir_ev_000225',bridge_id:'bir_bridge_000051',...evCommon,event_type:'launched',event_date:'2021-12-01',event_date_precision:'day',title:'Meson launches on mainnet',description:'Meson announced its mainnet launch with initial stablecoin routes across BNB Chain, Polygon, Fantom, and Avalanche.',source_count:2,affected_chains:['bnb-chain','polygon','fantom','avalanche']},
+            {id:'bir_ev_000226',bridge_id:'bir_bridge_000052',...evCommon,event_type:'launched',event_date:'2022-03-09',event_date_precision:'day',title:'Symbiosis V1 beta mainnet launches',description:'Symbiosis first-party material announced the V1 beta-mainnet launch and made the beta product available for cross-chain use.',source_count:2,affected_chains:['unknown']},
+            {id:'bir_ev_000227',bridge_id:'bir_bridge_000053',...evCommon,event_type:'launched',event_date:'2021',event_date_precision:'year',title:'Orbiter Alpha launches',description:'Orbiter first-party material confirms that its Alpha bridge had launched in 2021 with support for Ethereum mainnet, zkSync, and Arbitrum.',source_count:2,affected_chains:['ethereum','arbitrum','unknown']},
+            {id:'bir_ev_000228',bridge_id:'bir_bridge_000054',...evCommon,event_type:'launched',event_date:'2022-01-27',event_date_precision:'day',title:'Router Protocol alpha mainnet launches',description:'Router Protocol announced the public launch of its alpha mainnet for cross-chain transfers, swaps, and messaging.',source_count:2,affected_chains:['bnb-chain','polygon']},
+            {id:'bir_ev_000229',bridge_id:'bir_bridge_000055',...evCommon,event_type:'launched',event_date:'2021',event_date_precision:'year',title:'ChainPort launches',description:'First-party ChainPort history places the bridge launch in 2021; contemporaneous material confirms the permissionless bridge was already operating that year.',source_count:2,affected_chains:['unknown']}
+          );
+          const srcCommon={incident_id:null,reliability:'high',source_tier:'tier_1',url_status:'live',accessed_at:'2026-08-28',claim_scope:'event',language:'en',author:null,quote_excerpt:null,is_primary:true,is_paywalled:false,is_official_domain:false,supports_amount:false,supports_recovery:false,supports_reimbursement:false,supports_reopen:false,supports_shutdown:false,supports_migration:false};
+          evidence.push(
+            {id:'bir_src_000369',bridge_id:'bir_bridge_000051',event_id:'bir_ev_000225',...srcCommon,source_type:'official_blog',title:'Meson is now LIVE!',url:'https://medium.com/@mesonfi/hello-world-i-am-meson-e3c76411345a',publisher:'Meson',published_at:'2021-12-01',published_at_precision:'day',archived_url:'https://web.archive.org/web/*/https://medium.com/@mesonfi/hello-world-i-am-meson-e3c76411345a',notes:'First-party announcement explicitly identifies the mainnet launch and initial BSC, Polygon, Fantom, and Avalanche scope.'},
+            {id:'bir_src_000370',bridge_id:'bir_bridge_000051',event_id:'bir_ev_000225',...srcCommon,source_type:'official_blog',title:'Introducing Meson: the boundless highway for cross-chain stablecoins swap',url:'https://medium.com/@mesonfi/introducing-meson-the-boundless-freeway-for-cross-chain-stablecoins-movements-a30d07255519',publisher:'Meson',published_at:'2022-03-14',published_at_precision:'day',archived_url:'https://web.archive.org/web/*/https://medium.com/@mesonfi/introducing-meson-the-boundless-freeway-for-cross-chain-stablecoins-movements-a30d07255519',notes:'First-party follow-up confirms Meson live on mainnet and describes its cross-chain stablecoin bridge role.'},
+            {id:'bir_src_000371',bridge_id:'bir_bridge_000052',event_id:'bir_ev_000226',...srcCommon,source_type:'official_blog',title:'Symbiosis Finance’s β-Mainnet is Primed for the Launch Now',url:'https://medium.com/symbiosis-fi/symbiosis-finances-%CE%B2-mainnet-is-primed-for-the-launch-now-2fdd28f2e07d',publisher:'Symbiosis',published_at:'2022-03-09',published_at_precision:'day',archived_url:'https://web.archive.org/web/*/https://medium.com/symbiosis-fi/symbiosis-finances-%CE%B2-mainnet-is-primed-for-the-launch-now-2fdd28f2e07d',notes:'First-party launch article states the beta mainnet launch and availability of the cross-chain product.'},
+            {id:'bir_src_000372',bridge_id:'bir_bridge_000052',event_id:'bir_ev_000226',...srcCommon,source_type:'official_blog',title:'Symbiosis 2022 Recap',url:'https://medium.com/symbiosis-fi/symbiosis-2022-recap-879d7676f8eb',publisher:'Symbiosis',published_at:'2023-01-04',published_at_precision:'day',archived_url:'https://web.archive.org/web/*/https://medium.com/symbiosis-fi/symbiosis-2022-recap-879d7676f8eb',notes:'First-party retrospective identifies the V1 beta-mainnet launch as the start of Symbiosis and describes the later V2 lifecycle.'},
+            {id:'bir_src_000373',bridge_id:'bir_bridge_000053',event_id:'bir_ev_000227',...srcCommon,source_type:'official_blog',title:'Introduce Orbiter Finance',url:'https://orbiter-finance.medium.com/introduce-orbiter-finance-6520b878ea0c',publisher:'Orbiter Finance',published_at:'2021-12-30',published_at_precision:'day',archived_url:'https://web.archive.org/web/*/https://orbiter-finance.medium.com/introduce-orbiter-finance-6520b878ea0c',notes:'First-party material states Orbiter Alpha had launched and supported Ethereum mainnet, zkSync, and Arbitrum.'},
+            {id:'bir_src_000374',bridge_id:'bir_bridge_000053',event_id:'bir_ev_000227',...srcCommon,source_type:'official_blog',title:'Orbiter Finance FAQ',url:'https://orbiter-finance.medium.com/orbiter-finance-faq-486d74fe83bc',publisher:'Orbiter Finance',published_at:'2022-01-06',published_at_precision:'day',archived_url:'https://web.archive.org/web/*/https://orbiter-finance.medium.com/orbiter-finance-faq-486d74fe83bc',notes:'First-party FAQ identifies Orbiter as a decentralized cross-rollup bridge and documents the early protocol model.'},
+            {id:'bir_src_000375',bridge_id:'bir_bridge_000054',event_id:'bir_ev_000228',...srcCommon,source_type:'official_blog',title:'Router Protocol Alpha Mainnet launch',url:'https://routerprotocol.medium.com/router-protocol-alpha-mainnet-launch-148105aed99b',publisher:'Router Protocol',published_at:'2022-01-27',published_at_precision:'day',archived_url:'https://web.archive.org/web/*/https://routerprotocol.medium.com/router-protocol-alpha-mainnet-launch-148105aed99b',notes:'First-party launch announcement establishes the public alpha mainnet and cross-chain bridge/messaging architecture.'},
+            {id:'bir_src_000376',bridge_id:'bir_bridge_000054',event_id:'bir_ev_000228',...srcCommon,source_type:'official_blog',title:'Introducing Voyager: Go Anywhere, Everywhere',url:'https://routerprotocol.medium.com/introducing-voyager-go-anywhere-everywhere-112536a59c09',publisher:'Router Protocol',published_at:'2022-06-29',published_at_precision:'day',archived_url:'https://web.archive.org/web/*/https://routerprotocol.medium.com/introducing-voyager-go-anywhere-everywhere-112536a59c09',notes:'First-party lifecycle article states Router’s cross-chain communication journey began on January 27, 2022 with the alpha mainnet bridge.'},
+            {id:'bir_src_000377',bridge_id:'bir_bridge_000055',event_id:'bir_ev_000229',...srcCommon,source_type:'official_blog',title:'ChainPort: The Bridge that Leads to Every Blockchain',url:'https://medium.com/chainport/chainport-the-bridge-that-leads-to-every-blockchain-d7184d91a403',publisher:'ChainPort',published_at:'2021-06-10',published_at_precision:'day',archived_url:'https://web.archive.org/web/*/https://medium.com/chainport/chainport-the-bridge-that-leads-to-every-blockchain-d7184d91a403',notes:'Contemporaneous first-party material identifies ChainPort as an operating permissionless blockchain bridge in 2021.'},
+            {id:'bir_src_000378',bridge_id:'bir_bridge_000055',event_id:'bir_ev_000229',...srcCommon,source_type:'official_blog',title:'ChainPort Launching the Perpetual PORTX Staking Contract',url:'https://medium.com/chainport/chainport-launching-the-perpetual-portx-staking-contract-ad32f7c670eb',publisher:'ChainPort',published_at:'2022-10-21',published_at_precision:'day',archived_url:'https://web.archive.org/web/*/https://medium.com/chainport/chainport-launching-the-perpetual-portx-staking-contract-ad32f7c670eb',notes:'First-party historical description explicitly states that ChainPort launched in 2021 and remained an operating permissionless bridge.'}
+          );
+          write('data/bridges.json',bridges); write('data/events.json',events); write('data/evidence.json',evidence);
+          const files=['README.md','docs/runbooks/current-status.md','docs/runbooks/recovery-checkpoint.md','docs/runbooks/development-roadmap.md','docs/runbooks/public-consistency-remediation.md'];
+          const targets={Bridges:55,Incidents:51,Events:229,Evidence:377};
+          for (const file of files) {
+            let text=fs.readFileSync(file,'utf8');
+            for (const [label,value] of Object.entries(targets)) {
+              const exact=new RegExp(`\\b${label}\\s+${value}\\b`);
+              if (exact.test(text)) continue;
+              const any=new RegExp(`\\b${label}\\s+\\d+\\b`);
+              if (!any.test(text)) throw new Error(`${file}: missing count label ${label}`);
+              text=text.replace(any,`${label}   ${value}`);
+            }
+            if (file==='docs/runbooks/current-status.md') text=text.replace(/^Updated: .*$/m,'Updated: 2026-08-28');
+            fs.writeFileSync(file,text);
+          }
+          console.log(`result ${bridges.length}/${incidents.length}/${events.length}/${evidence.length}`);
+          NODE
+      - name: Validate bounded result
+        run: |
+          node scripts/validate-data.mjs
+          node scripts/check-source-count-equality.mjs
+          node scripts/check-source-quality-baseline.mjs
+      - name: Commit bounded delta and remove helper
+        run: |
+          git rm .github/workflows/tmp-apply-growth-batch-05.yml
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/bridges.json data/events.json data/evidence.json README.md docs/runbooks/current-status.md docs/runbooks/recovery-checkpoint.md docs/runbooks/development-roadmap.md docs/runbooks/public-consistency-remediation.md
+          git commit -m "DATA: add Batch 05 five bridge lifecycle records"
+          git push origin HEAD:canonical/growth-batch-05-five-bridges
