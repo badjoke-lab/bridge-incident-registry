@@ -7567,5 +7567,97 @@
     "affected_chains": [
       "unknown"
     ]
+  },
+  {
+    "id": "bir_ev_000230",
+    "bridge_id": "bir_bridge_000056",
+    "incident_id": null,
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "lifecycle",
+    "status_effect": "active",
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_applicable",
+    "restart_status": "not_applicable",
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": "Live by 2022-10-26; exact initial launch day not inferred.",
+    "duplicate_of": null,
+    "merged_into": null,
+    "event_type": "launched",
+    "event_date": "2022",
+    "event_date_precision": "year",
+    "title": "Mayan begins cross-chain swap operations",
+    "description": "First-party material from October 2022 documents Mayan already operating as cross-chain swap infrastructure across five networks; the record uses year precision because an exact initial launch day is not established.",
+    "source_count": 2,
+    "affected_chains": [
+      "unknown"
+    ]
+  },
+  {
+    "id": "bir_ev_000231",
+    "bridge_id": "bir_bridge_000057",
+    "incident_id": null,
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "lifecycle",
+    "status_effect": "active",
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_applicable",
+    "restart_status": "not_applicable",
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "event_type": "launched",
+    "event_date": "2022-07-13",
+    "event_date_precision": "day",
+    "title": "rhino.fi launches cross-chain swaps with Polygon",
+    "description": "DeversiFi announced its rhino.fi rebrand and the launch of cross-chain swaps with Polygon, establishing the bridge/cross-chain lifecycle boundary used by BIR.",
+    "source_count": 2,
+    "affected_chains": [
+      "polygon",
+      "unknown"
+    ]
+  },
+  {
+    "id": "bir_ev_000232",
+    "bridge_id": "bir_bridge_000058",
+    "incident_id": null,
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "lifecycle",
+    "status_effect": "active",
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_applicable",
+    "restart_status": "not_applicable",
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "event_type": "launched",
+    "event_date": "2023-01",
+    "event_date_precision": "month",
+    "title": "Squid launches",
+    "description": "Squid first-party retrospectives state that the cross-chain routing protocol launched in January 2023 to address multichain fragmentation.",
+    "source_count": 2,
+    "affected_chains": [
+      "ethereum",
+      "unknown"
+    ]
   }
 ]
