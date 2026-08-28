@@ -4,6 +4,8 @@ Issue: #397
 
 Review-only boundary for three bridge lifecycle additions. This file does not modify canonical JSON.
 
+Canonical application: PR #399 applies the reviewed SKALE IMA Bridge, Cronos Bridge, and Findora Rialto Bridge lifecycle records at **62 bridges / 51 incidents / 236 events / 387 evidence**. No incident is added by this batch.
+
 ## SKALE IMA Bridge — add_now
 
 Canonical boundary: SKALE's Interchain Messaging Agent / IMA bridge between Ethereum and SKALE chains, introduced **2021-07-20**.
@@ -49,7 +51,7 @@ Review decision: use 2022-03-22 day precision unless a stronger earlier first-pa
 
 ## duplicate boundary
 
-Name-level searches against current main returned no hits for SKALE IMA Bridge, Cronos Bridge, or Findora Rialto. Because GitHub code search can be incomplete, this is not final proof of absence. Canonicalization must repeat alias/domain/slug checks against then-current main before IDs are allocated.
+Canonicalization repeated the check against the actual `data/bridges.json` on then-current main, not merely repository-wide code search. SKALE, Cronos, and Rialto had no canonical entity matches before IDs 60–62 were allocated.
 
 ## guardrails
 
