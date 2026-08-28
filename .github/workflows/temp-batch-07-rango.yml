@@ -1,0 +1,22 @@
+name: TEMP Batch 07 Rango Applicator
+on:
+  push:
+    branches:
+      - canonical/growth-batch-07-rango
+permissions:
+  contents: write
+jobs:
+  apply:
+    if: contains(github.event.head_commit.message, 'temporary Batch 07 applicator') || contains(github.event.head_commit.message, 'TEMP Batch 07') || contains(github.event.head_commit.message, 'run temporary Batch 07 applicator')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: canonical/growth-batch-07-rango
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node scripts/apply-batch-07-rango.mjs
