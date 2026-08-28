@@ -1,15 +1,15 @@
 # Current Status — Bridge Incident Registry
 
 Status: active maintenance — Ledger Series Phase 2 complete  
-Updated: 2026-08-20
+Updated: 2026-08-28
 
 ## Canonical and production state
 
 ```text
-Bridges   45
+Bridges   50
 Incidents   51
-Events   220
-Evidence   358
+Events   224
+Evidence   367
 ```
 
 Ledger Series Phase 2 remains closed. Later reviewed maintenance added WanBridge, ChainConnect and separate May and July 2026 Verus-Ethereum Bridge incidents without reopening Phase 2.
