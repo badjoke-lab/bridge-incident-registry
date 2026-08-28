@@ -1,0 +1,51 @@
+name: TEMP Sync Batch 04 counts
+
+on:
+  push:
+    branches:
+      - canonical/growth-batch-04-five-bridges
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: startsWith(github.event.head_commit.message, 'TEMP sync Batch04')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: canonical/growth-batch-04-five-bridges
+          fetch-depth: 0
+      - name: Sync canonical count documents
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const files = [
+            'README.md',
+            'docs/runbooks/current-status.md',
+            'docs/runbooks/recovery-checkpoint.md',
+            'docs/runbooks/development-roadmap.md',
+            'docs/runbooks/public-consistency-remediation.md'
+          ];
+          const targets = {Bridges:50, Incidents:51, Events:224, Evidence:367};
+          for (const file of files) {
+            let text = fs.readFileSync(file, 'utf8');
+            for (const [label, value] of Object.entries(targets)) {
+              const exact = new RegExp(`\\b${label}\\s+${value}\\b`);
+              if (exact.test(text)) continue;
+              const any = new RegExp(`\\b${label}\\s+\\d+\\b`);
+              if (!any.test(text)) throw new Error(`${file}: missing count label ${label}`);
+              text = text.replace(any, `${label}   ${value}`);
+            }
+            if (file === 'docs/runbooks/current-status.md') text = text.replace(/^Updated: .*$/m, 'Updated: 2026-08-28');
+            fs.writeFileSync(file, text);
+          }
+          NODE
+          git rm .github/workflows/tmp-sync-batch-04-counts.yml
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add README.md docs/runbooks/current-status.md docs/runbooks/recovery-checkpoint.md docs/runbooks/development-roadmap.md docs/runbooks/public-consistency-remediation.md
+          git commit -m "docs: sync Batch 04 canonical counts"
+          git push origin HEAD:canonical/growth-batch-04-five-bridges
