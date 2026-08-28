@@ -48,10 +48,10 @@ The public UI/support layer includes expanded incident and bridge discovery, fil
 Current canonical counts:
 
 ```text
-Bridges   45
+Bridges   50
 Incidents   51
-Events   220
-Evidence   358
+Events   224
+Evidence   367
 ```
 
 Current hard states:

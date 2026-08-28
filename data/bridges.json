@@ -2622,5 +2622,268 @@
     "duplicate_of": null,
     "merged_into": null,
     "notes": "Current operation is kept limited because the official May 2026 AMA describes ongoing investigation and hardening but does not establish a fully resolved incident boundary or total damage."
+  },
+  {
+    "id": "bir_bridge_000046",
+    "slug": "debridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "deBridge",
+    "type": "interoperability_protocol",
+    "status": "active",
+    "summary": "deBridge is a cross-chain interoperability protocol for transferring assets, messages, and transaction data across supported blockchains. Its first-party history places mainnet launch on February 17, 2022, initially supporting Ethereum, BNB Chain, HECO, Arbitrum, and Polygon.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-28",
+    "last_verified_at": "2026-08-28",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "deBridge Protocol"
+    ],
+    "launch_date": "2022-02-17",
+    "launch_date_precision": "day",
+    "official_url": "https://debridge.com/",
+    "official_domain": "debridge.com",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "ethereum",
+      "bnb-chain",
+      "polygon",
+      "arbitrum",
+      "unknown"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "deBridge",
+    "operator_type": "protocol_team",
+    "ecosystem_name": "deBridge",
+    "related_protocols": [
+      "deBridge",
+      "DLN"
+    ],
+    "brand_history_notes": null,
+    "notes": "HECO is represented by the existing unknown chain reference because BIR has no dedicated HECO reference key. The reviewed 2022 attempted cyberattack is not canonicalized as an incident in this batch."
+  },
+  {
+    "id": "bir_bridge_000047",
+    "slug": "gnosis-omnibridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Gnosis OmniBridge",
+    "type": "canonical_bridge",
+    "status": "active",
+    "summary": "Gnosis OmniBridge is the native token bridge connecting Ethereum and Gnosis Chain. Gnosis documentation states that OmniBridge is built on top of the Arbitrary Message Bridge (AMB), shares its validator trust model, and mints canonical representations of bridged assets on Gnosis.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-28",
+    "last_verified_at": "2026-08-28",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "OmniBridge",
+      "Gnosis Chain OmniBridge"
+    ],
+    "launch_date": null,
+    "launch_date_precision": "unknown",
+    "official_url": "https://bridge.gnosischain.com/",
+    "official_domain": "bridge.gnosischain.com",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "ethereum",
+      "unknown"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "Gnosis",
+    "operator_type": "protocol ecosystem",
+    "ecosystem_name": "Gnosis Chain",
+    "related_protocols": [
+      "Arbitrary Message Bridge (AMB)"
+    ],
+    "brand_history_notes": "Current Gnosis documentation distinguishes the current bridge UI from the legacy OmniBridge interface.",
+    "notes": "Gnosis Chain is represented by the existing unknown chain reference because BIR has no dedicated Gnosis Chain reference key. Legacy/current UI changes and historical pauses are not treated as exploit incidents."
+  },
+  {
+    "id": "bir_bridge_000048",
+    "slug": "hop-protocol",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Hop Protocol",
+    "type": "asset_bridge",
+    "status": "active",
+    "summary": "Hop Protocol is a token bridge designed to move assets across Ethereum scaling networks and their shared layer-1. Hop announced mainnet availability in July 2021, initially live on Ethereum, Polygon, and xDai before expanding to additional rollups.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-28",
+    "last_verified_at": "2026-08-28",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "Hop Bridge",
+      "Hop"
+    ],
+    "launch_date": "2021-07-12",
+    "launch_date_precision": "day",
+    "official_url": "https://hop.exchange/",
+    "official_domain": "hop.exchange",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "ethereum",
+      "polygon",
+      "optimism",
+      "arbitrum",
+      "unknown"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "Hop Protocol",
+    "operator_type": "protocol_team",
+    "ecosystem_name": "Hop",
+    "related_protocols": [
+      "Hop v1"
+    ],
+    "brand_history_notes": "This record describes the reviewed Hop bridge lifecycle. v2 development is not used to infer deprecation or death of v1.",
+    "notes": "xDai/Gnosis is represented by the existing unknown chain reference because BIR has no dedicated Gnosis Chain reference key. No incident is added in this batch."
+  },
+  {
+    "id": "bir_bridge_000049",
+    "slug": "across-protocol",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Across Protocol",
+    "type": "interoperability_protocol",
+    "status": "active",
+    "summary": "Across began as a cross-chain token bridge and now describes itself as a crosschain interoperability protocol using an intents-based architecture. Across launched on mainnet in November 2021 and its current unified API powers crosschain swaps, bridges, and embedded actions.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-28",
+    "last_verified_at": "2026-08-28",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "Across",
+      "Across Bridge"
+    ],
+    "launch_date": "2021-11-08",
+    "launch_date_precision": "day",
+    "official_url": "https://across.to/",
+    "official_domain": "across.to",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "ethereum",
+      "arbitrum",
+      "optimism"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "Across",
+    "operator_type": "protocol_team",
+    "ecosystem_name": "Across",
+    "related_protocols": [
+      "Across Bridge"
+    ],
+    "brand_history_notes": "Across evolved from its original L2 bridge design into an intents-based interoperability protocol; this is treated as one continuing canonical entity.",
+    "notes": "Absence of a reviewed major hack is not a safety claim and no incident is inferred in this batch."
+  },
+  {
+    "id": "bir_bridge_000050",
+    "slug": "stargate-finance",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Stargate Finance",
+    "type": "interoperability_protocol",
+    "status": "active",
+    "summary": "Stargate is a cross-chain asset-transfer and global-liquidity protocol. Stargate documentation identifies V1 as the foundational native-asset transfer mechanism introduced in March 2022, using unified liquidity and LayerZero messaging; current materials describe Stargate as a global liquidity layer.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-28",
+    "last_verified_at": "2026-08-28",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "Stargate",
+      "Stargate Protocol"
+    ],
+    "launch_date": "2022-03",
+    "launch_date_precision": "month",
+    "official_url": "https://stargate.finance/",
+    "official_domain": "stargate.finance",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "unknown"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "Stargate",
+    "operator_type": "protocol ecosystem",
+    "ecosystem_name": "Stargate",
+    "related_protocols": [
+      "Stargate V1",
+      "Stargate V2",
+      "LayerZero"
+    ],
+    "brand_history_notes": "V1 and V2 are retained as lifecycle/architecture context inside one Stargate canonical entity rather than split into separate bridge entities.",
+    "notes": "Current multi-chain breadth is not flattened into an exhaustive chain list here. No exploit incident is inferred in this batch."
   }
 ]
