@@ -8,10 +8,10 @@ GitHub state and canonical JSON are authoritative. Ledger Series Phase 2 horizon
 ## Canonical and production baseline
 
 ```text
-Bridges   50
+Bridges   55
 Incidents   51
-Events   224
-Evidence   367
+Events   229
+Evidence   377
 ```
 
 Latest production-verified canonical maintenance:
