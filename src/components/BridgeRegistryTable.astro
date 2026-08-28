@@ -10,6 +10,7 @@ import type { BridgeEntity } from "../lib/types";
 interface Props { bridges: BridgeEntity[]; }
 const { bridges } = Astro.props;
 const PAGE_SIZE = 25;
+const compactSummary = (summary: string) => summary.match(/^.*?[.!?](?:\s|$)/)?.[0]?.trim() ?? summary;
 ---
 <div class="registry-table-wrap">
   <table class="registry-table" aria-describedby="bridge-result-count">
@@ -37,7 +38,7 @@ const PAGE_SIZE = 25;
             data-reimbursement={String(Boolean(bridge.has_reimbursement_history))}
             data-reviewed={bridge.last_verified_at ?? ""}
           >
-            <td data-label="Bridge"><div class="registry-name"><a href={`/bridge/${bridge.slug}/`}>{bridge.canonical_name}</a><span class="registry-summary">{bridge.summary}</span></div></td>
+            <td data-label="Bridge"><div class="registry-name"><a href={`/bridge/${bridge.slug}/`}>{bridge.canonical_name}</a><span class="registry-summary">{compactSummary(bridge.summary)}</span></div></td>
             <td data-label="Type"><span class="registry-small">{formatLabel(bridge.type)}</span></td>
             <td data-label="Status"><StatusChip status={bridge.status} /></td>
             <td data-label="Maturity"><MaturityChip maturity={bridge.record_maturity} /></td>
