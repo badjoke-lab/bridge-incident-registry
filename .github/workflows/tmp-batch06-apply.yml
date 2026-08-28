@@ -1,0 +1,39 @@
+name: TEMP Batch 06 Apply
+
+on:
+  push:
+    branches:
+      - canonical/growth-batch-06-three-bridges
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: canonical/growth-batch-06-three-bridges
+          fetch-depth: 1
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Apply bounded Batch 06 data
+        run: node scripts/tmp-apply-batch06.mjs
+      - name: Validate canonical records
+        run: |
+          npm run validate:data
+          npm run validate:enums
+          npm run audit:full-corpus
+          npm run audit:source-count
+          npm run audit:source-quality
+      - name: Remove temporary helper and commit data
+        run: |
+          rm scripts/tmp-apply-batch06.mjs .github/workflows/tmp-batch06-apply.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/bridges.json data/events.json data/evidence.json docs/research/record-growth-batch-06-review.md scripts/tmp-apply-batch06.mjs .github/workflows/tmp-batch06-apply.yml
+          git commit -m "data: add Batch 06 bridge lifecycle records"
+          git push origin HEAD:canonical/growth-batch-06-three-bridges
