@@ -7284,5 +7284,132 @@
     "notes": "The official AMA does not provide a complete total-loss figure.",
     "duplicate_of": null,
     "merged_into": null
+  },
+  {
+    "id": "bir_ev_000221",
+    "bridge_id": "bir_bridge_000046",
+    "incident_id": null,
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "lifecycle",
+    "status_effect": "active",
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_applicable",
+    "restart_status": "not_applicable",
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "event_type": "launched",
+    "event_date": "2022-02-17",
+    "event_date_precision": "day",
+    "title": "deBridge launches on mainnet",
+    "description": "deBridge first-party history identifies February 17, 2022 as its mainnet launch, following an announced initial scope of Ethereum, BNB Chain, HECO, Arbitrum, and Polygon.",
+    "source_count": 2,
+    "affected_chains": [
+      "ethereum",
+      "bnb-chain",
+      "polygon",
+      "arbitrum",
+      "unknown"
+    ]
+  },
+  {
+    "id": "bir_ev_000222",
+    "bridge_id": "bir_bridge_000048",
+    "incident_id": null,
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "lifecycle",
+    "status_effect": "active",
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_applicable",
+    "restart_status": "not_applicable",
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "event_type": "launched",
+    "event_date": "2021-07-12",
+    "event_date_precision": "day",
+    "title": "Hop goes live on mainnet",
+    "description": "Hop announced that its bridge was live on Ethereum, Polygon, and xDai, beginning its production bridge lifecycle in July 2021.",
+    "source_count": 1,
+    "affected_chains": [
+      "ethereum",
+      "polygon",
+      "unknown"
+    ]
+  },
+  {
+    "id": "bir_ev_000223",
+    "bridge_id": "bir_bridge_000049",
+    "incident_id": null,
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "lifecycle",
+    "status_effect": "active",
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_applicable",
+    "restart_status": "not_applicable",
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "event_type": "launched",
+    "event_date": "2021-11-08",
+    "event_date_precision": "day",
+    "title": "Across Protocol launches on mainnet",
+    "description": "Across announced its mainnet launch with live bridge support from Arbitrum to Ethereum; later first-party material describes the same protocol evolving into an intents-based interoperability platform.",
+    "source_count": 2,
+    "affected_chains": [
+      "ethereum",
+      "arbitrum"
+    ]
+  },
+  {
+    "id": "bir_ev_000224",
+    "bridge_id": "bir_bridge_000050",
+    "incident_id": null,
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "lifecycle",
+    "status_effect": "active",
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_applicable",
+    "restart_status": "not_applicable",
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "event_type": "launched",
+    "event_date": "2022-03",
+    "event_date_precision": "month",
+    "title": "Stargate V1 launches",
+    "description": "Stargate documentation places introduction of its foundational V1 native-asset transfer mechanism in March 2022.",
+    "source_count": 2,
+    "affected_chains": [
+      "unknown"
+    ]
   }
 ]
