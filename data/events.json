@@ -7689,5 +7689,98 @@
     "affected_chains": [
       "unknown"
     ]
+  },
+  {
+    "id": "bir_ev_000234",
+    "bridge_id": "bir_bridge_000060",
+    "incident_id": null,
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "lifecycle",
+    "status_effect": "active",
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_applicable",
+    "restart_status": "not_applicable",
+    "affected_assets": [
+      "eth",
+      "unknown"
+    ],
+    "notes": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "event_type": "launched",
+    "event_date": "2021-07-20",
+    "event_date_precision": "day",
+    "title": "SKALE introduces IMA Bridge",
+    "description": "SKALE introduced the IMA Bridge for token and arbitrary-message transfer between Ethereum and SKALE chains.",
+    "source_count": 1,
+    "affected_chains": [
+      "ethereum",
+      "unknown"
+    ]
+  },
+  {
+    "id": "bir_ev_000235",
+    "bridge_id": "bir_bridge_000061",
+    "incident_id": null,
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "lifecycle",
+    "status_effect": "active",
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_applicable",
+    "restart_status": "not_applicable",
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "event_type": "launched",
+    "event_date": "2021-11-08",
+    "event_date_precision": "day",
+    "title": "Cronos Bridge goes live with Cronos mainnet",
+    "description": "Cronos first-party mainnet launch material states the Cronos Bridge was available from day one for Crypto.org Chain to Cronos transfers.",
+    "source_count": 1,
+    "affected_chains": [
+      "unknown"
+    ]
+  },
+  {
+    "id": "bir_ev_000236",
+    "bridge_id": "bir_bridge_000062",
+    "incident_id": null,
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "lifecycle",
+    "status_effect": "active",
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_applicable",
+    "restart_status": "not_applicable",
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "event_type": "launched",
+    "event_date": "2022-03-22",
+    "event_date_precision": "day",
+    "title": "Rialto Bridge launches on Findora mainnet",
+    "description": "A Findora-issued launch release states that Rialto launched on Findora mainnet and connected Findora with BNB Chain.",
+    "source_count": 1,
+    "affected_chains": [
+      "bnb-chain",
+      "unknown"
+    ]
   }
 ]

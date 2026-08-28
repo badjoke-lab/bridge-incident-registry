@@ -3353,5 +3353,161 @@
     ],
     "brand_history_notes": "BIR treats Rango Exchange, Rango DEX, and its bridge-aggregation routing product as one protocol lineage unless future first-party evidence establishes a separate canonical product identity.",
     "notes": "The reviewed first-party material supports August 2021 month precision, not an exact launch day. No incident or safety conclusion is inferred from the bridge aggregation architecture."
+  },
+  {
+    "id": "bir_bridge_000060",
+    "slug": "skale-ima-bridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "SKALE IMA Bridge",
+    "type": "interoperability_protocol",
+    "status": "active",
+    "summary": "SKALE IMA Bridge is the Interchain Messaging Agent bridge used for token and message transfer between Ethereum and SKALE chains. SKALE introduced the bridge on July 20, 2021, and current SKALE Portal/documentation continues the bridge lineage.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-29",
+    "last_verified_at": "2026-08-29",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "IMA Bridge",
+      "SKALE Bridge",
+      "Interchain Messaging Agent"
+    ],
+    "launch_date": "2021-07-20",
+    "launch_date_precision": "day",
+    "official_url": "https://portal.skale.space/",
+    "official_domain": "skale.space",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "ethereum",
+      "unknown"
+    ],
+    "primary_assets": [
+      "eth",
+      "unknown"
+    ],
+    "operator_name": "SKALE Network",
+    "operator_type": "protocol_team",
+    "ecosystem_name": "SKALE",
+    "related_protocols": [
+      "SKALE IMA",
+      "SKALE Portal"
+    ],
+    "brand_history_notes": "BIR preserves IMA Bridge, SKALE Bridge, and the later Portal bridge experience as one bridge lineage unless future first-party evidence establishes a separate canonical product.",
+    "notes": "Launch day is directly supported by SKALE first-party material. No incident or safety conclusion is inferred."
+  },
+  {
+    "id": "bir_bridge_000061",
+    "slug": "cronos-bridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Cronos Bridge",
+    "type": "canonical_bridge",
+    "status": "active",
+    "summary": "Cronos Bridge is the first-party bridge for transfers involving Cronos and its connected ecosystem. Cronos mainnet launch material states that the bridge was available from day one on November 8, 2021, and the current official bridge interface remains available.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-29",
+    "last_verified_at": "2026-08-29",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "Cronos EVM Bridge"
+    ],
+    "launch_date": "2021-11-08",
+    "launch_date_precision": "day",
+    "official_url": "https://cronos.org/bridge/",
+    "official_domain": "cronos.org",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "unknown"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "Cronos Labs",
+    "operator_type": "company",
+    "ecosystem_name": "Cronos",
+    "related_protocols": [
+      "Cronos EVM",
+      "Cronos POS",
+      "IBC"
+    ],
+    "brand_history_notes": "The first-party Cronos Bridge lineage is kept distinct from third-party bridge integrations and from individual later IBC channel additions.",
+    "notes": "Launch day is directly supported by Cronos first-party mainnet material. No incident is inferred."
+  },
+  {
+    "id": "bir_bridge_000062",
+    "slug": "findora-rialto-bridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Findora Rialto Bridge",
+    "type": "asset_bridge",
+    "status": "active",
+    "summary": "Rialto Bridge is Findora cross-chain bridge infrastructure derived from ChainBridge. A Findora-issued release states that Rialto launched on Findora mainnet on March 22, 2022, connecting Findora with BNB Chain, while current Findora documentation continues to identify Rialto as a bridge.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-29",
+    "last_verified_at": "2026-08-29",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "Rialto Bridge",
+      "Rialto"
+    ],
+    "launch_date": "2022-03-22",
+    "launch_date_precision": "day",
+    "official_url": "https://docs.findora.org/general-user-materials/bridge-tokens-to-findora",
+    "official_domain": "docs.findora.org",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "bnb-chain",
+      "unknown"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "Findora",
+    "operator_type": "protocol_team",
+    "ecosystem_name": "Findora",
+    "related_protocols": [
+      "ChainBridge"
+    ],
+    "brand_history_notes": "Rialto is retained as one Findora bridge lineage; its ChainBridge-derived architecture does not create a separate canonical entity.",
+    "notes": "The March 22, 2022 mainnet launch boundary is supported by a company-issued Findora release. No incident is inferred."
   }
 ]
