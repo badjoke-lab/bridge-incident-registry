@@ -3144,5 +3144,162 @@
     ],
     "brand_history_notes": "Current ChainPort supports several bridging architectures within one product lineage.",
     "notes": "Security and custody claims in first-party materials are treated only as source context, not as BIR safety ratings. No incident is inferred in this batch."
+  },
+  {
+    "id": "bir_bridge_000056",
+    "slug": "mayan",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Mayan",
+    "type": "interoperability_protocol",
+    "status": "active",
+    "summary": "Mayan is cross-chain swap and execution infrastructure built around Wormhole-connected routing and later intent-based transfer methods. First-party material shows Mayan operating as cross-chain swap infrastructure in 2022; the exact initial launch day is not established here.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-29",
+    "last_verified_at": "2026-08-29",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "Mayan Finance"
+    ],
+    "launch_date": "2022",
+    "launch_date_precision": "year",
+    "official_url": "https://mayan.finance/",
+    "official_domain": "mayan.finance",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "unknown"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "Mayan",
+    "operator_type": "protocol_team",
+    "ecosystem_name": "Mayan",
+    "related_protocols": [
+      "Wormhole Swap",
+      "Mayan Swift",
+      "MCTP",
+      "Mayan 2.0"
+    ],
+    "brand_history_notes": "Wormhole Swap, Swift/MCTP, and Mayan 2.0 are retained as architecture/lifecycle evolution within one Mayan canonical entity.",
+    "notes": "An official October 26, 2022 post already describes Mayan as cross-chain swap infrastructure connected to five networks. The record therefore uses conservative 2022 year precision rather than the looser later phrase 'since our launch one year ago'. No incident is inferred."
+  },
+  {
+    "id": "bir_bridge_000057",
+    "slug": "rhino-fi",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "rhino.fi",
+    "type": "asset_bridge",
+    "status": "active",
+    "summary": "rhino.fi is a multichain DeFi platform with cross-chain swaps and a collateralized bridge model. First-party material marks July 13, 2022 as the rhino.fi rebrand and launch of cross-chain swaps with Polygon.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-29",
+    "last_verified_at": "2026-08-29",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "DeversiFi",
+      "Rhino Finance",
+      "Rhino.fi"
+    ],
+    "launch_date": "2022-07-13",
+    "launch_date_precision": "day",
+    "official_url": "https://rhino.fi/",
+    "official_domain": "rhino.fi",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "polygon",
+      "unknown"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "rhino.fi",
+    "operator_type": "protocol_team",
+    "ecosystem_name": "rhino.fi",
+    "related_protocols": [
+      "DeversiFi",
+      "rhino.fi Bridge"
+    ],
+    "brand_history_notes": "The bridge lifecycle preserves the DeversiFi to rhino.fi lineage. It is not backdated to the earlier DeversiFi L2 exchange launch; July 13, 2022 is the directly supported cross-chain feature boundary.",
+    "notes": "Later first-party material describes rhino.fi's collateralized bridge/liquidity-outpost model. No incident or safety rating is inferred from the architecture."
+  },
+  {
+    "id": "bir_bridge_000058",
+    "slug": "squid",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Squid",
+    "type": "interoperability_protocol",
+    "status": "active",
+    "summary": "Squid is cross-chain routing and swap infrastructure. First-party retrospectives state that Squid launched in January 2023, initially using Axelar-based connectivity before later routing and settlement architecture evolved.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-29",
+    "last_verified_at": "2026-08-29",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "Squid Router"
+    ],
+    "launch_date": "2023-01",
+    "launch_date_precision": "month",
+    "official_url": "https://www.squidrouter.com/",
+    "official_domain": "squidrouter.com",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "ethereum",
+      "unknown"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "Squid",
+    "operator_type": "protocol_team",
+    "ecosystem_name": "Squid",
+    "related_protocols": [
+      "Axelar",
+      "CORAL",
+      "Squid Intents"
+    ],
+    "brand_history_notes": "Squid V1, CORAL, and Squid Intents are retained as architecture/lifecycle evolution within one canonical Squid entity.",
+    "notes": "The reviewed first-party sources establish January 2023, not an exact launch day. No incident is inferred from later architecture changes."
   }
 ]

@@ -10,14 +10,14 @@ This review deliberately keeps the batch to three bridge lifecycle additions. It
 
 ### Mayan
 
-Canonical boundary: bridge/cross-chain protocol, launch year **2023** only unless stronger exact-date evidence is found during canonicalization.
+Canonical boundary: bridge/cross-chain protocol, conservative launch year **2022**. Canonicalization found first-party evidence that Mayan was already operating as cross-chain swap infrastructure on 2022-10-26; do not invent an exact launch day.
 
 Reviewed evidence:
 - Current first-party docs define Mayan as cross-chain routing/execution with Swift, MCTP and Wormhole Swap, including explicit bridge use cases: https://docs.mayan.finance/
-- First-party 2024 funding/lifecycle post says Mayan launched one year earlier and connects Solana, Ethereum and EVM-compatible chains: https://mayan.finance/blog/mayan-secures-usd3-million-funding-to-fuel-the-future-of-cross-chain-trading
-- First-party January 2023 blog index establishes active Wormhole/bridge-related Mayan work in early 2023: https://mayan.finance/blog
+- Stronger first-party evidence found during canonicalization: an official 2022-10-26 post already describes Mayan as cross-chain swap infrastructure connected to five networks: https://mayan.finance/blog/mayan-partners-with-ottersec-to-perform-audit-of-smart-contracts
+- First-party 2024 funding/lifecycle post describes Mayan as a connector across Solana, Ethereum and EVM-compatible chains. Its approximate 'since our launch one year ago' wording is treated as later lifecycle context and does not override direct 2022 evidence: https://mayan.finance/blog/mayan-secures-usd3-million-funding-to-fuel-the-future-of-cross-chain-trading
 
-Do not invent an exact launch day. Wormhole Swap, Swift/MCTP and Mayan 2.0 are lifecycle/architecture evolution unless stronger evidence establishes a split. No incident is inferred.
+Do not invent an exact launch day. The original 2023-year review boundary is superseded by direct 2022 first-party evidence. Wormhole Swap, Swift/MCTP and Mayan 2.0 are lifecycle/architecture evolution unless stronger evidence establishes a split. No incident is inferred.
 
 ### rhino.fi
 
