@@ -2,19 +2,23 @@
 
 Issue: #393
 
-This is a review-only boundary for three cross-chain bridge-routing / interoperability infrastructure candidates. It does not modify canonical JSON.
+This is a review-only boundary for one genuinely new cross-chain interoperability candidate plus an explicit duplicate-audit correction. It does not modify canonical JSON.
 
-## LI.FI / Li.Finance — add_now
+## Duplicate-audit correction
 
-Canonical boundary: cross-chain bridge/DEX aggregation and routing infrastructure, conservatively live by **2021-10**. Do not invent an exact October launch day.
+The initial Batch 07 review incorrectly treated LI.FI and Rubic as new candidates because the name-level GitHub code search returned no hits. The subsequent exhaustive Batch 06 production verification exposed the actual canonical routes and incident dossiers, which supersede that weak search result.
 
-Reviewed first-party evidence:
+### LI.FI / Li.Finance — already canonical, do not add
 
-- LI.FI's historical Arbitrum article states Li.Finance had supported cross-chain swaps to Arbitrum One since October 2021: https://li.fi/knowledge-hub/explore-arbitrum-by-swapping-cross-chain-with-li-fi
-- LI.FI's 2022 rebrand announcement preserves Li.Finance -> LI.FI continuity and defines the product around bridge/DEX aggregation for cross-chain strategies: https://li.fi/knowledge-hub/li-finance-is-now-li-fi
-- LI.FI's interoperability history says the project came from ETHGlobal HackMoney/KERNEL in June 2021 and had been working with bridge projects thereafter: https://develop.li.fi/knowledge-hub/announcing-li-fi-plug-and-play-interoperability
+Production/canonical verification proves an existing `/bridge/li-fi/` dossier, legacy redirects from `/bridge/li-finance` and `/bridge/lifi`, and existing incident dossiers including the 2022 approval-drain exploit and 2024 facet-approval exploit.
 
-Review decision: one entity; preserve Li.Finance as alias/brand history. Lifecycle-only in this batch. No incident inferred.
+The newly gathered LI.FI history remains useful future enrichment evidence, but Batch 07 must not allocate another bridge entity.
+
+### Rubic — already canonical, do not add
+
+Production/canonical verification proves an existing `/bridge/rubic/` dossier, legacy redirects from `/bridge/rubic-exchange`, and existing 2022 Rubic incident dossiers.
+
+The newly gathered 2021 launch material may support a separate lifecycle-enrichment review if the existing record needs it, but Batch 07 must not allocate another bridge entity.
 
 ## Rango Exchange — add_now
 
@@ -28,27 +32,16 @@ Reviewed primary evidence:
 
 Review decision: month precision only unless canonicalization finds a stronger exact launch day. Lifecycle-only; no incident or safety judgment.
 
-## Rubic — add_now
-
-Canonical boundary: cross-chain routing / bridge aggregation solution, launch **2021-08-31** if the reviewed company-issued release remains consistent during canonicalization.
-
-Reviewed evidence:
-
-- Company-issued Rubic release distributed by PR Newswire on 2021-08-27 states the cross-chain routing solution would officially launch on 2021-08-31: https://www.prnewswire.com/news-releases/the-first-cross-chain-routing-301364321.html
-- Rubic first-party 2021 roadmap places cross-chain routing in Q3 2021: https://rubic.exchange/pdf/white-paper.pdf
-- Current first-party bridge product remains a bridge/DEX aggregation interface: https://rubic.exchange/bridge
-
-Review decision: company-issued launch release may support day precision, but canonicalization must retain the first-party roadmap/current product corroboration and must not treat unrelated same-chain DEX history as the bridge-routing launch. No incident inferred.
-
 ## retained research-only
 
 - Owlto Finance — present bridge identity is strong; historical launch precision still needs a clean first-party locator.
-- Layerswap — current identity is strong; historical launch boundary remains insufficiently pinned.
+- Layerswap — current identity is strong; a partner-primary January 2022 integration establishes operation by that date, but the initial Layerswap launch boundary remains insufficiently pinned for this batch.
 - HECO Bridge / HECO Chain gateway 2023 — keep research-only; HTX hot-wallet loss is not bridge-specific loss evidence.
 
 ## guardrails
 
 - Scope remains cross-chain bridge and interoperability infrastructure. This review does not authorize ordinary same-chain DEX records.
+- Production/canonical evidence wins over incomplete name-level code search results for duplicate detection.
 - Repeat duplicate/alias/domain checks on current main before canonical ID allocation.
 - Primary/Tier-1 support is required for each promoted lifecycle event.
 - Do not invent incidents, losses, launch dates, or safety conclusions.
