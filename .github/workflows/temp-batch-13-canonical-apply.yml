@@ -38,12 +38,12 @@ jobs:
             'id':'bir_bridge_000067','slug':'base-bridge','previous_slugs':[],'redirect_from':[],'canonical_name':'Base Bridge','type':'canonical_bridge','status':'deprecated',
             'summary':'Base Bridge was Base’s first-party Ethereum-to-Base bridge interface. Base opened it for public bridging on August 3, 2023. The first-party bridge.base.org interface is now deprecated and redirects to Base documentation, while Base Standard Bridge contracts remain available programmatically and through ecosystem bridge interfaces.',
             'confidence':'high','record_maturity':'reviewed','update_status':'current','last_reviewed_at':'2026-08-29','last_verified_at':'2026-08-29',
-            'aliases':['Base Mainnet Bridge','bridge.base.org'],'launch_date':'2023-08-03','launch_date_precision':'day','end_date':None,'end_date_precision':'unknown','terminal_reason':None,
+            'aliases':['Base Mainnet Bridge','bridge.base.org'],'launch_date':'2023-08-03','launch_date_precision':'day','end_date':None,'end_date_precision':'unknown','terminal_reason':'replacement',
             'official_url':'https://bridge.base.org/','official_domain':'bridge.base.org','official_url_status':'redirected','archived_url':None,
             'primary_chains':['ethereum','unknown'],'primary_assets':['eth','unknown'],'operator_name':'Base','operator_type':'company','ecosystem_name':'Base','related_protocols':['OP Stack','Base Standard Bridge'],
             'brand_history_notes':'This record tracks the Base-operated bridge.base.org product surface. Its deprecation does not imply that the underlying OP Stack Standard Bridge contracts were shut down; Base documentation continues to describe programmatic bridging and directs users to ecosystem interfaces such as Superbridge and Brid.gg.',
             'major_incident_count':0,'has_unresolved_incident':False,'has_reimbursement_history':False,'successor_id':None,'predecessor_id':None,'replacement_bridge_id':None,'duplicate_of':None,'merged_into':None,
-            'notes':'Current first-party Base documentation states that bridge.base.org has been deprecated. No exact deprecation date is asserted because a dated first-party deprecation notice has not been established. No incident is inferred.'})
+            'notes':'Current first-party Base documentation states that bridge.base.org has been deprecated as Base shifted bridging to community-operated providers. No exact deprecation date is asserted because a dated first-party deprecation notice has not been established. No incident is inferred.'})
           bridges.append(b)
           ev=copy.deepcopy(max(events,key=suffix)); ev.update({
             'id':'bir_ev_000241','bridge_id':'bir_bridge_000067','incident_id':None,'event_type':'bridge_launched','event_date':'2023-08-03','event_date_precision':'day','title':'Base opens Base Bridge for public bridging',
