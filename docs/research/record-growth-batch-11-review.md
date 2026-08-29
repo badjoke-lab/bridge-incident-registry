@@ -22,11 +22,23 @@ Review decision:
 - preserve later bridge UI/product changes within the same native/canonical bridge lineage unless first-party evidence requires a split;
 - current status may be represented as active only if the canonical application re-verifies a current first-party Mantle bridge surface immediately before publication.
 
+## canonical application result
+
+Applied on `canonical/growth-batch-11-mantle-mainnet-bridge` after the review PR merged.
+
+- `bir_bridge_000065` — Mantle Mainnet Bridge
+- `bir_ev_000239` — 2023-07-17 launch/public-availability lifecycle event
+- `bir_src_000391`–`bir_src_000392` — two primary/Tier-1 Mantle sources
+- incidents added: **0**
+- resulting canonical counts: **65 bridges / 51 incidents / 239 events / 391 evidence**
+- data validation, enum validation, full-corpus blocking audit, exact source-count equality, source-quality no-regression, build, and dist consistency passed before final PR CI
+- temporary applicator and count-sync workflows were removed from the branch before final review
+
 ## duplicate boundary
 
 Current main at review start: `137931f8be5ed966b529981511f34adeeda964bb`.
 
-GitHub code search for `Mantle` inside canonical `data/bridges.json` returned no hit. Batch 10 production verification also enumerated all 64 current bridge dossier routes and contained no Mantle route. Repeat name/alias/domain/slug checks immediately before canonical ID allocation.
+GitHub code search for `Mantle` inside canonical `data/bridges.json` returned no hit. Batch 10 production verification also enumerated all 64 current bridge dossier routes and contained no Mantle route. The canonical applicator repeated name/domain/alias guards against the 64/51/238/389 baseline before allocating `bir_bridge_000065`.
 
 ## retained research-only
 

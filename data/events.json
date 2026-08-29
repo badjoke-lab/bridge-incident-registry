@@ -7846,5 +7846,37 @@
       "ethereum",
       "unknown"
     ]
+  },
+  {
+    "id": "bir_ev_000239",
+    "bridge_id": "bir_bridge_000065",
+    "incident_id": null,
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "lifecycle",
+    "status_effect": "active",
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_applicable",
+    "restart_status": "not_applicable",
+    "affected_assets": [
+      "eth",
+      "unknown"
+    ],
+    "notes": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "event_type": "launched",
+    "event_date": "2023-07-17",
+    "event_date_precision": "day",
+    "title": "Mantle Mainnet Bridge opens with Mainnet Alpha",
+    "description": "Mantle’s July 11 migration guide pre-announced July 17 availability and directed users to the Mantle canonical bridge for moving assets from Ethereum L1 to Mantle Network; Mantle’s July 17 launch post confirms Mainnet Alpha was live.",
+    "source_count": 2,
+    "affected_chains": [
+      "ethereum",
+      "unknown"
+    ]
   }
 ]
