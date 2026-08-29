@@ -1,0 +1,75 @@
+name: TEMP Batch 14 Canonical Apply
+on:
+  push:
+    branches:
+      - canonical/growth-batch-14-arbitrum-bridge
+    paths:
+      - .github/workflows/temp-batch-14-canonical-apply.yml
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: canonical/growth-batch-14-arbitrum-bridge
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Apply reviewed Arbitrum Bridge record
+        run: |
+          python3 - <<'PY'
+          import copy, json
+          from pathlib import Path
+          def load(p): return json.loads(Path(p).read_text())
+          def save(p,o): Path(p).write_text(json.dumps(o,indent=2,ensure_ascii=False)+'\n')
+          def suffix(r): return int(r['id'].rsplit('_',1)[1])
+          bridges=load('data/bridges.json'); incidents=load('data/incidents.json'); events=load('data/events.json'); evidence=load('data/evidence.json')
+          if (len(bridges),len(incidents),len(events),len(evidence)) != (66,51,240,393): raise SystemExit('baseline count mismatch')
+          if (max(map(suffix,bridges)),max(map(suffix,events)),max(map(suffix,evidence))) != (66,240,394): raise SystemExit('baseline max-ID mismatch')
+          for b in bridges:
+              hay=' '.join([b.get('slug',''),b.get('canonical_name',''),b.get('official_domain','')]+b.get('aliases',[])).lower()
+              if b.get('slug')=='arbitrum-bridge' or 'arbitrum bridge' in hay: raise SystemExit(f'duplicate candidate: {b["id"]}')
+          b=copy.deepcopy(max(bridges,key=suffix)); b.update({
+            'id':'bir_bridge_000067','slug':'arbitrum-bridge','previous_slugs':[],'redirect_from':[],'canonical_name':'Arbitrum Bridge','type':'canonical_bridge','status':'active',
+            'summary':'Arbitrum Bridge is the native/canonical bridge path between Ethereum and Arbitrum One. Arbitrum One opened to the public on August 31, 2021, and first-party material from that launch describes the project’s bridge operating at public launch. Current Arbitrum guidance continues to identify the Arbitrum bridge as a native bridge.',
+            'confidence':'high','record_maturity':'reviewed','update_status':'current','last_reviewed_at':'2026-08-29','last_verified_at':'2026-08-29',
+            'aliases':['Arbitrum One Bridge','Arbitrum native bridge'],'launch_date':'2021-08-31','launch_date_precision':'day','end_date':None,'end_date_precision':'unknown','terminal_reason':None,
+            'official_url':'https://bridge.arbitrum.io/','official_domain':'bridge.arbitrum.io','official_url_status':'live_verified','archived_url':None,
+            'primary_chains':['ethereum','arbitrum'],'primary_assets':['eth','unknown'],'operator_name':'Arbitrum','operator_type':'foundation','ecosystem_name':'Arbitrum One','related_protocols':['Arbitrum One'],
+            'brand_history_notes':'This record preserves the native/canonical Ethereum ↔ Arbitrum One bridge lineage across interface and protocol upgrades unless first-party evidence establishes a distinct successor bridge product.',
+            'major_incident_count':0,'has_unresolved_incident':False,'has_reimbursement_history':False,'successor_id':None,'predecessor_id':None,'replacement_bridge_id':None,'duplicate_of':None,'merged_into':None,
+            'notes':'The 2021 contemporaneous Offchain Labs launch post is retained in review notes but is not added as canonical evidence because it is Medium-hosted and unarchived. Durable first-party Arbitrum-hosted sources support the launch date and current native-bridge identity. No incident is inferred.'})
+          bridges.append(b)
+          ev=copy.deepcopy(max(events,key=suffix)); ev.update({
+            'id':'bir_ev_000241','bridge_id':'bir_bridge_000067','incident_id':None,'event_type':'bridge_launched','event_date':'2021-08-31','event_date_precision':'day','title':'Arbitrum Bridge available with Arbitrum One public launch',
+            'description':'Arbitrum One opened to the public on August 31, 2021. First-party launch material identifies the project’s canonical bridge as operating with the public network, and current Arbitrum guidance identifies the Arbitrum bridge as a native bridge.',
+            'confidence':'high','record_maturity':'reviewed','update_status':'current','impact_level':'context','status_effect':'bridge launched','source_count':2,'sort_order':10,
+            'amount_text':None,'recovered_amount_text':None,'reimbursement_status':'not_applicable','restart_status':'not_applicable','affected_chains':['ethereum','arbitrum'],'affected_assets':['eth','unknown'],'notes':'Launch date is supported by Arbitrum first-party retrospectives; current first-party bridge documentation supports canonical/native bridge identity.','duplicate_of':None,'merged_into':None})
+          events.append(ev)
+          templates=sorted(evidence,key=suffix)[-2:]
+          specs=[
+            ('bir_src_000395','Arbitrum Stylus: Now Live on Mainnet','https://blog.arbitrum.io/arbitrum-stylus-mainnet/','2024-09-03','Arbitrum','Official Arbitrum retrospective explicitly states that Arbitrum One publicly launched on August 31, 2021.'),
+            ('bir_src_000396','How to bridge tokens to and from Arbitrum One','https://blog.arbitrum.io/how-to-bridge-tokens-to-and-from-arbitrum-one/','2025-03-27','Arbitrum','Official Arbitrum guide explicitly identifies the Arbitrum bridge as a native bridge and uses it as the official bridge example.')]
+          for t,(sid,title,url,published,publisher,notes) in zip(templates,specs):
+              s=copy.deepcopy(t); s.update({'id':sid,'bridge_id':'bir_bridge_000067','incident_id':None,'event_id':'bir_ev_000241','source_type':'official_announcement','title':title,'url':url,'publisher':publisher,'published_at':published,'published_at_precision':'day','reliability':'high','source_tier':'tier_1','url_status':'live','accessed_at':'2026-08-29','claim_scope':'launch','language':'en','author':None,'quote_excerpt':None,'is_primary':True,'is_paywalled':False,'is_official_domain':True,'supports_amount':False,'supports_recovery':False,'supports_reimbursement':False,'supports_reopen':False,'supports_shutdown':False,'supports_migration':False,'archived_url':None,'notes':notes}); evidence.append(s)
+          save('data/bridges.json',bridges); save('data/events.json',events); save('data/evidence.json',evidence)
+          print('applied counts',len(bridges),len(incidents),len(events),len(evidence))
+          PY
+      - run: npm run validate:data
+      - run: npm run validate:enums
+      - run: npm run audit:full-corpus
+      - run: npm run audit:source-count
+      - run: npm run audit:source-quality
+      - name: Commit canonical data and remove helper
+        run: |
+          git rm -f .github/workflows/temp-batch-14-canonical-apply.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/bridges.json data/events.json data/evidence.json
+          git commit -m 'data: add Arbitrum Bridge'
+          git push origin HEAD:canonical/growth-batch-14-arbitrum-bridge
