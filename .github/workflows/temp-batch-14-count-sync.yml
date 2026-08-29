@@ -1,0 +1,63 @@
+name: TEMP Batch 14 Count Sync
+on:
+  push:
+    branches:
+      - canonical/growth-batch-14-arbitrum-bridge
+    paths:
+      - .github/workflows/temp-batch-14-count-sync.yml
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: canonical/growth-batch-14-arbitrum-bridge
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Sync current count blocks only
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          files=[
+            'README.md',
+            'docs/runbooks/current-status.md',
+            'docs/runbooks/recovery-checkpoint.md',
+            'docs/runbooks/development-roadmap.md',
+            'docs/runbooks/public-consistency-remediation.md',
+          ]
+          replacements=[
+            ('66 bridges', '67 bridges'),
+            ('240 events', '241 events'),
+            ('393 evidence', '395 evidence'),
+            ('Bridges: 66', 'Bridges: 67'),
+            ('Events: 240', 'Events: 241'),
+            ('Evidence: 393', 'Evidence: 395'),
+            ('bridges: 66', 'bridges: 67'),
+            ('events: 240', 'events: 241'),
+            ('evidence: 393', 'evidence: 395'),
+            ('| Bridges | 66 |', '| Bridges | 67 |'),
+            ('| Events | 240 |', '| Events | 241 |'),
+            ('| Evidence | 393 |', '| Evidence | 395 |'),
+          ]
+          for f in files:
+            p=Path(f); s=p.read_text(); original=s
+            for a,b in replacements: s=s.replace(a,b)
+            if s==original: raise SystemExit(f'no current-count replacement applied in {f}')
+            p.write_text(s)
+          PY
+      - run: npm run build
+      - run: npm run dist:check
+      - name: Commit sync and remove helper
+        run: |
+          git rm -f .github/workflows/temp-batch-14-count-sync.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md docs/runbooks/current-status.md docs/runbooks/recovery-checkpoint.md docs/runbooks/development-roadmap.md docs/runbooks/public-consistency-remediation.md
+          git commit -m 'docs: sync Batch 14 canonical counts'
+          git push origin HEAD:canonical/growth-batch-14-arbitrum-bridge
