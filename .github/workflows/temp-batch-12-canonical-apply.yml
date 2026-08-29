@@ -30,6 +30,8 @@ jobs:
               return json.loads(Path(path).read_text())
           def save(path, obj):
               Path(path).write_text(json.dumps(obj, indent=2, ensure_ascii=False) + '\n')
+          def suffix(record):
+              return int(record['id'].rsplit('_', 1)[1])
 
           bridges = load('data/bridges.json')
           incidents = load('data/incidents.json')
@@ -40,8 +42,10 @@ jobs:
           actual = (len(bridges), len(incidents), len(events), len(evidence))
           if actual != expected:
               raise SystemExit(f'baseline count mismatch: expected {expected}, got {actual}')
-          if bridges[-1]['id'] != 'bir_bridge_000065' or events[-1]['id'] != 'bir_ev_000239' or evidence[-1]['id'] != 'bir_src_000391':
-              raise SystemExit('baseline tail IDs changed; refuse to allocate IDs')
+
+          maxima = (max(map(suffix, bridges)), max(map(suffix, events)), max(map(suffix, evidence)))
+          if maxima != (65, 239, 391):
+              raise SystemExit(f'baseline max IDs changed: expected (65,239,391), got {maxima}')
 
           needle = 'polygon zkevm'
           for b in bridges:
@@ -49,7 +53,11 @@ jobs:
               if needle in hay or b.get('slug') == 'polygon-zkevm-bridge':
                   raise SystemExit(f'duplicate candidate detected: {b["id"]} {b["canonical_name"]}')
 
-          b = copy.deepcopy(bridges[-1])
+          bridge_template = max(bridges, key=suffix)
+          event_template = max(events, key=suffix)
+          evidence_templates = sorted(evidence, key=suffix)[-2:]
+
+          b = copy.deepcopy(bridge_template)
           b.update({
               'id': 'bir_bridge_000066',
               'slug': 'polygon-zkevm-bridge',
@@ -93,7 +101,7 @@ jobs:
           })
           bridges.append(b)
 
-          ev = copy.deepcopy(events[-1])
+          ev = copy.deepcopy(event_template)
           ev.update({
               'id': 'bir_ev_000240',
               'bridge_id': 'bir_bridge_000066',
@@ -138,7 +146,7 @@ jobs:
                   'notes': 'First-party Polygon Labs usage guide independently corroborates live public bridge use from Ethereum Mainnet to Polygon zkEVM immediately after the bridge announcement.'
               }
           ]
-          for template, spec in zip(evidence[-2:], sources):
+          for template, spec in zip(evidence_templates, sources):
               src = copy.deepcopy(template)
               src.update({
                   'id': spec['id'],
