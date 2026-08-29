@@ -1,0 +1,24 @@
+name: TEMP Batch 09 StarkGate Applicator
+on:
+  push:
+    branches:
+      - canonical/growth-batch-09-starkgate
+    paths:
+      - scripts/apply-batch-09-starkgate.mjs
+      - .github/workflows/temp-batch-09-starkgate.yml
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: canonical/growth-batch-09-starkgate
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: node scripts/apply-batch-09-starkgate.mjs
