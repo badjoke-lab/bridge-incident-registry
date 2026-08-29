@@ -7878,5 +7878,37 @@
       "ethereum",
       "unknown"
     ]
+  },
+  {
+    "id": "bir_ev_000240",
+    "bridge_id": "bir_bridge_000066",
+    "incident_id": null,
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "context",
+    "status_effect": "bridge launched",
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_applicable",
+    "restart_status": "not_applicable",
+    "affected_assets": [
+      "eth",
+      "unknown"
+    ],
+    "notes": "Bridge-specific public availability is dated to the April 26, 2023 first-party bridge announcement rather than backdated to the March 27 network launch.",
+    "duplicate_of": null,
+    "merged_into": null,
+    "event_type": "bridge_launched",
+    "event_date": "2023-04-26",
+    "event_date_precision": "day",
+    "title": "Polygon zkEVM Bridge announced as available",
+    "description": "Polygon Labs announced Polygon Bridge for Polygon zkEVM as available for moving assets between Ethereum and Polygon zkEVM.",
+    "source_count": 2,
+    "affected_chains": [
+      "ethereum",
+      "unknown"
+    ]
   }
 ]
