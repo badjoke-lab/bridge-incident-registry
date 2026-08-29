@@ -27,7 +27,7 @@ Review decision:
 
 Current main at review start: `ce928cc8ca2e81951e6d8187f9c227a42317c227`.
 
-An exhaustive search of canonical `data/bridges.json` found no existing `StarkGate` or `starknet` entity/alias/domain reference. This must be repeated immediately before canonical ID allocation.
+An exhaustive search of canonical `data/bridges.json` found no existing `StarkGate` or `starknet` entity/alias/domain reference. This was repeated against main after review merge before canonical ID allocation.
 
 ## retained research-only
 
@@ -47,3 +47,7 @@ An exhaustive search of canonical `data/bridges.json` found no existing `StarkGa
 - Preserve bridge/version/product lineage rather than manufacturing duplicates.
 - Do not weaken source-count, source-quality, schema, Series, build, accessibility, performance, dist, browser, or production-equality gates.
 - Do not raise ceilings to fit corpus growth.
+
+## canonical application result
+
+Applied as `bir_bridge_000063` / `bir_ev_000237` / `bir_src_000389`. Canonical validation produced **63 bridges / 51 incidents / 237 events / 388 evidence** with source-count equality and source-quality no-regression passing. Current-count documents were synchronized to the same values; temporary application and count-sync workflows were removed before final PR validation.
