@@ -44,3 +44,9 @@ GitHub code search for `Polygon zkEVM` inside canonical `data/bridges.json` retu
 - Preserve bridge/version/product lineage rather than manufacturing duplicates.
 - Do not weaken source-count, source-quality, schema, Series, build, accessibility, performance, dist, browser, or production-equality gates.
 - Do not raise ceilings to fit corpus growth.
+
+## canonical application result
+
+Canonical branch application allocated `bir_bridge_000066`, launch event `bir_ev_000240`, and evidence IDs `bir_src_000393`–`bir_src_000394`. The existing corpus already used `bir_src_000392` for Mantle despite 391 total evidence records, so Batch 12 allocates after the actual maximum evidence ID rather than assuming record count equals maximum ID. Strict baseline counts and maximum-ID guards, duplicate checks, data/schema validation, full-corpus audit, exact source-count audit, and source-quality audit passed before the temporary applicator removed itself.
+
+Current branch counts after application are **66 bridges / 51 incidents / 240 events / 393 evidence**. No incident was added or inferred. Current-count documentation was synchronised separately and `npm run build` plus `npm run dist:check` passed without raising any ceiling.
