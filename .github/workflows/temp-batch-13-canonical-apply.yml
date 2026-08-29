@@ -1,0 +1,74 @@
+name: TEMP Batch 13 Canonical Apply
+on:
+  push:
+    branches:
+      - canonical/growth-batch-13-base-bridge
+    paths:
+      - .github/workflows/temp-batch-13-canonical-apply.yml
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: canonical/growth-batch-13-base-bridge
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Apply reviewed Base Bridge record
+        run: |
+          python3 - <<'PY'
+          import copy, json
+          from pathlib import Path
+          def load(p): return json.loads(Path(p).read_text())
+          def save(p,o): Path(p).write_text(json.dumps(o,indent=2,ensure_ascii=False)+'\n')
+          def suffix(r): return int(r['id'].rsplit('_',1)[1])
+          bridges=load('data/bridges.json'); incidents=load('data/incidents.json'); events=load('data/events.json'); evidence=load('data/evidence.json')
+          if (len(bridges),len(incidents),len(events),len(evidence)) != (66,51,240,393): raise SystemExit('baseline count mismatch')
+          if (max(map(suffix,bridges)),max(map(suffix,events)),max(map(suffix,evidence))) != (66,240,394): raise SystemExit('baseline max-ID mismatch')
+          for b in bridges:
+              hay=' '.join([b.get('slug',''),b.get('canonical_name',''),b.get('official_domain','')]+b.get('aliases',[])).lower()
+              if b.get('slug')=='base-bridge' or 'base bridge' in hay: raise SystemExit(f'duplicate candidate: {b["id"]}')
+          b=copy.deepcopy(max(bridges,key=suffix)); b.update({
+            'id':'bir_bridge_000067','slug':'base-bridge','previous_slugs':[],'redirect_from':[],'canonical_name':'Base Bridge','type':'canonical_bridge','status':'deprecated',
+            'summary':'Base Bridge was Base’s first-party Ethereum-to-Base bridge interface. Base opened it for public bridging on August 3, 2023. The first-party bridge.base.org interface is now deprecated and redirects to Base documentation, while Base Standard Bridge contracts remain available programmatically and through ecosystem bridge interfaces.',
+            'confidence':'high','record_maturity':'reviewed','update_status':'current','last_reviewed_at':'2026-08-29','last_verified_at':'2026-08-29',
+            'aliases':['Base Mainnet Bridge','bridge.base.org'],'launch_date':'2023-08-03','launch_date_precision':'day','end_date':None,'end_date_precision':'unknown','terminal_reason':None,
+            'official_url':'https://bridge.base.org/','official_domain':'bridge.base.org','official_url_status':'redirected','archived_url':None,
+            'primary_chains':['ethereum','unknown'],'primary_assets':['eth','unknown'],'operator_name':'Base','operator_type':'company','ecosystem_name':'Base','related_protocols':['OP Stack','Base Standard Bridge'],
+            'brand_history_notes':'This record tracks the Base-operated bridge.base.org product surface. Its deprecation does not imply that the underlying OP Stack Standard Bridge contracts were shut down; Base documentation continues to describe programmatic bridging and directs users to ecosystem interfaces such as Superbridge and Brid.gg.',
+            'major_incident_count':0,'has_unresolved_incident':False,'has_reimbursement_history':False,'successor_id':None,'predecessor_id':None,'replacement_bridge_id':None,'duplicate_of':None,'merged_into':None,
+            'notes':'Current first-party Base documentation states that bridge.base.org has been deprecated. No exact deprecation date is asserted because a dated first-party deprecation notice has not been established. No incident is inferred.'})
+          bridges.append(b)
+          ev=copy.deepcopy(max(events,key=suffix)); ev.update({
+            'id':'bir_ev_000241','bridge_id':'bir_bridge_000067','incident_id':None,'event_type':'bridge_launched','event_date':'2023-08-03','event_date_precision':'day','title':'Base opens Base Bridge for public bridging',
+            'description':'Base announced that Base was open for bridging and explicitly listed Base Bridge at bridge.base.org as a way to bridge ETH to Base.','confidence':'high','record_maturity':'reviewed','update_status':'current','impact_level':'context','status_effect':'bridge launched','source_count':2,'sort_order':10,
+            'amount_text':None,'recovered_amount_text':None,'reimbursement_status':'not_applicable','restart_status':'not_applicable','affected_chains':['ethereum','unknown'],'affected_assets':['eth','unknown'],'notes':'Public bridge availability is distinguished from the earlier builder-only mainnet phase.','duplicate_of':None,'merged_into':None})
+          events.append(ev)
+          templates=sorted(evidence,key=suffix)[-2:]
+          specs=[
+            ('bir_src_000395','It’s Onchain Summer 🟡 and Base is open for bridging','https://blog.base.org/its-onchain-summer-%F0%9F%9F%A1-and-base-is-open-for-bridging','2023-08-03','Base','Primary Base launch post stating that Base is open for bridging and explicitly listing Base Bridge at bridge.base.org.'),
+            ('bir_src_000396','Celebrate Onchain Summer 🟡 with Coinbase','https://www.coinbase.com/blog/celebrate-onchain-summer-with-coinbase','2023-08-03','Coinbase','Same-day Coinbase first-party announcement corroborating the Base public launch-day context and August 9 general mainnet rollout.')]
+          for t,(sid,title,url,published,publisher,notes) in zip(templates,specs):
+              s=copy.deepcopy(t); s.update({'id':sid,'bridge_id':'bir_bridge_000067','incident_id':None,'event_id':'bir_ev_000241','source_type':'official_announcement','title':title,'url':url,'publisher':publisher,'published_at':published,'published_at_precision':'day','reliability':'high','source_tier':'tier_1','url_status':'live','accessed_at':'2026-08-29','claim_scope':'launch','language':'en','author':None,'quote_excerpt':None,'is_primary':True,'is_paywalled':False,'is_official_domain':True,'supports_amount':False,'supports_recovery':False,'supports_reimbursement':False,'supports_reopen':False,'supports_shutdown':False,'supports_migration':False,'archived_url':None,'notes':notes}); evidence.append(s)
+          save('data/bridges.json',bridges); save('data/events.json',events); save('data/evidence.json',evidence)
+          print('applied counts',len(bridges),len(incidents),len(events),len(evidence))
+          PY
+      - run: npm run validate:data
+      - run: npm run validate:enums
+      - run: npm run audit:full-corpus
+      - run: npm run audit:source-count
+      - run: npm run audit:source-quality
+      - name: Commit canonical data and remove helper
+        run: |
+          git rm -f .github/workflows/temp-batch-13-canonical-apply.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/bridges.json data/events.json data/evidence.json
+          git commit -m 'data: add Base Bridge lifecycle'
+          git push origin HEAD:canonical/growth-batch-13-base-bridge
