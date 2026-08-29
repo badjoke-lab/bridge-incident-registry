@@ -23,6 +23,7 @@ jobs:
       - name: Sync current count blocks only
         run: |
           python3 - <<'PY'
+          import re
           from pathlib import Path
           files=[
             'README.md',
@@ -31,25 +32,23 @@ jobs:
             'docs/runbooks/development-roadmap.md',
             'docs/runbooks/public-consistency-remediation.md',
           ]
-          replacements=[
-            ('66 bridges', '67 bridges'),
-            ('240 events', '241 events'),
-            ('393 evidence', '395 evidence'),
-            ('Bridges: 66', 'Bridges: 67'),
-            ('Events: 240', 'Events: 241'),
-            ('Evidence: 393', 'Evidence: 395'),
-            ('bridges: 66', 'bridges: 67'),
-            ('events: 240', 'events: 241'),
-            ('evidence: 393', 'evidence: 395'),
-            ('| Bridges | 66 |', '| Bridges | 67 |'),
-            ('| Events | 240 |', '| Events | 241 |'),
-            ('| Evidence | 393 |', '| Evidence | 395 |'),
+          patterns=[
+            (r'(?i)(Bridges\s*[:|]?\s*)66\b', r'\g<1>67'),
+            (r'(?i)(Events\s*[:|]?\s*)240\b', r'\g<1>241'),
+            (r'(?i)(Evidence\s*[:|]?\s*)393\b', r'\g<1>395'),
+            (r'\b66\s+bridges\b', '67 bridges'),
+            (r'\b240\s+events\b', '241 events'),
+            (r'\b393\s+evidence\b', '395 evidence'),
           ]
+          changed=[]
           for f in files:
             p=Path(f); s=p.read_text(); original=s
-            for a,b in replacements: s=s.replace(a,b)
-            if s==original: raise SystemExit(f'no current-count replacement applied in {f}')
-            p.write_text(s)
+            for pat,repl in patterns: s=re.sub(pat,repl,s)
+            if s != original:
+              p.write_text(s); changed.append(f)
+          if set(changed) != set(files):
+            raise SystemExit(f'expected all five current-count docs to change; changed={changed}')
+          print('synced', changed)
           PY
       - run: npm run build
       - run: npm run dist:check
