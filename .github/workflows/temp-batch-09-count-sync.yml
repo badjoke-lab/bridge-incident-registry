@@ -1,0 +1,51 @@
+name: TEMP Batch 09 Count Sync
+on:
+  push:
+    branches:
+      - canonical/growth-batch-09-starkgate
+    paths:
+      - .github/workflows/temp-batch-09-count-sync.yml
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: canonical/growth-batch-09-starkgate
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Sync only current canonical count blocks
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          files = [
+              Path('README.md'),
+              Path('docs/runbooks/current-status.md'),
+              Path('docs/runbooks/recovery-checkpoint.md'),
+              Path('docs/runbooks/development-roadmap.md'),
+              Path('docs/runbooks/public-consistency-remediation.md'),
+          ]
+          old = 'Bridges   62\nIncidents   51\nEvents   236\nEvidence   387'
+          new = 'Bridges   63\nIncidents   51\nEvents   237\nEvidence   388'
+          for p in files:
+              s = p.read_text()
+              n = s.count(old)
+              if n != 1:
+                  raise SystemExit(f'{p}: expected exactly one current count block, found {n}')
+              p.write_text(s.replace(old, new, 1))
+          PY
+      - run: npm run build
+      - run: npm run dist:check
+      - run: |
+          git rm -f .github/workflows/temp-batch-09-count-sync.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md docs/runbooks/current-status.md docs/runbooks/recovery-checkpoint.md docs/runbooks/development-roadmap.md docs/runbooks/public-consistency-remediation.md
+          git commit -m 'docs: sync Batch 09 canonical counts'
+          git push origin HEAD:canonical/growth-batch-09-starkgate
