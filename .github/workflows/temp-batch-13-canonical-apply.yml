@@ -23,11 +23,22 @@ jobs:
       - name: Apply reviewed Base Bridge record
         run: |
           python3 - <<'PY'
-          import copy, json
+          import copy, json, urllib.parse, urllib.request
           from pathlib import Path
           def load(p): return json.loads(Path(p).read_text())
           def save(p,o): Path(p).write_text(json.dumps(o,indent=2,ensure_ascii=False)+'\n')
           def suffix(r): return int(r['id'].rsplit('_',1)[1])
+          def wayback(url, timestamp='20230803'):
+              q=urllib.parse.urlencode({'url':url,'timestamp':timestamp})
+              req=urllib.request.Request('https://archive.org/wayback/available?'+q,headers={'User-Agent':'BIR-source-archive-check/1.0'})
+              with urllib.request.urlopen(req,timeout=30) as r:
+                  payload=json.load(r)
+              snap=payload.get('archived_snapshots',{}).get('closest') or {}
+              if not snap.get('available') or str(snap.get('status'))!='200' or not snap.get('url'):
+                  raise SystemExit(f'no verified Wayback snapshot for {url}: {snap}')
+              archived=snap['url'].replace('http://web.archive.org/','https://web.archive.org/',1)
+              print('verified archive',url,'=>',archived)
+              return archived
           bridges=load('data/bridges.json'); incidents=load('data/incidents.json'); events=load('data/events.json'); evidence=load('data/evidence.json')
           if (len(bridges),len(incidents),len(events),len(evidence)) != (66,51,240,393): raise SystemExit('baseline count mismatch')
           if (max(map(suffix,bridges)),max(map(suffix,events)),max(map(suffix,evidence))) != (66,240,394): raise SystemExit('baseline max-ID mismatch')
@@ -41,7 +52,7 @@ jobs:
             'aliases':['Base Mainnet Bridge','bridge.base.org'],'launch_date':'2023-08-03','launch_date_precision':'day','end_date':None,'end_date_precision':'unknown','terminal_reason':'replacement',
             'official_url':'https://bridge.base.org/','official_domain':'bridge.base.org','official_url_status':'redirected','archived_url':None,
             'primary_chains':['ethereum','unknown'],'primary_assets':['eth','unknown'],'operator_name':'Base','operator_type':'company','ecosystem_name':'Base','related_protocols':['OP Stack','Base Standard Bridge'],
-            'brand_history_notes':'This record tracks the Base-operated bridge.base.org product surface. Its deprecation does not imply that the underlying OP Stack Standard Bridge contracts were shut down; Base documentation continues to describe programmatic bridging and directs users to ecosystem interfaces such as Superbridge and Brid.gg.',
+            'brand_history_notes':'This record tracks the Base-operated bridge.base.org product surface. Its deprecation does not imply that the underlying OP Stack Standard Bridge contracts were shut down; Base documentation continues to describe programmatic bridging and directs users to ecosystem bridge interfaces such as Superbridge and Brid.gg.',
             'major_incident_count':0,'has_unresolved_incident':False,'has_reimbursement_history':False,'successor_id':None,'predecessor_id':None,'replacement_bridge_id':None,'duplicate_of':None,'merged_into':None,
             'notes':'Current first-party Base documentation states that bridge.base.org has been deprecated as Base shifted bridging to community-operated providers. No exact deprecation date is asserted because a dated first-party deprecation notice has not been established. No incident is inferred.'})
           bridges.append(b)
@@ -55,7 +66,8 @@ jobs:
             ('bir_src_000395','It’s Onchain Summer 🟡 and Base is open for bridging','https://blog.base.org/its-onchain-summer-%F0%9F%9F%A1-and-base-is-open-for-bridging','2023-08-03','Base','Primary Base launch post stating that Base is open for bridging and explicitly listing Base Bridge at bridge.base.org.'),
             ('bir_src_000396','Celebrate Onchain Summer 🟡 with Coinbase','https://www.coinbase.com/blog/celebrate-onchain-summer-with-coinbase','2023-08-03','Coinbase','Same-day Coinbase first-party announcement corroborating the Base public launch-day context and August 9 general mainnet rollout.')]
           for t,(sid,title,url,published,publisher,notes) in zip(templates,specs):
-              s=copy.deepcopy(t); s.update({'id':sid,'bridge_id':'bir_bridge_000067','incident_id':None,'event_id':'bir_ev_000241','source_type':'official_announcement','title':title,'url':url,'publisher':publisher,'published_at':published,'published_at_precision':'day','reliability':'high','source_tier':'tier_1','url_status':'live','accessed_at':'2026-08-29','claim_scope':'launch','language':'en','author':None,'quote_excerpt':None,'is_primary':True,'is_paywalled':False,'is_official_domain':True,'supports_amount':False,'supports_recovery':False,'supports_reimbursement':False,'supports_reopen':False,'supports_shutdown':False,'supports_migration':False,'archived_url':None,'notes':notes}); evidence.append(s)
+              archived=wayback(url)
+              s=copy.deepcopy(t); s.update({'id':sid,'bridge_id':'bir_bridge_000067','incident_id':None,'event_id':'bir_ev_000241','source_type':'official_announcement','title':title,'url':url,'publisher':publisher,'published_at':published,'published_at_precision':'day','reliability':'high','source_tier':'tier_1','url_status':'live','accessed_at':'2026-08-29','claim_scope':'launch','language':'en','author':None,'quote_excerpt':None,'is_primary':True,'is_paywalled':False,'is_official_domain':True,'supports_amount':False,'supports_recovery':False,'supports_reimbursement':False,'supports_reopen':False,'supports_shutdown':False,'supports_migration':False,'archived_url':archived,'notes':notes}); evidence.append(s)
           save('data/bridges.json',bridges); save('data/events.json',events); save('data/evidence.json',evidence)
           print('applied counts',len(bridges),len(incidents),len(events),len(evidence))
           PY
