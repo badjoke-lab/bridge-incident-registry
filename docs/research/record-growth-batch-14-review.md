@@ -42,3 +42,16 @@ Batch 13 Base Bridge remains HOLD because its correct current status is deprecat
 - Preserve bridge/version/product lineage rather than manufacturing duplicates.
 - Do not weaken source-count, source-quality, schema, Series, build, accessibility, performance, dist, browser, or production-equality gates.
 - Do not raise ceilings to fit corpus growth.
+
+## canonical application result
+
+Applied on `canonical/growth-batch-14-arbitrum-bridge` after repeating the duplicate boundary checks.
+
+- Added one bridge lifecycle record for `Arbitrum Bridge`.
+- Added one launch event at `2021-08-31`.
+- Added two durable first-party Arbitrum-hosted evidence records; the Medium-hosted Offchain Labs post remained review context only.
+- Added no incident record and made no exploit, loss, or safety inference.
+- Canonical counts after application: **67 bridges / 51 incidents / 241 events / 395 evidence**.
+- Source-count, source-quality, schema/full-corpus, build and dist checks passed during bounded application/count synchronization.
+- The 16 KiB performance ceiling was not raised.
+- Temporary applicator/count-sync helpers were removed before final review.

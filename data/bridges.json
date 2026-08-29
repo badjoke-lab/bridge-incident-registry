@@ -3713,5 +3713,57 @@
     ],
     "brand_history_notes": "Later Polygon Wallet Suite and Polygon Portal surface changes are treated as product-interface evolution within the same Polygon zkEVM bridge lineage unless later first-party evidence establishes a distinct bridge product.",
     "notes": "Polygon zkEVM does not have a dedicated BIR chain-reference key at this checkpoint, so that side is conservatively represented as unknown. No incident is inferred."
+  },
+  {
+    "id": "bir_bridge_000067",
+    "slug": "arbitrum-bridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Arbitrum Bridge",
+    "type": "canonical_bridge",
+    "status": "active",
+    "summary": "Arbitrum Bridge is the native/canonical bridge path between Ethereum and Arbitrum One. Arbitrum One opened to the public on August 31, 2021, and first-party material from that launch describes the project’s bridge operating at public launch. Current Arbitrum guidance continues to identify the Arbitrum bridge as a native bridge.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-29",
+    "last_verified_at": "2026-08-29",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "Arbitrum One Bridge",
+      "Arbitrum native bridge"
+    ],
+    "launch_date": "2021-08-31",
+    "launch_date_precision": "day",
+    "official_url": "https://bridge.arbitrum.io/",
+    "official_domain": "bridge.arbitrum.io",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "ethereum",
+      "arbitrum"
+    ],
+    "primary_assets": [
+      "eth",
+      "unknown"
+    ],
+    "operator_name": "Arbitrum",
+    "operator_type": "foundation",
+    "ecosystem_name": "Arbitrum One",
+    "related_protocols": [
+      "Arbitrum One"
+    ],
+    "brand_history_notes": "This record preserves the native/canonical Ethereum ↔ Arbitrum One bridge lineage across interface and protocol upgrades unless first-party evidence establishes a distinct successor bridge product.",
+    "notes": "The 2021 contemporaneous Offchain Labs launch post is retained in review notes but is not added as canonical evidence because it is Medium-hosted and unarchived. Durable first-party Arbitrum-hosted sources support the launch date and current native-bridge identity. No incident is inferred."
   }
 ]
