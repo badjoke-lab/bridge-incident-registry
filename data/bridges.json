@@ -3561,5 +3561,55 @@
     ],
     "brand_history_notes": "StarkGate 2.0, legacy per-token bridge contracts, and later bridge integrations are retained as lifecycle/version evolution within the StarkGate lineage unless later primary evidence establishes a separate canonical product.",
     "notes": "Starknet lacks a dedicated BIR chain-reference key at this checkpoint, so the Starknet side is conservatively represented as unknown rather than creating an unreviewed reference entry. No incident is inferred."
+  },
+  {
+    "id": "bir_bridge_000064",
+    "slug": "linea-native-bridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Linea Native Bridge",
+    "type": "canonical_bridge",
+    "status": "active",
+    "summary": "Linea Native Bridge is Linea’s official native bridge between Ethereum and Linea. Linea’s July 18, 2023 public-mainnet announcement explicitly directed users to the bridge to onboard, and the current first-party Linea bridge page continues to expose the native bridge.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-29",
+    "last_verified_at": "2026-08-29",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "Linea Bridge",
+      "Linea Official Bridge"
+    ],
+    "launch_date": "2023-07-18",
+    "launch_date_precision": "day",
+    "official_url": "https://linea.build/bridge",
+    "official_domain": "linea.build",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "ethereum",
+      "unknown"
+    ],
+    "primary_assets": [
+      "eth",
+      "unknown"
+    ],
+    "operator_name": "Linea",
+    "operator_type": "protocol_team",
+    "ecosystem_name": "Linea",
+    "related_protocols": [],
+    "brand_history_notes": "Later native-bridge UI moves, aggregator additions, and bridge-component evolution are retained as lifecycle/product evolution within the Linea native bridge lineage unless later first-party evidence establishes a separate canonical product.",
+    "notes": "Linea lacks a dedicated BIR chain-reference key at this checkpoint, so the Linea side is conservatively represented as unknown rather than creating an unreviewed reference entry. No incident is inferred."
   }
 ]
