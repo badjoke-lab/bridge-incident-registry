@@ -26,12 +26,9 @@ jobs:
           import copy, json
           from pathlib import Path
 
-          def load(path):
-              return json.loads(Path(path).read_text())
-          def save(path, obj):
-              Path(path).write_text(json.dumps(obj, indent=2, ensure_ascii=False) + '\n')
-          def suffix(record):
-              return int(record['id'].rsplit('_', 1)[1])
+          def load(path): return json.loads(Path(path).read_text())
+          def save(path, obj): Path(path).write_text(json.dumps(obj, indent=2, ensure_ascii=False) + '\n')
+          def suffix(record): return int(record['id'].rsplit('_', 1)[1])
 
           bridges = load('data/bridges.json')
           incidents = load('data/incidents.json')
@@ -42,10 +39,9 @@ jobs:
           actual = (len(bridges), len(incidents), len(events), len(evidence))
           if actual != expected:
               raise SystemExit(f'baseline count mismatch: expected {expected}, got {actual}')
-
           maxima = (max(map(suffix, bridges)), max(map(suffix, events)), max(map(suffix, evidence)))
-          if maxima != (65, 239, 391):
-              raise SystemExit(f'baseline max IDs changed: expected (65,239,391), got {maxima}')
+          if maxima != (65, 239, 392):
+              raise SystemExit(f'baseline max IDs changed: expected (65,239,392), got {maxima}')
 
           needle = 'polygon zkevm'
           for b in bridges:
@@ -53,137 +49,42 @@ jobs:
               if needle in hay or b.get('slug') == 'polygon-zkevm-bridge':
                   raise SystemExit(f'duplicate candidate detected: {b["id"]} {b["canonical_name"]}')
 
-          bridge_template = max(bridges, key=suffix)
-          event_template = max(events, key=suffix)
-          evidence_templates = sorted(evidence, key=suffix)[-2:]
-
-          b = copy.deepcopy(bridge_template)
+          b = copy.deepcopy(max(bridges, key=suffix))
           b.update({
-              'id': 'bir_bridge_000066',
-              'slug': 'polygon-zkevm-bridge',
-              'previous_slugs': [],
-              'redirect_from': [],
-              'canonical_name': 'Polygon zkEVM Bridge',
-              'type': 'canonical_bridge',
-              'status': 'active',
-              'summary': 'Polygon zkEVM Bridge is Polygon Labs’ official bridge path between Ethereum and Polygon zkEVM. Polygon announced the bridge as available on April 26, 2023, after Polygon zkEVM Mainnet Beta launched in March 2023.',
-              'confidence': 'high',
-              'record_maturity': 'reviewed',
-              'update_status': 'current',
-              'last_reviewed_at': '2026-08-29',
-              'last_verified_at': '2026-08-29',
-              'aliases': ['Polygon Bridge for Polygon zkEVM', 'zkEVM Bridge'],
-              'launch_date': '2023-04-26',
-              'launch_date_precision': 'day',
-              'end_date': None,
-              'end_date_precision': 'unknown',
-              'terminal_reason': None,
-              'official_url': 'https://portal.polygon.technology/',
-              'official_domain': 'portal.polygon.technology',
-              'official_url_status': 'live',
-              'archived_url': None,
-              'primary_chains': ['ethereum', 'unknown'],
-              'primary_assets': ['eth', 'unknown'],
-              'operator_name': 'Polygon Labs',
-              'operator_type': 'company',
-              'ecosystem_name': 'Polygon zkEVM',
-              'related_protocols': ['Polygon zkEVM'],
-              'brand_history_notes': 'Later Polygon Wallet Suite and Polygon Portal surface changes are treated as product-interface evolution within the same Polygon zkEVM bridge lineage unless later first-party evidence establishes a distinct bridge product.',
-              'major_incident_count': 0,
-              'has_unresolved_incident': False,
-              'has_reimbursement_history': False,
-              'successor_id': None,
-              'predecessor_id': None,
-              'replacement_bridge_id': None,
-              'duplicate_of': None,
-              'merged_into': None,
-              'notes': 'Polygon zkEVM does not have a dedicated BIR chain-reference key at this checkpoint, so that side is conservatively represented as unknown. No incident is inferred.'
+              'id':'bir_bridge_000066','slug':'polygon-zkevm-bridge','previous_slugs':[],'redirect_from':[],
+              'canonical_name':'Polygon zkEVM Bridge','type':'canonical_bridge','status':'active',
+              'summary':'Polygon zkEVM Bridge is Polygon Labs’ official bridge path between Ethereum and Polygon zkEVM. Polygon announced the bridge as available on April 26, 2023, after Polygon zkEVM Mainnet Beta launched in March 2023.',
+              'confidence':'high','record_maturity':'reviewed','update_status':'current','last_reviewed_at':'2026-08-29','last_verified_at':'2026-08-29',
+              'aliases':['Polygon Bridge for Polygon zkEVM','zkEVM Bridge'],'launch_date':'2023-04-26','launch_date_precision':'day','end_date':None,'end_date_precision':'unknown','terminal_reason':None,
+              'official_url':'https://portal.polygon.technology/','official_domain':'portal.polygon.technology','official_url_status':'live','archived_url':None,
+              'primary_chains':['ethereum','unknown'],'primary_assets':['eth','unknown'],'operator_name':'Polygon Labs','operator_type':'company','ecosystem_name':'Polygon zkEVM','related_protocols':['Polygon zkEVM'],
+              'brand_history_notes':'Later Polygon Wallet Suite and Polygon Portal surface changes are treated as product-interface evolution within the same Polygon zkEVM bridge lineage unless later first-party evidence establishes a distinct bridge product.',
+              'major_incident_count':0,'has_unresolved_incident':False,'has_reimbursement_history':False,'successor_id':None,'predecessor_id':None,'replacement_bridge_id':None,'duplicate_of':None,'merged_into':None,
+              'notes':'Polygon zkEVM does not have a dedicated BIR chain-reference key at this checkpoint, so that side is conservatively represented as unknown. No incident is inferred.'
           })
           bridges.append(b)
 
-          ev = copy.deepcopy(event_template)
+          ev = copy.deepcopy(max(events, key=suffix))
           ev.update({
-              'id': 'bir_ev_000240',
-              'bridge_id': 'bir_bridge_000066',
-              'incident_id': None,
-              'event_type': 'bridge_launched',
-              'event_date': '2023-04-26',
-              'event_date_precision': 'day',
-              'title': 'Polygon zkEVM Bridge announced as available',
-              'description': 'Polygon Labs announced Polygon Bridge for Polygon zkEVM as available for moving assets between Ethereum and Polygon zkEVM.',
-              'confidence': 'high',
-              'record_maturity': 'reviewed',
-              'update_status': 'current',
-              'impact_level': 'context',
-              'status_effect': 'bridge launched',
-              'source_count': 2,
-              'sort_order': 10,
-              'amount_text': None,
-              'recovered_amount_text': None,
-              'reimbursement_status': 'not_applicable',
-              'restart_status': 'not_applicable',
-              'affected_chains': ['ethereum', 'unknown'],
-              'affected_assets': ['eth', 'unknown'],
-              'notes': 'Bridge-specific public availability is dated to the April 26, 2023 first-party bridge announcement rather than backdated to the March 27 network launch.',
-              'duplicate_of': None,
-              'merged_into': None
+              'id':'bir_ev_000240','bridge_id':'bir_bridge_000066','incident_id':None,'event_type':'bridge_launched','event_date':'2023-04-26','event_date_precision':'day',
+              'title':'Polygon zkEVM Bridge announced as available','description':'Polygon Labs announced Polygon Bridge for Polygon zkEVM as available for moving assets between Ethereum and Polygon zkEVM.',
+              'confidence':'high','record_maturity':'reviewed','update_status':'current','impact_level':'context','status_effect':'bridge launched','source_count':2,'sort_order':10,
+              'amount_text':None,'recovered_amount_text':None,'reimbursement_status':'not_applicable','restart_status':'not_applicable','affected_chains':['ethereum','unknown'],'affected_assets':['eth','unknown'],
+              'notes':'Bridge-specific public availability is dated to the April 26, 2023 first-party bridge announcement rather than backdated to the March 27 network launch.','duplicate_of':None,'merged_into':None
           })
           events.append(ev)
 
-          sources = [
-              {
-                  'id': 'bir_src_000392',
-                  'title': 'Announcing Polygon Bridge for Polygon zkEVM',
-                  'url': 'https://polygon.technology/blog/announcing-polygon-bridge-for-polygon-zkevm-2',
-                  'published_at': '2023-04-26',
-                  'notes': 'First-party Polygon Labs announcement explicitly states that Polygon Bridge for zkEVM is available and identifies its Ethereum and Polygon zkEVM smart-contract sides.'
-              },
-              {
-                  'id': 'bir_src_000393',
-                  'title': 'How to Bridge to Polygon zkEVM Mainnet Beta in 3 Easy Steps',
-                  'url': 'https://polygon.technology/blog/how-to-bridge-to-polygon-zkevm-mainnet-beta-in-3-easy-steps',
-                  'published_at': '2023-04-27',
-                  'notes': 'First-party Polygon Labs usage guide independently corroborates live public bridge use from Ethereum Mainnet to Polygon zkEVM immediately after the bridge announcement.'
-              }
+          templates = sorted(evidence, key=suffix)[-2:]
+          specs = [
+            ('bir_src_000393','Announcing Polygon Bridge for Polygon zkEVM','https://polygon.technology/blog/announcing-polygon-bridge-for-polygon-zkevm-2','2023-04-26','First-party Polygon Labs announcement explicitly states that Polygon Bridge for zkEVM is available and identifies its Ethereum and Polygon zkEVM smart-contract sides.'),
+            ('bir_src_000394','How to Bridge to Polygon zkEVM Mainnet Beta in 3 Easy Steps','https://polygon.technology/blog/how-to-bridge-to-polygon-zkevm-mainnet-beta-in-3-easy-steps','2023-04-27','First-party Polygon Labs usage guide independently corroborates live public bridge use from Ethereum Mainnet to Polygon zkEVM immediately after the bridge announcement.')
           ]
-          for template, spec in zip(evidence_templates, sources):
+          for template, (sid,title,url,published,notes) in zip(templates,specs):
               src = copy.deepcopy(template)
-              src.update({
-                  'id': spec['id'],
-                  'bridge_id': 'bir_bridge_000066',
-                  'incident_id': None,
-                  'event_id': 'bir_ev_000240',
-                  'source_type': 'official_announcement',
-                  'title': spec['title'],
-                  'url': spec['url'],
-                  'publisher': 'Polygon Labs',
-                  'published_at': spec['published_at'],
-                  'published_at_precision': 'day',
-                  'reliability': 'high',
-                  'source_tier': 'tier_1',
-                  'url_status': 'live',
-                  'accessed_at': '2026-08-29',
-                  'claim_scope': 'launch',
-                  'language': 'en',
-                  'author': None,
-                  'quote_excerpt': None,
-                  'is_primary': True,
-                  'is_paywalled': False,
-                  'is_official_domain': True,
-                  'supports_amount': False,
-                  'supports_recovery': False,
-                  'supports_reimbursement': False,
-                  'supports_reopen': False,
-                  'supports_shutdown': False,
-                  'supports_migration': False,
-                  'archived_url': None,
-                  'notes': spec['notes']
-              })
+              src.update({'id':sid,'bridge_id':'bir_bridge_000066','incident_id':None,'event_id':'bir_ev_000240','source_type':'official_announcement','title':title,'url':url,'publisher':'Polygon Labs','published_at':published,'published_at_precision':'day','reliability':'high','source_tier':'tier_1','url_status':'live','accessed_at':'2026-08-29','claim_scope':'launch','language':'en','author':None,'quote_excerpt':None,'is_primary':True,'is_paywalled':False,'is_official_domain':True,'supports_amount':False,'supports_recovery':False,'supports_reimbursement':False,'supports_reopen':False,'supports_shutdown':False,'supports_migration':False,'archived_url':None,'notes':notes})
               evidence.append(src)
 
-          save('data/bridges.json', bridges)
-          save('data/events.json', events)
-          save('data/evidence.json', evidence)
+          save('data/bridges.json', bridges); save('data/events.json', events); save('data/evidence.json', evidence)
           print('applied counts', len(bridges), len(incidents), len(events), len(evidence))
           PY
       - run: npm run validate:data
@@ -195,7 +96,7 @@ jobs:
         run: |
           git rm -f .github/workflows/temp-batch-12-canonical-apply.yml
           git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config user.email '418982982+github-actions[bot]@users.noreply.github.com'
           git add data/bridges.json data/events.json data/evidence.json
           git commit -m 'data: add Polygon zkEVM Bridge'
           git push origin HEAD:canonical/growth-batch-12-polygon-zkevm-bridge
