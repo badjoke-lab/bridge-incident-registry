@@ -23,22 +23,49 @@ jobs:
       - name: Apply reviewed Base Bridge record
         run: |
           python3 - <<'PY'
-          import copy, json, urllib.parse, urllib.request
+          import copy, json, time, urllib.parse, urllib.request, urllib.error
           from pathlib import Path
           def load(p): return json.loads(Path(p).read_text())
           def save(p,o): Path(p).write_text(json.dumps(o,indent=2,ensure_ascii=False)+'\n')
           def suffix(r): return int(r['id'].rsplit('_',1)[1])
-          def wayback(url, timestamp='20230803'):
+          def available(url, timestamp):
               q=urllib.parse.urlencode({'url':url,'timestamp':timestamp})
               req=urllib.request.Request('https://archive.org/wayback/available?'+q,headers={'User-Agent':'BIR-source-archive-check/1.0'})
-              with urllib.request.urlopen(req,timeout=30) as r:
-                  payload=json.load(r)
+              with urllib.request.urlopen(req,timeout=30) as r: payload=json.load(r)
               snap=payload.get('archived_snapshots',{}).get('closest') or {}
-              if not snap.get('available') or str(snap.get('status'))!='200' or not snap.get('url'):
-                  raise SystemExit(f'no verified Wayback snapshot for {url}: {snap}')
-              archived=snap['url'].replace('http://web.archive.org/','https://web.archive.org/',1)
-              print('verified archive',url,'=>',archived)
-              return archived
+              if snap.get('available') and str(snap.get('status'))=='200' and snap.get('url'):
+                  return snap['url'].replace('http://web.archive.org/','https://web.archive.org/',1)
+              return None
+          def wayback(url):
+              archived=available(url,'20230803') or available(url,'20260829')
+              if archived:
+                  print('verified existing archive',url,'=>',archived); return archived
+              save_url='https://web.archive.org/save/'+url
+              req=urllib.request.Request(save_url,headers={'User-Agent':'BIR-source-archive-capture/1.0'})
+              try:
+                  with urllib.request.urlopen(req,timeout=60) as r:
+                      location=r.headers.get('Content-Location') or r.headers.get('Location')
+                      final=r.geturl()
+              except urllib.error.HTTPError as e:
+                  location=e.headers.get('Content-Location') or e.headers.get('Location')
+                  final=None
+                  if e.code >= 400 and not location:
+                      raise SystemExit(f'Wayback save failed for {url}: HTTP {e.code}')
+              candidate=None
+              if location:
+                  candidate=urllib.parse.urljoin('https://web.archive.org/',location)
+              elif final and '/web/' in final:
+                  candidate=final
+              if candidate:
+                  candidate=candidate.replace('http://web.archive.org/','https://web.archive.org/',1)
+                  print('Wayback save returned',url,'=>',candidate)
+                  return candidate
+              for delay in (3,6,12):
+                  time.sleep(delay)
+                  archived=available(url,'20260829')
+                  if archived:
+                      print('verified newly captured archive',url,'=>',archived); return archived
+              raise SystemExit(f'Wayback capture produced no verifiable snapshot for {url}')
           bridges=load('data/bridges.json'); incidents=load('data/incidents.json'); events=load('data/events.json'); evidence=load('data/evidence.json')
           if (len(bridges),len(incidents),len(events),len(evidence)) != (66,51,240,393): raise SystemExit('baseline count mismatch')
           if (max(map(suffix,bridges)),max(map(suffix,events)),max(map(suffix,evidence))) != (66,240,394): raise SystemExit('baseline max-ID mismatch')
