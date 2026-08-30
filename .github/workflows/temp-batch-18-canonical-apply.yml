@@ -1,0 +1,98 @@
+name: TEMP Batch 18 canonical apply
+
+on:
+  push:
+    branches:
+      - canonical/growth-batch-18-metis-bridge
+    paths:
+      - .github/workflows/temp-batch-18-canonical-apply.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: canonical/growth-batch-18-metis-bridge
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Apply bounded canonical record and sync counts
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const p = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
+          const bridges = p('data/bridges.json');
+          const incidents = p('data/incidents.json');
+          const events = p('data/events.json');
+          const evidence = p('data/evidence.json');
+          const fail = (m) => { throw new Error(m); };
+          if (bridges.length !== 70 || incidents.length !== 51 || events.length !== 244 || evidence.length !== 399) fail(`baseline count mismatch ${bridges.length}/${incidents.length}/${events.length}/${evidence.length}`);
+          if (bridges.at(-1)?.id !== 'bir_bridge_000070') fail('unexpected bridge max id');
+          if (events.at(-1)?.id !== 'bir_ev_000244') fail('unexpected event max id');
+          if (evidence.at(-1)?.id !== 'bir_src_000400') fail('unexpected evidence max id');
+          const haystack = JSON.stringify(bridges).toLowerCase();
+          for (const token of ['metis bridge','metis-bridge','bridge.metis.io']) if (haystack.includes(token)) fail(`duplicate guard hit: ${token}`);
+          bridges.push({
+            id:'bir_bridge_000071', slug:'metis-bridge', previous_slugs:[], redirect_from:[], canonical_name:'Metis Bridge',
+            type:'canonical_bridge', status:'active',
+            summary:'Metis Bridge is the official asset bridge between Ethereum mainnet and Metis Andromeda. Metis first-party launch material listed the bridge as part of the Andromeda release, and the official bridge interface remains available.',
+            confidence:'high', record_maturity:'reviewed', update_status:'current', last_reviewed_at:'2026-08-30', last_verified_at:'2026-08-30',
+            end_date:null, end_date_precision:'unknown', terminal_reason:null, archived_url:null, major_incident_count:0, has_unresolved_incident:false, has_reimbursement_history:false,
+            successor_id:null, predecessor_id:null, replacement_bridge_id:null, duplicate_of:null, merged_into:null,
+            aliases:['Metis Official Bridge'], launch_date:'2021-11', launch_date_precision:'month',
+            official_url:'https://bridge.metis.io/', official_domain:'bridge.metis.io', official_url_status:'live_verified',
+            primary_chains:['ethereum','metis'], primary_assets:['unknown'], operator_name:'Metis', operator_type:'foundation', ecosystem_name:'Metis Andromeda', related_protocols:[],
+            brand_history_notes:'The bridge remains part of the Metis ecosystem despite later third-party bridge integrations and bridge architecture changes; no separate successor is inferred here.',
+            notes:'The 2021-11 month boundary is supported by the Andromeda launch announcement and November operational instructions. No exact launch day is inferred and no incident is inferred.'
+          });
+          events.push({
+            id:'bir_ev_000245', bridge_id:'bir_bridge_000071', incident_id:null, confidence:'high', record_maturity:'reviewed', update_status:'current', impact_level:'context', status_effect:'active', sort_order:10,
+            amount_text:null, recovered_amount_text:null, reimbursement_status:'not_applicable', restart_status:'not_applicable', affected_assets:['unknown'], notes:'Metis announced Andromeda for November 2021 and explicitly listed Metis Bridge as a launch component. Exact day precision is not inferred.', duplicate_of:null, merged_into:null,
+            event_type:'bridge_launched', event_date:'2021-11', event_date_precision:'month', title:'Metis Bridge launches with Andromeda', description:'Metis listed Metis Bridge as part of the Andromeda release for transferring tokens between Ethereum mainnet and Metis Layer 2, with November 2021 operational instructions confirming launch-month availability.', source_count:1, affected_chains:['ethereum','metis']
+          });
+          evidence.push({
+            id:'bir_src_000401', bridge_id:'bir_bridge_000071', event_id:'bir_ev_000245', incident_id:null, reliability:'high', source_tier:'tier_1', url_status:'live', accessed_at:'2026-08-30', claim_scope:'launch', language:'en', author:null, quote_excerpt:null,
+            is_primary:true, is_paywalled:false, is_official_domain:true, supports_amount:false, supports_recovery:false, supports_reimbursement:false, supports_reopen:false, supports_shutdown:false, supports_migration:false,
+            source_type:'official_announcement', title:'Metis to Launch Andromeda, Honoring Our Commitment to Decentralization', url:'https://www.metis.io/blog/metis-to-launch-andromeda-honoring-our-commitment-to-decentralization', publisher:'Metis', published_at:'2021-11-03', published_at_precision:'day', archived_url:null,
+            notes:'First-party Metis announcement states Andromeda would launch during November 2021 and explicitly lists Metis Bridge as the Ethereum-mainnet-to-Metis-Layer-2 bridge included in that structure.'
+          });
+          fs.writeFileSync('data/bridges.json', JSON.stringify(bridges,null,2)+'\n');
+          fs.writeFileSync('data/events.json', JSON.stringify(events,null,2)+'\n');
+          fs.writeFileSync('data/evidence.json', JSON.stringify(evidence,null,2)+'\n');
+          const docs = ['README.md','docs/runbooks/current-status.md','docs/runbooks/recovery-checkpoint.md','docs/runbooks/development-roadmap.md','docs/runbooks/public-consistency-remediation.md'];
+          for (const file of docs) {
+            let s = fs.readFileSync(file,'utf8');
+            const before = s;
+            s = s.replace(/(Bridges\s+)(70)(\b)/g,'$171$3')
+                 .replace(/(Incidents\s+)(51)(\b)/g,'$151$3')
+                 .replace(/(Events\s+)(244)(\b)/g,'$1245$3')
+                 .replace(/(Evidence\s+)(399)(\b)/g,'$1400$3');
+            if (s === before) fail(`count sync made no change in ${file}`);
+            fs.writeFileSync(file,s);
+          }
+          NODE
+      - name: Install and validate
+        run: |
+          npm ci
+          npm run validate:data
+          npm run validate:enums
+          npm run audit:full-corpus
+          npm run audit:source-count
+          npm run audit:source-quality
+          npm run check
+          npm run build
+          npm run accessibility:check
+          npm run performance:check
+          npm run dist:check
+      - name: Commit canonical data and self-delete helper
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/bridges.json data/events.json data/evidence.json README.md docs/runbooks/current-status.md docs/runbooks/recovery-checkpoint.md docs/runbooks/development-roadmap.md docs/runbooks/public-consistency-remediation.md
+          git rm .github/workflows/temp-batch-18-canonical-apply.yml
+          git commit -m 'data: add Metis Bridge canonical record'
+          git push origin HEAD:canonical/growth-batch-18-metis-bridge
