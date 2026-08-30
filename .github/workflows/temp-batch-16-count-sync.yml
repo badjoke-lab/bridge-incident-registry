@@ -19,6 +19,7 @@ jobs:
       - name: Sync current canonical count blocks
         shell: bash
         run: |
+          npm ci
           node <<'NODE'
           const fs = require('fs');
           const files = [
