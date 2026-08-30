@@ -25,112 +25,51 @@ jobs:
           const incidents = JSON.parse(fs.readFileSync('data/incidents.json','utf8'));
           const events = JSON.parse(fs.readFileSync('data/events.json','utf8'));
           const evidence = JSON.parse(fs.readFileSync('data/evidence.json','utf8'));
-
           const maxId = (rows, prefix) => Math.max(...rows.map(r => Number(String(r.id).replace(prefix,''))));
-          if (bridges.length !== 68 || incidents.length !== 51 || events.length !== 242 || evidence.length !== 397) {
-            throw new Error(`baseline count mismatch ${bridges.length}/${incidents.length}/${events.length}/${evidence.length}`);
-          }
-          if (maxId(bridges,'bir_bridge_') !== 68 || maxId(events,'bir_ev_') !== 242 || maxId(evidence,'bir_src_') !== 398) {
-            throw new Error('baseline max-ID mismatch');
-          }
+          if (bridges.length !== 68 || incidents.length !== 51 || events.length !== 242 || evidence.length !== 397) throw new Error(`baseline count mismatch ${bridges.length}/${incidents.length}/${events.length}/${evidence.length}`);
+          if (maxId(bridges,'bir_bridge_') !== 68 || maxId(events,'bir_ev_') !== 242 || maxId(evidence,'bir_src_') !== 398) throw new Error('baseline max-ID mismatch');
 
           const names = new Set(bridges.flatMap(b => [b.canonical_name, ...(b.aliases||[])]).map(s => String(s).toLowerCase()));
           const slugs = new Set(bridges.flatMap(b => [b.slug, ...(b.previous_slugs||[]), ...(b.redirect_from||[])]).map(s => String(s).toLowerCase()));
           const domains = new Set(bridges.map(b => String(b.official_domain||'').toLowerCase()).filter(Boolean));
-          for (const n of ['Shyft Bridge','Byfrost','Byfrost (Shyft Bridge)']) if (names.has(n.toLowerCase())) throw new Error(`duplicate name/alias ${n}`);
-          if (slugs.has('shyft-bridge')) throw new Error('duplicate slug shyft-bridge');
-          if (domains.has('shyft.network')) throw new Error('duplicate official domain shyft.network');
+          if (names.has('shyft bridge') || slugs.has('shyft-bridge') || domains.has('shyft.network')) throw new Error('duplicate Shyft bridge identity/domain');
 
           bridges.push({
-            id:'bir_bridge_000069',
-            slug:'shyft-bridge',
-            previous_slugs:[],
-            redirect_from:[],
-            canonical_name:'Shyft Bridge',
-            type:'asset_bridge',
-            status:'active',
-            summary:'Shyft Bridge is Shyft Network’s Ethereum-to-Shyft Mainnet asset bridge. Shyft Network announced deployment of the bridge on September 2, 2021, and current first-party terminology retains the bridge lineage as Byfrost (Shyft Bridge).',
-            confidence:'high',
-            record_maturity:'reviewed',
-            update_status:'current',
-            last_reviewed_at:'2026-08-30',
-            last_verified_at:'2026-08-30',
-            end_date:null,
-            end_date_precision:'unknown',
-            terminal_reason:null,
-            archived_url:null,
-            major_incident_count:0,
-            has_unresolved_incident:false,
-            has_reimbursement_history:false,
-            successor_id:null,
-            predecessor_id:null,
-            replacement_bridge_id:null,
-            duplicate_of:null,
-            merged_into:null,
-            aliases:['Byfrost','Byfrost (Shyft Bridge)'],
-            launch_date:'2021-09-02',
-            launch_date_precision:'day',
-            official_url:'https://www.shyft.network/glossary',
-            official_domain:'shyft.network',
-            official_url_status:'live_verified',
-            primary_chains:['ethereum','unknown'],
-            primary_assets:['unknown'],
-            operator_name:'Shyft Network',
-            operator_type:'protocol_team',
-            ecosystem_name:'Shyft Network',
-            related_protocols:['Byfrost'],
-            brand_history_notes:'BIR preserves the 2021 Shyft Bridge deployment and the current Byfrost (Shyft Bridge) terminology as one bridge lineage unless later first-party evidence establishes a distinct successor product.',
+            id:'bir_bridge_000069', slug:'shyft-bridge', previous_slugs:[], redirect_from:[], canonical_name:'Shyft Bridge',
+            type:'asset_bridge', status:'active',
+            summary:'Shyft Bridge is Shyft Network’s Ethereum-to-Shyft Mainnet asset bridge. Shyft Network announced deployment of the bridge on September 2, 2021, enabling ERC assets to move from Ethereum to Shyft Network.',
+            confidence:'high', record_maturity:'reviewed', update_status:'current', last_reviewed_at:'2026-08-30', last_verified_at:'2026-08-30',
+            end_date:null, end_date_precision:'unknown', terminal_reason:null, archived_url:null,
+            major_incident_count:0, has_unresolved_incident:false, has_reimbursement_history:false,
+            successor_id:null, predecessor_id:null, replacement_bridge_id:null, duplicate_of:null, merged_into:null,
+            aliases:[], launch_date:'2021-09-02', launch_date_precision:'day',
+            official_url:'https://www.shyft.network/newsroom/the-shyft-federation-deploys-the-shyft-bridge', official_domain:'shyft.network', official_url_status:'live_verified',
+            primary_chains:['ethereum','unknown'], primary_assets:['unknown'],
+            operator_name:'Shyft Network', operator_type:'protocol_team', ecosystem_name:'Shyft Network', related_protocols:['ChainBridge'],
+            brand_history_notes:'Current Shyft terminology uses “Byfrost (Shyft Bridge)”, but a separate October 2021 first-party tokenomics post described Byfrost as not yet launched. BIR therefore does not backdate Byfrost to the September 2 Shyft Bridge deployment or encode it as a launch-day alias in canonical data.',
             notes:'Shyft Mainnet does not have a dedicated BIR chain-reference key at this checkpoint, so that side is conservatively represented as unknown. No incident is inferred.'
           });
 
           events.push({
-            id:'bir_ev_000243',
-            bridge_id:'bir_bridge_000069',
-            incident_id:null,
-            confidence:'high',
-            record_maturity:'reviewed',
-            update_status:'current',
-            impact_level:'context',
-            status_effect:'active',
-            sort_order:10,
-            amount_text:null,
-            recovered_amount_text:null,
-            reimbursement_status:'not_applicable',
-            restart_status:'not_applicable',
-            affected_assets:['unknown'],
-            notes:'Launch boundary is taken directly from Shyft Network’s September 2, 2021 bridge deployment announcement; current first-party glossary evidence supports the Byfrost naming lineage.',
-            duplicate_of:null,
-            merged_into:null,
-            event_type:'bridge_launched',
-            event_date:'2021-09-02',
-            event_date_precision:'day',
+            id:'bir_ev_000243', bridge_id:'bir_bridge_000069', incident_id:null,
+            confidence:'high', record_maturity:'reviewed', update_status:'current', impact_level:'context', status_effect:'active', sort_order:10,
+            amount_text:null, recovered_amount_text:null, reimbursement_status:'not_applicable', restart_status:'not_applicable', affected_assets:['unknown'],
+            notes:'Launch boundary is taken directly from Shyft Network’s September 2, 2021 bridge deployment announcement. Byfrost timing is not backdated to this event.',
+            duplicate_of:null, merged_into:null, event_type:'bridge_launched', event_date:'2021-09-02', event_date_precision:'day',
             title:'Shyft Bridge deployed on Shyft Mainnet',
             description:'Shyft Network announced deployment of the Shyft Bridge on Shyft Mainnet, enabling ERC assets to bridge from Ethereum to Shyft Network.',
-            source_count:2,
-            affected_chains:['ethereum','unknown']
+            source_count:1, affected_chains:['ethereum','unknown']
           });
 
-          const baseEvidence = {
-            bridge_id:'bir_bridge_000069', event_id:'bir_ev_000243', incident_id:null,
-            reliability:'high', source_tier:'tier_1', url_status:'live', accessed_at:'2026-08-30',
-            language:'en', author:null, quote_excerpt:null, is_paywalled:false,
-            supports_amount:false, supports_recovery:false, supports_reimbursement:false,
-            supports_reopen:false, supports_shutdown:false, supports_migration:false, archived_url:null
-          };
           evidence.push({
-            ...baseEvidence,
-            id:'bir_src_000399', claim_scope:'launch', is_primary:true, is_official_domain:true,
+            id:'bir_src_000399', bridge_id:'bir_bridge_000069', event_id:'bir_ev_000243', incident_id:null,
+            reliability:'high', source_tier:'tier_1', url_status:'live', accessed_at:'2026-08-30', claim_scope:'launch', language:'en',
+            author:null, quote_excerpt:null, is_primary:true, is_paywalled:false, is_official_domain:true,
+            supports_amount:false, supports_recovery:false, supports_reimbursement:false, supports_reopen:false, supports_shutdown:false, supports_migration:false,
             source_type:'official_announcement', title:'The Shyft Federation Deploys the Shyft Bridge',
-            url:'https://www.shyft.network/newsroom/the-shyft-federation-deploys-the-shyft-bridge',
-            publisher:'Shyft Network', published_at:'2021-09-02', published_at_precision:'day',
+            url:'https://www.shyft.network/newsroom/the-shyft-federation-deploys-the-shyft-bridge', publisher:'Shyft Network',
+            published_at:'2021-09-02', published_at_precision:'day', archived_url:null,
             notes:'First-party Shyft Network announcement explicitly states deployment of the Shyft Network Bridge on Shyft Mainnet and ERC-asset bridging from Ethereum.'
-          });
-          evidence.push({
-            ...baseEvidence,
-            id:'bir_src_000400', claim_scope:'event', is_primary:true, is_official_domain:true,
-            source_type:'official_documentation', title:'Shyft Network Glossary — Byfrost (Shyft Bridge)',
-            url:'https://www.shyft.network/glossary', publisher:'Shyft Network', published_at:null, published_at_precision:'unknown',
-            notes:'Current first-party glossary defines Byfrost (Shyft Bridge) as Shyft Network bridging technology, supporting current identity and lineage without asserting a separate product launch.'
           });
 
           fs.writeFileSync('data/bridges.json', JSON.stringify(bridges,null,2)+'\n');
