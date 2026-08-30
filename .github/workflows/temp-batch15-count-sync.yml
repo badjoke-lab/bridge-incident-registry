@@ -1,0 +1,46 @@
+name: TEMP Batch 15 Count Sync
+on:
+  push:
+    branches:
+      - canonical/growth-batch-15-optimism-standard-bridge
+jobs:
+  sync:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - name: Sync current-count blocks only
+        run: |
+          node <<'NODE'
+          const fs=require('fs');
+          const files=['README.md','docs/runbooks/current-status.md','docs/runbooks/recovery-checkpoint.md','docs/runbooks/development-roadmap.md','docs/runbooks/public-consistency-remediation.md'];
+          let total=0;
+          for(const f of files){
+            let s=fs.readFileSync(f,'utf8'), before=s;
+            s=s.replace(/\b67 bridges\b/gi,m=>{total++;return m.replace('67','68')});
+            s=s.replace(/\b241 events\b/gi,m=>{total++;return m.replace('241','242')});
+            s=s.replace(/\b395 evidence\b/gi,m=>{total++;return m.replace('395','397')});
+            s=s.replace(/(\bBridges\b[^\d\n]{0,30})67\b/g,(m,p)=>{total++;return p+'68'});
+            s=s.replace(/(\bEvents\b[^\d\n]{0,30})241\b/g,(m,p)=>{total++;return p+'242'});
+            s=s.replace(/(\bEvidence\b[^\d\n]{0,30})395\b/g,(m,p)=>{total++;return p+'397'});
+            if(s!==before) fs.writeFileSync(f,s);
+          }
+          if(total===0) throw new Error('no current-count replacements made');
+          console.log('replacements',total);
+          NODE
+      - run: npm run build
+      - run: npm run dist:check
+      - run: rm -f .github/workflows/temp-batch15-count-sync.yml
+      - name: Commit count sync and self-delete helper
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md docs/runbooks/current-status.md docs/runbooks/recovery-checkpoint.md docs/runbooks/development-roadmap.md docs/runbooks/public-consistency-remediation.md .github/workflows/temp-batch15-count-sync.yml
+          git commit -m 'docs: sync Batch 15 canonical counts'
+          git push
