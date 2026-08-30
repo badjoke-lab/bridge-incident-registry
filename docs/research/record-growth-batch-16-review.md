@@ -28,6 +28,14 @@ Review decision:
 - do not claim a current end-user bridge UI unless independently evidenced;
 - lifecycle-only addition; no incident, exploit, loss, or safety claim inferred.
 
+## canonical application correction
+
+Canonical application added `bir_bridge_000069`, launch event `bir_ev_000243`, and first-party launch evidence `bir_src_000399`. The resulting corpus is **69 bridges / 51 incidents / 243 events / 398 evidence**.
+
+A later first-party Shyft tokenomics post dated 2021-10-01 states that Byfrost had not yet launched and was expected later that year. That evidence materially narrows the naming boundary: canonical data therefore **does not** backdate `Byfrost` or `Byfrost (Shyft Bridge)` to the 2021-09-02 Shyft Bridge deployment and does not store either as a launch-day alias. Current glossary terminology remains lineage context only unless a separate Byfrost launch boundary is established.
+
+The canonical applicator passed data/schema/full-corpus/source-count/source-quality gates. Count synchronization subsequently built **128 canonical HTML routes**, preserved **84 legacy redirects**, and validated **44 reviewed Series relationships** without raising any ceiling.
+
 ## duplicate boundary
 
 Current main at review start: `9be3d3beb04f9c223dff120b7b98099cc69fb189`.
