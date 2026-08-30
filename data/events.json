@@ -8036,5 +8036,36 @@
       "ethereum",
       "unknown"
     ]
+  },
+  {
+    "id": "bir_ev_000245",
+    "bridge_id": "bir_bridge_000071",
+    "incident_id": null,
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "context",
+    "status_effect": "active",
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_applicable",
+    "restart_status": "not_applicable",
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": "Metis announced Andromeda for November 2021 and explicitly listed Metis Bridge as a launch component. Exact day precision is not inferred.",
+    "duplicate_of": null,
+    "merged_into": null,
+    "event_type": "bridge_launched",
+    "event_date": "2021-11",
+    "event_date_precision": "month",
+    "title": "Metis Bridge launches with Andromeda",
+    "description": "Metis listed Metis Bridge as part of the Andromeda release for transferring tokens between Ethereum mainnet and Metis Layer 2, with November 2021 operational instructions confirming launch-month availability.",
+    "source_count": 1,
+    "affected_chains": [
+      "ethereum",
+      "metis"
+    ]
   }
 ]

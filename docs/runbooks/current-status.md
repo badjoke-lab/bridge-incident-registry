@@ -6,10 +6,10 @@ Updated: 2026-08-28
 ## Canonical and production state
 
 ```text
-Bridges   70
+Bridges   71
 Incidents   51
-Events   244
-Evidence   399
+Events   245
+Evidence   400
 ```
 
 Ledger Series Phase 2 remains closed. Later reviewed maintenance added WanBridge, ChainConnect and separate May and July 2026 Verus-Ethereum Bridge incidents without reopening Phase 2.

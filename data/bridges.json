@@ -3914,5 +3914,53 @@
     ],
     "brand_history_notes": "Later IBC enablement, Canonical Chain changes, and the Ionic bridge upgrade are treated as lifecycle evolution within the same Injective Bridge lineage unless future first-party evidence establishes a distinct successor.",
     "notes": "The first-party September 2021 retrospective supports month precision only. Injective does not yet have a dedicated BIR chain-reference key, so that side is conservatively represented as unknown. No incident is inferred."
+  },
+  {
+    "id": "bir_bridge_000071",
+    "slug": "metis-bridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Metis Bridge",
+    "type": "canonical_bridge",
+    "status": "active",
+    "summary": "Metis Bridge is the official asset bridge between Ethereum mainnet and Metis Andromeda. Metis first-party launch material listed the bridge as part of the Andromeda release, and the official bridge interface remains available.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-30",
+    "last_verified_at": "2026-08-30",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "Metis Official Bridge"
+    ],
+    "launch_date": "2021-11",
+    "launch_date_precision": "month",
+    "official_url": "https://bridge.metis.io/",
+    "official_domain": "bridge.metis.io",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "ethereum",
+      "metis"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "Metis",
+    "operator_type": "foundation",
+    "ecosystem_name": "Metis Andromeda",
+    "related_protocols": [],
+    "brand_history_notes": "The bridge remains part of the Metis ecosystem despite later third-party bridge integrations and bridge architecture changes; no separate successor is inferred here.",
+    "notes": "The 2021-11 month boundary is supported by the Andromeda launch announcement and November operational instructions. No exact launch day is inferred and no incident is inferred."
   }
 ]
