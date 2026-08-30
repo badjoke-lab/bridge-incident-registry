@@ -54,3 +54,17 @@ Repository search for `Injective Bridge` returned no canonical hit before this r
 - Preserve bridge upgrades as lifecycle unless first-party evidence establishes a distinct successor.
 - Do not weaken source-count, source-quality, schema, Series, build, accessibility, performance, dist, browser, or production-equality gates.
 - Do not raise ceilings to fit corpus growth.
+
+## Canonical application result
+
+Applied on `canonical/growth-batch-17-injective-bridge` after strict baseline and duplicate guards.
+
+- `bir_bridge_000070` — Injective Bridge
+- launch: `2021-09` month precision
+- `bir_ev_000244` — launch lifecycle event
+- `bir_src_000400` — Injective first-party September 2021 retrospective
+- chain boundary: `ethereum + unknown`; no Injective reference key invented
+- no incident inferred
+- resulting corpus: **70 bridges / 51 incidents / 244 events / 399 evidence**
+- build output: 129 HTML routes, 84 redirects, 70 bridge dossiers, 51 incident dossiers
+- source-quality, source-count, schema, full-corpus, accessibility, performance, and dist gates passed without ceiling changes
