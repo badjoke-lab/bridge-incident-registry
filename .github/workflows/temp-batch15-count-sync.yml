@@ -1,0 +1,68 @@
+name: TEMP Batch 15 Count Sync
+
+on:
+  push:
+    branches:
+      - canonical/growth-batch-15-optimism-standard-bridge
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Sync canonical counts and review result
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const files = [
+            'README.md',
+            'docs/runbooks/current-status.md',
+            'docs/runbooks/recovery-checkpoint.md',
+            'docs/runbooks/development-roadmap.md',
+            'docs/runbooks/public-consistency-remediation.md'
+          ];
+          for (const file of files) {
+            let s = fs.readFileSync(file, 'utf8');
+            const replacements = [
+              [/Bridges\s+67\b/, 'Bridges   68'],
+              [/Incidents\s+51\b/, 'Incidents   51'],
+              [/Events\s+241\b/, 'Events   242'],
+              [/Evidence\s+395\b/, 'Evidence   397']
+            ];
+            for (const [re, value] of replacements) {
+              const matches = s.match(new RegExp(re.source, 'g')) || [];
+              if (matches.length !== 1) throw new Error(`${file}: expected exactly one ${re}, got ${matches.length}`);
+              s = s.replace(re, value);
+            }
+            fs.writeFileSync(file, s);
+          }
+          const review = 'docs/research/record-growth-batch-15-review.md';
+          let r = fs.readFileSync(review, 'utf8');
+          if (!r.includes('## canonical application result')) {
+            r += `\n## canonical application result\n\nApplied on \`canonical/growth-batch-15-optimism-standard-bridge\` after repeat duplicate guards.\n\n- Added \`bir_bridge_000068\` for Optimism Standard Bridge.\n- Added one launch event at \`2021-07-13\`; no incident record or safety inference was added.\n- Added two durable evidence records; the Medium-hosted Optimism launch post remains review context only.\n- Canonical counts after application: **68 bridges / 51 incidents / 242 events / 397 evidence**.\n- Source-count, source-quality, schema/full-corpus gates passed during bounded application.\n- No source-quality, performance, or other ceilings were raised.\n`;
+            fs.writeFileSync(review, r);
+          }
+          NODE
+      - name: Build
+        run: npm run build
+      - name: Dist check
+        run: npm run dist:check
+      - name: Commit synced docs and remove temporary workflow
+        run: |
+          rm .github/workflows/temp-batch15-count-sync.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add README.md docs/runbooks/current-status.md docs/runbooks/recovery-checkpoint.md docs/runbooks/development-roadmap.md docs/runbooks/public-consistency-remediation.md docs/research/record-growth-batch-15-review.md .github/workflows/temp-batch15-count-sync.yml
+          git commit -m 'docs: sync Batch 15 canonical counts'
+          git push
