@@ -2,7 +2,7 @@
 
 Issue: #435
 
-Review-only boundary for one bridge lifecycle addition. Canonical JSON remains unchanged in this PR.
+Review-only boundary for one bridge lifecycle addition.
 
 ## Metis Bridge — add_now
 
@@ -29,12 +29,12 @@ Review decision:
 - launch boundary **2021-11 month precision**;
 - no exact November day should be inferred from the planned launch week or later staking instructions;
 - initial/current canonical route is Ethereum ↔ Metis Andromeda;
-- BIR chain reference already contains `metis`, so canonical application should use `ethereum + metis`;
+- BIR chain reference already contains `metis`, so canonical application uses `ethereum + metis`;
 - lifecycle-only addition; no incident, exploit, loss, or safety conclusion inferred.
 
 ## duplicate boundary
 
-Repository code search for `Metis Bridge` returned no canonical record before this review. Repeat canonical name/slug/domain/alias checks immediately before ID allocation.
+Repository code search for `Metis Bridge` returned no canonical record before this review. Canonical application repeated name/slug/domain duplicate guards before ID allocation.
 
 ## retained hold / research-only
 
@@ -53,3 +53,16 @@ Repository code search for `Metis Bridge` returned no canonical record before th
 - Repeat duplicate checks before IDs.
 - Do not weaken source-count, source-quality, schema, Series, build, accessibility, performance, dist, browser, or production-equality gates.
 - Do not raise ceilings to fit corpus growth.
+
+## Canonical application result
+
+Applied on `canonical/growth-batch-18-metis-bridge` after strict baseline and duplicate guards.
+
+- `bir_bridge_000071` — Metis Bridge
+- launch: `2021-11` month precision
+- `bir_ev_000245` — launch lifecycle event
+- `bir_src_000401` — first-party Metis Andromeda launch announcement
+- chain boundary: `ethereum + metis`
+- no incident inferred
+- resulting corpus: **71 bridges / 51 incidents / 245 events / 400 evidence**
+- source-quality, source-count, schema, full-corpus, accessibility, performance, build, and dist gates passed without ceiling changes
