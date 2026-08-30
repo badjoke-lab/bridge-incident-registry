@@ -1,0 +1,87 @@
+name: TEMP Batch 17 canonical apply
+
+on:
+  push:
+    branches:
+      - canonical/growth-batch-17-injective-bridge
+    paths:
+      - .github/workflows/temp-batch-17-canonical-apply.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: canonical/growth-batch-17-injective-bridge
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Apply bounded canonical record
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const p = (f) => JSON.parse(fs.readFileSync(f, 'utf8'));
+          const bridges = p('data/bridges.json');
+          const incidents = p('data/incidents.json');
+          const events = p('data/events.json');
+          const evidence = p('data/evidence.json');
+          const fail = (m) => { throw new Error(m); };
+          if (bridges.length !== 69 || incidents.length !== 51 || events.length !== 243 || evidence.length !== 398) fail(`baseline count mismatch ${bridges.length}/${incidents.length}/${events.length}/${evidence.length}`);
+          if (bridges.at(-1)?.id !== 'bir_bridge_000069') fail('unexpected bridge max id');
+          if (events.at(-1)?.id !== 'bir_ev_000243') fail('unexpected event max id');
+          if (evidence.at(-1)?.id !== 'bir_src_000399') fail('unexpected evidence max id');
+          const haystack = JSON.stringify(bridges).toLowerCase();
+          for (const token of ['injective bridge','injective-bridge']) if (haystack.includes(token)) fail(`duplicate guard hit: ${token}`);
+          bridges.push({
+            id:'bir_bridge_000070', slug:'injective-bridge', previous_slugs:[], redirect_from:[], canonical_name:'Injective Bridge',
+            type:'asset_bridge', status:'active',
+            summary:'Injective Bridge is Injective’s native cross-chain bridge. Injective first-party material states that it went live on the Injective Hub during September 2021, enabling ERC-20 assets to bridge from Ethereum to Injective.',
+            confidence:'high', record_maturity:'reviewed', update_status:'current', last_reviewed_at:'2026-08-30', last_verified_at:'2026-08-30',
+            end_date:null, end_date_precision:'unknown', terminal_reason:null, archived_url:null, major_incident_count:0, has_unresolved_incident:false, has_reimbursement_history:false,
+            successor_id:null, predecessor_id:null, replacement_bridge_id:null, duplicate_of:null, merged_into:null,
+            aliases:[], launch_date:'2021-09', launch_date_precision:'month',
+            official_url:'https://injective.com/blog/injective-update-september-2021/', official_domain:'injective.com', official_url_status:'live_verified',
+            primary_chains:['ethereum','unknown'], primary_assets:['unknown'], operator_name:'Injective', operator_type:'protocol_team', ecosystem_name:'Injective', related_protocols:['Injective Hub'],
+            brand_history_notes:'Later IBC enablement, Canonical Chain changes, and the Ionic bridge upgrade are treated as lifecycle evolution within the same Injective Bridge lineage unless future first-party evidence establishes a distinct successor.',
+            notes:'The first-party September 2021 retrospective supports month precision only. Injective does not yet have a dedicated BIR chain-reference key, so that side is conservatively represented as unknown. No incident is inferred.'
+          });
+          events.push({
+            id:'bir_ev_000244', bridge_id:'bir_bridge_000070', incident_id:null, confidence:'high', record_maturity:'reviewed', update_status:'current', impact_level:'context', status_effect:'active', sort_order:10,
+            amount_text:null, recovered_amount_text:null, reimbursement_status:'not_applicable', restart_status:'not_applicable', affected_assets:['unknown'], notes:'Launch boundary is based on Injective’s October 1, 2021 retrospective stating that the bridge went live during September 2021; no day is inferred.', duplicate_of:null, merged_into:null,
+            event_type:'bridge_launched', event_date:'2021-09', event_date_precision:'month', title:'Injective Bridge goes live on the Injective Hub', description:'Injective reported that the Injective Bridge went live on the Injective Hub during September 2021 and enabled users to bridge ERC-20 tokens from Ethereum to Injective.', source_count:1, affected_chains:['ethereum','unknown']
+          });
+          evidence.push({
+            id:'bir_src_000400', bridge_id:'bir_bridge_000070', event_id:'bir_ev_000244', incident_id:null, reliability:'high', source_tier:'tier_1', url_status:'live', accessed_at:'2026-08-30', claim_scope:'launch', language:'en', author:null, quote_excerpt:null,
+            is_primary:true, is_paywalled:false, is_official_domain:true, supports_amount:false, supports_recovery:false, supports_reimbursement:false, supports_reopen:false, supports_shutdown:false, supports_migration:false,
+            source_type:'official_announcement', title:'Injective Update: September 2021', url:'https://injective.com/blog/injective-update-september-2021/', publisher:'Injective', published_at:'2021-10-01', published_at_precision:'day', archived_url:null,
+            notes:'First-party Injective retrospective states that the Injective Bridge went live on the Injective Hub during September 2021 and enabled ERC-20 bridging to Injective.'
+          });
+          fs.writeFileSync('data/bridges.json', JSON.stringify(bridges,null,2)+'\n');
+          fs.writeFileSync('data/events.json', JSON.stringify(events,null,2)+'\n');
+          fs.writeFileSync('data/evidence.json', JSON.stringify(evidence,null,2)+'\n');
+          NODE
+      - name: Install and validate
+        run: |
+          npm ci
+          npm run validate:data
+          npm run validate:enums
+          npm run audit:full-corpus
+          npm run audit:source-count
+          npm run audit:source-quality
+          npm run check
+          npm run build
+          npm run accessibility:check
+          npm run performance:check
+          npm run dist:check
+      - name: Commit canonical data and self-delete helper
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/bridges.json data/events.json data/evidence.json
+          git rm .github/workflows/temp-batch-17-canonical-apply.yml
+          git commit -m 'data: add Injective Bridge canonical record'
+          git push origin HEAD:canonical/growth-batch-17-injective-bridge
