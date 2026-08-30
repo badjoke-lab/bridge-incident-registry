@@ -35,6 +35,18 @@ Repository code search for `Optimism Standard Bridge` returned no hit. Repeat fu
 
 Batch 13 Base Bridge remains HOLD on deprecated-entity archival/source-quality requirements. This does not block the independent active-bridge lane.
 
+## canonical application result
+
+Applied on `canonical/growth-batch-15-optimism-standard-bridge` after the duplicate guard and full validation gates passed.
+
+- `bir_bridge_000068` — Optimism Standard Bridge
+- `bir_ev_000242` — public bridge availability on 2021-07-13
+- canonical evidence uses durable Uniswap Labs and Optimism-hosted OpenZeppelin audit records; the Medium source remains review-only
+- resulting corpus: **68 bridges / 51 incidents / 242 events / 397 evidence**
+- no incident record added
+- source-count/source-quality/schema/full-corpus gates passed without raising ceilings
+- current-count documentation synced and build/dist checks passed
+
 ## guardrails
 
 - No secondary-database row import.
