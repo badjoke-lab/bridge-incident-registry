@@ -3818,5 +3818,53 @@
     ],
     "brand_history_notes": "Later Optimism Gateway/front-end changes and Bedrock-era bridge contract upgrades are treated as evolution within the same native Standard Bridge lineage unless future first-party evidence establishes a distinct bridge product.",
     "notes": "Public availability is bounded to July 13, 2021 from contemporaneous launch evidence. No incident is inferred."
+  },
+  {
+    "id": "bir_bridge_000069",
+    "slug": "shyft-bridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Shyft Bridge",
+    "type": "asset_bridge",
+    "status": "active",
+    "summary": "Shyft Bridge is Shyft Network’s Ethereum-to-Shyft Mainnet asset bridge. Shyft Network announced deployment of the bridge on September 2, 2021, enabling ERC assets to move from Ethereum to Shyft Network.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-30",
+    "last_verified_at": "2026-08-30",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [],
+    "launch_date": "2021-09-02",
+    "launch_date_precision": "day",
+    "official_url": "https://www.shyft.network/newsroom/the-shyft-federation-deploys-the-shyft-bridge",
+    "official_domain": "shyft.network",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "ethereum",
+      "unknown"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "Shyft Network",
+    "operator_type": "protocol_team",
+    "ecosystem_name": "Shyft Network",
+    "related_protocols": [
+      "ChainBridge"
+    ],
+    "brand_history_notes": "Current Shyft terminology uses “Byfrost (Shyft Bridge)”, but a separate October 2021 first-party tokenomics post described Byfrost as not yet launched. BIR therefore does not backdate Byfrost to the September 2 Shyft Bridge deployment or encode it as a launch-day alias in canonical data.",
+    "notes": "Shyft Mainnet does not have a dedicated BIR chain-reference key at this checkpoint, so that side is conservatively represented as unknown. No incident is inferred."
   }
 ]
