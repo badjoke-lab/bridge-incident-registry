@@ -3866,5 +3866,53 @@
     ],
     "brand_history_notes": "Current Shyft terminology uses “Byfrost (Shyft Bridge)”, but a separate October 2021 first-party tokenomics post described Byfrost as not yet launched. BIR therefore does not backdate Byfrost to the September 2 Shyft Bridge deployment or encode it as a launch-day alias in canonical data.",
     "notes": "Shyft Mainnet does not have a dedicated BIR chain-reference key at this checkpoint, so that side is conservatively represented as unknown. No incident is inferred."
+  },
+  {
+    "id": "bir_bridge_000070",
+    "slug": "injective-bridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Injective Bridge",
+    "type": "asset_bridge",
+    "status": "active",
+    "summary": "Injective Bridge is Injective’s native cross-chain bridge. Injective first-party material states that it went live on the Injective Hub during September 2021, enabling ERC-20 assets to bridge from Ethereum to Injective.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-30",
+    "last_verified_at": "2026-08-30",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [],
+    "launch_date": "2021-09",
+    "launch_date_precision": "month",
+    "official_url": "https://injective.com/blog/injective-update-september-2021/",
+    "official_domain": "injective.com",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "ethereum",
+      "unknown"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "Injective",
+    "operator_type": "protocol_team",
+    "ecosystem_name": "Injective",
+    "related_protocols": [
+      "Injective Hub"
+    ],
+    "brand_history_notes": "Later IBC enablement, Canonical Chain changes, and the Ionic bridge upgrade are treated as lifecycle evolution within the same Injective Bridge lineage unless future first-party evidence establishes a distinct successor.",
+    "notes": "The first-party September 2021 retrospective supports month precision only. Injective does not yet have a dedicated BIR chain-reference key, so that side is conservatively represented as unknown. No incident is inferred."
   }
 ]

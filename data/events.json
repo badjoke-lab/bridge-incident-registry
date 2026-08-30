@@ -8005,5 +8005,36 @@
       "ethereum",
       "unknown"
     ]
+  },
+  {
+    "id": "bir_ev_000244",
+    "bridge_id": "bir_bridge_000070",
+    "incident_id": null,
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "context",
+    "status_effect": "active",
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_applicable",
+    "restart_status": "not_applicable",
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": "Launch boundary is based on Injective’s October 1, 2021 retrospective stating that the bridge went live during September 2021; no day is inferred.",
+    "duplicate_of": null,
+    "merged_into": null,
+    "event_type": "bridge_launched",
+    "event_date": "2021-09",
+    "event_date_precision": "month",
+    "title": "Injective Bridge goes live on the Injective Hub",
+    "description": "Injective reported that the Injective Bridge went live on the Injective Hub during September 2021 and enabled users to bridge ERC-20 tokens from Ethereum to Injective.",
+    "source_count": 1,
+    "affected_chains": [
+      "ethereum",
+      "unknown"
+    ]
   }
 ]
