@@ -3765,5 +3765,58 @@
     ],
     "brand_history_notes": "This record preserves the native/canonical Ethereum ↔ Arbitrum One bridge lineage across interface and protocol upgrades unless first-party evidence establishes a distinct successor bridge product.",
     "notes": "The 2021 contemporaneous Offchain Labs launch post is retained in review notes but is not added as canonical evidence because it is Medium-hosted and unarchived. Durable first-party Arbitrum-hosted sources support the launch date and current native-bridge identity. No incident is inferred."
+  },
+  {
+    "id": "bir_bridge_000068",
+    "slug": "optimism-standard-bridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Optimism Standard Bridge",
+    "type": "canonical_bridge",
+    "status": "active",
+    "summary": "Optimism Standard Bridge is the native token bridge system between Ethereum and OP Mainnet. Public Optimistic Ethereum access on July 13, 2021 included a redesigned token bridge, while current Optimism documentation identifies the Standard Bridge as the native ETH/ERC-20 bridging system for OP Mainnet.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-30",
+    "last_verified_at": "2026-08-30",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "Optimism Bridge",
+      "Optimism Gateway",
+      "OP Mainnet Standard Bridge"
+    ],
+    "launch_date": "2021-07-13",
+    "launch_date_precision": "day",
+    "official_url": "https://docs.optimism.io/app-developers/guides/bridging/standard-bridge",
+    "official_domain": "docs.optimism.io",
+    "official_url_status": "live",
+    "primary_chains": [
+      "ethereum",
+      "optimism"
+    ],
+    "primary_assets": [
+      "eth",
+      "unknown"
+    ],
+    "operator_name": "Optimism",
+    "operator_type": "protocol ecosystem",
+    "ecosystem_name": "Optimism",
+    "related_protocols": [
+      "OP Mainnet"
+    ],
+    "brand_history_notes": "Later Optimism Gateway/front-end changes and Bedrock-era bridge contract upgrades are treated as evolution within the same native Standard Bridge lineage unless future first-party evidence establishes a distinct bridge product.",
+    "notes": "Public availability is bounded to July 13, 2021 from contemporaneous launch evidence. No incident is inferred."
   }
 ]

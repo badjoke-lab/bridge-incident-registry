@@ -7942,5 +7942,37 @@
       "ethereum",
       "arbitrum"
     ]
+  },
+  {
+    "id": "bir_ev_000242",
+    "bridge_id": "bir_bridge_000068",
+    "incident_id": null,
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "context",
+    "status_effect": "active",
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_applicable",
+    "restart_status": "not_applicable",
+    "affected_assets": [
+      "eth",
+      "unknown"
+    ],
+    "notes": "Launch boundary uses contemporaneous public-access evidence and protocol audit context; risky-host Optimism Medium material is review-only.",
+    "duplicate_of": null,
+    "merged_into": null,
+    "event_type": "bridge_launched",
+    "event_date": "2021-07-13",
+    "event_date_precision": "day",
+    "title": "Optimism Standard Bridge available with public Optimistic Ethereum access",
+    "description": "Public Optimistic Ethereum access on July 13, 2021 included a redesigned token bridge for deposits from Ethereum; current Optimism documentation identifies the native bridge lineage as the Standard Bridge.",
+    "source_count": 2,
+    "affected_chains": [
+      "ethereum",
+      "optimism"
+    ]
   }
 ]
