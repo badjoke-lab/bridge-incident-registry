@@ -63,6 +63,38 @@ jobs:
           });
           for (const [k,p] of Object.entries(paths)) fs.writeFileSync(p, JSON.stringify(data[k], null, 2)+'\n');
           NODE
+      - name: Sync current-count documents
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+          const files = [
+            'README.md',
+            'docs/runbooks/current-status.md',
+            'docs/runbooks/recovery-checkpoint.md',
+            'docs/runbooks/development-roadmap.md',
+            'docs/runbooks/public-consistency-remediation.md'
+          ];
+          const replacements = [
+            [/Bridges(\s*[:|]?\s*)71\b/g, 'Bridges$172'],
+            [/Incidents(\s*[:|]?\s*)51\b/g, 'Incidents$151'],
+            [/Events(\s*[:|]?\s*)245\b/g, 'Events$1246'],
+            [/Evidence(\s*[:|]?\s*)400\b/g, 'Evidence$1401'],
+            [/71\s+bridges\b/gi, '72 bridges'],
+            [/51\s+incidents\b/gi, '51 incidents'],
+            [/245\s+events\b/gi, '246 events'],
+            [/400\s+evidence(?:\s+sources)?\b/gi, m => m.toLowerCase().includes('sources') ? '401 evidence sources' : '401 evidence']
+          ];
+          let changed = 0;
+          for (const file of files) {
+            const before = fs.readFileSync(file, 'utf8');
+            let after = before;
+            for (const [re, repl] of replacements) after = after.replace(re, repl);
+            if (after === before) throw new Error(`expected count change missing in ${file}`);
+            fs.writeFileSync(file, after);
+            changed++;
+          }
+          if (changed !== 5) throw new Error(`expected 5 count docs, changed ${changed}`);
+          NODE
       - run: npm run validate:data
       - run: npm run validate:enums
       - run: npm run audit:full-corpus
@@ -78,6 +110,6 @@ jobs:
           rm .github/workflows/temp-batch-19-canonical-apply.yml
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/bridges.json data/events.json data/evidence.json .github/workflows/temp-batch-19-canonical-apply.yml
+          git add data/bridges.json data/events.json data/evidence.json README.md docs/runbooks/current-status.md docs/runbooks/recovery-checkpoint.md docs/runbooks/development-roadmap.md docs/runbooks/public-consistency-remediation.md .github/workflows/temp-batch-19-canonical-apply.yml
           git commit -m 'data: add Ad-Astra Bridge canonical record'
           git push
