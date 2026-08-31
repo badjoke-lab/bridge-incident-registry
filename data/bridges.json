@@ -3962,5 +3962,55 @@
     "related_protocols": [],
     "brand_history_notes": "The bridge remains part of the Metis ecosystem despite later third-party bridge integrations and bridge architecture changes; no separate successor is inferred here.",
     "notes": "The 2021-11 month boundary is supported by the Andromeda launch announcement and November operational instructions. No exact launch day is inferred and no incident is inferred."
+  },
+  {
+    "id": "bir_bridge_000072",
+    "slug": "ad-astra-bridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Ad-Astra Bridge",
+    "type": "canonical_bridge",
+    "status": "active",
+    "summary": "Ad-Astra Bridge is MultiversX’s first-party cross-chain bridge lineage, launched as the Elrond Ad Astra Portal for Ethereum and later expanded under the MultiversX Bridge interface.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-08-31",
+    "last_verified_at": "2026-08-31",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "archived_url": null,
+    "major_incident_count": 0,
+    "has_unresolved_incident": false,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "aliases": [
+      "Ad Astra Portal",
+      "Elrond Ad Astra Portal",
+      "MultiversX Bridge"
+    ],
+    "launch_date": "2022-05-24",
+    "launch_date_precision": "day",
+    "official_url": "https://bridge.multiversx.com/",
+    "official_domain": "bridge.multiversx.com",
+    "official_url_status": "live_verified",
+    "primary_chains": [
+      "ethereum",
+      "unknown"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "MultiversX",
+    "operator_type": "foundation",
+    "ecosystem_name": "MultiversX",
+    "related_protocols": [],
+    "brand_history_notes": "The 2023 MultiversX Bridge interface and BSC expansion are treated as lifecycle evolution of the Ad-Astra bridge lineage unless future first-party evidence establishes a distinct successor.",
+    "notes": "The launch boundary is the May 24, 2022 first-party Ad Astra Portal go-live announcement. MultiversX does not yet have a dedicated BIR chain-reference key, so that side is conservatively represented as unknown. No incident is inferred."
   }
 ]
