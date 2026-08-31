@@ -8067,5 +8067,36 @@
       "ethereum",
       "metis"
     ]
+  },
+  {
+    "id": "bir_ev_000246",
+    "bridge_id": "bir_bridge_000072",
+    "incident_id": null,
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "context",
+    "status_effect": "active",
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_applicable",
+    "restart_status": "not_applicable",
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": "Launch boundary is taken directly from MultiversX/Elrond first-party material announcing the Ad Astra Portal go-live on May 24, 2022.",
+    "duplicate_of": null,
+    "merged_into": null,
+    "event_type": "bridge_launched",
+    "event_date": "2022-05-24",
+    "event_date_precision": "day",
+    "title": "Ad Astra Portal goes live between Elrond and Ethereum",
+    "description": "MultiversX/Elrond announced the go-live of the Ad Astra Portal as a token bridge connecting Elrond and Ethereum.",
+    "source_count": 1,
+    "affected_chains": [
+      "ethereum",
+      "unknown"
+    ]
   }
 ]
