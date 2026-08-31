@@ -35,7 +35,7 @@ Review decision:
 
 ## duplicate boundary
 
-Repository code search for `Ad Astra`, `MultiversX Bridge`, and `Elrond bridge` returned no canonical record before this review. Canonical application must repeat full name/alias/domain/slug duplicate guards immediately before ID allocation.
+Repository code search for `Ad Astra`, `MultiversX Bridge`, and `Elrond bridge` returned no canonical record before this review. Canonical application repeated full name/alias/domain/slug duplicate guards before ID allocation.
 
 ## retained hold / research-only
 
@@ -55,3 +55,16 @@ Repository code search for `Ad Astra`, `MultiversX Bridge`, and `Elrond bridge` 
 - Repeat duplicate checks before IDs.
 - Do not weaken source-count, source-quality, schema, Series, build, accessibility, performance, dist, browser, or production-equality gates.
 - Do not raise ceilings to fit corpus growth.
+
+## Canonical application result
+
+Applied on `canonical/growth-batch-19-ad-astra-bridge` after strict baseline and duplicate guards.
+
+- `bir_bridge_000072` — Ad-Astra Bridge
+- launch: `2022-05-24` day precision
+- `bir_ev_000246` — bridge launch lifecycle event
+- `bir_src_000402` — first-party MultiversX/Elrond launch announcement
+- chain boundary: `ethereum + unknown`
+- no incident inferred
+- resulting corpus: **72 bridges / 51 incidents / 246 events / 401 evidence**
+- source-quality, source-count, schema, full-corpus, accessibility, performance, build, and dist gates passed without ceiling changes
