@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 
+// Trigger after workflow registration.
 const files = [
   'README.md',
   'docs/runbooks/current-status.md',
