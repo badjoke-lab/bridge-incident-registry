@@ -1,0 +1,39 @@
+name: Batch 20 canonical apply
+
+on:
+  push:
+    branches:
+      - canonical/growth-batch-20-incident-heavy
+    paths:
+      - scripts/batch20-apply.mjs
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: canonical/growth-batch-20-incident-heavy
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Apply bounded canonical records
+        run: node scripts/batch20-apply.mjs
+      - name: Validate JSON syntax
+        run: |
+          node -e "for (const f of ['data/bridges.json','data/incidents.json','data/events.json','data/evidence.json']) JSON.parse(require('fs').readFileSync(f,'utf8'))"
+      - name: Commit canonical mutation
+        run: |
+          if git diff --quiet -- data/bridges.json data/incidents.json data/events.json data/evidence.json; then
+            echo 'No canonical diff produced'
+            exit 1
+          fi
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/bridges.json data/incidents.json data/events.json data/evidence.json
+          git commit -m 'Add Batch 20 incident-heavy canonical records'
+          git push origin HEAD:canonical/growth-batch-20-incident-heavy
