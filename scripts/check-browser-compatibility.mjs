@@ -30,7 +30,7 @@ async function checkRegistryInteractions(page, kind) {
   const row = isBridge ? "#bridge-table-body .registry-row:not([hidden])" : "#incident-table-body .registry-row:not([hidden])";
   const next = isBridge ? "#bridge-next-page" : "#incident-next-page";
   const current = isBridge ? "#bridge-current-page" : "#incident-current-page";
-  const query = isBridge ? "ronin" : "wormhole";
+  const query = isBridge ? "ronin" : "qubit";
   const singular = isBridge ? "1 bridge record" : "1 incident case";
 
   await open(page, route);
