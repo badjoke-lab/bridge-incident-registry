@@ -8129,7 +8129,7 @@
     "event_date_precision": "day",
     "title": "Alephium TokenBridge forged-message exploit",
     "description": "Forged Wormhole-format events produced guardian-signed VAAs that were redeemed against real bridge collateral and used to mint unbacked wALPH.",
-    "source_count": 2,
+    "source_count": 1,
     "affected_chains": [
       "ethereum",
       "bnb-chain",
@@ -8153,10 +8153,10 @@
     "affected_assets": [
       "unknown"
     ],
-    "notes": "This is cleanup of unbacked supply, not recovery of drained real collateral.",
+    "notes": "Authorized cleanup of unbacked supply; explicitly not classified as recovery of the real collateral drained from bridge custody.",
     "duplicate_of": null,
     "merged_into": null,
-    "event_type": "funds_recovered",
+    "event_type": "other",
     "event_date": "2026-06-02",
     "event_date_precision": "day",
     "title": "Alephium burns most unbacked wALPH",
@@ -8193,7 +8193,7 @@
     "event_date_precision": "day",
     "title": "Butter Bridge V3.1 unauthorized MAPO mint",
     "description": "The affected OmniServiceProxy cross-chain path was manipulated, resulting in unauthorized MAPO minting on Ethereum and BNB Chain.",
-    "source_count": 2,
+    "source_count": 1,
     "affected_chains": [
       "ethereum",
       "bnb-chain",
@@ -8261,7 +8261,7 @@
     "event_date_precision": "day",
     "title": "Garden solver operating environment compromised",
     "description": "Unauthorized access to an independent solver operating environment led to approximately $11.4 million in solver-owned crypto assets being drained across multiple chains.",
-    "source_count": 2,
+    "source_count": 1,
     "affected_chains": [
       "ethereum",
       "arbitrum",
@@ -8329,7 +8329,7 @@
     "event_date_precision": "day",
     "title": "Garden independent-solver database compromised",
     "description": "An independent solver’s off-chain database was compromised and fraudulent swap records caused solver-owned settlement funds to be released for unfunded swaps.",
-    "source_count": 2,
+    "source_count": 1,
     "affected_chains": [
       "ethereum",
       "arbitrum",
@@ -8400,7 +8400,7 @@
     "event_date_precision": "day",
     "title": "Gravity Bridge drained",
     "description": "Independent security and media reporting identified approximately $5.4 million of assets drained from Gravity Bridge.",
-    "source_count": 2,
+    "source_count": 1,
     "affected_chains": [
       "ethereum",
       "cosmos-interchain"
@@ -8431,7 +8431,7 @@
     "event_date_precision": "day",
     "title": "Gravity validators and orchestrators instructed to halt",
     "description": "The Gravity team acknowledged an incident and instructed validators to halt validators and orchestrators while investigation continued; reporting subsequently described the bridge as halted.",
-    "source_count": 2,
+    "source_count": 1,
     "affected_chains": [
       "ethereum",
       "cosmos-interchain"

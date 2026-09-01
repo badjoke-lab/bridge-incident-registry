@@ -3977,7 +3977,7 @@
     ],
     "recovery_status": "none",
     "reimbursement_status": "not_applicable",
-    "restart_status": "reopened",
+    "restart_status": "unknown",
     "current_outcome": "active_after_incident",
     "is_unresolved": true,
     "unresolved_reason": [
@@ -3999,7 +3999,8 @@
     "postmortem_available": "available",
     "known_unknowns": [
       "The exact initial compromise method remains not fully established by the admitted first-party source.",
-      "Attribution indicators are not treated as a legal attribution finding."
+      "Attribution indicators are not treated as a legal attribution finding.",
+      "A dated post-incident service reopening is not established in this bounded evidence package."
     ],
     "conflicting_claims": [],
     "duplicate_of": null,
