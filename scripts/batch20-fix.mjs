@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 
+// Triggered after the branch-only fix workflow has been registered by GitHub Actions.
 const incidentsPath = 'data/incidents.json';
 const eventsPath = 'data/events.json';
 const evidencePath = 'data/evidence.json';
