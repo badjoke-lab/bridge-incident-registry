@@ -179,3 +179,6 @@ Technical closure does not create or imply a semantic-version tag or GitHub Rele
 16. Accessibility, performance, browser compatibility, dependency security, source quality, native data and applicable Series output are permanent release gates.
 17. Cloudflare Pages preview deployment remains `none`.
 18. Technical v1 closure does not create or imply a GitHub Release or semantic-version tag.
+
+<!-- canonical-counts:batch20 -->
+Current canonical counts: Bridges 75 / Incidents 54 / Events 252 / Evidence 410.

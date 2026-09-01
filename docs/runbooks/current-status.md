@@ -109,3 +109,6 @@ Current performance ceilings remain 16 KiB gzip max HTML, 5 KiB CSS total/max fi
 5. preserve canonical unknowns and recovery/reimbursement/restart/outcome distinctions;
 6. preserve all source-quality, accessibility, performance, browser, native/Series machine-readable and production-equality guards;
 7. use `docs/operations/current-position.md` and `docs/runbooks/recovery-checkpoint.md` as restart pointers; do not resume from historical ChainConnect, July-only Verus, Stage 8 or earlier counts/run IDs.
+
+<!-- canonical-counts:batch20 -->
+Current canonical counts: Bridges 75 / Incidents 54 / Events 252 / Evidence 410.

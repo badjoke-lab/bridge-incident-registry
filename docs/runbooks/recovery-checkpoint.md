@@ -131,3 +131,6 @@ Production branch is `main`. Canonical/public output changes require post-merge 
 4. inspect monitoring/candidate changes as review-only and preserve silent-repeat behavior;
 5. preserve source-quality ceilings, canonical semantics, Series/native publication contracts, and every permanent release gate;
 6. for cross-series continuation, audit SOG's own live repository/status/authority before implementation rather than transplanting BIR assumptions.
+
+<!-- canonical-counts:batch20 -->
+Current canonical counts: Bridges 75 / Incidents 54 / Events 252 / Evidence 410.
