@@ -8129,7 +8129,7 @@
     "event_date_precision": "day",
     "title": "Alephium TokenBridge forged-message exploit",
     "description": "Forged Wormhole-format events produced guardian-signed VAAs that were redeemed against real bridge collateral and used to mint unbacked wALPH.",
-    "source_count": 1,
+    "source_count": 2,
     "affected_chains": [
       "ethereum",
       "bnb-chain",
@@ -8193,7 +8193,7 @@
     "event_date_precision": "day",
     "title": "Butter Bridge V3.1 unauthorized MAPO mint",
     "description": "The affected OmniServiceProxy cross-chain path was manipulated, resulting in unauthorized MAPO minting on Ethereum and BNB Chain.",
-    "source_count": 1,
+    "source_count": 2,
     "affected_chains": [
       "ethereum",
       "bnb-chain",
@@ -8261,7 +8261,7 @@
     "event_date_precision": "day",
     "title": "Garden solver operating environment compromised",
     "description": "Unauthorized access to an independent solver operating environment led to approximately $11.4 million in solver-owned crypto assets being drained across multiple chains.",
-    "source_count": 1,
+    "source_count": 2,
     "affected_chains": [
       "ethereum",
       "arbitrum",
@@ -8302,139 +8302,6 @@
       "base",
       "bnb-chain",
       "unknown"
-    ]
-  },
-  {
-    "id": "bir_ev_000253",
-    "bridge_id": "bir_bridge_000075",
-    "incident_id": "bir_inc_000055",
-    "confidence": "high",
-    "record_maturity": "reviewed",
-    "update_status": "current",
-    "impact_level": "high",
-    "status_effect": "limited",
-    "sort_order": 10,
-    "amount_text": null,
-    "recovered_amount_text": null,
-    "reimbursement_status": "not_applicable",
-    "restart_status": "not_applicable",
-    "affected_assets": [
-      "usdt"
-    ],
-    "notes": "Garden states the protocol and HTLC contracts were not compromised and user funds were not at risk.",
-    "duplicate_of": null,
-    "merged_into": null,
-    "event_type": "hack_disclosed",
-    "event_date": "2026-07-26",
-    "event_date_precision": "day",
-    "title": "Garden independent-solver database compromised",
-    "description": "An independent solver’s off-chain database was compromised and fraudulent swap records caused solver-owned settlement funds to be released for unfunded swaps.",
-    "source_count": 1,
-    "affected_chains": [
-      "ethereum",
-      "arbitrum",
-      "base",
-      "bnb-chain",
-      "unknown"
-    ]
-  },
-  {
-    "id": "bir_ev_000254",
-    "bridge_id": "bir_bridge_000075",
-    "incident_id": "bir_inc_000055",
-    "confidence": "high",
-    "record_maturity": "reviewed",
-    "update_status": "current",
-    "impact_level": "high",
-    "status_effect": "paused",
-    "sort_order": 20,
-    "amount_text": null,
-    "recovered_amount_text": null,
-    "reimbursement_status": "not_applicable",
-    "restart_status": "not_applicable",
-    "affected_assets": [
-      "usdt"
-    ],
-    "notes": "No unrestricted reopening date is inferred from later website reachability.",
-    "duplicate_of": null,
-    "merged_into": null,
-    "event_type": "bridge_paused",
-    "event_date": "2026-07-26",
-    "event_date_precision": "day",
-    "title": "Garden app taken offline during July 2026 containment",
-    "description": "Garden took the app offline while the affected solver infrastructure was isolated and reviewed with security partners.",
-    "source_count": 1,
-    "affected_chains": [
-      "ethereum",
-      "arbitrum",
-      "base",
-      "bnb-chain",
-      "unknown"
-    ]
-  },
-  {
-    "id": "bir_ev_000255",
-    "bridge_id": "bir_bridge_000076",
-    "incident_id": "bir_inc_000056",
-    "confidence": "high",
-    "record_maturity": "reviewed",
-    "update_status": "current",
-    "impact_level": "critical",
-    "status_effect": "paused",
-    "sort_order": 10,
-    "amount_text": null,
-    "recovered_amount_text": null,
-    "reimbursement_status": "not_applicable",
-    "restart_status": "not_applicable",
-    "affected_assets": [
-      "usdc",
-      "weth",
-      "usdt",
-      "unknown"
-    ],
-    "notes": "Attack vector remains unknown in canonical data because technical explanations conflict.",
-    "duplicate_of": null,
-    "merged_into": null,
-    "event_type": "exploit_occurred",
-    "event_date": "2026-05-30",
-    "event_date_precision": "day",
-    "title": "Gravity Bridge drained",
-    "description": "Independent security and media reporting identified approximately $5.4 million of assets drained from Gravity Bridge.",
-    "source_count": 1,
-    "affected_chains": [
-      "ethereum",
-      "cosmos-interchain"
-    ]
-  },
-  {
-    "id": "bir_ev_000256",
-    "bridge_id": "bir_bridge_000076",
-    "incident_id": "bir_inc_000056",
-    "confidence": "high",
-    "record_maturity": "reviewed",
-    "update_status": "current",
-    "impact_level": "high",
-    "status_effect": "paused",
-    "sort_order": 20,
-    "amount_text": null,
-    "recovered_amount_text": null,
-    "reimbursement_status": "not_applicable",
-    "restart_status": "not_applicable",
-    "affected_assets": [
-      "unknown"
-    ],
-    "notes": "First-party acknowledgement is preserved without promoting a disputed root-cause claim.",
-    "duplicate_of": null,
-    "merged_into": null,
-    "event_type": "bridge_paused",
-    "event_date": "2026-05-30",
-    "event_date_precision": "day",
-    "title": "Gravity validators and orchestrators instructed to halt",
-    "description": "The Gravity team acknowledged an incident and instructed validators to halt validators and orchestrators while investigation continued; reporting subsequently described the bridge as halted.",
-    "source_count": 1,
-    "affected_chains": [
-      "ethereum",
-      "cosmos-interchain"
     ]
   }
 ]

@@ -4174,59 +4174,6 @@
       "Garden solvers"
     ],
     "brand_history_notes": null,
-    "major_incident_count": 2,
-    "has_unresolved_incident": true,
-    "has_reimbursement_history": false,
-    "successor_id": null,
-    "predecessor_id": null,
-    "replacement_bridge_id": null,
-    "duplicate_of": null,
-    "merged_into": null,
-    "notes": "Both incidents are scoped to solver infrastructure. Solver-owned losses are not converted into user-loss or protocol-contract-compromise claims. Latest unrestricted service restoration after the July 2026 pause is not established in the admitted incident evidence."
-  },
-  {
-    "id": "bir_bridge_000076",
-    "slug": "gravity-bridge",
-    "previous_slugs": [],
-    "redirect_from": [],
-    "canonical_name": "Gravity Bridge",
-    "type": "asset_bridge",
-    "status": "paused",
-    "summary": "Gravity Bridge connects Ethereum assets with the Cosmos ecosystem. On May 30, 2026, approximately $5.4 million in assets were reported drained and the Gravity team instructed validators to halt validators and orchestrators while the incident was investigated. Public technical analyses disagree on the exact mechanism, so BIR keeps the attack vector unknown pending authoritative resolution.",
-    "confidence": "high",
-    "record_maturity": "reviewed",
-    "update_status": "current",
-    "last_reviewed_at": "2026-09-01",
-    "last_verified_at": "2026-09-01",
-    "aliases": [
-      "Gravity"
-    ],
-    "launch_date": null,
-    "launch_date_precision": "unknown",
-    "end_date": null,
-    "end_date_precision": "unknown",
-    "terminal_reason": null,
-    "official_url": "https://www.gravitybridge.net/",
-    "official_domain": "gravitybridge.net",
-    "official_url_status": "live_unverified",
-    "archived_url": null,
-    "primary_chains": [
-      "ethereum",
-      "cosmos-interchain"
-    ],
-    "primary_assets": [
-      "usdc",
-      "weth",
-      "usdt",
-      "unknown"
-    ],
-    "operator_name": "Gravity Bridge",
-    "operator_type": "protocol_team",
-    "ecosystem_name": "Cosmos interchain",
-    "related_protocols": [
-      "Cosmos"
-    ],
-    "brand_history_notes": null,
     "major_incident_count": 1,
     "has_unresolved_incident": true,
     "has_reimbursement_history": false,
@@ -4235,6 +4182,6 @@
     "replacement_bridge_id": null,
     "duplicate_of": null,
     "merged_into": null,
-    "notes": "PAXG is conservatively represented as unknown because BIR has no dedicated PAXG asset key. The bridge halt is first-party acknowledged through contemporaneous reporting; no authoritative postmortem resolving the disputed mechanism was located."
+    "notes": "Both incidents are scoped to solver infrastructure. Solver-owned losses are not converted into user-loss or protocol-contract-compromise claims. Latest unrestricted service restoration after the July 2026 pause is not established in the admitted incident evidence."
   }
 ]

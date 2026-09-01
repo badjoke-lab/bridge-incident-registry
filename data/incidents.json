@@ -3795,7 +3795,7 @@
     "confidence": "high",
     "record_maturity": "reviewed",
     "update_status": "current",
-    "source_count": 2,
+    "source_count": 3,
     "last_reviewed_at": "2026-09-01",
     "last_verified_at": "2026-09-01",
     "is_major_incident": true,
@@ -3875,7 +3875,7 @@
     "confidence": "high",
     "record_maturity": "reviewed",
     "update_status": "current",
-    "source_count": 2,
+    "source_count": 3,
     "last_reviewed_at": "2026-09-01",
     "last_verified_at": "2026-09-01",
     "is_major_incident": true,
@@ -3945,7 +3945,7 @@
     "confidence": "high",
     "record_maturity": "reviewed",
     "update_status": "current",
-    "source_count": 2,
+    "source_count": 3,
     "last_reviewed_at": "2026-09-01",
     "last_verified_at": "2026-09-01",
     "is_major_incident": true,
@@ -4003,165 +4003,6 @@
       "A dated post-incident service reopening is not established in this bounded evidence package."
     ],
     "conflicting_claims": [],
-    "duplicate_of": null,
-    "merged_into": null,
-    "split_from": null,
-    "split_reason": null
-  },
-  {
-    "id": "bir_inc_000055",
-    "bridge_id": "bir_bridge_000075",
-    "slug": "garden-finance-2026-solver-database-compromise",
-    "previous_slugs": [],
-    "redirect_from": [],
-    "title": "Garden Finance 2026 solver database compromise",
-    "incident_date": "2026-07-26",
-    "incident_date_precision": "day",
-    "incident_type": "hack",
-    "summary": "Garden stated that an independent solver’s off-chain database was compromised and fraudulent swap records were inserted, causing the solver to release funds for swaps that had not been funded by counterparties. Garden said neither its protocol nor HTLC smart contracts were compromised and no user funds were lost or placed at risk; the app was taken offline during containment.",
-    "confidence": "high",
-    "record_maturity": "reviewed",
-    "update_status": "current",
-    "source_count": 2,
-    "last_reviewed_at": "2026-09-01",
-    "last_verified_at": "2026-09-01",
-    "is_major_incident": true,
-    "reported_loss_usd_display": "about $450,000 reported",
-    "reported_loss_usd": 450000,
-    "reported_loss_usd_min": null,
-    "reported_loss_usd_max": null,
-    "reported_loss_text": "Blockaid/secondary reporting estimated about $450,000 in USDT drained from solver-owned settlement funds across Ethereum, Base, Arbitrum, and BNB Chain; Garden said it was still confirming the exact amount, assets, and networks.",
-    "reported_loss_assets": [
-      "usdt"
-    ],
-    "usd_valuation_date": "2026-07-26",
-    "loss_amount_basis": "reported_by_security_firm",
-    "amount_confidence": "medium",
-    "amount_note": "The approximately $450,000 figure remains an external estimate because Garden had not finalized the exact amount at the reviewed update.",
-    "amount_claims": [
-      {
-        "amount_text": "solver-owned USDT drained",
-        "amount_usd_text": "about $450,000",
-        "source_id": "bir_src_000410",
-        "basis": "reported_by_security_firm",
-        "usd_valuation_date": "2026-07-26",
-        "notes": "External estimate; Garden said final amount/assets/networks were still being confirmed."
-      }
-    ],
-    "recovery_status": "unknown",
-    "reimbursement_status": "not_applicable",
-    "restart_status": "paused",
-    "current_outcome": "limited_after_incident",
-    "is_unresolved": true,
-    "unresolved_reason": [
-      "Final loss amount and asset/network reconciliation were still being confirmed.",
-      "Completed attacker-fund recovery is not established.",
-      "A dated unrestricted service reopening is not established in the admitted evidence."
-    ],
-    "affected_chains": [
-      "ethereum",
-      "base",
-      "arbitrum",
-      "bnb-chain"
-    ],
-    "affected_assets": [
-      "usdt"
-    ],
-    "attack_vector_category": "operator_or_governance_issue",
-    "postmortem_available": "not_found",
-    "known_unknowns": [
-      "Exact final solver-owned loss remains unconfirmed by Garden.",
-      "The database compromise is not a smart-contract exploit and is not generalized into compromise of Garden HTLC contracts."
-    ],
-    "conflicting_claims": [],
-    "duplicate_of": null,
-    "merged_into": null,
-    "split_from": null,
-    "split_reason": null
-  },
-  {
-    "id": "bir_inc_000056",
-    "bridge_id": "bir_bridge_000076",
-    "slug": "gravity-bridge-2026-drain",
-    "previous_slugs": [],
-    "redirect_from": [],
-    "title": "Gravity Bridge 2026 drain and emergency halt",
-    "incident_date": "2026-05-30",
-    "incident_date_precision": "day",
-    "incident_type": "exploit",
-    "summary": "Gravity Bridge was drained of approximately $5.4 million in USDC, WETH, USDT and PAXG-equivalent assets. The Gravity team acknowledged an incident and instructed validators to halt validators and orchestrators while the investigation continued. Because public technical analyses disagree on the exact mechanism and no authoritative first-party postmortem was located, the canonical attack vector remains unknown.",
-    "confidence": "high",
-    "record_maturity": "reviewed",
-    "update_status": "current",
-    "source_count": 2,
-    "last_reviewed_at": "2026-09-01",
-    "last_verified_at": "2026-09-01",
-    "is_major_incident": true,
-    "reported_loss_usd_display": "about $5.4 million",
-    "reported_loss_usd": 5400000,
-    "reported_loss_usd_min": null,
-    "reported_loss_usd_max": null,
-    "reported_loss_text": "Independent on-chain/security reporting estimated approximately $5.4 million drained, including USDC, WETH, USDT and PAXG.",
-    "reported_loss_assets": [
-      "usdc",
-      "weth",
-      "usdt",
-      "unknown"
-    ],
-    "usd_valuation_date": "2026-05-30",
-    "loss_amount_basis": "mixed_sources",
-    "amount_confidence": "medium",
-    "amount_note": "The approximate aggregate is secondary. PAXG uses the unknown asset reference because BIR lacks a PAXG key.",
-    "amount_claims": [
-      {
-        "amount_text": "USDC, WETH, USDT and PAXG drained",
-        "amount_usd_text": "about $5.4 million",
-        "source_id": "bir_src_000412",
-        "basis": "reported_by_news",
-        "usd_valuation_date": "2026-05-30",
-        "notes": "Contemporaneous reporting based on on-chain security researchers."
-      }
-    ],
-    "recovery_status": "unknown",
-    "reimbursement_status": "unknown",
-    "restart_status": "paused",
-    "current_outcome": "paused_long_term",
-    "is_unresolved": true,
-    "unresolved_reason": [
-      "Final attacker-fund recovery is not established.",
-      "Reimbursement is not established.",
-      "A dated bridge reopening is not established.",
-      "The attack mechanism remains materially disputed in public technical analyses."
-    ],
-    "affected_chains": [
-      "ethereum",
-      "cosmos-interchain"
-    ],
-    "affected_assets": [
-      "usdc",
-      "weth",
-      "usdt",
-      "unknown"
-    ],
-    "attack_vector_category": "unknown",
-    "postmortem_available": "not_found",
-    "known_unknowns": [
-      "Suspected signing-key compromise and denom-mapping poisoning are competing public explanations and neither is promoted as canonical without authoritative resolution.",
-      "Final recovery, reimbursement and restart outcomes remain unknown."
-    ],
-    "conflicting_claims": [
-      {
-        "claim": "attack_vector_category",
-        "values": [
-          "validator_key_compromise",
-          "message_verification_failure"
-        ],
-        "source_ids": [
-          "bir_src_000412"
-        ],
-        "resolution": "kept_unknown_pending_authoritative_postmortem"
-      }
-    ],
     "duplicate_of": null,
     "merged_into": null,
     "split_from": null,
