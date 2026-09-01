@@ -30,11 +30,16 @@ async function checkRegistryInteractions(page, kind) {
   const row = isBridge ? "#bridge-table-body .registry-row:not([hidden])" : "#incident-table-body .registry-row:not([hidden])";
   const next = isBridge ? "#bridge-next-page" : "#incident-next-page";
   const current = isBridge ? "#bridge-current-page" : "#incident-current-page";
-  const query = isBridge ? "ronin" : "qubit";
 
   await open(page, route);
   assert(await page.locator(count).isVisible(), `${kind}: result count is not visible`);
   assert(await page.locator(row).count() === 25, `${kind}: expected 25 visible rows on initial page`);
+
+  const seedSearchable = await page.locator(row).first().evaluate((entry) => `${entry.textContent || ""} ${entry.dataset.search || ""}`.toLowerCase());
+  const query = seedSearchable
+    .split(/[^a-z0-9-]+/)
+    .find((token) => token.length >= 5 && !/^\d+$/.test(token));
+  assert(query, `${kind}: could not derive a stable search token from the first visible row`);
 
   await page.locator(next).click();
   await page.waitForFunction((selector) => document.querySelector(selector)?.textContent === "2", current);
