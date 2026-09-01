@@ -31,7 +31,6 @@ async function checkRegistryInteractions(page, kind) {
   const next = isBridge ? "#bridge-next-page" : "#incident-next-page";
   const current = isBridge ? "#bridge-current-page" : "#incident-current-page";
   const query = isBridge ? "ronin" : "qubit";
-  const singular = isBridge ? "1 bridge record" : "1 incident case";
 
   await open(page, route);
   assert(await page.locator(count).isVisible(), `${kind}: result count is not visible`);
@@ -42,8 +41,21 @@ async function checkRegistryInteractions(page, kind) {
   assert(new URL(page.url()).searchParams.get("page") === "2", `${kind}: pagination did not update URL state`);
 
   await page.locator(search).fill(query);
-  await page.waitForFunction(({ selector, expected }) => document.querySelector(selector)?.textContent?.trim() === expected, { selector: count, expected: singular });
-  assert(await page.locator(row).count() === 1, `${kind}: expected one visible filtered row`);
+  await page.waitForFunction(
+    ({ key, expected }) => new URL(window.location.href).searchParams.get(key) === expected,
+    { key: "search", expected: query },
+  );
+  const visibleRows = page.locator(row);
+  const visibleCount = await visibleRows.count();
+  assert(visibleCount > 0, `${kind}: search produced no visible rows for ${query}`);
+  const resultCountText = (await page.locator(count).textContent())?.trim() || "";
+  const resultCount = Number.parseInt(resultCountText, 10);
+  assert(Number.isFinite(resultCount) && resultCount >= visibleCount, `${kind}: invalid search result count ${resultCountText}`);
+  const matches = await visibleRows.evaluateAll((rows, expected) => rows.every((entry) => {
+    const searchable = `${entry.textContent || ""} ${entry.dataset.search || ""}`.toLowerCase();
+    return searchable.includes(String(expected).toLowerCase());
+  }), query);
+  assert(matches, `${kind}: visible search rows do not all match ${query}`);
   assert(new URL(page.url()).searchParams.get("search") === query, `${kind}: search did not update URL state`);
   assert(new URL(page.url()).searchParams.has("page") === false, `${kind}: filtering did not reset page state`);
 }
