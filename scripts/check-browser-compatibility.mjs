@@ -37,7 +37,14 @@ async function checkRegistryInteractions(page, kind) {
 
   const seedSearchable = await page.locator(row).first().evaluate((entry) => `${entry.textContent || ""} ${entry.dataset.search || ""}`.toLowerCase());
   const query = seedSearchable
-    .split(/[^a-z0-9-]+/)
+    .match(/[a-z0-9-]+/g)
+    ?.flatMap((token) => {
+      if (token.length % 2 === 0) {
+        const half = token.slice(0, token.length / 2);
+        if (half.length >= 5 && half + half === token) return [half, token];
+      }
+      return [token];
+    })
     .find((token) => token.length >= 5 && !/^\d+$/.test(token));
   assert(query, `${kind}: could not derive a stable search token from the first visible row`);
 
@@ -128,7 +135,7 @@ async function checkBrowser(name, browserType) {
 
   page.on("pageerror", (error) => runtimeErrors.push(`pageerror: ${error.message}`));
   page.on("console", (message) => {
-    if (message.type() === "error") runtimeErrors.push(`console: ${message.text()}`);
+    if (message.type() === "error") runtimeErrors.push(`console: ${message.text()}`));
   });
 
   try {
