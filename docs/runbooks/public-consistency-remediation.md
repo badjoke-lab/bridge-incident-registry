@@ -98,3 +98,6 @@ The emergency public-consistency remediation remains closed. Canonical-derived p
 5. run explicit full-content production verification after public-data changes;
 6. confirm `generated_at` and complete dataset equality before declaring publication;
 7. after one reviewed build-input refresh, prefer delayed rerun over repeated refresh commits when the timestamp remains unchanged.
+
+<!-- canonical-counts:batch20 -->
+Current canonical counts: Bridges 75 / Incidents 54 / Events 252 / Evidence 410.

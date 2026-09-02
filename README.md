@@ -225,3 +225,6 @@ Canonical data and generated machine-readable output are validated during the bu
 ## Development rule
 
 Never write canonical data directly to `main`. Candidate research, monitoring output, private notes, and temporary files must remain separate from reviewed canonical records.
+
+<!-- canonical-counts:batch20 -->
+Current canonical counts: Bridges 75 / Incidents 54 / Events 252 / Evidence 410.
