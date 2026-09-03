@@ -20,3 +20,4 @@ bridge.notes = 'The incident boundary is the shared Token Gateway settlement lay
 
 fs.writeFileSync(path, `${JSON.stringify(bridges, null, 2)}\n`);
 console.log('Corrected bir_bridge_000077 from terminal TokenGateway entity to active Hyperbridge protocol entity.');
+// one-shot trigger marker
