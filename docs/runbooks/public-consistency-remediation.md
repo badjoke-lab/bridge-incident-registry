@@ -101,3 +101,6 @@ The emergency public-consistency remediation remains closed. Canonical-derived p
 
 <!-- canonical-counts:batch20 -->
 Current canonical counts: Bridges 75 / Incidents 54 / Events 252 / Evidence 410.
+
+<!-- batch21-current-counts -->
+Current canonical counts: Bridges 77 / Incidents 56 / Events 257 / Evidence 415.

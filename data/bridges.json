@@ -4183,5 +4183,108 @@
     "duplicate_of": null,
     "merged_into": null,
     "notes": "Both incidents are scoped to solver infrastructure. Solver-owned losses are not converted into user-loss or protocol-contract-compromise claims. Latest unrestricted service restoration after the July 2026 pause is not established in the admitted incident evidence."
+  },
+  {
+    "id": "bir_bridge_000076",
+    "slug": "dusk-evm-bridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Dusk to EVM Bridge",
+    "type": "asset_bridge",
+    "status": "active",
+    "summary": "Dusk operated a bridge service for EVM migration events. On January 16, 2026, an attacker gained unauthorized access to the bridge signing wallet, drained DUSK on Dusk, and moved part of the funds through the bridge to BNB Smart Chain. Dusk shut the bridge down and later redesigned the service with stronger isolation and reduced hot-wallet exposure.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-09-03",
+    "last_verified_at": "2026-09-03",
+    "aliases": [
+      "Dusk Bridge",
+      "Dusk to EVM bridge service"
+    ],
+    "launch_date": null,
+    "launch_date_precision": "unknown",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "official_url": "https://dusk.network/news/bridge-incident-post-mortem",
+    "official_domain": "dusk.network",
+    "official_url_status": "live_verified",
+    "archived_url": null,
+    "primary_chains": [
+      "unknown",
+      "bnb-chain"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "Dusk",
+    "operator_type": "protocol_team",
+    "ecosystem_name": "Dusk",
+    "related_protocols": [],
+    "brand_history_notes": null,
+    "major_incident_count": 1,
+    "has_unresolved_incident": true,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "notes": "Dusk says the redesigned bridge has been stable since release, but the reviewed post-mortem does not provide a dated reopening boundary or a quantified final recovery/reimbursement outcome."
+  },
+  {
+    "id": "bir_bridge_000077",
+    "slug": "hyperbridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Hyperbridge",
+    "type": "interoperability_protocol",
+    "status": "active",
+    "summary": "Hyperbridge is a cross-chain interoperability protocol. On April 13, 2026, a forged Merkle Mountain Range proof was accepted by its verifier and used to extract funds from the shared Token Gateway settlement layer. Hyperbridge paused bridging, patched and audited the verification stack, and relaunched in June with a redesigned architecture that deprecated the shared TokenGateway model while keeping the Hyperbridge protocol active.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-09-03",
+    "last_verified_at": "2026-09-03",
+    "aliases": [
+      "Hyperbridge protocol",
+      "Hyperbridge Token Gateway"
+    ],
+    "launch_date": null,
+    "launch_date_precision": "unknown",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "official_url": "https://blog.hyperbridge.network/april-13-post-mortem/",
+    "official_domain": "blog.hyperbridge.network",
+    "official_url_status": "live_verified",
+    "archived_url": null,
+    "primary_chains": [
+      "ethereum",
+      "base",
+      "bnb-chain",
+      "arbitrum",
+      "unknown"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "Polytope Labs",
+    "operator_type": "protocol_team",
+    "ecosystem_name": "Hyperbridge",
+    "related_protocols": [
+      "ISMP"
+    ],
+    "brand_history_notes": "The affected shared TokenGateway was deprecated in the June 2026 redesign and replaced by issuer-owned Hyperfungible Token logic. This is lifecycle context within the still-active Hyperbridge protocol entity.",
+    "major_incident_count": 1,
+    "has_unresolved_incident": true,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "notes": "The incident boundary is the shared Token Gateway settlement layer. The protocol itself relaunched and remains the canonical entity; final attacker-fund recovery remains incomplete in the reviewed material."
   }
 ]
