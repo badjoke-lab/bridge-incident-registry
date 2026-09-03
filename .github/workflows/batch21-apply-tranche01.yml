@@ -5,7 +5,7 @@ on:
     branches:
       - canonical/growth-batch-21-incident-heavy
     paths:
-      - scripts/batch21-apply-tranche01.mjs
+      - scripts/batch21-apply-tranche01-v2.mjs
       - .github/workflows/batch21-apply-tranche01.yml
 
 permissions:
@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: node scripts/batch21-apply-tranche01.mjs
+      - run: node scripts/batch21-apply-tranche01-v2.mjs
       - run: npm install
       - run: npm run validate:data
       - run: npm run validate:enums
