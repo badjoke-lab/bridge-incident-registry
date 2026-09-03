@@ -8303,5 +8303,169 @@
       "bnb-chain",
       "unknown"
     ]
+  },
+  {
+    "id": "bir_ev_000253",
+    "bridge_id": "bir_bridge_000076",
+    "incident_id": "bir_inc_000055",
+    "event_type": "exploit_occurred",
+    "event_date": "2026-01-16",
+    "event_date_precision": "day",
+    "title": "Dusk bridge signing wallet compromised",
+    "description": "An unauthorized actor gained access to the Dusk bridge signing wallet and stole DUSK, with part of the stolen amount moved through the bridge to BNB Smart Chain.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "high",
+    "status_effect": "bridge signing path compromised",
+    "source_count": 1,
+    "sort_order": 10,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "unknown",
+    "restart_status": "unknown",
+    "affected_chains": [
+      "unknown",
+      "bnb-chain"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": "First-party post-mortem explicitly excludes a Dusk consensus failure or protocol exploit.",
+    "duplicate_of": null,
+    "merged_into": null
+  },
+  {
+    "id": "bir_ev_000254",
+    "bridge_id": "bir_bridge_000076",
+    "incident_id": "bir_inc_000055",
+    "event_type": "bridge_paused",
+    "event_date": "2026-01-16",
+    "event_date_precision": "day",
+    "title": "Dusk bridge shut down during containment",
+    "description": "Dusk shut the bridge down at 23:12 UTC after an internal compromise report, causing a later 8.91 million DUSK bridge attempt to fail.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "high",
+    "status_effect": "bridge paused for incident containment",
+    "source_count": 1,
+    "sort_order": 20,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "unknown",
+    "restart_status": "paused",
+    "affected_chains": [
+      "unknown",
+      "bnb-chain"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": null,
+    "duplicate_of": null,
+    "merged_into": null
+  },
+  {
+    "id": "bir_ev_000255",
+    "bridge_id": "bir_bridge_000077",
+    "incident_id": "bir_inc_000056",
+    "event_type": "exploit_occurred",
+    "event_date": "2026-04-13",
+    "event_date_precision": "day",
+    "title": "Hyperbridge Token Gateway MMR verifier exploited",
+    "description": "A forged proof with an out-of-bounds leaf index was accepted by the MMR verifier and downstream handlers treated it as a valid Hyperbridge message, enabling extraction from Token Gateway.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "critical",
+    "status_effect": "Token Gateway settlement layer exploited",
+    "source_count": 1,
+    "sort_order": 10,
+    "amount_text": "over $2 million realized loss in later revised assessment",
+    "recovered_amount_text": null,
+    "reimbursement_status": "unknown",
+    "restart_status": "unknown",
+    "affected_chains": [
+      "ethereum",
+      "base",
+      "bnb-chain",
+      "arbitrum",
+      "unknown"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": "The later post-mortem supersedes the initial Ethereum-only scope.",
+    "duplicate_of": null,
+    "merged_into": null
+  },
+  {
+    "id": "bir_ev_000256",
+    "bridge_id": "bir_bridge_000077",
+    "incident_id": "bir_inc_000056",
+    "event_type": "bridge_paused",
+    "event_date": "2026-04-13",
+    "event_date_precision": "day",
+    "title": "Hyperbridge bridging operations paused",
+    "description": "Hyperbridge paused its messaging and bridging infrastructure within hours of detecting the Token Gateway exploit.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "high",
+    "status_effect": "all bridging operations paused",
+    "source_count": 1,
+    "sort_order": 20,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "unknown",
+    "restart_status": "paused",
+    "affected_chains": [
+      "ethereum",
+      "base",
+      "bnb-chain",
+      "arbitrum",
+      "unknown"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": null,
+    "duplicate_of": null,
+    "merged_into": null
+  },
+  {
+    "id": "bir_ev_000257",
+    "bridge_id": "bir_bridge_000077",
+    "incident_id": "bir_inc_000056",
+    "event_type": "bridge_reopened",
+    "event_date": "2026-06-15",
+    "event_date_precision": "day",
+    "title": "Hyperbridge bridging relaunched with redesigned architecture",
+    "description": "Hyperbridge announced that bridging had resumed after a redesign that replaced centralized proving and deprecated the shared TokenGateway in favor of issuer-owned Hyperfungible Token applications.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "high",
+    "status_effect": "bridging resumed under redesigned architecture",
+    "source_count": 1,
+    "sort_order": 30,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "unknown",
+    "restart_status": "reopened",
+    "affected_chains": [
+      "ethereum",
+      "base",
+      "bnb-chain",
+      "arbitrum",
+      "unknown"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": "This is a protocol relaunch; the shared TokenGateway itself is recorded as deprecated.",
+    "duplicate_of": null,
+    "merged_into": null
   }
 ]

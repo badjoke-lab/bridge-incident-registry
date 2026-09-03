@@ -4007,5 +4007,134 @@
     "merged_into": null,
     "split_from": null,
     "split_reason": null
+  },
+  {
+    "id": "bir_inc_000055",
+    "bridge_id": "bir_bridge_000076",
+    "slug": "dusk-evm-bridge-2026-signing-wallet-compromise",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "title": "Dusk to EVM Bridge 2026 signing-wallet compromise",
+    "incident_date": "2026-01-16",
+    "incident_date_precision": "day",
+    "incident_type": "exploit",
+    "summary": "An unauthorized actor gained access to a Dusk signing wallet used by the bridge, stole DUSK directly on Dusk, and moved part of the stolen amount through the bridge to BNB Smart Chain. Dusk states this was a bridge-wallet compromise, not a Dusk consensus failure or protocol exploit.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "source_count": 2,
+    "last_reviewed_at": "2026-09-03",
+    "last_verified_at": "2026-09-03",
+    "is_major_incident": true,
+    "reported_loss_usd_display": null,
+    "reported_loss_usd": null,
+    "reported_loss_usd_min": null,
+    "reported_loss_usd_max": null,
+    "reported_loss_text": "The reviewed first-party post-mortem enumerates stolen DUSK amounts but does not establish a canonical USD loss total.",
+    "reported_loss_assets": [
+      "unknown"
+    ],
+    "usd_valuation_date": null,
+    "loss_amount_basis": "reported_by_project",
+    "amount_confidence": "unknown",
+    "amount_note": "BIR does not invent a USD valuation from the token quantities in the post-mortem.",
+    "amount_claims": [],
+    "recovery_status": "unknown",
+    "reimbursement_status": "unknown",
+    "restart_status": "unknown",
+    "current_outcome": "active_after_incident",
+    "is_unresolved": true,
+    "unresolved_reason": [
+      "The reviewed post-mortem does not establish a final attacker-fund recovery or reimbursement outcome.",
+      "The redesigned bridge is described as stable since release, but the post-mortem does not provide a dated reopening boundary."
+    ],
+    "affected_chains": [
+      "unknown",
+      "bnb-chain"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "attack_vector_category": "validator_key_compromise",
+    "postmortem_available": "available",
+    "known_unknowns": [
+      "Exact mechanism by which the signing wallet credential became accessible was not established in the reviewed post-mortem.",
+      "Canonical USD loss remains unquantified."
+    ],
+    "conflicting_claims": [],
+    "duplicate_of": null,
+    "merged_into": null,
+    "split_from": null,
+    "split_reason": null
+  },
+  {
+    "id": "bir_inc_000056",
+    "bridge_id": "bir_bridge_000077",
+    "slug": "hyperbridge-token-gateway-2026-mmr-verifier-exploit",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "title": "Hyperbridge Token Gateway 2026 MMR verifier exploit",
+    "incident_date": "2026-04-13",
+    "incident_date_precision": "day",
+    "incident_type": "exploit",
+    "summary": "An attacker submitted a forged Merkle Mountain Range proof containing an out-of-bounds leaf index that the verifier accepted. Downstream handlers treated the forged leaf as a valid Hyperbridge message and funds were extracted from Token Gateway. Hyperbridge paused bridging, patched and audited the stack, and later relaunched with a redesigned architecture.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "source_count": 3,
+    "last_reviewed_at": "2026-09-03",
+    "last_verified_at": "2026-09-03",
+    "is_major_incident": true,
+    "reported_loss_usd_display": "over $2 million",
+    "reported_loss_usd": null,
+    "reported_loss_usd_min": 2000000,
+    "reported_loss_usd_max": null,
+    "reported_loss_text": "Hyperbridge later reported realized loss of over $2 million, concentrated in DeFi Singularity incentive pools across Ethereum, Base, BNB Chain, and Arbitrum.",
+    "reported_loss_assets": [
+      "unknown"
+    ],
+    "usd_valuation_date": "2026-04-13",
+    "loss_amount_basis": "reported_by_project",
+    "amount_confidence": "high",
+    "amount_note": "Use the later revised first-party assessment rather than the initial Ethereum-only estimate of roughly $237,000.",
+    "amount_claims": [
+      {
+        "amount_text": "realized loss",
+        "amount_usd_text": "over $2 million",
+        "source_id": "bir_src_000414",
+        "basis": "reported_by_project",
+        "usd_valuation_date": "2026-04-13",
+        "notes": "Revised first-party scope after tracing across four EVM networks."
+      }
+    ],
+    "recovery_status": "partial_recovery",
+    "reimbursement_status": "unknown",
+    "restart_status": "reopened",
+    "current_outcome": "migrated_after_incident",
+    "is_unresolved": true,
+    "unresolved_reason": [
+      "Reviewed first-party updates establish partial voluntary returns but not full recovery.",
+      "Final reimbursement or loss-allocation completion is not established."
+    ],
+    "affected_chains": [
+      "ethereum",
+      "base",
+      "bnb-chain",
+      "arbitrum",
+      "unknown"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "attack_vector_category": "message_verification_failure",
+    "postmortem_available": "available",
+    "known_unknowns": [
+      "Final recovered amount and final net unrecovered loss are not established in the reviewed sources."
+    ],
+    "conflicting_claims": [],
+    "duplicate_of": null,
+    "merged_into": null,
+    "split_from": null,
+    "split_reason": null
   }
 ]
