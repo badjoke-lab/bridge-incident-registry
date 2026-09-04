@@ -4286,5 +4286,57 @@
     "duplicate_of": null,
     "merged_into": null,
     "notes": "The incident boundary is the shared Token Gateway settlement layer. The protocol itself relaunched and remains the canonical entity; final attacker-fund recovery remains incomplete in the reviewed material."
+  },
+  {
+    "id": "bir_bridge_000078",
+    "slug": "heco-bridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "HECO Bridge",
+    "type": "asset_bridge",
+    "status": "limited",
+    "summary": "HECO Bridge was the cross-chain gateway used to move assets between HECO Chain and external networks including Ethereum. On November 22, 2023, the bridge was compromised in an incident independently attributed to compromise of the bridge operator wallet/private key, with approximately $86.6 million reported drained from the bridge. HTX and HECO suspended affected gateway and exchange transfer services while investigating.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-09-04",
+    "last_verified_at": "2026-09-04",
+    "aliases": [
+      "Heco Bridge",
+      "HECO Cross-Chain Bridge",
+      "HECO cross-chain gateway"
+    ],
+    "launch_date": null,
+    "launch_date_precision": "unknown",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "official_url": "https://www.htx.com/vi-vi/support/104954980569005/",
+    "official_domain": "htx.com",
+    "official_url_status": "live_verified",
+    "archived_url": null,
+    "primary_chains": [
+      "ethereum",
+      "unknown"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "HECO Chain / HTX ecosystem",
+    "operator_type": "protocol ecosystem",
+    "ecosystem_name": "HECO Chain",
+    "related_protocols": [
+      "HTX"
+    ],
+    "brand_history_notes": null,
+    "major_incident_count": 1,
+    "has_unresolved_incident": true,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "notes": "HECO has no dedicated BIR chain-reference key, so that side is represented as unknown. The reviewed evidence does not establish a dated unrestricted HECO Bridge reopening, final bridge-specific recovery, or bridge-specific reimbursement. HTX hot-wallet compensation is not generalized to the bridge loss."
   }
 ]

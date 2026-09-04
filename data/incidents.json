@@ -4136,5 +4136,75 @@
     "merged_into": null,
     "split_from": null,
     "split_reason": null
+  },
+  {
+    "id": "bir_inc_000057",
+    "bridge_id": "bir_bridge_000078",
+    "slug": "heco-bridge-2023-operator-key-compromise",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "title": "HECO Bridge 2023 operator-key compromise",
+    "incident_date": "2023-11-22",
+    "incident_date_precision": "day",
+    "incident_type": "exploit",
+    "summary": "On November 22, 2023, HECO Bridge was drained after the bridge operator wallet was compromised. HTX confirmed a cyberattack affecting HTX and HECO Chain and suspended affected transfer services; independent security analysis attributed the bridge component to operator-key compromise and estimated approximately $86.6 million drained from HECO Bridge.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "source_count": 2,
+    "last_reviewed_at": "2026-09-04",
+    "last_verified_at": "2026-09-04",
+    "is_major_incident": true,
+    "reported_loss_usd_display": "Approximately $86.6 million",
+    "reported_loss_usd": 86600000,
+    "reported_loss_usd_min": null,
+    "reported_loss_usd_max": null,
+    "reported_loss_text": "Independent security analysis and contemporaneous reporting estimated approximately $86.6 million drained from HECO Bridge. HTX separately reported hot-wallet losses; those exchange losses are excluded from this bridge amount.",
+    "reported_loss_assets": [
+      "unknown"
+    ],
+    "usd_valuation_date": "2023-11-22",
+    "loss_amount_basis": "independent security analysis corroborated by contemporaneous reporting",
+    "amount_confidence": "medium",
+    "amount_note": "The canonical amount is bridge-specific. It must not be combined with HTX hot-wallet losses disclosed in the same incident window.",
+    "amount_claims": [
+      {
+        "amount_text": "HECO Bridge drain",
+        "amount_usd_text": "approximately $86.6 million",
+        "source_id": "bir_src_000418",
+        "basis": "independent security analysis",
+        "usd_valuation_date": "2023-11-22",
+        "notes": "Bridge-specific estimate from CertiK; HTX exchange hot-wallet losses remain outside this claim."
+      }
+    ],
+    "recovery_status": "unknown",
+    "reimbursement_status": "unknown",
+    "restart_status": "paused",
+    "current_outcome": "unknown",
+    "is_unresolved": true,
+    "unresolved_reason": [
+      "Final HECO Bridge attacker-fund recovery is not established in the admitted evidence.",
+      "HTX hot-wallet compensation does not establish HECO Bridge reimbursement.",
+      "A dated unrestricted HECO Bridge reopening is not established."
+    ],
+    "affected_chains": [
+      "ethereum",
+      "unknown"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "attack_vector_category": "private_key_compromise",
+    "postmortem_available": "partial",
+    "known_unknowns": [
+      "The official HTX notice did not publish a bridge-specific technical root cause; operator-key compromise is supported by independent security analysis.",
+      "Final recovered amount and reimbursement status remain unknown.",
+      "Current unrestricted bridge operation is not established by the reviewed source package."
+    ],
+    "conflicting_claims": [],
+    "duplicate_of": null,
+    "merged_into": null,
+    "split_from": null,
+    "split_reason": null
   }
 ]
