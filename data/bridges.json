@@ -4338,5 +4338,57 @@
     "duplicate_of": null,
     "merged_into": null,
     "notes": "HECO has no dedicated BIR chain-reference key, so that side is represented as unknown. The reviewed evidence does not establish a dated unrestricted HECO Bridge reopening, final bridge-specific recovery, or bridge-specific reimbursement. HTX hot-wallet compensation is not generalized to the bridge loss."
+  },
+  {
+    "id": "bir_bridge_000079",
+    "slug": "icon-sodax-migration-bridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "ICON–SODAX Migration Bridge",
+    "type": "asset_bridge",
+    "status": "active",
+    "summary": "The ICON–SODAX migration bridge is the migration and withdrawal path connecting ICON-held ICX/bnUSD with SODAX-side assets through the ICON migration contract and SODAX Asset Manager. On August 27, 2026, a replay defect in signed withdrawal-message uniqueness handling allowed repeated releases of foundation-held assets. The affected withdrawal path was paused, the ICON Network was temporarily halted, and a corrected contract was deployed before network operation resumed on August 28.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-09-04",
+    "last_verified_at": "2026-09-04",
+    "aliases": [
+      "ICON migration bridge",
+      "ICON–SODAX bridge",
+      "SODAX Asset Manager withdrawal path"
+    ],
+    "launch_date": null,
+    "launch_date_precision": "unknown",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "official_url": "https://www.icon.foundation/blog/2026/icon-network-replay-exploit-post-mortem",
+    "official_domain": "icon.foundation",
+    "official_url_status": "live",
+    "archived_url": null,
+    "primary_chains": [
+      "unknown"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "ICON Foundation / SODAX",
+    "operator_type": "protocol ecosystem",
+    "ecosystem_name": "ICON / SODAX",
+    "related_protocols": [
+      "ICON Network",
+      "SODAX"
+    ],
+    "brand_history_notes": "This record is scoped to the migration/withdrawal bridge path during the ICON-to-SODAX transition, not to the ICON L1 or SODAX protocol generally.",
+    "major_incident_count": 1,
+    "has_unresolved_incident": true,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "notes": "BIR has no dedicated ICON or Sonic chain-reference key in the current vocabulary, so the chain side remains unknown. The first-party postmortem states all affected assets were foundation-held and no user deposits, balances, or positions were accessed or affected."
   }
 ]
