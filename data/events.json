@@ -8467,5 +8467,36 @@
     "notes": "This is a protocol relaunch; the shared TokenGateway itself is recorded as deprecated.",
     "duplicate_of": null,
     "merged_into": null
+  },
+  {
+    "id": "bir_ev_000258",
+    "bridge_id": "bir_bridge_000078",
+    "incident_id": "bir_inc_000057",
+    "event_type": "exploit_detected_and_bridge_paused",
+    "event_date": "2023-11-22",
+    "event_date_precision": "day",
+    "title": "HECO Bridge compromised and affected transfer services suspended",
+    "description": "HTX confirmed a cyberattack affecting HTX and HECO Chain and suspended affected deposits, withdrawals, and the HECO Chain gateway while investigating. Independent analysis attributed the bridge drain to compromise of the bridge operator wallet.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "major",
+    "status_effect": "HECO gateway and affected transfer services suspended",
+    "source_count": 2,
+    "sort_order": 10,
+    "amount_text": "approximately $86.6 million bridge-specific estimate",
+    "recovered_amount_text": null,
+    "reimbursement_status": "unknown",
+    "restart_status": "paused",
+    "affected_chains": [
+      "ethereum",
+      "unknown"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": "HTX hot-wallet compensation is outside the HECO Bridge reimbursement boundary.",
+    "duplicate_of": null,
+    "merged_into": null
   }
 ]
