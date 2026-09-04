@@ -1,0 +1,42 @@
+name: Batch 21 HECO apply v2
+
+on:
+  push:
+    branches:
+      - canonical/growth-batch-21-tranche-03-heco
+    paths:
+      - .github/workflows/batch21-heco-apply-v2.yml
+
+permissions:
+  contents: write
+
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: canonical/growth-batch-21-tranche-03-heco
+          fetch-depth: 0
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - name: Correct HECO evidence IDs in applicator
+        run: |
+          sed -i 's/bir_src_000417/bir_src_000418/g' scripts/batch21-apply-heco.mjs
+          sed -i 's/bir_src_000416/bir_src_000417/g' scripts/batch21-apply-heco.mjs
+      - run: node scripts/batch21-apply-heco.mjs
+      - run: npm install
+      - run: npm run validate:data
+      - run: npm run validate:enums
+      - run: npm run audit:full-corpus
+      - run: npm run audit:source-count
+      - run: npm run audit:source-quality
+      - name: Commit canonical HECO records
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add data/bridges.json data/incidents.json data/events.json data/evidence.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Add HECO Bridge canonical incident records"
+          git push origin HEAD:canonical/growth-batch-21-tranche-03-heco
