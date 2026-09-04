@@ -22,6 +22,10 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 22
+      - name: Correct occupied evidence ID allocation
+        run: |
+          sed -i 's/bir_src_000417/bir_src_000418/g' scripts/batch21-apply-heco.mjs
+          sed -i 's/bir_src_000416/bir_src_000417/g' scripts/batch21-apply-heco.mjs
       - run: node scripts/batch21-apply-heco.mjs
       - run: npm install
       - run: npm run validate:data
