@@ -4206,5 +4206,76 @@
     "merged_into": null,
     "split_from": null,
     "split_reason": null
+  },
+  {
+    "id": "bir_inc_000058",
+    "bridge_id": "bir_bridge_000079",
+    "slug": "icon-sodax-2026-withdrawal-message-replay-exploit",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "title": "ICON–SODAX 2026 withdrawal-message replay exploit",
+    "incident_date": "2026-08-27",
+    "incident_date_precision": "day",
+    "incident_type": "exploit",
+    "summary": "On August 27, 2026, an attacker replayed two previously legitimate signed withdrawal messages through the ICON migration contract / SODAX Asset Manager path. A serial-number precision defect meant the uniqueness check and signature verification did not validate the same exact value, allowing 1,490 successful repeated calls and unauthorized release of foundation-held assets. The withdrawal path was paused and ICON Network was temporarily halted before a corrected contract and additional relayer control were deployed.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "source_count": 3,
+    "last_reviewed_at": "2026-09-04",
+    "last_verified_at": "2026-09-04",
+    "is_major_incident": true,
+    "reported_loss_usd_display": "150.2 ETH + 31,204 USDC confirmed net loss",
+    "reported_loss_usd": null,
+    "reported_loss_usd_min": null,
+    "reported_loss_usd_max": null,
+    "reported_loss_text": "The ICON Foundation postmortem reported confirmed net loss of approximately 150.2 ETH plus 31,204 USDC. The gross 119,866,000 ICX release is not treated as final realized loss because most ICX was traced/frozen at exchanges and recovery remained active.",
+    "reported_loss_assets": [
+      "eth",
+      "usdc"
+    ],
+    "usd_valuation_date": null,
+    "loss_amount_basis": "official postmortem; token amounts preserved without USD conversion",
+    "amount_confidence": "high",
+    "amount_note": "Preserves the first-party confirmed-net-loss boundary rather than converting gross released ICX into a USD loss estimate.",
+    "amount_claims": [
+      {
+        "amount_text": "approximately 150.2 ETH plus 31,204 USDC confirmed net loss",
+        "amount_usd_text": null,
+        "source_id": "bir_src_000419",
+        "basis": "official postmortem",
+        "usd_valuation_date": null,
+        "notes": "The same postmortem says most exploited ICX was traced/frozen and in active recovery."
+      }
+    ],
+    "recovery_status": "partial_recovery",
+    "reimbursement_status": "unknown",
+    "restart_status": "reopened",
+    "current_outcome": "active_after_incident",
+    "is_unresolved": true,
+    "unresolved_reason": [
+      "Exchange-frozen ICX recovery was still active at postmortem publication.",
+      "No reimbursement program or final reimbursement outcome is established in the admitted evidence."
+    ],
+    "affected_chains": [
+      "unknown",
+      "ethereum"
+    ],
+    "affected_assets": [
+      "unknown",
+      "eth",
+      "usdc"
+    ],
+    "attack_vector_category": "message_verification_failure",
+    "postmortem_available": "full",
+    "known_unknowns": [
+      "Final amount of frozen ICX ultimately recovered after the August 30 postmortem is not established here.",
+      "No canonical ICON or Sonic chain-reference key exists in this batch."
+    ],
+    "conflicting_claims": [],
+    "duplicate_of": null,
+    "merged_into": null,
+    "split_from": null,
+    "split_reason": null
   }
 ]
