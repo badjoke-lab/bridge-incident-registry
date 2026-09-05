@@ -8591,5 +8591,69 @@
     "notes": "Restart does not imply completed recovery.",
     "duplicate_of": null,
     "merged_into": null
+  },
+  {
+    "id": "bir_ev_000262",
+    "bridge_id": "bir_bridge_000001",
+    "incident_id": "bir_inc_000059",
+    "event_type": "exploit_detected_and_bridge_paused",
+    "event_date": "2024-08-06",
+    "event_date_precision": "day",
+    "title": "Upgrade misconfiguration exploited and Ronin Bridge paused",
+    "description": "After a governance-deployed bridge upgrade, required operator-weight parameters were left uninitialized and the withdrawal threshold could be bypassed. Approximately 4,000 ETH and 2 million USDC were temporarily withdrawn before the bridge was paused.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "major",
+    "status_effect": "Bridge paused for investigation and remediation",
+    "source_count": 1,
+    "sort_order": 10,
+    "amount_text": "approximately 4,000 ETH and 2 million USDC temporarily withdrawn",
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_required",
+    "restart_status": "paused",
+    "affected_chains": [
+      "ronin",
+      "ethereum"
+    ],
+    "affected_assets": [
+      "eth",
+      "usdc"
+    ],
+    "notes": "The temporary outflow was bounded by bridge withdrawal limits and was later returned.",
+    "duplicate_of": null,
+    "merged_into": null
+  },
+  {
+    "id": "bir_ev_000263",
+    "bridge_id": "bir_bridge_000001",
+    "incident_id": "bir_inc_000059",
+    "event_type": "security_audit_completed",
+    "event_date": "2024-08-21",
+    "event_date_precision": "day",
+    "title": "Recovery fix restores operator weights and passes security audit",
+    "description": "Beosin’s Ronin-hosted audit reviewed the recovery proposal that restored the missing bridge-operator weights and verified that fake-credential withdrawals failed after the fix. The event date uses the audit publication boundary rather than inferring an earlier deployment timestamp.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "major",
+    "status_effect": "Recovery fix independently verified",
+    "source_count": 1,
+    "sort_order": 20,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "not_required",
+    "restart_status": "unknown",
+    "affected_chains": [
+      "ronin",
+      "ethereum"
+    ],
+    "affected_assets": [
+      "eth",
+      "usdc"
+    ],
+    "notes": "The separate fact that the temporary 4,000 ETH + 2M USDC outflow was returned remains incident-level recovery context supported by contemporaneous reporting; this event is limited to the primary-source technical fix and audit boundary.",
+    "duplicate_of": null,
+    "merged_into": null
   }
 ]
