@@ -10,7 +10,7 @@ interface Props { incidents: IncidentCase[]; }
 const { incidents } = Astro.props;
 const bridgesById = new Map(registryData.bridges.map((bridge) => [bridge.id, bridge]));
 const PAGE_SIZE = 25;
-const SUMMARY_PREVIEW_LIMIT = 110;
+const SUMMARY_PREVIEW_LIMIT = 80;
 const summaryPreview = (value: string) => value.length <= SUMMARY_PREVIEW_LIMIT
   ? value
   : `${value.slice(0, SUMMARY_PREVIEW_LIMIT - 1).trimEnd()}…`;

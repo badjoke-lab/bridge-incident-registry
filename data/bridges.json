@@ -7,12 +7,12 @@
     "canonical_name": "Ronin Bridge",
     "type": "asset_bridge",
     "status": "active",
-    "summary": "Ronin Bridge is the bridge associated with the Ronin network. It is included because of the March 2022 validator-key compromise and large reported loss, followed by attribution, recovery, and reimbursement-related aftermath.",
+    "summary": "Ronin Bridge is the bridge associated with the Ronin network. BIR records the March 2022 validator-key compromise and the distinct August 2024 bridge-upgrade incident in which operator-weight initialization failed, enabling temporary unauthorized withdrawals that were returned by whitehat/MEV actors before the vulnerability was fixed and independently audited.",
     "confidence": "high",
     "record_maturity": "reviewed",
     "update_status": "current",
-    "last_reviewed_at": "2026-06-11",
-    "last_verified_at": "2026-06-11",
+    "last_reviewed_at": "2026-09-04",
+    "last_verified_at": "2026-09-04",
     "aliases": [
       "Ronin Network Bridge"
     ],
@@ -40,7 +40,7 @@
       "Axie Infinity"
     ],
     "brand_history_notes": null,
-    "major_incident_count": 1,
+    "major_incident_count": 2,
     "has_unresolved_incident": false,
     "has_reimbursement_history": true,
     "successor_id": null,
@@ -48,7 +48,7 @@
     "replacement_bridge_id": null,
     "duplicate_of": null,
     "merged_into": null,
-    "notes": "Seed record focused on the 2022 incident and aftermath rather than live bridge safety."
+    "notes": "The 2022 and 2024 incidents are separate lineages: 2022 involved validator-key compromise; 2024 involved an upgrade/operator-weight initialization failure. The 2024 outflow was returned and the fix was verified in a Ronin-hosted Beosin audit."
   },
   {
     "id": "bir_bridge_000002",
