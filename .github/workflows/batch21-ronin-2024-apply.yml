@@ -6,6 +6,7 @@ on:
       - canonical/growth-batch-21-tranche-05-ronin-2024
     paths:
       - scripts/batch21-apply-ronin-2024.mjs
+      - scripts/batch21-apply-ronin-2024-v2.mjs
       - .github/workflows/batch21-ronin-2024-apply.yml
 
 permissions:
@@ -23,6 +24,7 @@ jobs:
         with:
           node-version: 22
       - run: node scripts/batch21-apply-ronin-2024.mjs
+      - run: node scripts/batch21-apply-ronin-2024-v2.mjs
       - run: npm install --no-audit --no-fund
       - run: npm run validate:data
       - run: npm run validate:enums
