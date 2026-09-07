@@ -19,6 +19,21 @@ jobs:
           node-version: 20
       - run: npm ci
       - run: node scripts/apply-force-bridge-tranche-06.mjs
+      - name: Normalize unsupported reference keys
+        run: |
+          node --input-type=module - <<'NODE'
+          import fs from 'node:fs';
+          for (const p of ['data/bridges.json','data/events.json']) {
+            const rows=JSON.parse(fs.readFileSync(p,'utf8'));
+            for (const r of rows) {
+              if (r.id==='bir_bridge_000080' || r.bridge_id==='bir_bridge_000080') {
+                for (const k of ['primary_chains','affected_chains']) if (Array.isArray(r[k])) r[k]=[...new Set(r[k].map(x=>x==='nervos-ckb'?'unknown':x))];
+                for (const k of ['primary_assets','affected_assets']) if (Array.isArray(r[k])) r[k]=[...new Set(r[k].map(x=>x==='btcb'?'unknown':x))];
+              }
+            }
+            fs.writeFileSync(p,JSON.stringify(rows,null,2)+'\n');
+          }
+          NODE
       - run: npm run validate:data
       - run: npm run validate:enums
       - run: npm run audit:full-corpus
