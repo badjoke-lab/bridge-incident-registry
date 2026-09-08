@@ -4390,5 +4390,58 @@
     "duplicate_of": null,
     "merged_into": null,
     "notes": "BIR has no dedicated ICON or Sonic chain-reference key in the current vocabulary, so the chain side remains unknown. The first-party postmortem states all affected assets were foundation-held and no user deposits, balances, or positions were accessed or affected."
+  },
+  {
+    "id": "bir_bridge_000080",
+    "slug": "kelpdao-rseth-bridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "KelpDAO rsETH Bridge",
+    "type": "asset_bridge",
+    "status": "paused",
+    "summary": "KelpDAO operated an rsETH cross-chain bridge built on LayerZero messaging. On April 18, 2026, poisoned RPC responses caused the sole LayerZero Labs DVN configured for the affected OApp to attest to a forged Unichain-to-Ethereum message, releasing 116,500 rsETH on Ethereum without a corresponding source-chain burn. KelpDAO paused rsETH contracts across mainnet and several L2s while the incident was investigated.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-09-09",
+    "last_verified_at": "2026-09-09",
+    "aliases": [
+      "KelpDAO LayerZero rsETH bridge",
+      "rsETH OFT bridge"
+    ],
+    "launch_date": null,
+    "launch_date_precision": "unknown",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "official_url": "https://layerzero.network/blog/layerzero-labs-kelpdao-incident-report",
+    "official_domain": "layerzero.network",
+    "official_url_status": "live_verified",
+    "archived_url": null,
+    "primary_chains": [
+      "unknown",
+      "ethereum"
+    ],
+    "primary_assets": [
+      "unknown"
+    ],
+    "operator_name": "KelpDAO",
+    "operator_type": "protocol_team",
+    "ecosystem_name": "KelpDAO",
+    "related_protocols": [
+      "LayerZero",
+      "rsETH",
+      "Unichain"
+    ],
+    "brand_history_notes": null,
+    "major_incident_count": 1,
+    "has_unresolved_incident": true,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "notes": "The current BIR reference vocabulary does not include dedicated Unichain or rsETH keys, so those references remain unknown in keyed fields while exact names are preserved in prose. LayerZero was the compromised DVN infrastructure operator; this record does not treat LayerZero on-chain protocol contracts as exploited."
   }
 ]

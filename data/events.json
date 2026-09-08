@@ -8655,5 +8655,98 @@
     "notes": "The separate fact that the temporary 4,000 ETH + 2M USDC outflow was returned remains incident-level recovery context supported by contemporaneous reporting; this event is limited to the primary-source technical fix and audit boundary.",
     "duplicate_of": null,
     "merged_into": null
+  },
+  {
+    "id": "bir_ev_000264",
+    "bridge_id": "bir_bridge_000080",
+    "incident_id": "bir_inc_000060",
+    "event_type": "exploit_occurred",
+    "event_date": "2026-04-18",
+    "event_date_precision": "day",
+    "title": "Forged cross-chain message releases 116,500 rsETH on Ethereum",
+    "description": "Poisoned LayerZero Labs RPC responses and denial of service against an external RPC path caused the sole configured LayerZero Labs DVN to attest to a forged Unichain-to-Ethereum message. The destination accepted the single attestation and released 116,500 rsETH without a corresponding source-chain burn.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "critical",
+    "status_effect": "116,500 rsETH released without corresponding source-chain burn",
+    "source_count": 1,
+    "sort_order": 10,
+    "amount_text": "116,500 rsETH; approximately $292 million at the time of attack",
+    "recovered_amount_text": null,
+    "reimbursement_status": "unknown",
+    "restart_status": "unknown",
+    "affected_chains": [
+      "unknown",
+      "ethereum"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": "Unichain and rsETH are preserved in prose because dedicated reference keys are absent.",
+    "duplicate_of": null,
+    "merged_into": null
+  },
+  {
+    "id": "bir_ev_000265",
+    "bridge_id": "bir_bridge_000080",
+    "incident_id": "bir_inc_000060",
+    "event_type": "bridge_paused",
+    "event_date": "2026-04-18",
+    "event_date_precision": "day",
+    "title": "KelpDAO pauses rsETH contracts during containment",
+    "description": "KelpDAO acknowledged suspicious cross-chain activity and paused rsETH contracts across Ethereum mainnet and several L2s while working with LayerZero and security teams on root-cause analysis.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "high",
+    "status_effect": "Affected rsETH bridge operations paused for containment",
+    "source_count": 2,
+    "sort_order": 20,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "unknown",
+    "restart_status": "paused",
+    "affected_chains": [
+      "ethereum",
+      "unknown"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": "No unrestricted reopening is inferred.",
+    "duplicate_of": null,
+    "merged_into": null
+  },
+  {
+    "id": "bir_ev_000266",
+    "bridge_id": "bir_bridge_000080",
+    "incident_id": "bir_inc_000060",
+    "event_type": "postmortem_published",
+    "event_date": "2026-05-20",
+    "event_date_precision": "day",
+    "title": "LayerZero publishes final KelpDAO incident report",
+    "description": "LayerZero Labs published its final incident report describing the March 6 social-engineering entry point, compromise of internal RPC nodes, DDoS-assisted failover, the 1-of-1 DVN configuration, and the forged attestation that enabled the April 18 bridge loss.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "high",
+    "status_effect": "Root cause and infrastructure remediation documented",
+    "source_count": 1,
+    "sort_order": 30,
+    "amount_text": "116,500 rsETH; approximately $292 million",
+    "recovered_amount_text": null,
+    "reimbursement_status": "unknown",
+    "restart_status": "unknown",
+    "affected_chains": [
+      "unknown",
+      "ethereum"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": "Publication of the report does not establish recovery or bridge reopening.",
+    "duplicate_of": null,
+    "merged_into": null
   }
 ]

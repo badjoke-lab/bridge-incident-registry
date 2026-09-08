@@ -4343,5 +4343,75 @@
     "merged_into": null,
     "split_from": null,
     "split_reason": null
+  },
+  {
+    "id": "bir_inc_000060",
+    "bridge_id": "bir_bridge_000080",
+    "slug": "kelpdao-2026-rseth-bridge-rpc-dvn-compromise",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "title": "KelpDAO 2026 rsETH bridge RPC/DVN compromise",
+    "incident_date": "2026-04-18",
+    "incident_date_precision": "day",
+    "incident_type": "exploit",
+    "summary": "On April 18, 2026, attackers compromised LayerZero Labs internal RPC infrastructure and simultaneously disrupted an external RPC path. Poisoned RPC responses caused the sole LayerZero Labs DVN configured for KelpDAO’s rsETH OApp to attest to a forged cross-chain message. With a 1-of-1 DVN configuration, the destination accepted that attestation and released 116,500 rsETH on Ethereum even though no corresponding burn occurred on Unichain.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "source_count": 4,
+    "last_reviewed_at": "2026-09-09",
+    "last_verified_at": "2026-09-09",
+    "is_major_incident": true,
+    "reported_loss_usd_display": "116,500 rsETH (approximately $292 million)",
+    "reported_loss_usd": 292000000,
+    "reported_loss_usd_min": null,
+    "reported_loss_usd_max": null,
+    "reported_loss_text": "LayerZero’s final incident report states that 116,500 rsETH, approximately $292 million at the time of attack, was lost from the KelpDAO rsETH bridge.",
+    "reported_loss_assets": [
+      "unknown"
+    ],
+    "usd_valuation_date": "2026-04-18",
+    "loss_amount_basis": "reported_by_project",
+    "amount_confidence": "high",
+    "amount_note": "USD value follows LayerZero Labs’ final incident report; rsETH is preserved as the exact token quantity in prose because BIR does not yet have an rsETH reference key.",
+    "amount_claims": [
+      {
+        "amount_text": "116,500 rsETH",
+        "amount_usd_text": "approximately $292 million",
+        "source_id": "bir_src_000427",
+        "basis": "LayerZero Labs final incident report",
+        "usd_valuation_date": "2026-04-18",
+        "notes": "Direct report from the compromised DVN infrastructure operator."
+      }
+    ],
+    "recovery_status": "unknown",
+    "reimbursement_status": "unknown",
+    "restart_status": "paused",
+    "current_outcome": "unknown",
+    "is_unresolved": true,
+    "unresolved_reason": [
+      "Final recovery of the 116,500 rsETH is not established by the admitted evidence.",
+      "A completed reimbursement state is not established.",
+      "A dated unrestricted reopening of the affected rsETH bridge path is not established."
+    ],
+    "affected_chains": [
+      "unknown",
+      "ethereum"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "attack_vector_category": "relayer_or_oracle_issue",
+    "postmortem_available": "available",
+    "known_unknowns": [
+      "Final recovered amount and reimbursement state remain unresolved.",
+      "The admitted evidence does not establish a dated unrestricted reopening."
+    ],
+    "conflicting_claims": [],
+    "notes": "The incident was an off-chain verifier-infrastructure compromise combined with a single-DVN configuration, not a KelpDAO smart-contract bug or a compromise of LayerZero on-chain protocol contracts.",
+    "duplicate_of": null,
+    "merged_into": null,
+    "split_from": null,
+    "split_reason": null
   }
 ]
