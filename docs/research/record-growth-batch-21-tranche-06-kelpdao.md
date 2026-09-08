@@ -12,8 +12,8 @@ Direct canonical review found no existing KelpDAO / Kelp / rsETH bridge entity o
 
 - bridge: `bir_bridge_000080` — KelpDAO rsETH Bridge
 - incident: `bir_inc_000060` — KelpDAO 2026 rsETH bridge RPC/DVN compromise
-- events: `bir_ev_000264`–`bir_ev_000265`
-- evidence: `bir_src_000425`–`bir_src_000427`
+- events: `bir_ev_000264`–`bir_ev_000266`
+- evidence: `bir_src_000425`–`bir_src_000428`
 
 ## Incident boundary
 
@@ -33,9 +33,12 @@ Direct canonical review found no existing KelpDAO / Kelp / rsETH bridge entity o
 2. LayerZero — `LayerZero Labs KelpDAO Incident Report`, 2026-05-20
    - https://layerzero.network/blog/layerzero-labs-kelpdao-incident-report
    - first-party final report; supports 116,500 rsETH / approximately USD 292M, social-engineering/RPC compromise timeline, DDoS failover and forged attestation
-3. Chainalysis — `Inside the KelpDAO Bridge Exploit`, 2026-04-23
+3. The Block — contemporaneous incident report, 2026-04-18
+   - https://www.theblock.co/news/regulation/2026-04-18-kelp-daos-rseth-bridge-apparently-exploited-for-roughly-292-million-in-layerzero-based-attack-397988
+   - independent report quoting KelpDAO's acknowledgement and rsETH contract pause
+4. Chainalysis — `Inside the KelpDAO Bridge Exploit`, 2026-04-23
    - https://www.chainalysis.com/blog/kelpdao-bridge-exploit-april-2026/
-   - independent security/forensic analysis; supports Unichain → Ethereum route, phantom burn, 116,500 rsETH release and off-chain infrastructure compromise
+   - independent security/forensic analysis supporting Unichain → Ethereum route, phantom burn, 116,500 rsETH release and off-chain infrastructure compromise; retained as reviewed context even though the canonical evidence set uses the LayerZero and The Block records above
 
 ## Modeling guardrails
 
@@ -44,4 +47,4 @@ Direct canonical review found no existing KelpDAO / Kelp / rsETH bridge entity o
 - do not describe LayerZero protocol contracts as exploited
 - do not generalize attribution beyond the admitted LayerZero report
 - keep downstream lending-market effects outside the bridge-loss amount
-- resulting expected counts: 80 bridges / 60 incidents / 265 events / 426 evidence
+- resulting counts: 80 bridges / 60 incidents / 266 events / 427 evidence
