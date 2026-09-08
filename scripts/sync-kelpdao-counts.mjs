@@ -1,0 +1,3 @@
+import fs from 'node:fs';
+const files=['README.md','docs/runbooks/current-status.md','docs/runbooks/recovery-checkpoint.md','docs/runbooks/development-roadmap.md','docs/runbooks/public-consistency-remediation.md'];
+for(const f of files){let t=fs.readFileSync(f,'utf8');t=t.replace(/Current canonical counts: Bridges 79 \/ Incidents\s+59 \/ Events\s+263 \/ Evidence\s+423\./g,'Current canonical counts: Bridges 80 / Incidents 60 / Events 266 / Evidence 427.');fs.writeFileSync(f,t);}console.log('Synced KelpDAO tranche counts to 80/60/266/427.');
