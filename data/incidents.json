@@ -4485,5 +4485,67 @@
     "merged_into": null,
     "split_from": null,
     "split_reason": null
+  },
+  {
+    "id": "bir_inc_000062",
+    "bridge_id": "bir_bridge_000060",
+    "slug": "skale-ima-bridge-2026-validator-infrastructure-compromise",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "title": "SKALE IMA Bridge 2026 validator-infrastructure compromise",
+    "incident_date": "2026-08-27",
+    "incident_date_precision": "day",
+    "incident_type": "exploit",
+    "summary": "At approximately 21:00 UTC on August 27, 2026, infrastructure providers running validator nodes in the SKALE Network were compromised and the Ethereum-connected SKALE IMA Bridge was exploited. The attacker drained ERC-20 assets held in affected bridge infrastructure. SKALE immediately paused the bridge and began investigating the exact attack vector, total loss and recovery options. SKALE on Base was explicitly reported as unaffected.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "source_count": 2,
+    "last_reviewed_at": "2026-09-09",
+    "last_verified_at": "2026-09-09",
+    "is_major_incident": true,
+    "reported_loss_usd_display": "Unknown — under assessment",
+    "reported_loss_usd": null,
+    "reported_loss_usd_min": null,
+    "reported_loss_usd_max": null,
+    "reported_loss_text": "SKALE states that ERC-20 assets were drained and that the total value lost is still being assessed.",
+    "reported_loss_assets": [
+      "unknown"
+    ],
+    "usd_valuation_date": null,
+    "loss_amount_basis": "unknown",
+    "amount_confidence": "unknown",
+    "amount_note": "No canonical USD amount is emitted because SKALE had not published a verified total at the admitted evidence horizon.",
+    "amount_claims": [],
+    "recovery_status": "unknown",
+    "reimbursement_status": "unknown",
+    "restart_status": "paused",
+    "current_outcome": "unknown",
+    "is_unresolved": true,
+    "unresolved_reason": [
+      "The total value lost remains under assessment.",
+      "The precise attack vector remains under investigation.",
+      "Recovery and reimbursement outcomes are not established.",
+      "A dated restoration of affected IMA Bridge functionality is not established."
+    ],
+    "affected_chains": [
+      "ethereum",
+      "unknown"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "attack_vector_category": "unknown",
+    "postmortem_available": "unclear",
+    "known_unknowns": [
+      "Exact affected ERC-20 asset inventory and wallet list are not yet published.",
+      "The current BIR chain vocabulary lacks a dedicated SKALE Europa reference key, so Europa is preserved in prose rather than inferred into a new key."
+    ],
+    "conflicting_claims": [],
+    "notes": "Do not infer validator-key compromise merely from compromise of infrastructure providers running validator nodes. SKALE on Base is outside the affected incident scope.",
+    "duplicate_of": null,
+    "merged_into": null,
+    "split_from": null,
+    "split_reason": null
   }
 ]
