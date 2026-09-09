@@ -4631,5 +4631,101 @@
     "merged_into": null,
     "split_from": null,
     "split_reason": null
+  },
+  {
+    "id": "bir_inc_000064",
+    "bridge_id": "bir_bridge_000083",
+    "slug": "shibarium-pos-bridge-2025-validator-signing-compromise",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "title": "Shibarium PoS Bridge 2025 validator-signing compromise",
+    "incident_date": "2025-09-12",
+    "incident_date_precision": "day",
+    "incident_type": "exploit",
+    "summary": "At 18:44 UTC on September 12, 2025, the Shibarium bridge suffered a security breach in which unauthorized validator signing power was used to authorize malicious withdrawals. Contemporaneous and later ecosystem reporting described compromised validator signing authority combined with flash-loan-amplified BONE stake and a malicious checkpoint/exit path. Published direct-loss estimates differ materially, so BIR preserves a reported range instead of emitting a single false-precision value.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "source_count": 4,
+    "last_reviewed_at": "2026-09-09",
+    "last_verified_at": "2026-09-09",
+    "is_major_incident": true,
+    "reported_loss_usd_display": "Approximately $2.4 million–$4.1 million reported",
+    "reported_loss_usd": null,
+    "reported_loss_usd_min": 2400000,
+    "reported_loss_usd_max": 4100000,
+    "reported_loss_text": "Contemporaneous reporting placed the drain near $2.4M, while later Shiba Inu ecosystem reporting described approximately $4.1M across a broader 17-token inventory.",
+    "reported_loss_assets": [
+      "eth",
+      "usdc",
+      "usdt",
+      "wbtc",
+      "unknown"
+    ],
+    "usd_valuation_date": "2025-09-12",
+    "loss_amount_basis": "source-specific contemporaneous and ecosystem incident reporting",
+    "amount_confidence": "medium",
+    "amount_note": "BIR preserves the material source disagreement as a range. Frozen or immobilized BONE/KNINE response actions are not added as separate stolen value.",
+    "amount_claims": [
+      {
+        "amount_text": "224.57 ETH and 92.6 billion SHIB among drained assets",
+        "amount_usd_text": "about $2.4 million",
+        "source_id": "bir_src_000440",
+        "basis": "contemporaneous independent reporting",
+        "usd_valuation_date": "2025-09-13",
+        "notes": "Early estimate based on then-observed bridge outflows."
+      },
+      {
+        "amount_text": "17-token bridge inventory",
+        "amount_usd_text": "approximately $4.1 million",
+        "source_id": "bir_src_000441",
+        "basis": "later Shiba Inu ecosystem dev-report coverage",
+        "usd_valuation_date": "2025-09-12",
+        "notes": "Later broader inventory estimate; retained as the upper reported boundary rather than replacing the contemporaneous estimate."
+      }
+    ],
+    "recovery_status": "unknown",
+    "reimbursement_status": "in_progress",
+    "restart_status": "reopened",
+    "current_outcome": "active_after_incident",
+    "is_unresolved": true,
+    "unresolved_reason": [
+      "The final recovered-funds percentage is not established by the admitted first-party recovery material.",
+      "Shib.io continues to represent affected-user recovery balances and payouts through SOU, so reimbursement is not treated as completed.",
+      "The initial intrusion route into validator-signing infrastructure remains unresolved even though unauthorized/compromised signing authority is established."
+    ],
+    "affected_chains": [
+      "ethereum",
+      "unknown"
+    ],
+    "affected_assets": [
+      "eth",
+      "usdc",
+      "usdt",
+      "wbtc",
+      "unknown"
+    ],
+    "attack_vector_category": "validator_key_compromise",
+    "postmortem_available": "partial",
+    "known_unknowns": [
+      "Exact initial key-compromise mechanism is not publicly established.",
+      "Final recovered amount and final reimbursement completion are not established.",
+      "Exact unrestricted PoS bridge reopen timestamp is not inferred from the current live interface."
+    ],
+    "conflicting_claims": [
+      {
+        "topic": "reported direct loss",
+        "claims": [
+          "Approximately $2.4M in contemporaneous reporting.",
+          "Approximately $4.1M / over $4M in later Shiba Inu ecosystem reporting across a broader token inventory."
+        ],
+        "resolution": "BIR preserves an approximately $2.4M–$4.1M reported range and does not collapse the disagreement to a single value."
+      }
+    ],
+    "notes": "The incident is scoped to the Shibarium PoS bridge path; it is not generalized to the separate Plasma bridge path or all Shibarium protocol activity.",
+    "duplicate_of": null,
+    "merged_into": null,
+    "split_from": null,
+    "split_reason": null
   }
 ]
