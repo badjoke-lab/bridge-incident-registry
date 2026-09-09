@@ -4547,5 +4547,89 @@
     "merged_into": null,
     "split_from": null,
     "split_reason": null
+  },
+  {
+    "id": "bir_inc_000063",
+    "bridge_id": "bir_bridge_000082",
+    "slug": "mayachain-2026-chained-accounting-exploit",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "title": "MAYAChain 2026 chained accounting exploit",
+    "incident_date": "2026-08-18",
+    "incident_date_precision": "day",
+    "incident_type": "exploit",
+    "summary": "On August 18, 2026, an attacker used a single transaction containing 23 messages to chain multiple MAYAChain accounting and state-handling defects. The sequence triggered a false theft condition and an unfunded slash-subsidy credit in the thin ARB.LINK pool, after which the attacker gained near-total pool ownership and extracted Bitcoin and other assets. Maya halted MAYAChain trading for containment and recovery work.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "source_count": 3,
+    "last_reviewed_at": "2026-09-09",
+    "last_verified_at": "2026-09-09",
+    "is_major_incident": true,
+    "reported_loss_usd_display": "Approximately $1.7 million direct extraction",
+    "reported_loss_usd": 1700000,
+    "reported_loss_usd_min": 1650000,
+    "reported_loss_usd_max": 1760000,
+    "reported_loss_text": "Contemporaneous reporting based on Maya disclosures places direct attacker extraction at roughly $1.65M–$1.76M, including about 20.83 BTC moved to the attacker’s Bitcoin address. The roughly $10.9M decline in pool value is treated separately as market/arbitrage fallout, not stolen funds.",
+    "reported_loss_assets": [
+      "btc",
+      "unknown"
+    ],
+    "usd_valuation_date": "2026-08-18",
+    "loss_amount_basis": "operator disclosures corroborated by independent reporting",
+    "amount_confidence": "medium",
+    "amount_note": "Do not add the approximately $10.9M pool-value decline to direct stolen funds; it includes CACAO price collapse and arbitrage effects.",
+    "amount_claims": [
+      {
+        "amount_text": "about 20 BTC plus roughly $300,000 of other assets",
+        "amount_usd_text": "approximately $1.7 million",
+        "source_id": "bir_src_000436",
+        "basis": "contemporaneous report citing Maya founder disclosure and on-chain reconstruction",
+        "usd_valuation_date": "2026-08-18",
+        "notes": "Direct extraction only; excludes wider pool-value decline."
+      }
+    ],
+    "recovery_status": "unknown",
+    "reimbursement_status": "unknown",
+    "restart_status": "paused",
+    "current_outcome": "unknown",
+    "is_unresolved": true,
+    "unresolved_reason": [
+      "The attacker-controlled Bitcoin remained unrecovered at the latest admitted recovery horizon.",
+      "Full LP/protocol recovery and reimbursement are not established.",
+      "An unrestricted post-incident trading restart is not established in this tranche."
+    ],
+    "affected_chains": [
+      "bitcoin",
+      "ethereum",
+      "arbitrum",
+      "unknown"
+    ],
+    "affected_assets": [
+      "btc",
+      "unknown"
+    ],
+    "attack_vector_category": "unknown",
+    "postmortem_available": "partial",
+    "known_unknowns": [
+      "Final recovered amount is not established.",
+      "Final pool-level recovery and reimbursement treatment remain unresolved.",
+      "MAYAChain and CACAO lack dedicated keys in the current BIR reference vocabulary."
+    ],
+    "conflicting_claims": [
+      {
+        "topic": "financial impact",
+        "claims": [
+          "Direct attacker extraction was approximately $1.7M.",
+          "A much larger approximately $10.9M pool-value decline was reported after CACAO price collapse and arbitrage."
+        ],
+        "resolution": "BIR records the direct extraction as canonical reported loss and preserves the larger pool-value decline only as secondary impact."
+      }
+    ],
+    "notes": "The exploit is a composed accounting/state failure involving multiple bugs; BIR does not reduce it to a private-key compromise or treat every pool-value decline as theft.",
+    "duplicate_of": null,
+    "merged_into": null,
+    "split_from": null,
+    "split_reason": null
   }
 ]
