@@ -4497,5 +4497,62 @@
     "duplicate_of": null,
     "merged_into": null,
     "notes": "BIR scopes this entity to the affected SAND cross-chain bridge configuration. Ethereum and Polygon are not modeled as compromised, and the incident is not generalized into a LayerZero-wide protocol compromise."
+  },
+  {
+    "id": "bir_bridge_000082",
+    "slug": "maya-protocol-mayachain",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Maya Protocol / MAYAChain",
+    "type": "interoperability_protocol",
+    "status": "paused",
+    "summary": "MAYAChain is Maya Protocol’s decentralized cross-chain liquidity network for native-asset swaps. On August 18, 2026, an attacker chained multiple accounting and state-handling flaws in a single batched transaction, created an unfunded balance in a thin liquidity pool and extracted Bitcoin and other assets. MAYAChain trading was halted while fixes and recovery work proceeded.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-09-09",
+    "last_verified_at": "2026-09-09",
+    "aliases": [
+      "Maya Protocol",
+      "MAYAChain",
+      "MAYA Protocol"
+    ],
+    "launch_date": null,
+    "launch_date_precision": "unknown",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "official_url": "https://docs.mayaprotocol.com/mayachain-dev-docs/introduction",
+    "official_domain": "docs.mayaprotocol.com",
+    "official_url_status": "live",
+    "archived_url": null,
+    "primary_chains": [
+      "bitcoin",
+      "ethereum",
+      "arbitrum",
+      "unknown"
+    ],
+    "primary_assets": [
+      "btc",
+      "eth",
+      "unknown"
+    ],
+    "operator_name": "Maya Protocol contributors / MAYAChain node operators",
+    "operator_type": "protocol ecosystem",
+    "ecosystem_name": "Maya Protocol",
+    "related_protocols": [
+      "MAYAChain",
+      "THORChain"
+    ],
+    "brand_history_notes": null,
+    "major_incident_count": 1,
+    "has_unresolved_incident": true,
+    "has_reimbursement_history": false,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "notes": "BIR models MAYAChain as an interoperability protocol because it executes native cross-chain swaps from network vaults rather than a conventional lock-and-mint bridge. The current BIR vocabulary has no dedicated MAYAChain or CACAO key, so those exact names remain in prose."
   }
 ]

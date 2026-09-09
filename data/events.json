@@ -8904,5 +8904,39 @@
     "notes": "SKALE on Base remained operational and is excluded from this pause event.",
     "duplicate_of": null,
     "merged_into": null
+  },
+  {
+    "id": "bir_ev_000272",
+    "bridge_id": "bir_bridge_000082",
+    "incident_id": "bir_inc_000063",
+    "event_type": "root_cause_analysis_published",
+    "event_date": "2026-08-18",
+    "event_date_precision": "day",
+    "title": "MAYANode exploit-hardening merge request opened",
+    "description": "Maya opened MAYANode merge request !835 to harden outbound matching, native transaction-ID uniqueness and theft-slash subsidy handling after the incident. The change set documents the accounting/state paths involved, but it does not by itself establish mainnet state recovery, deployment completion or trading restart.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "major",
+    "status_effect": "Exploit-hardening changes documented; deployment and state recovery remained unresolved",
+    "source_count": 2,
+    "sort_order": 20,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "unknown",
+    "restart_status": "paused",
+    "affected_chains": [
+      "bitcoin",
+      "ethereum",
+      "arbitrum",
+      "unknown"
+    ],
+    "affected_assets": [
+      "btc",
+      "unknown"
+    ],
+    "notes": "This event intentionally tracks the first-party technical remediation record instead of creating a separate pause event supported only by secondary reporting.",
+    "duplicate_of": null,
+    "merged_into": null
   }
 ]
