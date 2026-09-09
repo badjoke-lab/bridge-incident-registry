@@ -4413,5 +4413,77 @@
     "merged_into": null,
     "split_from": null,
     "split_reason": null
+  },
+  {
+    "id": "bir_inc_000061",
+    "bridge_id": "bir_bridge_000081",
+    "slug": "the-sandbox-2026-base-bsc-bridge-configuration-exploit",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "title": "The Sandbox 2026 Base/BSC bridge-configuration exploit",
+    "incident_date": "2026-08-21",
+    "incident_date_precision": "day",
+    "incident_type": "exploit",
+    "summary": "Beginning around 23:41 UTC on August 21, 2026, an attacker exploited contracts associated with The Sandbox SAND bridge configuration on Base and BNB Smart Chain, enabling unbacked SAND minting without corresponding Ethereum deposits. Independent reporting based on the operator postmortem states that 14,742,341.84 SAND was drained from the Ethereum backing vault. The affected bridge paths were disabled and The Sandbox later opened a compensation process for eligible users.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "source_count": 4,
+    "last_reviewed_at": "2026-09-09",
+    "last_verified_at": "2026-09-09",
+    "is_major_incident": true,
+    "reported_loss_usd_display": "14,742,341.84 SAND (about $697,000)",
+    "reported_loss_usd": 697000,
+    "reported_loss_usd_min": null,
+    "reported_loss_usd_max": null,
+    "reported_loss_text": "Independent coverage of The Sandbox postmortem reports 14,742,341.84 SAND drained from the Ethereum backing vault, valued at about $697,000 at the incident-period valuation.",
+    "reported_loss_assets": [
+      "sand"
+    ],
+    "usd_valuation_date": "2026-08-21",
+    "loss_amount_basis": "mixed_sources",
+    "amount_confidence": "medium",
+    "amount_note": "The canonical amount is the SAND actually drained from the Ethereum backing vault. Enormous nominal unbacked-mint face values are intentionally excluded from realized loss.",
+    "amount_claims": [
+      {
+        "amount_text": "14,742,341.84 SAND",
+        "amount_usd_text": "about $697,000",
+        "source_id": "bir_src_000432",
+        "basis": "independent reporting based on operator postmortem",
+        "usd_valuation_date": "2026-08-21",
+        "notes": "Realized backing-vault drain, not nominal unbacked-mint face value."
+      }
+    ],
+    "recovery_status": "unknown",
+    "reimbursement_status": "in_progress",
+    "restart_status": "paused",
+    "current_outcome": "unknown",
+    "is_unresolved": true,
+    "unresolved_reason": [
+      "Final attacker-fund recovery is not established.",
+      "The compensation process is in progress and is not recorded as completed.",
+      "A dated unrestricted reopening of the affected Base/BSC bridge paths is not established."
+    ],
+    "affected_chains": [
+      "ethereum",
+      "base",
+      "bnb-chain"
+    ],
+    "affected_assets": [
+      "sand"
+    ],
+    "attack_vector_category": "configuration_error",
+    "postmortem_available": "available",
+    "known_unknowns": [
+      "Final recovery amount remains unknown.",
+      "Compensation completion remains unresolved.",
+      "No unrestricted Base/BSC bridge reopening is established by admitted evidence."
+    ],
+    "conflicting_claims": [],
+    "notes": "Nominal unbacked-mint quantities are not treated as realized loss. Ethereum and Polygon are not modeled as compromised.",
+    "duplicate_of": null,
+    "merged_into": null,
+    "split_from": null,
+    "split_reason": null
   }
 ]
