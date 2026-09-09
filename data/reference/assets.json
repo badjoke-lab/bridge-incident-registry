@@ -255,5 +255,11 @@
     "aliases": [
       "Oraichain Token"
     ]
+  },
+  "sand": {
+    "display_name": "SAND",
+    "aliases": [
+      "The Sandbox SAND"
+    ]
   }
 }

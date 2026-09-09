@@ -4443,5 +4443,59 @@
     "duplicate_of": null,
     "merged_into": null,
     "notes": "The current BIR reference vocabulary does not include dedicated Unichain or rsETH keys, so those references remain unknown in keyed fields while exact names are preserved in prose. LayerZero was the compromised DVN infrastructure operator; this record does not treat LayerZero on-chain protocol contracts as exploited."
+  },
+  {
+    "id": "bir_bridge_000081",
+    "slug": "the-sandbox-sand-bridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "The Sandbox SAND Bridge",
+    "type": "asset_bridge",
+    "status": "paused",
+    "summary": "The Sandbox used cross-chain SAND bridge configuration on Base and BNB Smart Chain backed from Ethereum. On August 21, 2026, an attacker exploited contracts associated with that bridge configuration to mint unbacked SAND and drain 14,742,341.84 SAND from the Ethereum backing vault. The affected Base/BSC bridge paths were disabled and a compensation process was later launched for eligible users.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-09-09",
+    "last_verified_at": "2026-09-09",
+    "aliases": [
+      "The Sandbox SAND bridge",
+      "SAND Base bridge",
+      "SAND BNB Smart Chain bridge"
+    ],
+    "launch_date": null,
+    "launch_date_precision": "unknown",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "official_url": "https://www.sandbox.game/en/blog/",
+    "official_domain": "sandbox.game",
+    "official_url_status": "live_verified",
+    "archived_url": null,
+    "primary_chains": [
+      "ethereum",
+      "base",
+      "bnb-chain"
+    ],
+    "primary_assets": [
+      "sand"
+    ],
+    "operator_name": "The Sandbox",
+    "operator_type": "company",
+    "ecosystem_name": "The Sandbox",
+    "related_protocols": [
+      "SAND",
+      "LayerZero"
+    ],
+    "brand_history_notes": null,
+    "major_incident_count": 1,
+    "has_unresolved_incident": true,
+    "has_reimbursement_history": true,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "notes": "BIR scopes this entity to the affected SAND cross-chain bridge configuration. Ethereum and Polygon are not modeled as compromised, and the incident is not generalized into a LayerZero-wide protocol compromise."
   }
 ]

@@ -8748,5 +8748,99 @@
     "notes": "Publication of the report does not establish recovery or bridge reopening.",
     "duplicate_of": null,
     "merged_into": null
+  },
+  {
+    "id": "bir_ev_000267",
+    "bridge_id": "bir_bridge_000081",
+    "incident_id": "bir_inc_000061",
+    "event_type": "exploit_occurred",
+    "event_date": "2026-08-21",
+    "event_date_precision": "day",
+    "title": "Base/BSC bridge configuration exploited",
+    "description": "An attacker exploited contracts associated with The Sandbox SAND bridge configuration on Base and BNB Smart Chain, enabling unbacked SAND minting without corresponding Ethereum deposits and draining backing assets from the Ethereum vault.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "high",
+    "status_effect": "Unbacked SAND minted on affected bridge paths and Ethereum backing vault drained",
+    "source_count": 2,
+    "sort_order": 10,
+    "amount_text": "14,742,341.84 SAND drained; about $697,000 at incident-period valuation",
+    "recovered_amount_text": null,
+    "reimbursement_status": "unknown",
+    "restart_status": "unknown",
+    "affected_chains": [
+      "ethereum",
+      "base",
+      "bnb-chain"
+    ],
+    "affected_assets": [
+      "sand"
+    ],
+    "notes": "Nominal synthetic mint face values are excluded from realized loss.",
+    "duplicate_of": null,
+    "merged_into": null
+  },
+  {
+    "id": "bir_ev_000268",
+    "bridge_id": "bir_bridge_000081",
+    "incident_id": "bir_inc_000061",
+    "event_type": "bridge_paused",
+    "event_date": "2026-08-22",
+    "event_date_precision": "day",
+    "title": "Affected Base and BNB Smart Chain bridge paths disabled",
+    "description": "The Sandbox disabled bridging on the affected Base and BNB Smart Chain paths during containment and warned users against trading affected SAND representations.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "high",
+    "status_effect": "Affected Base/BSC SAND bridging disabled",
+    "source_count": 1,
+    "sort_order": 20,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "unknown",
+    "restart_status": "paused",
+    "affected_chains": [
+      "base",
+      "bnb-chain"
+    ],
+    "affected_assets": [
+      "sand"
+    ],
+    "notes": "No unrestricted reopening is inferred.",
+    "duplicate_of": null,
+    "merged_into": null
+  },
+  {
+    "id": "bir_ev_000269",
+    "bridge_id": "bir_bridge_000081",
+    "incident_id": "bir_inc_000061",
+    "event_type": "reimbursement_started",
+    "event_date": "2026-09-08",
+    "event_date_precision": "day",
+    "title": "The Sandbox publishes SAND compensation claim process",
+    "description": "The Sandbox published its compensation process for users affected by the August exploit, stating that it had committed to a full compensation plan and explaining eligibility and claim mechanics.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "high",
+    "status_effect": "Compensation process opened for eligible affected users",
+    "source_count": 1,
+    "sort_order": 30,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "in_progress",
+    "restart_status": "paused",
+    "affected_chains": [
+      "base",
+      "bnb-chain"
+    ],
+    "affected_assets": [
+      "sand"
+    ],
+    "notes": "Publication of a claim process does not establish completed reimbursement.",
+    "duplicate_of": null,
+    "merged_into": null
   }
 ]
