@@ -8938,5 +8938,40 @@
     "notes": "This event intentionally tracks the first-party technical remediation record instead of creating a separate pause event supported only by secondary reporting.",
     "duplicate_of": null,
     "merged_into": null
+  },
+  {
+    "id": "bir_ev_000273",
+    "bridge_id": "bir_bridge_000083",
+    "incident_id": "bir_inc_000064",
+    "event_type": "exploit_occurred",
+    "event_date": "2025-09-12",
+    "event_date_precision": "day",
+    "title": "Shibarium PoS Bridge malicious withdrawal incident",
+    "description": "Unauthorized validator signing power was used to authorize malicious withdrawals from the Shibarium bridge. The incident affected multiple assets and triggered containment and recovery work; the exact initial compromise route remained under investigation.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "critical",
+    "status_effect": "Malicious withdrawals from the PoS bridge and subsequent containment",
+    "source_count": 3,
+    "sort_order": 10,
+    "amount_text": "Reported estimates approximately $2.4M–$4.1M",
+    "recovered_amount_text": null,
+    "reimbursement_status": "in_progress",
+    "restart_status": "reopened",
+    "affected_chains": [
+      "ethereum",
+      "unknown"
+    ],
+    "affected_assets": [
+      "eth",
+      "usdc",
+      "usdt",
+      "wbtc",
+      "unknown"
+    ],
+    "notes": "The event does not assign an exact reopen date or extend the incident to the separate Plasma bridge path.",
+    "duplicate_of": null,
+    "merged_into": null
   }
 ]

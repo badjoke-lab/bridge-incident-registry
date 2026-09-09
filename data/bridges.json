@@ -4554,5 +4554,62 @@
     "duplicate_of": null,
     "merged_into": null,
     "notes": "BIR models MAYAChain as an interoperability protocol because it executes native cross-chain swaps from network vaults rather than a conventional lock-and-mint bridge. The current BIR vocabulary has no dedicated MAYAChain or CACAO key, so those exact names remain in prose."
+  },
+  {
+    "id": "bir_bridge_000083",
+    "slug": "shibarium-pos-bridge",
+    "previous_slugs": [],
+    "redirect_from": [],
+    "canonical_name": "Shibarium PoS Bridge",
+    "type": "canonical_bridge",
+    "status": "active",
+    "summary": "Shibarium PoS Bridge is the native Proof-of-Stake bridge path for transfers between Ethereum and Shibarium. On September 12, 2025, unauthorized validator signing power was used to authorize malicious withdrawals from the bridge. The affected bridge path was restricted during containment and later returned to operation, while user recovery obligations remain active through Shib.io’s SOU recovery system.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "last_reviewed_at": "2026-09-09",
+    "last_verified_at": "2026-09-09",
+    "aliases": [
+      "Shibarium Bridge",
+      "Shiba Inu PoS Bridge",
+      "Shibarium Proof-of-Stake Bridge"
+    ],
+    "launch_date": null,
+    "launch_date_precision": "unknown",
+    "end_date": null,
+    "end_date_precision": "unknown",
+    "terminal_reason": null,
+    "official_url": "https://shib.io/shibarium/bridge",
+    "official_domain": "shib.io",
+    "official_url_status": "live",
+    "archived_url": null,
+    "primary_chains": [
+      "ethereum",
+      "unknown"
+    ],
+    "primary_assets": [
+      "eth",
+      "usdc",
+      "usdt",
+      "wbtc",
+      "unknown"
+    ],
+    "operator_name": "Shiba Inu / Shibarium ecosystem",
+    "operator_type": "protocol ecosystem",
+    "ecosystem_name": "Shibarium",
+    "related_protocols": [
+      "Shibarium",
+      "Shiba Inu"
+    ],
+    "brand_history_notes": "This BIR entity is scoped to the PoS bridge path. Shibarium documentation also describes a distinct Plasma bridge path, which is not merged into this incident record.",
+    "major_incident_count": 1,
+    "has_unresolved_incident": true,
+    "has_reimbursement_history": true,
+    "successor_id": null,
+    "predecessor_id": null,
+    "replacement_bridge_id": null,
+    "duplicate_of": null,
+    "merged_into": null,
+    "notes": "The current BIR chain vocabulary has no dedicated Shibarium key, so keyed chain fields use Ethereum plus unknown while Shibarium is preserved in prose. Current bridge operation is directly observable on the official Shib.io interface; no exact unrestricted-reopen timestamp is inferred."
   }
 ]
