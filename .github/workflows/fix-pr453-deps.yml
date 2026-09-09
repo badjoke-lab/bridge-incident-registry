@@ -1,0 +1,36 @@
+name: Fix PR453 dependencies
+on:
+  push:
+    branches:
+      - canonical/growth-batch-21-tranche-07-sandbox-2026
+    paths:
+      - .github/workflows/fix-pr453-deps.yml
+permissions:
+  contents: write
+jobs:
+  fix:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: canonical/growth-batch-21-tranche-07-sandbox-2026
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: npm install --no-audit --no-fund
+      - run: npm audit fix
+      - run: npm audit --audit-level=high
+      - run: npm run check
+      - run: npm run validate:data
+      - run: npm run audit:source-quality
+      - run: npm run build
+      - run: npm run dist:check
+      - name: Commit dependency remediation
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add package.json package-lock.json
+          git diff --cached --quiet && exit 0
+          git commit -m "Update dependencies for current security advisories"
+          git push origin HEAD:canonical/growth-batch-21-tranche-07-sandbox-2026
