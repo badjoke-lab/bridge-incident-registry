@@ -1,3 +1,0 @@
-import fs from 'node:fs';
-const files=['README.md','docs/runbooks/current-status.md','docs/runbooks/recovery-checkpoint.md','docs/runbooks/development-roadmap.md','docs/runbooks/public-consistency-remediation.md'];
-for(const f of files){let t=fs.readFileSync(f,'utf8');t=t.replace(/Current canonical counts: Bridges 81 \/ Incidents\s+61 \/ Events\s+269 \/ Evidence\s+431\./g,'Current canonical counts: Bridges 81 / Incidents 62 / Events 271 / Evidence 433.');fs.writeFileSync(f,t);}console.log('Synced SKALE tranche counts to 81/62/271/433.');
