@@ -8842,5 +8842,67 @@
     "notes": "Publication of a claim process does not establish completed reimbursement.",
     "duplicate_of": null,
     "merged_into": null
+  },
+  {
+    "id": "bir_ev_000270",
+    "bridge_id": "bir_bridge_000060",
+    "incident_id": "bir_inc_000062",
+    "event_type": "exploit_occurred",
+    "event_date": "2026-08-27",
+    "event_date_precision": "day",
+    "title": "SKALE IMA Bridge infrastructure exploited",
+    "description": "Infrastructure providers running validator nodes were compromised and the Ethereum-connected IMA Bridge infrastructure was exploited, allowing an attacker to drain ERC-20 assets. The exact technical attack vector and total value lost remained under investigation.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "critical",
+    "status_effect": "ERC-20 assets drained from affected IMA Bridge infrastructure",
+    "source_count": 1,
+    "sort_order": 10,
+    "amount_text": "Unknown; total value under assessment",
+    "recovered_amount_text": null,
+    "reimbursement_status": "unknown",
+    "restart_status": "unknown",
+    "affected_chains": [
+      "ethereum",
+      "unknown"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": "SKALE Europa is preserved in prose because there is no dedicated reference key.",
+    "duplicate_of": null,
+    "merged_into": null
+  },
+  {
+    "id": "bir_ev_000271",
+    "bridge_id": "bir_bridge_000060",
+    "incident_id": "bir_inc_000062",
+    "event_type": "bridge_paused",
+    "event_date": "2026-08-27",
+    "event_date_precision": "day",
+    "title": "SKALE pauses affected IMA Bridge",
+    "description": "SKALE paused the affected IMA Bridge as soon as the attack was discovered and began working with affected parties and authorities to trace, freeze and recover stolen assets.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "high",
+    "status_effect": "Affected Ethereum-connected IMA Bridge paused",
+    "source_count": 1,
+    "sort_order": 20,
+    "amount_text": null,
+    "recovered_amount_text": null,
+    "reimbursement_status": "unknown",
+    "restart_status": "paused",
+    "affected_chains": [
+      "ethereum",
+      "unknown"
+    ],
+    "affected_assets": [
+      "unknown"
+    ],
+    "notes": "SKALE on Base remained operational and is excluded from this pause event.",
+    "duplicate_of": null,
+    "merged_into": null
   }
 ]
