@@ -8,61 +8,27 @@ const incidents = read('data/incidents.json');
 const events = read('data/events.json');
 const evidence = read('data/evidence.json');
 
-const bridgeId = 'bir_bridge_000084';
+const bridgeId = 'bir_bridge_000052';
 const incidentId = 'bir_inc_000065';
 const eventId = 'bir_ev_000274';
 const sourceIds = ['bir_src_000443', 'bir_src_000444', 'bir_src_000445'];
 
-if (bridges.some((x) => x.id === bridgeId || /symbiosis/i.test(`${x.canonical_name || ''} ${x.slug || ''} ${(x.aliases || []).join(' ')}`))) {
-  throw new Error('Symbiosis bridge already present or bridge ID collision');
-}
+const bridge = bridges.find((x) => x.id === bridgeId);
+if (!bridge || bridge.slug !== 'symbiosis') throw new Error('Canonical Symbiosis bridge entity not found at bir_bridge_000052');
 if (incidents.some((x) => x.id === incidentId || /symbiosis.*2026/i.test(`${x.slug || ''} ${x.title || ''}`))) {
   throw new Error('Symbiosis incident already present or incident ID collision');
 }
 if (events.some((x) => x.id === eventId)) throw new Error('event ID collision');
 if (evidence.some((x) => sourceIds.includes(x.id))) throw new Error('evidence ID collision');
 
-bridges.push({
-  id: bridgeId,
-  slug: 'symbiosis-finance',
-  previous_slugs: [],
-  redirect_from: [],
-  canonical_name: 'Symbiosis Finance',
-  type: 'cross_chain_router',
-  status: 'active',
-  summary: 'Symbiosis Finance is cross-chain routing and bridge infrastructure supporting native Bitcoin and EVM routes through an internal syBTC settlement layer. On September 11, 2026, security-monitoring reports identified anomalous BridgeV2-signed syBTC activity on BNB Smart Chain followed by WBTC cash-out on Ethereum. The incident remains under investigation and BIR does not infer a root cause from the protocol architecture alone.',
-  confidence: 'high',
-  record_maturity: 'reviewed',
-  update_status: 'current',
-  last_reviewed_at: '2026-09-11',
-  last_verified_at: '2026-09-11',
-  aliases: ['Symbiosis', 'Symbiosis Protocol', 'Symbiosis Bitcoin Bridge'],
-  launch_date: null,
-  launch_date_precision: 'unknown',
-  end_date: null,
-  end_date_precision: 'unknown',
-  terminal_reason: null,
-  official_url: 'https://symbiosis.finance/bridge-btc',
-  official_domain: 'symbiosis.finance',
-  official_url_status: 'live_verified',
-  archived_url: null,
-  primary_chains: ['bitcoin', 'bnb-chain', 'ethereum'],
-  primary_assets: ['btc', 'wbtc', 'unknown'],
-  operator_name: 'Symbiosis Finance',
-  operator_type: 'protocol_team',
-  ecosystem_name: 'Symbiosis',
-  related_protocols: ['Symbiosis Bitcoin Bridge', 'BridgeV2', 'syBTC'],
-  brand_history_notes: null,
-  major_incident_count: 0,
-  has_unresolved_incident: true,
-  has_reimbursement_history: false,
-  successor_id: null,
-  predecessor_id: null,
-  replacement_bridge_id: null,
-  duplicate_of: null,
-  merged_into: null,
-  notes: 'syBTC has no dedicated BIR asset-reference key, so it is preserved in prose and represented as unknown in keyed asset arrays. The current public evidence establishes the incident and realized WBTC cash-out but does not establish the underlying compromise mechanism, total final loss, recovery outcome, or a canonical service-pause/reopen boundary.'
-});
+bridge.summary = 'Symbiosis is a cross-chain liquidity and token-routing protocol supporting bridging, cross-chain swaps, and interchain operations. First-party material launched the V1 beta mainnet on March 9, 2022; current documentation describes V2 as the successor retaining the core cross-chain model. On September 11, 2026, security-monitoring reports identified anomalous BridgeV2-signed syBTC activity on BNB Smart Chain followed by WBTC cash-out on Ethereum; the root cause and final loss remained under investigation at the reviewed evidence horizon.';
+bridge.last_reviewed_at = '2026-09-11';
+bridge.last_verified_at = '2026-09-11';
+bridge.primary_chains = [...new Set([...(bridge.primary_chains || []), 'bitcoin', 'bnb-chain', 'ethereum'])];
+bridge.primary_assets = [...new Set([...(bridge.primary_assets || []), 'btc', 'wbtc'])];
+bridge.related_protocols = [...new Set([...(bridge.related_protocols || []), 'Symbiosis Bitcoin Bridge', 'BridgeV2', 'syBTC'])];
+bridge.has_unresolved_incident = true;
+bridge.notes = 'Current documentation describes bridging as one of several cross-chain operations. syBTC has no dedicated BIR asset-reference key, so it is preserved in prose and represented as unknown in keyed asset arrays. The September 11, 2026 incident is unresolved: public evidence establishes anomalous BridgeV2/syBTC activity and realized WBTC cash-out but not the underlying compromise mechanism, total final loss, recovery outcome, or a canonical service-pause/reopen boundary.';
 
 incidents.push({
   id: incidentId,
@@ -242,5 +208,6 @@ console.log({
   incidents: incidents.length,
   events: events.length,
   evidence: evidence.length,
-  added: { bridgeId, incidentId, eventId, sourceIds }
+  updated: { bridgeId },
+  added: { incidentId, eventId, sourceIds }
 });
