@@ -8938,5 +8938,37 @@
     "notes": "This event intentionally tracks the first-party technical remediation record instead of creating a separate pause event supported only by secondary reporting.",
     "duplicate_of": null,
     "merged_into": null
+  },
+  {
+    "id": "bir_ev_000274",
+    "bridge_id": "bir_bridge_000052",
+    "incident_id": "bir_inc_000065",
+    "event_type": "exploit_occurred",
+    "event_date": "2026-09-11",
+    "event_date_precision": "day",
+    "title": "BridgeV2-signed syBTC anomaly followed by WBTC cash-out",
+    "description": "Security-monitoring reports described a BridgeV2-signed transaction on BNB Smart Chain transferring an anomalously large raw syBTC amount to a newly created EOA. The same beneficiary later sold approximately 4.39 WBTC on Ethereum Uni V4. The underlying exploit path and total final loss remained unresolved at the reviewed evidence horizon.",
+    "confidence": "high",
+    "record_maturity": "reviewed",
+    "update_status": "current",
+    "impact_level": "high",
+    "status_effect": "Anomalous syBTC issuance/transfer and WBTC cash-out reported; full service impact remains under investigation",
+    "source_count": 3,
+    "sort_order": 10,
+    "amount_text": "approximately 4.39 WBTC sold; about $336,000 realized at the early reporting horizon",
+    "recovered_amount_text": null,
+    "reimbursement_status": "unknown",
+    "restart_status": "unknown",
+    "affected_chains": [
+      "bnb-chain",
+      "ethereum"
+    ],
+    "affected_assets": [
+      "wbtc",
+      "unknown"
+    ],
+    "notes": "The nominal raw syBTC amount is not converted into canonical loss. No signing-key or MPC compromise is inferred.",
+    "duplicate_of": null,
+    "merged_into": null
   }
 ]
