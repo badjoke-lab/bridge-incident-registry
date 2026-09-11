@@ -2947,18 +2947,18 @@
     "canonical_name": "Symbiosis",
     "type": "interoperability_protocol",
     "status": "active",
-    "summary": "Symbiosis is a cross-chain liquidity and token-routing protocol supporting bridging, cross-chain swaps, and interchain operations. First-party material launched the V1 beta mainnet on March 9, 2022; current documentation describes V2 as the successor retaining the core cross-chain model.",
+    "summary": "Symbiosis is a cross-chain liquidity and token-routing protocol supporting bridging, cross-chain swaps, and interchain operations. First-party material launched the V1 beta mainnet on March 9, 2022; current documentation describes V2 as the successor retaining the core cross-chain model. On September 11, 2026, security-monitoring reports identified anomalous BridgeV2-signed syBTC activity on BNB Smart Chain followed by WBTC cash-out on Ethereum; the root cause and final loss remained under investigation at the reviewed evidence horizon.",
     "confidence": "high",
     "record_maturity": "reviewed",
     "update_status": "current",
-    "last_reviewed_at": "2026-08-28",
-    "last_verified_at": "2026-08-28",
+    "last_reviewed_at": "2026-09-11",
+    "last_verified_at": "2026-09-11",
     "end_date": null,
     "end_date_precision": "unknown",
     "terminal_reason": null,
     "archived_url": null,
     "major_incident_count": 0,
-    "has_unresolved_incident": false,
+    "has_unresolved_incident": true,
     "has_reimbursement_history": false,
     "successor_id": null,
     "predecessor_id": null,
@@ -2975,20 +2975,28 @@
     "official_domain": "symbiosis.finance",
     "official_url_status": "live_verified",
     "primary_chains": [
-      "unknown"
+      "unknown",
+      "bitcoin",
+      "bnb-chain",
+      "ethereum"
     ],
     "primary_assets": [
-      "unknown"
+      "unknown",
+      "btc",
+      "wbtc"
     ],
     "operator_name": "Symbiosis",
     "operator_type": "protocol_team",
     "ecosystem_name": "Symbiosis",
     "related_protocols": [
       "Symbiosis V1",
-      "Symbiosis V2"
+      "Symbiosis V2",
+      "Symbiosis Bitcoin Bridge",
+      "BridgeV2",
+      "syBTC"
     ],
     "brand_history_notes": "Symbiosis V1 later reached end of life and V2 became its direct successor. No exact V1 shutdown date is inferred here.",
-    "notes": "Current documentation describes bridging as one of several cross-chain operations. No exploit, loss, recovery, or reimbursement record is inferred in this batch."
+    "notes": "Current documentation describes bridging as one of several cross-chain operations. syBTC has no dedicated BIR asset-reference key, so it is preserved in prose and represented as unknown in keyed asset arrays. The September 11, 2026 incident is unresolved: public evidence establishes anomalous BridgeV2/syBTC activity and realized WBTC cash-out but not the underlying compromise mechanism, total final loss, recovery outcome, or a canonical service-pause/reopen boundary."
   },
   {
     "id": "bir_bridge_000053",
